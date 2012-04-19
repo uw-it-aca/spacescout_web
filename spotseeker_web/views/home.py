@@ -36,13 +36,17 @@ def HomeView(request):
     else:
         zoom_level = '15'
 
-
-    json = get_spot_search_json(client, {
+    search_args = {
         'center_latitude': center_latitude,
         'center_longitude': center_longitude,
         'open_now': '1',
         'distance': '500',
-    })
+    }
+
+    for key in request.GET:
+        search_args[key] = request.GET[key]
+
+    json = get_spot_search_json(client, search_args)
 
     return render_to_response('search/results.html', {
         'center_latitude': center_latitude,
@@ -55,7 +59,6 @@ def HomeView(request):
 def get_spot_search_json(client, options):
     args = []
     for key in options:
-        print type(options[key])
         if isinstance(options[key], types.ListType):
             for item in options[key]:
                 args.append("{0}={1}".format(urllib.quote(key), urllib.quote(item)))

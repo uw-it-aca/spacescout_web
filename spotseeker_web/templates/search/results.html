@@ -41,12 +41,43 @@
     <script type="text/javascript">
         var spot_seeker_map, spot_seeker_infowindow, spot_seeker_markers = [];
 
+        function openInfoWindow(marker, info) {
+            if (!window.spot_seeker_infowindow) {
+                window.spot_seeker_infowindow = new google.maps.InfoWindow({});
+            }
+
+            window.spot_seeker_infowindow.setContent(["<h1>", info.name, "</h1><div>This is the content window about the space.  Here's some info: <ul><li>Hours available: ", info.display_hours_available, "</li><li>Capacity: ", info.capacity, "</li></ul></div>"].join(""));
+            window.spot_seeker_infowindow.open(window.spot_seeker_map, marker);
+        }
+
+        function addMarkerListener(marker, data) {
+            google.maps.event.addListener(marker, 'click', function() {
+                openInfoWindow(marker, data);
+            });
+
+        }
+
         function initialize() {
             var i, myOptions = {
                 center: new google.maps.LatLng({{ center_latitude }}, {{ center_longitude }}),
                 zoom: {{ zoom_level }},
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             };
+
+            $("#cancel_custom_search").click(function() {
+                $( "#dialog-modal" ).dialog("close");
+            });
+
+            $("#custom_search").click(function() {
+                $( "#dialog-modal" ).dialog({
+                    height: 340,
+                    width: 500,
+                    modal: true
+                });
+            });
+
+
+
             window.spot_seeker_map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 
             var data = window.search_results;
@@ -58,6 +89,7 @@
                 window.spot_seeker_markers.push(marker);
 
                 marker.setMap(window.spot_seeker_map);
+                addMarkerListener(marker, data[i]);
 
             }
 
@@ -67,20 +99,25 @@
   </head>
   <body onload="initialize()">
 <div id="dialog-modal" title="Custom search interface?" style="display: none;">
-    <label for="require_whiteboard">Require whiteboard: </label> <input type="checkbox" id="require_checkbox" checked="checked" />
+    <form action="./" method="GET">
+    <label for="spot_name">Name includes:</label> <input type="text" name="name" id="spot_name"/>
+    <br />
+    <label for="require_whiteboard">Require whiteboard: </label> <input type="checkbox" name="extended_info:require_whiteboard" id="require_whiteboard" value="1" />
     <br />
     <label for="building">Building: </label>
-    <select id="building">
+    <select id="building" name="building">
+        <option value="">No Preference</option>
         <option value="OUGL">OUGL</option>
         <option value="MGH">MGH</option>
         <option value="Fountain">Fountain</option>
     </select>
     <br />
     <br />
-    <button id="run_custom_search">Run the search</button> <button id="cancel_custom_search">Cancel</button>
+    <input type="submit" value="Run the search"/> <button id="cancel_custom_search">Cancel</button>
+    </form>
 </div>
     <div id="nav" style="width: 100%; height: 10%;">
-        <button id="custom_search">Custom search</button> <button id="basic_search">Search</button>
+        <button id="custom_search">Custom search</button>
     </div>
     <div id="map_canvas" style="width:100%; height:90%"></div>
   </body>
