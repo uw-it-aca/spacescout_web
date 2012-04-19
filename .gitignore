@@ -1,0 +1,11 @@
+# compiled files, swap files, system files, etc.
+*.pyc
+*.swp
+.DS_Store
+
+# virtualenv files
+.Python
+bin/
+include/
+lib/
+local/
