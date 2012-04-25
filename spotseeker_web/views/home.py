@@ -32,7 +32,7 @@ def HomeView(request):
         center_longitude = '-122.306864'
 
     if hasattr(settings, 'DEFAULT_ZOOM_LEVEL'):
-        zoom_level = DEFAULT_ZOOM_LEVEL
+        zoom_level = settings.DEFAULT_ZOOM_LEVEL
     else:
         zoom_level = '15'
 
