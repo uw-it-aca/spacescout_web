@@ -9,3 +9,7 @@ bin/
 include/
 lib/
 local/
+
+# django project files
+manage.py
+spotseeker
