@@ -30,7 +30,9 @@
     </style>
 
     <script>
-        window.search_results = {{ found_spots|safe }};
+        window.default_latitude = {{ center_latitude }};
+        window.default_longitude = {{ center_longitude }};
+        window.default_zoom = {{ zoom_level }};
     </script>
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
@@ -39,7 +41,7 @@
       src="http://maps.googleapis.com/maps/api/js?sensor=true">
     </script>
     <script type="text/javascript">
-        var spot_seeker_map, spot_seeker_infowindow, spot_seeker_markers = [];
+        var spot_seeker_map, spot_seeker_infowindow, spot_seeker_marker_ids = {}, spot_seeker_markers = [];
 
         function openInfoWindow(marker, info) {
             if (!window.spot_seeker_infowindow) {
@@ -57,13 +59,25 @@
 
         }
 
-        function initialize() {
-            var i, myOptions = {
-                center: new google.maps.LatLng({{ center_latitude }}, {{ center_longitude }}),
-                zoom: {{ zoom_level }},
-                mapTypeId: google.maps.MapTypeId.ROADMAP
-            };
+        function run_custom_search() {
+            // Clear the map
+            for (var i = 0; i < window.spot_seeker_markers.length; i++) {
+                window.spot_seeker_markers[i].setMap(null);
+            }
+            window.spot_seeker_markers = [];
+            window.spot_seeker_marker_ids = {};
 
+            // Set the search values, so they'll stick through zooms and pans
+            window.spot_seeker_search_options = {};
+            window.spot_seeker_search_options["name"] = $("#spot_name").val();
+
+            // Run the search
+            fetch_data();
+            $("#dialog-modal").dialog("close");
+        }
+
+        function initialize() {
+            var i;
             $("#cancel_custom_search").click(function() {
                 $( "#dialog-modal" ).dialog("close");
             });
@@ -76,30 +90,128 @@
                 });
             });
 
+            $("#run_custom_search").click(run_custom_search);
 
+            window.spot_seeker_search_options = {};
 
-            window.spot_seeker_map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+            if (navigator.geolocation) {
+                // Doing a timeout here, to make sure we load something...
+                window.position_timeout = window.setTimeout(function() {
+                    load_map(window.default_latitude, window.default_longitude, window.default_zoom);
+                }, 5000);
 
-            var data = window.search_results;
-            for (i = 0; i < data.length; i++) {
-                marker = new google.maps.Marker({
-                    position: new google.maps.LatLng(data[i].location.latitude, data[i].location.longitude),
-                    title: data[i].name
-                });
-                window.spot_seeker_markers.push(marker);
-
-                marker.setMap(window.spot_seeker_map);
-                addMarkerListener(marker, data[i]);
-
+                navigator.geolocation.getCurrentPosition(
+                    // Success...
+                    function(position) {
+                        window.clearTimeout(window.position_timeout);
+                        load_map(position.coords.latitude, position.coords.longitude, window.default_zoom);
+                    }
+                );
+            }
+            else {
+                load_map(window.default_latitude, window.default_longitude, window.default_zoom);
             }
 
+        }
+
+        function load_map(latitude, longitude, zoom) {
+            var myOptions = {
+                center: new google.maps.LatLng(latitude, longitude),
+                zoom: zoom,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+
+            window.spot_seeker_map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+            google.maps.event.addListener(window.spot_seeker_map, 'idle', reload_on_idle);
+        }
+
+        function display_search_results(data) {
+
+            for (i = 0; i < data.length; i++) {
+                if (!window.spot_seeker_marker_ids[data[i].id]) {
+                    marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(data[i].location.latitude, data[i].location.longitude),
+                        title: data[i].name
+                    });
+
+                    marker.setMap(window.spot_seeker_map);
+                    addMarkerListener(marker, data[i]);
+
+                    window.spot_seeker_marker_ids[data[i].id] = true;
+                    window.spot_seeker_markers.push(marker);
+                }
+            }
+        }
+
+        function load_data(data) {
+            display_search_results(data);
+        }
+
+        function reload_on_idle() {
+            fetch_data();
+        }
+
+        function fetch_data() {
+            var args = window.spot_seeker_search_options;
+            if (!args) {
+                args = {};
+            }
+
+            var display_bounds = window.spot_seeker_map.getBounds();
+            var ne = display_bounds.getNorthEast();
+            var sw = display_bounds.getSouthWest();
+            var distance = distance_between_points(ne.lat(), ne.lng(), sw.lat(), sw.lng());
+            // Calculated in KM
+            distance = distance * 1000;
+
+            var center = window.spot_seeker_map.getCenter();
+            args["center_latitude"] = [center.lat()];
+            args["center_longitude"] = center.lng();
+            args["open_now"] = 1;
+            args["distance"] = distance;
+
+            var url_args = ["/search/?"];
+            for (var key in args) {
+                if (typeof(args[key]) == "object") {
+                    for (var i = 0; i < args[key].length; i++) {
+                        url_args.push(encodeURIComponent(key), "=", encodeURIComponent(args[key][i]), '&');
+                    }
+                }
+                else {
+                    url_args.push(encodeURIComponent(key), "=", encodeURIComponent(args[key]), '&');
+                }
+            }
+
+            url_args.pop();
+
+            var query = url_args.join("");
+
+            $.ajax({
+                url: query,
+                success: load_data
+            });
+        }
+
+        function distance_between_points(lat1, lon1, lat2, lon2) {
+            // from http://www.movable-type.co.uk/scripts/latlong.html
+            var R = 6371; // km
+            var dLat = (lat2-lat1) * Math.PI / 180;
+            var dLon = (lon2-lon1) * Math.PI / 180;
+            var lat1 = lat1 * Math.PI / 180;
+            var lat2 = lat2 * Math.PI / 180;
+
+            var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                    Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2);
+            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            var d = R * c;
+
+            return d;
         }
 
     </script>
   </head>
   <body onload="initialize()">
 <div id="dialog-modal" title="Custom search interface?" style="display: none;">
-    <form action="./" method="GET">
     <label for="spot_name">Name includes:</label> <input type="text" name="name" id="spot_name"/>
     <br />
     <label for="require_whiteboard">Require whiteboard: </label> <input type="checkbox" name="extended_info:require_whiteboard" id="require_whiteboard" value="1" />
@@ -113,8 +225,7 @@
     </select>
     <br />
     <br />
-    <input type="submit" value="Run the search"/> <button id="cancel_custom_search">Cancel</button>
-    </form>
+    <button id="run_custom_search">Run the search</button> <button id="cancel_custom_search">Cancel</button>
 </div>
     <div id="nav" style="width: 100%; height: 10%;">
         <button id="custom_search">Custom search</button>
