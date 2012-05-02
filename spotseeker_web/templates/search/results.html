@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block content %}
+{% block head %}
   <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     <title>SpotSeeker!</title>
@@ -193,6 +193,8 @@
 
     </script>
   </head>
+{% endblock %}
+{% block content %}
   <body onload="initialize()">
 <div id="dialog-modal" title="Custom search interface?" style="display: none;">
     <label for="spot_name">Name includes:</label> <input type="text" name="name" id="spot_name"/>
