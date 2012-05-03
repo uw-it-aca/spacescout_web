@@ -1,9 +1,12 @@
 from django.shortcuts import render_to_response
+from django.template import RequestContext
 from django.conf import settings
 import oauth2
 import simplejson as json
 
 from django.http import HttpResponse
+
+
 def SpotView(request, spot_id):
     # Required settings for the client
     if not hasattr(settings, 'SS_WEB_SERVER_HOST'):
@@ -40,7 +43,7 @@ def SpotView(request, spot_id):
     for attribute in spot_json["extended_info"]:
         params["attribute_list"].append({ "name": attribute, "value": spot_json["extended_info"][attribute] })
 
-    return render_to_response('spot.html', params)
+    return render_to_response('spot.html', params, context_instance=RequestContext(request))
 
 
 
