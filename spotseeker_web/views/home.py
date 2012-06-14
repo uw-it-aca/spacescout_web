@@ -2,6 +2,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.conf import settings
 
+
 def HomeView(request):
 
     # Default to zooming in on the UW Seattle campus

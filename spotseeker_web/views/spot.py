@@ -16,7 +16,7 @@ def SpotView(request, spot_id):
     if not hasattr(settings, 'SS_WEB_OAUTH_SECRET'):
         raise(Exception("Required setting missing: SS_WEB_OAUTH_SECRET"))
 
-    consumer = oauth2.Consumer(key=settings.SS_WEB_OAUTH_KEY, secret = settings.SS_WEB_OAUTH_SECRET)
+    consumer = oauth2.Consumer(key=settings.SS_WEB_OAUTH_KEY, secret=settings.SS_WEB_OAUTH_SECRET)
     client = oauth2.Client(consumer)
 
     url = "{0}/api/v1/spot/{1}".format(settings.SS_WEB_SERVER_HOST, spot_id)
@@ -41,10 +41,6 @@ def SpotView(request, spot_id):
     }
 
     for attribute in spot_json["extended_info"]:
-        params["attribute_list"].append({ "name": attribute, "value": spot_json["extended_info"][attribute] })
+        params["attribute_list"].append({"name": attribute, "value": spot_json["extended_info"][attribute]})
 
     return render_to_response('spot.html', params, context_instance=RequestContext(request))
-
-
-
-
