@@ -2,11 +2,11 @@
 
         function openInfoWindow(marker, info) {
             if (!window.spot_seeker_infowindow) {
-                window.spot_seeker_infowindow = new google.maps.InfoWindow({});
+                window.spot_seeker_infowindow = $("#info_list");
             }
 
-            window.spot_seeker_infowindow.setContent(["<h1>", info.name, "</h1><div>This is the content window about the space.  Here's some info: <ul><li>Hours available: ", info.display_hours_available, "</li><li>Capacity: ", info.capacity, "</li></ul></div><div><a href='/spot/"+info.id+"'>View more</a></div>"].join(""));
-            window.spot_seeker_infowindow.open(window.spot_seeker_map, marker);
+            window.spot_seeker_infowindow.html(["<h1>", info.name, "</h1><div>This is the content window about the space.  Here's some info: <ul><li>Hours available: ", info.display_hours_available, "</li><li>Capacity: ", info.capacity, "</li></ul></div><div><a href='/spot/"+info.id+"'>View more</a></div>"].join(""));
+            //window.spot_seeker_infowindow.open(window.spot_seeker_map, marker);
         }
 
         function addMarkerListener(marker, data) {
