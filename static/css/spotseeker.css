@@ -5,11 +5,13 @@
     #map_canvas {
         width: 80%;
         float: left;
+        height: 400px;
     }
 
     #info_list {
         width: 20%;
         float: right;
+        min-height: 400px;
     }
 
 }
