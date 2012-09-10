@@ -5,7 +5,6 @@
     <style type="text/css">
       html { height: 100% }
       body { height: 100%; margin: 0; padding: 0 }
-      #map_canvas { height: 100% }
     </style>
 {% endblock %}
 
@@ -25,26 +24,33 @@
 
 {% block content %}
   <body onload="initialize()">
-<div id="dialog-modal" title="Custom search interface?" style="display: none;">
-    <label for="spot_name">Name includes:</label> <input type="text" name="name" id="spot_name"/>
-    <br />
-    <label for="require_whiteboard">Require whiteboard: </label> <input type="checkbox" name="extended_info:require_whiteboard" id="require_whiteboard" value="1" />
-    <br />
-    <label for="building">Building: </label>
-    <select id="building" name="building">
-        <option value="">No Preference</option>
-        <option value="OUGL">OUGL</option>
-        <option value="MGH">MGH</option>
-        <option value="Fountain">Fountain</option>
-    </select>
-    <br />
-    <br />
-    <button id="run_custom_search">Run the search</button> <button id="cancel_custom_search">Cancel</button>
-</div>
+    <div id="dialog-modal" title="Custom search interface?" style="display: none;">
+        <label for="spot_name">Name includes:</label> <input type="text" name="name" id="spot_name"/>
+        <br />
+        <label for="require_whiteboard">Require whiteboard: </label> <input type="checkbox" name="extended_info:require_whiteboard" id="require_whiteboard" value="1" />
+        <br />
+        <label for="building">Building: </label>
+        <select id="building" name="building">
+            <option value="">No Preference</option>
+            <option value="OUGL">OUGL</option>
+            <option value="MGH">MGH</option>
+            <option value="Fountain">Fountain</option>
+        </select>
+        <br />
+        <br />
+        <button id="run_custom_search">Run the search</button> <button id="cancel_custom_search">Cancel</button>
+    </div>
+
     <div id="nav" style="width: 100%; height: 10%;">
         <button id="custom_search">Custom search</button>
+
     </div>
-    <div id="map_canvas" style="width:100%; height:90%"></div>
-    <div id="info_list"></div>
+
+    <div id="map_canvas"></div>
+
+    <div id="info_list">
+        <p>none selected</p>
+    </div>
+
   </body>
 {% endblock %}

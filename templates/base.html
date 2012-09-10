@@ -21,7 +21,8 @@
     <head>
         <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
         <title>SpaceScout&trade;</title>
-        <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/spotseeker.css" />
+        <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/mobile.css" media="screen, handheld" />
+        <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/spotseeker.css" media="screen  and (min-width: 480px)" />
         {% block extra_css %}
         {% endblock %}
         {% block extra_js %}
