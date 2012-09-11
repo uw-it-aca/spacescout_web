@@ -5,31 +5,28 @@
 {% endblock %}
 
 {% block extra_js %}
-    <script>
-        window.default_latitude = {{ center_latitude }};
-        window.default_longitude = {{ center_longitude }};
-        window.default_zoom = {{ zoom_level }};
-    </script>
 
-    <script type="text/javascript" src="{{ STATIC_URL }}js/responsive.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}js/search.js"></script>
-    <script type="text/javascript"
-      src="http://maps.googleapis.com/maps/api/js?sensor=true">
-    </script>
 {% endblock %}
 
 {% block content %}
 
 
 
-    <div id="nav">
-        <button id="custom_search">Custom search</button>
-
+    <div id="nav" style="position:relative;">
+        <div class="logo">SPACESCOUT</div>
+        <div style="position:absolute; top:80px; left:0; right:0;  z-index:999; ">
+            <div id="filter_container" style="display:none; height:200px; opacity: .85; background-color:#000;">jsafdlkjasdlkf</div>
+            <div style="height: 20px; text-align:center; line-height:20px;"><div id="filter_button" style="background-color:#000; display:inline-block;padding: 0 10px;">Filters</div></div>
+        </div>
     </div>
+
     <div id="main_content" class="clearfix">
         <div id="map_canvas"></div>
         <div id="info_list">
-            <p>none selected</p>
+            <ul>
+                <li>Location 1</li>
+                <li>Location 2</li>
+            </ul>
         </div>
     </div>
 

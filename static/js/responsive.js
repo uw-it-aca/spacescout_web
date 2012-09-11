@@ -8,6 +8,14 @@
 
 	$(document).ready(function() {
 		checkMobile();
+
+		// Toggle Filter display
+		$('#filter_button').click(function() {
+          $('#filter_container').slideToggle('fast', function() {
+            // Animation complete.
+          });
+        });
+
 	});
 
 	$(w).resize(function(){ //Update dimensions on resize
@@ -40,6 +48,7 @@
 
          $('#map_canvas').height(contentH);
          $('#info_list').height(contentH);
+
     }
 
     function resetContent() {
