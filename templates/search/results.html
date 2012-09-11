@@ -1,11 +1,7 @@
-{% extends 'base.html' %}
+{% extends 'base-responsive.html' %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" media="all" />
-    <style type="text/css">
-      html { height: 100% }
-      body { height: 100%; margin: 0; padding: 0 }
-    </style>
+
 {% endblock %}
 
 {% block extra_js %}
@@ -14,8 +10,8 @@
         window.default_longitude = {{ center_longitude }};
         window.default_zoom = {{ zoom_level }};
     </script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-    <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js" type="text/javascript"></script>
+
+    <script type="text/javascript" src="{{ STATIC_URL }}js/responsive.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/search.js"></script>
     <script type="text/javascript"
       src="http://maps.googleapis.com/maps/api/js?sensor=true">
@@ -23,7 +19,20 @@
 {% endblock %}
 
 {% block content %}
-  <body onload="initialize()">
+
+
+
+    <div id="nav">
+        <button id="custom_search">Custom search</button>
+
+    </div>
+    <div id="main_content" class="clearfix">
+        <div id="map_canvas"></div>
+        <div id="info_list">
+            <p>none selected</p>
+        </div>
+    </div>
+
     <div id="dialog-modal" title="Custom search interface?" style="display: none;">
         <label for="spot_name">Name includes:</label> <input type="text" name="name" id="spot_name"/>
         <br />
@@ -41,16 +50,4 @@
         <button id="run_custom_search">Run the search</button> <button id="cancel_custom_search">Cancel</button>
     </div>
 
-    <div id="nav">
-        <button id="custom_search">Custom search</button>
-
-    </div>
-
-    <div id="map_canvas"></div>
-
-    <div id="info_list">
-        <p>none selected</p>
-    </div>
-
-  </body>
 {% endblock %}

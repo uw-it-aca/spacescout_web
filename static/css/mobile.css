@@ -1,5 +1,5 @@
 body {
-    background-color: white;
+    background-color: lime;
 }
 
 
@@ -16,7 +16,7 @@ body {
 #info_list {
     background-color: silver;
     padding: 0;
-    min-height: 300px;
+    height: 300px;
 }
 
 h1 {font-size: 1.2em;}
