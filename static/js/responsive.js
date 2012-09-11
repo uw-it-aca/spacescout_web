@@ -1,6 +1,6 @@
 (function(w){
 
-	var windowW = $(window).width();
+	var sw = document.body.clientWidth,
 		breakpoint = 768,
 		speed = 800,
 		mobile = true;
@@ -17,7 +17,7 @@
 
 	// Check if Mobile
 	function checkMobile() {
-		mobile = (windowW > breakpoint) ? false : true;
+		mobile = (sw > breakpoint) ? false : true;
 
 		if (!mobile) {
 		  // If Not Mobile (Desktop )
