@@ -1,9 +1,8 @@
 var spot_seeker_map, spot_seeker_infowindow, spot_seeker_marker_ids = {}, spot_seeker_markers = [];
+var mc = null;
 
 function openInfoWindow(marker, info) {
-    if (!window.spot_seeker_infowindow) {
-        window.spot_seeker_infowindow = $("#info_list");
-    }
+    window.spot_seeker_infowindow = $("#info_list");
 
     window.spot_seeker_infowindow.html(["<h1>", info.name, "</h1><div>This is the content window about the space.  Here's some info: <ul><li>Hours available: ", info.display_hours_available, "</li><li>Capacity: ", info.capacity, "</li></ul></div><div><a href='/spot/"+info.id+"'>View more</a></div>"].join(""));
     //window.spot_seeker_infowindow.open(window.spot_seeker_map, marker);
@@ -12,6 +11,25 @@ function openInfoWindow(marker, info) {
 function addMarkerListener(marker, data) {
     google.maps.event.addListener(marker, 'click', function() {
         openInfoWindow(marker, data);
+    });
+
+}
+
+function openClusterInfoWindow(cluster) {
+    window.spot_seeker_infowindow = $("#info_list");
+    infohtml = "<ul>";
+    for (i = 0; i < cluster.getMarkers().length; i++) {
+        mark = cluster.getMarkers()[i];
+        infohtml += "<li>" + mark.title + "</li>";
+    }
+    infohtml += "</ul>";
+    
+    window.spot_seeker_infowindow.html(infohtml);
+}
+
+function addClusterListener(markerCluster) {
+    google.maps.event.addListener(markerCluster, 'click', function(c) {
+        openClusterInfoWindow(c);
     });
 
 }
@@ -85,7 +103,7 @@ function load_map(latitude, longitude, zoom) {
 
 function display_search_results(data) {
     var mcOpts = {zoomOnClick: false};
-    var mc = new MarkerClusterer(spot_seeker_map, [], mcOpts);
+    mc = new MarkerClusterer(spot_seeker_map, [], mcOpts);
     for (i = 0; i < data.length; i++) {
         if (!window.spot_seeker_marker_ids[data[i].id]) {
             marker = new google.maps.Marker({
@@ -101,6 +119,7 @@ function display_search_results(data) {
             window.spot_seeker_markers.push(marker);
         }
     }
+    addClusterListener(mc);
 }
 
 function load_data(data) {
