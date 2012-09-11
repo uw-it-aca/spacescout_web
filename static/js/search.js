@@ -120,6 +120,7 @@ function display_search_results(data) {
         }
     }
     addClusterListener(mc);
+    openClusterInfoWindow(mc);
 }
 
 function load_data(data) {
