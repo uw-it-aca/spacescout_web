@@ -83,7 +83,8 @@ function load_map(latitude, longitude, zoom) {
 }
 
 function display_search_results(data) {
-
+    var mcOpts = {zoomOnClick: false};
+    var mc = new MarkerClusterer(spot_seeker_map, [], mcOpts);
     for (i = 0; i < data.length; i++) {
         if (!window.spot_seeker_marker_ids[data[i].id]) {
             marker = new google.maps.Marker({
@@ -91,7 +92,8 @@ function display_search_results(data) {
                 title: data[i].name
             });
 
-            marker.setMap(window.spot_seeker_map);
+            //marker.setMap(window.spot_seeker_map);
+            mc.addMarker(marker);
             addMarkerListener(marker, data[i]);
 
             window.spot_seeker_marker_ids[data[i].id] = true;
