@@ -24,12 +24,14 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <meta name="viewport" content="width=device-width,initial-scale=1">
 
+        {% load compress %}
+        {% compress css %}
         <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}libs/bootstrap/css/bootstrap.min.css" charset="utf-8" />
+        <link rel="stylesheet" type="text/less" href="{{ STATIC_URL }}css/mobile.less" media="screen, handheld" />
+        <link rel="stylesheet" type="text/less" href="{{ STATIC_URL }}css/responsive.less" media="screen  and (min-width: 768px)" />
+        {% endcompress %}
 
-        <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/mobile.css" media="screen, handheld" />
-        <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/responsive.css" media="screen  and (min-width: 768px)" />
-        {% block extra_css %}
-        {% endblock %}
+        {% block extra_css %}{% endblock %}
 
         <link rel="shortcut icon" href="{{ STATIC_URL }}img/ico/favicon.ico">
 
@@ -45,10 +47,23 @@
 
           {% block content %}{% endblock %}
 
-
           <!-- jQuery -->
           <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
           <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+
+          {% compress js %}
+            <script>
+            window.default_latitude = {{ center_latitude }};
+            window.default_longitude = {{ center_longitude }};
+            window.default_zoom = {{ zoom_level }};
+            </script>
+
+            <script type="text/javascript" src="{{ STATIC_URL }}js/responsive.js"></script>
+            <script type="text/javascript" src="{{ STATIC_URL }}js/markerclusterer.js"></script>
+            <script type="text/javascript" src="{{ STATIC_URL }}js/search.js"></script>
+          {% endcompress %}
+
+          <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=true"></script>
 
           {% block extra_js %}{% endblock %}
 

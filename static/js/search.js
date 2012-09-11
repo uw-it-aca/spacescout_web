@@ -16,7 +16,7 @@ function addMarkerListener(marker, data) {
 
 }
 
-function run_custom_search() {
+/* function run_custom_search() {
     // Clear the map
     for (var i = 0; i < window.spot_seeker_markers.length; i++) {
         window.spot_seeker_markers[i].setMap(null);
@@ -31,11 +31,12 @@ function run_custom_search() {
     // Run the search
     fetch_data();
     $("#dialog-modal").dialog("close");
-}
+} */
 
 function initialize() {
     var i;
-    $("#cancel_custom_search").click(function() {
+
+    /*$("#cancel_custom_search").click(function() {
         $( "#dialog-modal" ).dialog("close");
     });
 
@@ -47,7 +48,7 @@ function initialize() {
         });
     });
 
-    $("#run_custom_search").click(run_custom_search);
+    $("#run_custom_search").click(run_custom_search);*/
 
     window.spot_seeker_search_options = {};
 
