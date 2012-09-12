@@ -34,6 +34,18 @@ function addClusterListener(markerCluster) {
 
 }
 
+function openAllMarkerInfoWindow(data) {
+    window.spot_seeker_infowindow = $("#info_list");
+    infohtml = "<ul>";
+    for (i = 0; i < data.length; i++) {
+        mark = data[i];
+        infohtml += "<li>" + mark.name + "</li>";
+    }
+    infohtml += "</ul>";
+    
+    window.spot_seeker_infowindow.html(infohtml);
+}
+
 /* function run_custom_search() {
     // Clear the map
     for (var i = 0; i < window.spot_seeker_markers.length; i++) {
@@ -120,7 +132,7 @@ function display_search_results(data) {
         }
     }
     addClusterListener(mc);
-    openClusterInfoWindow(mc);
+    openAllMarkerInfoWindow(data);
 }
 
 function load_data(data) {
