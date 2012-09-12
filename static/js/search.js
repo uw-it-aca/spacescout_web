@@ -2,7 +2,7 @@ var spot_seeker_map, spot_seeker_infowindow, spot_seeker_marker_ids = {}, spot_s
 var mc = null;
 
 function openInfoWindow(marker, info) {
-    window.spot_seeker_infowindow = $("#info_list");
+    window.spot_seeker_infowindow = $("#info_items");
 
     window.spot_seeker_infowindow.html(["<h1>", info.name, "</h1><div>This is the content window about the space.  Here's some info: <ul><li>Hours available: ", info.display_hours_available, "</li><li>Capacity: ", info.capacity, "</li></ul></div><div><a href='/spot/"+info.id+"'>View more</a></div>"].join(""));
     //window.spot_seeker_infowindow.open(window.spot_seeker_map, marker);
@@ -16,14 +16,14 @@ function addMarkerListener(marker, data) {
 }
 
 function openClusterInfoWindow(cluster) {
-    window.spot_seeker_infowindow = $("#info_list");
+    window.spot_seeker_infowindow = $("#info_items");
     infohtml = "<ul>";
     for (i = 0; i < cluster.getMarkers().length; i++) {
         mark = cluster.getMarkers()[i];
         infohtml += "<li>" + mark.title + "</li>";
     }
     infohtml += "</ul>";
-    
+
     window.spot_seeker_infowindow.html(infohtml);
 }
 

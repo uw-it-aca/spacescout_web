@@ -22,7 +22,7 @@
         <title>SpaceScout&trade;</title>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 
         {% load compress %}
         {% compress css %}
@@ -58,9 +58,11 @@
             window.default_zoom = {{ zoom_level }};
             </script>
 
+            <script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap/js/bootstrap.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}js/responsive.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}js/markerclusterer.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}js/search.js"></script>
+
           {% endcompress %}
 
           <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=true"></script>

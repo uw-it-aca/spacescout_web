@@ -2,10 +2,19 @@
 
     #nav {
 
-        #filter_container {
-             position:absolute; top:80px; left:0; right:0;  z-index:999;
+        .logo { height: 80px; line-height: 80px; font-size: 24px; }
 
-             #filter_block { height:300px; opacity: .85; }
+        #filter_container {
+             position:absolute; top:80px; left:0; right:0;  z-index:1000;
+             #filter_block {  }
+        }
+
+        #filter_block {
+
+            .inner-column { width: 33.3%; float: left;
+                .inner-block-left { padding-right: 20px; }
+                .inner-block-right { padding-left: 20px; }
+            }
         }
     }
 
@@ -18,6 +27,12 @@
         width: 38%;
         float: right;
         overflow-y: auto;
+
+        .list-arrow { display: none; }
+
+        #info_items {
+            ul { margin: 10px; }
+        }
     }
 
 }

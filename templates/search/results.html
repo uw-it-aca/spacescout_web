@@ -12,14 +12,171 @@
     <div id="nav" style="position:relative;">
         <div class="logo">SPACESCOUT</div>
         <div id="filter_container">
-            <div id="filter_block">jsafdlkjasdlkf</div>
+            <div id="filter_block">
+
+                <div class="inner clearfix">
+
+                    <div class="inner-column">
+                        <div class="inner-block-left">
+                            <h2>Type</h2>
+                            <p><small>Specify preferred conditions, if any:</small> <a href="#" id="waaa" rel="popover">view descriptions</a></p>
+                            <div id="waaa_content" style="display:none;">
+                                <ul>
+                                    <li>salkjdf</li>
+                                    <li>asdjfl asldkfj</li>
+                                </ul>
+                            </div>
+                            <div class="choice-group">
+                                <label class="checkbox inline">
+                                  <input type="checkbox" id="" value=""> Study Room
+                                </label>
+                                <label class="checkbox inline">
+                                  <input type="checkbox" id="" value=""> Study Area
+                                </label>
+                                <label class="checkbox inline">
+                                  <input type="checkbox" id="" value=""> Computer Lab
+                                </label>
+                                <label class="checkbox inline">
+                                  <input type="checkbox" id="" value=""> Production Studio
+                                </label>
+                                <label class="checkbox inline">
+                                  <input type="checkbox" id="" value=""> Conference/Classroom
+                                </label>
+                                <label class="checkbox inline">
+                                  <input type="checkbox" id="" value=""> Open space
+                                </label>
+                                <label class="checkbox inline">
+                                  <input type="checkbox" id="" value=""> Lounge
+                                </label>
+                                <label class="checkbox inline">
+                                  <input type="checkbox" id="" value=""> Cafe
+                                </label>
+                                <label class="checkbox inline">
+                                  <input type="checkbox" id="" value=""> Outdoor area
+                                </label>
+                            </div>
+                            <div class="choice-group">
+                                <label class="checkbox inline">
+                                  <input type="checkbox" id="" value=""> Reservable Space Only
+                                </label>
+                            </div>
+                            <div class="choice-group">
+                                <p>Capacity</p>
+                                At least:
+                                <select>
+                                  <option>1</option>
+                                  <option>2</option>
+                                  <option>3</option>
+                                  <option>4</option>
+                                  <option>5</option>
+                                  <option>6</option>
+                                  <option>7</option>
+                                  <option>8</option>
+                                  <option>9</option>
+                                  <option>10</option>
+                                  <option>15</option>
+                                  <option>20</option>
+                                  <option>25+</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="inner-column">
+                    <h2>Hours</h2>
+                    <p><small>laskdjflkjasdfkl aslkjfd</small></p>
+
+                    <div class="choice-group">
+                    from <input type="date" placeholder="sadf" /><br/>
+                    until <input type="date" placeholder="sadf" />
+                    </div>
+
+                    <h2>Location</h2>
+                    <p><small>laskdjflkjasdfkl aslkjfd</small></p>
+
+                    <h2>Resources</h2>
+                    <p><small>laskdjflkjasdfkl aslkjfd</small></p>
+
+                    <div class="choice-group">
+                        <label class="checkbox inline">
+                          <input type="checkbox" id="" value=""> Whiteboard
+                        </label>
+                        <label class="checkbox inline">
+                          <input type="checkbox" id="" value=""> Outlets
+                        </label>
+                        <label class="checkbox inline">
+                          <input type="checkbox" id="" value=""> Computer
+                        </label>
+                        <label class="checkbox inline">
+                          <input type="checkbox" id="" value=""> Large display (for laptop)
+                        </label>
+                        <label class="checkbox inline">
+                          <input type="checkbox" id="" value=""> Projector
+                        </label>
+                        <label class="checkbox inline">
+                          <input type="checkbox" id="" value=""> Printing
+                        </label>
+                        <label class="checkbox inline">
+                          <input type="checkbox" id="" value=""> Scanning
+                        </label>
+                    </div>
+                    </div>
+
+                    <div class="inner-column">
+                        <div class="inner-block-right">
+                            <h2>Conditions</h2>
+                            <p><small>laskdjflkjasdfkl aslkjfd</small></p>
+
+                            <div class="choice-group">
+                                <div>Noise Level</div>
+                                <label class="checkbox inline">
+                                  <input type="checkbox" id="" value=""> Silent
+                                </label>
+                                <label class="checkbox inline">
+                                  <input type="checkbox" id="" value=""> Low Hum
+                                </label>
+                                <label class="checkbox inline">
+                                  <input type="checkbox" id="" value=""> Chatter
+                                </label>
+                            </div>
+
+                            <div class="choice-group">
+                                <div>Lighting</div>
+                                <label class="checkbox inline">
+                                  <input type="checkbox" id="" value=""> Natural Light
+                                </label>
+                            </div>
+
+                            <div class="choice-group">
+                                <div>Food/Coffee</div>
+                                <label class="checkbox inline">
+                                  <input type="checkbox" id="" value=""> In space
+                                </label>
+                                <label class="checkbox inline">
+                                  <input type="checkbox" id="" value=""> In building
+                                </label>
+                                <label class="checkbox inline">
+                                  <input type="checkbox" id="" value=""> In neighboring building
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="filter-submit">
+                    <button class="btn btn-warning" type="button">View Results</button>
+                </div>
+            </div>
             <div id="filter_button_container"><div id="filter_button">Filters</div></div>
         </div>
     </div>
 
     <div id="main_content" class="clearfix">
         <div id="map_canvas"></div>
+
         <div id="info_list">
+            <div class="list-arrow">^</div>
+            <div id="info_items"></div>
         </div>
     </div>
 

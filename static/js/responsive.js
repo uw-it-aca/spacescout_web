@@ -16,6 +16,16 @@
           });
         });
 
+        $('#waaa').popover({
+            title: 'Space Descriptions',
+            content: 'Some content!',
+            placement: 'bottom',
+            html: true,
+            content: function() {
+              return $('#waaa_content').html();
+            }
+        })
+
 	});
 
 	$(w).resize(function(){ //Update dimensions on resize
@@ -57,7 +67,7 @@
         var headerH = $('#nav').height();
         var contentH = windowH - headerH;
 
-         $('#map_canvas').height(300);
+         $('#map_canvas').height(320);
          $('#info_list').height('auto');
     }
 

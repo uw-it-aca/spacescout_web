@@ -8,12 +8,24 @@ body {
     background-color: black;
 
 
-    .logo { height: 80px; line-height: 80px;     color: purple; }
+    .logo { height: 50px; line-height: 50px; color: purple; padding-left: 10px; font-size: 18px; }
+
 
     #filter_container { position: relative;
 
+        #filter_block { display:none; background-color:#111; color: #fff;
 
-        #filter_block { display:none; height: 600px; background-color:#222; color: #fff; }
+            .inner { padding: 15px; }
+
+            .choice-group { /*border: solid 1px rgba(241,241,12,0.3);*/ margin-bottom: 20px;
+                .checkbox.inline { margin-left: 0; margin-right: 10px; }
+            }
+
+            h2 { color: yellow; border-top: 1px dotted #aaa; margin: 0; font-size: 14px; line-height: 18px; }
+            .filter-submit { background-color: #000; text-align: center; padding: 15px;
+                .btn { background: yellow; color: #111; }
+            }
+        }
         #filter_button_container { height: 20px; text-align:center; line-height:20px; position:absolute; left:0; right:0; bottom:-20px; z-index: 999;
             #filter_button { background-color:#000; display:inline-block;padding: 0 10px; }
         }
@@ -21,16 +33,21 @@ body {
 }
 
 #map_canvas {
-    height: 300px;
+    height: 320px;
 }
 
 #info_list {
+    position: relative;
     padding: 0;
     height: 300px;
 
-    /* list of spaces */
-    ul { margin: 10px;
+    .list-arrow { background-color:#fff; position:absolute; top: -18px;z-index:1000; width:20px; left:50%; margin-left:-10px; text-align:center; }
 
-        li { background-color: #fff; color: #000; list-style: none; margin-bottom: 10px; padding: 20px; }
+    /* list of spaces */
+    #info_items {
+        ul { margin: 0;
+
+            li { background-color: #fff; color: #000; list-style: none; margin-bottom: 0px; padding: 20px; border-top:solid 2px #ddd; }
+        }
     }
 }
