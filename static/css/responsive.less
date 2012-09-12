@@ -1,5 +1,14 @@
 @media screen and (min-width: 481px) {
 
+    #nav {
+
+        #filter_container {
+             position:absolute; top:80px; left:0; right:0;  z-index:999;
+
+             #filter_block { height:300px; opacity: .85; }
+        }
+    }
+
     #map_canvas {
         width: 62%;
         float: left;
@@ -8,6 +17,7 @@
     #info_list {
         width: 38%;
         float: right;
+        overflow-y: auto;
     }
 
 }

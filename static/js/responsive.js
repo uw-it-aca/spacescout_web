@@ -11,7 +11,7 @@
 
 		// Toggle Filter display
 		$('#filter_button').click(function() {
-          $('#filter_container').slideToggle('fast', function() {
+          $('#filter_block').slideToggle('fast', function() {
             // Animation complete.
           });
         });
