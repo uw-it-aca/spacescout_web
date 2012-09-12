@@ -10,10 +10,13 @@ body {
 
     .logo { height: 80px; line-height: 80px;     color: purple; }
 
-    #filter_container {
+    #filter_container { position: relative;
 
 
         #filter_block { display:none; height: 600px; background-color:#222; color: #fff; }
+        #filter_button_container { height: 20px; text-align:center; line-height:20px; position:absolute; left:0; right:0; bottom:-20px; z-index: 999;
+            #filter_button { background-color:#000; display:inline-block;padding: 0 10px; }
+        }
     }
 }
 
