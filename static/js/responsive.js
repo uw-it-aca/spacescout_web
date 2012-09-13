@@ -11,9 +11,13 @@
 
 		// Toggle Filter display
 		$('#filter_button').click(function() {
-          $('#filter_block').slideToggle('fast', function() {
-            // Animation complete.
-          });
+    		if ($("#filter_block").is(":hidden")) {
+                $("#filter_block").slideDown(speed);
+            } else {
+                // scroll to top of the page and then slide the filters up
+                scrollTo('top');
+                $("#filter_block").slideUp(speed);
+            }
         });
 
         // Handle space description popover
@@ -30,6 +34,23 @@
             event.preventDefault();
         })
 
+        // Scroll to the top of page
+        $('#top_link').click(function(e){
+              // Prevent a page reload when a link is pressed
+              e.preventDefault();
+              // Call the scroll function
+              scrollTo('top');
+        });
+
+        // Scroll to top of Filter list
+        $('#filter_link').click(function(e){
+              // Prevent a page reload when a link is pressed
+              e.preventDefault();
+              // Call the scroll function
+              scrollTo('info_items');
+        });
+
+
 	});
 
 	$(w).resize(function(){ //Update dimensions on resize
@@ -37,19 +58,24 @@
 		checkMobile();
 	});
 
+
+	// ScrollTo a spot on the UI
+	function scrollTo(id) {
+
+        // Scroll
+        $('html,body').animate({
+            scrollTop: $("#"+id).offset().top},speed);
+    }
+
 	// Check if Mobile
 	function checkMobile() {
 		mobile = (sw > breakpoint) ? false : true;
-
 		if (!mobile) {
 		  // If Not Mobile (Desktop )
 		  resizeContent();
-
 		} else {
-
 		  // Do this for mobile size
 		  resetContent();
-
 		}
 	}
 
