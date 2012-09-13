@@ -1,5 +1,6 @@
 body {
     background-color: silver;
+    min-height: 480px;
 }
 
 
@@ -34,7 +35,7 @@ body {
 }
 
 #map_canvas {
-    height: 320px;
+    min-height: 220px;
 }
 
 #info_list {
@@ -42,7 +43,11 @@ body {
     padding: 0;
     height: 300px;
 
-    .list-arrow { background-color:#fff; position:absolute; top: -28px;z-index:1000; width:30px; line-height: 30px; left:50%; margin-left:-15px; text-align:center; }
+    .list-arrow { background-color:#fff; position:absolute; top: -30px;z-index:1000; width:30px; line-height: 30px; left:50%; margin-left:-15px; text-align:center;
+        border-left: solid 2px #ddd;
+        border-top: solid 2px #ddd;
+        border-right: solid 2px #ddd;
+    }
 
     /* list of spaces */
     #info_items {
@@ -73,5 +78,19 @@ body {
     left: 13px !important;
     right: 13px !important;
     width: auto !important;
+}
 
+
+/* Target iPhone */
+@media screen and (min-width: 320px) {
+    #map_canvas {
+        min-height: 300px;
+    }
+}
+
+/* Target Androids */
+@media screen and (min-width: 480px) {
+    #map_canvas {
+        min-height: 500px;
+    }
 }
