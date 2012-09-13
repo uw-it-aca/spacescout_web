@@ -70,14 +70,12 @@
         });
 
         $('#close_descriptions').live('click', function(){
-            console.log("this is the click");
             $('#view_space_descriptions').popover('hide');
             return false;
         });
 
-        $('#view_space_descriptions').click(function(event){
-            event.preventDefault();
-
+        $('#view_space_descriptions').click(function(e){
+            e.preventDefault();
             if (mobile) {
                 $('.popover').addClass("popover-mobile-override");
             }
