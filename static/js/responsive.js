@@ -16,6 +16,7 @@
           });
         });
 
+        // Handle space description popover
         $('#waaa').popover({
             title: 'Space Descriptions',
             content: 'Some content!',
@@ -24,6 +25,9 @@
             content: function() {
               return $('#waaa_content').html();
             }
+        })
+        $('#waaa').click(function(event){
+            event.preventDefault();
         })
 
 	});
