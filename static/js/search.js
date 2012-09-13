@@ -35,14 +35,14 @@ function addClusterListener(markerCluster) {
 }
 
 function openAllMarkerInfoWindow(data) {
-    window.spot_seeker_infowindow = $("#info_list");
+    window.spot_seeker_infowindow = $("#info_items");
     infohtml = "<ul>";
     for (i = 0; i < data.length; i++) {
         mark = data[i];
         infohtml += "<li>" + mark.name + "</li>";
     }
     infohtml += "</ul>";
-    
+
     window.spot_seeker_infowindow.html(infohtml);
 }
 
