@@ -161,6 +161,7 @@ function fetch_data() {
     args["center_longitude"] = center.lng();
     args["open_now"] = 1;
     args["distance"] = distance;
+    args["limit"] = 0;
 
     var url_args = ["/search/?"];
     for (var key in args) {
