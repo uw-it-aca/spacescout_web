@@ -12,25 +12,34 @@
 		// Toggle Filter display
 		$('#filter_button').click(function() {
     		if ($("#filter_block").is(":hidden")) {
-                $("#filter_block").slideDown(speed);
+                $("#filter_block").slideDown(speed, function() {
+                    // Animation complete.
+                    if (mobile) {
+                        $('#map_canvas').hide();
+                        $('#info_list').hide();
+                        $('#filter_button_container').hide();
 
-                if (mobile) {
-                    $('#map_canvas').hide();
-                    $('#info_list').hide();
-                    $('#filter_button_container').hide();
+                    }
 
-                }
+                    $('.back-top').hide();
+
+                });
+
+
 
             } else {
                 // scroll to top of the page and then slide the filters up
                 scrollTo('top');
+
                 $("#filter_block").slideUp(speed);
 
                 if (mobile) {
                     $('#map_canvas').show();
                     $('#info_list').show();
                     $('#filter_button_container').show();
+
                 }
+                $('.back-top').show();
             }
         });
 
@@ -44,6 +53,9 @@
                 $('#info_list').show();
                 $('#filter_button_container').show();
             }
+
+            $('.back-top').show();
+
         });
 
 
