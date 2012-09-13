@@ -43,9 +43,11 @@
 
     </head>
 
-      <body onload="initialize()">
+      <body onload="initialize()" id="top">
 
           {% block content %}{% endblock %}
+
+          <div class="back-top"><a id="top_link" href="#">TOP</a></div>
 
           <!-- jQuery -->
           <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>

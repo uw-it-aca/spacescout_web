@@ -5,30 +5,98 @@
 		speed = 800,
 		mobile = true;
 
-
 	$(document).ready(function() {
 		checkMobile();
 
 		// Toggle Filter display
 		$('#filter_button').click(function() {
-          $('#filter_block').slideToggle('fast', function() {
-            // Animation complete.
-          });
+    		if ($("#filter_block").is(":hidden")) {
+                $("#filter_block").slideDown(speed, function() {
+                    // Animation complete.
+                    if (mobile) {
+                        $('#map_canvas').hide();
+                        $('#info_list').hide();
+                        $('#filter_button_container').hide();
+
+                    }
+
+                    $('.back-top').hide();
+
+                });
+
+
+
+            } else {
+                // scroll to top of the page and then slide the filters up
+                scrollTo('top');
+
+                $("#filter_block").slideUp(speed);
+
+                if (mobile) {
+                    $('#map_canvas').show();
+                    $('#info_list').show();
+                    $('#filter_button_container').show();
+
+                }
+                $('.back-top').show();
+            }
         });
 
+        // Close the filter display using Cancel button
+        $('#cancel_results_button').click(function() {
+            scrollTo('top');
+            $("#filter_block").slideUp(speed);
+
+            if (mobile) {
+                $('#map_canvas').show();
+                $('#info_list').show();
+                $('#filter_button_container').show();
+            }
+
+            $('.back-top').show();
+
+        });
+
+
         // Handle space description popover
-        $('#waaa').popover({
+        $('#view_space_descriptions').popover({
             title: 'Space Descriptions',
             content: 'Some content!',
             placement: 'bottom',
             html: true,
             content: function() {
-              return $('#waaa_content').html();
+              return $('#space_descriptions_list').html();
             }
-        })
-        $('#waaa').click(function(event){
-            event.preventDefault();
-        })
+        });
+
+        $('#close_descriptions').live('click', function(){
+            $('#view_space_descriptions').popover('hide');
+            return false;
+        });
+
+        $('#view_space_descriptions').click(function(e){
+            e.preventDefault();
+            if (mobile) {
+                $('.popover').addClass("popover-mobile-override");
+            }
+        });
+
+        // Scroll to the top of page
+        $('#top_link').click(function(e){
+              // Prevent a page reload when a link is pressed
+              e.preventDefault();
+              // Call the scroll function
+              scrollTo('top');
+        });
+
+        // Scroll to top of Filter list
+        $('#filter_link').click(function(e){
+              // Prevent a page reload when a link is pressed
+              e.preventDefault();
+              // Call the scroll function
+              scrollTo('info_items');
+        });
+
 
 	});
 
@@ -37,19 +105,24 @@
 		checkMobile();
 	});
 
+
+	// ScrollTo a spot on the UI
+	function scrollTo(id) {
+
+        // Scroll
+        $('html,body').animate({
+            scrollTop: $("#"+id).offset().top},speed);
+    }
+
 	// Check if Mobile
 	function checkMobile() {
 		mobile = (sw > breakpoint) ? false : true;
-
 		if (!mobile) {
 		  // If Not Mobile (Desktop )
 		  resizeContent();
-
 		} else {
-
 		  // Do this for mobile size
 		  resetContent();
-
 		}
 	}
 
