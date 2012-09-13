@@ -13,12 +13,39 @@
 		$('#filter_button').click(function() {
     		if ($("#filter_block").is(":hidden")) {
                 $("#filter_block").slideDown(speed);
+
+                if (mobile) {
+                    $('#map_canvas').hide();
+                    $('#info_list').hide();
+                    $('#filter_button_container').hide();
+
+                }
+
             } else {
                 // scroll to top of the page and then slide the filters up
                 scrollTo('top');
                 $("#filter_block").slideUp(speed);
+
+                if (mobile) {
+                    $('#map_canvas').show();
+                    $('#info_list').show();
+                    $('#filter_button_container').show();
+                }
             }
         });
+
+        // Close the filter display using Cancel button
+        $('#cancel_results_button').click(function() {
+            scrollTo('top');
+            $("#filter_block").slideUp(speed);
+
+            if (mobile) {
+                $('#map_canvas').show();
+                $('#info_list').show();
+                $('#filter_button_container').show();
+            }
+        });
+
 
         // Handle space description popover
         $('#waaa').popover({
