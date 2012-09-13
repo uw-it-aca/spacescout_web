@@ -5,7 +5,6 @@
 		speed = 800,
 		mobile = true;
 
-
 	$(document).ready(function() {
 		checkMobile();
 
@@ -60,18 +59,29 @@
 
 
         // Handle space description popover
-        $('#waaa').popover({
+        $('#view_space_descriptions').popover({
             title: 'Space Descriptions',
             content: 'Some content!',
             placement: 'bottom',
             html: true,
             content: function() {
-              return $('#waaa_content').html();
+              return $('#space_descriptions_list').html();
             }
-        })
-        $('#waaa').click(function(event){
+        });
+
+        $('#close_descriptions').live('click', function(){
+            console.log("this is the click");
+            $('#view_space_descriptions').popover('hide');
+            return false;
+        });
+
+        $('#view_space_descriptions').click(function(event){
             event.preventDefault();
-        })
+
+            if (mobile) {
+                $('.popover').addClass("popover-mobile-override");
+            }
+        });
 
         // Scroll to the top of page
         $('#top_link').click(function(e){
