@@ -39,7 +39,7 @@ function openAllMarkerInfoWindow(data) {
     infohtml = "<ul>";
     for (i = 0; i < data.length; i++) {
         mark = data[i];
-        infohtml += "<li><img src='http://placehold.it/50x50' class='img-polaroid'>" + mark.name + "</li>";
+        infohtml += "<li><img src='http://placehold.it/75x75' class='img-rounded'>" + mark.name + "</li>";
     }
     infohtml += "</ul>";
 
