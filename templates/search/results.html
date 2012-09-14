@@ -11,83 +11,93 @@
     <div id="nav" style="position:relative;">
         <div class="logo">SPACESCOUT</div>
         <div id="filter_container">
+
             <div id="filter_block">
 
                 <div class="inner clearfix">
 
                     <div class="inner-column">
                         <div class="inner-block-left">
-                            <h2>Type</h2>
-                            <p><small>Specify preferred conditions, if any:</small> <a href="#" id="view_space_descriptions" rel="popover">view descriptions</a></p>
-                            <div id="space_descriptions_list" style="display:none;">
-                                <ul>
-                                    <li>Study Room<br/>
-                                        Enclosed space for individual or group
-                                    </li>
-                                    <li>Study Area<br/>
-                                        Unenclosed space for individual or group
-                                    </li>
-                                    <li>Computer Lab<br/>
-                                        Group of computer stations
-                                    </li>
-                                    <li>Production Studio<br/>
-                                        Work space with specialized equipment or technology
-                                    </li>
-                                    <li>Conference/Classroom<br/>
-                                        Larger-capacity rooms primarily used for classes, meetings, or workshops
-                                    </li>
-                                    <li>Open Space<br/>
-                                        Area for use by multiple individuals or groups
-                                    </li>
-                                    <li>Lounge<br/>
-                                        Indoor casual space
-                                    </li>
-                                    <li>Cafe<br/>
-                                        Space that functions primarily as an eatery
-                                    </li>
-                                    <li>Outdoor area<br/>
-                                        Outdoor casual space
-                                    </li>
-                                </ul>
-                                <div><a id="close_descriptions" href="#">Close</a></div>
+                            <h2>Spaces</h2>
+                            <p><small>Specify preferred conditions, if any:</small></p>
+
+                            <div class="choice-group clearfix">
+                                <p><strong>Type of space:</strong> <a href="#" id="view_space_descriptions" rel="popover">view descriptions</a></p>
+                                <div id="space_descriptions_list" style="display:none;">
+                                    <ul>
+                                        <li>Study Room<br/>
+                                            Enclosed space for individual or group
+                                        </li>
+                                        <li>Study Area<br/>
+                                            Unenclosed space for individual or group
+                                        </li>
+                                        <li>Computer Lab<br/>
+                                            Group of computer stations
+                                        </li>
+                                        <li>Production Studio<br/>
+                                            Work space with specialized equipment or technology
+                                        </li>
+                                        <li>Conference/Classroom<br/>
+                                            Larger-capacity rooms primarily used for classes, meetings, or workshops
+                                        </li>
+                                        <li>Open Space<br/>
+                                            Area for use by multiple individuals or groups
+                                        </li>
+                                        <li>Lounge<br/>
+                                            Indoor casual space
+                                        </li>
+                                        <li>Cafe<br/>
+                                            Space that functions primarily as an eatery
+                                        </li>
+                                        <li>Outdoor area<br/>
+                                            Outdoor casual space
+                                        </li>
+                                    </ul>
+                                    <div><a id="close_descriptions" href="#">Close</a></div>
+                                </div>
+                                <div style="width:50%;float:left">
+                                    <label class="checkbox">
+                                      <input type="checkbox" id="" value=""> Study Room
+                                    </label>
+                                    <label class="checkbox">
+                                      <input type="checkbox" id="" value=""> Study Area
+                                    </label>
+                                    <label class="checkbox">
+                                      <input type="checkbox" id="" value=""> Computer Lab
+                                    </label>
+                                    <label class="checkbox">
+                                      <input type="checkbox" id="" value=""> Production Studio
+                                    </label>
+                                    <label class="checkbox">
+                                      <input type="checkbox" id="" value=""> Conference/Classroom
+                                    </label>
+                                </div>
+
+                                <div style="width:50%;float:left">
+                                    <label class="checkbox">
+                                      <input type="checkbox" id="" value=""> Open space
+                                    </label>
+                                    <label class="checkbox">
+                                      <input type="checkbox" id="" value=""> Lounge
+                                    </label>
+                                    <label class="checkbox">
+                                      <input type="checkbox" id="" value=""> Cafe
+                                    </label>
+                                    <label class="checkbox">
+                                      <input type="checkbox" id="" value=""> Outdoor area
+                                    </label>
+                                </div>
+
                             </div>
                             <div class="choice-group">
-                                <label class="checkbox inline">
-                                  <input type="checkbox" id="" value=""> Study Room
-                                </label>
-                                <label class="checkbox inline">
-                                  <input type="checkbox" id="" value=""> Study Area
-                                </label>
-                                <label class="checkbox inline">
-                                  <input type="checkbox" id="" value=""> Computer Lab
-                                </label>
-                                <label class="checkbox inline">
-                                  <input type="checkbox" id="" value=""> Production Studio
-                                </label>
-                                <label class="checkbox inline">
-                                  <input type="checkbox" id="" value=""> Conference/Classroom
-                                </label>
-                                <label class="checkbox inline">
-                                  <input type="checkbox" id="" value=""> Open space
-                                </label>
-                                <label class="checkbox inline">
-                                  <input type="checkbox" id="" value=""> Lounge
-                                </label>
-                                <label class="checkbox inline">
-                                  <input type="checkbox" id="" value=""> Cafe
-                                </label>
-                                <label class="checkbox inline">
-                                  <input type="checkbox" id="" value=""> Outdoor area
-                                </label>
-                            </div>
-                            <div class="choice-group">
+                                <p><strong>Reservability:</strong></p>
                                 <label class="checkbox inline">
                                   <input type="checkbox" id="" value=""> Reservable Space Only
                                 </label>
                             </div>
                             <div class="choice-group">
-                                <p>Capacity</p>
-                                At least:
+                                <p><strong>Capacity</strong></p>
+                                Seats at least:
                                 <select style="width:60px;">
                                   <option>1</option>
                                   <option>2</option>
@@ -103,6 +113,7 @@
                                   <option>20</option>
                                   <option>25+</option>
                                 </select>
+                                people
                             </div>
                         </div>
                     </div>
@@ -112,92 +123,130 @@
                     <p><small>laskdjflkjasdfkl aslkjfd</small></p>
 
                     <div class="choice-group">
+                        <div>
+                            <label class="radio inline">
+                              <input type="radio" name="optionsRadios" id="" value="option1" checked>
+                              Open now
+                            </label>
+                            <label class="radio inline">
+                              <input type="radio" name="optionsRadios" id="" value="option2">
+                              Specify day &amp; time
+                            </label>
+                        </div>
                         <div>from <select style="width:130px;">
+                          <option>No preference</option>
                           <option>Monday</option>
                           <option>Tuesday</option>
                           <option>Wednesday</option>
                           <option>Thursday</option>
                           <option>Friday</option>
+                          <option>Saturday</option>
+                          <option>Sunday</option>
                         </select>&nbsp;&nbsp;
-                        <select style="width:60px;">
-                                  <option>1</option>
-                                  <option>2</option>
-                                  <option>3</option>
-                                  <option>4</option>
-                                  <option>5</option>
-                                  <option>6</option>
-                                  <option>7</option>
-                                  <option>8</option>
-                                  <option>9</option>
-                                  <option>10</option>
-                                  <option>15</option>
-                                  <option>20</option>
-                                  <option>25+</option>
-                                </select>
+                        <select style="width:100px;">
+                          <option>No preference</option>
+                          <option>1</option>
+                          <option>2</option>
+                          <option>3</option>
+                          <option>4</option>
+                          <option>5</option>
+                          <option>6</option>
+                          <option>7</option>
+                          <option>8</option>
+                          <option>9</option>
+                          <option>10</option>
+                          <option>15</option>
+                          <option>20</option>
+                          <option>25+</option>
+                        </select>
                         </div>
                         <div>until <select style="width:130px;">
+                          <option>No preference</option>
                           <option>Monday</option>
                           <option>Tuesday</option>
                           <option>Wednesday</option>
                           <option>Thursday</option>
                           <option>Friday</option>
+                          <option>Saturday</option>
+                          <option>Sunday</option>
                         </select>&nbsp;&nbsp;
-                        <select style="width:60px;">
-                                  <option>1</option>
-                                  <option>2</option>
-                                  <option>3</option>
-                                  <option>4</option>
-                                  <option>5</option>
-                                  <option>6</option>
-                                  <option>7</option>
-                                  <option>8</option>
-                                  <option>9</option>
-                                  <option>10</option>
-                                  <option>15</option>
-                                  <option>20</option>
-                                  <option>25+</option>
-                                </select>
+                        <select style="width:100px;">
+                          <option>No preference</option>
+                          <option>1</option>
+                          <option>2</option>
+                          <option>3</option>
+                          <option>4</option>
+                          <option>5</option>
+                          <option>6</option>
+                          <option>7</option>
+                          <option>8</option>
+                          <option>9</option>
+                          <option>10</option>
+                          <option>15</option>
+                          <option>20</option>
+                          <option>25+</option>
+                        </select>
                         </div>
                     </div>
 
                     <h2>Location</h2>
                     <p><small>laskdjflkjasdfkl aslkjfd</small></p>
 
-                    <h2>Resources</h2>
+                    <div class="choice-group">
+                        <div>
+                            <label class="radio inline">
+                              <input type="radio" name="optionsRadios" id="" value="option1" checked> Entire campus
+                            </label>
+                            <label class="radio inline">
+                              <input type="radio" name="optionsRadios" id="" value="option2"> Specific building
+                            </label>
+                        </div>
+                        <div>
+                            fancy input autofill tab thingy goes here
+                        </div>
+                    </div>
+
+                    <h2>Equipment</h2>
                     <p><small>laskdjflkjasdfkl aslkjfd</small></p>
 
-                    <div class="choice-group">
-                        <label class="checkbox inline">
-                          <input type="checkbox" id="" value=""> Whiteboard
-                        </label>
-                        <label class="checkbox inline">
-                          <input type="checkbox" id="" value=""> Outlets
-                        </label>
-                        <label class="checkbox inline">
-                          <input type="checkbox" id="" value=""> Computer
-                        </label>
-                        <label class="checkbox inline">
-                          <input type="checkbox" id="" value=""> Large display (for laptop)
-                        </label>
-                        <label class="checkbox inline">
-                          <input type="checkbox" id="" value=""> Projector
-                        </label>
-                        <label class="checkbox inline">
-                          <input type="checkbox" id="" value=""> Printing
-                        </label>
-                        <label class="checkbox inline">
-                          <input type="checkbox" id="" value=""> Scanning
-                        </label>
+                    <div class="choice-group clearfix">
+                        <div style="width:50%;float:left">
+                            <label class="checkbox">
+                              <input type="checkbox" id="" value=""> Whiteboard
+                            </label>
+                            <label class="checkbox">
+                              <input type="checkbox" id="" value=""> Outlets
+                            </label>
+                            <label class="checkbox">
+                              <input type="checkbox" id="" value=""> Computer
+                            </label>
+                            <label class="checkbox">
+                              <input type="checkbox" id="" value=""> Scanning
+                            </label>
+                        </div>
+
+                        <div style="width:50%;float:left">
+                            <label class="checkbox">
+                              <input type="checkbox" id="" value=""> Large display (for laptop)
+                            </label>
+                            <label class="checkbox">
+                              <input type="checkbox" id="" value=""> Projector
+                            </label>
+                            <label class="checkbox">
+                              <input type="checkbox" id="" value=""> Printing
+                            </label>
+                        </div>
                     </div>
                     </div>
 
                     <div class="inner-column">
                         <div class="inner-block-right">
-                            <h2>Conditions</h2>
+                            <h2>Environment</h2>
                             <p><small>laskdjflkjasdfkl aslkjfd</small></p>
 
-                            <div class="choice-group">
-                                <div>Noise Level</div>
+                            <div id="filter_noise_level" class="choice-group">
+                                <p><strong>Noise Level</strong></p>
+                                <div>
                                 <label class="checkbox inline">
                                   <input type="checkbox" id="" value=""> Silent
                                 </label>
@@ -207,17 +256,18 @@
                                 <label class="checkbox inline">
                                   <input type="checkbox" id="" value=""> Chatter
                                 </label>
+                                </div>
                             </div>
 
                             <div class="choice-group">
-                                <div>Lighting</div>
+                                <p><strong>Lighting</strong></p>
                                 <label class="checkbox inline">
                                   <input type="checkbox" id="" value=""> Natural Light
                                 </label>
                             </div>
 
-                            <div class="choice-group">
-                                <div>Food/Coffee</div>
+                            <div id="filter_food_coffee" class="choice-group">
+                                <p><strong>Food/Coffee</strong></p>
                                 <label class="checkbox inline">
                                   <input type="checkbox" id="" value=""> In space
                                 </label>
@@ -237,7 +287,7 @@
                     <button id="cancel_results_button" class="btn btn-link" type="button">Cancel</button>
                 </div>
             </div>
-            <div id="filter_button_container"><div id="filter_button">Filters</div></div>
+            <div id="filter_button_container"><div id="filter_button"><i class="icon-th-large icon-white"></i><span class="filter-button-text">Filters</span></div></div>
         </div>
     </div>
 
@@ -246,6 +296,9 @@
 
         <div id="info_list">
             <div class="list-arrow"><a id="filter_link" href="#"><i class="icon-th-list"></i></a></div>
+
+            <!-- TODO: need to implement if/else logic for spinner and info_items -->
+            <div>SPINNER</div>
             <div id="info_items"></div>
         </div>
     </div>

@@ -21,7 +21,7 @@
                     if (mobile) {
                         $('#map_canvas').hide();
                         $('#info_list').hide();
-                        $('#filter_button_container').hide();
+                        //$('#filter_button_container').hide();
 
                     }
 
