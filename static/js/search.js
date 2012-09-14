@@ -114,13 +114,16 @@ function load_map(latitude, longitude, zoom) {
 }
 
 function display_search_results(data) {
-    var mcOpts = {zoomOnClick: false};
+    var mcOpts = {
+        zoomOnClick: false
+    };
     mc = new MarkerClusterer(spot_seeker_map, [], mcOpts);
     for (i = 0; i < data.length; i++) {
         if (!window.spot_seeker_marker_ids[data[i].id]) {
             marker = new google.maps.Marker({
                 position: new google.maps.LatLng(data[i].location.latitude, data[i].location.longitude),
-                title: data[i].name
+                title: data[i].name,
+                icon: '/static/img/pins/pin01.png'
             });
 
             //marker.setMap(window.spot_seeker_map);
