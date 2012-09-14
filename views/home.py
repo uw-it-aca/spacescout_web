@@ -31,7 +31,7 @@ def HomeView(request):
     for key in request.GET:
         search_args[key] = request.GET[key]
 
-    return render_to_response('search/results.html', {
+    return render_to_response('app.html', {
         'center_latitude': center_latitude,
         'center_longitude': center_longitude,
         'zoom_level': zoom_level,
