@@ -114,13 +114,26 @@ function load_map(latitude, longitude, zoom) {
 }
 
 function display_search_results(data) {
-    var mcOpts = {zoomOnClick: false};
+    var mcOpts = {
+        averageCenter: true,
+        zoomOnClick: false,
+        styles: [{
+            textColor: 'white',
+            textSize: 12,
+            fontWeight: 'normal',
+            anchor: [5, 0], // These values can only be positive
+            height: 40,
+            width: 35, // The icon width is actually 40, but the anchorIcon offset doesn't seem to work right, this gets the cluster icon centered on the number
+            url: '/static/img/pins/pin00.png',
+        }]
+    };
     mc = new MarkerClusterer(spot_seeker_map, [], mcOpts);
     for (i = 0; i < data.length; i++) {
         if (!window.spot_seeker_marker_ids[data[i].id]) {
             marker = new google.maps.Marker({
                 position: new google.maps.LatLng(data[i].location.latitude, data[i].location.longitude),
-                title: data[i].name
+                title: data[i].name,
+                icon: '/static/img/pins/pin01.png'
             });
 
             //marker.setMap(window.spot_seeker_map);
