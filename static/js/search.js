@@ -115,7 +115,17 @@ function load_map(latitude, longitude, zoom) {
 
 function display_search_results(data) {
     var mcOpts = {
-        zoomOnClick: false
+        averageCenter: true,
+        zoomOnClick: false,
+        styles: [{
+            textColor: 'white',
+            textSize: 12,
+            fontWeight: 'normal',
+            anchor: [5, 0], // These values can only be positive
+            height: 40,
+            width: 35, // The icon width is actually 40, but the anchorIcon offset doesn't seem to work right, this gets the cluster icon centered on the number
+            url: '/static/img/pins/pin00.png',
+        }]
     };
     mc = new MarkerClusterer(spot_seeker_map, [], mcOpts);
     for (i = 0; i < data.length; i++) {
