@@ -43,4 +43,4 @@ def SpotView(request, spot_id):
     for attribute in spot_json["extended_info"]:
         params["attribute_list"].append({"name": attribute, "value": spot_json["extended_info"][attribute]})
 
-    return render_to_response('spot.html', params, context_instance=RequestContext(request))
+    return render_to_response('space.html', params, context_instance=RequestContext(request))
