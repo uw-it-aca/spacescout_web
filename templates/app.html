@@ -301,6 +301,36 @@
                 <!-- TODO: need to implement if/else logic for spinner and info_items -->
                 <div class="loading"><div class="loading-inner"><img src="{{ STATIC_URL }}img/spinner.gif" /> Please wait while we load spaces...</div></div>
                 <div id="info_items"></div>
+                {% load templatetag_handlebars %}
+                {% tplhandlebars "all_markers" %}
+                    <ul>
+                        {{#each data}}
+                        <li><img src='http://placehold.it/75x75' class='img-rounded'> {{name}} </li>
+                        {{/each}}
+                    </ul>
+                {% endtplhandlebars %}
+
+                {% tplhandlebars "cluster_list" %}
+                    <ul>
+                        {{#each data}}
+                        <li>{{title}}</li>
+                        {{/each}}
+                    </ul>
+                {% endtplhandlebars %}
+
+                {% tplhandlebars "spot_info" %}
+                    <h1>{{name}}</h1>
+                    <div>
+                        This is the content window about the space.  Here's some info: 
+                        <ul>
+                            <li>Hours available: {{display_hours_available}}</li>
+                            <li>Capacity: {{capacity}}</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <a href='/spot/{{id}}'>View more</a>
+                    </div>
+                {% endtplhandlebars %}
             </div>
         </div>
     </div>
