@@ -295,14 +295,12 @@
         <div id="map_canvas"></div>
 
         <div id="info_list">
-            <div class="inner">
+            <div class="list-inner">
                 <div class="list-arrow"><a id="filter_link" href="#"><i class="icon-th-list"></i></a></div>
 
                 <!-- TODO: need to implement if/else logic for spinner and info_items -->
-                <div class="loading"><img src="{{ STATIC_URL }}img/spinner.gif" /> Please wait while we load spaces...</div>
-                <div id="info_items">
-                    <ul></ul>
-                </div>
+                <div class="loading"><div class="loading-inner"><img src="{{ STATIC_URL }}img/spinner.gif" /> Please wait while we load spaces...</div></div>
+                <div id="info_items"></div>
             </div>
         </div>
     </div>
