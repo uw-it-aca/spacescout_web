@@ -11,6 +11,7 @@
 		mobile = true;
 
 	$(document).ready(function() {
+
 		checkMobile();
 
 		// Toggle Filter display
@@ -140,6 +141,10 @@
 
          $('#map_canvas').height(contentH);
          $('#info_list').height(contentH);
+
+         // make sure loading and list height fills the list container
+         $('#info_list .inner').css('min-height', contentH);
+         $('.loading').height(contentH);
 
     }
 

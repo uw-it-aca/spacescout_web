@@ -55,13 +55,14 @@ body {
     border-top: solid 2px #ddd;
 
     .list-arrow { background-color:#fff; position:absolute; top: -32px; z-index:1000; width:30px; line-height: 30px; left:50%; margin-left:-15px; text-align:center;
+
         border-left: solid 2px #ddd;
         border-top: solid 2px #ddd;
         border-right: solid 2px #ddd;
     }
 
     /* list of spaces */
-    #info_items { min-height: 100px;
+    #info_items {
         ul { margin: 0;
 
             li { background-color: #fff; color: #000; list-style: none; margin-bottom: 0px; padding: 10px; border-bottom:solid 2px #ddd; }
@@ -69,7 +70,9 @@ body {
     }
 }
 
-.loading { background: url('/static/img/spinner.gif') no-repeat center center; line-height: 50px; text-indent: -9999px; background-size: 20px;  }
+.loading { padding: 20px;
+    img { width: 20px;}
+}
 
 .back-top { line-height: 35px; background-color: #444; }
 

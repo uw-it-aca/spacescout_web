@@ -5,7 +5,7 @@ function openInfoWindow(marker, info) {
     window.spot_seeker_infowindow = $("#info_items");
 
     window.spot_seeker_infowindow.html(["<h1>", info.name, "</h1><div>This is the content window about the space.  Here's some info: <ul><li>Hours available: ", info.display_hours_available, "</li><li>Capacity: ", info.capacity, "</li></ul></div><div><a href='/spot/"+info.id+"'>View more</a></div>"].join(""));
-    $('.loading').hide();
+    $('.loading').slideUp('fast');
 }
 
 function addMarkerListener(marker, data) {
@@ -16,6 +16,7 @@ function addMarkerListener(marker, data) {
 }
 
 function openClusterInfoWindow(cluster) {
+
     window.spot_seeker_infowindow = $("#info_items");
     infohtml = "<ul>";
     for (i = 0; i < cluster.getMarkers().length; i++) {
@@ -25,7 +26,8 @@ function openClusterInfoWindow(cluster) {
     infohtml += "</ul>";
 
     window.spot_seeker_infowindow.html(infohtml);
-    $('.loading').hide();
+
+    $('.loading').slideUp('fast');
 }
 
 function addClusterListener(markerCluster) {
@@ -36,6 +38,7 @@ function addClusterListener(markerCluster) {
 }
 
 function openAllMarkerInfoWindow(data) {
+
     window.spot_seeker_infowindow = $("#info_items");
     infohtml = "<ul>";
     for (i = 0; i < data.length; i++) {
@@ -45,7 +48,8 @@ function openAllMarkerInfoWindow(data) {
     infohtml += "</ul>";
 
     window.spot_seeker_infowindow.html(infohtml);
-    $('.loading').hide();
+
+    $('.loading').slideUp('fast');
 }
 
 /* function run_custom_search() {
