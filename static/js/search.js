@@ -1,4 +1,4 @@
-var spot_seeker_map, spot_seeker_infowindow, spot_seeker_marker_ids = {}, spot_seeker_markers = [];
+var spot_seeker_map, spot_seeker_infowindow, spot_seeker_marker_ids = {}, spot_seeker_markers = [], speed = 800;
 var mc = null;
 
 function openInfoWindow(marker, info) {
@@ -48,7 +48,7 @@ function openAllMarkerInfoWindow(data) {
     $('.loading').hide();
 }
 
-/* function run_custom_search() {
+function run_custom_search() {
     // Clear the map
     for (var i = 0; i < window.spot_seeker_markers.length; i++) {
         window.spot_seeker_markers[i].setMap(null);
@@ -58,12 +58,18 @@ function openAllMarkerInfoWindow(data) {
 
     // Set the search values, so they'll stick through zooms and pans
     window.spot_seeker_search_options = {};
-    window.spot_seeker_search_options["name"] = $("#spot_name").val();
+    
+    // type
+    
+    // reservable
+    if ( $("#reservable").is(":checked") ) {
+        window.spot_seeker_search_options["extended_info:reservable"] = "true";
+    }
 
     // Run the search
     fetch_data();
-    $("#dialog-modal").dialog("close");
-} */
+    $("#filter_block").slideUp(speed);
+}
 
 function initialize() {
     var i;
@@ -79,8 +85,8 @@ function initialize() {
             modal: true
         });
     });
-
-    $("#run_custom_search").click(run_custom_search);*/
+    */
+    $("#view_results_button").click(run_custom_search);
 
     window.spot_seeker_search_options = {};
 

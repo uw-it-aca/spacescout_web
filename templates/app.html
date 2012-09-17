@@ -11,6 +11,7 @@
     <div id="nav" style="position:relative;">
         <div class="logo">SPACESCOUT</div>
         <div id="filter_container">
+        <form>
 
             <div id="filter_block">
 
@@ -57,34 +58,34 @@
                                 </div>
                                 <div style="width:50%;float:left">
                                     <label class="checkbox">
-                                      <input type="checkbox" id="" value=""> Study Room
+                                      <input type="checkbox" name="type" value="study_room"> Study Room
                                     </label>
                                     <label class="checkbox">
-                                      <input type="checkbox" id="" value=""> Study Area
+                                      <input type="checkbox" name="type" value="study_area"> Study Area
                                     </label>
                                     <label class="checkbox">
-                                      <input type="checkbox" id="" value=""> Computer Lab
+                                      <input type="checkbox" name="type" value="computer_lab"> Computer Lab
                                     </label>
                                     <label class="checkbox">
-                                      <input type="checkbox" id="" value=""> Production Studio
+                                      <input type="checkbox" name="type" value="studio"> Production Studio
                                     </label>
                                     <label class="checkbox">
-                                      <input type="checkbox" id="" value=""> Conference/Classroom
+                                      <input type="checkbox" name="type" value="classroom"> Conference/Classroom
                                     </label>
                                 </div>
 
                                 <div style="width:50%;float:left">
                                     <label class="checkbox">
-                                      <input type="checkbox" id="" value=""> Open space
+                                      <input type="checkbox" name="type" value="open"> Open space
                                     </label>
                                     <label class="checkbox">
-                                      <input type="checkbox" id="" value=""> Lounge
+                                      <input type="checkbox" name="type" value="lounge"> Lounge
                                     </label>
                                     <label class="checkbox">
-                                      <input type="checkbox" id="" value=""> Cafe
+                                      <input type="checkbox" name="type" value="cafe"> Cafe
                                     </label>
                                     <label class="checkbox">
-                                      <input type="checkbox" id="" value=""> Outdoor area
+                                      <input type="checkbox" name="type" value="outdoor"> Outdoor area
                                     </label>
                                 </div>
 
@@ -92,7 +93,7 @@
                             <div class="choice-group">
                                 <p><strong>Reservability:</strong></p>
                                 <label class="checkbox inline">
-                                  <input type="checkbox" id="" value=""> Reservable Space Only
+                                  <input type="checkbox" id="reservable" value="true"> Reservable Space Only
                                 </label>
                             </div>
                             <div class="choice-group">
@@ -289,6 +290,7 @@
             </div>
             <div id="filter_button_container"><div id="filter_button"><i class="icon-th icon-white"></i><span class="filter-button-text">Filters</span></div></div>
         </div>
+        </form>
     </div>
 
     <div id="main_content" class="clearfix">
@@ -301,23 +303,6 @@
             <div class="loading">Loading...</div>
             <div id="info_items"></div>
         </div>
-    </div>
-
-    <div id="dialog-modal" title="Custom search interface?" style="display: none;">
-        <label for="spot_name">Name includes:</label> <input type="text" name="name" id="spot_name"/>
-        <br />
-        <label for="require_whiteboard">Require whiteboard: </label> <input type="checkbox" name="extended_info:require_whiteboard" id="require_whiteboard" value="1" />
-        <br />
-        <label for="building">Building: </label>
-        <select id="building" name="building">
-            <option value="">No Preference</option>
-            <option value="OUGL">OUGL</option>
-            <option value="MGH">MGH</option>
-            <option value="Fountain">Fountain</option>
-        </select>
-        <br />
-        <br />
-        <button id="run_custom_search">Run the search</button> <button id="cancel_custom_search">Cancel</button>
     </div>
 
 {% endblock %}
