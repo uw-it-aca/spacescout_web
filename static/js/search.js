@@ -1,5 +1,4 @@
-var spot_seeker_map, spot_seeker_infowindow, spot_seeker_marker_ids = {}, spot_seeker_markers = [], speed = 800;
-var mc = null;
+var spot_seeker_map, spot_seeker_infowindow, spot_seeker_marker_ids = {}, spot_seeker_markers = [], speed = 800, mc = null, youarehere = null;
 
 function openInfoWindow(marker, info) {
     var source = $('#spot_info').html();
@@ -93,6 +92,7 @@ function initialize() {
             // Success...
             function(position) {
                 window.clearTimeout(window.position_timeout);
+                youarehere = position.coords;
                 load_map(position.coords.latitude, position.coords.longitude, window.default_zoom);
             }
         );
@@ -117,6 +117,7 @@ function load_map(latitude, longitude, zoom) {
 
 function display_search_results(data) {
     $('.loading').show();
+
     var mcOpts = {
         averageCenter: true,
         zoomOnClick: false,
@@ -149,6 +150,18 @@ function display_search_results(data) {
     }
     addClusterListener(mc);
     openAllMarkerInfoWindow(data);
+    
+    // you are here marker
+    if (navigator.geolocation) {
+        my_marker = new google.maps.Marker({
+            position: new google.maps.LatLng(youarehere.latitude, youarehere.longitude),
+            title: "You are here",
+            map: spot_seeker_map,
+            icon: '/static/img/pins/blue-dot.png'
+        });
+        //window.spot_seeker_markers.push(my_marker);
+    }
+
 }
 
 function load_data(data) {
