@@ -23,7 +23,11 @@ body {
                 .checkbox.inline { margin-left: 0; margin-right: 10px; }
             }
 
-            h2 { color: yellow; border-top: 1px dotted #aaa; margin: 0; font-size: 14px; line-height: 34px; }
+            h2 { color: yellow; border-top: 1px dotted #aaa; margin: 0; font-size: 15px; line-height: 34px; }
+
+            h3 { color: lime; font-size: 13px; line-height: 14px; margin: 0 0 5px 0;
+                span { font-weight: normal; font-size: 12px; }
+            }
 
             #filter_space_types, #filter_equipment_types {
                 .checkbox { background-color: blue; white-space: nowrap; line-height: 30px;  padding-top: 0;
@@ -35,11 +39,17 @@ body {
 
                 /*.checkbox input[type="checkbox"] { margin-top: 10px; }*/
             }
-            #filter_noise_level, #filter_food_coffee {
+            #filter_reservability, #filter_noise_level, #filter_food_coffee, #filter_lighting {
                 .checkbox { width: auto; margin-right: 15px; background-color: red; white-space: nowrap; line-height: 30px; padding-top: 0;
 
                     /*input { visibility: hidden; }*/ // hide the ugly checkbox inputs
                     input[type="checkbox"] { margin-top: 10px; }
+                }
+            }
+
+            #filter_location, #filter_hours {
+                .radio { width: auto; margin-right: 15px; background-color: purple; white-space: nowrap; line-height: 30px; padding-top: 0;
+                    input[type="radio"] { margin-top: 10px; }
                 }
             }
 
