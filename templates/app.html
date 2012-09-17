@@ -21,8 +21,8 @@
                             <h2>Spaces</h2>
                             <p><small>Specify preferred conditions, if any:</small></p>
 
-                            <div class="choice-group clearfix">
-                                <p><strong>Type of space:</strong> <a href="#" id="view_space_descriptions" rel="popover">view descriptions</a></p>
+                            <div id="filter_space_types" class="choice-group clearfix">
+                                <h3>Type of space: <span><a href="#" id="view_space_descriptions" rel="popover">view descriptions</a></span></h3>
                                 <div id="space_descriptions_list" style="display:none;">
                                     <ul>
                                         <li>Study Room<br/>
@@ -55,7 +55,7 @@
                                     </ul>
                                     <div><a id="close_descriptions" href="#">Close</a></div>
                                 </div>
-                                <div style="width:50%;float:left">
+                                <div style="width:auto;float:left; margin-right: 15px;">
                                     <label class="checkbox">
                                       <input type="checkbox" id="" value=""> Study Room
                                     </label>
@@ -73,7 +73,7 @@
                                     </label>
                                 </div>
 
-                                <div style="width:50%;float:left">
+                                <div style="width:auto;float:left">
                                     <label class="checkbox">
                                       <input type="checkbox" id="" value=""> Open space
                                     </label>
@@ -89,14 +89,14 @@
                                 </div>
 
                             </div>
-                            <div class="choice-group">
-                                <p><strong>Reservability:</strong></p>
+                            <div id="filter_reservability"  class="choice-group">
+                                <h3>Reservability:</h3>
                                 <label class="checkbox inline">
                                   <input type="checkbox" id="" value=""> Reservable Space Only
                                 </label>
                             </div>
                             <div class="choice-group">
-                                <p><strong>Capacity</strong></p>
+                                <h3>Capacity</h3>
                                 Seats at least:
                                 <select style="width:60px;">
                                   <option>1</option>
@@ -122,7 +122,7 @@
                     <h2>Hours</h2>
                     <p><small>laskdjflkjasdfkl aslkjfd</small></p>
 
-                    <div class="choice-group">
+                    <div id="filter_hours" class="choice-group">
                         <div>
                             <label class="radio inline">
                               <input type="radio" name="optionsRadios" id="" value="option1" checked>
@@ -192,7 +192,7 @@
                     <h2>Location</h2>
                     <p><small>laskdjflkjasdfkl aslkjfd</small></p>
 
-                    <div class="choice-group">
+                    <div id="filter_location" class="choice-group">
                         <div>
                             <label class="radio inline">
                               <input type="radio" name="optionsRadios" id="" value="option1" checked> Entire campus
@@ -209,8 +209,8 @@
                     <h2>Equipment</h2>
                     <p><small>laskdjflkjasdfkl aslkjfd</small></p>
 
-                    <div class="choice-group clearfix">
-                        <div style="width:50%;float:left">
+                    <div id="filter_equipment_types" class="choice-group clearfix">
+                        <div style="width:auto;float:left; margin-right:15px;">
                             <label class="checkbox">
                               <input type="checkbox" id="" value=""> Whiteboard
                             </label>
@@ -225,7 +225,7 @@
                             </label>
                         </div>
 
-                        <div style="width:50%;float:left">
+                        <div style="width:auto;float:left;">
                             <label class="checkbox">
                               <input type="checkbox" id="" value=""> Large display (for laptop)
                             </label>
@@ -245,7 +245,7 @@
                             <p><small>laskdjflkjasdfkl aslkjfd</small></p>
 
                             <div id="filter_noise_level" class="choice-group">
-                                <p><strong>Noise Level</strong></p>
+                                <h3>Noise Level</h3>
                                 <div>
                                 <label class="checkbox inline">
                                   <input type="checkbox" id="" value=""> Silent
@@ -259,15 +259,15 @@
                                 </div>
                             </div>
 
-                            <div class="choice-group">
-                                <p><strong>Lighting</strong></p>
+                            <div id="filter_lighting" class="choice-group">
+                                <h3>Lighting</h3>
                                 <label class="checkbox inline">
                                   <input type="checkbox" id="" value=""> Natural Light
                                 </label>
                             </div>
 
                             <div id="filter_food_coffee" class="choice-group">
-                                <p><strong>Food/Coffee</strong></p>
+                                <h3>Food/Coffee</h3>
                                 <label class="checkbox inline">
                                   <input type="checkbox" id="" value=""> In space
                                 </label>
@@ -299,7 +299,7 @@
                 <div class="list-arrow"><a id="filter_link" href="#"><i class="icon-th-list"></i></a></div>
 
                 <!-- TODO: need to implement if/else logic for spinner and info_items -->
-                <div class="loading"><div class="loading-inner"><img src="{{ STATIC_URL }}img/spinner.gif" /> Please wait while we load spaces...</div></div>
+                <div class="loading"><div class="loading-inner"><img src="{{ STATIC_URL }}img/spinner.gif" />&nbsp;&nbsp;Loading spaces...</div></div>
                 <div id="info_items"></div>
                 {% load templatetag_handlebars %}
                 {% tplhandlebars "all_markers" %}

@@ -9,15 +9,11 @@
         #filter_container {
              position:absolute; top:80px; left:0; right:0;  z-index:1000;
 
-             #filter_block {
+             #filter_block { background: rgba(0, 0, 0, 0.9);
 
                 .inner-column { width: 33.3%; float: left;
                     .inner-block-left { padding-right: 20px; }
                     .inner-block-right { padding-left: 20px; }
-                }
-
-                #filter_noise_level, #filter_food_coffee {
-                    .checkbox { width: 24%; }
                 }
 
             }
@@ -68,41 +64,21 @@
 /* Target Androids */
 @media screen and (min-width: 1024px) {
 
-    #nav {
-
-        #filter_container {
-
-            #filter_block {
-
-                #filter_noise_level, #filter_food_coffee {
-                    .checkbox { width: 26.5%; }
-                }
-
-            }
-        }
-    }
 }
 
 /* Target Androids */
 @media screen and (min-width: 1280px) {
 
-    #nav {
 
-        #filter_container {
-
-            #filter_block {
-
-                #filter_noise_level, #filter_food_coffee {
-                    .checkbox { width: 28%; }
-                }
-
-            }
-        }
-    }
 }
 
 
 
 
 /* Override default Bootstrap Popover styles */
-.popover { width: 400px; }
+.popover { width: 600px; }
+
+.popover-desktop-override {
+    top: 150px !important;
+    .arrow { /*top: 20px !important;*/ display: none !important; }
+}

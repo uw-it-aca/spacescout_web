@@ -17,20 +17,15 @@
 		// Toggle Filter display
 		$('#filter_button').click(function() {
     		if ($("#filter_block").is(":hidden")) {
+
                 $("#filter_block").slideDown(speed, function() {
                     // Animation complete.
                     if (mobile) {
                         $('#map_canvas').hide();
                         $('#info_list').hide();
-                        //$('#filter_button_container').hide();
-
+                        $('.back-top').hide();
                     }
-
-                    $('.back-top').hide();
-
                 });
-
-
 
             } else {
                 // scroll to top of the page and then slide the filters up
@@ -41,9 +36,10 @@
                     $('#map_canvas').show();
                     $('#info_list').show();
                     $('#filter_button_container').show();
+                    $('.back-top').show();
 
                 }
-                $('.back-top').show();
+
             }
         });
 
@@ -57,23 +53,38 @@
                 $('#map_canvas').show();
                 $('#info_list').show();
                 $('#filter_button_container').show();
+                $('.back-top').show();
             }
-
-            $('.back-top').show();
 
         });
 
 
-        // Handle space description popover
-        $('#view_space_descriptions').popover({
-            title: 'Space Descriptions',
-            content: 'Some content!',
-            placement: 'bottom',
-            html: true,
-            content: function() {
-              return $('#space_descriptions_list').html();
-            }
-        });
+        // Space descriptions
+        if (mobile){
+            // Handle space description popover
+            $('#view_space_descriptions').popover({
+                title: 'Space Descriptions',
+                content: 'Some content!',
+                placement: 'bottom',
+                html: true,
+                content: function() {
+                  return $('#space_descriptions_list').html();
+                }
+            });
+        }
+        else {
+            // Handle space description popover
+            $('#view_space_descriptions').popover({
+                title: 'Space Descriptions',
+                content: 'Some content!',
+                placement: 'right',
+                html: true,
+                content: function() {
+                  return $('#space_descriptions_list').html();
+                }
+            });
+        }
+
 
         $('#close_descriptions').live('click', function(){
             $('#view_space_descriptions').popover('hide');
@@ -84,6 +95,9 @@
             e.preventDefault();
             if (mobile) {
                 $('.popover').addClass("popover-mobile-override");
+            }
+            else {
+                $('.popover').addClass("popover-desktop-override");
             }
         });
 
@@ -139,13 +153,12 @@
         var headerH = $('#nav').height();
         var contentH = windowH - headerH;
 
-         $('#map_canvas').height(contentH);
-         $('#info_list').height(contentH);
+        $('#map_canvas').height(contentH);
+        $('#info_list').height(contentH);
 
-         // make sure loading and list height fills the list container
-         $('#info_list .list-inner').css('min-height', contentH);
-         $('.loading').height(contentH);
-
+        // make sure loading and list height fills the list container
+        $('#info_list .list-inner').css('min-height', contentH);
+        $('.loading').height(contentH);
     }
 
     function resetContent() {
@@ -154,8 +167,8 @@
         var headerH = $('#nav').height();
         var contentH = windowH - headerH;
 
-         $('#map_canvas').height('auto');
-         $('#info_list').height('auto');
+        $('#map_canvas').height('auto');
+        $('#info_list').height('auto');
     }
 
 
