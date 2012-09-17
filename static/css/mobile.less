@@ -15,7 +15,7 @@ body {
 
     #filter_container { position: relative;
 
-        #filter_block { display:none; background-color:#111; color: #fff;
+        #filter_block { display:none; background-color:#111; color: #aaa;
 
             .inner { padding: 15px; }
 
@@ -25,8 +25,22 @@ body {
 
             h2 { color: yellow; border-top: 1px dotted #aaa; margin: 0; font-size: 14px; line-height: 34px; }
 
+            #filter_space_types, #filter_equipment_types {
+                .checkbox { background-color: blue; white-space: nowrap; line-height: 30px;  padding-top: 0;
+
+                   /* input { visibility: hidden; }*/ // hide the ugly checkbox inputs
+
+                   input[type="checkbox"] { margin-top: 10px; }
+                }
+
+                /*.checkbox input[type="checkbox"] { margin-top: 10px; }*/
+            }
             #filter_noise_level, #filter_food_coffee {
-                .checkbox { width: 24%; background-color: red; white-space: nowrap; margin: 0; }
+                .checkbox { width: auto; margin-right: 15px; background-color: red; white-space: nowrap; line-height: 30px; padding-top: 0;
+
+                    /*input { visibility: hidden; }*/ // hide the ugly checkbox inputs
+                    input[type="checkbox"] { margin-top: 10px; }
+                }
             }
 
 
@@ -97,6 +111,8 @@ body {
     left: 13px !important;
     right: 13px !important;
     width: auto !important;
+
+    .arrow { display: none !important; }
 }
 
 
@@ -106,20 +122,6 @@ body {
         min-height: 280px;
     }
 
-
-    #nav {
-
-        #filter_container {
-
-            #filter_block {
-
-                #filter_noise_level, #filter_food_coffee {
-                    .checkbox { width: 26.5%; }
-                }
-
-            }
-        }
-    }
 }
 
 /* Target Androids */
@@ -128,17 +130,4 @@ body {
         min-height: 400px;
     }
 
-    #nav {
-
-        #filter_container {
-
-            #filter_block {
-
-                #filter_noise_level, #filter_food_coffee {
-                    .checkbox { width: 28.5%; }
-                }
-
-            }
-        }
-    }
 }

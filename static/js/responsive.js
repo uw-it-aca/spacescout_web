@@ -59,16 +59,32 @@
         });
 
 
-        // Handle space description popover
-        $('#view_space_descriptions').popover({
-            title: 'Space Descriptions',
-            content: 'Some content!',
-            placement: 'bottom',
-            html: true,
-            content: function() {
-              return $('#space_descriptions_list').html();
-            }
-        });
+        // Space descriptions
+        if (mobile){
+            // Handle space description popover
+            $('#view_space_descriptions').popover({
+                title: 'Space Descriptions',
+                content: 'Some content!',
+                placement: 'bottom',
+                html: true,
+                content: function() {
+                  return $('#space_descriptions_list').html();
+                }
+            });
+        }
+        else {
+            // Handle space description popover
+            $('#view_space_descriptions').popover({
+                title: 'Space Descriptions',
+                content: 'Some content!',
+                placement: 'right',
+                html: true,
+                content: function() {
+                  return $('#space_descriptions_list').html();
+                }
+            });
+        }
+
 
         $('#close_descriptions').live('click', function(){
             $('#view_space_descriptions').popover('hide');
@@ -79,6 +95,9 @@
             e.preventDefault();
             if (mobile) {
                 $('.popover').addClass("popover-mobile-override");
+            }
+            else {
+                $('.popover').addClass("popover-desktop-override");
             }
         });
 
