@@ -17,20 +17,15 @@
 		// Toggle Filter display
 		$('#filter_button').click(function() {
     		if ($("#filter_block").is(":hidden")) {
+
                 $("#filter_block").slideDown(speed, function() {
                     // Animation complete.
                     if (mobile) {
                         $('#map_canvas').hide();
                         $('#info_list').hide();
-                        //$('#filter_button_container').hide();
-
+                        $('.back-top').hide();
                     }
-
-                    $('.back-top').hide();
-
                 });
-
-
 
             } else {
                 // scroll to top of the page and then slide the filters up
@@ -41,9 +36,10 @@
                     $('#map_canvas').show();
                     $('#info_list').show();
                     $('#filter_button_container').show();
+                    $('.back-top').show();
 
                 }
-                $('.back-top').show();
+
             }
         });
 
@@ -57,9 +53,8 @@
                 $('#map_canvas').show();
                 $('#info_list').show();
                 $('#filter_button_container').show();
+                $('.back-top').show();
             }
-
-            $('.back-top').show();
 
         });
 
@@ -139,13 +134,12 @@
         var headerH = $('#nav').height();
         var contentH = windowH - headerH;
 
-         $('#map_canvas').height(contentH);
-         $('#info_list').height(contentH);
+        $('#map_canvas').height(contentH);
+        $('#info_list').height(contentH);
 
-         // make sure loading and list height fills the list container
-         $('#info_list .list-inner').css('min-height', contentH);
-         $('.loading').height(contentH);
-
+        // make sure loading and list height fills the list container
+        $('#info_list .list-inner').css('min-height', contentH);
+        $('.loading').height(contentH);
     }
 
     function resetContent() {
@@ -154,8 +148,8 @@
         var headerH = $('#nav').height();
         var contentH = windowH - headerH;
 
-         $('#map_canvas').height('auto');
-         $('#info_list').height('auto');
+        $('#map_canvas').height('auto');
+        $('#info_list').height('auto');
     }
 
 

@@ -21,7 +21,7 @@ function openClusterInfoWindow(cluster) {
     infohtml = "<ul>";
     for (i = 0; i < cluster.getMarkers().length; i++) {
         mark = cluster.getMarkers()[i];
-        infohtml += "<li>" + mark.title + "</li>";
+        infohtml += "<li><img src='http://placehold.it/75x75' class='img-rounded'>" + mark.title + "</li>";
     }
     infohtml += "</ul>";
 
