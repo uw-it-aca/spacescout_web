@@ -87,11 +87,6 @@ function initialize() {
         // Doing a timeout here, to make sure we load something...
         window.position_timeout = window.setTimeout(function() {
             load_map(window.default_latitude, window.default_longitude, window.default_zoom);
-
-            // append space details container for use later
-            $('#map_canvas').append("<div id='space_detail_container'>zzz</div>");
-            $('#space_detail_container').height($('#map_canvas').height());
-
         }, 5000);
 
         navigator.geolocation.getCurrentPosition(

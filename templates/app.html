@@ -295,6 +295,17 @@
 
     <div id="main_content" class="clearfix">
         <div id="map_canvas"></div>
+        {% load templatetag_handlebars %}
+        {% tplhandlebars "space_details" %}
+            <div id="space_detail_container" class="">
+                <div class="space-detail">
+                    <div class="space-detail-inner">
+                        <div>this is the details view</div>
+                        <div><a class="close" href="#">&times; close me</a></div>
+                    </div>
+                </div>
+            </div>
+        {% endtplhandlebars %}
 
         <div id="info_list">
             <div class="list-inner">
@@ -302,12 +313,13 @@
 
                 <!-- TODO: need to implement if/else logic for spinner and info_items -->
                 <div class="loading"><div class="loading-inner"><img src="{{ STATIC_URL }}img/spinner.gif" />&nbsp;&nbsp;Loading spaces...</div></div>
+
                 <div id="info_items"></div>
-                {% load templatetag_handlebars %}
+
                 {% tplhandlebars "all_markers" %}
                     <ul>
                         {{#each data}}
-                        <li><img src='http://placehold.it/75x75' class='img-rounded'> {{name}} </li>
+                        <li><img src='http://placehold.it/75x75' class='img-rounded'> {{name}} <a href="#" class="view-details" id="">view details</a></li>
                         {{/each}}
                     </ul>
                 {% endtplhandlebars %}
@@ -323,7 +335,7 @@
                 {% tplhandlebars "spot_info" %}
                     <h1>{{name}}</h1>
                     <div>
-                        This is the content window about the space.  Here's some info: 
+                        This is the content window about the space.  Here's some info:
                         <ul>
                             <li>Hours available: {{display_hours_available}}</li>
                             <li>Capacity: {{capacity}}</li>

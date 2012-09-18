@@ -58,7 +58,6 @@
 
         });
 
-
         // Space descriptions
         if (mobile){
             // Handle space description popover
@@ -117,6 +116,18 @@
               scrollTo('info_items');
         });
 
+        // handle view details click
+        $('.view-details').live('click', function(e){
+            console.log('clickasdfasfd fired');
+            e.preventDefault();
+            showSpaceDetails();
+        });
+
+        $('#space_detail_container .close').live('click', function(e){
+            e.preventDefault();
+
+            hideSpaceDetails();
+        });
 
 	});
 
@@ -124,6 +135,39 @@
 		sw = document.body.clientWidth;
 		checkMobile();
 	});
+
+	// Show space details
+	function showSpaceDetails() {
+
+    	// remove any open details
+    	$('#space_detail_container').remove();
+
+    	if (!mobile) { // if desktop
+
+    	   console.log('show space function fired');
+
+    	   // build the template
+    	   var source = $('#space_details').html();
+    	   var template = Handlebars.compile(source);
+    	   $('#map_canvas').append(template(template));
+
+    	   // display behavior
+    	   $('#space_detail_container').height($('#map_canvas').height());
+    	   $('#space_detail_container').show();
+    	   $('.space-detail').slideDown('slow');
+	   }
+	   else { // TODO: mobile should open new page
+    	   console.log('do something else for mobile -- open new page');
+	   }
+	}
+
+	function hideSpaceDetails() {
+	   $('.space-detail').slideUp('slow', function() {
+        // Animation complete.
+        $('#space_detail_container').remove();
+      });
+
+	}
 
 
 	// ScrollTo a spot on the UI
