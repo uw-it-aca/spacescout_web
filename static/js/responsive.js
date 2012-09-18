@@ -119,7 +119,16 @@
         // handle view details click
         $('.view-details').live('click', function(e){
             e.preventDefault();
-            showSpaceDetails();
+            
+            // if new 
+            if ($('#space_detail_container').is(':visible')) {
+                console.log("kasdfjlaksdjfalksd");   
+                replaceSpaceDetails();
+            }
+            else {
+                showSpaceDetails();
+            }
+
         });
 
         $('#space_detail_container .close').live('click', function(e){
@@ -138,7 +147,7 @@
 	function showSpaceDetails() {
 
     	// remove any open details
-    	//$('#space_detail_container').remove();
+    	$('#space_detail_container').remove();
 
     	if (!mobile) { // if desktop
 
@@ -150,33 +159,38 @@
     	   // set/reset initial state
     	   $('.space-detail-inner').hide();
     	   $(".space-detail .loading").show();
+    	   $('#space_detail_container').show();
 
-    	   // display behavior
     	   $('#space_detail_container').height($('#map_canvas').height());
-
-    	   if ($('#space_detail_container').is(':visible')) {
-
-        	   console.log("fire again... container already open");
-
+    	   
+    	   $('.space-detail').slideDown('slow', function() {
         	   setTimeout('$(".space-detail .loading").hide()', 1000);
         	   setTimeout('$(".space-detail-inner").show()', 1500);
+    	   });
+    	   
+	   }
+	   else { // TODO: mobile should open new page
+    	   console.log('do something else for mobile -- open new page');
+	   }
+	}
+	
+	function replaceSpaceDetails() {
+  
+    	if (!mobile) { // if desktop
 
-    	   }
-    	   else {
-        	   // open the container
-        	   $('#space_detail_container').show();
+    	   // build the template
+    	   var source = $('#space_details_replace').html();
+    	   var template = Handlebars.compile(source);
+    	   $('#space_detail_container').html(template(template));
+    	   
+    	   // set/reset initial state
+    	   $('.space-detail-inner').hide();
+    	   $(".space-detail .loading").show();
+    	   
+    	   $('.space-detail').show();
 
-        	   // if space container is open, just show
-        	   $('.space-detail').slideDown('slow', function() {
-
-            	   setTimeout('$(".space-detail .loading").hide()', 1000);
-            	   setTimeout('$(".space-detail-inner").show()', 1500);
-
-        	   });
-
-    	   }
-
-
+    	   setTimeout('$(".space-detail .loading").hide()', 1000);
+    	   setTimeout('$(".space-detail-inner").show()', 1500);
 	   }
 	   else { // TODO: mobile should open new page
     	   console.log('do something else for mobile -- open new page');
@@ -184,11 +198,10 @@
 	}
 
 	function hideSpaceDetails() {
-	   $('.space-detail').slideUp('slow', function() {
-        // Animation complete.
-        $('#space_detail_container').remove();
-      });
-
+    	$('.space-detail').slideUp('slow', function() {
+            // Animation complete.
+            $('#space_detail_container').remove();
+        });
 	}
 
 
