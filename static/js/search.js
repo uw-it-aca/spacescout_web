@@ -5,6 +5,7 @@ function openInfoWindow(marker, info) {
     window.spot_seeker_infowindow = $("#info_items");
 
     window.spot_seeker_infowindow.html(["<h1>", info.name, "</h1><div>This is the content window about the space.  Here's some info: <ul><li>Hours available: ", info.display_hours_available, "</li><li>Capacity: ", info.capacity, "</li></ul></div><div><a href='/spot/"+info.id+"'>View more</a></div>"].join(""));
+
     $('.loading').slideUp('fast');
 }
 
@@ -92,6 +93,11 @@ function initialize() {
         // Doing a timeout here, to make sure we load something...
         window.position_timeout = window.setTimeout(function() {
             load_map(window.default_latitude, window.default_longitude, window.default_zoom);
+
+            // append space details container for use later
+            $('#map_canvas').append("<div id='space_detail_container'>zzz</div>");
+            $('#space_detail_container').height($('#map_canvas').height());
+
         }, 5000);
 
         navigator.geolocation.getCurrentPosition(
@@ -118,6 +124,8 @@ function load_map(latitude, longitude, zoom) {
 
     window.spot_seeker_map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
     google.maps.event.addListener(window.spot_seeker_map, 'idle', reload_on_idle);
+
+
 }
 
 function display_search_results(data) {

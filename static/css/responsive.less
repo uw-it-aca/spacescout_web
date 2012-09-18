@@ -11,10 +11,14 @@
 
              #filter_block { background: rgba(0, 0, 0, 0.9);
 
+                h2 { border: none; }
+
                 .inner-column { width: 33.3%; float: left;
                     .inner-block-left { padding-right: 20px; }
                     .inner-block-right { padding-left: 20px; }
                 }
+
+                .filter-submit { text-align: right; }
 
             }
 
@@ -32,6 +36,16 @@
     #map_canvas {
         width: 62%;
         float: left;
+
+        #space_detail_container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: red;
+            z-index: 1;
+            opacity: .8;
+        }
     }
 
     #info_list {

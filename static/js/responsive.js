@@ -158,7 +158,7 @@
 
         // make sure loading and list height fills the list container
         $('#info_list .list-inner').css('min-height', contentH);
-        $('.loading').height(contentH);
+        //$('.loading').height(contentH);
     }
 
     function resetContent() {
