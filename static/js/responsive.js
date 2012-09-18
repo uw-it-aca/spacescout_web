@@ -165,7 +165,7 @@
     	   
     	   $('.space-detail').slideDown('slow', function() {
         	   setTimeout('$(".space-detail .loading").hide()', 1000);
-        	   setTimeout('$(".space-detail-inner").show()', 1500);
+        	   setTimeout('$(".space-detail-inner").show()', 1300);
     	   });
     	   
 	   }
@@ -190,7 +190,7 @@
     	   $('.space-detail').show();
 
     	   setTimeout('$(".space-detail .loading").hide()', 1000);
-    	   setTimeout('$(".space-detail-inner").show()', 1500);
+    	   setTimeout('$(".space-detail-inner").show()', 1300);
 	   }
 	   else { // TODO: mobile should open new page
     	   console.log('do something else for mobile -- open new page');
