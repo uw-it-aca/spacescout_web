@@ -155,7 +155,7 @@ function display_search_results(data) {
     openAllMarkerInfoWindow(data);
 
     // you are here marker
-    if (navigator.geolocation) {
+    if (youarehere != null) {
         my_marker = new google.maps.Marker({
             position: new google.maps.LatLng(youarehere.latitude, youarehere.longitude),
             title: "You are here",
