@@ -66,6 +66,7 @@ function run_custom_search() {
     }
 
     // capacity
+    window.spacescout_search_options["capacity"] = $("#capacity option:selected").val();
 
     // hours
 
