@@ -8,6 +8,7 @@ function openInfoWindow(marker, info) {
     window.spot_seeker_infowindow = $("#info_items");
 
     window.spot_seeker_infowindow.html(["<h1>", info.name, "</h1><div>This is the content window about the space.  Here's some info: <ul><li>Hours available: ", info.display_hours_available, "</li><li>Capacity: ", info.capacity, "</li></ul></div><div><a href='/spot/"+info.id+"'>View more</a></div>"].join(""));
+
     */
     $('.loading').slideUp('fast');
 }
@@ -51,7 +52,7 @@ function run_custom_search() {
 
     // Set the search values, so they'll stick through zooms and pans
     window.spot_seeker_search_options = {};
-    
+
     // type
     var checked = new Array();
     $.each($("input[name='type']:checked"), function() {
@@ -119,6 +120,8 @@ function load_map(latitude, longitude, zoom) {
 
     window.spot_seeker_map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
     google.maps.event.addListener(window.spot_seeker_map, 'idle', reload_on_idle);
+
+
 }
 
 function display_search_results(data) {
@@ -156,9 +159,9 @@ function display_search_results(data) {
     }
     addClusterListener(mc);
     openAllMarkerInfoWindow(data);
-    
+
     // you are here marker
-    if (navigator.geolocation) {
+    if (youarehere != null) {
         my_marker = new google.maps.Marker({
             position: new google.maps.LatLng(youarehere.latitude, youarehere.longitude),
             title: "You are here",

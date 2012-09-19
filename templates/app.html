@@ -20,7 +20,7 @@
                     <div class="inner-column">
                         <div class="inner-block-left">
                             <h2>Spaces</h2>
-                            <p><small>Specify preferred conditions, if any:</small></p>
+                            <p><small><em>Some explanation text will go here...</em></small></p>
 
                             <div id="filter_space_types" class="choice-group clearfix">
                                 <h3>Type of space: <span><a href="#" id="view_space_descriptions" rel="popover">view descriptions</a></span></h3>
@@ -121,7 +121,7 @@
 
                     <div class="inner-column">
                     <h2>Hours</h2>
-                    <p><small>laskdjflkjasdfkl aslkjfd</small></p>
+                    <p><small><em>Some explanation text will go here...</em></small></p>
 
                     <div id="filter_hours" class="choice-group">
                         <div>
@@ -191,7 +191,7 @@
                     </div>
 
                     <h2>Location</h2>
-                    <p><small>laskdjflkjasdfkl aslkjfd</small></p>
+                    <p><small><em>Some explanation text will go here...</em></small></p>
 
                     <div id="filter_location" class="choice-group">
                         <div>
@@ -202,13 +202,70 @@
                               <input type="radio" name="optionsRadios" id="" value="option2"> Specific building
                             </label>
                         </div>
-                        <div>
-                            fancy input autofill tab thingy goes here
+                        <div id="building_list_container">
+                            <select multiple="" name="e9" id="e9" style="display: none; " class="populate">
+                                <optgroup label="A">
+                                    <option value="AK">Alaska</option>
+                                    <option value="HI">Hawaii</option>
+                                </optgroup>
+                                <optgroup label="B">
+                                    <option value="CA">California</option>
+                                    <option value="NV">Nevada</option>
+                                    <option value="OR">Oregon</option>
+                                    <option value="WA">Washington</option>
+                                </optgroup>
+                                <optgroup label="C">
+                                    <option value="AZ">Arizona</option>
+                                    <option value="CO">Colorado</option>
+                                    <option value="ID">Idaho</option>
+                                    <option value="MT">Montana</option><option value="NE">Nebraska</option>
+                                    <option value="NM">New Mexico</option>
+                                    <option value="ND">North Dakota</option>
+                                    <option value="UT">Utah</option>
+                                    <option value="WY">Wyoming</option>
+                                </optgroup>
+                                <optgroup label="D">
+                                    <option value="AL">Alabama</option>
+                                    <option value="AR">Arkansas</option>
+                                    <option value="IL">Illinois</option>
+                                    <option value="IA">Iowa</option>
+                                    <option value="KS">Kansas</option>
+                                    <option value="KY">Kentucky</option>
+                                    <option value="LA">Louisiana</option>
+                                    <option value="MN">Minnesota</option>
+                                    <option value="MS">Mississippi</option>
+                                    <option value="MO">Missouri</option>
+                                    <option value="OK">Oklahoma</option>
+                                    <option value="SD">South Dakota</option>
+                                    <option value="TX">Texas</option>
+                                    <option value="TN">Tennessee</option>
+                                    <option value="WI">Wisconsin</option>
+                                </optgroup>
+                                <optgroup label="Eastern Time Zone">
+                                    <option value="CT">Connecticut</option>
+                                    <option value="DE">Delaware</option>
+                                    <option value="FL">Florida</option>
+                                    <option value="GA">Georgia</option>
+                                    <option value="IN">Indiana</option>
+                                    <option value="ME">Maine</option>
+                                    <option value="MD">Maryland</option>
+                                    <option value="MA">Massachusetts</option>
+                                    <option value="MI">Michigan</option>
+                                    <option value="NH">New Hampshire</option><option value="NJ">New Jersey</option>
+                                    <option value="NY">New York</option>
+                                    <option value="NC">North Carolina</option>
+                                    <option value="OH">Ohio</option>
+                                    <option value="PA">Pennsylvania</option><option value="RI">Rhode Island</option><option value="SC">South Carolina</option>
+                                    <option value="VT">Vermont</option><option value="VA">Virginia</option>
+                                    <option value="WV">West Virginia</option>
+                                </optgroup>
+                            </select>
                         </div>
+
                     </div>
 
-                    <h2>Equipment</h2>
-                    <p><small>laskdjflkjasdfkl aslkjfd</small></p>
+                    <h2>Equipment Evailable</h2>
+                    <p><small><em>Some explanation text will go here...</em></small></p>
 
                     <div id="filter_equipment_types" class="choice-group clearfix">
                         <div style="width:auto;float:left; margin-right:15px;">
@@ -243,7 +300,7 @@
                     <div class="inner-column">
                         <div class="inner-block-right">
                             <h2>Environment</h2>
-                            <p><small>laskdjflkjasdfkl aslkjfd</small></p>
+                            <p><small><em>Some explanation text will go here...</em></small></p>
 
                             <div id="filter_noise_level" class="choice-group">
                                 <h3>Noise Level</h3>
@@ -295,6 +352,27 @@
 
     <div id="main_content" class="clearfix">
         <div id="map_canvas"></div>
+        {% load templatetag_handlebars %}
+        {% tplhandlebars "space_details" %}
+            <div id="space_detail_container" class="">
+                <div class="space-detail">
+                    <div class="loading"><div class="loading-inner">&nbsp;</div></div>
+                    <div class="space-detail-inner">
+                        <div>this is the details view</div>
+                        <div><a class="close" href="#">&times; close me</a></div>
+                    </div>
+                </div>
+            </div>
+        {% endtplhandlebars %}
+        {% tplhandlebars "space_details_replace" %}
+                <div class="space-detail">
+                    <div class="loading"><div class="loading-inner">&nbsp;</div></div>
+                    <div class="space-detail-inner">
+                        <div>this is the details view</div>
+                        <div><a class="close" href="#">&times; close me</a></div>
+                    </div>
+                </div>
+        {% endtplhandlebars %}
 
         <div id="info_list">
             <div class="list-inner">
@@ -302,12 +380,13 @@
 
                 <!-- TODO: need to implement if/else logic for spinner and info_items -->
                 <div class="loading"><div class="loading-inner"><img src="{{ STATIC_URL }}img/spinner.gif" />&nbsp;&nbsp;Loading spaces...</div></div>
+
                 <div id="info_items"></div>
-                {% load templatetag_handlebars %}
+
                 {% tplhandlebars "all_markers" %}
                     <ul>
                         {{#each data}}
-                        <li><img src='http://placehold.it/75x75' class='img-rounded'> {{name}} </li>
+                        <li><img src='http://placehold.it/100x70' class='img-rounded'> {{name}} <a href="#" class="view-details" id="">view details</a></li>
                         {{/each}}
                     </ul>
                 {% endtplhandlebars %}
@@ -315,7 +394,7 @@
                 {% tplhandlebars "cluster_list" %}
                     <ul>
                         {{#each data}}
-                        <li>{{title}}</li>
+                        <li><img src='http://placehold.it/100x70' class='img-polaroid'> {{title}} <a href="#" class="view-details" id="">view details</a></li>
                         {{/each}}
                     </ul>
                 {% endtplhandlebars %}
@@ -323,7 +402,7 @@
                 {% tplhandlebars "spot_info" %}
                     <h1>{{name}}</h1>
                     <div>
-                        This is the content window about the space.  Here's some info: 
+                        This is the content window about the space.  Here's some info:
                         <ul>
                             <li>Hours available: {{display_hours_available}}</li>
                             <li>Capacity: {{capacity}}</li>

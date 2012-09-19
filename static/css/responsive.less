@@ -11,14 +11,16 @@
 
              #filter_block { background: rgba(0, 0, 0, 0.9);
 
+                h2 { border: none; }
+
                 .inner-column { width: 33.3%; float: left;
                     .inner-block-left { padding-right: 20px; }
                     .inner-block-right { padding-left: 20px; }
                 }
 
-            }
+                .filter-submit { text-align: right; }
 
-            form { margin: 0px; }
+            }
 
             #filter_button_container { height: 30px; text-align:center; line-height:30px; position:absolute; left:0; right:0; top: auto; bottom:-30px; z-index: 999;
                 .filter-button-text { display: inline-block; margin-left: 3px; color: #eee; }
@@ -27,13 +29,33 @@
 
         }
 
-
-
     }
 
     #map_canvas {
         width: 62%;
         float: left;
+
+        #space_detail_container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1;
+            display: none;
+
+            .space-detail { display: none; background-color: #eee; position: absolute; top: 40px; right: 40px; bottom: 40px; left: 40px; color: #333;
+                -webkit-border-radius: 3px;
+                -moz-border-radius: 3px;
+                border-radius: 3px;
+                box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.5);
+                -moz-box-shadow: 1px 2px 6px rgba(0,0,0, 0.5);
+                -webkit-box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.5);
+
+                .loading { position: absolute; top: 45%; background: transparent url('/static/img/spinner.gif') no-repeat 50% 50%; background-size: 20px; text-align: center; left: 0; right: 0;}
+                .space-detail-inner { display:none; padding: 10px; }
+            }
+        }
     }
 
     #info_list {
