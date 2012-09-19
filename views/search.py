@@ -22,7 +22,7 @@ def SearchView(request):
     search_args = {}
 
     for key in request.GET:
-        search_args[key] = request.GET[key]
+        search_args[key] = request.GET.getlist(key)
 
     json = get_spot_search_json(client, search_args)
 

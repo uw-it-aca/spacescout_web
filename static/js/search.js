@@ -47,11 +47,17 @@ function run_custom_search() {
     }
     window.spot_seeker_markers = [];
     window.spot_seeker_marker_ids = {};
+    mc.clearMarkers();
 
     // Set the search values, so they'll stick through zooms and pans
     window.spot_seeker_search_options = {};
     
     // type
+    var checked = new Array();
+    $.each($("input[name='type']:checked"), function() {
+        checked.push($(this).val());
+    });
+    window.spot_seeker_search_options["type"] = checked;
     
     // reservable
     if ( $("#reservable").is(":checked") ) {
