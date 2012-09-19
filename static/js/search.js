@@ -1,13 +1,13 @@
-var spot_seeker_map, spot_seeker_infowindow, spot_seeker_marker_ids = {}, spot_seeker_markers = [], speed = 800, mc = null, youarehere = null;
+var spacescout_map, spacescout_infowindow, spacescout_marker_ids = {}, spacescout_markers = [], speed = 800, mc = null, youarehere = null;
 
 function openInfoWindow(marker, info) {
     var source = $('#spot_info').html();
     var template = Handlebars.compile(source);
     $("#info_items").html(template(info));
     /*
-    window.spot_seeker_infowindow = $("#info_items");
+    window.spacescout_infowindow = $("#info_items");
 
-    window.spot_seeker_infowindow.html(["<h1>", info.name, "</h1><div>This is the content window about the space.  Here's some info: <ul><li>Hours available: ", info.display_hours_available, "</li><li>Capacity: ", info.capacity, "</li></ul></div><div><a href='/spot/"+info.id+"'>View more</a></div>"].join(""));
+    window.spacescout_infowindow.html(["<h1>", info.name, "</h1><div>This is the content window about the space.  Here's some info: <ul><li>Hours available: ", info.display_hours_available, "</li><li>Capacity: ", info.capacity, "</li></ul></div><div><a href='/spot/"+info.id+"'>View more</a></div>"].join(""));
 
     */
     $('.loading').slideUp('fast');
@@ -43,27 +43,41 @@ function openAllMarkerInfoWindow(data) {
 
 function run_custom_search() {
     // Clear the map
-    for (var i = 0; i < window.spot_seeker_markers.length; i++) {
-        window.spot_seeker_markers[i].setMap(null);
+    for (var i = 0; i < window.spacescout_markers.length; i++) {
+        window.spacescout_markers[i].setMap(null);
     }
-    window.spot_seeker_markers = [];
-    window.spot_seeker_marker_ids = {};
+    window.spacescout_markers = [];
+    window.spacescout_marker_ids = {};
     mc.clearMarkers();
 
     // Set the search values, so they'll stick through zooms and pans
-    window.spot_seeker_search_options = {};
+    window.spacescout_search_options = {};
 
     // type
     var checked = new Array();
     $.each($("input[name='type']:checked"), function() {
         checked.push($(this).val());
     });
-    window.spot_seeker_search_options["type"] = checked;
+    window.spacescout_search_options["type"] = checked;
     
     // reservable
     if ( $("#reservable").is(":checked") ) {
-        window.spot_seeker_search_options["extended_info:reservable"] = "true";
+        window.spacescout_search_options["extended_info:reservable"] = "true";
     }
+
+    // capacity
+
+    // hours
+
+    // location
+
+    // equipment
+
+    // noise
+
+    // lighting
+
+    // food/coffee
 
     // Run the search
     fetch_data();
@@ -87,7 +101,7 @@ function initialize() {
     */
     $("#view_results_button").click(run_custom_search);
 
-    window.spot_seeker_search_options = {};
+    window.spacescout_search_options = {};
 
     if (navigator.geolocation) {
         // Doing a timeout here, to make sure we load something...
@@ -118,8 +132,8 @@ function load_map(latitude, longitude, zoom) {
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
 
-    window.spot_seeker_map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-    google.maps.event.addListener(window.spot_seeker_map, 'idle', reload_on_idle);
+    window.spacescout_map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+    google.maps.event.addListener(window.spacescout_map, 'idle', reload_on_idle);
 
 
 }
@@ -140,21 +154,21 @@ function display_search_results(data) {
             url: '/static/img/pins/pin00.png',
         }]
     };
-    mc = new MarkerClusterer(spot_seeker_map, [], mcOpts);
+    mc = new MarkerClusterer(spacescout_map, [], mcOpts);
     for (i = 0; i < data.length; i++) {
-        if (!window.spot_seeker_marker_ids[data[i].id]) {
+        if (!window.spacescout_marker_ids[data[i].id]) {
             marker = new google.maps.Marker({
                 position: new google.maps.LatLng(data[i].location.latitude, data[i].location.longitude),
                 title: data[i].name,
                 icon: '/static/img/pins/pin01.png'
             });
 
-            //marker.setMap(window.spot_seeker_map);
+            //marker.setMap(window.spacescout_map);
             mc.addMarker(marker);
             addMarkerListener(marker, data[i]);
 
-            window.spot_seeker_marker_ids[data[i].id] = true;
-            window.spot_seeker_markers.push(marker);
+            window.spacescout_marker_ids[data[i].id] = true;
+            window.spacescout_markers.push(marker);
         }
     }
     addClusterListener(mc);
@@ -165,10 +179,10 @@ function display_search_results(data) {
         my_marker = new google.maps.Marker({
             position: new google.maps.LatLng(youarehere.latitude, youarehere.longitude),
             title: "You are here",
-            map: spot_seeker_map,
+            map: spacescout_map,
             icon: '/static/img/pins/blue-dot.png'
         });
-        //window.spot_seeker_markers.push(my_marker);
+        //window.spacescout_markers.push(my_marker);
     }
 
 }
@@ -183,19 +197,19 @@ function reload_on_idle() {
 
 function fetch_data() {
     $('.loading').show();
-    var args = window.spot_seeker_search_options;
+    var args = window.spacescout_search_options;
     if (!args) {
         args = {};
     }
 
-    var display_bounds = window.spot_seeker_map.getBounds();
+    var display_bounds = window.spacescout_map.getBounds();
     var ne = display_bounds.getNorthEast();
     var sw = display_bounds.getSouthWest();
     var distance = distance_between_points(ne.lat(), ne.lng(), sw.lat(), sw.lng());
     // Calculated in KM
     distance = distance * 1000;
 
-    var center = window.spot_seeker_map.getCenter();
+    var center = window.spacescout_map.getCenter();
     args["center_latitude"] = [center.lat()];
     args["center_longitude"] = center.lng();
     args["open_now"] = 1;
