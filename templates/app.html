@@ -407,18 +407,14 @@
                 {% tplhandlebars "cluster_list" %}
                     <ul>
                         {{#each data}}
-<<<<<<< HEAD
                         <li class="clearfix">
                             <div class="space-detail-list-image pull-left"><img src='http://placehold.it/92x70' class='img-polaroid'></div>
                             <div class="space-detail-list-item view-details pull-left">
                                 <div class="space-detail-type">{{type}}</div>
-                                <div class="space-detail-name"><a href="#" id="">{{title}}</a></div>
-                                <div class="space-detail-desc">{{type.extended_info.location_description}}</div>
+                                <div class="space-detail-name"><a href="#" id="">{{name}}</a></div>
+                                <div class="space-detail-desc">{{.extended_info.location_description}}</div>
                             </div>
                         </li>
-=======
-                        <li><img src='http://placehold.it/100x70' class='img-polaroid'> {{name}} <a href="#" class="view-details" id="">view details</a></li>
->>>>>>> 96d12c4f595fce2296f38f1fcbe725e7cafbe737
                         {{/each}}
                     </ul>
                 {% endtplhandlebars %}
