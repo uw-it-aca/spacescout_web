@@ -72,14 +72,28 @@ function run_custom_search() {
     // location
 
     // equipment
+    checked = [];
+    $.each($("input[name='equipment']:checked"), function() {
+        checked.push($(this).val());
+    });
+    for (i=0; i < checked.length; i++) {
+        window.spacescout_search_options["extended_info:" + checked[i]] = true;
+    }
 
     // noise
+    var checked = new Array();
+    $.each($("input[name='noise_level']:checked"), function() {
+        checked.push($(this).val());
+    });
+    window.spacescout_search_options["extended_info:noise_level"] = checked;
+    
 
     // lighting
 
     // food/coffee
 
     // Run the search
+    //console.log(window.spacescout_search_options);
     fetch_data();
     $("#filter_block").slideUp(speed);
 }
