@@ -48,16 +48,27 @@
             z-index: 1;
             display: none;
 
-            .space-detail { display: none; background-color: #eee; position: absolute; top: 40px; right: 40px; bottom: 40px; left: 40px; color: #333;
-                -webkit-border-radius: 3px;
-                -moz-border-radius: 3px;
-                border-radius: 3px;
+            .space-detail { display: none; background-color: #fff; position: absolute; top: 40px; right: 40px; bottom: 40px; left: 40px; color: #333;
+
+                -webkit-border-radius: 2px;
+                -moz-border-radius: 2px;
+                border-radius: 2px;
+
                 box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.5);
                 -moz-box-shadow: 1px 2px 6px rgba(0,0,0, 0.5);
                 -webkit-box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.5);
 
                 .loading { position: absolute; top: 45%; background: transparent url('/static/img/spinner.gif') no-repeat 50% 50%; background-size: 20px; text-align: center; left: 0; right: 0;}
-                .space-detail-inner { display:none; padding: 10px; }
+                .space-detail-inner { display:none; padding: 10px;
+
+                    .space-detail-header { position: relative; height: 60px;
+                        .space-detail-type { color: #666; }
+                        .space-detail-name { font-size: 20px; color: #000; margin: 5px 0; }
+                        .close { position: absolute; right: 0; top: 0; float: none; }
+                    }
+                    .space-detail-body { background-color: yellow; }
+                    .space-detail-footer { text-align: center; font-size: 12px; color: #ccc; line-height: 30px; }
+                }
             }
         }
     }

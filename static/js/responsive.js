@@ -122,7 +122,6 @@
 
             // if a space details already exists
             if ($('#space_detail_container').is(':visible')) {
-                console.log("kasdfjlaksdjfalksd");
                 replaceSpaceDetails();
             }
             else {
@@ -206,6 +205,7 @@
     	   $('#space_detail_container').show();
 
     	   $('#space_detail_container').height($('#map_canvas').height());
+    	   $('.space-detail-body').height($('.space-detail').height() - 110);
 
     	   $('.space-detail').slideDown('slow', function() {
         	   setTimeout('$(".space-detail .loading").hide()', 1000);
@@ -230,6 +230,7 @@
     	   // set/reset initial state
     	   $('.space-detail-inner').hide();
     	   $(".space-detail .loading").show();
+    	   $('.space-detail-body').height($('.space-detail').height() - 110);
 
     	   $('.space-detail').show();
 
