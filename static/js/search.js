@@ -81,14 +81,16 @@ function run_custom_search() {
     }
 
     // noise
-    var checked = new Array();
+    checked = [];
     $.each($("input[name='noise_level']:checked"), function() {
         checked.push($(this).val());
     });
     window.spacescout_search_options["extended_info:noise_level"] = checked;
-    
 
     // lighting
+    if ( $("#lighting").is(":checked") ) {
+        window.spacescout_search_options["extended_info:has_natural_light"] = "true";
+    }
 
     // food/coffee
 
