@@ -72,6 +72,13 @@ function run_custom_search() {
     // location
 
     // equipment
+    checked = [];
+    $.each($("input[name='equipment']:checked"), function() {
+        checked.push($(this).val());
+    });
+    for (i=0; i < checked.length; i++) {
+        window.spacescout_search_options["extended_info:" + checked[i]] = true;
+    }
 
     // noise
 
@@ -80,6 +87,7 @@ function run_custom_search() {
     // food/coffee
 
     // Run the search
+    //console.log(window.spacescout_search_options);
     fetch_data();
     $("#filter_block").slideUp(speed);
 }
