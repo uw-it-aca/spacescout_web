@@ -15,13 +15,15 @@ body {
 
     #filter_container { position: relative;
 
-        #filter_block { display:none; background-color:#111; color: #aaa;
+        #filter_block { display:none; background-color:#111; color: #666;
 
             .inner { padding: 15px; }
 
             .choice-group { /*border: solid 1px rgba(241,241,12,0.3);*/ margin-bottom: 20px;
                 .checkbox.inline { margin-left: 0; margin-right: 10px; }
             }
+            
+            .selected { color: #fff; }
 
             h2 { color: yellow; border-top: 1px dotted #aaa; margin: 0; font-size: 15px; line-height: 18px; }
 
@@ -30,7 +32,7 @@ body {
             }
 
             #filter_space_types, #filter_equipment_types {
-                .checkbox { background-color: blue; white-space: nowrap; line-height: 30px;  padding-top: 0;
+                .checkbox { white-space: nowrap; line-height: 30px;  padding-top: 0;
 
                    /* input { visibility: hidden; }*/ // hide the ugly checkbox inputs
 
@@ -40,7 +42,7 @@ body {
                 /*.checkbox input[type="checkbox"] { margin-top: 10px; }*/
             }
             #filter_reservability, #filter_noise_level, #filter_food_coffee, #filter_lighting {
-                .checkbox { width: auto; margin-right: 15px; background-color: red; white-space: nowrap; line-height: 30px; padding-top: 0;
+                .checkbox { width: auto; margin-right: 15px; white-space: nowrap; line-height: 30px; padding-top: 0;
 
                     /*input { visibility: hidden; }*/ // hide the ugly checkbox inputs
                     input[type="checkbox"] { margin-top: 11px; }

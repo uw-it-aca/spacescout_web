@@ -142,10 +142,17 @@
                 allowClear: true
             });
 
-        if ($('.select2-input').is(':visible')) {
-            $('.select2-input').attr('readonly', true);
-            // readonly="true"
-        }
+        // handle checkbox clicks
+        
+        $(".checkbox").toggle(function() {
+            console.log("first click");
+            $(this).find('input').prop("checked", true);
+            $(this).addClass("selected");
+        }, function() {
+            console.log("second click");
+            $(this).find('input').prop("checked", false);
+            $(this).removeClass("selected");
+        });
 
 	});
 
