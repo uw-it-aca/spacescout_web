@@ -1,6 +1,7 @@
 body {
     min-height: 420px;
-    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    /*font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;*/
+    font-family: Helvetica, Arial, "Lucida Grande", sans-serif;
     background-color: gray;
 }
 
@@ -25,34 +26,32 @@ body {
             
             .selected { color: #fff; }
 
-            h2 { color: yellow; border-top: 1px dotted #aaa; margin: 0; font-size: 15px; line-height: 18px; }
+            h2 { color: yellow; border-top: 1px dotted #aaa; margin: 0; font-size: 15px; line-height: 33px; }
 
-            h3 { color: lime; font-size: 13px; line-height: 14px; margin: 0 0 5px 0;
+            h3 { color: #fff; font-size: 13px; line-height: 14px; margin: 0 0 5px 0;
                 span { font-weight: normal; font-size: 12px; }
             }
 
             #filter_space_types, #filter_equipment_types {
                 .checkbox { white-space: nowrap; line-height: 30px;  padding-top: 0;
-
-                   /* input { visibility: hidden; }*/ // hide the ugly checkbox inputs
-
-                   input[type="checkbox"] { margin-top: 11px; }
+                   input[type="checkbox"] { margin-top: 0px; width: 17px; height: 17px; float: none; }
                 }
-
-                /*.checkbox input[type="checkbox"] { margin-top: 10px; }*/
             }
             #filter_reservability, #filter_noise_level, #filter_food_coffee, #filter_lighting {
                 .checkbox { width: auto; margin-right: 15px; white-space: nowrap; line-height: 30px; padding-top: 0;
-
-                    /*input { visibility: hidden; }*/ // hide the ugly checkbox inputs
-                    input[type="checkbox"] { margin-top: 11px; }
+                    input[type="checkbox"] { margin-top: 0px; width: 17px; height: 17px; float: none; }
                 }
             }
 
             #filter_location, #filter_hours {
-                .radio { width: auto; margin-right: 15px; background-color: purple; white-space: nowrap; line-height: 30px; padding-top: 0;
-                    input[type="radio"] { margin-top: 10px; }
+                .radio { width: auto; margin-right: 15px; white-space: nowrap; line-height: 30px; padding-top: 0; margin-left: 0;
+                    input[type="radio"] { margin-top: -3px; width: 15px; height: 15px; float: none; }
                 }
+            }
+            
+            #filter_hours {
+                .hours-from, .hours-until { display: inline-block; width: 35px; }
+                select { width: 39%; }
             }
 
 
@@ -140,7 +139,32 @@ body {
 
 .select2-drop {
     margin-top: 10px !important;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 1px 2px 6px rgba(0,0,0, 0.5);
+    -webkit-box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.5);
+    border: none;
+}
 
+ul.select2-choices {
+    background-color: white;
+border: 1px solid #CCC;
+-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+-webkit-transition: border linear 0.2s, box-shadow linear 0.2s;
+-moz-transition: border linear 0.2s, box-shadow linear 0.2s;
+-o-transition: border linear 0.2s, box-shadow linear 0.2s;
+transition: border linear 0.2s, box-shadow linear 0.2s;
+line-height: 20px;
+-webkit-border-radius: 3px;
+-moz-border-radius: 3px;
+border-radius: 3px;
+    
+    .select2-search-choice { line-height: 18px !important; }
+    .select2-search-field input { height: auto !important; }
 }
 
 

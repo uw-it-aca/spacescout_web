@@ -142,18 +142,26 @@
                 allowClear: true
             });
 
-        // handle checkbox clicks
-        
-        $(".checkbox").toggle(function() {
-            console.log("first click");
-            $(this).find('input').prop("checked", true);
-            $(this).addClass("selected");
-        }, function() {
-            console.log("second click");
-            $(this).find('input').prop("checked", false);
-            $(this).removeClass("selected");
+        // handle checkbox and radio button clicks
+                
+        $('.checkbox input:checkbox').click(function() {
+            if(this.checked) {
+                console.log("lasjdflasjdlsakdjf");
+                $(this).parent().addClass("selected");
+            }
+            else {
+                console.log("xxxx");
+                $(this).parent().removeClass("selected");     
+            }
         });
-
+            
+        $('.radio input:radio').change(function() {
+            console.log("lasjdflasjdlsakdjf");
+            $(this).parent().addClass("selected");
+            $(this).parent().siblings().removeClass("selected");
+          
+        });
+        
 	});
 
 	$(w).resize(function(){ //Update dimensions on resize
