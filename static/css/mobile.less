@@ -23,7 +23,7 @@ body {
             .choice-group { /*border: solid 1px rgba(241,241,12,0.3);*/ margin-bottom: 20px;
                 .checkbox.inline { margin-left: 0; margin-right: 10px; }
             }
-            
+
             .selected { color: #fff; }
 
             h2 { color: yellow; border-top: 1px dotted #aaa; margin: 0; font-size: 15px; line-height: 18px; padding-top: 10px; }
@@ -33,13 +33,13 @@ body {
             }
 
             #filter_space_types, #filter_equipment_types {
-                .checkbox { white-space: nowrap; line-height: 30px;  padding-top: 0;
-                   input[type="checkbox"] { margin-top: 0px; width: 17px; height: 17px; float: none; }
+                .checkbox { white-space: nowrap; line-height: 30px;  padding-top: 0; margin-bottom: 0;
+                   input[type="checkbox"] { margin-top: -3px; width: 17px; height: 17px; float: none; }
                 }
             }
             #filter_reservability, #filter_noise_level, #filter_food_coffee, #filter_lighting {
                 .checkbox { width: auto; margin-right: 15px; white-space: nowrap; line-height: 30px; padding-top: 0;
-                    input[type="checkbox"] { margin-top: 0px; width: 17px; height: 17px; float: none; }
+                    input[type="checkbox"] { margin-top: -3px; width: 17px; height: 17px; float: none; }
                 }
             }
 
@@ -48,7 +48,7 @@ body {
                     input[type="radio"] { margin-top: -3px; width: 15px; height: 15px; float: none; }
                 }
             }
-            
+
             #filter_hours {
                 .hours-from, .hours-until { display: inline-block; width: 35px; }
                 select { width: 39%; }
@@ -162,7 +162,7 @@ line-height: 20px;
 -webkit-border-radius: 3px;
 -moz-border-radius: 3px;
 border-radius: 3px;
-    
+
     .select2-search-choice { line-height: 18px !important; }
     .select2-search-field input { height: auto !important; }
 }
@@ -171,6 +171,17 @@ border-radius: 3px;
 
 /* Target iPhone */
 @media screen and (min-width: 320px) {
+
+    #nav {
+        #filter_container {
+            #filter_block {
+                #filter_hours {
+                    select { width: 42%; }
+                }
+            }
+        }
+    }
+
     #map_canvas {
         min-height: 280px;
     }
@@ -179,6 +190,17 @@ border-radius: 3px;
 
 /* Target Androids */
 @media screen and (min-width: 480px) {
+
+    #nav {
+        #filter_container {
+            #filter_block {
+                #filter_hours {
+                    select { width: 44.9%; }
+                }
+            }
+        }
+    }
+
     #map_canvas {
         min-height: 400px;
     }
