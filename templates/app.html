@@ -126,15 +126,15 @@
                     <div id="filter_hours" class="choice-group">
                         <div>
                             <label class="radio inline">
-                              <input type="radio" name="optionsRadios" id="" value="option1" checked>
+                              <input type="radio" name="optionsHours" id="" value="option1" checked>
                               Open now
                             </label>
                             <label class="radio inline">
-                              <input type="radio" name="optionsRadios" id="" value="option2">
+                              <input type="radio" name="optionsHours" id="hours_list_input" value="option2">
                               Specify day &amp; time
                             </label>
                         </div>
-                        <div style="margin-top:8px;">
+                        <div id="hours_list_container" style="margin-top:8px; display:none; ">
                             <div><span class="hours-from">from</span><select>
                               <option>No preference</option>
                               <option>Monday</option>
@@ -198,13 +198,13 @@
                     <div id="filter_location" class="choice-group">
                         <div>
                             <label class="radio inline">
-                              <input type="radio" name="optionsRadios" id="" value="option1" checked> Entire campus
+                              <input type="radio" name="optionsLocations" id="" value="option1" checked> Entire campus
                             </label>
                             <label class="radio inline">
-                              <input type="radio" name="optionsRadios" id="" value="option2"> Specific building
+                              <input type="radio" name="optionsLocations" id="building_list_input" value="option2"> Specific building
                             </label>
                         </div>
-                        <div id="building_list_container" style="margin-top:8px;">
+                        <div id="building_list_container" style="margin-top:8px;display:none;">
                             <select multiple="" name="e9" id="e9" style="display:none; " class="populate">
                                 <optgroup label="A">
                                     <option value="x1">Alder Hall</option>

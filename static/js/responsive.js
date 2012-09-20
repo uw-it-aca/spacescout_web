@@ -143,25 +143,43 @@
             });
 
         // handle checkbox and radio button clicks
-                
         $('.checkbox input:checkbox').click(function() {
             if(this.checked) {
-                console.log("lasjdflasjdlsakdjf");
                 $(this).parent().addClass("selected");
             }
             else {
-                console.log("xxxx");
-                $(this).parent().removeClass("selected");     
+                $(this).parent().removeClass("selected");
             }
         });
-            
-        $('.radio input:radio').change(function() {
-            console.log("lasjdflasjdlsakdjf");
+
+
+        $('#filter_hours input:radio').change(function() {
             $(this).parent().addClass("selected");
             $(this).parent().siblings().removeClass("selected");
-          
+
+            if ($('#hours_list_input').is(':checked')) {
+                scrollTo('filter_hours');
+                $('#hours_list_container').show();
+            }
+            else {
+                $('#hours_list_container').hide();
+            }
         });
-        
+
+        $('#filter_location input:radio').change(function() {
+            $(this).parent().addClass("selected");
+            $(this).parent().siblings().removeClass("selected");
+
+            if ($('#building_list_input').is(':checked')) {
+                scrollTo('filter_location');
+                $('#building_list_container').show();
+            }
+            else {
+                $('#building_list_container').hide();
+            }
+
+        });
+
 	});
 
 	$(w).resize(function(){ //Update dimensions on resize
