@@ -7,7 +7,7 @@
 (function(w){
 	var sw = document.body.clientWidth,
 		breakpoint = 768,
-		speed = 800,
+		speed = 600,
 		mobile = true;
 
 	$(document).ready(function() {
