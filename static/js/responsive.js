@@ -120,7 +120,7 @@
         $('.view-details').live('click', function(e){
             e.preventDefault();
 
-            // if new
+            // if a space details already exists
             if ($('#space_detail_container').is(':visible')) {
                 console.log("kasdfjlaksdjfalksd");
                 replaceSpaceDetails();
@@ -214,7 +214,7 @@
 
 	   }
 	   else { // TODO: mobile should open new page
-    	   console.log('do something else for mobile -- open new page');
+    	   alert("mobile: take me to another page");
 	   }
 	}
 
@@ -237,7 +237,8 @@
     	   setTimeout('$(".space-detail-inner").show()', 1300);
 	   }
 	   else { // TODO: mobile should open new page
-    	   console.log('do something else for mobile -- open new page');
+
+    	   alert("mobile: take me to another page");
 	   }
 	}
 

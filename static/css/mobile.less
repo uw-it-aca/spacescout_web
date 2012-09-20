@@ -95,7 +95,16 @@ body {
         ul { margin: 0;
 
             li { background-color: #fff; color: #000; list-style: none; margin-bottom: 0px; padding: 10px; border-bottom:solid 2px #ddd;
-                img { margin-right: 10px; }
+                .view-details { cursor: pointer; }
+                .space-detail-list-image { margin-right: 10px; display: inline-block; width: 100px; }
+                .space-detail-list-item { width: 51%; display: inline-block;
+                    .space-detail-type { color: #666; }
+                    .space-detail-name { font-size: 17px; line-height: 28px; white-space: nowrap; overflow:hidden; text-overflow: ellipsis; color: #000;
+                        a { color: #000; text-decoration: none; }
+                        a:hover { color: red; }
+                    }
+                    .space-detail-desc { white-space: nowrap; overflow:hidden; text-overflow: ellipsis; color: #ddd; }
+                }
             }
             li:last-child { border-bottom: none; }
         }
@@ -133,9 +142,9 @@ body {
 }
 
 select {
-    -webkit-border-radius: 9px;
-    -moz-border-radius: 9px;
-    border-radius: 9px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
 
 }
 
@@ -146,9 +155,11 @@ select {
 
 .select2-drop {
     margin-top: 5px !important;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
+
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+
     box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.5);
     -moz-box-shadow: 1px 2px 6px rgba(0,0,0, 0.5);
     -webkit-box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.5);
@@ -166,9 +177,10 @@ ul.select2-choices {
     -o-transition: border linear 0.2s, box-shadow linear 0.2s;
     transition: border linear 0.2s, box-shadow linear 0.2s;
     line-height: 20px;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
+
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
 
     .select2-search-choice { line-height: 18px !important; }
     .select2-search-field input { height: auto !important; }
@@ -193,6 +205,16 @@ ul.select2-choices {
         min-height: 280px;
     }
 
+    #info_list {
+        #info_items {
+            ul {
+                li {
+                    .space-detail-list-item { width: 63%; }
+                }
+            }
+        }
+    }
+
 }
 
 /* Target Androids */
@@ -210,6 +232,16 @@ ul.select2-choices {
 
     #map_canvas {
         min-height: 400px;
+    }
+
+    #info_list {
+        #info_items {
+            ul {
+                li {
+                    .space-detail-list-item { width: 76%; }
+                }
+            }
+        }
     }
 
 }
