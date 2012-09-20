@@ -81,6 +81,12 @@ function run_custom_search() {
     }
 
     // noise
+    var checked = new Array();
+    $.each($("input[name='noise_level']:checked"), function() {
+        checked.push($(this).val());
+    });
+    window.spacescout_search_options["extended_info:noise_level"] = checked;
+    
 
     // lighting
 
