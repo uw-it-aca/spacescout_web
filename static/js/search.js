@@ -93,6 +93,11 @@ function run_custom_search() {
     }
 
     // food/coffee
+    checked = [];
+    $.each($("input[name='food_nearby']:checked"), function() {
+        checked.push($(this).val());
+    });
+    window.spacescout_search_options["extended_info:food_nearby"] = checked;
 
     // Run the search
     //console.log(window.spacescout_search_options);
