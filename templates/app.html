@@ -326,20 +326,20 @@
                             <div id="filter_lighting" class="choice-group">
                                 <h3>Lighting</h3>
                                 <label class="checkbox inline">
-                                  <input type="checkbox" id="" value=""> Natural Light
+                                  <input type="checkbox" id="lighting" name="has_natural_light"  value="true"> Natural Light
                                 </label>
                             </div>
 
                             <div id="filter_food_coffee" class="choice-group">
                                 <h3>Food/Coffee</h3>
                                 <label class="checkbox inline">
-                                  <input type="checkbox" id="" value=""> In space
+                                  <input type="checkbox" id="" name="food_nearby" value="space"> In space
                                 </label>
                                 <label class="checkbox inline">
-                                  <input type="checkbox" id="" value=""> In building
+                                  <input type="checkbox" id="" name="food_nearby" value="building"> In building
                                 </label>
                                 <label class="checkbox inline">
-                                  <input type="checkbox" id="" value=""> In neighboring building
+                                  <input type="checkbox" id="" name="food_nearby" value="neighboring"> In neighboring building
                                 </label>
                             </div>
                         </div>
@@ -407,6 +407,7 @@
                 {% tplhandlebars "cluster_list" %}
                     <ul>
                         {{#each data}}
+<<<<<<< HEAD
                         <li class="clearfix">
                             <div class="space-detail-list-image pull-left"><img src='http://placehold.it/92x70' class='img-polaroid'></div>
                             <div class="space-detail-list-item view-details pull-left">
@@ -415,6 +416,9 @@
                                 <div class="space-detail-desc">{{type.extended_info.location_description}}</div>
                             </div>
                         </li>
+=======
+                        <li><img src='http://placehold.it/100x70' class='img-polaroid'> {{name}} <a href="#" class="view-details" id="">view details</a></li>
+>>>>>>> 96d12c4f595fce2296f38f1fcbe725e7cafbe737
                         {{/each}}
                     </ul>
                 {% endtplhandlebars %}
