@@ -214,7 +214,8 @@
 
 	   }
 	   else { // TODO: mobile should open new page
-    	   alert("mobile: take me to another page");
+    	   //alert("mobile: take me to another page");
+    	   location.href = '/space/1934';
 	   }
 	}
 
@@ -238,8 +239,8 @@
     	   setTimeout('$(".space-detail-inner").show()', 1300);
 	   }
 	   else { // TODO: mobile should open new page
-
-    	   alert("mobile: take me to another page");
+    	   //alert("mobile: take me to another page");
+    	   location.href = '/space/1934';
 	   }
 	}
 
