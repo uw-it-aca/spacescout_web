@@ -268,10 +268,10 @@
 	function checkMobile() {
 		mobile = (sw > breakpoint) ? false : true;
 		if (!mobile) {
-		  // If Not Mobile (Desktop )
+		  // desktop
 		  resizeContent();
 		} else {
-		  // Do this for mobile size
+		  // mobile
 		  resetContent();
 		}
 	}
@@ -296,9 +296,13 @@
         var windowH = $(window).height();
         var headerH = $('#nav').height();
         var contentH = windowH - headerH;
+        var mainContentH = windowH - headerH - 35;
 
         $('#map_canvas').height('auto');
         $('#info_list').height('auto');
+        
+        //$('#main_content').height(mainContentH);
+        $('#main_content').css({ minHeight: mainContentH });
     }
 
 

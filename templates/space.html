@@ -3,7 +3,12 @@
 {% block head %}
 {% endblock %}
 {% block content %}
-    <body>
+    
+    <div id="nav" style="position:relative;">
+        <div class="logo">SPACESCOUT</div>
+    </div>
+
+    <div id="main_content">
         <h1>{{ name }}</h1>
         <p style="font-size: .6em">
         This doesn't really have more content yet.
@@ -16,5 +21,6 @@
             <li>{{ attribute.name }} - {{ attribute.value }}</li>
             {% endfor %}
         </ul>
-    </body>
+    </div>
+    
 {% endblock %}
