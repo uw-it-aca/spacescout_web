@@ -4,6 +4,12 @@
 {% endblock %}
 
 {% block extra_js %}
+<script>
+    window.default_latitude = {{ center_latitude }};
+    window.default_longitude = {{ center_longitude }};
+    window.default_zoom = {{ zoom_level }};
+</script>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=true"></script>
 {% endblock %}
 
 {% block content %}
@@ -365,7 +371,7 @@
                     <div class="loading"><div class="loading-inner">&nbsp;</div></div>
                     <div class="space-detail-inner">
                         <div class="space-detail-header">
-                            <div class="space-detail-type">Open Area</div>
+                            <div class="space-detail-type">Open area</div>
                             <div class="space-detail-name">Paccar Hall Atrium</div>
                             <a class="close" href="#">&times;</a>
                         </div>
@@ -379,9 +385,13 @@
                 <div class="space-detail">
                     <div class="loading"><div class="loading-inner">&nbsp;</div></div>
                     <div class="space-detail-inner">
-                        <div class="space-detail-header">title <a class="close" href="#">&times;</a></div>
+                        <div class="space-detail-header">
+                            <div class="space-detail-type">Open Area</div>
+                            <div class="space-detail-name">Paccar Hall Atrium</div>
+                            <a class="close" href="#">&times;</a>
+                        </div>
                         <div class="space-detail-body">this is the details view</div>
-                        <div class="space-detail-footer">footer</div>
+                        <div class="space-detail-footer">This space was last updated...</div>
                     </div>
                 </div>
         {% endtplhandlebars %}

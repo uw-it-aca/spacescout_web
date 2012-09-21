@@ -118,14 +118,18 @@
 
         // handle view details click
         $('.view-details').live('click', function(e){
+            
+            // get the space id
+            id =  $(this).attr('id');
+            
             e.preventDefault();
 
             // if a space details already exists
             if ($('#space_detail_container').is(':visible')) {
-                replaceSpaceDetails();
+                replaceSpaceDetails(id);
             }
             else {
-                showSpaceDetails();
+                showSpaceDetails(id);
             }
 
         });
@@ -187,10 +191,12 @@
 	});
 
 	// Show space details
-	function showSpaceDetails() {
+	function showSpaceDetails(id) {
 
     	// remove any open details
     	$('#space_detail_container').remove();
+    	
+    	console.log("the following id was passed: " + id);
 
     	if (!mobile) { // if desktop
 
@@ -214,13 +220,14 @@
 
 	   }
 	   else { // TODO: mobile should open new page
-    	   //alert("mobile: take me to another page");
-    	   location.href = '/space/1934';
+    	   location.href = '/space/' + id;
 	   }
 	}
 
-	function replaceSpaceDetails() {
-
+	function replaceSpaceDetails(id) {
+    	
+    	console.log("the following id was passed: " + id);
+    	
     	if (!mobile) { // if desktop
 
     	   // build the template
@@ -239,8 +246,7 @@
     	   setTimeout('$(".space-detail-inner").show()', 1300);
 	   }
 	   else { // TODO: mobile should open new page
-    	   //alert("mobile: take me to another page");
-    	   location.href = '/space/1934';
+    	   location.href = '/space/' + id;
 	   }
 	}
 
@@ -251,10 +257,8 @@
         });
 	}
 
-
 	// ScrollTo a spot on the UI
 	function scrollTo(id) {
-
         // Scroll
         $('html,body').animate({
             scrollTop: $("#"+id).offset().top},speed);
