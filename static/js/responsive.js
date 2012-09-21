@@ -1,10 +1,3 @@
-/* Normalized hide address bar for iOS & Android (c) Scott Jehl, scottjehl.com MIT License */
-
-/*(function(a){var b=a.document;if(!location.hash&&a.addEventListener){window.scrollTo(0,1);var c=1,d=function(){return a.pageYOffset||b.compatMode==="CSS1Compat"&&b.documentElement.scrollTop||b.body.scrollTop||0},e=setInterval(function(){if(b.body){clearInterval(e);c=d();a.scrollTo(0,c===1?0:1)}},15);a.addEventListener("load",function(){setTimeout(function(){if(d()<20){a.scrollTo(0,c===1?0:1)}},0)})}})(this);
-
-/*! A fix for the iOS orientationchange zoom bug. Script by @scottjehl, rebound by @wilto.MIT License.*/
-/*(function(m){var l=m.document;if(!l.querySelector){return}var n=l.querySelector("meta[name=viewport]"),a=n&&n.getAttribute("content"),k=a+",maximum-scale=1",d=a+",maximum-scale=10",g=true,j,i,h,c;if(!n){return}function f(){n.setAttribute("content",d);g=true}function b(){n.setAttribute("content",k);g=false}function e(o){c=o.accelerationIncludingGravity;j=Math.abs(c.x);i=Math.abs(c.y);h=Math.abs(c.z);if(!m.orientation&&(j>7||((h>6&&i<8||h<8&&i>6)&&j>5))){if(g){b()}}else{if(!g){f()}}}m.addEventListener("orientationchange",f,false);m.addEventListener("devicemotion",e,false)})(this); */
-
 (function(w){
 	var sw = document.body.clientWidth,
 		breakpoint = 767,
@@ -14,6 +7,7 @@
 	$(document).ready(function() {
 
 		checkMobile();
+		setDisplay();
 
 		// Toggle Filter display
 		$('#filter_button').click(function() {
@@ -30,7 +24,7 @@
 
             } else {
                 // scroll to top of the page and then slide the filters up
-                scrollTo('top');
+                //scrollTo('top');
                 $("#filter_block").slideUp(speed);
 
                 if (mobile) {
@@ -47,7 +41,7 @@
         // Close the filter display using Cancel button
         $('#cancel_results_button').click(function() {
 
-            scrollTo('top');
+            //scrollTo('top');
             $("#filter_block").slideUp(speed);
 
             if (mobile) {
@@ -186,10 +180,32 @@
 
 	});
 
-	$(w).resize(function(){ //Update dimensions on resize
-		sw = document.body.clientWidth;
-		checkMobile();
+	//Update dimensions on resize
+	$(w).resize(function(){
+
+	   console.log("resized");
+	   sw = document.body.clientWidth;
+
+	   checkMobile();
+	   setDisplay();
+
 	});
+
+	// Check if Mobile
+	function checkMobile() {
+		mobile = (sw > breakpoint) ? false : true;
+	}
+
+	// Set the proper display settings
+	function setDisplay() {
+    	if (mobile) {
+		  // mobile
+		  mobileContent();
+		} else {
+		  // desktop
+		  desktopContent();
+		}
+	}
 
 	// Show space details
 	function showSpaceDetails(id) {
@@ -199,9 +215,12 @@
 
     	console.log("the following id was passed: " + id);
 
-    	if (!mobile) { // if desktop
-
-    	   // build the template
+    	if (mobile) {
+        	// change url
+        	location.href = '/space/' + id;
+    	}
+    	else {
+        	// build the template
     	   var source = $('#space_details').html();
     	   var template = Handlebars.compile(source);
     	   $('#map_canvas').append(template(template));
@@ -218,20 +237,20 @@
         	   setTimeout('$(".space-detail .loading").hide()', 1000);
         	   setTimeout('$(".space-detail-inner").show()', 1300);
     	   });
+    	}
 
-	   }
-	   else { // TODO: mobile should open new page
-    	   location.href = '/space/' + id;
-	   }
 	}
 
 	function replaceSpaceDetails(id) {
 
     	console.log("the following id was passed: " + id);
 
-    	if (!mobile) { // if desktop
-
-    	   // build the template
+    	if (mobile) {
+        	// change url
+        	location.href = '/space/' + id;
+    	}
+    	else {
+        	// build the template
     	   var source = $('#space_details_replace').html();
     	   var template = Handlebars.compile(source);
     	   $('#space_detail_container').html(template(template));
@@ -245,10 +264,8 @@
 
     	   setTimeout('$(".space-detail .loading").hide()', 1000);
     	   setTimeout('$(".space-detail-inner").show()', 1300);
-	   }
-	   else { // TODO: mobile should open new page
-    	   location.href = '/space/' + id;
-	   }
+    	}
+
 	}
 
 	function hideSpaceDetails() {
@@ -265,20 +282,8 @@
             scrollTop: $("#"+id).offset().top},speed);
     }
 
-	// Check if Mobile
-	function checkMobile() {
-		mobile = (sw > breakpoint) ? false : true;
-		if (!mobile) {
-		  // desktop
-		  resizeContent();
-		} else {
-		  // mobile
-		  resetContent();
-		}
-	}
-
-	// Resize Map and List
-	function resizeContent() {
+	// Desktop display defaults
+	function desktopContent() {
 
     	var windowH = $(window).height();
         var headerH = $('#nav').height();
@@ -292,7 +297,8 @@
         //$('.loading').height(contentH);
     }
 
-    function resetContent() {
+    // Mobile display defaults
+    function mobileContent() {
 
         var windowH = $(window).height();
         var headerH = $('#nav').height();
@@ -306,6 +312,5 @@
         //$('#main_content').height(mainContentH);
         //$('#main_content').css({ minHeight: mainContentH });
     }
-
 
 })(this);
