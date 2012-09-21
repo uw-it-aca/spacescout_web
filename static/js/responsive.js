@@ -13,45 +13,41 @@
 		$('#filter_button').click(function() {
     		if ($("#filter_block").is(":hidden")) {
 
-                $("#filter_block").slideDown(speed, function() {
-                    // Animation complete.
-                    if (mobile) {
-                        $('#map_canvas').hide();
-                        $('#info_list').hide();
-                        $('.back-top').hide();
-                    }
-                });
+                $("#filter_block").slideDown('slow');
+
+                if (mobile) {
+                    $('#map_canvas').hide();
+                    $('#info_list').hide();
+                    $('.back-top').hide();
+                }
 
             } else {
-                // scroll to top of the page and then slide the filters up
-                $("#filter_block").slideUp(speed);
 
                 if (mobile) {
                     $('#map_canvas').show();
                     $('#info_list').show();
                     $('#filter_button_container').show();
                     $('.back-top').show();
-
                 }
 
+                $("#filter_block").slideUp('slow');
             }
         });
 
         // Close the filter display using Cancel button
         $('#cancel_results_button').click(function() {
 
-
-            $("#filter_block").slideUp(speed);
-
             if (mobile) {
                 $('#map_canvas').show();
                 $('#info_list').show();
                 $('#filter_button_container').show();
                 $('.back-top').show();
+                // scroll to top since the cancel button is at the bottom
+                scrollTo('top');
             }
 
-            // scroll to top since the cancel button is at the bottom
-            scrollTo('top');
+            $("#filter_block").slideUp('slow');
+
 
         });
 
@@ -309,10 +305,18 @@
         var mapH = windowH - headerH - 43; // enough to show the loading spinner at the bottom of the viewport
 
         $('#map_canvas').height(mapH);
+        $('#map_canvas').css({ minHeight: mapH })
         $('#info_list').height('auto');
 
         //$('#main_content').height(mainContentH);
         //$('#main_content').css({ minHeight: mainContentH });
+    }
+
+    function blah() {
+        $('#map_canvas').show();
+        $('#info_list').show();
+        $('#filter_button_container').show();
+        $('.back-top').show();
     }
 
 })(this);

@@ -62,7 +62,7 @@ function run_custom_search() {
         checked.push($(this).val());
     });
     window.spacescout_search_options["type"] = checked;
-    
+
     // reservable
     if ( $("#reservable").is(":checked") ) {
         window.spacescout_search_options["extended_info:reservable"] = "true";
