@@ -6,7 +6,7 @@
 
 (function(w){
 	var sw = document.body.clientWidth,
-		breakpoint = 768,
+		breakpoint = 767,
 		speed = 600,
 		mobile = true;
 
@@ -296,13 +296,14 @@
         var windowH = $(window).height();
         var headerH = $('#nav').height();
         var contentH = windowH - headerH;
-        var mainContentH = windowH - headerH - 35;
+        var mainContentH = windowH - headerH + 35;
+        var mapH = windowH - headerH - 10;
 
-        $('#map_canvas').height('auto');
+        $('#map_canvas').height(mapH);
         $('#info_list').height('auto');
         
         //$('#main_content').height(mainContentH);
-        $('#main_content').css({ minHeight: mainContentH });
+        //$('#main_content').css({ minHeight: mainContentH });
     }
 
 
