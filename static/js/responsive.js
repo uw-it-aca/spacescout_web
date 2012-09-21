@@ -9,6 +9,9 @@
 		checkMobile();
 		setDisplay();
 
+		// Initialize bootstrap stuff
+		$('.carousel').carousel();
+
 		// Toggle Filter display
 		$('#filter_button').click(function() {
     		if ($("#filter_block").is(":hidden")) {
@@ -224,17 +227,19 @@
     	   $('#map_canvas').append(template(template));
 
     	   // set/reset initial state
-    	   $('.space-detail-inner').hide();
-    	   $(".space-detail .loading").show();
+    	   $('.space-detail-inner').show();
+    	   //$(".space-detail .loading").show();
     	   $('#space_detail_container').show();
 
     	   $('#space_detail_container').height($('#map_canvas').height());
     	   $('.space-detail-body').height($('.space-detail').height() - 110);
 
-    	   $('.space-detail').slideDown('slow', function() {
+    	   /*$('.space-detail').slideDown('slow', function() {
         	   setTimeout('$(".space-detail .loading").hide()', 1000);
         	   setTimeout('$(".space-detail-inner").show()', 1300);
-    	   });
+    	   });*/
+
+    	   $('.space-detail').show("slide", { direction: "right" }, 700);
     	}
 
 	}
@@ -267,9 +272,13 @@
 	}
 
 	function hideSpaceDetails() {
-    	$('.space-detail').slideUp('slow', function() {
+    	/*$('.space-detail').slideUp('slow', function() {
             // Animation complete.
             $('#space_detail_container').remove();
+        });*/
+
+        $('.space-detail').hide("slide", { direction: "right" }, 700, function() {
+        	   $('#space_detail_container').remove();
         });
 	}
 
