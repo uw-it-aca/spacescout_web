@@ -1,8 +1,9 @@
 /* Normalized hide address bar for iOS & Android (c) Scott Jehl, scottjehl.com MIT License */
-(function(a){var b=a.document;if(!location.hash&&a.addEventListener){window.scrollTo(0,1);var c=1,d=function(){return a.pageYOffset||b.compatMode==="CSS1Compat"&&b.documentElement.scrollTop||b.body.scrollTop||0},e=setInterval(function(){if(b.body){clearInterval(e);c=d();a.scrollTo(0,c===1?0:1)}},15);a.addEventListener("load",function(){setTimeout(function(){if(d()<20){a.scrollTo(0,c===1?0:1)}},0)})}})(this);
+
+/*(function(a){var b=a.document;if(!location.hash&&a.addEventListener){window.scrollTo(0,1);var c=1,d=function(){return a.pageYOffset||b.compatMode==="CSS1Compat"&&b.documentElement.scrollTop||b.body.scrollTop||0},e=setInterval(function(){if(b.body){clearInterval(e);c=d();a.scrollTo(0,c===1?0:1)}},15);a.addEventListener("load",function(){setTimeout(function(){if(d()<20){a.scrollTo(0,c===1?0:1)}},0)})}})(this);
 
 /*! A fix for the iOS orientationchange zoom bug. Script by @scottjehl, rebound by @wilto.MIT License.*/
-(function(m){var l=m.document;if(!l.querySelector){return}var n=l.querySelector("meta[name=viewport]"),a=n&&n.getAttribute("content"),k=a+",maximum-scale=1",d=a+",maximum-scale=10",g=true,j,i,h,c;if(!n){return}function f(){n.setAttribute("content",d);g=true}function b(){n.setAttribute("content",k);g=false}function e(o){c=o.accelerationIncludingGravity;j=Math.abs(c.x);i=Math.abs(c.y);h=Math.abs(c.z);if(!m.orientation&&(j>7||((h>6&&i<8||h<8&&i>6)&&j>5))){if(g){b()}}else{if(!g){f()}}}m.addEventListener("orientationchange",f,false);m.addEventListener("devicemotion",e,false)})(this);
+/*(function(m){var l=m.document;if(!l.querySelector){return}var n=l.querySelector("meta[name=viewport]"),a=n&&n.getAttribute("content"),k=a+",maximum-scale=1",d=a+",maximum-scale=10",g=true,j,i,h,c;if(!n){return}function f(){n.setAttribute("content",d);g=true}function b(){n.setAttribute("content",k);g=false}function e(o){c=o.accelerationIncludingGravity;j=Math.abs(c.x);i=Math.abs(c.y);h=Math.abs(c.z);if(!m.orientation&&(j>7||((h>6&&i<8||h<8&&i>6)&&j>5))){if(g){b()}}else{if(!g){f()}}}m.addEventListener("orientationchange",f,false);m.addEventListener("devicemotion",e,false)})(this); */
 
 (function(w){
 	var sw = document.body.clientWidth,
@@ -118,10 +119,10 @@
 
         // handle view details click
         $('.view-details').live('click', function(e){
-            
+
             // get the space id
             id =  $(this).attr('id');
-            
+
             e.preventDefault();
 
             // if a space details already exists
@@ -195,7 +196,7 @@
 
     	// remove any open details
     	$('#space_detail_container').remove();
-    	
+
     	console.log("the following id was passed: " + id);
 
     	if (!mobile) { // if desktop
@@ -225,9 +226,9 @@
 	}
 
 	function replaceSpaceDetails(id) {
-    	
+
     	console.log("the following id was passed: " + id);
-    	
+
     	if (!mobile) { // if desktop
 
     	   // build the template
@@ -295,13 +296,13 @@
 
         var windowH = $(window).height();
         var headerH = $('#nav').height();
-        var contentH = windowH - headerH;
-        var mainContentH = windowH - headerH + 35;
-        var mapH = windowH - headerH - 10;
+        //var contentH = windowH - headerH;
+        //var mainContentH = windowH - headerH + 35;
+        var mapH = windowH - headerH - 43; // enough to show the loading spinner at the bottom of the viewport
 
         $('#map_canvas').height(mapH);
         $('#info_list').height('auto');
-        
+
         //$('#main_content').height(mainContentH);
         //$('#main_content').css({ minHeight: mainContentH });
     }
