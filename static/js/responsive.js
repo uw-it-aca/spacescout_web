@@ -24,7 +24,6 @@
 
             } else {
                 // scroll to top of the page and then slide the filters up
-                //scrollTo('top');
                 $("#filter_block").slideUp(speed);
 
                 if (mobile) {
@@ -41,7 +40,7 @@
         // Close the filter display using Cancel button
         $('#cancel_results_button').click(function() {
 
-            //scrollTo('top');
+
             $("#filter_block").slideUp(speed);
 
             if (mobile) {
@@ -50,6 +49,9 @@
                 $('#filter_button_container').show();
                 $('.back-top').show();
             }
+
+            // scroll to top since the cancel button is at the bottom
+            scrollTo('top');
 
         });
 
