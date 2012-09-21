@@ -4,12 +4,6 @@ function openInfoWindow(marker, info) {
     var source = $('#spot_info').html();
     var template = Handlebars.compile(source);
     $("#info_items").html(template(info));
-    /*
-    window.spacescout_infowindow = $("#info_items");
-
-    window.spacescout_infowindow.html(["<h1>", info.name, "</h1><div>This is the content window about the space.  Here's some info: <ul><li>Hours available: ", info.display_hours_available, "</li><li>Capacity: ", info.capacity, "</li></ul></div><div><a href='/spot/"+info.id+"'>View more</a></div>"].join(""));
-
-    */
     $('.loading').slideUp('fast');
 }
 
@@ -20,16 +14,25 @@ function addMarkerListener(marker, data) {
 
 }
 
-function openClusterInfoWindow(cluster) {
+function openClusterInfoWindow(cluster, data) {
+    // I'm sure there's a better way of filtering this down to spaces...
+    var spaces = new Array();
+    for (i=0; i < cluster.getMarkers().length; i++) {
+        for (j=0; j < data.length; j++) {
+            if (data[j].name == cluster.getMarkers()[i].title) {
+                spaces.push(data[j]);
+            }
+        }
+    }
     var source = $('#cluster_list').html();
     var template = Handlebars.compile(source);
-    $('#info_items').html(template({data: cluster.getMarkers()}));
+    $('#info_items').html(template({data: spaces}));
     $('.loading').slideUp('fast');
 }
 
-function addClusterListener(markerCluster) {
+function addClusterListener(markerCluster, data) {
     google.maps.event.addListener(markerCluster, 'click', function(c) {
-        openClusterInfoWindow(c);
+        openClusterInfoWindow(c, data);
     });
 
 }
@@ -73,14 +76,35 @@ function run_custom_search() {
     // location
 
     // equipment
+    checked = [];
+    $.each($("input[name='equipment']:checked"), function() {
+        checked.push($(this).val());
+    });
+    for (i=0; i < checked.length; i++) {
+        window.spacescout_search_options["extended_info:" + checked[i]] = true;
+    }
 
     // noise
+    checked = [];
+    $.each($("input[name='noise_level']:checked"), function() {
+        checked.push($(this).val());
+    });
+    window.spacescout_search_options["extended_info:noise_level"] = checked;
 
     // lighting
+    if ( $("#lighting").is(":checked") ) {
+        window.spacescout_search_options["extended_info:has_natural_light"] = "true";
+    }
 
     // food/coffee
+    checked = [];
+    $.each($("input[name='food_nearby']:checked"), function() {
+        checked.push($(this).val());
+    });
+    window.spacescout_search_options["extended_info:food_nearby"] = checked;
 
     // Run the search
+    //console.log(window.spacescout_search_options);
     fetch_data();
     $("#filter_block").slideUp(speed);
 }
@@ -172,7 +196,7 @@ function display_search_results(data) {
             window.spacescout_markers.push(marker);
         }
     }
-    addClusterListener(mc);
+    addClusterListener(mc, data);
     openAllMarkerInfoWindow(data);
 
     // you are here marker

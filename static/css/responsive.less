@@ -1,7 +1,5 @@
 @media screen and (min-width: 768px) {
 
-    /* body, label, input, button, select, textarea { font-size: 13px; } */
-
     #nav {
 
         .logo { height: 80px; line-height: 80px; font-size: 24px; }
@@ -11,20 +9,28 @@
 
              #filter_block { background: rgba(0, 0, 0, 0.9);
 
-                h2 { border: none; }
+                h2 { border: none; padding-top: 0;}
 
                 .inner-column { width: 33.3%; float: left;
                     .inner-block-left { padding-right: 20px; }
                     .inner-block-right { padding-left: 20px; }
                 }
 
+                #filter_hours {
+                    select { width: 40.6%; }
+                }
+
                 .filter-submit { text-align: right; }
 
             }
 
-            #filter_button_container { height: 30px; text-align:center; line-height:30px; position:absolute; left:0; right:0; top: auto; bottom:-30px; z-index: 999;
+            #filter_button_container { height: 30px; width: auto; text-align:center; line-height:30px; position:absolute; left:0; right:0; top: auto; bottom:-30px; z-index: 999;
                 .filter-button-text { display: inline-block; margin-left: 3px; color: #eee; }
-                #filter_button { background-color:#000; display:inline-block;padding: 0 10px; }
+                #filter_button { background-color:#000; display:inline-block;padding: 0 10px;
+                    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+                    -moz-box-shadow: 1px 1px 3px rgba(0,0,0, 0.5);
+                    -webkit-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+                }
             }
 
         }
@@ -44,16 +50,27 @@
             z-index: 1;
             display: none;
 
-            .space-detail { display: none; background-color: #eee; position: absolute; top: 40px; right: 40px; bottom: 40px; left: 40px; color: #333;
-                -webkit-border-radius: 3px;
-                -moz-border-radius: 3px;
-                border-radius: 3px;
-                box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.5);
-                -moz-box-shadow: 1px 2px 6px rgba(0,0,0, 0.5);
-                -webkit-box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.5);
+            .space-detail { display: none; background-color: #fff; position: absolute; top: 40px; right: 40px; bottom: 40px; left: 40px; color: #333;
+
+                -webkit-border-radius: 2px;
+                -moz-border-radius: 2px;
+                border-radius: 2px;
+
+                box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.5);
+                -moz-box-shadow: 1px 1px 6px rgba(0,0,0, 0.5);
+                -webkit-box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.5);
 
                 .loading { position: absolute; top: 45%; background: transparent url('/static/img/spinner.gif') no-repeat 50% 50%; background-size: 20px; text-align: center; left: 0; right: 0;}
-                .space-detail-inner { display:none; padding: 10px; }
+                .space-detail-inner { display:none; padding: 10px;
+
+                    .space-detail-header { position: relative; height: 60px;
+                        .space-detail-type { color: #666; }
+                        .space-detail-name { font-size: 20px; color: #000; margin: 5px 0; }
+                        .close { position: absolute; right: 0; top: 0; float: none; }
+                    }
+                    .space-detail-body { background-color: yellow; }
+                    .space-detail-footer { text-align: center; font-size: 12px; color: #ccc; line-height: 30px; }
+                }
             }
         }
     }
@@ -72,8 +89,9 @@
 
         #info_items {
             ul { margin: 0px;
-
-                li { }
+                li {
+                    .space-detail-list-item { width: 55%; }
+                }
             }
         }
     }
@@ -88,11 +106,50 @@
 /* Target Androids */
 @media screen and (min-width: 1024px) {
 
+    #nav {
+        #filter_container {
+            #filter_block {
+                #filter_hours {
+                    select { width: 43%; }
+                }
+            }
+        }
+    }
+
+    #info_list {
+        #info_items {
+            ul {
+                li {
+                    .space-detail-list-item { width: 65%; }
+                }
+            }
+        }
+    }
+
 }
 
 /* Target Androids */
 @media screen and (min-width: 1280px) {
 
+    #nav {
+        #filter_container {
+            #filter_block {
+                #filter_hours {
+                    select { width: 44.4%; }
+                }
+            }
+        }
+    }
+
+    #info_list {
+        #info_items {
+            ul {
+                li {
+                    .space-detail-list-item { width: 75%; }
+                }
+            }
+        }
+    }
 
 }
 
