@@ -3,24 +3,61 @@
 {% block head %}
 {% endblock %}
 {% block content %}
-    
+
     <div id="nav" style="position:relative;">
         <div class="logo">SPACESCOUT</div>
     </div>
 
     <div id="main_content">
-        <h1>{{ name }}</h1>
-        <p style="font-size: .6em">
-        This doesn't really have more content yet.
-        </p>
-        <p>Capacity: {{ capacity }} </p>
 
-        Extra info:
-        <ul>
-            {% for attribute in attribute_list %}
-            <li>{{ attribute.name }} - {{ attribute.value }}</li>
-            {% endfor %}
-        </ul>
+        <div id="space_details_page">
+
+            <div id="space_detail_container" class="">
+                <div class="space-detail">
+                    <div class="space-detail-inner">
+                        <div class="space-detail-header">
+                            <div class="space-detail-type">Open area</div>
+                            <div class="space-detail-name">{{ name }}</div>
+                        </div>
+                        <div class="space-detail-body">
+                            <div class="space-detail-body-inner">
+                                <div class="image-container">
+                                    <div id="myCarousel" class="carousel slide">
+                                      <!-- Carousel items -->
+                                      <div class="carousel-inner">
+                                        <div class="active item"><img src="http://placehold.it/440x300" class="img"></div>
+                                        <div class="item"><img src="http://placehold.it/440x300" class="img"></div>
+                                        <div class="item"><img src="http://placehold.it/440x300" class="img"></div>
+                                      </div>
+                                      <!-- Carousel nav -->
+                                      <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+                                      <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+                                    </div>
+                                </div>
+                                <div class="map-container" style="display:none; ">map here</div>
+
+                                <div class="btn-group" style="text-align:center; margin-top: 5px;">
+                                  <button class="btn">images</button>
+                                  <button class="btn">map</button>
+                                </div>
+                                <div>
+                                    <p>Capacity: {{ capacity }} </p>
+
+                                    <div>Extra info:</div>
+                                    <ul>
+                                        {% for attribute in attribute_list %}
+                                        <li>{{ attribute.name }} - {{ attribute.value }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="space-detail-footer">This space was last updated...  <button type="button" class="btn btn-small btn-danger">report a problem</button></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
-    
+
 {% endblock %}

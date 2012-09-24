@@ -76,6 +76,36 @@ body {
     }
 }
 
+/* mobile only: space details page */
+#space_details_page { position: relative; padding: 15px;
+
+    #space_detail_container {
+
+        .space-detail { background: #fff; color: #333;
+
+            .space-detail-inner {
+
+                .space-detail-header { position: relative; height: 60px;
+                    .space-detail-type { color: #666; }
+                    .space-detail-name { font-size: 20px; color: #000; margin: 5px 0; }
+                    .close { position: absolute; right: 0; top: 0; float: none; }
+                }
+                .space-detail-body {
+                    .space-detail-body-inner {
+
+                        .image-container, .map-container { width: 440px; background-color: yellow; }
+                        .image-container {
+                            .carousel { margin: 0; }
+                        }
+                    }
+                }
+                .space-detail-footer { text-align: center; font-size: 12px; color: #ccc; line-height: 30px; }
+            }
+        }
+    }
+
+}
+
 #map_canvas {
     /*min-height: 220px;*/
     background: #ddd url('/static/img/spinner.gif') no-repeat 50% 50%;

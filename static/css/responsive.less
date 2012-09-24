@@ -41,6 +41,7 @@
         width: 62%;
         float: left;
 
+        // copy the following block and make sure that mobile.less contains the "mobile" version
         #space_detail_container {
             position: absolute;
             top: 0;
@@ -72,7 +73,9 @@
                         .space-detail-body-inner { min-height: 700px;
 
                             .image-container, .map-container { width: 440px; background-color: yellow; }
-                            .image-container {  }
+                            .image-container {
+                                .carousel { margin: 0; }
+                            }
                         }
                     }
                     .space-detail-footer { text-align: center; font-size: 12px; color: #ccc; line-height: 30px; }
