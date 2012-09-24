@@ -151,13 +151,12 @@
             }
         });
 
-
         $('#filter_hours input:radio').change(function() {
             $(this).parent().addClass("selected");
             $(this).parent().siblings().removeClass("selected");
 
             if ($('#hours_list_input').is(':checked')) {
-                scrollTo('filter_hours');
+                //scrollTo('filter_hours');
                 $('#hours_list_container').show();
             }
             else {
@@ -170,7 +169,7 @@
             $(this).parent().siblings().removeClass("selected");
 
             if ($('#building_list_input').is(':checked')) {
-                scrollTo('filter_location');
+                //scrollTo('filter_location');
                 $('#building_list_container').show();
             }
             else {
