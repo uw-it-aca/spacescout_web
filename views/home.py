@@ -1,6 +1,8 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.conf import settings
+import oauth2
+import simplejson as json
 
 
 def HomeView(request):
@@ -31,8 +33,25 @@ def HomeView(request):
     for key in request.GET:
         search_args[key] = request.GET[key]
 
+    consumer = oauth2.Consumer(key=settings.SS_WEB_OAUTH_KEY, secret=settings.SS_WEB_OAUTH_SECRET)
+    client = oauth2.Client(consumer)
+
+    buildings = json.loads(get_building_json(client))
+
+
     return render_to_response('app.html', {
         'center_latitude': center_latitude,
         'center_longitude': center_longitude,
         'zoom_level': zoom_level,
+        'buildings': buildings,
     }, context_instance=RequestContext(request))
+
+
+def get_building_json(client):
+    url = "{0}/api/v1/buildings".format(settings.SS_WEB_SERVER_HOST)
+    resp, content = client.request(url, 'GET')
+
+    if resp.status == 200:
+        return content
+
+    return '[]'

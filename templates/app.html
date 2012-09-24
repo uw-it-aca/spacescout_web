@@ -213,63 +213,9 @@
                         <div id="building_list_container" style="margin-top:8px;display:none;">
                             <select multiple="" name="e9" id="e9" style="display:none; " class="populate">
                                 <optgroup label="A">
-                                    <option value="x1">Alder Hall</option>
-                                    <option value="x2">Allen Library (ALB)</option>
-                                    <option value="x3">Allen Library (ALB) North</option>
-                                    <option value="x4">Allen Library (ALB) South</option>
-                                    <option value="x5">Architecture Hall (ARC)</option>
-                                    <option value="x6">Art Building (ART)</option>
-                                </optgroup>
-                                <optgroup label="B">
-                                    <option value="x7">Burke Memorial-Washington State Museum (BMM)</option>
-                                </optgroup>
-                                <optgroup label="C">
-                                    <option value="x8">Computer Science and Engineering Building (CSE)</option>
-                                </optgroup>
-                                <optgroup label="E">
-                                    <option value="x9">Electrical Engineering Building (EEB)</option>
-                                    <option value="x10">Engineering Library (ELB)</option>
-                                </optgroup>
-                                <optgroup label="F">
-                                    <option value="x11">Fishery Sciences (FSH)</option>
-                                </optgroup>
-                                <optgroup label="G">
-                                    <option value="x12">Gould Hall (GLD)</option>
-                                    <option value="x13">Gowen Hall (GWN)</option>
-                                </optgroup>
-                                <optgroup label="H">
-                                    <option value="x14">Haggett Hall (HGT)</option>
-                                    <option value="x15">Hutchinson Hall (HUT)</option>
-                                </optgroup>
-                                <optgroup label="I">
-                                    <option value="x16">Intramural Activities Building (IMA)</option>
-                                </optgroup>
-                                <optgroup label="M">
-                                    <option value="x17">Magnuson Health Sciences Center A (HSA)</option>
-                                    <option value="x18">Magnuson Health Sciences Center C (HSC)</option>
-                                    <option value="x19">Magnuson Health Sciences Center D (HSD)</option>
-                                    <option value="x20">Magnuson Health Sciences Center E (HSE)</option>
-                                    <option value="x21">Magnuson Health Sciences Center I (HSI)</option>
-                                    <option value="x22">Magnuson Health Sciences Center T (HST)</option>
-                                    <option value="x23">Mary Gates Hall (MGH)</option>
-                                    <option value="x24">McMahon Hall (MCM)</option>
-                                    <option value="x25">Miller Hall (MLR)</option>
-                                    <option value="x26">Music Building (MUS)</option>
-                                </optgroup>
-                                <optgroup label="P">
-                                    <option value="x27">Paccar Hall (PCAR)</option>
-                                    <option value="x28">Padelford Hall (PDL)</option>
-                                    <option value="x29">Physics/Astronomy Building (PAB) Tower</option>
-                                    <option value="x30">Poplar Hall (UTO)</option>
-                                </optgroup>
-                                <optgroup label="S">
-                                    <option value="x31">Social Work/Speech & Hearing Sciences Building (SWS)</option>
-                                    <option value="x32">South Campus Center (SOCC)</option>
-                                    <option value="x33">Suzzallo Library (SUZ)</option>
-                                </optgroup>
-                                <optgroup label="W">
-                                    <option value="x34">William H. Foege Genome Sciences (GNOM)</option>
-                                    <option value="x35">William H. Gates Hall (LAW)</option>
+                                    {% for building in buildings %}
+                                    <option value="{{ building }}">{{ building }}</option>
+                                    {% endfor %}
                                 </optgroup>
                             </select>
                         </div>
