@@ -9,49 +9,48 @@
 		checkMobile();
 		setDisplay();
 
+		// Initialize bootstrap stuff
+		$('.carousel').carousel();
+
 		// Toggle Filter display
 		$('#filter_button').click(function() {
     		if ($("#filter_block").is(":hidden")) {
 
-                $("#filter_block").slideDown(speed, function() {
-                    // Animation complete.
-                    if (mobile) {
-                        $('#map_canvas').hide();
-                        $('#info_list').hide();
-                        $('.back-top').hide();
-                    }
-                });
+                $("#filter_block").slideDown('slow');
+
+                if (mobile) {
+                    $('#map_canvas').hide();
+                    $('#info_list').hide();
+                    $('.back-top').hide();
+                }
 
             } else {
-                // scroll to top of the page and then slide the filters up
-                $("#filter_block").slideUp(speed);
 
                 if (mobile) {
                     $('#map_canvas').show();
                     $('#info_list').show();
                     $('#filter_button_container').show();
                     $('.back-top').show();
-
                 }
 
+                $("#filter_block").slideUp('slow');
             }
         });
 
         // Close the filter display using Cancel button
         $('#cancel_results_button').click(function() {
 
-
-            $("#filter_block").slideUp(speed);
-
             if (mobile) {
                 $('#map_canvas').show();
                 $('#info_list').show();
                 $('#filter_button_container').show();
                 $('.back-top').show();
+                // scroll to top since the cancel button is at the bottom
+                scrollTo('top');
             }
 
-            // scroll to top since the cancel button is at the bottom
-            scrollTo('top');
+            $("#filter_block").slideUp('slow');
+
 
         });
 
@@ -152,13 +151,12 @@
             }
         });
 
-
         $('#filter_hours input:radio').change(function() {
             $(this).parent().addClass("selected");
             $(this).parent().siblings().removeClass("selected");
 
             if ($('#hours_list_input').is(':checked')) {
-                scrollTo('filter_hours');
+                //scrollTo('filter_hours');
                 $('#hours_list_container').show();
             }
             else {
@@ -171,7 +169,7 @@
             $(this).parent().siblings().removeClass("selected");
 
             if ($('#building_list_input').is(':checked')) {
-                scrollTo('filter_location');
+                //scrollTo('filter_location');
                 $('#building_list_container').show();
             }
             else {
@@ -215,7 +213,7 @@
     	// remove any open details
     	$('#space_detail_container').remove();
 
-    	console.log("the following id was passed: " + id);
+    	console.log("the following id is pissed: " + id);
 
     	if (mobile) {
         	// change url
@@ -228,17 +226,14 @@
     	   $('#map_canvas').append(template(template));
 
     	   // set/reset initial state
-    	   $('.space-detail-inner').hide();
-    	   $(".space-detail .loading").show();
+    	   $('.space-detail-inner').show();
     	   $('#space_detail_container').show();
 
     	   $('#space_detail_container').height($('#map_canvas').height());
     	   $('.space-detail-body').height($('.space-detail').height() - 110);
 
-    	   $('.space-detail').slideDown('slow', function() {
-        	   setTimeout('$(".space-detail .loading").hide()', 1000);
-        	   setTimeout('$(".space-detail-inner").show()', 1300);
-    	   });
+    	   $('.space-detail').show("slide", { direction: "right" }, 700);
+    	   
     	}
 
 	}
@@ -266,14 +261,14 @@
 
     	   setTimeout('$(".space-detail .loading").hide()', 1000);
     	   setTimeout('$(".space-detail-inner").show()', 1300);
+    	       	   
     	}
 
 	}
 
 	function hideSpaceDetails() {
-    	$('.space-detail').slideUp('slow', function() {
-            // Animation complete.
-            $('#space_detail_container').remove();
+        $('.space-detail').hide("slide", { direction: "right" }, 700, function() {
+        	   $('#space_detail_container').remove();
         });
 	}
 
@@ -309,10 +304,18 @@
         var mapH = windowH - headerH - 43; // enough to show the loading spinner at the bottom of the viewport
 
         $('#map_canvas').height(mapH);
+        $('#map_canvas').css({ minHeight: mapH })
         $('#info_list').height('auto');
 
         //$('#main_content').height(mainContentH);
         //$('#main_content').css({ minHeight: mainContentH });
+    }
+
+    function blah() {
+        $('#map_canvas').show();
+        $('#info_list').show();
+        $('#filter_button_container').show();
+        $('.back-top').show();
     }
 
 })(this);
