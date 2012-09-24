@@ -122,10 +122,16 @@
 
             // if a space details already exists
             if ($('#space_detail_container').is(':visible')) {
-                replaceSpaceDetails(id);
+                $.ajax({
+                    url: '/space/'+id+'/json/',
+                    success: replaceSpaceDetails
+                });
             }
             else {
-                showSpaceDetails(id);
+                $.ajax({
+                    url: '/space/'+id+'/json/',
+                    success: showSpaceDetails
+                });
             }
 
         });
@@ -208,22 +214,22 @@
 	}
 
 	// Show space details
-	function showSpaceDetails(id) {
+	function showSpaceDetails(data) {
 
     	// remove any open details
     	$('#space_detail_container').remove();
 
-    	console.log("the following id is pissed: " + id);
+    	console.log("the following id is pissed: " + data.id);
 
     	if (mobile) {
         	// change url
-        	location.href = '/space/' + id;
+        	location.href = '/space/' + data.id;
     	}
     	else {
         	// build the template
     	   var source = $('#space_details').html();
     	   var template = Handlebars.compile(source);
-    	   $('#map_canvas').append(template(template));
+    	   $('#map_canvas').append(template(data));
 
     	   // set/reset initial state
     	   $('.space-detail-inner').show();
@@ -238,19 +244,19 @@
 
 	}
 
-	function replaceSpaceDetails(id) {
+	function replaceSpaceDetails(data) {
 
-    	console.log("the following id was passed: " + id);
+    	console.log("the following id was passed: " + data.id);
 
     	if (mobile) {
         	// change url
-        	location.href = '/space/' + id;
+        	location.href = '/space/' + data.id;
     	}
     	else {
         	// build the template
     	   var source = $('#space_details_replace').html();
     	   var template = Handlebars.compile(source);
-    	   $('#space_detail_container').html(template(template));
+    	   $('#space_detail_container').html(template(data));
 
     	   // set/reset initial state
     	   $('.space-detail-inner').hide();
