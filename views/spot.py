@@ -7,7 +7,7 @@ import simplejson as json
 from django.http import HttpResponse
 
 
-def SpotView(request, spot_id):
+def SpotView(request, spot_id, return_json=False):
     # Required settings for the client
     if not hasattr(settings, 'SS_WEB_SERVER_HOST'):
         raise(Exception("Required setting missing: SS_WEB_SERVER_HOST"))
@@ -43,4 +43,7 @@ def SpotView(request, spot_id):
     for attribute in spot_json["extended_info"]:
         params["attribute_list"].append({"name": attribute, "value": spot_json["extended_info"][attribute]})
 
-    return render_to_response('space.html', params, context_instance=RequestContext(request))
+    if return_json:
+        return HttpResponse(content, mimetype='application/json')
+    else:
+        return render_to_response('space.html', params, context_instance=RequestContext(request))

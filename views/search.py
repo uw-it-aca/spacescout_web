@@ -24,7 +24,7 @@ def SearchView(request):
     for key in request.GET:
         search_args[key] = request.GET.getlist(key)
 
-    json = get_spot_search_json(client, search_args)
+    json = get_space_search_json(client, search_args)
 
     response = HttpResponse(json)
 
@@ -33,7 +33,7 @@ def SearchView(request):
     return response
 
 
-def get_spot_search_json(client, options):
+def get_space_search_json(client, options):
     args = []
     for key in options:
         if isinstance(options[key], types.ListType):
