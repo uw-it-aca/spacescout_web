@@ -214,7 +214,7 @@
     	// remove any open details
     	$('#space_detail_container').remove();
 
-    	console.log("the following id was passed: " + id);
+    	console.log("the following id is pissed: " + id);
 
     	if (mobile) {
         	// change url
@@ -228,18 +228,13 @@
 
     	   // set/reset initial state
     	   $('.space-detail-inner').show();
-    	   //$(".space-detail .loading").show();
     	   $('#space_detail_container').show();
 
     	   $('#space_detail_container').height($('#map_canvas').height());
     	   $('.space-detail-body').height($('.space-detail').height() - 110);
 
-    	   /*$('.space-detail').slideDown('slow', function() {
-        	   setTimeout('$(".space-detail .loading").hide()', 1000);
-        	   setTimeout('$(".space-detail-inner").show()', 1300);
-    	   });*/
-
     	   $('.space-detail').show("slide", { direction: "right" }, 700);
+    	   
     	}
 
 	}
@@ -267,16 +262,12 @@
 
     	   setTimeout('$(".space-detail .loading").hide()', 1000);
     	   setTimeout('$(".space-detail-inner").show()', 1300);
+    	       	   
     	}
 
 	}
 
 	function hideSpaceDetails() {
-    	/*$('.space-detail').slideUp('slow', function() {
-            // Animation complete.
-            $('#space_detail_container').remove();
-        });*/
-
         $('.space-detail').hide("slide", { direction: "right" }, 700, function() {
         	   $('#space_detail_container').remove();
         });
