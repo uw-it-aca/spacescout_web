@@ -74,6 +74,7 @@ function run_custom_search() {
     // hours
 
     // location
+    window.spacescout_search_options["building_name"] = $('select#e9').val();
 
     // equipment
     checked = [];
