@@ -35,6 +35,7 @@ def SpotView(request, spot_id, return_json=False):
     spot_json = json.loads(content)
 
     params = {
+        "type": spot_json["type"],
         "name": spot_json["name"],
         "capacity": spot_json["capacity"],
         "attribute_list": []
