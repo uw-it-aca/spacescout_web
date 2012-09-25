@@ -37,13 +37,21 @@ def HomeView(request):
     client = oauth2.Client(consumer)
 
     buildings = json.loads(get_building_json(client))
+    buildings.sort()
 
+    # This could probably be a template tag, but didn't seem worth it for one-time use
+    buildingdict = {}
+    for building in buildings:
+        if not building[0] in buildingdict.keys():  # building[0] is the first letter of the string
+            buildingdict[building[0]] = []
+
+        buildingdict[building[0]].append(building)
 
     return render_to_response('app.html', {
         'center_latitude': center_latitude,
         'center_longitude': center_longitude,
         'zoom_level': zoom_level,
-        'buildings': buildings,
+        'buildingdict': buildingdict,
     }, context_instance=RequestContext(request))
 
 

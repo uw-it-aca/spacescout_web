@@ -212,11 +212,13 @@
                         </div>
                         <div id="building_list_container" style="margin-top:8px;display:none;">
                             <select multiple="" name="e9" id="e9" style="display:none; " class="populate">
-                                <optgroup label="A">
-                                    {% for building in buildings %}
+                                {% for letter, buildings in buildingdict.items %}
+                                <optgroup label="{{ letter }}">
+                                    {% for building in buildings%}
                                     <option value="{{ building }}">{{ building }}</option>
                                     {% endfor %}
                                 </optgroup>
+                                {% endfor %}
                             </select>
                         </div>
 
