@@ -329,9 +329,13 @@
                                     <div id="myCarousel" class="carousel slide">
                                       <!-- Carousel items -->
                                       <div class="carousel-inner">
+
+                                        <!-- TODO: do an each loop of some sort -->
                                         <div class="active item"><img src="http://placehold.it/1000x667" class="img"></div>
                                         <div class="item"><img src="http://placehold.it/1000x667" class="img"></div>
                                         <div class="item"><img src="http://placehold.it/1000x667" class="img"></div>
+                                        <!-- end loop -->
+
                                       </div>
                                       <!-- Carousel nav -->
                                       <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
@@ -344,11 +348,19 @@
                                   <button class="btn">images</button>
                                   <button class="btn">map</button>
                                 </div>
+
                                 <div>
                                     <ul>
+                                        <li>Current hours: {{display_hours_available}}</li>
+                                        <li>Break hours: {{available_hours}}</li>
                                         <li>Location: {{extended_info.location_description}}</li>
-                                        <li>Hours available: {{display_hours_available}}</li>
+                                        <li>Resources: </li>
+                                        <li>Noise Level: {{extended_info.noise_level}}</li>
+                                        <li>Lighting: {{extended_info.has_natural_light}}</li>
+                                        <li>Coffee/Food: </li>
                                         <li>Capacity: {{capacity}}</li>
+                                        <li></li>
+                                        <li></li>
                                     </ul>
                                 </div>
                             </div>
@@ -390,9 +402,16 @@
                                 </div>
                                 <div>
                                     <ul>
+                                        <li>Current hours: {{display_hours_available}}</li>
+                                        <li>Break hours: {{available_hours}}</li>
                                         <li>Location: {{extended_info.location_description}}</li>
-                                        <li>Hours available: {{display_hours_available}}</li>
+                                        <li>Resources: </li>
+                                        <li>Noise Level: {{extended_info.noise_level}}</li>
+                                        <li>Lighting: {{extended_info.has_natural_light}}</li>
+                                        <li>Coffee/Food: </li>
                                         <li>Capacity: {{capacity}}</li>
+                                        <li></li>
+                                        <li></li>
                                     </ul>
                                 </div>
                             </div>
