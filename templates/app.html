@@ -319,8 +319,8 @@
                     <div class="loading"><div class="loading-inner">&nbsp;</div></div>
                     <div class="space-detail-inner">
                         <div class="space-detail-header">
-                            <div class="space-detail-type">Open area</div>
-                            <div class="space-detail-name">{{ name }}</div>
+                            <div class="space-detail-type">{{type}}</div>
+                            <div class="space-detail-name">{{name}}</div>
                             <a class="close" href="#">&times;</a>
                         </div>
                         <div class="space-detail-body">
@@ -344,7 +344,13 @@
                                   <button class="btn">images</button>
                                   <button class="btn">map</button>
                                 </div>
-                                <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus at mi sem. Etiam leo urna, facilisis vel pharetra at, sagittis at libero. Nam turpis tellus, vestibulum non mattis non, rhoncus quis lacus. Cras vitae lacinia augue. Vivamus egestas facilisis dui non congue. Morbi porttitor, tortor sed ullamcorper consectetur, nunc orci sodales ante, ut egestas eros est a risus. Sed quis diam magna. Morbi non sollicitudin purus. Aenean nec luctus massa.</div>
+                                <div>
+                                    <ul>
+                                        <li>Location: {{extended_info.location_description}}</li>
+                                        <li>Hours available: {{display_hours_available}}</li>
+                                        <li>Capacity: {{capacity}}</li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                         <div class="space-detail-footer">This space was last updated...  <button type="button" class="btn btn-small btn-danger">report a problem</button></div>
@@ -357,12 +363,41 @@
                     <div class="loading"><div class="loading-inner">&nbsp;</div></div>
                     <div class="space-detail-inner">
                         <div class="space-detail-header">
-                            <div class="space-detail-type">Open Area</div>
-                            <div class="space-detail-name">{{ name }}</div>
+                            <div class="space-detail-type">{{type}}</div>
+                            <div class="space-detail-name">{{name}}</div>
                             <a class="close" href="#">&times;</a>
                         </div>
-                        <div class="space-detail-body">this is the details view</div>
-                        <div class="space-detail-footer">This space was last updated...</div>
+                        <div class="space-detail-body">
+                            <div class="space-detail-body-inner">
+                                <div class="image-container">
+                                    <div id="myCarousel" class="carousel slide">
+                                      <!-- Carousel items -->
+                                      <div class="carousel-inner">
+                                        <div class="active item"><img src="http://placehold.it/1000x667" class="img"></div>
+                                        <div class="item"><img src="http://placehold.it/1000x667" class="img"></div>
+                                        <div class="item"><img src="http://placehold.it/1000x667" class="img"></div>
+                                      </div>
+                                      <!-- Carousel nav -->
+                                      <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+                                      <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+                                    </div>
+                                </div>
+                                <div class="map-container" style="display:none; ">map here</div>
+
+                                <div class="btn-group" style="text-align:center; margin-top: 5px;">
+                                  <button class="btn">images</button>
+                                  <button class="btn">map</button>
+                                </div>
+                                <div>
+                                    <ul>
+                                        <li>Location: {{extended_info.location_description}}</li>
+                                        <li>Hours available: {{display_hours_available}}</li>
+                                        <li>Capacity: {{capacity}}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="space-detail-footer">This space was last updated...  <button type="button" class="btn btn-small btn-danger">report a problem</button></div>
                     </div>
                 </div>
         {% endtplhandlebars %}
