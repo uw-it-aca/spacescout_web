@@ -9,8 +9,13 @@
 		checkMobile();
 		setDisplay();
 
-		// Initialize bootstrap stuff
-		$('.carousel').carousel();
+		// Initialize bootstrap carousel
+
+        $('.carousel').each(function(){
+            $(this).carousel({
+                interval: false
+            });
+        });
 
 		// Toggle Filter display
 		$('#filter_button').click(function() {
@@ -239,7 +244,7 @@
     	   $('.space-detail-body').height($('.space-detail').height() - 110);
 
     	   $('.space-detail').show("slide", { direction: "right" }, 700);
-    	   
+
     	}
 
 	}
@@ -267,7 +272,7 @@
 
     	   setTimeout('$(".space-detail .loading").hide()', 1000);
     	   setTimeout('$(".space-detail-inner").show()', 1300);
-    	       	   
+
     	}
 
 	}
