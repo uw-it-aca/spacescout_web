@@ -42,10 +42,7 @@
                                   <button class="btn">images</button>
                                   <button class="btn">map</button>
                                 </div>
-                                <div>
-                                    <p>Capacity: {{ capacity }} </p>
-
-                                    <div>Extra info:</div>
+                                <div class="space-info">
                                     <ul>
                                         {% for attribute in attribute_list %}
                                         <li>{{ attribute.name }} - {{ attribute.value }}</li>

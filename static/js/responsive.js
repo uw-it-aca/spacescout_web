@@ -15,6 +15,9 @@
             $(this).carousel({
                 interval: false
             });
+
+            //set the first item as active
+            $(this).find(".item:first-child").addClass("active");
         });
 
 		// Toggle Filter display
