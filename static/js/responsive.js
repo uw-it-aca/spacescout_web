@@ -22,16 +22,10 @@ Handlebars.registerHelper('carouselimages', function(spacedata) {
 		checkMobile();
 		setDisplay();
 
-		// Initialize bootstrap carousel
+		// initialize the carousel for mobile standalone space page
 
-        $('.carousel').each(function(){
-            $(this).carousel({
-                interval: false
-            });
+		  initializeCarousel();
 
-            //set the first item as active
-            $(this).find(".item:first-child").addClass("active");
-        });
 
 		// Toggle Filter display
 		$('#filter_button').click(function() {
@@ -237,10 +231,10 @@ Handlebars.registerHelper('carouselimages', function(spacedata) {
 	// Show space details
 	function showSpaceDetails(data) {
 
+    	console.log("the following id is pissed: " + data.id);
+
     	// remove any open details
     	$('#space_detail_container').remove();
-
-    	console.log("the following id is pissed: " + data.id);
 
     	if (mobile) {
         	// change url
@@ -262,6 +256,8 @@ Handlebars.registerHelper('carouselimages', function(spacedata) {
     	   $('.space-detail').show("slide", { direction: "right" }, 700);
 
     	}
+
+    	initializeCarousel();
 
 	}
 
@@ -290,6 +286,8 @@ Handlebars.registerHelper('carouselimages', function(spacedata) {
     	   setTimeout('$(".space-detail-inner").show()', 1300);
 
     	}
+
+    	initializeCarousel();
 
 	}
 
@@ -343,6 +341,21 @@ Handlebars.registerHelper('carouselimages', function(spacedata) {
         $('#info_list').show();
         $('#filter_button_container').show();
         $('.back-top').show();
+    }
+
+    function initializeCarousel() {
+
+        console.log("carousel initialized");
+
+        $('.carousel').each(function(){
+            $(this).carousel({
+                interval: false
+            });
+
+            //set the first item as active
+            $(this).find(".item:first-child").addClass("active");
+        });
+
     }
 
 })(this);

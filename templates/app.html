@@ -332,7 +332,6 @@
 
                                         <!-- TODO: do an each loop of some sort -->
                                         {{ carouselimages this }}
-                                        <!-- end loop -->
 
                                       </div>
                                       <!-- Carousel nav -->
@@ -347,23 +346,44 @@
                                   <button class="btn">map</button>
                                 </div>
 
-                                <div>
-                                    <ul>
-                                        <li>Current hours: {{display_hours_available}}</li>
-                                        <li>Break hours: {{available_hours}}</li>
-                                        <li>Location: {{extended_info.location_description}}</li>
-                                        <li>Resources: </li>
-                                        <li>Noise Level: {{extended_info.noise_level}}</li>
-                                        <li>Lighting: {{extended_info.has_natural_light}}</li>
-                                        <li>Coffee/Food: </li>
-                                        <li>Capacity: {{capacity}}</li>
-                                        <li></li>
-                                        <li></li>
+                                <div class="space-info">
+                                     <ul>
+                                        <li class="clearfix"><div class="space-info-label pull-left">Current hours</div><div class="space-info-detail pull-left">{{display_hours_available}}</div></li>
+                                        <li class="clearfix"><div class="space-info-label pull-left">Location</div><div class="space-info-detail pull-left">{{extended_info.location_description}}</div></li>
+                                        <li class="clearfix">
+                                            <div class="space-info-label pull-left">Resources</div>
+                                            <div class="space-info-detail pull-left">
+                                                {{#if extended_info.has_computers }}Computers{{/if}}
+                                                {{#if extended_info.has_displays }}Displays&nbsp;{{/if}}
+                                                {{#if extended_info.has_outlets }}Outlets&nbsp;{{/if}}
+                                                {{#if extended_info.has_printing }}Printing&nbsp;{{/if}}
+                                                {{#if extended_info.has_projector }}Projector&nbsp;{{/if}}
+                                                {{#if extended_info.has_scanner }}Scanner&nbsp;{{/if}}
+                                                {{#if extended_info.has_whiteboards }}Whiteboards&nbsp;{{/if}}
+                                            </div>
+                                        </li>
+
+                                        {{#if extended_info.has_natural_light }}
+                                        <li class="clearfix"><div class="space-info-label pull-left">Lighting</div><div class="space-info-detail pull-left">Natural light</div></li>
+                                        {{/if}}
+
+
+                                        {{#if extended_info.food_nearby }}
+                                        <li class="clearfix">
+                                            <div class="space-info-label pull-left">Coffee/Food</div>
+                                            <div class="space-info-detail pull-left">
+
+                                                stupid handlebars compare
+
+                                            </div>
+                                        </li>
+                                        {{/if}}
+
                                     </ul>
                                 </div>
                             </div>
                         </div>
-                        <div class="space-detail-footer">This space was last updated...  <button type="button" class="btn btn-small btn-danger">report a problem</button></div>
+                        <div class="space-detail-footer">This space was last updated {{last_modified}}...  <button type="button" class="btn btn-small btn-danger">report a problem</button></div>
                     </div>
                 </div>
             </div>
