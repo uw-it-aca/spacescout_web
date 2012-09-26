@@ -1,3 +1,16 @@
+// Handlebars helpers
+
+Handlebars.registerHelper('carouselimages', function(spacedata) {
+    var space_id = spacedata.id;
+    var elements = new Array;
+    for (i=0; i < spacedata.images.length; i++) {
+        image_id = spacedata.images[i].id;
+        console.log(image_id);
+        elements.push('<div class="item"><img src="/space/'+space_id+'/image/'+image_id+'/thumb/1000x667" class="img"></div>');
+        return new Handlebars.SafeString(elements.join('\n'));
+    }
+});
+
 (function(w){
 	var sw = document.body.clientWidth,
 		breakpoint = 767,
