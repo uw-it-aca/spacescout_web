@@ -25,10 +25,9 @@
                                     <div id="myCarousel" class="carousel slide">
                                       <!-- Carousel items -->
                                       <div class="carousel-inner">
-
-                                        <div class="item"><img src="/space/1931/image/2848/thumb/500x333" class="img"></div>
-                                        <div class="item"><img src="http://placehold.it/500x333" class="img"></div>
-                                        <div class="item"><img src="http://placehold.it/500x333" class="img"></div>
+                                        {% for image in images %}
+                                        <div class="item"><img src="/space/{{ id }}/image/{{ image.id }}/thumb/500x333" class="img"></div>
+                                        {% endfor %}
 
                                       </div>
                                       <!-- Carousel nav -->
