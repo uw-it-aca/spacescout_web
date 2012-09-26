@@ -26,7 +26,7 @@
                                       <!-- Carousel items -->
                                       <div class="carousel-inner">
 
-                                        <div class="item"><img src="space/1931/image/2848/thumb/500x333" class="img"></div>
+                                        <div class="item"><img src="/space/1931/image/2848/thumb/500x333" class="img"></div>
                                         <div class="item"><img src="http://placehold.it/500x333" class="img"></div>
                                         <div class="item"><img src="http://placehold.it/500x333" class="img"></div>
 
@@ -38,15 +38,67 @@
                                 </div>
                                 <div class="map-container" style="display:none; ">map here</div>
 
-                                <div class="btn-group" style="text-align:center; margin-top: 5px;">
+                                <div class="btn-group" style="text-align:center; margin-top: 5px;margin-bottom:8px;">
                                   <button class="btn">images</button>
                                   <button class="btn">map</button>
                                 </div>
                                 <div class="space-info">
+
                                     <ul>
                                         {% for attribute in attribute_list %}
-                                        <li>{{ attribute.name }} - {{ attribute.value }}</li>
+                                        <li class="clearfix"><div class="space-info-label pull-left">{{ attribute.name }}</div><div class="space-info-detail pull-left">{{ attribute.value }}</div></li>
                                         {% endfor %}
+                                    </ul>
+                                    <hr/>
+                                    <ul>
+                                        <li class="clearfix"><div class="space-info-label pull-left">Current hours</div><div class="space-info-detail pull-left">xxxxx</div></li>
+                                        <li class="clearfix"><div class="space-info-label pull-left">Break hours</div><div class="space-info-detail pull-left">xxxxx</div></li>
+                                        <li class="clearfix"><div class="space-info-label pull-left">Location</div><div class="space-info-detail pull-left">{{location_description}}</div></li>
+                                        <li class="clearfix">
+                                            <div class="space-info-label pull-left">Resources</div>
+                                            <div class="space-info-detail pull-left">
+                                                {% if has_computers %}Computers
+                                                {% elif has_displays %}Displays
+                                                {% elif has_outlets %}Outlets
+                                                {% elif has_printing %}Printing
+                                                {% elif has_projector %}Projector
+                                                {% elif has_scanner %}Scanner
+                                                {% elif has_whiteboards %}Whiteboards
+                                                {% endif %}
+                                            </div>
+                                        </li>
+                                        <li class="clearfix">
+                                            <div class="space-info-label pull-left">Noise Level</div>
+                                            <div class="space-info-detail pull-left">
+                                                {% if noise_level == "quite" %}
+                                                    Quite
+                                                {% elif noise_level == "moderate"%}
+                                                    Moderate
+                                                    {% elif noise_level == "silent"%}
+                                                    Silent
+                                                {% else %}
+                                                    Variable
+                                                {% endif %}
+                                            </div>
+                                        </li>
+                                        <li class="clearfix">
+                                            <div class="space-info-label pull-left">Lighting</div>
+                                            <div class="space-info-detail pull-left">
+                                            {% if has_natural_light %}Natural light{% else %}In building{% endif %}
+                                            </div>
+                                        </li>
+                                        <li class="clearfix">
+                                            <div class="space-info-label pull-left">Coffee/Food</div>
+                                            <div class="space-info-detail pull-left">
+                                                {% if food_nearby == "building" %}
+                                                    In building
+                                                {% elif food_nearby == "space"%}
+                                                    In space
+                                                {% else %}
+                                                    In neighboring building
+                                                {% endif %}
+                                            </div>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>

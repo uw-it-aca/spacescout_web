@@ -38,6 +38,18 @@ def SpotView(request, spot_id, return_json=False):
         "type": spot_json["type"],
         "name": spot_json["name"],
         "capacity": spot_json["capacity"],
+        "location_description": spot_json["extended_info"]["location_description"],
+        #"has_natual_light": spot_json["extended_info"]["has_natural_light"],
+        #"noise_level": spot_json["extended_info"]["noise_level"],
+        #"food_nearby": spot_json["extended_info"]["food_nearby"],
+
+        #"has_computers": spot_json["extended_info"]["has_computers"],
+        #"has_displays": spot_json["extended_info"]["has_displays"],
+        #"has_outlets": spot_json["extended_info"]["has_outlets"],
+        #"has_printing": spot_json["extended_info"]["has_printing"],
+        #"has_projector": spot_json["extended_info"]["has_projector"],
+        #"has_scanner": spot_json["extended_info"]["has_scanner"],
+        #"has_whiteboards": spot_json["extended_info"]["has_whiteboards"],
         "attribute_list": []
     }
 
