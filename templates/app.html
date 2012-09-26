@@ -341,14 +341,14 @@
                                 </div>
                                 <div class="map-container" style="display:none; ">map here</div>
 
-                                <div class="btn-group" style="text-align:center; margin-top: 5px;">
-                                  <button class="btn">images</button>
+                                <div class="space-image-map btn-group">
+                                  <button class="btn disabled">images</button>
                                   <button class="btn">map</button>
                                 </div>
 
                                 <div class="space-info">
                                      <ul>
-                                        <li class="clearfix"><div class="space-info-label pull-left">Current hours</div><div class="space-info-detail pull-left">{{display_hours_available}}</div></li>
+                                        <li class="clearfix"><div class="space-info-label pull-left">Current hours</div><div class="space-info-detail pull-left">{{available_hours}}</div></li>
                                         <li class="clearfix"><div class="space-info-label pull-left">Location</div><div class="space-info-detail pull-left">{{extended_info.location_description}}</div></li>
                                         <li class="clearfix">
                                             <div class="space-info-label pull-left">Resources</div>
@@ -363,6 +363,29 @@
                                             </div>
                                         </li>
 
+                                        {{#if extended_info.noise_level }}
+                                        <li class="clearfix">
+                                            <div class="space-info-label pull-left">Noise Level</div>
+                                            <div class="space-info-detail pull-left">
+
+                                                {{#compare extended_info.noise_level "quiet" operator="=="}}
+                                                Low hum
+                                                  {{^}}
+                                                        {{#compare extended_info.noise_level "moderate" operator="=="}}
+                                                        Chatter
+                                                        {{^}}
+                                                            {{#compare extended_info.noise_level "silent" operator="=="}}
+                                                            Silent
+                                                            {{^}}
+                                                            Variable
+                                                            {{/compare}}
+                                                        {{/compare}}
+                                                  {{/compare}}
+
+                                            </div>
+                                        </li>
+                                        {{/if}}
+
                                         {{#if extended_info.has_natural_light }}
                                         <li class="clearfix"><div class="space-info-label pull-left">Lighting</div><div class="space-info-detail pull-left">Natural light</div></li>
                                         {{/if}}
@@ -373,7 +396,15 @@
                                             <div class="space-info-label pull-left">Coffee/Food</div>
                                             <div class="space-info-detail pull-left">
 
-                                                stupid handlebars compare
+                                              {{#compare extended_info.food_nearby "building" operator="=="}}
+                                                 In building
+                                              {{^}}
+                                                    {{#compare extended_info.food_nearby "space" operator="=="}}
+                                                    In space
+                                                    {{^}}
+                                                    In neighboring building
+                                                    {{/compare}}
+                                              {{/compare}}
 
                                             </div>
                                         </li>
