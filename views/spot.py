@@ -32,17 +32,7 @@ def SpotView(request, spot_id, return_json=False):
         response.status_code = resp.status_code
         return response
 
-    spot_json = json.loads(content)
-
-    params = {
-        "type": spot_json["type"],
-        "name": spot_json["name"],
-        "capacity": spot_json["capacity"],
-        "attribute_list": []
-    }
-
-    for attribute in spot_json["extended_info"]:
-        params["attribute_list"].append({"name": attribute, "value": spot_json["extended_info"][attribute]})
+    params = json.loads(content)
 
     if return_json:
         return HttpResponse(content, mimetype='application/json')

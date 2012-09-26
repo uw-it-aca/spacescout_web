@@ -93,14 +93,20 @@ body {
                 .space-detail-body {
                     .space-detail-body-inner {
 
-                        .image-container, .map-container { background-color: yellow; }
+                        .image-container, .map-container { /*background: #eee url('/static/img/spinner.gif') no-repeat 50% 50%;*/ background-color: #f5f5f5; }
                         .image-container {
                             .carousel { margin: 0; }
                         }
 
                         .space-info {
-                            li { list-style: none; }
+                            ul { margin: 0; }
+                            li { list-style: none; margin-bottom: 5px;
+                              .space-info-label { width: 35%; margin-right: 10px; color: #ccc; overflow: hidden; text-overflow: ellipsis; }
+                              .space-info-detail { width: 60%; }
+                            }
                         }
+
+                        .space-image-map-buttons { text-align:center; margin: 5px 0; }
                     }
                 }
                 .space-detail-footer { text-align: center; font-size: 12px; color: #ccc; line-height: 30px; }
@@ -148,7 +154,11 @@ body {
 
             li { background-color: #fff; color: #000; list-style: none; margin-bottom: 0px; padding: 10px; border-bottom:solid 2px #ddd;
                 .view-details { cursor: pointer; }
-                .space-detail-list-image { margin-right: 10px; display: inline-block; width: 100px; }
+
+                .space-detail-list-image { margin-right: 10px; display: inline-block; width: 100px;
+                        .img { width: 100px; height: 67px; background: transparent url('/static/img/spinner.gif') no-repeat 50% 50%; background-size: 15px;}
+                    }
+
                 .space-detail-list-item { width: 51%; display: inline-block;
                     .space-detail-type { color: #666; }
                     .space-detail-name { font-size: 17px; line-height: 28px; white-space: nowrap; overflow:hidden; text-overflow: ellipsis; color: #000;
@@ -201,7 +211,7 @@ select {
 }
 
 .carousel-control { top: 50% !important; }
-.carousel-inner img { max-width: 100% !important;}
+.carousel-inner img { max-width: 100% !important; margin: 0 auto; }
 
 /* Override Select2 */
 .select2-container {

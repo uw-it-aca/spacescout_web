@@ -1,3 +1,48 @@
+// Handlebars helpers
+
+Handlebars.registerHelper('carouselimages', function(spacedata) {
+    var space_id = spacedata.id;
+    var elements = new Array;
+    for (i=0; i < spacedata.images.length; i++) {
+        image_id = spacedata.images[i].id;
+        console.log(image_id);
+        elements.push('<div class="item"><img src="/space/'+space_id+'/image/'+image_id+'/thumb/1000x667" class="img"></div>');
+        return new Handlebars.SafeString(elements.join('\n'));
+    }
+});
+
+Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
+
+    if (arguments.length < 3)
+        throw new Error("Handlerbars Helper 'compare' needs 2 parameters");
+
+    operator = options.hash.operator || "==";
+
+    var operators = {
+        '==':       function(l,r) { return l == r; },
+        '===':      function(l,r) { return l === r; },
+        '!=':       function(l,r) { return l != r; },
+        '<':        function(l,r) { return l < r; },
+        '>':        function(l,r) { return l > r; },
+        '<=':       function(l,r) { return l <= r; },
+        '>=':       function(l,r) { return l >= r; },
+        'typeof':   function(l,r) { return typeof l == r; }
+    }
+
+    if (!operators[operator])
+        throw new Error("Handlerbars Helper 'compare' doesn't know the operator "+operator);
+
+    var result = operators[operator](lvalue,rvalue);
+
+    if( result ) {
+        return options.fn(this);
+    } else {
+        return options.inverse(this);
+    }
+
+});
+
+
 (function(w){
 	var sw = document.body.clientWidth,
 		breakpoint = 767,
@@ -9,16 +54,10 @@
 		checkMobile();
 		setDisplay();
 
-		// Initialize bootstrap carousel
+		// initialize the carousel for mobile standalone space page
 
-        $('.carousel').each(function(){
-            $(this).carousel({
-                interval: false
-            });
+		  initializeCarousel();
 
-            //set the first item as active
-            $(this).find(".item:first-child").addClass("active");
-        });
 
 		// Toggle Filter display
 		$('#filter_button').click(function() {
@@ -224,10 +263,10 @@
 	// Show space details
 	function showSpaceDetails(data) {
 
+    	console.log("the following id is pissed: " + data.id);
+
     	// remove any open details
     	$('#space_detail_container').remove();
-
-    	console.log("the following id is pissed: " + data.id);
 
     	if (mobile) {
         	// change url
@@ -249,6 +288,8 @@
     	   $('.space-detail').show("slide", { direction: "right" }, 700);
 
     	}
+
+    	initializeCarousel();
 
 	}
 
@@ -277,6 +318,8 @@
     	   setTimeout('$(".space-detail-inner").show()', 1300);
 
     	}
+
+    	initializeCarousel();
 
 	}
 
@@ -330,6 +373,21 @@
         $('#info_list').show();
         $('#filter_button_container').show();
         $('.back-top').show();
+    }
+
+    function initializeCarousel() {
+
+        console.log("carousel initialized");
+
+        $('.carousel').each(function(){
+            $(this).carousel({
+                interval: false
+            });
+
+            //set the first item as active
+            $(this).find(".item:first-child").addClass("active");
+        });
+
     }
 
 })(this);
