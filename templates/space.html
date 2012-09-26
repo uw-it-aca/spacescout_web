@@ -52,52 +52,56 @@
                                     <ul>
                                         <li class="clearfix"><div class="space-info-label pull-left">Current hours</div><div class="space-info-detail pull-left">xxxxx</div></li>
                                         <li class="clearfix"><div class="space-info-label pull-left">Break hours</div><div class="space-info-detail pull-left">xxxxx</div></li>
-                                        <li class="clearfix"><div class="space-info-label pull-left">Location</div><div class="space-info-detail pull-left">{{location_description}}</div></li>
+                                        <li class="clearfix"><div class="space-info-label pull-left">Location</div><div class="space-info-detail pull-left">{{extended_info.location_description}}</div></li>
                                         <li class="clearfix">
                                             <div class="space-info-label pull-left">Resources</div>
                                             <div class="space-info-detail pull-left">
-                                                {% if has_computers %}Computers
-                                                {% elif has_displays %}Displays
-                                                {% elif has_outlets %}Outlets
-                                                {% elif has_printing %}Printing
-                                                {% elif has_projector %}Projector
-                                                {% elif has_scanner %}Scanner
-                                                {% elif has_whiteboards %}Whiteboards
-                                                {% endif %}
+                                                {% if extended_info.has_computers %}Computers&nbsp;{% endif %}
+                                                {% if extended_info.has_displays %}Displays&nbsp;{% endif %}
+                                                {% if extended_info.has_outlets %}Outlets&nbsp;{% endif %}
+                                                {% if extended_info.has_printing %}Printing&nbsp;{% endif %}
+                                                {% if extended_info.has_projector %}Projector&nbsp;{% endif %}
+                                                {% if extended_info.has_scanner %}Scanner&nbsp;{% endif %}
+                                                {% if extended_info.has_whiteboards %}Whiteboards&nbsp;{% endif %}
                                             </div>
                                         </li>
+                                        {% if extended_info.noise_level %}
                                         <li class="clearfix">
                                             <div class="space-info-label pull-left">Noise Level</div>
                                             <div class="space-info-detail pull-left">
-                                                {% if noise_level == "quite" %}
+                                                {% if extended_info.noise_level == "quite" %}
                                                     Quite
-                                                {% elif noise_level == "moderate"%}
+                                                {% elif extended_info.noise_level == "moderate"%}
                                                     Moderate
-                                                    {% elif noise_level == "silent"%}
+                                                    {% elif extended_info.noise_level == "silent"%}
                                                     Silent
                                                 {% else %}
                                                     Variable
                                                 {% endif %}
                                             </div>
                                         </li>
-                                        <li class="clearfix">
-                                            <div class="space-info-label pull-left">Lighting</div>
-                                            <div class="space-info-detail pull-left">
-                                            {% if extended_info.has_natural_light %}Natural light{% endif %}
-                                            </div>
-                                        </li>
+                                        {% endif %}
+
+                                        {% if extended_info.has_natural_light %}
+                                        <li class="clearfix"><div class="space-info-label pull-left">Lighting</div><div class="space-info-detail pull-left">Natural light</div></li>
+                                        {% endif %}
+
+
+                                        {% if extended_info.food_nearby %}
                                         <li class="clearfix">
                                             <div class="space-info-label pull-left">Coffee/Food</div>
                                             <div class="space-info-detail pull-left">
-                                                {% if food_nearby == "building" %}
+                                                {% if extended_info.food_nearby == "building" %}
                                                     In building
-                                                {% elif food_nearby == "space"%}
+                                                {% elif extended_info.food_nearby == "space"%}
                                                     In space
                                                 {% else %}
                                                     In neighboring building
                                                 {% endif %}
                                             </div>
                                         </li>
+                                        {% endif %}
+
                                     </ul>
                                 </div>
                             </div>
