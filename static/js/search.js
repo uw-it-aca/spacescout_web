@@ -151,10 +151,12 @@ function initialize() {
 }
 
 function load_map(latitude, longitude, zoom) {
+    console.log('load_map called');
     $('.loading').show();
     var myOptions = {
         center: new google.maps.LatLng(latitude, longitude),
         zoom: zoom,
+        mapTypeControl: false,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
 
