@@ -57,6 +57,7 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 		// initialize the carousel for mobile standalone space page
 		if (mobile) {
 		  initializeCarousel();
+		  resizeCarouselMapContainer();
 		}
 
 		// Toggle Filter display
@@ -260,19 +261,18 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 		}
 	}
 
-	// Show space details
+	// Show space details (sliding transition)
 	function showSpaceDetails(data) {
-
-    	console.log("the following id is pissed: " + data.id);
-
-    	// remove any open details
-    	$('#space_detail_container').remove();
 
     	if (mobile) {
         	// change url
         	location.href = '/space/' + data.id;
     	}
     	else {
+
+    	   // remove any open details
+    	   $('#space_detail_container').remove();
+
         	// build the template
     	   var source = $('#space_details').html();
     	   var template = Handlebars.compile(source);
@@ -284,18 +284,17 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
     	   $('#space_detail_container').height($('#map_canvas').height());
     	   $('.space-detail-body').height($('.space-detail').height() - 150);
-
     	   $('.space-detail').show("slide", { direction: "right" }, 700);
+
+    	   initializeCarousel();
+    	   resizeCarouselMapContainer();
 
     	}
 
-    	initializeCarousel();
-
 	}
 
+	// Replace space details (inline loading of already slid panel)
 	function replaceSpaceDetails(data) {
-
-    	console.log("the following id was passed: " + data.id);
 
     	if (mobile) {
         	// change url
@@ -309,17 +308,19 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
     	   // set/reset initial state
     	   $('.space-detail-inner').hide();
-    	   $(".space-detail .loading").show();
+    	   //$(".space-detail .loading").show();
+
     	   $('.space-detail-body').height($('.space-detail').height() - 150);
 
     	   $('.space-detail').show();
 
-    	   setTimeout('$(".space-detail .loading").hide()', 1000);
-    	   setTimeout('$(".space-detail-inner").show()', 1300);
-
+    	   // wait before showing the new space
+    	   $(".space-detail-inner").delay(700).show(0, function() {
+        	   initializeCarousel();
+        	   resizeCarouselMapContainer();
+           });
     	}
 
-    	initializeCarousel();
 
 	}
 
@@ -390,11 +391,22 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
             // hide the controls if only 1 picture exists
             if ($(this).find('.item').length == 1) {
                  $(this).find('.carousel-control').hide();
-                 console.log("only 1 picture found");
             }
 
         });
 
+    }
+
+    function resizeCarouselMapContainer() {
+
+        // get the width
+        var containerW = $('.image-container').width();
+
+        // calcuate height based on 3:2 aspect ratio
+        var containerH = containerW / 1.5;
+
+        $('.carousel').height(containerH);
+        $('.map-container').height(containerH);
     }
 
 })(this);
