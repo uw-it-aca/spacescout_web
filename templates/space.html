@@ -1,7 +1,13 @@
 {% extends 'base-responsive.html' %}
 
-{% block head %}
+{% block extra_js %}
+<script>
+    window.space_latitude = {{ location.latitude }};
+    window.space_longitude = {{ location.longitude }};
+</script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/space.js"></script>
 {% endblock %}
+
 {% block content %}
 
     <div id="nav" style="position:relative;">
@@ -21,8 +27,8 @@
                         </div>
                         <div class="space-detail-body">
                             <div class="space-detail-body-inner">
-                                <div class="image-container">
-                                    <div id="myCarousel" class="carousel slide">
+                                <div id="spaceCarouselContainer" class="image-container">
+                                    <div id="spaceCarousel" class="carousel slide">
                                       <!-- Carousel items -->
                                       <div class="carousel-inner">
                                         {% for image in images %}
@@ -31,16 +37,17 @@
 
                                       </div>
                                       <!-- Carousel nav -->
-                                      <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
-                                      <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+                                      <a class="carousel-control left" href="#spaceCarousel" data-slide="prev">&lsaquo;</a>
+                                      <a class="carousel-control right" href="#spaceCarousel" data-slide="next">&rsaquo;</a>
                                     </div>
                                 </div>
-                                <div class="map-container" style="display:none; ">map here</div>
+                                <div id="spaceMap" class="map-container" style="display:none;"></div>
 
-                                <div class="space-image-map-buttons btn-group">
-                                  <button class="btn disabled">images</button>
-                                  <button class="btn">map</button>
+                                <div class="space-image-map-buttons btn-group" data-toggle="buttons-radio">
+                                  <button id="carouselControl" class="btn active">images</button>
+                                  <button id="mapControl" class="btn">map</button>
                                 </div>
+
 
                                 <div class="space-info">
                                     <ul>

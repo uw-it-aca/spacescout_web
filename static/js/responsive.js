@@ -1,3 +1,5 @@
+var detailsLat, detailsLon;
+
 // Handlebars helpers
 
 Handlebars.registerHelper('carouselimages', function(spacedata) {
@@ -6,9 +8,9 @@ Handlebars.registerHelper('carouselimages', function(spacedata) {
     for (i=0; i < spacedata.images.length; i++) {
         image_id = spacedata.images[i].id;
         console.log(image_id);
-        elements.push('<div class="item"><img src="/space/'+space_id+'/image/'+image_id+'/thumb/1000x667" class="img"></div>');
-        return new Handlebars.SafeString(elements.join('\n'));
+        elements.push('<div class="item"><img src="/space/'+space_id+'/image/'+image_id+'/thumb/600x400" class="img"></div>');
     }
+    return new Handlebars.SafeString(elements.join('\n'));
 });
 
 Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
@@ -51,13 +53,20 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
 	$(document).ready(function() {
 
+    	// if map_canvas
+
+    	if ($("#map_canvas").length == 1) {
+          initialize();
+        }
+
 		checkMobile();
 		setDisplay();
 
 		// initialize the carousel for mobile standalone space page
-
+		if (mobile) {
 		  initializeCarousel();
-
+		  resizeCarouselMapContainer();
+		}
 
 		// Toggle Filter display
 		$('#filter_button').click(function() {
@@ -231,6 +240,20 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
         });
 
+        // Toggle between carousel and map
+        $('.space-image-map-buttons button').live('click', function(e){
+
+            if ($('#carouselControl').hasClass('active')) { // show the carousel
+                $('#spaceCarouselContainer').show();
+                $('#spaceMap').hide();
+            }
+            else { //show the map
+                $('#spaceCarouselContainer').hide();
+                $('#spaceMap').show();
+                getSpaceMap(detailsLat, detailsLon);
+            }
+        });
+
 	});
 
 	//Update dimensions on resize
@@ -260,19 +283,18 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 		}
 	}
 
-	// Show space details
+	// Show space details (sliding transition)
 	function showSpaceDetails(data) {
-
-    	console.log("the following id is pissed: " + data.id);
-
-    	// remove any open details
-    	$('#space_detail_container').remove();
 
     	if (mobile) {
         	// change url
         	location.href = '/space/' + data.id;
     	}
     	else {
+
+    	   // remove any open details
+    	   $('#space_detail_container').remove();
+
         	// build the template
     	   var source = $('#space_details').html();
     	   var template = Handlebars.compile(source);
@@ -283,19 +305,21 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
     	   $('#space_detail_container').show();
 
     	   $('#space_detail_container').height($('#map_canvas').height());
-    	   $('.space-detail-body').height($('.space-detail').height() - 110);
-
+    	   $('.space-detail-body').height($('.space-detail').height() - 150);
     	   $('.space-detail').show("slide", { direction: "right" }, 700);
+
+    	   initializeCarousel();
+    	   resizeCarouselMapContainer();
+
+    	   detailsLat = data.location.latitude;
+    	   detailsLon = data.location.longitude;
 
     	}
 
-    	initializeCarousel();
-
 	}
 
+	// Replace space details (inline loading of already slid panel)
 	function replaceSpaceDetails(data) {
-
-    	console.log("the following id was passed: " + data.id);
 
     	if (mobile) {
         	// change url
@@ -309,17 +333,22 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
     	   // set/reset initial state
     	   $('.space-detail-inner').hide();
-    	   $(".space-detail .loading").show();
-    	   $('.space-detail-body').height($('.space-detail').height() - 110);
+    	   //$(".space-detail .loading").show();
+
+    	   $('.space-detail-body').height($('.space-detail').height() - 150);
 
     	   $('.space-detail').show();
 
-    	   setTimeout('$(".space-detail .loading").hide()', 1000);
-    	   setTimeout('$(".space-detail-inner").show()', 1300);
+    	   // wait before showing the new space
+    	   $(".space-detail-inner").delay(700).show(0, function() {
+        	   initializeCarousel();
+        	   resizeCarouselMapContainer();
+           });
 
+           detailsLat = data.location.latitude;
+    	   detailsLon = data.location.longitude;
     	}
 
-    	initializeCarousel();
 
 	}
 
@@ -368,13 +397,6 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
         //$('#main_content').css({ minHeight: mainContentH });
     }
 
-    function blah() {
-        $('#map_canvas').show();
-        $('#info_list').show();
-        $('#filter_button_container').show();
-        $('.back-top').show();
-    }
-
     function initializeCarousel() {
 
         console.log("carousel initialized");
@@ -386,7 +408,26 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
             //set the first item as active
             $(this).find(".item:first-child").addClass("active");
+
+            // hide the controls if only 1 picture exists
+            if ($(this).find('.item').length == 1) {
+                 $(this).find('.carousel-control').hide();
+            }
         });
+
+
+    }
+
+    function resizeCarouselMapContainer() {
+
+        // get the width
+        var containerW = $('.image-container').width();
+
+        // calcuate height based on 3:2 aspect ratio
+        var containerH = containerW / 1.5;
+
+        $('.carousel').height(containerH);
+        $('.map-container').height(containerH);
 
     }
 

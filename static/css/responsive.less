@@ -51,7 +51,7 @@
             z-index: 1;
             display: none;
 
-            .space-detail { display: none; background: #fff; position: absolute;  color: #333; /*width: 470px; top: 5px; bottom: 5px; right: 5px;*/ top: 30px; bottom: 30px; left: 30px; right: 0px; margin-right: 30px;
+            .space-detail { display: none; background: #fff url('/static/img/spinner.gif') no-repeat 50% 50%; background-size: 20px; position: absolute;  color: #333; /*width: 470px; top: 5px; bottom: 5px; right: 5px;*/ top: 30px; bottom: 30px; left: 30px; right: 0px; margin-right: 30px;
 
                 -webkit-border-radius: 2px;
                 -moz-border-radius: 2px;
@@ -61,8 +61,7 @@
                 -moz-box-shadow: 1px 1px 6px rgba(0,0,0, 0.5);
                 -webkit-box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.5);
 
-                .loading { position: absolute; top: 45%; background: transparent url('/static/img/spinner.gif') no-repeat 50% 50%; background-size: 20px; text-align: center; left: 0; right: 0; display: none; }
-                .space-detail-inner { display:none; padding: 15px;
+                .space-detail-inner { display:none; padding: 15px; background-color: #fff;
 
                     .space-detail-header { position: relative; height: 60px;
                         .space-detail-type { color: #666; }
@@ -70,12 +69,16 @@
                         .close { position: absolute; right: 0; top: 0; float: none; }
                     }
                     .space-detail-body { overflow-y: auto;
-                        .space-detail-body-inner { min-height: 700px;
+                        .space-detail-body-inner {
 
-                            .image-container, .map-container { background: #f7f7f7; min-height: 200px; }
+                            .image-container, .map-container { }
                             .image-container {
-                                .carousel { margin: 0; }
+                                .carousel { margin: 0; background: #f8f8f8 url('/static/img/spinner.gif') no-repeat 50% 50%; background-size: 20px; }
                             }
+
+                            .space-image { }
+
+                            .map-container { background: #f8f8f8 url('/static/img/spinner.gif') no-repeat 50% 50%; background-size: 20px; }
 
                             .space-info {
                                 ul { margin: 0; }
@@ -136,6 +139,28 @@
         }
     }
 
+   /* #map_canvas {
+        #space_detail_container {
+            .space-detail {
+                .space-detail-inner {
+                    .space-detail-body {
+                        .space-detail-body-inner {
+                            .space-image { float: left; width: 50%; margin-right: 20px }
+
+                            .space-info { float: left; width: 45%;
+                                ul { margin: 0; }
+                                li { list-style: none; margin-bottom: 5px;
+                                  .space-info-label { width: 35%; margin-right: 10px; color: #ccc; overflow: hidden; text-overflow: ellipsis; }
+                                  .space-info-detail { width: 60%; }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }*/
+
     #info_list {
         #info_items {
             ul {
@@ -156,6 +181,28 @@
             #filter_block {
                 #filter_hours {
                     select { width: 44.4%; }
+                }
+            }
+        }
+    }
+
+    #map_canvas {
+        #space_detail_container {
+            .space-detail {
+                .space-detail-inner {
+                    .space-detail-body {
+                        .space-detail-body-inner {
+                            .space-image { float: left; width: 50%; margin-right: 20px }
+
+                            .space-info { float: left; width: 45%;
+                                ul { margin: 0; }
+                                li { list-style: none; margin-bottom: 5px;
+                                  .space-info-label { width: 35%; margin-right: 10px; color: #ccc; overflow: hidden; text-overflow: ellipsis; }
+                                  .space-info-detail { width: 60%; }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
