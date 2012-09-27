@@ -1,3 +1,5 @@
+var detailsLat, detailsLon;
+
 // Handlebars helpers
 
 Handlebars.registerHelper('carouselimages', function(spacedata) {
@@ -248,7 +250,7 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
             else { //show the map
                 $('#spaceCarouselContainer').hide();
                 $('#spaceMap').show();
-                getSpaceMap();
+                getSpaceMap(detailsLat, detailsLon);
             }
         });
 
@@ -309,6 +311,9 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
     	   initializeCarousel();
     	   resizeCarouselMapContainer();
 
+    	   detailsLat = data.location.latitude;
+    	   detailsLon = data.location.longitude;
+
     	}
 
 	}
@@ -339,6 +344,9 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
         	   initializeCarousel();
         	   resizeCarouselMapContainer();
            });
+
+           detailsLat = data.location.latitude;
+    	   detailsLon = data.location.longitude;
     	}
 
 
