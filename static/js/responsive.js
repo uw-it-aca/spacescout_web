@@ -7,8 +7,8 @@ Handlebars.registerHelper('carouselimages', function(spacedata) {
         image_id = spacedata.images[i].id;
         console.log(image_id);
         elements.push('<div class="item"><img src="/space/'+space_id+'/image/'+image_id+'/thumb/600x400" class="img"></div>');
-        return new Handlebars.SafeString(elements.join('\n'));
     }
+    return new Handlebars.SafeString(elements.join('\n'));
 });
 
 Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
