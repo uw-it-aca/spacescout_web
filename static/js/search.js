@@ -8,8 +8,8 @@ function openInfoWindow(marker, info) {
 }
 
 function addMarkerListener(marker, data) {
-    google.maps.event.addListener(marker, 'click', function() {
-        openInfoWindow(marker, data);
+    google.maps.event.addListener(marker, 'click', function(m) {
+        openInfoWindow(m, data);
     });
 
 }
