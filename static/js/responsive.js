@@ -55,9 +55,9 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 		setDisplay();
 
 		// initialize the carousel for mobile standalone space page
-
+		if (mobile) {
 		  initializeCarousel();
-
+		}
 
 		// Toggle Filter display
 		$('#filter_button').click(function() {
@@ -386,6 +386,13 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
             //set the first item as active
             $(this).find(".item:first-child").addClass("active");
+
+            // hide the controls if only 1 picture exists
+            if ($(this).find('.item').length == 1) {
+                 $(this).find('.carousel-control').hide();
+                 console.log("only 1 picture found");
+            }
+
         });
 
     }
