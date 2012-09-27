@@ -569,17 +569,16 @@
                 {% endtplhandlebars %}
 
                 {% tplhandlebars "spot_info" %}
-                    <h1>{{name}}</h1>
-                    <div>
-                        This is the content window about the space.  Here's some info:
-                        <ul>
-                            <li>Hours available: {{display_hours_available}}</li>
-                            <li>Capacity: {{capacity}}</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <a href='/space/{{id}}'>View more</a>
-                    </div>
+                    <ul>
+                        <li class="clearfix">
+                            <div class="space-detail-list-image pull-left"><img src='space/{{id}}/image/{{images.0.id}}/thumb/100x67' class='img'></div>
+                            <div id="{{id}}" class="space-detail-list-item view-details pull-left">
+                                <div class="space-detail-type">{{type}}</div>
+                                <div class="space-detail-name">{{name}}</div>
+                                <div class="space-detail-desc">{{extended_info.location_description}}</div>
+                            </div>
+                        </li>
+                    </ul>
                 {% endtplhandlebars %}
             </div>
         </div>
