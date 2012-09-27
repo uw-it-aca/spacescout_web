@@ -53,18 +53,20 @@
           <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
           <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
 
-          {% compress js %}
+          <!-- Google Maps -->
+          <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=true"></script>
 
+          {% compress js %}
             <script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap/js/bootstrap.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/select2/select2.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/markerclusterer.js"></script>
-            <script type="text/javascript" src="{{ STATIC_URL }}js/search.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}js/handlebars.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}js/responsive.js"></script>
-
+            {% block extra_js %}{% endblock %}
           {% endcompress %}
 
-          {% block extra_js %}{% endblock %}
+
+
 
 
 

@@ -369,13 +369,6 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
         //$('#main_content').css({ minHeight: mainContentH });
     }
 
-    function blah() {
-        $('#map_canvas').show();
-        $('#info_list').show();
-        $('#filter_button_container').show();
-        $('.back-top').show();
-    }
-
     function initializeCarousel() {
 
         console.log("carousel initialized");
