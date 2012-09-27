@@ -327,26 +327,26 @@
                             <div class="space-detail-body-inner clearfix">
 
                                 <div class="space-image">
-                                <div class="image-container">
-                                    <div id="myCarousel" class="carousel slide">
-                                      <!-- Carousel items -->
-                                      <div class="carousel-inner">
+                                    <div class="image-container">
+                                        <div id="myCarousel" class="carousel slide">
+                                          <!-- Carousel items -->
+                                          <div class="carousel-inner">
 
-                                        <!-- TODO: do an each loop of some sort -->
-                                        {{ carouselimages this }}
+                                            <!-- TODO: do an each loop of some sort -->
+                                            {{ carouselimages this }}
 
-                                      </div>
-                                      <!-- Carousel nav -->
-                                      <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
-                                      <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+                                          </div>
+                                          <!-- Carousel nav -->
+                                          <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+                                          <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="map-container" style="display:none; ">map here</div>
+                                    <div class="map-container" style="display:none; ">map here</div>
 
-                                <div class="space-image-map-buttons btn-group">
-                                  <button class="btn disabled">images</button>
-                                  <button class="btn">map</button>
-                                </div>
+                                    <div class="space-image-map-buttons btn-group">
+                                      <button class="btn disabled">images</button>
+                                      <button class="btn">map</button>
+                                    </div>
                                 </div>
 
                                 <div class="space-info">
@@ -432,28 +432,30 @@
                             <a class="close" href="#">&times;</a>
                         </div>
                         <div class="space-detail-body">
-                            <div class="space-detail-body-inner">
-                                <div class="image-container">
-                                    <div id="myCarousel" class="carousel slide">
-                                      <!-- Carousel items -->
-                                      <div class="carousel-inner">
+                            <div class="space-detail-body-inner clearfix">
 
-                                        <!-- TODO: do an each loop of some sort -->
-                                        {{ carouselimages this }}
+                                <div class="space-image">
+                                    <div class="image-container">
+                                        <div id="myCarousel" class="carousel slide">
+                                          <!-- Carousel items -->
+                                          <div class="carousel-inner">
 
-                                      </div>
-                                      <!-- Carousel nav -->
-                                      <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
-                                      <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+                                            <!-- TODO: do an each loop of some sort -->
+                                            {{ carouselimages this }}
+
+                                          </div>
+                                          <!-- Carousel nav -->
+                                          <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+                                          <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+                                        </div>
+                                    </div>
+                                    <div class="map-container" style="display:none; ">map here</div>
+
+                                    <div class="space-image-map-buttons btn-group">
+                                      <button class="btn disabled">images</button>
+                                      <button class="btn">map</button>
                                     </div>
                                 </div>
-                                <div class="map-container" style="display:none; ">map here</div>
-
-                                <div class="space-image-map-buttons btn-group">
-                                  <button class="btn disabled">images</button>
-                                  <button class="btn">map</button>
-                                </div>
-
                                 <div class="space-info">
                                      <ul>
                                         <li class="clearfix"><div class="space-info-label pull-left">Current hours</div><div class="space-info-detail pull-left">{{available_hours}}</div></li>
