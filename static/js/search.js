@@ -1,4 +1,4 @@
-var spacescout_map, spacescout_infowindow, spacescout_marker_ids = {}, spacescout_markers = [], speed = 800, mc = null, youarehere = null;
+var spacescout_map = null, spacescout_infowindow, spacescout_marker_ids = {}, spacescout_markers = [], speed = 800, mc = null, youarehere = null;
 
 function openInfoWindow(marker, info) {
     var source = $('#spot_info').html();
@@ -151,7 +151,6 @@ function initialize() {
 }
 
 function load_map(latitude, longitude, zoom) {
-    console.log('load_map called');
     $('.loading').show();
     var myOptions = {
         center: new google.maps.LatLng(latitude, longitude),
@@ -160,7 +159,11 @@ function load_map(latitude, longitude, zoom) {
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
 
-    window.spacescout_map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+    if (window.spacescout_map == null) {
+        window.spacescout_map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+    } else {
+        window.spacescout_map.setCenter(new google.maps.LatLng(latitude, longitude));
+    }
     google.maps.event.addListener(window.spacescout_map, 'idle', reload_on_idle);
 
 
