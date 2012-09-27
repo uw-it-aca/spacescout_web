@@ -326,7 +326,7 @@
                             <div class="space-detail-body-inner clearfix">
 
                                 <div class="space-image">
-                                    <div class="image-container">
+                                    <div id="spaceCarouselContainer" class="image-container">
                                         <div id="myCarousel" class="carousel slide">
                                           <!-- Carousel items -->
                                           <div class="carousel-inner">
@@ -340,11 +340,11 @@
                                           <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
                                         </div>
                                     </div>
-                                    <div class="map-container" style="display:none; ">map here</div>
+                                    <div id="spaceMap" class="map-container" style="display:none;">map goes here</div>
 
-                                    <div class="space-image-map-buttons btn-group">
-                                      <button class="btn disabled">images</button>
-                                      <button class="btn">map</button>
+                                    <div class="space-image-map-buttons btn-group" data-toggle="buttons-radio">
+                                      <button id="carouselControl" class="btn active">images</button>
+                                      <button id="mapControl" class="btn">map</button>
                                     </div>
                                 </div>
 

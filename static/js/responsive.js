@@ -51,6 +51,12 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
 	$(document).ready(function() {
 
+    	// if map_canvas
+
+    	if ($("#map_canvas").length == 1) {
+          initialize();
+        }
+
 		checkMobile();
 		setDisplay();
 
@@ -232,6 +238,20 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
         });
 
+        // Toggle between carousel and map
+        $('.space-image-map-buttons button').live('click', function(e){
+
+            if ($('#carouselControl').hasClass('active')) { // show the carousel
+                $('#spaceCarouselContainer').show();
+                $('#spaceMap').hide();
+            }
+            else { //show the map
+                $('#spaceCarouselContainer').hide();
+                $('#spaceMap').show();
+                getSpaceMap();
+            }
+        });
+
 	});
 
 	//Update dimensions on resize
@@ -385,8 +405,8 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
             if ($(this).find('.item').length == 1) {
                  $(this).find('.carousel-control').hide();
             }
-
         });
+
 
     }
 
@@ -400,6 +420,7 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
         $('.carousel').height(containerH);
         $('.map-container').height(containerH);
+
     }
 
 })(this);

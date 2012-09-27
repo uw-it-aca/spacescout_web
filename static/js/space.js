@@ -1,4 +1,4 @@
-function initialize() {
+function getSpaceMap() {
 
   var mapOptions = {
     zoom: 17,
