@@ -6,7 +6,7 @@ Handlebars.registerHelper('carouselimages', function(spacedata) {
     for (i=0; i < spacedata.images.length; i++) {
         image_id = spacedata.images[i].id;
         console.log(image_id);
-        elements.push('<div class="item"><img src="/space/'+space_id+'/image/'+image_id+'/thumb/1000x667" class="img"></div>');
+        elements.push('<div class="item"><img src="/space/'+space_id+'/image/'+image_id+'/thumb/600x400" class="img"></div>');
         return new Handlebars.SafeString(elements.join('\n'));
     }
 });
@@ -283,7 +283,7 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
     	   $('#space_detail_container').show();
 
     	   $('#space_detail_container').height($('#map_canvas').height());
-    	   $('.space-detail-body').height($('.space-detail').height() - 110);
+    	   $('.space-detail-body').height($('.space-detail').height() - 150);
 
     	   $('.space-detail').show("slide", { direction: "right" }, 700);
 
@@ -310,7 +310,7 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
     	   // set/reset initial state
     	   $('.space-detail-inner').hide();
     	   $(".space-detail .loading").show();
-    	   $('.space-detail-body').height($('.space-detail').height() - 110);
+    	   $('.space-detail-body').height($('.space-detail').height() - 150);
 
     	   $('.space-detail').show();
 
