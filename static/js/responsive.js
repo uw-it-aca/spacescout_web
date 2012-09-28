@@ -75,16 +75,21 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
                 $("#filter_block").slideDown('slow');
 
                 if (mobile) {
-                    $('#map_canvas').hide();
-                    $('#info_list').hide();
+                    //$('#map_canvas').hide();
+                    //$('#info_list').hide();
+
+                    $('#main_content').hide();
+
                     $('.back-top').hide();
                 }
 
             } else {
 
                 if (mobile) {
-                    $('#map_canvas').show();
-                    $('#info_list').show();
+                    //$('#map_canvas').show();
+                    //$('#info_list').show();
+                    $('#main_content').show();
+
                     $('#filter_button_container').show();
                     $('.back-top').show();
                 }
@@ -97,8 +102,11 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
         $('#cancel_results_button').click(function() {
 
             if (mobile) {
-                $('#map_canvas').show();
-                $('#info_list').show();
+                //$('#map_canvas').show();
+                //$('#info_list').show();
+
+                $('#main_content').show();
+
                 $('#filter_button_container').show();
                 $('.back-top').show();
                 // scroll to top since the cancel button is at the bottom
@@ -305,8 +313,8 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
     	   $('#space_detail_container').show();
 
     	   $('#space_detail_container').height($('#map_canvas').height());
-    	   //$('.space-detail-body').height($('.space-detail').height() - 150);
-    	   
+    	   $('.space-detail-body').height($('.space-detail').height() - 120);
+
     	   $('.space-detail').show("slide", { direction: "right" }, 700);
 
     	   initializeCarousel();
@@ -336,8 +344,8 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
     	   $('.space-detail-inner').hide();
     	   //$(".space-detail .loading").show();
 
-    	   //$('.space-detail-body').height($('.space-detail').height() - 150);
-    	   
+    	   $('.space-detail-body').height($('.space-detail').height() - 120);
+
     	   $('.space-detail').show();
 
     	   // wait before showing the new space
@@ -374,10 +382,10 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
         var contentH = windowH - headerH;
 
         $('#map_canvas').height(contentH - 100);
-        $('#info_list').height(contentH -100);
+        $('#info_list').height(contentH -80);
 
         // make sure loading and list height fills the list container
-        $('#info_list .list-inner').css('min-height', contentH);
+        $('#info_list .list-inner').css('min-height', contentH - 100);
         //$('.loading').height(contentH);
     }
 
