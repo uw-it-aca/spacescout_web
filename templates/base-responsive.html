@@ -48,7 +48,10 @@
           <div style="max-width:1024px; margin: 0 auto;">
               {% block content %}{% endblock %}
               <div class="back-top"><a id="top_link" href="#">TOP</a></div>
-              <div><img src="{{ STATIC_URL }}/img/w.png" /> woof!</div>
+              <div id="footer" class="clearfix">
+                  <div class="pull-left copyright">Copyright &copy; 2012<br/>Academic and Collaborative Applications, UW-IT</div>
+                  <div class="pull-left partners">Brought to you by: UW-IT in partnership with Housing and Food Services, UW Libraries, UW Computing Directors, and partially funded by the Student Technology Fee</div>
+              </div>
           </div>
 
           <!-- jQuery -->
@@ -67,12 +70,6 @@
             <script type="text/javascript" src="{{ STATIC_URL }}js/responsive.js"></script>
             {% block extra_js %}{% endblock %}
           {% endcompress %}
-
-
-
-
-
-
 
     </body>
 </html>
