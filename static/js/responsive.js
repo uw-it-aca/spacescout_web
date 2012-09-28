@@ -305,7 +305,8 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
     	   $('#space_detail_container').show();
 
     	   $('#space_detail_container').height($('#map_canvas').height());
-    	   $('.space-detail-body').height($('.space-detail').height() - 150);
+    	   //$('.space-detail-body').height($('.space-detail').height() - 150);
+    	   
     	   $('.space-detail').show("slide", { direction: "right" }, 700);
 
     	   initializeCarousel();
@@ -335,8 +336,8 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
     	   $('.space-detail-inner').hide();
     	   //$(".space-detail .loading").show();
 
-    	   $('.space-detail-body').height($('.space-detail').height() - 150);
-
+    	   //$('.space-detail-body').height($('.space-detail').height() - 150);
+    	   
     	   $('.space-detail').show();
 
     	   // wait before showing the new space
@@ -372,8 +373,8 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
         var headerH = $('#nav').height();
         var contentH = windowH - headerH;
 
-        $('#map_canvas').height(contentH);
-        $('#info_list').height(contentH);
+        $('#map_canvas').height(contentH - 100);
+        $('#info_list').height(contentH -100);
 
         // make sure loading and list height fills the list container
         $('#info_list .list-inner').css('min-height', contentH);
