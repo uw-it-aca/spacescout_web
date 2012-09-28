@@ -184,6 +184,12 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
             e.preventDefault();
 
+            // clear previously selected space
+            $('#info_items li').removeClass('selected');
+
+            //highlight the selected space
+            $(this).parent().addClass('selected');
+
             // if a space details already exists
             if ($('#space_detail_container').is(':visible')) {
                 $.ajax({
@@ -313,7 +319,7 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
     	   $('#space_detail_container').show();
 
     	   $('#space_detail_container').height($('#map_canvas').height());
-    	   $('.space-detail-body').height($('.space-detail').height() - 125);
+    	   $('.space-detail-body').height($('.space-detail').height() - 120);
 
     	   $('.space-detail').show("slide", { direction: "right" }, 700);
 
@@ -344,7 +350,7 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
     	   $('.space-detail-inner').hide();
     	   //$(".space-detail .loading").show();
 
-    	   $('.space-detail-body').height($('.space-detail').height() - 125);
+    	   $('.space-detail-body').height($('.space-detail').height() - 120);
 
     	   $('.space-detail').show();
 
@@ -365,6 +371,9 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
         $('.space-detail').hide("slide", { direction: "right" }, 700, function() {
         	   $('#space_detail_container').remove();
         });
+
+        // deselect selected space in list
+        $('#info_items li').removeClass('selected');
 	}
 
 	// ScrollTo a spot on the UI
