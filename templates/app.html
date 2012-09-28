@@ -65,34 +65,34 @@
                                 </div>
                                 <div style="width:auto;float:left; margin-right: 15px;">
                                     <label class="checkbox">
-                                      <input type="checkbox" name="type" value="study_room"> Study Room
+                                      <input type="checkbox" name="type" id="study_room" value="study_room"> Study Room
                                     </label>
                                     <label class="checkbox">
-                                      <input type="checkbox" name="type" value="study_area"> Study Area
+                                      <input type="checkbox" name="type" id="study_area" value="study_area"> Study Area
                                     </label>
                                     <label class="checkbox">
-                                      <input type="checkbox" name="type" value="computer_lab"> Computer Lab
+                                      <input type="checkbox" name="type" id="computer_lab" value="computer_lab"> Computer Lab
                                     </label>
                                     <label class="checkbox">
-                                      <input type="checkbox" name="type" value="studio"> Production Studio
+                                      <input type="checkbox" name="type" id="studio" value="studio"> Production Studio
                                     </label>
                                     <label class="checkbox">
-                                      <input type="checkbox" name="type" value="classroom"> Conference/Classroom
+                                      <input type="checkbox" name="type" id="classroom" value="classroom"> Conference/Classroom
                                     </label>
                                 </div>
 
                                 <div style="width:auto;float:left">
                                     <label class="checkbox">
-                                      <input type="checkbox" name="type" value="open"> Open space
+                                      <input type="checkbox" name="type" id="open" value="open"> Open space
                                     </label>
                                     <label class="checkbox">
-                                      <input type="checkbox" name="type" value="lounge"> Lounge
+                                      <input type="checkbox" name="type" id="lounge" value="lounge"> Lounge
                                     </label>
                                     <label class="checkbox">
-                                      <input type="checkbox" name="type" value="cafe"> Cafe
+                                      <input type="checkbox" name="type" id="cafe" value="cafe"> Cafe
                                     </label>
                                     <label class="checkbox">
-                                      <input type="checkbox" name="type" value="outdoor"> Outdoor area
+                                      <input type="checkbox" name="type" id="outdoor" value="outdoor"> Outdoor area
                                     </label>
                                 </div>
 
@@ -133,7 +133,7 @@
                     <div id="filter_hours" class="choice-group">
                         <div>
                             <label class="radio inline">
-                              <input type="radio" name="optionsHours" id="" value="option1" checked>
+                              <input type="radio" name="optionsHours" id="open_now" value="option1" checked>
                               Open now
                             </label>
                             <label class="radio inline">
@@ -205,7 +205,7 @@
                     <div id="filter_location" class="choice-group">
                         <div>
                             <label class="radio inline">
-                              <input type="radio" name="optionsLocations" id="" value="option1" checked> Entire campus
+                              <input type="radio" name="optionsLocations" id="entire_campus" value="option1" checked> Entire campus
                             </label>
                             <label class="radio inline">
                               <input type="radio" name="optionsLocations" id="building_list_input" value="option2"> Specific building
@@ -231,28 +231,28 @@
                     <div id="filter_equipment_types" class="choice-group clearfix" style="margin-bottom:0px;">
                         <div style="width:auto;float:left; margin-right:15px;">
                             <label class="checkbox">
-                              <input type="checkbox" id="" name="equipment" value="has_whiteboards"> Whiteboard
+                              <input type="checkbox" id="has_whiteboards" name="equipment" value="has_whiteboards"> Whiteboard
                             </label>
                             <label class="checkbox">
-                              <input type="checkbox" id="" name="equipment" value="has_outlets"> Outlets
+                              <input type="checkbox" id="has_outlets" name="equipment" value="has_outlets"> Outlets
                             </label>
                             <label class="checkbox">
-                              <input type="checkbox" id="" name="equipment" value="has_computers"> Computer
+                              <input type="checkbox" id="has_computers" name="equipment" value="has_computers"> Computer
                             </label>
                             <label class="checkbox">
-                              <input type="checkbox" id="" name="equipment" value="has_scanner"> Scanning
+                              <input type="checkbox" id="has_scanner" name="equipment" value="has_scanner"> Scanning
                             </label>
                         </div>
 
                         <div style="width:auto;float:left;">
                             <label class="checkbox">
-                              <input type="checkbox" id="" name="equipment" value="has_displays"> Large display (for laptop)
+                              <input type="checkbox" id="has_displays" name="equipment" value="has_displays"> Large display (for laptop)
                             </label>
                             <label class="checkbox">
-                              <input type="checkbox" id="" name="equipment" value="has_projector"> Projector
+                              <input type="checkbox" id="has_projector" name="equipment" value="has_projector"> Projector
                             </label>
                             <label class="checkbox">
-                              <input type="checkbox" id="" name="equipment" value="has_printing"> Printing
+                              <input type="checkbox" id="has_printing" name="equipment" value="has_printing"> Printing
                             </label>
                         </div>
                     </div>
@@ -267,13 +267,13 @@
                                 <h3>Noise Level</h3>
                                 <div>
                                 <label class="checkbox inline">
-                                  <input type="checkbox" id="" name="noise_level" value="silent"> Silent
+                                  <input type="checkbox" id="silent" name="noise_level" value="silent"> Silent
                                 </label>
                                 <label class="checkbox inline">
-                                  <input type="checkbox" id="" name="noise_level" value="quiet"> Low Hum
+                                  <input type="checkbox" id="quiet" name="noise_level" value="quiet"> Low Hum
                                 </label>
                                 <label class="checkbox inline">
-                                  <input type="checkbox" id="" name="noise_level" value="moderate"> Chatter
+                                  <input type="checkbox" id="moderate" name="noise_level" value="moderate"> Chatter
                                 </label>
                                 </div>
                             </div>
@@ -288,13 +288,13 @@
                             <div id="filter_food_coffee" class="choice-group">
                                 <h3>Food/Coffee</h3>
                                 <label class="checkbox inline">
-                                  <input type="checkbox" id="" name="food_nearby" value="space"> In space
+                                  <input type="checkbox" id="in_space" name="food_nearby" value="space"> In space
                                 </label>
                                 <label class="checkbox inline">
-                                  <input type="checkbox" id="" name="food_nearby" value="building"> In building
+                                  <input type="checkbox" id="in_building" name="food_nearby" value="building"> In building
                                 </label>
                                 <label class="checkbox inline">
-                                  <input type="checkbox" id="" name="food_nearby" value="neighboring"> In neighboring building
+                                  <input type="checkbox" id="neighboring" name="food_nearby" value="neighboring"> In neighboring building
                                 </label>
                             </div>
                         </div>
