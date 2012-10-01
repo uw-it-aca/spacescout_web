@@ -44,7 +44,6 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
 });
 
-
 (function(w){
 	var sw = document.body.clientWidth,
 		breakpoint = 767,
