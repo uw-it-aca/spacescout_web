@@ -1,9 +1,15 @@
 var spacescout_map = null, spacescout_infowindow, spacescout_marker_ids = {}, spacescout_markers = [], speed = 800, mc = null, youarehere = null;
 
 function openInfoWindow(marker, info) {
+
+    // show the loading spinner for a few seconds
+    $('.loading').show().delay(3000);
+
     var source = $('#spot_info').html();
     var template = Handlebars.compile(source);
     $("#info_items").html(template(info));
+
+    scrollToTop('info_list');
     $('.loading').slideUp('fast');
 }
 
@@ -15,6 +21,10 @@ function addMarkerListener(marker, data) {
 }
 
 function openClusterInfoWindow(cluster, data) {
+
+    // show the loading spinner for a few seconds
+    $('.loading').show().delay(3000);
+
     // I'm sure there's a better way of filtering this down to spaces...
     var spaces = new Array();
     for (i=0; i < cluster.getMarkers().length; i++) {
@@ -27,6 +37,8 @@ function openClusterInfoWindow(cluster, data) {
     var source = $('#cluster_list').html();
     var template = Handlebars.compile(source);
     $('#info_items').html(template({data: spaces}));
+
+    scrollToTop('info_list');
     $('.loading').slideUp('fast');
 }
 
@@ -285,6 +297,12 @@ function distance_between_points(lat1, lon1, lat2, lon2) {
     var d = R * c;
 
     return d;
+}
+
+// ScrollTo a spot on the UI
+function scrollToTop(id) {
+    // Scroll
+    $('html,body').animate({ scrollTop: $("#"+id).offset().top},'fast');
 }
 
 

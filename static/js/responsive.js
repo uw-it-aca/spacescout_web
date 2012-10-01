@@ -53,8 +53,7 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
 	$(document).ready(function() {
 
-    	// if map_canvas
-
+    	// check if a map_canvas exists... populate it
     	if ($("#map_canvas").length == 1) {
           initialize();
         }
@@ -62,10 +61,28 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 		checkMobile();
 		setDisplay();
 
-		// initialize the carousel for mobile standalone space page
 		if (mobile) {
-		  initializeCarousel();
-		  resizeCarouselMapContainer();
+
+    		// initialize the carousel for mobile standalone space page
+            initializeCarousel();
+            resizeCarouselMapContainer();
+
+            // scroll to the top of page
+            $('#top_link').click(function(e){
+                  // Prevent a page reload when a link is pressed
+                  e.preventDefault();
+                  // Call the scroll function
+                  scrollTo('top');
+            });
+
+            // scroll to top of filter list
+            $('#filter_link').click(function(e){
+                  // Prevent a page reload when a link is pressed
+                  e.preventDefault();
+                  // Call the scroll function
+                  scrollTo('info_list');
+            });
+
 		}
 
 		// Toggle Filter display
@@ -160,21 +177,7 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
             }
         });
 
-        // Scroll to the top of page
-        $('#top_link').click(function(e){
-              // Prevent a page reload when a link is pressed
-              e.preventDefault();
-              // Call the scroll function
-              scrollTo('top');
-        });
 
-        // Scroll to top of Filter list
-        $('#filter_link').click(function(e){
-              // Prevent a page reload when a link is pressed
-              e.preventDefault();
-              // Call the scroll function
-              scrollTo('info_items');
-        });
 
         // handle view details click
         $('.view-details').live('click', function(e){
@@ -379,8 +382,7 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 	// ScrollTo a spot on the UI
 	function scrollTo(id) {
         // Scroll
-        $('html,body').animate({
-            scrollTop: $("#"+id).offset().top},speed);
+        $('html,body').animate({ scrollTop: $("#"+id).offset().top},'fast');
     }
 
 	// Desktop display defaults
@@ -405,7 +407,7 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
         var headerH = $('#nav').height();
         //var contentH = windowH - headerH;
         //var mainContentH = windowH - headerH + 35;
-        var mapH = windowH - headerH - 43; // enough to show the loading spinner at the bottom of the viewport
+        var mapH = windowH - headerH - 70; // enough to show the loading spinner at the bottom of the viewport
 
         $('#map_canvas').height(mapH);
         $('#map_canvas').css({ minHeight: mapH })
