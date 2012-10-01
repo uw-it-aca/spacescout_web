@@ -1,5 +1,12 @@
 var spacescout_map = null, spacescout_infowindow, spacescout_marker_ids = {}, spacescout_markers = [], speed = 800, mc = null, youarehere = null;
 
+var cw = document.body.clientWidth, breakpoint = 767, speed = 600, mobile = true;
+
+// Check if Mobile
+function checkMobile() {
+	mobile = (cw > breakpoint) ? false : true;
+}
+
 function openInfoWindow(marker, info) {
 
     // show the loading spinner for a few seconds
@@ -11,13 +18,19 @@ function openInfoWindow(marker, info) {
 
     scrollToTop('info_list');
     $('.loading').slideUp('fast');
+
+    // lazy load images
+    $("img.lazy").lazyload({
+        container: $("#info_list"),
+        threshold : 200,
+        event: "scrollstop"
+    });
 }
 
 function addMarkerListener(marker, data) {
     google.maps.event.addListener(marker, 'click', function(m) {
         openInfoWindow(m, data);
     });
-
 }
 
 function openClusterInfoWindow(cluster, data) {
@@ -40,6 +53,21 @@ function openClusterInfoWindow(cluster, data) {
 
     scrollToTop('info_list');
     $('.loading').slideUp('fast');
+
+    if (mobile) {
+        $("img.lazy").lazyload({
+            threshold : 200,
+            event: "scrollstop"
+        });
+    }
+    else {
+        // lazy load images
+        $("img.lazy").lazyload({
+            container: $("#info_list"),
+            threshold : 200,
+            event: "scrollstop"
+        });
+    }
 }
 
 function addClusterListener(markerCluster, data) {
@@ -54,6 +82,22 @@ function openAllMarkerInfoWindow(data) {
     var template = Handlebars.compile(source);
     $('#info_items').html(template({data: data}));
     $('.loading').slideUp('fast');
+
+	// lazy load images
+    if (mobile) {
+        // mobile loading
+        $("img.lazy").lazyload({
+            threshold : 200
+        });
+    }
+    else {
+        // desktop loading inside of a scrolling container
+        $("img.lazy").lazyload({
+            container: $("#info_list"),
+            threshold : 200,
+            event: "scrollstop"
+        });
+    }
 }
 
 function run_custom_search() {

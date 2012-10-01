@@ -85,6 +85,9 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
 		}
 
+
+
+
 		// Toggle Filter display
 		$('#filter_button').click(function() {
     		if ($("#filter_block").is(":hidden")) {
