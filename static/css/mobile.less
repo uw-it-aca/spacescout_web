@@ -22,8 +22,13 @@ body {
             -webkit-border-radius: 0;
             -moz-border-radius: 0;
             border-radius: 0;
+
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+            box-shadow: none;
+
         }
-        #filter_button { background:#514d83; display:inline-block; }
+        #filter_button { background:#514d83; display:inline-block; border-color: #333; }
         #view_results_button { background:#514d83;  display: none; }
         #cancel_results_button {display: none;}
 
@@ -41,11 +46,12 @@ body {
 
             .selected { color: #fff; }
 
-            h2 { color: yellow; border-top: 1px dotted #aaa; margin: 0; font-size: 15px; line-height: 18px; padding-top: 10px; }
+            h2 { color: #8681b9; border-top: 1px dotted #aaa; margin: 0; font-size: 15px; line-height: 18px; padding-top: 10px; }
 
             h3 { color: #fff; font-size: 13px; line-height: 14px; margin: 0 0 5px 0;
                 span { font-weight: normal; font-size: 12px; }
             }
+            em { color: #fff; }
 
             #filter_space_types, #filter_equipment_types {
                 .checkbox { white-space: nowrap; line-height: 30px;  padding-top: 0; margin-bottom: 0;

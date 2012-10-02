@@ -158,6 +158,14 @@ function run_custom_search() {
     //console.log(window.spacescout_search_options);
     fetch_data();
 
+    // close space detail if visible
+    if ($('#space_detail_container').is(":visible")) {
+        $('#info_items li').removeClass('selected');
+        $('.space-detail').hide("slide", { direction: "right" }, 700, function() {
+        	   $('#space_detail_container').remove();
+        });
+    }
+
     $('#filter_button').show();
     $('#view_results_button').hide();
     $('#cancel_results_button').hide();

@@ -99,10 +99,6 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
                 if (mobile) {
 
                     $('#main_content').hide();
-
-
-
-
                     $('#footer').hide();
                     $('.back-top').hide();
                 }
@@ -112,8 +108,6 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
                 if (mobile) {
 
                     $('#main_content').show();
-
-
                     $('#footer').show();
                     $('.back-top').show();
                 }
@@ -134,11 +128,6 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
                 //$('#info_list').show();
 
                 $('#main_content').show();
-
-
-
-
-
                 $('#footer').show();
                 $('.back-top').show();
 
@@ -151,7 +140,6 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
             $('#cancel_results_button').hide();
 
             $("#filter_block").slideUp('slow');
-
 
         });
 
