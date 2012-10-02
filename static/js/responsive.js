@@ -143,49 +143,6 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
         });
 
-        // Space descriptions
-        if (mobile){
-            // Handle space description popover
-            $('#view_space_descriptions').popover({
-                title: 'Space Descriptions',
-                content: 'Some content!',
-                placement: 'bottom',
-                html: true,
-                content: function() {
-                  return $('#space_descriptions_list').html();
-                }
-            });
-        }
-        else {
-            // Handle space description popover
-            $('#view_space_descriptions').popover({
-                title: 'Space Descriptions',
-                content: 'Some content!',
-                placement: 'right',
-                html: true,
-                content: function() {
-                  return $('#space_descriptions_list').html();
-                }
-            });
-        }
-
-
-        $('#close_descriptions').live('click', function(){
-            $('#view_space_descriptions').popover('hide');
-            return false;
-        });
-
-        $('#view_space_descriptions').click(function(e){
-            e.preventDefault();
-            if (mobile) {
-                $('.popover').addClass("popover-mobile-override");
-            }
-            else {
-                $('.popover').addClass("popover-desktop-override");
-            }
-        });
-
-
 
         // handle view details click
         $('.view-details').live('click', function(e){
