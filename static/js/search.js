@@ -1,7 +1,10 @@
 var spacescout_map = null, spacescout_infowindow, spacescout_marker_ids = {}, spacescout_markers = [], speed = 800, mc = null, youarehere = null;
 
 function openInfoWindow(marker, info) {
-
+    
+    // reset scroll position
+    $("#info_list").scrollTop(0);
+    
     // show the loading spinner for a few seconds
     $('.loading').show().delay(3000);
 
@@ -23,9 +26,12 @@ function addMarkerListener(marker, data) {
 }
 
 function openClusterInfoWindow(cluster, data) {
-
+    
+    // reset scroll position
+    $("#info_list").scrollTop(0);
+        
     // show the loading spinner for a few seconds
-    $('.loading').show().delay(3000);
+    $('.loading').show().delay(3000).focus();
 
     // I'm sure there's a better way of filtering this down to spaces...
     var spaces = new Array();
