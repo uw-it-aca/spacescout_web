@@ -15,12 +15,23 @@ body {
     z-index: 1;
 
 
-    .logo { height: 50px; line-height: 50px; background: url('/static/img/spacescout_logo.png') no-repeat 10px 50%; background-size: 120px; text-indent: -9999px; }
+    .logo { height: 50px; line-height: 50px; width: 40%; float:left; background: url('/static/img/spacescout_logo.png') no-repeat 10px 50%; background-size: 120px; text-indent: -9999px; }
+    .actions { width: 50%; float: right; text-align: right; height: 50px; line-height: 50px; margin-right: 10px;
 
+        button {
+            -webkit-border-radius: 0;
+            -moz-border-radius: 0;
+            border-radius: 0;
+        }
+        #filter_button { background:#514d83; display:inline-block; }
+        #view_results_button { background:#514d83;  display: none; }
+        #cancel_results_button {display: none;}
+
+    }
 
     #filter_container { position: relative; margin: 0 10px;
 
-        #filter_block { display:none; background-color:#222; color: #666;
+        #filter_block { display:none; background-color:#222; color: #666; overflow-y: auto;
 
             .inner { padding: 15px; }
 
@@ -67,10 +78,10 @@ body {
 
         form { margin: 0px; }
 
-        #filter_button_container { height: 35px; width: 35px; text-align:center; line-height:35px; position:absolute; right:0; top: -42px; z-index: 999; cursor: pointer;
+        /*#filter_button_container { height: 35px; width: 35px; text-align:center; line-height:35px; position:absolute; right:0; top: -42px; z-index: 999; cursor: pointer;
             .filter-button-text { display: none; }
             #filter_button { background-color:#514d83; display:inline-block;padding: 0 10px; }
-        }
+        }*/
     }
 }
 

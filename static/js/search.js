@@ -1,10 +1,10 @@
 var spacescout_map = null, spacescout_infowindow, spacescout_marker_ids = {}, spacescout_markers = [], speed = 800, mc = null, youarehere = null;
 
 function openInfoWindow(marker, info) {
-    
+
     // reset scroll position
     $("#info_list").scrollTop(0);
-    
+
     // show the loading spinner for a few seconds
     $('.loading').show().delay(3000);
 
@@ -14,7 +14,7 @@ function openInfoWindow(marker, info) {
 
     scrollToTop('info_list');
     $('.loading').slideUp('fast');
-    
+
     lazyLoadSpaceImages();
 
 }
@@ -26,10 +26,10 @@ function addMarkerListener(marker, data) {
 }
 
 function openClusterInfoWindow(cluster, data) {
-    
+
     // reset scroll position
     $("#info_list").scrollTop(0);
-        
+
     // show the loading spinner for a few seconds
     $('.loading').show().delay(3000).focus();
 
@@ -48,7 +48,7 @@ function openClusterInfoWindow(cluster, data) {
 
     scrollToTop('info_list');
     $('.loading').slideUp('fast');
-    
+
     lazyLoadSpaceImages();
 
 }
@@ -65,7 +65,7 @@ function openAllMarkerInfoWindow(data) {
     var template = Handlebars.compile(source);
     $('#info_items').html(template({data: data}));
     $('.loading').slideUp('fast');
-        
+
     lazyLoadSpaceImages();
 
 }
@@ -79,8 +79,8 @@ function openAllMarkerInfoWindow(data) {
 
 function lazyLoadSpaceImages() {
     // container lazy loading for desktop ui
-    if ($('#info_list').hasScrollBar()) { 
-        $("img.lazy").lazyload({         
+    if ($('#info_list').hasScrollBar()) {
+        $("img.lazy").lazyload({
              container: $("#info_list")
          });
         console.log("this div has scroll");
@@ -90,7 +90,7 @@ function lazyLoadSpaceImages() {
         console.log("this div has no scroll");
     }
 }
-    
+
 function run_custom_search() {
     // Clear the map
     for (var i = 0; i < window.spacescout_markers.length; i++) {
@@ -156,7 +156,13 @@ function run_custom_search() {
     // Run the search
     //console.log(window.spacescout_search_options);
     fetch_data();
+
+    $('#filter_button').show();
+    $('#view_results_button').hide();
+    $('#cancel_results_button').hide();
+
     $("#filter_block").slideUp(speed);
+
 }
 
 function initialize() {

@@ -84,34 +84,43 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
 		}
 
-
-
-
 		// Toggle Filter display
 		$('#filter_button').click(function() {
+
+
     		if ($("#filter_block").is(":hidden")) {
 
                 $("#filter_block").slideDown('slow');
 
+                $('#filter_button').hide();
+                $('#view_results_button').show();
+                $('#cancel_results_button').show();
+
                 if (mobile) {
-                    //$('#map_canvas').hide();
-                    //$('#info_list').hide();
 
                     $('#main_content').hide();
 
+
+
+
+                    $('#footer').hide();
                     $('.back-top').hide();
                 }
 
             } else {
 
                 if (mobile) {
-                    //$('#map_canvas').show();
-                    //$('#info_list').show();
+
                     $('#main_content').show();
 
-                    $('#filter_button_container').show();
+
+                    $('#footer').show();
                     $('.back-top').show();
                 }
+
+                $('#filter_button').show();
+                $('#view_results_button').hide();
+                $('#cancel_results_button').hide();
 
                 $("#filter_block").slideUp('slow');
             }
@@ -126,11 +135,20 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
                 $('#main_content').show();
 
-                $('#filter_button_container').show();
+
+
+
+
+                $('#footer').show();
                 $('.back-top').show();
+
                 // scroll to top since the cancel button is at the bottom
-                scrollTo('top');
+                //scrollTo('top');
             }
+
+            $('#filter_button').show();
+            $('#view_results_button').hide();
+            $('#cancel_results_button').hide();
 
             $("#filter_block").slideUp('slow');
 
@@ -415,8 +433,8 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
         $('#map_canvas').css({ minHeight: mapH })
         $('#info_list').height('auto');
 
-        //$('#main_content').height(mainContentH);
-        //$('#main_content').css({ minHeight: mainContentH });
+        $("#filter_block").height(mapH + 60);
+
     }
 
     function initializeCarousel() {
