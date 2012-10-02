@@ -43,7 +43,7 @@
 
     </head>
 
-      <body id="top" style="overflow:hidden;">
+      <body id="top">
 
           <div style="position:absolute; top: 0; bottom: 0; left:0; right:0; background: black; z-index: 9999; display:none; background: rgba(0, 0, 0, 0.9);">
               hello world
@@ -51,7 +51,10 @@
 
           <div style="max-width:1024px; margin: 0 auto;">
               {% block content %}{% endblock %}
-              <div class="back-top"><a id="top_link" href="#">TOP</a></div>
+              <div class="back-top">
+                <button id="top_link" class="btn btn-inverse" type="button">BACK TO TOP</button>
+              </div>
+
               <div id="footer" class="clearfix">
                   <div class="pull-left copyright">Copyright &copy; 2012<br/>Academic and Collaborative Applications, UW-IT</div>
                   <div class="pull-left partners">Brought to you by: UW-IT in partnership with Housing and Food Services, UW Libraries, UW Computing Directors, and partially funded by the Student Technology Fee</div>

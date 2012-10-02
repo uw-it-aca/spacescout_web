@@ -330,7 +330,7 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
     	   $('#space_detail_container').show();
 
     	   $('#space_detail_container').height($('#map_canvas').height());
-    	   $('.space-detail-body').height($('.space-detail').height() - 162);
+    	   $('.space-detail-body').height($('.space-detail').height() - 172);
 
     	   $('.space-detail').show("slide", { direction: "right" }, 700);
 
@@ -361,7 +361,7 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
     	   $('.space-detail-inner').hide();
     	   //$(".space-detail .loading").show();
 
-    	   $('.space-detail-body').height($('.space-detail').height() - 162);
+    	   $('.space-detail-body').height($('.space-detail').height() - 172);
 
     	   $('.space-detail').show();
 
