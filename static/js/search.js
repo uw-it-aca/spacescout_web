@@ -154,11 +154,7 @@ function run_custom_search() {
     });
     window.spacescout_search_options["extended_info:food_nearby"] = checked;
 
-    // Run the search
-    //console.log(window.spacescout_search_options);
-    fetch_data();
-
-    // close space detail if visible
+    // close space detail if visible (desktop)
     if ($('#space_detail_container').is(":visible")) {
         $('#info_items li').removeClass('selected');
         $('.space-detail').hide("slide", { direction: "right" }, 700, function() {
@@ -166,9 +162,21 @@ function run_custom_search() {
         });
     }
 
+    // toggle the correct buttons
     $('#filter_button').show();
     $('#view_results_button').hide();
     $('#cancel_results_button').hide();
+
+    // show the main content if it is hidden (mobile)
+    if ($('#main_content').is(":hidden")) {
+        $('#main_content').show();
+        $('#footer').show();
+        $('.back-top').show();
+    }
+
+    // Run the search
+    //console.log(window.spacescout_search_options);
+    fetch_data();
 
     $("#filter_block").slideUp(speed);
 

@@ -14,6 +14,7 @@ button {
     -moz-box-shadow: none !important;
     box-shadow: none !important;
 
+    border-color: #3e3e3e !important;
 }
 
 #nav {
@@ -28,9 +29,9 @@ button {
     .logo { height: 50px; line-height: 50px; width: 130px; float:left; background: url('/static/img/spacescout_logo.png') no-repeat 10px 50%; background-size: 120px; text-indent: -9999px; }
     .actions { width: auto; float: right; text-align: right; height: 50px; line-height: 50px; margin-right: 10px;
 
-        #filter_button { background:#514d83; display:inline-block; border-color: #333; }
-        #view_results_button { background:#514d83;  display: none; }
-        #cancel_results_button {display: none;}
+        #filter_button { background:#514d83 url('/static/img/down.png') no-repeat 8px 50%; padding-left: 30px; display:inline-block; color: #8987ab }
+        #view_results_button { background:#514d83 url('/static/img/check.png') no-repeat 10px 50%; padding-left: 30px; display: none; color: #8987ab; }
+        #cancel_results_button { background: #e4e4e4 url('/static/img/cross.png') no-repeat 10px 50%; padding-left: 30px; display: none; color: #646464; }
     }
 
     #filter_container { position: relative; margin: 0 10px;
@@ -157,13 +158,13 @@ button {
 
     .list-inner { border: solid 10px #ededed; }
 
-    .list-arrow { background-color: #ededed; position:absolute; top: -36px; z-index:1000; width:35px; line-height: 35px; left:50%; margin-left:-15px; text-align:center;
+    .list-arrow { background-color: #ededed; position:absolute; top: -31px; z-index:1000; width:45px; line-height: 30px; left:50%; margin-left:-22.5px; text-align:center;
 
         border-left: solid 1px #d6d6d6;
         border-top: solid 1px #d6d6d6;
         border-right: solid 1px #d6d6d6;
 
-        #filter_link { display: block; width: 35px; height: 35px; }
+        #filter_link { display: block; width: 45px; height: 30px; }
     }
 
     /* list of spaces */
@@ -203,7 +204,7 @@ button {
 }
 
 .back-top { line-height: 35px; text-align: center;
-    #top_link { background:#514d83; display:inline-block; border-color: #333; }
+    #top_link { background:#514d83; display:inline-block; color: #8987ab; }
 }
 
 
