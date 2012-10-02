@@ -11,6 +11,8 @@ function openInfoWindow(marker, info) {
 
     scrollToTop('info_list');
     $('.loading').slideUp('fast');
+    
+    lazyLoadSpaceImages();
 
 }
 
@@ -40,6 +42,8 @@ function openClusterInfoWindow(cluster, data) {
 
     scrollToTop('info_list');
     $('.loading').slideUp('fast');
+    
+    lazyLoadSpaceImages();
 
 }
 
@@ -55,8 +59,32 @@ function openAllMarkerInfoWindow(data) {
     var template = Handlebars.compile(source);
     $('#info_items').html(template({data: data}));
     $('.loading').slideUp('fast');
+        
+    lazyLoadSpaceImages();
+
 }
 
+// jquery function to check if scrollable
+(function($) {
+    $.fn.hasScrollBar = function() {
+        return this.get(0).scrollHeight > this.height();
+    }
+})(jQuery);
+
+function lazyLoadSpaceImages() {
+    // container lazy loading for desktop ui
+    if ($('#info_list').hasScrollBar()) { 
+        $("img.lazy").lazyload({         
+             container: $("#info_list")
+         });
+        console.log("this div has scroll");
+    }
+    else { //mobile ui
+        $("img.lazy").lazyload();
+        console.log("this div has no scroll");
+    }
+}
+    
 function run_custom_search() {
     // Clear the map
     for (var i = 0; i < window.spacescout_markers.length; i++) {
