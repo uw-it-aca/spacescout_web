@@ -1,4 +1,5 @@
 var spacescout_map = null, spacescout_infowindow, spacescout_marker_ids = {}, spacescout_markers = [], speed = 800, mc = null, youarehere = null;
+var requests = new Array();
 
 function openInfoWindow(marker, info) {
     
@@ -277,6 +278,10 @@ function reload_on_idle() {
 
 function fetch_data() {
     $('.loading').show();
+    // abort any pending ajax requests
+    for (i =0; i < requests.length; i++) {
+        requests[i].abort();
+    }
     var args = window.spacescout_search_options;
     if (!args) {
         args = {};
@@ -312,10 +317,12 @@ function fetch_data() {
 
     var query = url_args.join("");
 
-    $.ajax({
-        url: query,
-        success: load_data
-    });
+    requests.push(
+        $.ajax({
+            url: query,
+            success: load_data
+        })
+    );
 }
 
 function distance_between_points(lat1, lon1, lat2, lon2) {
