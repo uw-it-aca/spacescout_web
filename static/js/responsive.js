@@ -45,10 +45,14 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 });
 
 (function(w){
+
 	var sw = document.body.clientWidth,
 		breakpoint = 767,
 		speed = 600,
 		mobile = true;
+
+    var deviceAgent = navigator.userAgent.toLowerCase();
+	var iphone = deviceAgent.match(/(iphone|ipod)/);
 
 	$(document).ready(function() {
 
@@ -81,6 +85,11 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
                   // Call the scroll function
                   scrollTo('info_list');
             });
+
+            if (iphone) {
+                //detect iphone/ipod and show popin
+                showIosCallout();
+            }
 
 		}
 
@@ -414,6 +423,20 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
         $('.carousel').height(containerH);
         $('.map-container').height(containerH);
 
+    }
+
+    function showIosCallout() {
+        console.log("this is mobile");
+        $('#ios_callout').show(0, function() {
+            // Animation complete.
+            $('.ios-inner-container').show("slide", { direction: "down" }, 700);
+        });
+
+
+
+        document.ontouchmove = function(event){
+            event.preventDefault();
+        }
     }
 
 })(this);
