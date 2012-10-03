@@ -86,10 +86,20 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
                   scrollTo('info_list');
             });
 
+            // check cookie to see if user has seen the popup before, if not... show the popup (iphone/ipod)
             if (iphone) {
-                //detect iphone/ipod and show popin
-                showIosCallout();
+
+                if ($.cookie('showSpaceScoutiOS')){
+                    console.log("yes cookie... do nothing")
+                    return;
+                }
+                else {
+                    console.log("no cookie... set cookie and show modal");
+                    $.cookie('showSpaceScoutiOS', 'true');
+                    showIosCallout();
+                }
             }
+
 
 		}
 
@@ -433,17 +443,27 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
     }
 
     function showIosCallout() {
-        console.log("this is mobile");
+
+        console.log("you are on an iphone");
+
         $('#ios_callout').show(0, function() {
             // Animation complete.
             $('.ios-inner-container').show("slide", { direction: "down" }, 700);
         });
 
-
-
+        // disable the iphone scroll
         document.ontouchmove = function(event){
             event.preventDefault();
         }
+
+        $('#continue_webapp').click(function() {
+            // close the modal
+            $('#ios_callout').hide();
+        });
+
+        $('#download_native').click(function() {
+            window.location = "http://itunes.apple.com/us/app/spacescout/id551472160";
+        });
     }
 
 })(this);

@@ -48,12 +48,9 @@
           <div id="ios_callout">
 
               <div class="ios-inner-container">
-                  <p>Hey! We have as iOS app. Would you like to download and use it instead?</p>
-
-
-                  <button type="button" class="btn btn-primary">Yes, I love native apps!</button>
-                  <br/><br/>
-                  <button type="button" class="btn btn-warning">No thanks, I just want to use the webapp.</button>
+                  <p>We have an iPhone app!</p>
+                  <button type="button" id="continue_webapp" class="btn">Continue to the web app</button>
+                  <button type="button" id="download_native" class="btn btn-inverse">Let's download it!</button>
               </div>
 
           </div>
@@ -78,6 +75,7 @@
           <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=true"></script>
 
           {% compress js %}
+            <script type="text/javascript" src="{{ STATIC_URL }}libs/cookie.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/less.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap/js/bootstrap-transition.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap/js/bootstrap-button.js"></script>
