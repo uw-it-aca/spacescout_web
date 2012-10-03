@@ -295,7 +295,12 @@ function load_data(data) {
 }
 
 function reload_on_idle() {
-    fetch_data();
+
+    // only fetch data as long as space details are NOT being shown
+    if (!$('#space_detail_container').is(":visible")) {
+        fetch_data();
+    }
+
 }
 
 function fetch_data() {

@@ -256,6 +256,13 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 	   checkMobile();
 	   setDisplay();
 
+	   // if the space details is already open
+	   if ($('#space_detail_container').is(":visible")) {
+    	   $('#space_detail_container').height($('#map_canvas').height());
+    	   $('.space-detail-body').height($('.space-detail').height() - 172);
+	   }
+
+
 	});
 
 	// Check if Mobile
