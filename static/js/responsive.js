@@ -155,6 +155,8 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
         // Close the filter display using Cancel button
         $('#cancel_results_button').click(function() {
 
+            clear_custom_search();
+
             if (mobile) {
                 $('#main_content').show();
                 $('#footer').show();

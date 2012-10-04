@@ -182,6 +182,11 @@ function run_custom_search() {
 
 }
 
+function clear_custom_search() {
+    window.spacescout_search_options = [];
+    fetch_data();
+}
+
 function initialize() {
     var i;
 
