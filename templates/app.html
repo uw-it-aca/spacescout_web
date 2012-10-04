@@ -1,4 +1,4 @@
-{% extends 'base-responsive.html' %}
+{% extends is_mobile|yesno:"base-mobile.html,base-responsive.html" %}
 
 {% block extra_css %}
 {% endblock %}
