@@ -105,8 +105,12 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
 		// Toggle Filter display
 		$('#filter_button').click(function() {
-
-
+    		
+    		// calculate the filter height for mobile
+    		if (mobile) {
+    		  $("#filter_block").height($(window).height() - $('#nav').height() - 10);
+    		}
+    		
     		if ($("#filter_block").is(":hidden")) {
 
                 $("#filter_block").slideDown('slow');
@@ -257,7 +261,7 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
 	});
 
-	//Update dimensions on resize
+	// Update dimensions on resize
 	$(w).resize(function(){
 
 	   console.log("resized");
@@ -404,7 +408,7 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
         $('#map_canvas').css({ minHeight: mapH })
         $('#info_list').height('auto');
 
-        $("#filter_block").height(mapH + 60);
+        //$("#filter_block").height(mapH + 60);
 
     }
 
