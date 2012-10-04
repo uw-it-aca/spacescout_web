@@ -52,8 +52,18 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 		mobile = true;
 
     var deviceAgent = navigator.userAgent.toLowerCase();
+
+    // detect ios versions
 	var iphone = deviceAgent.match(/(ipad|iphone)/);
 	var ios56 = navigator.userAgent.match(/OS [56](_\d)+ like Mac OS X/i);
+
+    // detect android versions
+    var android = deviceAgent.match(/(android)/);
+    var gingerbread = deviceAgent.match(/android 2\.3/i);
+    var gingerbreadOrNewer = deviceAgent.match(/android [2-9]/i);
+    var honeycombOrNewer = deviceAgent.match(/android [3-9]/i);
+
+    var froyoOrOlder = android && !gingerbread && !honeycombOrNewer;
 
 	$(document).ready(function() {
 
@@ -103,7 +113,12 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
     		// calculate the filter height for mobile
     		if (mobile) {
-    		  $("#filter_block").height($(window).height() - $('#nav').height() - 10);
+        		$("#filter_block").height($(window).height() - $('#nav').height() - 10);
+
+        		// handle scrolling for android gingerbread or newer
+        		if (gingerbreadOrNewer) {
+            		touchScroll(filter_block);
+        		}
     		}
 
     		if ($("#filter_block").is(":hidden")) {
@@ -433,6 +448,7 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
         $('.map-container').height(containerH);
     }
 
+    // callout for ios5-6 native app
     function showIosCallout() {
 
         console.log("you are on an iphone");
@@ -458,5 +474,23 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
             document.ontouchmove = function(event){ return true; }
         });
     }
+
+    function touchScroll(id) {
+
+		var el=document.getElementById(id);
+		var scrollStartPos=0;
+
+		document.getElementById(id).addEventListener("touchstart", function(event) {
+			scrollStartPos=this.scrollTop+event.touches[0].pageY;
+			event.preventDefault();
+		},false);
+
+		document.getElementById(id).addEventListener("touchmove", function(event) {
+			this.scrollTop=scrollStartPos-event.touches[0].pageY;
+			event.preventDefault();
+		},false);
+
+    }
+
 
 })(this);
