@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<!--
+
+  Copyright 2012 UW Information Technology, University of Washington
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+-->
+<html lang="en">
+
+    <head>
+        <title>SpaceScout&trade;</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        {% load compress %}
+        {% compress css %}
+        <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}libs/bootstrap/css/bootstrap.min.css" charset="utf-8" />
+        <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}libs/select2/select2.css" charset="utf-8" />
+
+        <link rel="stylesheet" type="text/less" href="{{ STATIC_URL }}css/mobile.less" media="screen, handheld" />
+        <link rel="stylesheet" type="text/less" href="{{ STATIC_URL }}css/responsive.less" media="screen  and (min-width: 768px)" />
+        {% endcompress %}
+
+        {% block extra_css %}{% endblock %}
+
+        <link rel="shortcut icon" href="{{ STATIC_URL }}img/ico/favicon.ico">
+
+        <!-- Respond.js, for IE6-8 support of media queries -->
+        <!--[if lt IE 9]>
+            <script type="text/javascript" src="{{ STATIC_URL }}libs/respond/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+
+      <body id="top">
+
+          <div id="ios_callout">
+
+              <div class="ios-inner-container">
+                  <p>We have an iPhone app!</p>
+                  <button type="button" id="continue_webapp" class="btn">Continue to the web app</button>
+                  <button type="button" id="download_native" class="btn btn-inverse">Let's download it!</button>
+              </div>
+
+          </div>
+
+          <div style="max-width:1024px; margin: 0 auto;">
+              {% block content %}{% endblock %}
+              <div class="back-top">
+                <button id="top_link" class="btn btn-inverse" type="button">Back to top</button>
+              </div>
+
+              <div id="footer" class="clearfix">
+                  <div class="pull-left copyright">Copyright &copy; 2012<br/>Academic and Collaborative Applications, UW-IT</div>
+                  <div class="pull-left partners">Brought to you by: UW-IT in partnership with Housing and Food Services, UW Libraries, UW Computing Directors, and partially funded by the Student Technology Fee</div>
+              </div>
+          </div>
+
+          <!-- jQuery -->
+          <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+          <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+
+          <!-- Google Maps -->
+          <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=true"></script>
+
+          {% compress js %}
+            <script type="text/javascript" src="{{ STATIC_URL }}libs/cookie.js"></script>
+            <script type="text/javascript" src="{{ STATIC_URL }}libs/less.js"></script>
+            <script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap/js/bootstrap-transition.js"></script>
+            <script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap/js/bootstrap-button.js"></script>
+            <script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap/js/bootstrap-carousel.js"></script>
+            <script type="text/javascript" src="{{ STATIC_URL }}libs/select2/select2.js"></script>
+            <script type="text/javascript" src="{{ STATIC_URL }}libs/markerclusterer.js"></script>
+            <script type="text/javascript" src="{{ STATIC_URL }}libs/handlebars.js"></script>
+            <script type="text/javascript" src="{{ STATIC_URL }}libs/lazyload.js"></script>
+            <script type="text/javascript" src="{{ STATIC_URL }}js/search.js"></script>
+            <script type="text/javascript" src="{{ STATIC_URL }}js/responsive.js"></script>
+            {% block extra_js %}{% endblock %}
+          {% endcompress %}
+
+    </body>
+</html>
+
