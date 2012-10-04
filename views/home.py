@@ -32,6 +32,8 @@ def HomeView(request):
 
     for key in request.GET:
         search_args[key] = request.GET[key]
+    if 'spot_id' in request.session:
+        del request.session['spot_id']
 
     consumer = oauth2.Consumer(key=settings.SS_WEB_OAUTH_KEY, secret=settings.SS_WEB_OAUTH_SECRET)
     client = oauth2.Client(consumer)

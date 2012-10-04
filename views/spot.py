@@ -32,6 +32,7 @@ def SpotView(request, spot_id, return_json=False):
         response.status_code = resp.status_code
         return response
 
+    request.session['spot_id'] = spot_id
     params = json.loads(content)
 
     if return_json:
