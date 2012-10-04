@@ -1,8 +1,14 @@
-<div>
-This will be the contact me form
-</div>
+<head><title>Contact Us</title></head>
 
 <form action="/contact/" method="post">{% csrf_token %}
-{{ form.as_p }}
-<input type="submit" value="Submit" />
+    {{ form.non_field_errors }}
+    {% for field in form %}
+        <div class="fieldWrapper">
+            {{ field.label_tag }}: {{ field }}
+            {% for error in field.errors %}
+                <strong>{{ error|escape }}</strong>
+            {% endfor %}
+        </div>
+    {% endfor %}
+    <input type="submit" value="Send" />
 </form>
