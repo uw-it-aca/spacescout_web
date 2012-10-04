@@ -86,20 +86,15 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
                   scrollTo('info_list');
             });
 
-            // check cookie to see if user has seen the popup before, if not... show the popup (iphone/ipod)
-            /*if (iphone) {
-
-                if ($.cookie('showSpaceScoutiOS')){
-                    console.log("yes cookie... do nothing")
-                    return;
-                }
-                else {
+            // for iphones - check if they have the ios detector cookie, if they don't give them one and show the popup
+            // otherwise, don't do anything since they've already seen the popup
+            if (iphone) {
+                if (!$.cookie('showSpaceScoutiOS')){
                     console.log("no cookie... set cookie and show modal");
                     $.cookie('showSpaceScoutiOS', 'true');
                     showIosCallout();
                 }
-            }*/
-
+            }
 
 		}
 
@@ -428,7 +423,6 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
     }
 
     function resizeCarouselMapContainer() {
-
         // get the width
         var containerW = $('.image-container').width();
 
@@ -437,7 +431,6 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
         $('.carousel').height(containerH);
         $('.map-container').height(containerH);
-
     }
 
     function showIosCallout() {
