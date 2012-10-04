@@ -44,17 +44,19 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
 });
 
-
 (function(w){
+
 	var sw = document.body.clientWidth,
 		breakpoint = 767,
 		speed = 600,
 		mobile = true;
 
+    var deviceAgent = navigator.userAgent.toLowerCase();
+	var iphone = deviceAgent.match(/(iphone|ipod)/);
+
 	$(document).ready(function() {
 
-    	// if map_canvas
-
+    	// check if a map_canvas exists... populate it
     	if ($("#map_canvas").length == 1) {
           initialize();
         }
@@ -62,32 +64,75 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 		checkMobile();
 		setDisplay();
 
-		// initialize the carousel for mobile standalone space page
 		if (mobile) {
-		  initializeCarousel();
-		  resizeCarouselMapContainer();
+
+    		// initialize the carousel for mobile standalone space page
+            initializeCarousel();
+            resizeCarouselMapContainer();
+
+            // scroll to the top of page
+            $('#top_link').click(function(e){
+                  // Prevent a page reload when a link is pressed
+                  e.preventDefault();
+                  // Call the scroll function
+                  scrollTo('top');
+            });
+
+            // scroll to top of filter list
+            $('#filter_link').click(function(e){
+                  // Prevent a page reload when a link is pressed
+                  e.preventDefault();
+                  // Call the scroll function
+                  scrollTo('info_list');
+            });
+
+            // for iphones - check if they have the ios detector cookie, if they don't give them one and show the popup
+            // otherwise, don't do anything since they've already seen the popup
+            if (iphone) {
+                if (!$.cookie('showSpaceScoutiOS')){
+                    console.log("no cookie... set cookie and show modal");
+                    $.cookie('showSpaceScoutiOS', 'true');
+                    showIosCallout();
+                }
+            }
+
 		}
 
 		// Toggle Filter display
 		$('#filter_button').click(function() {
+    		
+    		// calculate the filter height for mobile
+    		if (mobile) {
+    		  $("#filter_block").height($(window).height() - $('#nav').height() - 10);
+    		}
+    		
     		if ($("#filter_block").is(":hidden")) {
 
                 $("#filter_block").slideDown('slow');
 
+                $('#filter_button').hide();
+                $('#view_results_button').show();
+                $('#cancel_results_button').show();
+
                 if (mobile) {
-                    $('#map_canvas').hide();
-                    $('#info_list').hide();
+
+                    $('#main_content').hide();
+                    $('#footer').hide();
                     $('.back-top').hide();
                 }
 
             } else {
 
                 if (mobile) {
-                    $('#map_canvas').show();
-                    $('#info_list').show();
-                    $('#filter_button_container').show();
+
+                    $('#main_content').show();
+                    $('#footer').show();
                     $('.back-top').show();
                 }
+
+                $('#filter_button').show();
+                $('#view_results_button').hide();
+                $('#cancel_results_button').hide();
 
                 $("#filter_block").slideUp('slow');
             }
@@ -97,76 +142,19 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
         $('#cancel_results_button').click(function() {
 
             if (mobile) {
-                $('#map_canvas').show();
-                $('#info_list').show();
-                $('#filter_button_container').show();
+                $('#main_content').show();
+                $('#footer').show();
                 $('.back-top').show();
-                // scroll to top since the cancel button is at the bottom
-                scrollTo('top');
             }
+
+            $('#filter_button').show();
+            $('#view_results_button').hide();
+            $('#cancel_results_button').hide();
 
             $("#filter_block").slideUp('slow');
 
-
         });
 
-        // Space descriptions
-        if (mobile){
-            // Handle space description popover
-            $('#view_space_descriptions').popover({
-                title: 'Space Descriptions',
-                content: 'Some content!',
-                placement: 'bottom',
-                html: true,
-                content: function() {
-                  return $('#space_descriptions_list').html();
-                }
-            });
-        }
-        else {
-            // Handle space description popover
-            $('#view_space_descriptions').popover({
-                title: 'Space Descriptions',
-                content: 'Some content!',
-                placement: 'right',
-                html: true,
-                content: function() {
-                  return $('#space_descriptions_list').html();
-                }
-            });
-        }
-
-
-        $('#close_descriptions').live('click', function(){
-            $('#view_space_descriptions').popover('hide');
-            return false;
-        });
-
-        $('#view_space_descriptions').click(function(e){
-            e.preventDefault();
-            if (mobile) {
-                $('.popover').addClass("popover-mobile-override");
-            }
-            else {
-                $('.popover').addClass("popover-desktop-override");
-            }
-        });
-
-        // Scroll to the top of page
-        $('#top_link').click(function(e){
-              // Prevent a page reload when a link is pressed
-              e.preventDefault();
-              // Call the scroll function
-              scrollTo('top');
-        });
-
-        // Scroll to top of Filter list
-        $('#filter_link').click(function(e){
-              // Prevent a page reload when a link is pressed
-              e.preventDefault();
-              // Call the scroll function
-              scrollTo('info_items');
-        });
 
         // handle view details click
         $('.view-details').live('click', function(e){
@@ -175,6 +163,12 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
             id =  $(this).attr('id');
 
             e.preventDefault();
+
+            // clear previously selected space
+            $('#info_items li').removeClass('selected');
+
+            //highlight the selected space
+            $(this).parent().addClass('selected');
 
             // if a space details already exists
             if ($('#space_detail_container').is(':visible')) {
@@ -256,7 +250,7 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
 	});
 
-	//Update dimensions on resize
+	// Update dimensions on resize
 	$(w).resize(function(){
 
 	   console.log("resized");
@@ -264,6 +258,13 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
 	   checkMobile();
 	   setDisplay();
+
+	   // if the space details is already open
+	   if ($('#space_detail_container').is(":visible")) {
+    	   $('#space_detail_container').height($('#map_canvas').height());
+    	   $('.space-detail-body').height($('.space-detail').height() - 172);
+	   }
+
 
 	});
 
@@ -305,8 +306,8 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
     	   $('#space_detail_container').show();
 
     	   $('#space_detail_container').height($('#map_canvas').height());
-    	   //$('.space-detail-body').height($('.space-detail').height() - 150);
-    	   
+    	   $('.space-detail-body').height($('.space-detail').height() - 172);
+
     	   $('.space-detail').show("slide", { direction: "right" }, 700);
 
     	   initializeCarousel();
@@ -336,8 +337,8 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
     	   $('.space-detail-inner').hide();
     	   //$(".space-detail .loading").show();
 
-    	   //$('.space-detail-body').height($('.space-detail').height() - 150);
-    	   
+    	   $('.space-detail-body').height($('.space-detail').height() - 172);
+
     	   $('.space-detail').show();
 
     	   // wait before showing the new space
@@ -357,13 +358,15 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
         $('.space-detail').hide("slide", { direction: "right" }, 700, function() {
         	   $('#space_detail_container').remove();
         });
+
+        // deselect selected space in list
+        $('#info_items li').removeClass('selected');
 	}
 
 	// ScrollTo a spot on the UI
 	function scrollTo(id) {
         // Scroll
-        $('html,body').animate({
-            scrollTop: $("#"+id).offset().top},speed);
+        $('html,body').animate({ scrollTop: $("#"+id).offset().top},'fast');
     }
 
 	// Desktop display defaults
@@ -374,10 +377,10 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
         var contentH = windowH - headerH;
 
         $('#map_canvas').height(contentH - 100);
-        $('#info_list').height(contentH -100);
+        $('#info_list').height(contentH -80);
 
         // make sure loading and list height fills the list container
-        $('#info_list .list-inner').css('min-height', contentH);
+        $('#info_list .list-inner').css('min-height', contentH - 100);
         //$('.loading').height(contentH);
     }
 
@@ -388,14 +391,14 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
         var headerH = $('#nav').height();
         //var contentH = windowH - headerH;
         //var mainContentH = windowH - headerH + 35;
-        var mapH = windowH - headerH - 43; // enough to show the loading spinner at the bottom of the viewport
+        var mapH = windowH - headerH - 70; // enough to show the loading spinner at the bottom of the viewport
 
         $('#map_canvas').height(mapH);
         $('#map_canvas').css({ minHeight: mapH })
         $('#info_list').height('auto');
 
-        //$('#main_content').height(mainContentH);
-        //$('#main_content').css({ minHeight: mainContentH });
+        //$("#filter_block").height(mapH + 60);
+
     }
 
     function initializeCarousel() {
@@ -420,7 +423,6 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
     }
 
     function resizeCarouselMapContainer() {
-
         // get the width
         var containerW = $('.image-container').width();
 
@@ -429,7 +431,32 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
         $('.carousel').height(containerH);
         $('.map-container').height(containerH);
+    }
 
+    function showIosCallout() {
+
+        console.log("you are on an iphone");
+
+        $('#ios_callout').show(0, function() {
+            // Animation complete.
+            $('.ios-inner-container').show("slide", { direction: "down" }, 700);
+            // disable the iphone scroll
+            document.ontouchmove = function(event){ event.preventDefault(); }
+        });
+
+        $('#continue_webapp').click(function() {
+            // close the modal
+            $('#ios_callout').hide();
+            // enable scrolling
+            document.ontouchmove = function(event){ return true; }
+        });
+
+        $('#download_native').click(function() {
+            // redirect to app store
+            window.location = "http://itunes.apple.com/us/app/spacescout/id551472160";
+            // enable scrolling
+            document.ontouchmove = function(event){ return true; }
+        });
     }
 
 })(this);

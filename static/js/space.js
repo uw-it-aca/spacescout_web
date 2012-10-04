@@ -13,6 +13,7 @@ function getSpaceMap(lat, lon) {
     zoom: 17,
     center: new google.maps.LatLng(lat , lon),
     mapTypeId: google.maps.MapTypeId.ROADMAP,
+    mapTypeControl: false,
   }
 
   console.log("lat: " + lat + " lon: " + lon);

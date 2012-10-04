@@ -1,20 +1,39 @@
 var spacescout_map = null, spacescout_infowindow, spacescout_marker_ids = {}, spacescout_markers = [], speed = 800, mc = null, youarehere = null;
+var requests = new Array();
 
 function openInfoWindow(marker, info) {
+
+    // reset scroll position
+    $("#info_list").scrollTop(0);
+
+    // show the loading spinner for a few seconds
+    $('.loading').show().delay(3000);
+
     var source = $('#spot_info').html();
     var template = Handlebars.compile(source);
     $("#info_items").html(template(info));
+
+    scrollToTop('info_list');
     $('.loading').slideUp('fast');
+
+    lazyLoadSpaceImages();
+
 }
 
 function addMarkerListener(marker, data) {
     google.maps.event.addListener(marker, 'click', function(m) {
         openInfoWindow(m, data);
     });
-
 }
 
 function openClusterInfoWindow(cluster, data) {
+
+    // reset scroll position
+    $("#info_list").scrollTop(0);
+
+    // show the loading spinner for a few seconds
+    $('.loading').show().delay(3000).focus();
+
     // I'm sure there's a better way of filtering this down to spaces...
     var spaces = new Array();
     for (i=0; i < cluster.getMarkers().length; i++) {
@@ -27,7 +46,12 @@ function openClusterInfoWindow(cluster, data) {
     var source = $('#cluster_list').html();
     var template = Handlebars.compile(source);
     $('#info_items').html(template({data: spaces}));
+
+    scrollToTop('info_list');
     $('.loading').slideUp('fast');
+
+    lazyLoadSpaceImages();
+
 }
 
 function addClusterListener(markerCluster, data) {
@@ -42,6 +66,30 @@ function openAllMarkerInfoWindow(data) {
     var template = Handlebars.compile(source);
     $('#info_items').html(template({data: data}));
     $('.loading').slideUp('fast');
+
+    lazyLoadSpaceImages();
+
+}
+
+// jquery function to check if scrollable
+(function($) {
+    $.fn.hasScrollBar = function() {
+        return this.get(0).scrollHeight > this.height();
+    }
+})(jQuery);
+
+function lazyLoadSpaceImages() {
+    // container lazy loading for desktop ui
+    if ($('#info_list').hasScrollBar()) {
+        $("img.lazy").lazyload({
+             container: $("#info_list")
+         });
+        console.log("this div has scroll");
+    }
+    else { //mobile ui
+        $("img.lazy").lazyload();
+        console.log("this div has no scroll");
+    }
 }
 
 function run_custom_search() {
@@ -74,7 +122,9 @@ function run_custom_search() {
     // hours
 
     // location
-    window.spacescout_search_options["building_name"] = $('select#e9').val();
+    if ($('select#e9').val()) {
+        window.spacescout_search_options["building_name"] = $('select#e9').val();
+    }
 
     // equipment
     checked = [];
@@ -104,10 +154,32 @@ function run_custom_search() {
     });
     window.spacescout_search_options["extended_info:food_nearby"] = checked;
 
+    // close space detail if visible (desktop)
+    if ($('#space_detail_container').is(":visible")) {
+        $('#info_items li').removeClass('selected');
+        $('.space-detail').hide("slide", { direction: "right" }, 700, function() {
+        	   $('#space_detail_container').remove();
+        });
+    }
+
+    // toggle the correct buttons
+    $('#filter_button').show();
+    $('#view_results_button').hide();
+    $('#cancel_results_button').hide();
+
+    // show the main content if it is hidden (mobile)
+    if ($('#main_content').is(":hidden")) {
+        $('#main_content').show();
+        $('#footer').show();
+        $('.back-top').show();
+    }
+
     // Run the search
     //console.log(window.spacescout_search_options);
     fetch_data();
+
     $("#filter_block").slideUp(speed);
+
 }
 
 function initialize() {
@@ -223,11 +295,20 @@ function load_data(data) {
 }
 
 function reload_on_idle() {
-    fetch_data();
+
+    // only fetch data as long as space details are NOT being shown
+    if (!$('#space_detail_container').is(":visible")) {
+        fetch_data();
+    }
+
 }
 
 function fetch_data() {
     $('.loading').show();
+    // abort any pending ajax requests
+    for (i =0; i < requests.length; i++) {
+        requests[i].abort();
+    }
     var args = window.spacescout_search_options;
     if (!args) {
         args = {};
@@ -263,10 +344,12 @@ function fetch_data() {
 
     var query = url_args.join("");
 
-    $.ajax({
-        url: query,
-        success: load_data
-    });
+    requests.push(
+        $.ajax({
+            url: query,
+            success: load_data
+        })
+    );
 }
 
 function distance_between_points(lat1, lon1, lat2, lon2) {
@@ -283,6 +366,12 @@ function distance_between_points(lat1, lon1, lat2, lon2) {
     var d = R * c;
 
     return d;
+}
+
+// ScrollTo a spot on the UI
+function scrollToTop(id) {
+    // Scroll
+    $('html,body').animate({ scrollTop: $("#"+id).offset().top},'fast');
 }
 
 

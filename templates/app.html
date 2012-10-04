@@ -16,12 +16,20 @@
 {% block content %}
 
     <div id="nav" style="position:relative;">
-        <div class="logo">SPACESCOUT</div>
+
+        <div class="clearfix">
+            <div class="logo">SPACESCOUT</div>
+            <div class="actions">
+                <button id="filter_button" class="btn btn-inverse" type="button">Filters</button>
+                <button id="cancel_results_button" class="btn" type="button">Clear</button>
+                <button id="view_results_button" class="btn btn-inverse" type="button">Done</button>
+            </div>
+        </div>
+
         <div id="filter_container">
         <form>
 
             <div id="filter_block">
-
                 <div class="inner clearfix">
 
                     <div class="inner-column">
@@ -30,8 +38,8 @@
                             <p><small><em>Some explanation text will go here...</em></small></p>
 
                             <div id="filter_space_types" class="choice-group clearfix">
-                                <h3>Type of space: <span><a href="#" id="view_space_descriptions" rel="popover">view descriptions</a></span></h3>
-                                <div id="space_descriptions_list" style="display:none;">
+                                <h3>Type of space: <!--<span><a href="#" id="view_space_descriptions" rel="popover">view descriptions</a></span>--></h3>
+                                <!--<div id="space_descriptions_list" style="display:none;">
                                     <ul>
                                         <li>Study Room<br/>
                                             Enclosed space for individual or group
@@ -62,37 +70,37 @@
                                         </li>
                                     </ul>
                                     <div><a id="close_descriptions" href="#">Close</a></div>
-                                </div>
+                                </div>-->
                                 <div style="width:auto;float:left; margin-right: 15px;">
                                     <label class="checkbox">
-                                      <input type="checkbox" name="type" value="study_room"> Study Room
+                                      <input type="checkbox" name="type" id="study_room" value="study_room"> Study Room
                                     </label>
                                     <label class="checkbox">
-                                      <input type="checkbox" name="type" value="study_area"> Study Area
+                                      <input type="checkbox" name="type" id="study_area" value="study_area"> Study Area
                                     </label>
                                     <label class="checkbox">
-                                      <input type="checkbox" name="type" value="computer_lab"> Computer Lab
+                                      <input type="checkbox" name="type" id="computer_lab" value="computer_lab"> Computer Lab
                                     </label>
                                     <label class="checkbox">
-                                      <input type="checkbox" name="type" value="studio"> Production Studio
+                                      <input type="checkbox" name="type" id="studio" value="studio"> Production Studio
                                     </label>
                                     <label class="checkbox">
-                                      <input type="checkbox" name="type" value="classroom"> Conference/Classroom
+                                      <input type="checkbox" name="type" id="classroom" value="classroom"> Conference/Classroom
                                     </label>
                                 </div>
 
                                 <div style="width:auto;float:left">
                                     <label class="checkbox">
-                                      <input type="checkbox" name="type" value="open"> Open space
+                                      <input type="checkbox" name="type" id="open" value="open"> Open space
                                     </label>
                                     <label class="checkbox">
-                                      <input type="checkbox" name="type" value="lounge"> Lounge
+                                      <input type="checkbox" name="type" id="lounge" value="lounge"> Lounge
                                     </label>
                                     <label class="checkbox">
-                                      <input type="checkbox" name="type" value="cafe"> Cafe
+                                      <input type="checkbox" name="type" id="cafe" value="cafe"> Cafe
                                     </label>
                                     <label class="checkbox">
-                                      <input type="checkbox" name="type" value="outdoor"> Outdoor area
+                                      <input type="checkbox" name="type" id="outdoor" value="outdoor"> Outdoor area
                                     </label>
                                 </div>
 
@@ -133,7 +141,7 @@
                     <div id="filter_hours" class="choice-group">
                         <div>
                             <label class="radio inline">
-                              <input type="radio" name="optionsHours" id="" value="option1" checked>
+                              <input type="radio" name="optionsHours" id="open_now" value="option1" checked>
                               Open now
                             </label>
                             <label class="radio inline">
@@ -151,22 +159,37 @@
                               <option>Friday</option>
                               <option>Saturday</option>
                               <option>Sunday</option>
-                            </select>&nbsp;&nbsp;
+                            </select>
                             <select>
                               <option>No preference</option>
-                              <option>1</option>
-                              <option>2</option>
-                              <option>3</option>
-                              <option>4</option>
-                              <option>5</option>
-                              <option>6</option>
-                              <option>7</option>
-                              <option>8</option>
-                              <option>9</option>
-                              <option>10</option>
-                              <option>15</option>
-                              <option>20</option>
-                              <option>25+</option>
+                              <option>12:00</option>
+                              <option>12:30</option>
+                              <option>1:00</option>
+                              <option>1:30</option>
+                              <option>2:00</option>
+                              <option>2:30</option>
+                              <option>3:00</option>
+                              <option>3:30</option>
+                              <option>4:00</option>
+                              <option>4:30</option>
+                              <option>5:00</option>
+                              <option>5:30</option>
+                              <option>6:00</option>
+                              <option>6:30</option>
+                              <option>7:00</option>
+                              <option>7:30</option>
+                              <option>8:00</option>
+                              <option>8:30</option>
+                              <option>9:00</option>
+                              <option>9:30</option>
+                              <option>10:00</option>
+                              <option>10:30</option>
+                              <option>11:00</option>
+                              <option>11:30</option>
+                            </select>
+                            <select class="ampm">
+                                <option>AM</option>
+                                <option>PM</option>
                             </select>
                             </div>
                             <div><span class="hours-until">until</span><select>
@@ -178,22 +201,37 @@
                               <option>Friday</option>
                               <option>Saturday</option>
                               <option>Sunday</option>
-                            </select>&nbsp;&nbsp;
+                            </select>
                             <select>
                               <option>No preference</option>
-                              <option>1</option>
-                              <option>2</option>
-                              <option>3</option>
-                              <option>4</option>
-                              <option>5</option>
-                              <option>6</option>
-                              <option>7</option>
-                              <option>8</option>
-                              <option>9</option>
-                              <option>10</option>
-                              <option>15</option>
-                              <option>20</option>
-                              <option>25+</option>
+                              <option>12:00</option>
+                              <option>12:30</option>
+                              <option>1:00</option>
+                              <option>1:30</option>
+                              <option>2:00</option>
+                              <option>2:30</option>
+                              <option>3:00</option>
+                              <option>3:30</option>
+                              <option>4:00</option>
+                              <option>4:30</option>
+                              <option>5:00</option>
+                              <option>5:30</option>
+                              <option>6:00</option>
+                              <option>6:30</option>
+                              <option>7:00</option>
+                              <option>7:30</option>
+                              <option>8:00</option>
+                              <option>8:30</option>
+                              <option>9:00</option>
+                              <option>9:30</option>
+                              <option>10:00</option>
+                              <option>10:30</option>
+                              <option>11:00</option>
+                              <option>11:30</option>
+                            </select>
+                            <select class="ampm">
+                                <option>AM</option>
+                                <option>PM</option>
                             </select>
                             </div>
                         </div>
@@ -205,7 +243,7 @@
                     <div id="filter_location" class="choice-group">
                         <div>
                             <label class="radio inline">
-                              <input type="radio" name="optionsLocations" id="" value="option1" checked> Entire campus
+                              <input type="radio" name="optionsLocations" id="entire_campus" value="option1" checked> Entire campus
                             </label>
                             <label class="radio inline">
                               <input type="radio" name="optionsLocations" id="building_list_input" value="option2"> Specific building
@@ -231,28 +269,28 @@
                     <div id="filter_equipment_types" class="choice-group clearfix" style="margin-bottom:0px;">
                         <div style="width:auto;float:left; margin-right:15px;">
                             <label class="checkbox">
-                              <input type="checkbox" id="" name="equipment" value="has_whiteboards"> Whiteboard
+                              <input type="checkbox" id="has_whiteboards" name="equipment" value="has_whiteboards"> Whiteboard
                             </label>
                             <label class="checkbox">
-                              <input type="checkbox" id="" name="equipment" value="has_outlets"> Outlets
+                              <input type="checkbox" id="has_outlets" name="equipment" value="has_outlets"> Outlets
                             </label>
                             <label class="checkbox">
-                              <input type="checkbox" id="" name="equipment" value="has_computers"> Computer
+                              <input type="checkbox" id="has_computers" name="equipment" value="has_computers"> Computer
                             </label>
                             <label class="checkbox">
-                              <input type="checkbox" id="" name="equipment" value="has_scanner"> Scanning
+                              <input type="checkbox" id="has_scanner" name="equipment" value="has_scanner"> Scanning
                             </label>
                         </div>
 
                         <div style="width:auto;float:left;">
                             <label class="checkbox">
-                              <input type="checkbox" id="" name="equipment" value="has_displays"> Large display (for laptop)
+                              <input type="checkbox" id="has_displays" name="equipment" value="has_displays"> Large display (for laptop)
                             </label>
                             <label class="checkbox">
-                              <input type="checkbox" id="" name="equipment" value="has_projector"> Projector
+                              <input type="checkbox" id="has_projector" name="equipment" value="has_projector"> Projector
                             </label>
                             <label class="checkbox">
-                              <input type="checkbox" id="" name="equipment" value="has_printing"> Printing
+                              <input type="checkbox" id="has_printing" name="equipment" value="has_printing"> Printing
                             </label>
                         </div>
                     </div>
@@ -267,13 +305,13 @@
                                 <h3>Noise Level</h3>
                                 <div>
                                 <label class="checkbox inline">
-                                  <input type="checkbox" id="" name="noise_level" value="silent"> Silent
+                                  <input type="checkbox" id="silent" name="noise_level" value="silent"> Silent
                                 </label>
                                 <label class="checkbox inline">
-                                  <input type="checkbox" id="" name="noise_level" value="quiet"> Low Hum
+                                  <input type="checkbox" id="quiet" name="noise_level" value="quiet"> Low Hum
                                 </label>
                                 <label class="checkbox inline">
-                                  <input type="checkbox" id="" name="noise_level" value="moderate"> Chatter
+                                  <input type="checkbox" id="moderate" name="noise_level" value="moderate"> Chatter
                                 </label>
                                 </div>
                             </div>
@@ -288,25 +326,21 @@
                             <div id="filter_food_coffee" class="choice-group">
                                 <h3>Food/Coffee</h3>
                                 <label class="checkbox inline">
-                                  <input type="checkbox" id="" name="food_nearby" value="space"> In space
+                                  <input type="checkbox" id="in_space" name="food_nearby" value="space"> In space
                                 </label>
                                 <label class="checkbox inline">
-                                  <input type="checkbox" id="" name="food_nearby" value="building"> In building
+                                  <input type="checkbox" id="in_building" name="food_nearby" value="building"> In building
                                 </label>
                                 <label class="checkbox inline">
-                                  <input type="checkbox" id="" name="food_nearby" value="neighboring"> In neighboring building
+                                  <input type="checkbox" id="neighboring" name="food_nearby" value="neighboring"> In neighboring building
                                 </label>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="filter-submit">
-                    <button id="view_results_button" class="btn btn-warning" type="button">View Results</button>
-                    <button id="cancel_results_button" class="btn btn-link" type="button">Cancel</button>
-                </div>
             </div>
-            <div id="filter_button_container"><div id="filter_button"><i class="icon-th icon-white"></i><span class="filter-button-text">Filters</span></div></div>
+
         </div>
         </form>
     </div>
@@ -449,12 +483,12 @@
                                         </div>
                                     </div>
                                     <div id="spaceMap" class="map-container" style="display:none; "></div>
-                                    
+
                                      <div class="space-image-map-buttons btn-group" data-toggle="buttons-radio">
                                       <button id="carouselControl" class="btn active">images</button>
                                       <button id="mapControl" class="btn">map</button>
                                     </div>
-                                    
+
                                 </div>
                                 <div class="space-info">
                                      <ul>
@@ -531,7 +565,7 @@
 
         <div id="info_list">
             <div class="list-inner">
-                <div class="list-arrow"><a id="filter_link" href="#"><i class="icon-th-list"></i></a></div>
+                <div class="list-arrow"><a id="filter_link" href="#"><img src="{{ STATIC_URL }}img/list.png" /></a></div>
 
                 <!-- TODO: need to implement if/else logic for spinner and info_items -->
                 <div class="loading"><div class="loading-inner"><img src="{{ STATIC_URL }}img/spinner.gif" />&nbsp;&nbsp;Loading spaces...</div></div>
@@ -542,7 +576,8 @@
                     <ul>
                         {{#each data}}
                         <li class="clearfix">
-                            <div class="space-detail-list-image pull-left"><img src='space/{{id}}/image/{{images.0.id}}/thumb/100x67' class='img'></div>
+                            <div class="space-detail-list-image pull-left"><img src="/static/img/transparent.gif" data-original='space/{{id}}/image/{{images.0.id}}/thumb/100x67' class='img lazy'></div>
+
                             <div id="{{id}}" class="space-detail-list-item view-details pull-left">
                                 <div class="space-detail-type">{{type}}</div>
                                 <div class="space-detail-name">{{name}}</div>
