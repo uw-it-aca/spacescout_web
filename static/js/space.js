@@ -16,8 +16,6 @@ function getSpaceMap(lat, lon) {
     mapTypeControl: false,
   }
 
-  console.log("lat: " + lat + " lon: " + lon);
-
   var map = new google.maps.Map(document.getElementById("spaceMap"), mapOptions);
 
   var image = '/static/img/pins/pin00.png';

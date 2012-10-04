@@ -84,11 +84,9 @@ function lazyLoadSpaceImages() {
         $("img.lazy").lazyload({
              container: $("#info_list")
          });
-        console.log("this div has scroll");
     }
     else { //mobile ui
         $("img.lazy").lazyload();
-        console.log("this div has no scroll");
     }
 }
 

@@ -7,7 +7,6 @@ Handlebars.registerHelper('carouselimages', function(spacedata) {
     var elements = new Array;
     for (i=0; i < spacedata.images.length; i++) {
         image_id = spacedata.images[i].id;
-        console.log(image_id);
         elements.push('<div class="item"><img src="/space/'+space_id+'/image/'+image_id+'/thumb/600x400" class="img"></div>');
     }
     return new Handlebars.SafeString(elements.join('\n'));
@@ -100,7 +99,6 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
             // otherwise, don't do anything since they've already seen the popup
             if (iphone && ios56) {
                 if (!$.cookie('showSpaceScoutiOS')){
-                    console.log("no cookie... set cookie and show popup");
                     $.cookie('showSpaceScoutiOS', 'true');
                     showIosCallout();
                 }
@@ -293,7 +291,6 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 	// Update dimensions on resize
 	$(w).resize(function(){
 
-	   console.log("resized");
 	   sw = document.body.clientWidth;
 
 	   checkMobile();
@@ -443,7 +440,6 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
     function initializeCarousel() {
 
-        console.log("carousel initialized");
 
         $('.carousel').each(function(){
             $(this).carousel({
@@ -476,7 +472,6 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
     // callout for ios5-6 native app
     function showIosCallout() {
 
-        console.log("you are on an iphone");
 
         $('#ios_callout').show(0, function() {
             // Animation complete.
