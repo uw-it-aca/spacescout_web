@@ -187,6 +187,12 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
             $('#hours_list_container').hide();
             $('#hours_list_input').parent().removeClass("selected");
 
+            // reset location
+            $('#entire_campus').prop('checked', true);
+            $('#entire_campus').parent().removeClass("selected");
+            $('#building_list_container').hide();
+            $('#building_list_input').parent().removeClass("selected");
+
         });
 
 
