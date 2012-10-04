@@ -44,6 +44,24 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
 });
 
+Handlebars.registerHelper('formatHours', function(hours) {
+    //tomorrow_starts_at_midnight = true;
+    //tomorrow_is_24_hours = 
+    //if (start_time[0] == 0 && start_time[1] == 0 && end_time[0] == 23 && end_time[1] == 59 && tomorrow_starts_at_midnight && !tomorrow_is_24_hours && tomorrows_hour > 3) {
+        //dsf
+    //}
+    var formatted = "";
+    $.each(hours, function(day) {
+        dayMarker = day.charAt(0);
+        dayMarker = dayMarker.toUpperCase();
+        if (dayMarker == 'T' && day.charAt(1) == 'h' || dayMarker == 'S' && day.charAt(1) == 'u') {
+            dayMarker += day.charAt(1);
+        }
+        formatted += "<p>" + dayMarker + ": " + hours[day][0] +" - " +hours[day][1] + "</p>\n";
+    });
+    return new Handlebars.SafeString(formatted);
+});
+
 (function(w){
 
 	var sw = document.body.clientWidth,

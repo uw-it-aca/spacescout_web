@@ -385,7 +385,11 @@
 
                                 <div class="space-info">
                                      <ul>
-                                        <li class="clearfix"><div class="space-info-label pull-left">Current hours</div><div class="space-info-detail pull-left">{{available_hours}}</div></li>
+                                        <li class="clearfix"><div class="space-info-label pull-left">Current hours</div>
+                                            <div class="space-info-detail pull-left">
+                                                {{formatHours available_hours}}
+                                            </div>
+                                        </li>
                                         <li class="clearfix"><div class="space-info-label pull-left">Location</div><div class="space-info-detail pull-left">{{extended_info.location_description}}</div></li>
                                         <li class="clearfix">
                                             <div class="space-info-label pull-left">Resources</div>
