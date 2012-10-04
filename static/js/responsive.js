@@ -87,7 +87,7 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
             });
 
             // check cookie to see if user has seen the popup before, if not... show the popup (iphone/ipod)
-            if (iphone) {
+            /*if (iphone) {
 
                 if ($.cookie('showSpaceScoutiOS')){
                     console.log("yes cookie... do nothing")
@@ -98,7 +98,7 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
                     $.cookie('showSpaceScoutiOS', 'true');
                     showIosCallout();
                 }
-            }
+            }*/
 
 
 		}
@@ -147,15 +147,9 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
         $('#cancel_results_button').click(function() {
 
             if (mobile) {
-                //$('#map_canvas').show();
-                //$('#info_list').show();
-
                 $('#main_content').show();
                 $('#footer').show();
                 $('.back-top').show();
-
-                // scroll to top since the cancel button is at the bottom
-                //scrollTo('top');
             }
 
             $('#filter_button').show();
