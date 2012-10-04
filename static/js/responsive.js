@@ -178,6 +178,9 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
                 }
             });
 
+            // reset capacity
+            $('#capacity').val('1');
+
         });
 
 
