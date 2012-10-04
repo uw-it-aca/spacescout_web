@@ -52,6 +52,7 @@ def HomeView(request):
         'center_longitude': center_longitude,
         'zoom_level': zoom_level,
         'buildingdict': buildingdict,
+        'is_mobile': request.MOBILE,
     }, context_instance=RequestContext(request))
 
 
