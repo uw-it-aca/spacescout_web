@@ -52,7 +52,8 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 		mobile = true;
 
     var deviceAgent = navigator.userAgent.toLowerCase();
-	var iphone = deviceAgent.match(/(iphone|ipod)/);
+	var iphone = deviceAgent.match(/(ipad|iphone)/);
+	var ios56 = navigator.userAgent.match(/OS [56](_\d)+ like Mac OS X/i);
 
 	$(document).ready(function() {
 
@@ -86,26 +87,25 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
                   scrollTo('info_list');
             });
 
-            // for iphones - check if they have the ios detector cookie, if they don't give them one and show the popup
+            // for iphones (ios5-6) - check if they have the ios detector cookie, if they don't give them one and show the popup
             // otherwise, don't do anything since they've already seen the popup
-            if (iphone) {
+            if (iphone && ios56) {
                 if (!$.cookie('showSpaceScoutiOS')){
-                    console.log("no cookie... set cookie and show modal");
+                    console.log("no cookie... set cookie and show popup");
                     $.cookie('showSpaceScoutiOS', 'true');
                     showIosCallout();
                 }
             }
-
 		}
 
 		// Toggle Filter display
 		$('#filter_button').click(function() {
-    		
+
     		// calculate the filter height for mobile
     		if (mobile) {
     		  $("#filter_block").height($(window).height() - $('#nav').height() - 10);
     		}
-    		
+
     		if ($("#filter_block").is(":hidden")) {
 
                 $("#filter_block").slideDown('slow');
