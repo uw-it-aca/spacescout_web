@@ -131,7 +131,6 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
                     // handle scrolling for android gingerbread or newer
             		if (gingerbreadOrNewer) {
-                		alert("you are on gingerbread");
                 		touchScroll("filter_block");
             		}
                 }
