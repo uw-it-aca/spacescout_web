@@ -57,7 +57,7 @@ Handlebars.registerHelper('formatHours', function(hours) {
         if (dayMarker == 'T' && day.charAt(1) == 'h' || dayMarker == 'S' && day.charAt(1) == 'u') {
             dayMarker += day.charAt(1);
         }
-        formatted += "<p>" + dayMarker + ": " + hours[day][0] +" - " +hours[day][1] + "</p>\n";
+        formatted += "<p>" + dayMarker + ": " + hours[day] +  "</p>\n";
     });
     return new Handlebars.SafeString(formatted);
 });
