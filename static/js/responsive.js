@@ -449,20 +449,22 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
         $('#ios_callout').show(0, function() {
             // Animation complete.
             $('.ios-inner-container').show("slide", { direction: "down" }, 700);
+            // disable the iphone scroll
+            document.ontouchmove = function(event){ event.preventDefault(); }
         });
-
-        // disable the iphone scroll
-        document.ontouchmove = function(event){
-            event.preventDefault();
-        }
 
         $('#continue_webapp').click(function() {
             // close the modal
             $('#ios_callout').hide();
+            // enable scrolling
+            document.ontouchmove = function(event){ return true; }
         });
 
         $('#download_native').click(function() {
+            // redirect to app store
             window.location = "http://itunes.apple.com/us/app/spacescout/id551472160";
+            // enable scrolling
+            document.ontouchmove = function(event){ return true; }
         });
     }
 
