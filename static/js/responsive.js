@@ -181,6 +181,12 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
             // reset capacity
             $('#capacity').val('1');
 
+            // reset hours
+            $('#open_now').prop('checked', true);
+            $('#open_now').parent().removeClass("selected");
+            $('#hours_list_container').hide();
+            $('#hours_list_input').parent().removeClass("selected");
+
         });
 
 
