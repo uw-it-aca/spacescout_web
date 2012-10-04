@@ -62,7 +62,6 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
     var gingerbread = deviceAgent.match(/android 2\.3/i);
     var gingerbreadOrNewer = deviceAgent.match(/android [2-9]/i);
     var honeycombOrNewer = deviceAgent.match(/android [3-9]/i);
-
     var froyoOrOlder = android && !gingerbread && !honeycombOrNewer;
 
 	$(document).ready(function() {
@@ -111,14 +110,9 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 		// Toggle Filter display
 		$('#filter_button').click(function() {
 
-    		// calculate the filter height for mobile
+    		// calculate the filter height for mobile browsers
     		if (mobile) {
         		$("#filter_block").height($(window).height() - $('#nav').height() - 10);
-
-        		// handle scrolling for android gingerbread or newer
-        		if (gingerbreadOrNewer) {
-            		touchScroll(filter_block);
-        		}
     		}
 
     		if ($("#filter_block").is(":hidden")) {
@@ -134,6 +128,12 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
                     $('#main_content').hide();
                     $('#footer').hide();
                     $('.back-top').hide();
+
+                    // handle scrolling for android gingerbread or newer
+            		if (gingerbreadOrNewer) {
+                		alert("you are on gingerbread");
+                		touchScroll("filter_block");
+            		}
                 }
 
             } else {
