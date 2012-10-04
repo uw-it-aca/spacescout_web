@@ -45,16 +45,6 @@
 
       <body id="top">
 
-          <div id="ios_callout">
-
-              <div class="ios-inner-container">
-                  <p>We have an iPhone app!</p>
-                  <button type="button" id="continue_webapp" class="btn">Continue to the web app</button>
-                  <button type="button" id="download_native" class="btn btn-inverse">Let's download it!</button>
-              </div>
-
-          </div>
-
           <div style="max-width:1024px; margin: 0 auto;">
               {% block content %}{% endblock %}
               <div class="back-top">
@@ -75,7 +65,6 @@
           <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=true"></script>
 
           {% compress js %}
-            <script type="text/javascript" src="{{ STATIC_URL }}libs/cookie.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/less.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap/js/bootstrap-transition.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap/js/bootstrap-button.js"></script>
