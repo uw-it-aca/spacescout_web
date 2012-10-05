@@ -207,7 +207,7 @@ function run_custom_search() {
     }
 
     // Run the search
-    console.log(window.spacescout_search_options);
+    //console.log(window.spacescout_search_options);
     fetch_data();
 
     $("#filter_block").slideUp(speed);
