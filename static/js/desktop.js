@@ -42,14 +42,9 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
 });
 
-(function(w){
+(function(d){
 
 	$(document).ready(function() {
-
-    	// check if a map_canvas exists... populate it
-    	if ($("#map_canvas").length == 1) {
-            initialize();
-        }
 
 		desktopContent();
 
@@ -203,20 +198,10 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
             }
         });
 
-
-        // handle clicking on map centering buttons
-        $('#center_all').live('click', function(e){
-            alert("center all");
-        });
-
-        $('#center_me').live('click', function(e){
-            alert("center me");
-        });
-
 	});
 
 	// Update dimensions on resize
-	$(w).resize(function(){
+	$(d).resize(function(){
 
         // desktop
         desktopContent();

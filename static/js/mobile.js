@@ -61,12 +61,6 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
 	$(document).ready(function() {
 
-    	// check if a map_canvas exists... populate it
-    	if ($("#map_canvas").length == 1) {
-          initialize();
-        }
-
-
 		mobileContent();
 
 
@@ -122,25 +116,23 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
                 $('#view_results_button').show();
                 $('#cancel_results_button').show();
 
+                // if mobile
+                $('#main_content').hide();
+                $('#footer').hide();
+                $('.back-top').hide();
 
-                    // if mobile
-                    $('#main_content').hide();
-                    $('#footer').hide();
-                    $('.back-top').hide();
-
-                    // handle scrolling for android gingerbread or newer
-            		if (gingerbreadOrNewer) {
-                		touchScroll("filter_block");
-            		}
+                // handle scrolling for android gingerbread or newer
+        		if (gingerbreadOrNewer) {
+            		touchScroll("filter_block");
+        		}
 
 
             } else {
 
-
-                    // if mobile
-                    $('#main_content').show();
-                    $('#footer').show();
-                    $('.back-top').show();
+                // if mobile
+                $('#main_content').show();
+                $('#footer').show();
+                $('.back-top').show();
 
 
                 $('#filter_button').show();
@@ -158,9 +150,9 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
             clear_custom_search();
 
             // if mobile
-                $('#main_content').show();
-                $('#footer').show();
-                $('.back-top').show();
+            $('#main_content').show();
+            $('#footer').show();
+            $('.back-top').show();
 
 
             $('#filter_button').show();
@@ -209,7 +201,6 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
             });
 
         });
-
 
         // fancy location select
         $("#e9").select2({
@@ -264,15 +255,6 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
                 $('#spaceMap').show();
                 getSpaceMap(detailsLat, detailsLon);
             }
-        });
-
-        // handle clicking on map centering buttons
-        $('#center_all').live('click', function(e){
-            alert("center all");
-        });
-
-        $('#center_me').live('click', function(e){
-            alert("center me");
         });
 
 	});
