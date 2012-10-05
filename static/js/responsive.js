@@ -153,6 +153,9 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
         // Close the filter display using Cancel button
         $('#cancel_results_button').click(function() {
 
+            // reset the map
+            clear_custom_search();
+
             if (mobile) {
                 $('#main_content').show();
                 $('#footer').show();
@@ -164,6 +167,29 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
             $('#cancel_results_button').hide();
 
             $("#filter_block").slideUp('slow');
+
+            // reset checkboxes
+            $('input[type=checkbox]').each(function() {
+                if ($(this).attr('checked')) {
+                    $(this).attr('checked', false);
+                    $(this).parent().removeClass("selected");
+                }
+            });
+
+            // reset capacity
+            $('#capacity').val('1');
+
+            // reset hours
+            $('#open_now').prop('checked', true);
+            $('#open_now').parent().removeClass("selected");
+            $('#hours_list_container').hide();
+            $('#hours_list_input').parent().removeClass("selected");
+
+            // reset location
+            $('#entire_campus').prop('checked', true);
+            $('#entire_campus').parent().removeClass("selected");
+            $('#building_list_container').hide();
+            $('#building_list_input').parent().removeClass("selected");
 
         });
 
