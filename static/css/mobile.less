@@ -32,7 +32,7 @@ button {
         #filter_button { background:#514d83 url('/static/img/down.png') no-repeat 8px 50%; display:inline-block; color: #8987ab; width: 30px; text-indent: -999px; }
         #view_results_button { background:#514d83 url('/static/img/check.png') no-repeat 10px 50%; display: none; color: #8987ab; width: 30px; text-indent: -999px; }
         #cancel_results_button { background: #e4e4e4 url('/static/img/cross.png') no-repeat 10px 50%; display: none; color: #646464; width: 30px; text-indent: -999px; }
-        
+
         #back_home_button { background:#514d83 url('/static/img/left.png') no-repeat 8px 50%; display:inline-block; color: #8987ab; width: 30px; text-indent: -999px; }
     }
 
@@ -180,8 +180,8 @@ button {
                         .img { width: 100px; height: 67px; background: #eee url('/static/img/spinner.gif') no-repeat 50% 50%; background-size: 15px;}
                     }
 
-                .space-detail-list-item { width: 42%; display: inline-block;
-                    .space-detail-type { color: #666; }
+                .space-detail-list-item { width: 37%; display: inline-block;
+                    .space-detail-type { color: #666;  white-space: nowrap; overflow:hidden; text-overflow: ellipsis; }
                     .space-detail-name { font-size: 17px; line-height: 28px; white-space: nowrap; overflow:hidden; text-overflow: ellipsis; color: #000;
                         a { color: #000; text-decoration: none; }
                         a:hover { color: red; }
@@ -306,14 +306,14 @@ ul.select2-choices {
 @media screen and (min-width: 320px) {
 
     #nav {
-        
+
         .actions {
             #back_home_button { width: 84px; padding-left: 30px; text-indent: 0; }
             #filter_button { width: 84px; padding-left: 30px; text-indent: 0; }
             #view_results_button {  width: 84px; padding-left: 30px; text-indent: 0; }
             #cancel_results_button { width: 84px; padding-left: 30px; text-indent: 0; }
         }
-        
+
         #filter_container {
             #filter_block {
                 #filter_hours {
