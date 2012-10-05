@@ -32,6 +32,7 @@
 
         {% block extra_css %}{% endblock %}
 
+        <script type="text/javascript" src="{{ STATIC_URL }}libs/less.js"></script>
         <link rel="shortcut icon" href="{{ STATIC_URL }}img/ico/favicon.ico">
 
     </head>
@@ -46,7 +47,7 @@
               </div>
           </div>
 
-          <div style="max-width:1024px; margin: 0 auto;">
+          <div id="container">
               {% block content %}{% endblock %}
               <div class="back-top">
                 <button id="top_link" class="btn btn-inverse" type="button">Back to top</button>
@@ -67,7 +68,6 @@
 
           {% compress js %}
             <script type="text/javascript" src="{{ STATIC_URL }}libs/cookie.js"></script>
-            <script type="text/javascript" src="{{ STATIC_URL }}libs/less.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap/js/bootstrap-transition.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap/js/bootstrap-button.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap/js/bootstrap-carousel.js"></script>
