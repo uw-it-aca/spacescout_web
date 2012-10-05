@@ -3,12 +3,18 @@
 <form action="/contact/" method="post">{% csrf_token %}
     {{ form.non_field_errors }}
     {% for field in form %}
-        <div class="fieldWrapper">
-            {{ field.label_tag }}: {{ field }}
-            {% for error in field.errors %}
-                <strong>{{ error|escape }}</strong>
-            {% endfor %}
-        </div>
+        {% if field.name == "bot_test" %}
+            <div style="display: None;">
+                (Enter text ONLY if you are a bot): {{ field }}
+            </div>
+        {% else %}
+            <div class="fieldWrapper">
+                {{ field.label_tag }}: {{ field }}
+                {% for error in field.errors %}
+                    <strong>{{ error|escape }}</strong>
+                {% endfor %}
+            </div>
+        {% endif %}
     {% endfor %}
     <input type="submit" value="Send" />
 </form>

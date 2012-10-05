@@ -9,3 +9,4 @@ class ContactForm(forms.Form):
             ('problem', 'Report a Problem'),
             ('feature', 'Request a Feature')), label="Feedback Choice")
         message = forms.CharField(widget=forms.Textarea(), label="Your Message")
+        bot_test = forms.CharField(required=False)
