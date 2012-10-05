@@ -5,7 +5,6 @@ from django.core.mail import send_mail
 from web_proj.settings import FEEDBACK_EMAIL_RECIPIENT
 
 def ContactView(request):
-    import pdb; pdb.set_trace()
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
