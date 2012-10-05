@@ -287,7 +287,7 @@ function display_search_results(data) {
             position: new google.maps.LatLng(youarehere.latitude, youarehere.longitude),
             title: "You are here",
             map: spacescout_map,
-            icon: '/static/img/pins/blue-dot.png'
+            icon: '/static/img/pins/me_pin.png'
         });
         //window.spacescout_markers.push(my_marker);
     }
