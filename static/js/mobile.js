@@ -232,7 +232,6 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
             $(this).parent().siblings().removeClass("selected");
 
             if ($('#hours_list_input').is(':checked')) {
-                //scrollTo('filter_hours');
                 $('#hours_list_container').show();
             }
             else {
@@ -245,7 +244,6 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
             $(this).parent().siblings().removeClass("selected");
 
             if ($('#building_list_input').is(':checked')) {
-                //scrollTo('filter_location');
                 $('#building_list_container').show();
             }
             else {

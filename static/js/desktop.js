@@ -1,7 +1,6 @@
 var detailsLat, detailsLon;
 
 // Handlebars helpers
-
 Handlebars.registerHelper('carouselimages', function(spacedata) {
     var space_id = spacedata.id;
     var elements = new Array;
@@ -45,79 +44,17 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
 (function(w){
 
-	var sw = document.body.clientWidth,
-		breakpoint = 767,
-		speed = 600,
-		mobile = true;
-
-    var deviceAgent = navigator.userAgent.toLowerCase();
-
-    // detect ios versions
-	var iphone = deviceAgent.match(/(ipad|iphone)/);
-	var ios56 = navigator.userAgent.match(/OS [56](_\d)+ like Mac OS X/i);
-
-    // detect android versions
-    var android = deviceAgent.match(/(android)/);
-    var gingerbread = deviceAgent.match(/android 2\.3/i);
-    var gingerbreadOrNewer = deviceAgent.match(/android [2-9]/i);
-    var honeycombOrNewer = deviceAgent.match(/android [3-9]/i);
-    var froyoOrOlder = android && !gingerbread && !honeycombOrNewer;
-
 	$(document).ready(function() {
 
     	// check if a map_canvas exists... populate it
     	if ($("#map_canvas").length == 1) {
-          initialize();
+            initialize();
         }
 
-		checkMobile();
-		setDisplay();
-
-		if (mobile) {
-
-    		// initialize the carousel for mobile standalone space page
-            initializeCarousel();
-            resizeCarouselMapContainer();
-
-            // scroll to the top of page
-            $('#top_link').click(function(e){
-                  // Prevent a page reload when a link is pressed
-                  e.preventDefault();
-                  // Call the scroll function
-                  scrollTo('top');
-            });
-
-            // scroll to top of filter list
-            $('#filter_link').click(function(e){
-                  // Prevent a page reload when a link is pressed
-                  e.preventDefault();
-                  // Call the scroll function
-                  scrollTo('info_list');
-            });
-
-            // back to spaces button on mobile space details page
-            $('#back_home_button').click(function() {
-                location.href = '/';
-            });
-
-            // for iphones (ios5-6) - check if they have the ios detector cookie, if they don't give them one and show the popup
-            // otherwise, don't do anything since they've already seen the popup
-            if (iphone && ios56) {
-                if (!$.cookie('showSpaceScoutiOS')){
-                    $.cookie('showSpaceScoutiOS', 'true');
-                    showIosCallout();
-                }
-            }
-
-		}
+		desktopContent();
 
 		// Toggle Filter display
 		$('#filter_button').click(function() {
-
-    		// calculate the filter height for mobile browsers
-    		if (mobile) {
-        		$("#filter_block").height($(window).height() - $('#nav').height() - 10);
-    		}
 
     		if ($("#filter_block").is(":hidden")) {
 
@@ -127,26 +64,8 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
                 $('#view_results_button').show();
                 $('#cancel_results_button').show();
 
-                if (mobile) {
-
-                    $('#main_content').hide();
-                    $('#footer').hide();
-                    $('.back-top').hide();
-
-                    // handle scrolling for android gingerbread or newer
-            		if (gingerbreadOrNewer) {
-                		touchScroll("filter_block");
-            		}
-                }
 
             } else {
-
-                if (mobile) {
-
-                    $('#main_content').show();
-                    $('#footer').show();
-                    $('.back-top').show();
-                }
 
                 $('#filter_button').show();
                 $('#view_results_button').hide();
@@ -161,12 +80,6 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
             // reset the map
             clear_custom_search();
-
-            if (mobile) {
-                $('#main_content').show();
-                $('#footer').show();
-                $('.back-top').show();
-            }
 
             $('#filter_button').show();
             $('#view_results_button').hide();
@@ -256,7 +169,6 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
             $(this).parent().siblings().removeClass("selected");
 
             if ($('#hours_list_input').is(':checked')) {
-                //scrollTo('filter_hours');
                 $('#hours_list_container').show();
             }
             else {
@@ -269,7 +181,6 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
             $(this).parent().siblings().removeClass("selected");
 
             if ($('#building_list_input').is(':checked')) {
-                //scrollTo('filter_location');
                 $('#building_list_container').show();
             }
             else {
@@ -292,6 +203,7 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
             }
         });
 
+
         // handle clicking on map centering buttons
         $('#center_all').live('click', function(e){
             alert("center all");
@@ -306,43 +218,19 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 	// Update dimensions on resize
 	$(w).resize(function(){
 
-	   sw = document.body.clientWidth;
+        // desktop
+        desktopContent();
 
-	   checkMobile();
-	   setDisplay();
-
-	   // if the space details is already open
-	   if ($('#space_detail_container').is(":visible")) {
-    	   $('#space_detail_container').height($('#map_canvas').height());
-    	   $('.space-detail-body').height($('.space-detail').height() - 172);
-	   }
+        // if the space details is already open
+        if ($('#space_detail_container').is(":visible")) {
+            $('#space_detail_container').height($('#map_canvas').height());
+            $('.space-detail-body').height($('.space-detail').height() - 172);
+        }
 
 	});
 
-	// Check if Mobile
-	function checkMobile() {
-		mobile = (sw > breakpoint) ? false : true;
-	}
-
-	// Set the proper display settings
-	function setDisplay() {
-    	if (mobile) {
-		  // mobile
-		  mobileContent();
-		} else {
-		  // desktop
-		  desktopContent();
-		}
-	}
-
 	// Show space details (sliding transition)
 	function showSpaceDetails(data) {
-
-    	if (mobile) {
-        	// change url
-        	location.href = '/space/' + data.id;
-    	}
-    	else {
 
     	   // remove any open details
     	   $('#space_detail_container').remove();
@@ -367,18 +255,11 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
     	   detailsLat = data.location.latitude;
     	   detailsLon = data.location.longitude;
 
-    	}
-
 	}
 
 	// Replace space details (inline loading of already slid panel)
 	function replaceSpaceDetails(data) {
 
-    	if (mobile) {
-        	// change url
-        	location.href = '/space/' + data.id;
-    	}
-    	else {
         	// build the template
     	   var source = $('#space_details_replace').html();
     	   var template = Handlebars.compile(source);
@@ -400,25 +281,19 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
            detailsLat = data.location.latitude;
     	   detailsLon = data.location.longitude;
-    	}
-
 
 	}
 
 	function hideSpaceDetails() {
         $('.space-detail').hide("slide", { direction: "right" }, 700, function() {
-        	   $('#space_detail_container').remove();
+            $('#space_detail_container').remove();
         });
 
         // deselect selected space in list
         $('#info_items li').removeClass('selected');
 	}
 
-	// ScrollTo a spot on the UI
-	function scrollTo(id) {
-        // Scroll
-        $('html,body').animate({ scrollTop: $("#"+id).offset().top},'fast');
-    }
+
 
 	// Desktop display defaults
 	function desktopContent() {
@@ -435,25 +310,7 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
         //$('.loading').height(contentH);
     }
 
-    // Mobile display defaults
-    function mobileContent() {
-
-        var windowH = $(window).height();
-        var headerH = $('#nav').height();
-        //var contentH = windowH - headerH;
-        //var mainContentH = windowH - headerH + 35;
-        var mapH = windowH - headerH - 70; // enough to show the loading spinner at the bottom of the viewport
-
-        $('#map_canvas').height(mapH);
-        $('#map_canvas').css({ minHeight: mapH })
-        $('#info_list').height('auto');
-
-        //$("#filter_block").height(mapH + 60);
-
-    }
-
     function initializeCarousel() {
-
 
         $('.carousel').each(function(){
             $(this).carousel({
@@ -465,10 +322,9 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
             // hide the controls if only 1 picture exists
             if ($(this).find('.item').length == 1) {
-                 $(this).find('.carousel-control').hide();
+                $(this).find('.carousel-control').hide();
             }
         });
-
 
     }
 
@@ -482,52 +338,5 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
         $('.carousel').height(containerH);
         $('.map-container').height(containerH);
     }
-
-    // callout for ios5-6 native app
-    function showIosCallout() {
-
-
-        $('#ios_callout').show(0, function() {
-            // Animation complete.
-            $('.ios-inner-container').show("slide", { direction: "down" }, 700);
-            // disable the iphone scroll
-            document.ontouchmove = function(event){ event.preventDefault(); }
-        });
-
-        $('#continue_webapp').click(function() {
-            // close the modal
-            $('#ios_callout').hide();
-            // enable scrolling
-            document.ontouchmove = function(event){ return true; }
-        });
-
-        $('#download_native').click(function() {
-            // redirect to app store
-            window.location = "http://itunes.apple.com/us/app/spacescout/id551472160";
-            // enable scrolling
-            document.ontouchmove = function(event){ return true; }
-        });
-    }
-
-    // enable div overflow scrolling for android
-    function touchScroll(id) {
-
-		var el=document.getElementById(id);
-		var scrollStartPos=0;
-
-		document.getElementById(id).addEventListener("touchstart", function(event) {
-			scrollStartPos=this.scrollTop+event.touches[0].pageY;
-			event.preventDefault();
-		},false);
-
-		document.getElementById(id).addEventListener("touchmove", function(event) {
-			this.scrollTop=scrollStartPos-event.touches[0].pageY;
-			event.preventDefault();
-		},false);
-
-    }
-
-
-
 
 })(this);
