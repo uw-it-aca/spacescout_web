@@ -1,5 +1,7 @@
 @media screen and (min-width: 768px) {
 
+    #container { min-width:768px; max-width:1024px;}
+
     #nav {
 
         .logo { height: 80px; line-height: 80px; width: 172px; background: url('/static/img/spacescout_logo.png') no-repeat 0px 50%; background-size: auto; }
@@ -46,7 +48,7 @@
             left: 0;
             right: 0;
             background: rgba(0, 0, 0, 0.6);
-            z-index: 0;
+            z-index: 3;
             display: none;
 
             .space-detail { display: none; background: #fff url('/static/img/spinner.gif') no-repeat 50% 50%; background-size: 20px; position: absolute;  color: #333; /*width: 470px; top: 5px; bottom: 5px; right: 5px;*/ top: 10px; bottom: 10px; left: 10px; right: 0px; margin-right: 10px;
@@ -110,7 +112,7 @@
         #info_items {
             ul { margin: 0px;
                 li {
-                    .space-detail-list-item { width: 55%; }
+                    .space-detail-list-item { width: 54%; }
                 }
 
                 li.selected { background-color: #6160a2;
@@ -226,7 +228,6 @@
 
 }
 */
-
 
 
 /* Override default Bootstrap Popover styles */

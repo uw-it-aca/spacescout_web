@@ -7,7 +7,6 @@ Handlebars.registerHelper('carouselimages', function(spacedata) {
     var elements = new Array;
     for (i=0; i < spacedata.images.length; i++) {
         image_id = spacedata.images[i].id;
-        console.log(image_id);
         elements.push('<div class="item"><img src="/space/'+space_id+'/image/'+image_id+'/thumb/600x400" class="img"></div>');
     }
     return new Handlebars.SafeString(elements.join('\n'));
@@ -52,7 +51,17 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 		mobile = true;
 
     var deviceAgent = navigator.userAgent.toLowerCase();
-	var iphone = deviceAgent.match(/(iphone|ipod)/);
+
+    // detect ios versions
+	var iphone = deviceAgent.match(/(ipad|iphone)/);
+	var ios56 = navigator.userAgent.match(/OS [56](_\d)+ like Mac OS X/i);
+
+    // detect android versions
+    var android = deviceAgent.match(/(android)/);
+    var gingerbread = deviceAgent.match(/android 2\.3/i);
+    var gingerbreadOrNewer = deviceAgent.match(/android [2-9]/i);
+    var honeycombOrNewer = deviceAgent.match(/android [3-9]/i);
+    var froyoOrOlder = android && !gingerbread && !honeycombOrNewer;
 
 	$(document).ready(function() {
 
@@ -86,11 +95,15 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
                   scrollTo('info_list');
             });
 
-            // for iphones - check if they have the ios detector cookie, if they don't give them one and show the popup
+            // back to spaces button on mobile space details page
+            $('#back_home_button').click(function() {
+                location.href = '/';
+            });
+
+            // for iphones (ios5-6) - check if they have the ios detector cookie, if they don't give them one and show the popup
             // otherwise, don't do anything since they've already seen the popup
-            if (iphone) {
+            if (iphone && ios56) {
                 if (!$.cookie('showSpaceScoutiOS')){
-                    console.log("no cookie... set cookie and show modal");
                     $.cookie('showSpaceScoutiOS', 'true');
                     showIosCallout();
                 }
@@ -100,12 +113,12 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
 		// Toggle Filter display
 		$('#filter_button').click(function() {
-    		
-    		// calculate the filter height for mobile
+
+    		// calculate the filter height for mobile browsers
     		if (mobile) {
-    		  $("#filter_block").height($(window).height() - $('#nav').height() - 10);
+        		$("#filter_block").height($(window).height() - $('#nav').height() - 10);
     		}
-    		
+
     		if ($("#filter_block").is(":hidden")) {
 
                 $("#filter_block").slideDown('slow');
@@ -119,6 +132,11 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
                     $('#main_content').hide();
                     $('#footer').hide();
                     $('.back-top').hide();
+
+                    // handle scrolling for android gingerbread or newer
+            		if (gingerbreadOrNewer) {
+                		touchScroll("filter_block");
+            		}
                 }
 
             } else {
@@ -141,6 +159,9 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
         // Close the filter display using Cancel button
         $('#cancel_results_button').click(function() {
 
+            // reset the map
+            clear_custom_search();
+
             if (mobile) {
                 $('#main_content').show();
                 $('#footer').show();
@@ -152,6 +173,29 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
             $('#cancel_results_button').hide();
 
             $("#filter_block").slideUp('slow');
+
+            // reset checkboxes
+            $('input[type=checkbox]').each(function() {
+                if ($(this).attr('checked')) {
+                    $(this).attr('checked', false);
+                    $(this).parent().removeClass("selected");
+                }
+            });
+
+            // reset capacity
+            $('#capacity').val('1');
+
+            // reset hours
+            $('#open_now').prop('checked', true);
+            $('#open_now').parent().removeClass("selected");
+            $('#hours_list_container').hide();
+            $('#hours_list_input').parent().removeClass("selected");
+
+            // reset location
+            $('#entire_campus').prop('checked', true);
+            $('#entire_campus').parent().removeClass("selected");
+            $('#building_list_container').hide();
+            $('#building_list_input').parent().removeClass("selected");
 
         });
 
@@ -248,12 +292,20 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
             }
         });
 
+        // handle clicking on map centering buttons
+        $('#center_all').live('click', function(e){
+            alert("center all");
+        });
+
+        $('#center_me').live('click', function(e){
+            alert("center me");
+        });
+
 	});
 
 	// Update dimensions on resize
 	$(w).resize(function(){
 
-	   console.log("resized");
 	   sw = document.body.clientWidth;
 
 	   checkMobile();
@@ -264,7 +316,6 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
     	   $('#space_detail_container').height($('#map_canvas').height());
     	   $('.space-detail-body').height($('.space-detail').height() - 172);
 	   }
-
 
 	});
 
@@ -403,7 +454,6 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
     function initializeCarousel() {
 
-        console.log("carousel initialized");
 
         $('.carousel').each(function(){
             $(this).carousel({
@@ -433,9 +483,9 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
         $('.map-container').height(containerH);
     }
 
+    // callout for ios5-6 native app
     function showIosCallout() {
 
-        console.log("you are on an iphone");
 
         $('#ios_callout').show(0, function() {
             // Animation complete.
@@ -458,5 +508,26 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
             document.ontouchmove = function(event){ return true; }
         });
     }
+
+    // enable div overflow scrolling for android
+    function touchScroll(id) {
+
+		var el=document.getElementById(id);
+		var scrollStartPos=0;
+
+		document.getElementById(id).addEventListener("touchstart", function(event) {
+			scrollStartPos=this.scrollTop+event.touches[0].pageY;
+			event.preventDefault();
+		},false);
+
+		document.getElementById(id).addEventListener("touchmove", function(event) {
+			this.scrollTop=scrollStartPos-event.touches[0].pageY;
+			event.preventDefault();
+		},false);
+
+    }
+
+
+
 
 })(this);

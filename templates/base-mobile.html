@@ -27,23 +27,25 @@
         {% compress css %}
         <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}libs/bootstrap/css/bootstrap.min.css" charset="utf-8" />
         <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}libs/select2/select2.css" charset="utf-8" />
-
         <link rel="stylesheet" type="text/less" href="{{ STATIC_URL }}css/mobile.less" media="screen, handheld" />
-        <link rel="stylesheet" type="text/less" href="{{ STATIC_URL }}css/responsive.less" media="screen  and (min-width: 768px)" />
         {% endcompress %}
 
         {% block extra_css %}{% endblock %}
 
-        <link rel="shortcut icon" href="{{ STATIC_URL }}img/ico/favicon.ico">
         <script type="text/javascript" src="{{ STATIC_URL }}libs/less.js"></script>
-        <!-- Respond.js, for IE6-8 support of media queries -->
-        <!--[if lt IE 9]>
-            <script type="text/javascript" src="{{ STATIC_URL }}libs/respond/respond.min.js"></script>
-        <![endif]-->
+        <link rel="shortcut icon" href="{{ STATIC_URL }}img/ico/favicon.ico">
 
     </head>
 
       <body id="top">
+
+          <div id="ios_callout" style="display:none;">
+              <div class="ios-inner-container">
+                  <p>We have an iPhone app!</p>
+                  <button type="button" id="continue_webapp" class="btn">Continue to the web app</button>
+                  <button type="button" id="download_native" class="btn btn-inverse">Let's download it!</button>
+              </div>
+          </div>
 
           <div id="container">
               {% block content %}{% endblock %}
@@ -65,7 +67,7 @@
           <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=true"></script>
 
           {% compress js %}
-
+            <script type="text/javascript" src="{{ STATIC_URL }}libs/cookie.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap/js/bootstrap-transition.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap/js/bootstrap-button.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap/js/bootstrap-carousel.js"></script>

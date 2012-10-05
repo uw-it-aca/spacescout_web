@@ -1,4 +1,4 @@
-{% extends 'base-responsive.html' %}
+{% extends is_mobile|yesno:"base-mobile.html,base-responsive.html" %}
 
 {% block extra_css %}
 {% endblock %}
@@ -29,7 +29,7 @@
         <div id="filter_container">
         <form>
 
-            <div id="filter_block">
+            <div id="filter_block" style="display:none;">
                 <div class="inner clearfix">
 
                     <div class="inner-column">
@@ -345,9 +345,17 @@
         </form>
     </div>
 
+    {% load templatetag_handlebars %}
     <div id="main_content" class="clearfix">
+
         <div id="map_canvas"></div>
-        {% load templatetag_handlebars %}
+        {% tplhandlebars "map_controls" %}
+            <div class="map-control-container">
+                <img id="center_all" src="/static/img/center_all.png" name="image" />&nbsp;
+                <img id="center_me" src="/static/img/center_me.png" name="image" />
+            </div>
+        {% endtplhandlebars %}
+
         {% tplhandlebars "space_details" %}
             <div id="space_detail_container" class="">
                 <div class="space-detail">

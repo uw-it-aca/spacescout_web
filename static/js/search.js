@@ -84,11 +84,9 @@ function lazyLoadSpaceImages() {
         $("img.lazy").lazyload({
              container: $("#info_list")
          });
-        console.log("this div has scroll");
     }
     else { //mobile ui
         $("img.lazy").lazyload();
-        console.log("this div has no scroll");
     }
 }
 
@@ -182,6 +180,11 @@ function run_custom_search() {
 
 }
 
+function clear_custom_search() {
+    window.spacescout_search_options = [];
+    fetch_data();
+}
+
 function initialize() {
     var i;
 
@@ -238,7 +241,8 @@ function load_map(latitude, longitude, zoom) {
     }
     google.maps.event.addListener(window.spacescout_map, 'idle', reload_on_idle);
 
-
+    // append the centering buttons after map has loaded
+    displayMapCenteringButtons();
 }
 
 function display_search_results(data) {
@@ -283,7 +287,7 @@ function display_search_results(data) {
             position: new google.maps.LatLng(youarehere.latitude, youarehere.longitude),
             title: "You are here",
             map: spacescout_map,
-            icon: '/static/img/pins/blue-dot.png'
+            icon: '/static/img/pins/me_pin.png'
         });
         //window.spacescout_markers.push(my_marker);
     }
@@ -372,6 +376,13 @@ function distance_between_points(lat1, lon1, lat2, lon2) {
 function scrollToTop(id) {
     // Scroll
     $('html,body').animate({ scrollTop: $("#"+id).offset().top},'fast');
+}
+
+ function displayMapCenteringButtons() {
+    // build the template
+   var source = $('#map_controls').html();
+   var template = Handlebars.compile(source);
+   $('#map_canvas').append(template(template));
 }
 
 
