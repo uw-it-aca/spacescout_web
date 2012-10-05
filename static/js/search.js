@@ -118,9 +118,9 @@ function run_custom_search() {
     window.spacescout_search_options["capacity"] = $("#capacity option:selected").val();
 
     // hours
-    var hours_query = new Array;
+    var from_query = new Array;
     if ($('#day-from').val() != 'No preference') {
-        hours_query.push($('#day-from').val());
+        from_query.push($('#day-from').val());
         if ($('#hour-from').val() != 'No preference') {
             var time = $('#hour-from').val();
             if ($('#ampm').val() == 'PM') {
@@ -129,10 +129,12 @@ function run_custom_search() {
                 hour = Number(hour) + 12;
                 time = hour+':'+min;
             }
-            hours_query.push(time);
+            from_query.push(time);
+        } else {
+            from_query.push('00:00');
         }
+        window.spacescout_search_options["open_at"] = from_query.join(",");
     }
-    console.log(hours_query);
 
     // location
     if ($('select#e9').val()) {
@@ -188,7 +190,7 @@ function run_custom_search() {
     }
 
     // Run the search
-    //console.log(window.spacescout_search_options);
+    console.log(window.spacescout_search_options);
     fetch_data();
 
     $("#filter_block").slideUp(speed);
