@@ -95,6 +95,11 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
                   scrollTo('info_list');
             });
 
+            // back to spaces button on mobile space details page
+            $('#back_home_button').click(function() {
+                location.href = '/';
+            });
+
             // for iphones (ios5-6) - check if they have the ios detector cookie, if they don't give them one and show the popup
             // otherwise, don't do anything since they've already seen the popup
             if (iphone && ios56) {
@@ -103,6 +108,7 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
                     showIosCallout();
                 }
             }
+
 		}
 
 		// Toggle Filter display
@@ -301,7 +307,6 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
     	   $('#space_detail_container').height($('#map_canvas').height());
     	   $('.space-detail-body').height($('.space-detail').height() - 172);
 	   }
-
 
 	});
 
