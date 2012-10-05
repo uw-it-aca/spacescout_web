@@ -118,6 +118,21 @@ function run_custom_search() {
     window.spacescout_search_options["capacity"] = $("#capacity option:selected").val();
 
     // hours
+    var hours_query = new Array;
+    if ($('#day-from').val() != 'No preference') {
+        hours_query.push($('#day-from').val());
+        if ($('#hour-from').val() != 'No preference') {
+            var time = $('#hour-from').val();
+            if ($('#ampm').val() == 'PM') {
+                var hour = time.split(':')[0];
+                var min = time.split(':')[1];
+                hour = Number(hour) + 12;
+                time = hour+':'+min;
+            }
+            hours_query.push(time);
+        }
+    }
+    console.log(hours_query);
 
     // location
     if ($('select#e9').val()) {
