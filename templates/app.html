@@ -345,9 +345,17 @@
         </form>
     </div>
 
+    {% load templatetag_handlebars %}
     <div id="main_content" class="clearfix">
+
         <div id="map_canvas"></div>
-        {% load templatetag_handlebars %}
+        {% tplhandlebars "map_controls" %}
+            <div class="map-control-container">
+                <img id="center_all" src="/static/img/center_all.png" name="image" />&nbsp;
+                <img id="center_me" src="/static/img/center_me.png" name="image" />
+            </div>
+        {% endtplhandlebars %}
+
         {% tplhandlebars "space_details" %}
             <div id="space_detail_container" class="">
                 <div class="space-detail">

@@ -292,6 +292,15 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
             }
         });
 
+        // handle clicking on map centering buttons
+        $('#center_all').live('click', function(e){
+            alert("center all");
+        });
+
+        $('#center_me').live('click', function(e){
+            alert("center me");
+        });
+
 	});
 
 	// Update dimensions on resize
@@ -500,6 +509,7 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
         });
     }
 
+    // enable div overflow scrolling for android
     function touchScroll(id) {
 
 		var el=document.getElementById(id);
@@ -516,6 +526,8 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 		},false);
 
     }
+
+
 
 
 })(this);

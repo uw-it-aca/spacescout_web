@@ -241,7 +241,8 @@ function load_map(latitude, longitude, zoom) {
     }
     google.maps.event.addListener(window.spacescout_map, 'idle', reload_on_idle);
 
-
+    // append the centering buttons after map has loaded
+    displayMapCenteringButtons();
 }
 
 function display_search_results(data) {
@@ -375,6 +376,13 @@ function distance_between_points(lat1, lon1, lat2, lon2) {
 function scrollToTop(id) {
     // Scroll
     $('html,body').animate({ scrollTop: $("#"+id).offset().top},'fast');
+}
+
+ function displayMapCenteringButtons() {
+    // build the template
+   var source = $('#map_controls').html();
+   var template = Handlebars.compile(source);
+   $('#map_canvas').append(template(template));
 }
 
 
