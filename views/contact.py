@@ -12,7 +12,7 @@ def ContactView(request):
             sender = form.cleaned_data['sender']
             message = form.cleaned_data['message']
             feedback_choice = form.cleaned_data['feedback_choice']
-            bot_test = form.cleaned_data['bot_test']
+            bot_test = form.cleaned_data['email_confirmation']
 
             if 'spot_id' in request.session:
                 spot_id = request.session['spot_id']

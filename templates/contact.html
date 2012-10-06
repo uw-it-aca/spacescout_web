@@ -3,9 +3,9 @@
 <form action="/contact/" method="post">{% csrf_token %}
     {{ form.non_field_errors }}
     {% for field in form %}
-        {% if field.name == "bot_test" %}
+        {% if field.name == "email_confirmation" %}
             <div style="display: None;">
-                (Enter text ONLY if you are a bot): {{ field }}
+                (LEAVE BLANK): {{ field }}
             </div>
         {% else %}
             <div class="fieldWrapper">
