@@ -9,8 +9,6 @@
     window.default_longitude = {{ center_longitude }};
     window.default_zoom = {{ zoom_level }};
 </script>
-<script type="text/javascript" src="{{ STATIC_URL }}js/search.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}js/space.js"></script>
 {% endblock %}
 
 {% block content %}
@@ -150,7 +148,7 @@
                             </label>
                         </div>
                         <div id="hours_list_container" style="margin-top:8px; display:none; ">
-                            <div><span class="hours-from">from</span><select>
+                            <div><span class="hours-from">from</span><select id="day-from">
                               <option>No preference</option>
                               <option>Monday</option>
                               <option>Tuesday</option>
@@ -160,7 +158,7 @@
                               <option>Saturday</option>
                               <option>Sunday</option>
                             </select>
-                            <select>
+                            <select id="hour-from">
                               <option>No preference</option>
                               <option>12:00</option>
                               <option>12:30</option>
@@ -187,12 +185,12 @@
                               <option>11:00</option>
                               <option>11:30</option>
                             </select>
-                            <select class="ampm">
+                            <select class="ampm" id="ampm-from">
                                 <option>AM</option>
                                 <option>PM</option>
                             </select>
                             </div>
-                            <div><span class="hours-until">until</span><select>
+                            <div><span class="hours-until">until</span><select id="day-until">
                               <option>No preference</option>
                               <option>Monday</option>
                               <option>Tuesday</option>
@@ -202,7 +200,7 @@
                               <option>Saturday</option>
                               <option>Sunday</option>
                             </select>
-                            <select>
+                            <select id="hour-until">
                               <option>No preference</option>
                               <option>12:00</option>
                               <option>12:30</option>
@@ -229,7 +227,7 @@
                               <option>11:00</option>
                               <option>11:30</option>
                             </select>
-                            <select class="ampm">
+                            <select class="ampm" id="ampm-until">
                                 <option>AM</option>
                                 <option>PM</option>
                             </select>
