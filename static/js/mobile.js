@@ -7,7 +7,6 @@ Handlebars.registerHelper('carouselimages', function(spacedata) {
     var elements = new Array;
     for (i=0; i < spacedata.images.length; i++) {
         image_id = spacedata.images[i].id;
-        console.log(image_id);
         elements.push('<div class="item"><img src="/space/'+space_id+'/image/'+image_id+'/thumb/600x400" class="img"></div>');
     }
     return new Handlebars.SafeString(elements.join('\n'));
@@ -44,68 +43,71 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
 });
 
-(function(w){
+(function(m) {
 
-	var sw = document.body.clientWidth,
-		breakpoint = 767,
-		speed = 600,
-		mobile = true;
 
     var deviceAgent = navigator.userAgent.toLowerCase();
-	var iphone = deviceAgent.match(/(iphone|ipod)/);
+
+    // detect ios versions
+	var iphone = deviceAgent.match(/(ipad|iphone)/);
+	var ios56 = navigator.userAgent.match(/OS [56](_\d)+ like Mac OS X/i);
+
+    // detect android versions
+    var android = deviceAgent.match(/(android)/);
+    var gingerbread = deviceAgent.match(/android 2\.3/i);
+    var gingerbreadOrNewer = deviceAgent.match(/android [2-9]/i);
+    var honeycombOrNewer = deviceAgent.match(/android [3-9]/i);
+    var froyoOrOlder = android && !gingerbread && !honeycombOrNewer;
 
 	$(document).ready(function() {
 
-    	// check if a map_canvas exists... populate it
-    	if ($("#map_canvas").length == 1) {
-          initialize();
+		mobileContent();
+
+
+		// initialize the carousel for mobile standalone space page
+        initializeCarousel();
+        resizeCarouselMapContainer();
+
+        // scroll to the top of page
+        $('#top_link').click(function(e){
+              // Prevent a page reload when a link is pressed
+              e.preventDefault();
+              // Call the scroll function
+              scrollTo('top');
+        });
+
+        // scroll to top of filter list
+        $('#filter_link').click(function(e){
+              // Prevent a page reload when a link is pressed
+              e.preventDefault();
+              // Call the scroll function
+              scrollTo('info_list');
+        });
+
+        // back to spaces button on mobile space details page
+        $('#back_home_button').click(function() {
+            location.href = '/';
+        });
+
+        // for iphones (ios5-6) - check if they have the ios detector cookie, if they don't give them one and show the popup
+        // otherwise, don't do anything since they've already seen the popup
+        if (iphone && ios56) {
+            if (!$.cookie('showSpaceScoutiOS')){
+                $.cookie('showSpaceScoutiOS', 'true');
+                showIosCallout();
+            }
         }
 
-		checkMobile();
-		setDisplay();
 
-		if (mobile) {
-
-    		// initialize the carousel for mobile standalone space page
-            initializeCarousel();
-            resizeCarouselMapContainer();
-
-            // scroll to the top of page
-            $('#top_link').click(function(e){
-                  // Prevent a page reload when a link is pressed
-                  e.preventDefault();
-                  // Call the scroll function
-                  scrollTo('top');
-            });
-
-            // scroll to top of filter list
-            $('#filter_link').click(function(e){
-                  // Prevent a page reload when a link is pressed
-                  e.preventDefault();
-                  // Call the scroll function
-                  scrollTo('info_list');
-            });
-
-            // for iphones - check if they have the ios detector cookie, if they don't give them one and show the popup
-            // otherwise, don't do anything since they've already seen the popup
-            if (iphone) {
-                if (!$.cookie('showSpaceScoutiOS')){
-                    console.log("no cookie... set cookie and show modal");
-                    $.cookie('showSpaceScoutiOS', 'true');
-                    showIosCallout();
-                }
-            }
-
-		}
 
 		// Toggle Filter display
 		$('#filter_button').click(function() {
-    		
-    		// calculate the filter height for mobile
-    		if (mobile) {
-    		  $("#filter_block").height($(window).height() - $('#nav').height() - 10);
-    		}
-    		
+
+    		// calculate the filter height for mobile browsers
+
+    		$("#filter_block").height($(window).height() - $('#nav').height() - 10);
+
+
     		if ($("#filter_block").is(":hidden")) {
 
                 $("#filter_block").slideDown('slow');
@@ -114,21 +116,24 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
                 $('#view_results_button').show();
                 $('#cancel_results_button').show();
 
-                if (mobile) {
+                // if mobile
+                $('#main_content').hide();
+                $('#footer').hide();
+                $('.back-top').hide();
 
-                    $('#main_content').hide();
-                    $('#footer').hide();
-                    $('.back-top').hide();
-                }
+                // handle scrolling for android gingerbread or newer
+        		if (gingerbreadOrNewer) {
+            		touchScroll("filter_block");
+        		}
+
 
             } else {
 
-                if (mobile) {
+                // if mobile
+                $('#main_content').show();
+                $('#footer').show();
+                $('.back-top').show();
 
-                    $('#main_content').show();
-                    $('#footer').show();
-                    $('.back-top').show();
-                }
 
                 $('#filter_button').show();
                 $('#view_results_button').hide();
@@ -141,17 +146,43 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
         // Close the filter display using Cancel button
         $('#cancel_results_button').click(function() {
 
-            if (mobile) {
-                $('#main_content').show();
-                $('#footer').show();
-                $('.back-top').show();
-            }
+            // reset the map
+            clear_custom_search();
+
+            // if mobile
+            $('#main_content').show();
+            $('#footer').show();
+            $('.back-top').show();
+
 
             $('#filter_button').show();
             $('#view_results_button').hide();
             $('#cancel_results_button').hide();
 
             $("#filter_block").slideUp('slow');
+
+            // reset checkboxes
+            $('input[type=checkbox]').each(function() {
+                if ($(this).attr('checked')) {
+                    $(this).attr('checked', false);
+                    $(this).parent().removeClass("selected");
+                }
+            });
+
+            // reset capacity
+            $('#capacity').val('1');
+
+            // reset hours
+            $('#open_now').prop('checked', true);
+            $('#open_now').parent().removeClass("selected");
+            $('#hours_list_container').hide();
+            $('#hours_list_input').parent().removeClass("selected");
+
+            // reset location
+            $('#entire_campus').prop('checked', true);
+            $('#entire_campus').parent().removeClass("selected");
+            $('#building_list_container').hide();
+            $('#building_list_input').parent().removeClass("selected");
 
         });
 
@@ -164,31 +195,11 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
             e.preventDefault();
 
-            // clear previously selected space
-            $('#info_items li').removeClass('selected');
+            $.ajax({
+                url: '/space/'+id+'/json/',
+                success: showSpaceDetails
+            });
 
-            //highlight the selected space
-            $(this).parent().addClass('selected');
-
-            // if a space details already exists
-            if ($('#space_detail_container').is(':visible')) {
-                $.ajax({
-                    url: '/space/'+id+'/json/',
-                    success: replaceSpaceDetails
-                });
-            }
-            else {
-                $.ajax({
-                    url: '/space/'+id+'/json/',
-                    success: showSpaceDetails
-                });
-            }
-
-        });
-
-        $('#space_detail_container .close').live('click', function(e){
-            e.preventDefault();
-            hideSpaceDetails();
         });
 
         // fancy location select
@@ -212,7 +223,6 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
             $(this).parent().siblings().removeClass("selected");
 
             if ($('#hours_list_input').is(':checked')) {
-                //scrollTo('filter_hours');
                 $('#hours_list_container').show();
             }
             else {
@@ -225,7 +235,6 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
             $(this).parent().siblings().removeClass("selected");
 
             if ($('#building_list_input').is(':checked')) {
-                //scrollTo('filter_location');
                 $('#building_list_container').show();
             }
             else {
@@ -251,117 +260,22 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 	});
 
 	// Update dimensions on resize
-	$(w).resize(function(){
+	$(m).resize(function(){
 
-	   console.log("resized");
-	   sw = document.body.clientWidth;
 
-	   checkMobile();
-	   setDisplay();
-
-	   // if the space details is already open
-	   if ($('#space_detail_container').is(":visible")) {
-    	   $('#space_detail_container').height($('#map_canvas').height());
-    	   $('.space-detail-body').height($('.space-detail').height() - 172);
-	   }
-
+	   mobileContent();
 
 	});
 
-	// Check if Mobile
-	function checkMobile() {
-		mobile = (sw > breakpoint) ? false : true;
-	}
-
-	// Set the proper display settings
-	function setDisplay() {
-    	if (mobile) {
-		  // mobile
-		  mobileContent();
-		} else {
-		  // desktop
-		  desktopContent();
-		}
-	}
 
 	// Show space details (sliding transition)
 	function showSpaceDetails(data) {
 
-    	if (mobile) {
         	// change url
         	location.href = '/space/' + data.id;
-    	}
-    	else {
-
-    	   // remove any open details
-    	   $('#space_detail_container').remove();
-
-        	// build the template
-    	   var source = $('#space_details').html();
-    	   var template = Handlebars.compile(source);
-    	   $('#map_canvas').append(template(data));
-
-    	   // set/reset initial state
-    	   $('.space-detail-inner').show();
-    	   $('#space_detail_container').show();
-
-    	   $('#space_detail_container').height($('#map_canvas').height());
-    	   $('.space-detail-body').height($('.space-detail').height() - 172);
-
-    	   $('.space-detail').show("slide", { direction: "right" }, 700);
-
-    	   initializeCarousel();
-    	   resizeCarouselMapContainer();
-
-    	   detailsLat = data.location.latitude;
-    	   detailsLon = data.location.longitude;
-
-    	}
 
 	}
 
-	// Replace space details (inline loading of already slid panel)
-	function replaceSpaceDetails(data) {
-
-    	if (mobile) {
-        	// change url
-        	location.href = '/space/' + data.id;
-    	}
-    	else {
-        	// build the template
-    	   var source = $('#space_details_replace').html();
-    	   var template = Handlebars.compile(source);
-    	   $('#space_detail_container').html(template(data));
-
-    	   // set/reset initial state
-    	   $('.space-detail-inner').hide();
-    	   //$(".space-detail .loading").show();
-
-    	   $('.space-detail-body').height($('.space-detail').height() - 172);
-
-    	   $('.space-detail').show();
-
-    	   // wait before showing the new space
-    	   $(".space-detail-inner").delay(700).show(0, function() {
-        	   initializeCarousel();
-        	   resizeCarouselMapContainer();
-           });
-
-           detailsLat = data.location.latitude;
-    	   detailsLon = data.location.longitude;
-    	}
-
-
-	}
-
-	function hideSpaceDetails() {
-        $('.space-detail').hide("slide", { direction: "right" }, 700, function() {
-        	   $('#space_detail_container').remove();
-        });
-
-        // deselect selected space in list
-        $('#info_items li').removeClass('selected');
-	}
 
 	// ScrollTo a spot on the UI
 	function scrollTo(id) {
@@ -369,20 +283,6 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
         $('html,body').animate({ scrollTop: $("#"+id).offset().top},'fast');
     }
 
-	// Desktop display defaults
-	function desktopContent() {
-
-    	var windowH = $(window).height();
-        var headerH = $('#nav').height();
-        var contentH = windowH - headerH;
-
-        $('#map_canvas').height(contentH - 100);
-        $('#info_list').height(contentH -80);
-
-        // make sure loading and list height fills the list container
-        $('#info_list .list-inner').css('min-height', contentH - 100);
-        //$('.loading').height(contentH);
-    }
 
     // Mobile display defaults
     function mobileContent() {
@@ -403,7 +303,6 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
     function initializeCarousel() {
 
-        console.log("carousel initialized");
 
         $('.carousel').each(function(){
             $(this).carousel({
@@ -433,9 +332,9 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
         $('.map-container').height(containerH);
     }
 
+    // callout for ios5-6 native app
     function showIosCallout() {
 
-        console.log("you are on an iphone");
 
         $('#ios_callout').show(0, function() {
             // Animation complete.
@@ -458,5 +357,26 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
             document.ontouchmove = function(event){ return true; }
         });
     }
+
+    // enable div overflow scrolling for android
+    function touchScroll(id) {
+
+		var el=document.getElementById(id);
+		var scrollStartPos=0;
+
+		document.getElementById(id).addEventListener("touchstart", function(event) {
+			scrollStartPos=this.scrollTop+event.touches[0].pageY;
+			event.preventDefault();
+		},false);
+
+		document.getElementById(id).addEventListener("touchmove", function(event) {
+			this.scrollTop=scrollStartPos-event.touches[0].pageY;
+			event.preventDefault();
+		},false);
+
+    }
+
+
+
 
 })(this);

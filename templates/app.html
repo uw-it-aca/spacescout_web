@@ -1,4 +1,4 @@
-{% extends 'base-responsive.html' %}
+{% extends is_mobile|yesno:"base-mobile.html,base-responsive.html" %}
 
 {% block extra_css %}
 {% endblock %}
@@ -9,8 +9,6 @@
     window.default_longitude = {{ center_longitude }};
     window.default_zoom = {{ zoom_level }};
 </script>
-<script type="text/javascript" src="{{ STATIC_URL }}js/search.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}js/space.js"></script>
 {% endblock %}
 
 {% block content %}
@@ -29,7 +27,7 @@
         <div id="filter_container">
         <form>
 
-            <div id="filter_block">
+            <div id="filter_block" style="display:none;">
                 <div class="inner clearfix">
 
                     <div class="inner-column">
@@ -150,7 +148,7 @@
                             </label>
                         </div>
                         <div id="hours_list_container" style="margin-top:8px; display:none; ">
-                            <div><span class="hours-from">from</span><select>
+                            <div><span class="hours-from">from</span><select id="day-from">
                               <option>No preference</option>
                               <option>Monday</option>
                               <option>Tuesday</option>
@@ -160,7 +158,7 @@
                               <option>Saturday</option>
                               <option>Sunday</option>
                             </select>
-                            <select>
+                            <select id="hour-from">
                               <option>No preference</option>
                               <option>12:00</option>
                               <option>12:30</option>
@@ -187,12 +185,12 @@
                               <option>11:00</option>
                               <option>11:30</option>
                             </select>
-                            <select class="ampm">
+                            <select class="ampm" id="ampm-from">
                                 <option>AM</option>
                                 <option>PM</option>
                             </select>
                             </div>
-                            <div><span class="hours-until">until</span><select>
+                            <div><span class="hours-until">until</span><select id="day-until">
                               <option>No preference</option>
                               <option>Monday</option>
                               <option>Tuesday</option>
@@ -202,7 +200,7 @@
                               <option>Saturday</option>
                               <option>Sunday</option>
                             </select>
-                            <select>
+                            <select id="hour-until">
                               <option>No preference</option>
                               <option>12:00</option>
                               <option>12:30</option>
@@ -229,7 +227,7 @@
                               <option>11:00</option>
                               <option>11:30</option>
                             </select>
-                            <select class="ampm">
+                            <select class="ampm" id="ampm-until">
                                 <option>AM</option>
                                 <option>PM</option>
                             </select>
@@ -345,9 +343,17 @@
         </form>
     </div>
 
+    {% load templatetag_handlebars %}
     <div id="main_content" class="clearfix">
+
         <div id="map_canvas"></div>
-        {% load templatetag_handlebars %}
+        {% tplhandlebars "map_controls" %}
+            <div class="map-control-container">
+                <img id="center_all" src="/static/img/center_all.png" name="image" />&nbsp;
+                <img id="center_me" src="/static/img/center_me.png" name="image" />
+            </div>
+        {% endtplhandlebars %}
+
         {% tplhandlebars "space_details" %}
             <div id="space_detail_container" class="">
                 <div class="space-detail">

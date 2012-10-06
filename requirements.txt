@@ -2,4 +2,5 @@ Django==1.4
 simplejson
 oauth2
 django-compressor
+django-mobility
 django-templatetag-handlebars
