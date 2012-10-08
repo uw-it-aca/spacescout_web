@@ -1,15 +1,16 @@
-<head><title>Contact Us</title></head>
+{% extends 'base-mobile.html' %}
 
+{% block content %}
 <form action="/contact/" method="post">{% csrf_token %}
     {{ form.non_field_errors }}
     {% for field in form %}
         {% if field.name == "email_confirmation" %}
             <div style="display: None;">
-                (LEAVE BLANK): {{ field }}
+                LEAVE BLANK {{ field }}
             </div>
         {% else %}
             <div class="fieldWrapper">
-                {{ field.label_tag }}: {{ field }}
+                {{ field.label_tag }}{{ field }}
                 {% for error in field.errors %}
                     <strong>{{ error|escape }}</strong>
                 {% endfor %}
@@ -18,3 +19,4 @@
     {% endfor %}
     <input type="submit" value="Send" />
 </form>
+{% endblock %}

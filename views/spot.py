@@ -34,7 +34,6 @@ def SpotView(request, spot_id, return_json=False):
 
     params = json.loads(content)
     request.session['spot_id'] = spot_id
-    request.session['path'] = request.path
 
     if return_json:
         return HttpResponse(content, mimetype='application/json')
