@@ -265,7 +265,8 @@ function load_map(latitude, longitude, zoom) {
         center: new google.maps.LatLng(latitude, longitude),
         zoom: zoom,
         mapTypeControl: false,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        streetViewControl: false,
     };
 
     if (window.spacescout_map == null) {
