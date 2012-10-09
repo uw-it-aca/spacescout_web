@@ -52,13 +52,14 @@ Handlebars.registerHelper('formatHours', function(hours) {
     //}
     var formatted = [];
     $.each(hours, function(day) {
-        dayMarker = day.charAt(0);
-        dayMarker = dayMarker.toUpperCase();
-        if (dayMarker == 'T' && day.charAt(1) == 'h' || dayMarker == 'S' && day.charAt(1) == 'u') {
-            dayMarker += day.charAt(1);
+        if (hours[day].length > 0) {
+            dayMarker = day.charAt(0);
+            dayMarker = dayMarker.toUpperCase();
+            if (dayMarker == 'T' && day.charAt(1) == 'h' || dayMarker == 'S' && day.charAt(1) == 'u') {
+                dayMarker += day.charAt(1);
+            }
+            formatted[dayMarker] = to12Hour(hours[day]);
         }
-        
-        formatted[dayMarker] = to12Hour(hours[day]);
     });
     formatted = sortDays(formatted);
     return new Handlebars.SafeString(formatted.join("<br/>"));
@@ -83,11 +84,14 @@ function to12Hour(day) {
     }
     return data[0] +" - " +data[1];
 }
+
 function sortDays(days) {
     var ordered = [];
     order = ["M", "T", "W", "Th", "F", "S", "Su"];
     $.each(order, function(day) {
-        ordered.push(order[day] +": " +days[order[day]] );
+        if (days[order[day]]) {
+            ordered.push(order[day] +": " +days[order[day]] );
+        }
     });
     return ordered;
 }
