@@ -266,7 +266,7 @@ function load_map(latitude, longitude, zoom) {
         zoom: zoom,
         mapTypeControl: false,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
-        streetViewControl: false,
+        streetViewControl: false
     };
 
     if (window.spacescout_map == null) {

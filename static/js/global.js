@@ -40,7 +40,7 @@ function getSpaceMap(lat, lon) {
     center: new google.maps.LatLng(lat , lon),
     mapTypeId: google.maps.MapTypeId.ROADMAP,
     mapTypeControl: false,
-    streetViewControl: false,
+    streetViewControl: false
   }
 
   var map = new google.maps.Map(document.getElementById("spaceMap"), mapOptions);
