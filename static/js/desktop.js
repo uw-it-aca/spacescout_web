@@ -210,6 +210,8 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
         if ($('#space_detail_container').is(":visible")) {
             $('#space_detail_container').height($('#map_canvas').height());
             $('.space-detail-body').height($('.space-detail').height() - 172);
+            
+            resizeCarouselMapContainer();
         }
 
 	});
