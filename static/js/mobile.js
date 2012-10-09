@@ -262,18 +262,16 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 	// Update dimensions on resize
 	$(m).resize(function(){
 
-
 	   mobileContent();
-
+	   resizeCarouselMapContainer();
+	   
 	});
 
 
 	// Show space details (sliding transition)
 	function showSpaceDetails(data) {
-
-        	// change url
-        	location.href = '/space/' + data.id;
-
+    	// change url
+    	location.href = '/space/' + data.id;
 	}
 
 
