@@ -1,4 +1,4 @@
-{% extends 'base-mobile.html' %}
+{% extends 'base-mobile-subpage.html' %}
 
 {% block extra_js %}
 <script>
@@ -9,26 +9,19 @@
 
 {% block content %}
 
-    <div id="nav" style="position:relative;">
-        <div class="clearfix">
-            <div class="logo">SPACESCOUT&trade;</div>
-            <div class="actions">
-                <button id="back_home_button" class="btn btn-inverse" type="button">Spaces</button>
-            </div>
-        </div>
+    <div style="margin:10px;background:gray;">
+        <h1>{{name}}</h1>
+        <div>{{type}}</div>
+        <button id="back_home_button" class="btn btn-inverse" type="button">Back</button>
     </div>
 
-    <div id="main_content">
+    <div style="margin:10px;">
 
         <div id="space_details_page">
 
             <div id="space_detail_container" class="">
                 <div class="space-detail">
                     <div class="space-detail-inner">
-                        <div class="space-detail-header">
-                            <div class="space-detail-type">{{type}}</div>
-                            <div class="space-detail-name">{{name}}</div>
-                        </div>
                         <div class="space-detail-body">
                             <div class="space-detail-body-inner">
                                 <div id="spaceCarouselContainer" class="image-container">

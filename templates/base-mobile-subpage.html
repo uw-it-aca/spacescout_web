@@ -27,33 +27,21 @@
         {% compress css %}
         <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}libs/bootstrap/css/bootstrap.min.css" charset="utf-8" />
         <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}libs/select2/select2.css" charset="utf-8" />
-
-        <link rel="stylesheet" type="text/less" href="{{ STATIC_URL }}css/mobile.less" media="screen" />
-        <link rel="stylesheet" type="text/less" href="{{ STATIC_URL }}css/desktop.less" media="screen" />
+        <link rel="stylesheet" type="text/less" href="{{ STATIC_URL }}css/mobile.less" media="screen, handheld" />
         {% endcompress %}
 
         {% block extra_css %}{% endblock %}
 
+        <!--<script type="text/javascript" src="{{ STATIC_URL }}libs/less.js"></script>-->
         <link rel="shortcut icon" href="{{ STATIC_URL }}img/ico/favicon.ico">
-        {% if less_not_compiled %}
-        <script type="text/javascript" src="{{ STATIC_URL }}libs/less.js"></script>
-        {% endif %}
-        <!-- Respond.js, for IE6-8 support of media queries -->
-        <!--[if lt IE 9]>
-            <script type="text/javascript" src="{{ STATIC_URL }}libs/respond/respond.min.js"></script>
-        <![endif]-->
 
     </head>
 
-      <body id="top">
+      <body id="top" style="background:yellow;">
 
-          <div id="container">
+
+          <div>
               {% block content %}{% endblock %}
-
-              <div id="footer" class="clearfix">
-                  <div class="pull-left copyright">Copyright &copy; 2012 &nbsp;&nbsp;&nbsp;<a href="http://www.washington.edu/online/privacy/" target="_blank">Privacy</a> | <a href="http://www.washington.edu/online/terms/" target="_blank">Terms</a><br/>Academic and Collaborative Applications, UW-IT</div>
-                  <div class="pull-left partners">Brought to you by UW-IT in partnership with Housing and Food Services, UW Libraries, UW Computing Directors, and partially funded by the Student Technology Fee</div>
-              </div>
           </div>
 
           <!-- jQuery -->
@@ -64,7 +52,7 @@
           <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=true"></script>
 
           {% compress js %}
-
+            <script type="text/javascript" src="{{ STATIC_URL }}libs/cookie.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap/js/bootstrap-transition.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap/js/bootstrap-button.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap/js/bootstrap-carousel.js"></script>
@@ -73,13 +61,12 @@
             <script type="text/javascript" src="{{ STATIC_URL }}libs/handlebars.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/lazyload.js"></script>
 
-            {% block extra_js %}{% endblock %}
 
             <script type="text/javascript" src="{{ STATIC_URL }}js/global.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}js/search.js"></script>
-            <script type="text/javascript" src="{{ STATIC_URL }}js/desktop.js"></script>
+            <script type="text/javascript" src="{{ STATIC_URL }}js/mobile.js"></script>
 
-
+            {% block extra_js %}{% endblock %}
           {% endcompress %}
 
     </body>
