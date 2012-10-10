@@ -581,10 +581,10 @@
 
                         {{#if data }}
                             {{#each data}}
-                            <li class="clearfix">
+                            <li class="clearfix view-details">
                                 <div class="space-detail-list-image pull-left"><img src="/static/img/transparent.gif" data-original='space/{{id}}/image/{{images.0.id}}/thumb/100x67' class='img lazy'></div>
 
-                                <div id="{{id}}" class="space-detail-list-item view-details pull-left">
+                                <div id="{{id}}" class="space-detail-list-item pull-left">
                                     <div class="space-detail-type">{{type}}</div>
                                     <div class="space-detail-name">{{name}}</div>
                                     <div class="space-detail-desc">{{extended_info.location_description}}</div>
@@ -602,9 +602,9 @@
                     <ul>
                         {{#if data }}
                             {{#each data}}
-                            <li class="clearfix">
+                            <li class="clearfix view-details">
                                 <div class="space-detail-list-image pull-left"><img src='space/{{id}}/image/{{images.0.id}}/thumb/100x67' class='img'></div>
-                                <div id="{{id}}" class="space-detail-list-item view-details pull-left">
+                                <div id="{{id}}" class="space-detail-list-item pull-left">
                                     <div class="space-detail-type">{{type}}</div>
                                     <div class="space-detail-name">{{name}}</div>
                                     <div class="space-detail-desc">{{extended_info.location_description}}</div>
@@ -619,9 +619,9 @@
 
                 {% tplhandlebars "spot_info" %}
                     <ul>
-                        <li class="clearfix">
+                        <li class="clearfix view-details">
                             <div class="space-detail-list-image pull-left"><img src='space/{{id}}/image/{{images.0.id}}/thumb/100x67' class='img'></div>
-                            <div id="{{id}}" class="space-detail-list-item view-details pull-left">
+                            <div id="{{id}}" class="space-detail-list-item pull-left">
                                 <div class="space-detail-type">{{type}}</div>
                                 <div class="space-detail-name">{{name}}</div>
                                 <div class="space-detail-desc">{{extended_info.location_description}}</div>

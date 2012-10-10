@@ -191,7 +191,7 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
         $('.view-details').live('click', function(e){
 
             // get the space id
-            id =  $(this).attr('id');
+            id =  $(this).find('.space-detail-list-item').attr('id');
 
             e.preventDefault();
 
@@ -264,7 +264,7 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
 	   mobileContent();
 	   resizeCarouselMapContainer();
-	   
+
 	});
 
 

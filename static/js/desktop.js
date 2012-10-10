@@ -112,7 +112,7 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
         $('.view-details').live('click', function(e){
 
             // get the space id
-            id =  $(this).attr('id');
+            id =  $(this).find('.space-detail-list-item').attr('id');
 
             e.preventDefault();
 
@@ -120,7 +120,7 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
             $('#info_items li').removeClass('selected');
 
             //highlight the selected space
-            $(this).parent().addClass('selected');
+            $(this).addClass('selected');
 
             // if a space details already exists
             if ($('#space_detail_container').is(':visible')) {
