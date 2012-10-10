@@ -32,8 +32,8 @@
 
                     <div class="inner-column">
                         <div class="inner-block-left">
-                            <h2>Spaces</h2>
-                            <p><small><em>Some explanation text will go here...</em></small></p>
+                            <h2>Type &amp; Capacity</h2>
+                            <p><small><em>Select preferred types of space, if any:</em></small></p>
 
                             <div id="filter_space_types" class="choice-group clearfix">
                                 <h3>Type of space: <!--<span><a href="#" id="view_space_descriptions" rel="popover">view descriptions</a></span>--></h3>
@@ -71,16 +71,16 @@
                                 </div>-->
                                 <div style="width:auto;float:left; margin-right: 15px;">
                                     <label class="checkbox">
-                                      <input type="checkbox" name="type" id="study_room" value="study_room"> Study Room
+                                      <input type="checkbox" name="type" id="study_room" value="study_room"> Study room
                                     </label>
                                     <label class="checkbox">
-                                      <input type="checkbox" name="type" id="study_area" value="study_area"> Study Area
+                                      <input type="checkbox" name="type" id="study_area" value="study_area"> Study area
                                     </label>
                                     <label class="checkbox">
-                                      <input type="checkbox" name="type" id="computer_lab" value="computer_lab"> Computer Lab
+                                      <input type="checkbox" name="type" id="computer_lab" value="computer_lab"> Computer lab
                                     </label>
                                     <label class="checkbox">
-                                      <input type="checkbox" name="type" id="studio" value="studio"> Production Studio
+                                      <input type="checkbox" name="type" id="studio" value="studio"> Production studio
                                     </label>
                                     <label class="checkbox">
                                       <input type="checkbox" name="type" id="classroom" value="classroom"> Conference/Classroom
@@ -106,7 +106,7 @@
                             <div id="filter_reservability"  class="choice-group">
                                 <h3>Reservability:</h3>
                                 <label class="checkbox inline">
-                                  <input type="checkbox" id="reservable" value="true"> Reservable Spaces Only
+                                  <input type="checkbox" id="reservable" value="true"> Show reservable spaces only
                                 </label>
                             </div>
                             <div class="choice-group">
@@ -133,7 +133,7 @@
 
                     <div class="inner-column">
                     <h2>Hours</h2>
-                    <p><small><em>Some explanation text will go here...</em></small></p>
+                    <p><small><em>Select open hours</em></small></p>
 
                     <div id="filter_hours" class="choice-group">
                         <div>
@@ -148,17 +148,17 @@
                         </div>
                         <div id="hours_list_container" style="margin-top:8px; display:none; ">
                             <div><span class="hours-from">from</span><select id="day-from">
-                              <option>No preference</option>
-                              <option>Monday</option>
-                              <option>Tuesday</option>
-                              <option>Wednesday</option>
-                              <option>Thursday</option>
-                              <option>Friday</option>
-                              <option>Saturday</option>
-                              <option>Sunday</option>
+                              <option value="nopref">No pref</option>
+                              <option value="Monday">MON</option>
+                              <option value="Tuesday">TUE</option>
+                              <option value="Wednesday">WED</option>
+                              <option value="Thursday">THU</option>
+                              <option value="Friday">FRI</option>
+                              <option value="Saturday">SAT</option>
+                              <option value="Sunday">SUN</option>
                             </select>
                             <select id="hour-from">
-                              <option>No preference</option>
+                              <option value="nopref">No pref</option>
                               <option>12:00</option>
                               <option>12:30</option>
                               <option>1:00</option>
@@ -185,22 +185,22 @@
                               <option>11:30</option>
                             </select>
                             <select class="ampm" id="ampm-from">
-                                <option>AM</option>
-                                <option>PM</option>
+                                <option value="AM">AM</option>
+                                <option value="PM">PM</option>
                             </select>
                             </div>
                             <div><span class="hours-until">until</span><select id="day-until">
-                              <option>No preference</option>
-                              <option>Monday</option>
-                              <option>Tuesday</option>
-                              <option>Wednesday</option>
-                              <option>Thursday</option>
-                              <option>Friday</option>
-                              <option>Saturday</option>
-                              <option>Sunday</option>
+                              <option value="nopref">No pref</option>
+                              <option value="Monday">MON</option>
+                              <option value="Tuesday">TUE</option>
+                              <option value="Wednesday">WED</option>
+                              <option value="Thursday">THU</option>
+                              <option value="Friday">FRI</option>
+                              <option value="Saturday">SAT</option>
+                              <option value="Sunday">SUN</option>
                             </select>
                             <select id="hour-until">
-                              <option>No preference</option>
+                              <option value="nopref">No pref</option>
                               <option>12:00</option>
                               <option>12:30</option>
                               <option>1:00</option>
@@ -227,15 +227,14 @@
                               <option>11:30</option>
                             </select>
                             <select class="ampm" id="ampm-until">
-                                <option>AM</option>
-                                <option>PM</option>
+                                <option value="AM">AM</option>
+                                <option value="PM">PM</option>
                             </select>
                             </div>
                         </div>
                     </div>
 
                     <h2>Location</h2>
-                    <p><small><em>Some explanation text will go here...</em></small></p>
 
                     <div id="filter_location" class="choice-group">
                         <div>
@@ -243,7 +242,7 @@
                               <input type="radio" name="optionsLocations" id="entire_campus" value="option1" checked> Entire campus
                             </label>
                             <label class="radio inline">
-                              <input type="radio" name="optionsLocations" id="building_list_input" value="option2"> Specific building
+                              <input type="radio" name="optionsLocations" id="building_list_input" value="option2"> Specific building(s)
                             </label>
                         </div>
                         <div id="building_list_container" style="margin-top:8px;display:none;">
@@ -261,7 +260,7 @@
                     </div>
 
                     <h2>Resources</h2>
-                    <p><small><em>Some explanation text will go here...</em></small></p>
+                    <p><small><em>Select resources needed</em></small></p>
 
                     <div id="filter_equipment_types" class="choice-group clearfix" style="margin-bottom:0px;">
                         <div style="width:auto;float:left; margin-right:15px;">
@@ -296,7 +295,7 @@
                     <div class="inner-column">
                         <div class="inner-block-right">
                             <h2>Environment</h2>
-                            <p><small><em>Some explanation text will go here...</em></small></p>
+                            <p><small><em>Select preferred conditions, if any:</em></small></p>
 
                             <div id="filter_noise_level" class="choice-group">
                                 <h3>Noise Level</h3>
@@ -305,7 +304,7 @@
                                   <input type="checkbox" id="silent" name="noise_level" value="silent"> Silent
                                 </label>
                                 <label class="checkbox inline">
-                                  <input type="checkbox" id="quiet" name="noise_level" value="quiet"> Low Hum
+                                  <input type="checkbox" id="quiet" name="noise_level" value="quiet"> Low hum
                                 </label>
                                 <label class="checkbox inline">
                                   <input type="checkbox" id="moderate" name="noise_level" value="moderate"> Chatter
@@ -390,11 +389,17 @@
 
                                 <div class="space-info">
                                      <ul>
-                                        <li class="clearfix"><div class="space-info-label pull-left">Current hours</div>
-                                            <div class="space-info-detail pull-left">
-                                                {{formatHours available_hours}}
-                                            </div>
-                                        </li>
+                                                    <li class="clearfix">
+                                                        <div class="space-info-label pull-left">Notes</div>
+                                                        <div class="space-info-detail pull-left">
+                                                            {{#if extended_info.access_notes }}<p>{{extended_info.access_notes }}</p>{{/if}}
+                                                            {{#if extended_info.hours_notes }}<p>{{extended_info.hours_notes }}</p>{{/if}}
+                                                            {{#if extended_info.reservation_notes }}<p>{{extended_info.reservation_notes }}</p>{{/if}}
+                                                        </div>
+                                                    </li>
+
+
+                                        <li class="clearfix"><div class="space-info-label pull-left">Hours</div><div class="space-info-detail pull-left">{{formatHours available_hours}}</div></li>
                                         <li class="clearfix"><div class="space-info-label pull-left">Location</div><div class="space-info-detail pull-left">{{extended_info.location_description}}</div></li>
                                         <li class="clearfix">
                                             <div class="space-info-label pull-left">Resources</div>
@@ -460,7 +465,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="space-detail-footer">This space was last updated {{last_modified}}...  <a href="/contact/"><button type="button" class="btn btn-small btn-danger">report a problem</button></a></div>
+                        <div class="space-detail-footer">This space was last updated {{last_modified}}{{#if organization }} by {{organization}} {{/if}}<a href="/contact/"><button type="button" class="btn btn-small btn-danger">report a problem</button></a></div>
                     </div>
                 </div>
             </div>
@@ -501,7 +506,17 @@
                                 </div>
                                 <div class="space-info">
                                      <ul>
-                                        <li class="clearfix"><div class="space-info-label pull-left">Current hours</div><div class="space-info-detail pull-left">{{formatHours available_hours}}</div></li>
+
+                                        <li class="clearfix">
+                                            <div class="space-info-label pull-left">Notes</div>
+                                            <div class="space-info-detail pull-left">
+                                                {{#if extended_info.access_notes }}<p>{{extended_info.access_notes }}</p>{{/if}}
+                                                {{#if extended_info.hours_notes }}<p>{{extended_info.hours_notes }}</p>{{/if}}
+                                                {{#if extended_info.reservation_notes }}<p>{{extended_info.reservation_notes }}</p>{{/if}}
+                                            </div>
+                                        </li>
+
+                                        <li class="clearfix"><div class="space-info-label pull-left">Hours</div><div class="space-info-detail pull-left">{{formatHours available_hours}}</div></li>
                                         <li class="clearfix"><div class="space-info-label pull-left">Location</div><div class="space-info-detail pull-left">{{extended_info.location_description}}</div></li>
                                         <li class="clearfix">
                                             <div class="space-info-label pull-left">Resources</div>
@@ -567,7 +582,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="space-detail-footer">This space was last updated {{last_modified}}...  <a href="/contact/"><button type="button" class="btn btn-small btn-danger">report a problem</button></a></div>
+                        <div class="space-detail-footer">This space was last updated {{last_modified}}{{#if organization }} by {{organization}} {{/if}}<a href="/contact/"><button type="button" class="btn btn-small btn-danger">report a problem</button></a></div>
                     </div>
                 </div>
         {% endtplhandlebars %}
@@ -583,40 +598,50 @@
 
                 {% tplhandlebars "all_markers" %}
                     <ul>
-                        {{#each data}}
-                        <li class="clearfix">
-                            <div class="space-detail-list-image pull-left"><img src="/static/img/transparent.gif" data-original='space/{{id}}/image/{{images.0.id}}/thumb/100x67' class='img lazy'></div>
 
-                            <div id="{{id}}" class="space-detail-list-item view-details pull-left">
-                                <div class="space-detail-type">{{type}}</div>
-                                <div class="space-detail-name">{{name}}</div>
-                                <div class="space-detail-desc">{{extended_info.location_description}}</div>
-                            </div>
-                        </li>
-                        {{/each}}
+                        {{#if data }}
+                            {{#each data}}
+                            <li class="clearfix view-details">
+                                <div class="space-detail-list-image pull-left"><img src="/static/img/transparent.gif" data-original='space/{{id}}/image/{{images.0.id}}/thumb/100x67' class='img lazy'></div>
+
+                                <div id="{{id}}" class="space-detail-list-item pull-left">
+                                    <div class="space-detail-type">{{type}}</div>
+                                    <div class="space-detail-name">{{name}}</div>
+                                    <div class="space-detail-desc">{{extended_info.location_description}}</div>
+                                </div>
+                            </li>
+                            {{/each}}
+                        {{else}}
+                            <li class="no-spaces">Sorry, no spaces match your filters!</li>
+                        {{/if}}
+
                     </ul>
                 {% endtplhandlebars %}
 
                 {% tplhandlebars "cluster_list" %}
                     <ul>
-                        {{#each data}}
-                        <li class="clearfix">
-                            <div class="space-detail-list-image pull-left"><img src='space/{{id}}/image/{{images.0.id}}/thumb/100x67' class='img'></div>
-                            <div id="{{id}}" class="space-detail-list-item view-details pull-left">
-                                <div class="space-detail-type">{{type}}</div>
-                                <div class="space-detail-name">{{name}}</div>
-                                <div class="space-detail-desc">{{extended_info.location_description}}</div>
-                            </div>
-                        </li>
-                        {{/each}}
+                        {{#if data }}
+                            {{#each data}}
+                            <li class="clearfix view-details">
+                                <div class="space-detail-list-image pull-left"><img src='space/{{id}}/image/{{images.0.id}}/thumb/100x67' class='img'></div>
+                                <div id="{{id}}" class="space-detail-list-item pull-left">
+                                    <div class="space-detail-type">{{type}}</div>
+                                    <div class="space-detail-name">{{name}}</div>
+                                    <div class="space-detail-desc">{{extended_info.location_description}}</div>
+                                </div>
+                            </li>
+                            {{/each}}
+                        {{else}}
+                            <li class="no-spaces">Sorry, no spaces match your filters!</li>
+                        {{/if}}
                     </ul>
                 {% endtplhandlebars %}
 
                 {% tplhandlebars "spot_info" %}
                     <ul>
-                        <li class="clearfix">
+                        <li class="clearfix view-details">
                             <div class="space-detail-list-image pull-left"><img src='space/{{id}}/image/{{images.0.id}}/thumb/100x67' class='img'></div>
-                            <div id="{{id}}" class="space-detail-list-item view-details pull-left">
+                            <div id="{{id}}" class="space-detail-list-item pull-left">
                                 <div class="space-detail-type">{{type}}</div>
                                 <div class="space-detail-name">{{name}}</div>
                                 <div class="space-detail-desc">{{extended_info.location_description}}</div>

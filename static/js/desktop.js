@@ -172,7 +172,7 @@ function sortDays(days) {
         $('.view-details').live('click', function(e){
 
             // get the space id
-            id =  $(this).attr('id');
+            id =  $(this).find('.space-detail-list-item').attr('id');
 
             e.preventDefault();
 
@@ -180,7 +180,7 @@ function sortDays(days) {
             $('#info_items li').removeClass('selected');
 
             //highlight the selected space
-            $(this).parent().addClass('selected');
+            $(this).addClass('selected');
 
             // if a space details already exists
             if ($('#space_detail_container').is(':visible')) {
@@ -205,7 +205,7 @@ function sortDays(days) {
 
         // fancy location select
         $("#e9").select2({
-                placeholder: "Select a building",
+                placeholder: "Select building(s)",
                 allowClear: true
             });
 
@@ -270,12 +270,20 @@ function sortDays(days) {
         if ($('#space_detail_container').is(":visible")) {
             $('#space_detail_container').height($('#map_canvas').height());
             $('.space-detail-body').height($('.space-detail').height() - 172);
+
+            resizeCarouselMapContainer();
         }
 
 	});
 
 	// Show space details (sliding transition)
 	function showSpaceDetails(data) {
+           // format last modified date
+           var last_mod= new Date(data["last_modified"]);
+           var month = last_mod.getMonth();
+           var day = last_mod.getDate();
+           var year = last_mod.getFullYear();
+           data["last_modified"] = month + "/" + day + "/" + year;
 
     	   // remove any open details
     	   $('#space_detail_container').remove();
@@ -292,7 +300,7 @@ function sortDays(days) {
     	   $('#space_detail_container').height($('#map_canvas').height());
     	   $('.space-detail-body').height($('.space-detail').height() - 172);
 
-    	   $('.space-detail').show("slide", { direction: "right" }, 700);
+    	   $('.space-detail').show("slide", { direction: "right" }, 400);
 
     	   initializeCarousel();
     	   resizeCarouselMapContainer();
@@ -304,6 +312,12 @@ function sortDays(days) {
 
 	// Replace space details (inline loading of already slid panel)
 	function replaceSpaceDetails(data) {
+           // format last modified date
+           var last_mod= new Date(data["last_modified"]);
+           var month = last_mod.getMonth();
+           var day = last_mod.getDate();
+           var year = last_mod.getFullYear();
+           data["last_modified"] = month + "/" + day + "/" + year;
 
         	// build the template
     	   var source = $('#space_details_replace').html();
@@ -319,10 +333,16 @@ function sortDays(days) {
     	   $('.space-detail').show();
 
     	   // wait before showing the new space
-    	   $(".space-detail-inner").delay(700).show(0, function() {
-        	   initializeCarousel();
-        	   resizeCarouselMapContainer();
-           });
+    	   //$(".space-detail-inner").delay(300).show(0, function() {
+           //   initializeCarousel();
+           //   resizeCarouselMapContainer();
+           //});
+
+           // fade the new space in
+           $('.space-detail-inner').fadeIn('400', function() {
+                resizeCarouselMapContainer();
+                initializeCarousel();
+            });
 
            detailsLat = data.location.latitude;
     	   detailsLon = data.location.longitude;
@@ -330,7 +350,7 @@ function sortDays(days) {
 	}
 
 	function hideSpaceDetails() {
-        $('.space-detail').hide("slide", { direction: "right" }, 700, function() {
+        $('.space-detail').hide("slide", { direction: "right" }, 400, function() {
             $('#space_detail_container').remove();
         });
 

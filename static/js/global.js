@@ -9,11 +9,11 @@
 
     	// handle clicking on map centering buttons
         $('#center_all').live('click', function(e){
-            alert("this is a global center all");
+            window.spacescout_map.setCenter(new google.maps.LatLng(window.default_latitude, window.default_longitude));
         });
 
         $('#center_me').live('click', function(e){
-            alert("this is a global center me");
+            window.spacescout_map.setCenter(new google.maps.LatLng(window.youarehere.latitude, window.youarehere.longitude));
         });
 
 	});
