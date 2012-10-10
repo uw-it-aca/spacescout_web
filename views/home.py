@@ -51,12 +51,19 @@ def HomeView(request):
 
         buildingdict[building[0]].append(building)
 
+    # See if django-compressor is being used to precompile less
+    if settings.COMPRESS_ENABLED:
+        less_not_compiled = False
+    else:
+        less_not_compiled = True
+
     return render_to_response('app.html', {
         'center_latitude': center_latitude,
         'center_longitude': center_longitude,
         'zoom_level': zoom_level,
         'buildingdict': buildingdict,
         'is_mobile': request.MOBILE,
+        'less_not_compiled': less_not_compiled,
     }, context_instance=RequestContext(request))
 
 
