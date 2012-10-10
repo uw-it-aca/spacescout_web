@@ -20,10 +20,13 @@
             }
 
             #filter_hours {
+                .hours-from, .hours-until { display: block; width: 35px; }
                 select { width: 33%; }
             }
 
             .filter-submit { text-align: right; }
+
+
 
         }
 
@@ -51,7 +54,7 @@
         z-index: 3;
         display: none;
 
-        .space-detail { display: none; background: #fff url('/static/img/spinner.gif') no-repeat 50% 50%; background-size: 20px; position: absolute;  color: #333; /*width: 470px; top: 5px; bottom: 5px; right: 5px;*/ top: 10px; bottom: 10px; left: 10px; right: 0px; margin-right: 10px;
+        .space-detail { display: none; background: #fff; background-size: 20px; position: absolute;  color: #333; /*width: 470px; top: 5px; bottom: 5px; right: 5px;*/ top: 10px; bottom: 10px; left: 10px; right: 0px; margin-right: 10px;
 
             /*-webkit-border-radius: 2px;
             -moz-border-radius: 2px;
@@ -68,7 +71,7 @@
                     .space-detail-name { font-size: 20px; color: #000; margin: 5px 0; }
                     .close { position: absolute; right: 0; top: 0; float: none; }
                 }
-                .space-detail-body { overflow-y: auto; border-top: solid 1px #eee; border-bottom: solid 1px #eee; padding: 10px 0;
+                .space-detail-body { overflow-y: auto; -webkit-overflow-scrolling: touch; border-top: solid 1px #eee; border-bottom: solid 1px #eee; padding: 10px 0;
                     .space-detail-body-inner {
 
                         .image-container, .map-container { width: 80%; margin: 0 auto; }
@@ -103,6 +106,7 @@
     width: 38%;
     float: right;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     border: none;
     border-left: solid 1px #d6d6d6;
     margin-top: -10px;
@@ -133,6 +137,17 @@
 @media screen and (min-width: 1024px) {
 
     #container { min-width:1004px; max-width:1004px; margin: 0 auto; }
+
+    #nav {
+        #filter_container {
+            #filter_block {
+                #filter_hours {
+                    .hours-from, .hours-until { display: inline-block; }
+                    select { width: 31%; }
+                }
+            }
+        }
+    }
 
     #info_list {
         #info_items {
