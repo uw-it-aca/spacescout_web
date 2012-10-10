@@ -2,13 +2,13 @@
 
 {% block extra_js %}
 <script>
+    var available_hours = {available_hours: {{available_hours|safe}}};
     window.space_latitude = {{ location.latitude }};
     window.space_longitude = {{ location.longitude }};
 </script>
 {% endblock %}
 
 {% block content %}
-
     <div style="margin:10px;background:gray;">
         <h1>{{name}}</h1>
         <div>{{type}}</div>
@@ -59,8 +59,12 @@
                                             </div>
                                         </li>
                                         {% endif %}
-
-                                        <li class="clearfix"><div class="space-info-label pull-left">Hours</div><div class="space-info-detail pull-left">{{formatHours available_hours}}</div></li>
+                                        {% load templatetag_handlebars %}
+                                        <li id="mobile_hours_template" class="clearfix">
+                                        {% tplhandlebars "mobile_hours" %}
+                                        <div class="space-info-label pull-left">Hours</div><div class="space-info-detail pull-left">{{formatHours available_hours}}</div>
+                                        {% endtplhandlebars %}
+                                        </li>
                                         <li class="clearfix"><div class="space-info-label pull-left">Location</div><div class="space-info-detail pull-left">{{extended_info.location_description}}</div></li>
                                         <li class="clearfix">
                                             <div class="space-info-label pull-left">Resources</div>

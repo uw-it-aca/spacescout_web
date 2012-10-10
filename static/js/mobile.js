@@ -61,6 +61,11 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
 	$(document).ready(function() {
 
+
+       var source = $('#mobile_hours').html();
+       var template = Handlebars.compile(source);
+       $('#mobile_hours_template').append(template(available_hours));
+
 		mobileContent();
 
 
