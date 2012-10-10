@@ -71,16 +71,16 @@
                                 </div>-->
                                 <div style="width:auto;float:left; margin-right: 15px;">
                                     <label class="checkbox">
-                                      <input type="checkbox" name="type" id="study_room" value="study_room"> Study Room
+                                      <input type="checkbox" name="type" id="study_room" value="study_room"> Study room
                                     </label>
                                     <label class="checkbox">
-                                      <input type="checkbox" name="type" id="study_area" value="study_area"> Study Area
+                                      <input type="checkbox" name="type" id="study_area" value="study_area"> Study area
                                     </label>
                                     <label class="checkbox">
-                                      <input type="checkbox" name="type" id="computer_lab" value="computer_lab"> Computer Lab
+                                      <input type="checkbox" name="type" id="computer_lab" value="computer_lab"> Computer lab
                                     </label>
                                     <label class="checkbox">
-                                      <input type="checkbox" name="type" id="studio" value="studio"> Production Studio
+                                      <input type="checkbox" name="type" id="studio" value="studio"> Production studio
                                     </label>
                                     <label class="checkbox">
                                       <input type="checkbox" name="type" id="classroom" value="classroom"> Conference/Classroom
@@ -304,7 +304,7 @@
                                   <input type="checkbox" id="silent" name="noise_level" value="silent"> Silent
                                 </label>
                                 <label class="checkbox inline">
-                                  <input type="checkbox" id="quiet" name="noise_level" value="quiet"> Low Hum
+                                  <input type="checkbox" id="quiet" name="noise_level" value="quiet"> Low hum
                                 </label>
                                 <label class="checkbox inline">
                                   <input type="checkbox" id="moderate" name="noise_level" value="moderate"> Chatter
@@ -389,7 +389,19 @@
 
                                 <div class="space-info">
                                      <ul>
-                                        <li class="clearfix"><div class="space-info-label pull-left">Current hours</div><div class="space-info-detail pull-left">{{available_hours}}</div></li>
+
+
+                                                    <li class="clearfix">
+                                                        <div class="space-info-label pull-left">Notes</div>
+                                                        <div class="space-info-detail pull-left">
+                                                            {{#if extended_info.access_notes }}<p>{{extended_info.access_notes }}</p>{{/if}}
+                                                            {{#if extended_info.hours_notes }}<p>{{extended_info.hours_notes }}</p>{{/if}}
+                                                            {{#if extended_info.reservation_notes }}<p>{{extended_info.reservation_notes }}</p>{{/if}}
+                                                        </div>
+                                                    </li>
+
+
+                                        <li class="clearfix"><div class="space-info-label pull-left">Hours</div><div class="space-info-detail pull-left">{{available_hours}}</div></li>
                                         <li class="clearfix"><div class="space-info-label pull-left">Location</div><div class="space-info-detail pull-left">{{extended_info.location_description}}</div></li>
                                         <li class="clearfix">
                                             <div class="space-info-label pull-left">Resources</div>
@@ -455,7 +467,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="space-detail-footer">This space was last updated {{last_modified}}...  <a href="/contact/"><button type="button" class="btn btn-small btn-danger">report a problem</button></a></div>
+                        <div class="space-detail-footer">This space was last updated {{last_modified}}{{#if organization }} by {{organization}} {{/if}}<a href="/contact/"><button type="button" class="btn btn-small btn-danger">report a problem</button></a></div>
                     </div>
                 </div>
             </div>
@@ -496,7 +508,17 @@
                                 </div>
                                 <div class="space-info">
                                      <ul>
-                                        <li class="clearfix"><div class="space-info-label pull-left">Current hours</div><div class="space-info-detail pull-left">{{available_hours}}</div></li>
+
+                                        <li class="clearfix">
+                                            <div class="space-info-label pull-left">Notes</div>
+                                            <div class="space-info-detail pull-left">
+                                                {{#if extended_info.access_notes }}<p>{{extended_info.access_notes }}</p>{{/if}}
+                                                {{#if extended_info.hours_notes }}<p>{{extended_info.hours_notes }}</p>{{/if}}
+                                                {{#if extended_info.reservation_notes }}<p>{{extended_info.reservation_notes }}</p>{{/if}}
+                                            </div>
+                                        </li>
+
+                                        <li class="clearfix"><div class="space-info-label pull-left">Hours</div><div class="space-info-detail pull-left">{{available_hours}}</div></li>
                                         <li class="clearfix"><div class="space-info-label pull-left">Location</div><div class="space-info-detail pull-left">{{extended_info.location_description}}</div></li>
                                         <li class="clearfix">
                                             <div class="space-info-label pull-left">Resources</div>
@@ -562,7 +584,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="space-detail-footer">This space was last updated {{last_modified}}...  <a href="/contact/"><button type="button" class="btn btn-small btn-danger">report a problem</button></a></div>
+                        <div class="space-detail-footer">This space was last updated {{last_modified}}{{#if organization }} by {{organization}} {{/if}}<a href="/contact/"><button type="button" class="btn btn-small btn-danger">report a problem</button></a></div>
                     </div>
                 </div>
         {% endtplhandlebars %}

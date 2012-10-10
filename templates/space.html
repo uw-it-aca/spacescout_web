@@ -55,7 +55,19 @@
 
                                 <div class="space-info">
                                     <ul>
-                                        <li class="clearfix"><div class="space-info-label pull-left">Current hours</div><div class="space-info-detail pull-left">{{available_hours}}</div></li>
+
+                                        {% if extended_info.access_notes or extended_info.hours_notes or extended_info.reservation_notes %}
+                                        <li class="clearfix">
+                                            <div class="space-info-label pull-left">Notes</div>
+                                            <div class="space-info-detail pull-left">
+                                                {% if extended_info.access_notes %}<p>{{extended_info.access_notes }}</p>{% endif %}
+                                                {% if extended_info.hours_notes %}<p>{{extended_info.hours_notes }}</p>{% endif %}
+                                                {% if extended_info.reservation_notes %}<p>{{extended_info.reservation_notes }}</p>{% endif %}
+                                            </div>
+                                        </li>
+                                        {% endif %}
+
+                                        <li class="clearfix"><div class="space-info-label pull-left">Hours</div><div class="space-info-detail pull-left">{{available_hours}}</div></li>
                                         <li class="clearfix"><div class="space-info-label pull-left">Location</div><div class="space-info-detail pull-left">{{extended_info.location_description}}</div></li>
                                         <li class="clearfix">
                                             <div class="space-info-label pull-left">Resources</div>
@@ -109,7 +121,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="space-detail-footer">This space was last updated {{last_modified}}...  <a href="/contact/"><button type="button" class="btn btn-small btn-danger">report a problem</button></a></div>
+                        <div class="space-detail-footer">This space was last updated {{last_modified}}{% if organization %} by {{ organization }}{% endif %}  <a href="/contact/"><button type="button" class="btn btn-small btn-danger">report a problem</button></a></div>
                     </div>
                 </div>
             </div>
