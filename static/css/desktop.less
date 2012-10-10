@@ -68,7 +68,7 @@
                     .space-detail-name { font-size: 20px; color: #000; margin: 5px 0; }
                     .close { position: absolute; right: 0; top: 0; float: none; }
                 }
-                .space-detail-body { overflow-y: auto; border-top: solid 1px #eee; border-bottom: solid 1px #eee; padding: 10px 0;
+                .space-detail-body { overflow-y: auto; -webkit-overflow-scrolling: touch; border-top: solid 1px #eee; border-bottom: solid 1px #eee; padding: 10px 0;
                     .space-detail-body-inner {
 
                         .image-container, .map-container { width: 80%; margin: 0 auto; }
@@ -103,6 +103,7 @@
     width: 38%;
     float: right;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     border: none;
     border-left: solid 1px #d6d6d6;
     margin-top: -10px;
