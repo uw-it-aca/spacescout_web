@@ -1,4 +1,4 @@
-{% extends 'base-mobile.html' %}
+{% extends is_mobile|yesno:"base-mobile.html,base-desktop.html" %}
 
 {% block content %}
 <form action="/contact/" method="post">{% csrf_token %}
