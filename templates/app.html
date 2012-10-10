@@ -578,32 +578,42 @@
 
                 {% tplhandlebars "all_markers" %}
                     <ul>
-                        {{#each data}}
-                        <li class="clearfix">
-                            <div class="space-detail-list-image pull-left"><img src="/static/img/transparent.gif" data-original='space/{{id}}/image/{{images.0.id}}/thumb/100x67' class='img lazy'></div>
 
-                            <div id="{{id}}" class="space-detail-list-item view-details pull-left">
-                                <div class="space-detail-type">{{type}}</div>
-                                <div class="space-detail-name">{{name}}</div>
-                                <div class="space-detail-desc">{{extended_info.location_description}}</div>
-                            </div>
-                        </li>
-                        {{/each}}
+                        {{#if data }}
+                            {{#each data}}
+                            <li class="clearfix">
+                                <div class="space-detail-list-image pull-left"><img src="/static/img/transparent.gif" data-original='space/{{id}}/image/{{images.0.id}}/thumb/100x67' class='img lazy'></div>
+
+                                <div id="{{id}}" class="space-detail-list-item view-details pull-left">
+                                    <div class="space-detail-type">{{type}}</div>
+                                    <div class="space-detail-name">{{name}}</div>
+                                    <div class="space-detail-desc">{{extended_info.location_description}}</div>
+                                </div>
+                            </li>
+                            {{/each}}
+                        {{else}}
+                            <li class="no-spaces">Sorry, no spaces match your filters!</li>
+                        {{/if}}
+
                     </ul>
                 {% endtplhandlebars %}
 
                 {% tplhandlebars "cluster_list" %}
                     <ul>
-                        {{#each data}}
-                        <li class="clearfix">
-                            <div class="space-detail-list-image pull-left"><img src='space/{{id}}/image/{{images.0.id}}/thumb/100x67' class='img'></div>
-                            <div id="{{id}}" class="space-detail-list-item view-details pull-left">
-                                <div class="space-detail-type">{{type}}</div>
-                                <div class="space-detail-name">{{name}}</div>
-                                <div class="space-detail-desc">{{extended_info.location_description}}</div>
-                            </div>
-                        </li>
-                        {{/each}}
+                        {{#if data }}
+                            {{#each data}}
+                            <li class="clearfix">
+                                <div class="space-detail-list-image pull-left"><img src='space/{{id}}/image/{{images.0.id}}/thumb/100x67' class='img'></div>
+                                <div id="{{id}}" class="space-detail-list-item view-details pull-left">
+                                    <div class="space-detail-type">{{type}}</div>
+                                    <div class="space-detail-name">{{name}}</div>
+                                    <div class="space-detail-desc">{{extended_info.location_description}}</div>
+                                </div>
+                            </li>
+                            {{/each}}
+                        {{else}}
+                            <li class="no-spaces">Sorry, no spaces match your filters!</li>
+                        {{/if}}
                     </ul>
                 {% endtplhandlebars %}
 
