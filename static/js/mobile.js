@@ -121,8 +121,8 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
                 $('#footer').hide();
                 $('.back-top').hide();
 
-                // handle scrolling for android gingerbread or newer
-        		if (gingerbreadOrNewer) {
+                // handle scrolling for android froyo or newer
+        		if (android || gingerbreadOrNewer) {
             		touchScroll("filter_block");
         		}
 
@@ -191,7 +191,7 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
         $('.view-details').live('click', function(e){
 
             // get the space id
-            id =  $(this).attr('id');
+            id =  $(this).find('.space-detail-list-item').attr('id');
 
             e.preventDefault();
 
@@ -264,7 +264,7 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
 	   mobileContent();
 	   resizeCarouselMapContainer();
-	   
+
 	});
 
 
@@ -364,12 +364,10 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
 		document.getElementById(id).addEventListener("touchstart", function(event) {
 			scrollStartPos=this.scrollTop+event.touches[0].pageY;
-			event.preventDefault();
 		},false);
 
 		document.getElementById(id).addEventListener("touchmove", function(event) {
 			this.scrollTop=scrollStartPos-event.touches[0].pageY;
-			event.preventDefault();
 		},false);
 
     }
