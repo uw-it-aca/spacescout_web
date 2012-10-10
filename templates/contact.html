@@ -1,6 +1,16 @@
 {% extends is_mobile|yesno:"base-mobile.html,base-desktop.html" %}
 
 {% block content %}
+<div id="nav" style="position:relative;">
+    <div class="clearfix">
+        <div class="logo">SPACESCOUT&trade;</div>
+        <div class="actions">
+            <button id="back_home_button" class="btn btn-inverse" type="button">Spaces</button>
+        </div>
+    </div>
+</div>
+<div id="main_content">
+
 <form action="/contact/" method="post">{% csrf_token %}
     {{ form.non_field_errors }}
     {% for field in form %}
@@ -19,4 +29,7 @@
     {% endfor %}
     <input type="submit" value="Send" />
 </form>
+
+</div>
+
 {% endblock %}
