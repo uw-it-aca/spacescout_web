@@ -3,6 +3,7 @@ from django.template import RequestContext
 from django.conf import settings
 import oauth2
 import simplejson as json
+import re
 
 from django.http import HttpResponse
 
@@ -33,6 +34,8 @@ def SpotView(request, spot_id, return_json=False):
         return response
 
     params = json.loads(content)
+    params["last_modified"] = re.sub('-', '/', params["last_modified"][:10])
+
     request.session['spot_id'] = spot_id
 
     if return_json:
