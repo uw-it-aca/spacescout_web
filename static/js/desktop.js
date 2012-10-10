@@ -234,7 +234,7 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
     	   $('#space_detail_container').height($('#map_canvas').height());
     	   $('.space-detail-body').height($('.space-detail').height() - 172);
 
-    	   $('.space-detail').show("slide", { direction: "right" }, 700);
+    	   $('.space-detail').show("slide", { direction: "right" }, 400);
 
     	   initializeCarousel();
     	   resizeCarouselMapContainer();
@@ -278,7 +278,7 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 	}
 
 	function hideSpaceDetails() {
-        $('.space-detail').hide("slide", { direction: "right" }, 700, function() {
+        $('.space-detail').hide("slide", { direction: "right" }, 400, function() {
             $('#space_detail_container').remove();
         });
 
