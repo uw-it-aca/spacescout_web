@@ -9,17 +9,19 @@
 
 {% block content %}
 
-    <div style="margin:10px;background:gray;">
-        <h1>{{name}}</h1>
-        <div>{{type}}</div>
-        <button id="back_home_button" class="btn btn-inverse" type="button">Back</button>
+    <div id="space_details_header">
+
+        <div class="clearfix">
+            <div class="space-detail-name pull-left" style="">{{name}}</div>
+             <img id="back_home_button" class="pull-right" src="/static/img/details_arrow.png" />
+        </div>
+       <div class="space-detail-type">{{type}}</div>
     </div>
 
-    <div style="margin:10px;">
 
         <div id="space_details_page">
 
-            <div id="space_detail_container" class="">
+            <div id="space_detail_container">
                 <div class="space-detail">
                     <div class="space-detail-inner">
                         <div class="space-detail-body">
@@ -39,87 +41,90 @@
                                     </div>
                                 </div>
                                 <div id="spaceMap" class="map-container" style="display:none;"></div>
-
-                                <div class="space-image-map-buttons btn-group" data-toggle="buttons-radio">
-                                  <button id="carouselControl" class="btn active">images</button>
-                                  <button id="mapControl" class="btn">map</button>
-                                </div>
-
-
-                                <div class="space-info">
-                                    <ul>
-
-                                        {% if extended_info.access_notes or extended_info.hours_notes or extended_info.reservation_notes %}
-                                        <li class="clearfix">
-                                            <div class="space-info-label pull-left">Notes</div>
-                                            <div class="space-info-detail pull-left">
-                                                {% if extended_info.access_notes %}<p>{{extended_info.access_notes }}</p>{% endif %}
-                                                {% if extended_info.hours_notes %}<p>{{extended_info.hours_notes }}</p>{% endif %}
-                                                {% if extended_info.reservation_notes %}<p>{{extended_info.reservation_notes }}</p>{% endif %}
-                                            </div>
-                                        </li>
-                                        {% endif %}
-
-                                        <li class="clearfix"><div class="space-info-label pull-left">Hours</div><div class="space-info-detail pull-left">{{available_hours}}</div></li>
-                                        <li class="clearfix"><div class="space-info-label pull-left">Location</div><div class="space-info-detail pull-left">{{extended_info.location_description}}</div></li>
-                                        <li class="clearfix">
-                                            <div class="space-info-label pull-left">Resources</div>
-                                            <div class="space-info-detail pull-left">
-                                                {% if extended_info.has_computers %}Computers&nbsp;{% endif %}
-                                                {% if extended_info.has_displays %}Displays&nbsp;{% endif %}
-                                                {% if extended_info.has_outlets %}Outlets&nbsp;{% endif %}
-                                                {% if extended_info.has_printing %}Printing&nbsp;{% endif %}
-                                                {% if extended_info.has_projector %}Projector&nbsp;{% endif %}
-                                                {% if extended_info.has_scanner %}Scanner&nbsp;{% endif %}
-                                                {% if extended_info.has_whiteboards %}Whiteboards&nbsp;{% endif %}
-                                            </div>
-                                        </li>
-                                        {% if extended_info.noise_level %}
-                                        <li class="clearfix">
-                                            <div class="space-info-label pull-left">Noise Level</div>
-                                            <div class="space-info-detail pull-left">
-                                                {% if extended_info.noise_level == "quite" %}
-                                                    Low hum
-                                                {% elif extended_info.noise_level == "moderate"%}
-                                                    Chatter
-                                                    {% elif extended_info.noise_level == "silent"%}
-                                                    Silent
-                                                {% else %}
-                                                    Variable
-                                                {% endif %}
-                                            </div>
-                                        </li>
-                                        {% endif %}
-
-                                        {% if extended_info.has_natural_light %}
-                                        <li class="clearfix"><div class="space-info-label pull-left">Lighting</div><div class="space-info-detail pull-left">Natural light</div></li>
-                                        {% endif %}
-
-
-                                        {% if extended_info.food_nearby %}
-                                        <li class="clearfix">
-                                            <div class="space-info-label pull-left">Coffee/Food</div>
-                                            <div class="space-info-detail pull-left">
-                                                {% if extended_info.food_nearby == "building" %}
-                                                    In building
-                                                {% elif extended_info.food_nearby == "space"%}
-                                                    In space
-                                                {% else %}
-                                                    In neighboring building
-                                                {% endif %}
-                                            </div>
-                                        </li>
-                                        {% endif %}
-                                    </ul>
-                                </div>
                             </div>
                         </div>
-                        <div class="space-detail-footer">This space was last updated {{last_modified}}{% if organization %} by {{ organization }}{% endif %}  <a href="/contact/"><button type="button" class="btn btn-small btn-danger">report a problem</button></a></div>
+
+                        <div class="space-image-map-buttons btn-group" data-toggle="buttons-radio">
+                          <button id="carouselControl" class="btn active"><img src="/static/img/pins/me_pin.png" /></button>
+                          <button id="mapControl" class="btn"><img src="/static/img/pins/me_pin.png" /></button>
+                        </div>
+                        <div style="margin-top:-20px;color:purple;">Space Details</div>
+
+                        <div class="space-info">
+                            <ul>
+
+                                {% if extended_info.access_notes or extended_info.hours_notes or extended_info.reservation_notes %}
+                                <li class="clearfix">
+                                    <div class="space-info-label pull-left">Notes</div>
+                                    <div class="space-info-detail pull-left">
+                                        {% if extended_info.access_notes %}<p>{{extended_info.access_notes }}</p>{% endif %}
+                                        {% if extended_info.hours_notes %}<p>{{extended_info.hours_notes }}</p>{% endif %}
+                                        {% if extended_info.reservation_notes %}<p>{{extended_info.reservation_notes }}</p>{% endif %}
+                                    </div>
+                                </li>
+                                {% endif %}
+
+                                <li class="clearfix"><div class="space-info-label pull-left">Hours</div><div class="space-info-detail pull-left">{{available_hours}}</div></li>
+                                <li class="clearfix"><div class="space-info-label pull-left">Location</div><div class="space-info-detail pull-left">{{extended_info.location_description}}</div></li>
+                                <li class="clearfix">
+                                    <div class="space-info-label pull-left">Resources</div>
+                                    <div class="space-info-detail pull-left">
+                                        {% if extended_info.has_computers %}Computers&nbsp;{% endif %}
+                                        {% if extended_info.has_displays %}Displays&nbsp;{% endif %}
+                                        {% if extended_info.has_outlets %}Outlets&nbsp;{% endif %}
+                                        {% if extended_info.has_printing %}Printing&nbsp;{% endif %}
+                                        {% if extended_info.has_projector %}Projector&nbsp;{% endif %}
+                                        {% if extended_info.has_scanner %}Scanner&nbsp;{% endif %}
+                                        {% if extended_info.has_whiteboards %}Whiteboards&nbsp;{% endif %}
+                                    </div>
+                                </li>
+                                {% if extended_info.noise_level %}
+                                <li class="clearfix">
+                                    <div class="space-info-label pull-left">Noise Level</div>
+                                    <div class="space-info-detail pull-left">
+                                        {% if extended_info.noise_level == "quite" %}
+                                            Low hum
+                                        {% elif extended_info.noise_level == "moderate"%}
+                                            Chatter
+                                            {% elif extended_info.noise_level == "silent"%}
+                                            Silent
+                                        {% else %}
+                                            Variable
+                                        {% endif %}
+                                    </div>
+                                </li>
+                                {% endif %}
+
+                                {% if extended_info.has_natural_light %}
+                                <li class="clearfix"><div class="space-info-label pull-left">Lighting</div><div class="space-info-detail pull-left">Natural light</div></li>
+                                {% endif %}
+
+
+                                {% if extended_info.food_nearby %}
+                                <li class="clearfix">
+                                    <div class="space-info-label pull-left">Coffee/Food</div>
+                                    <div class="space-info-detail pull-left">
+                                        {% if extended_info.food_nearby == "building" %}
+                                            In building
+                                        {% elif extended_info.food_nearby == "space"%}
+                                            In space
+                                        {% else %}
+                                            In neighboring building
+                                        {% endif %}
+                                    </div>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+
+                        <div style="text-align:center;margin-top:20px;">
+                            <a href="/contact/">Report a problem with this space</a>
+                        </div>
+                        <div class="space-detail-footer">This space was last updated on {{last_modified}} {% if organization %} by {{ organization }}{% endif %}</div>
                     </div>
                 </div>
             </div>
 
         </div>
-    </div>
 
 {% endblock %}
