@@ -218,6 +218,12 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
 	// Show space details (sliding transition)
 	function showSpaceDetails(data) {
+           // format last modified date
+           var last_mod= new Date(data["last_modified"]);
+           var month = last_mod.getMonth();
+           var day = last_mod.getDate();
+           var year = last_mod.getFullYear();
+           data["last_modified"] = month + "/" + day + "/" + year;
 
     	   // remove any open details
     	   $('#space_detail_container').remove();
@@ -246,6 +252,12 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
 	// Replace space details (inline loading of already slid panel)
 	function replaceSpaceDetails(data) {
+           // format last modified date
+           var last_mod= new Date(data["last_modified"]);
+           var month = last_mod.getMonth();
+           var day = last_mod.getDate();
+           var year = last_mod.getFullYear();
+           data["last_modified"] = month + "/" + day + "/" + year;
 
         	// build the template
     	   var source = $('#space_details_replace').html();
