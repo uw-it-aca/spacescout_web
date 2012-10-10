@@ -118,10 +118,10 @@ function run_custom_search() {
     window.spacescout_search_options["capacity"] = $("#capacity option:selected").val();
 
     // hours
-    var from_query = new Array;
-    if ($('#day-from').val() != 'No preference') {
+    if ($('#day-from').val() != 'nopref') {
+        var from_query = new Array;
         from_query.push($('#day-from').val());
-        if ($('#hour-from').val() != 'No preference') {
+        if ($('#hour-from').val() != 'nopref') {
             var time = $('#hour-from').val();
             if ($('#ampm-from').val() == 'PM') {
                 var hour = time.split(':')[0];
@@ -136,10 +136,10 @@ function run_custom_search() {
         window.spacescout_search_options["open_at"] = from_query.join(",");
     }
 
-    var until_query = new Array;
-    if ($('#day-from').val() != 'No preference' && $('#day-until').val() != 'No preference') {
+    if ($('#day-from').val() != 'nopref' && $('#day-until').val() != 'nopref') {
+        var until_query = new Array;
         until_query.push($('#day-until').val());
-        if ($('#hour-until').val() != 'No preference') {
+        if ($('#hour-until').val() != 'nopref') {
             var time = $('#hour-until').val();
             if ($('#ampm-until').val() == 'PM') {
                 var hour = time.split(':')[0];
