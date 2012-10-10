@@ -204,7 +204,7 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
         // fancy location select
         $("#e9").select2({
-                placeholder: "Select a building",
+                placeholder: "Select building(s)",
                 allowClear: true
             });
 
