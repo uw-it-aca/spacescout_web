@@ -210,7 +210,7 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
         if ($('#space_detail_container').is(":visible")) {
             $('#space_detail_container').height($('#map_canvas').height());
             $('.space-detail-body').height($('.space-detail').height() - 172);
-            
+
             resizeCarouselMapContainer();
         }
 
@@ -261,10 +261,16 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
     	   $('.space-detail').show();
 
     	   // wait before showing the new space
-    	   $(".space-detail-inner").delay(700).show(0, function() {
-        	   initializeCarousel();
-        	   resizeCarouselMapContainer();
-           });
+    	   //$(".space-detail-inner").delay(300).show(0, function() {
+           //   initializeCarousel();
+           //   resizeCarouselMapContainer();
+           //});
+
+           // fade the new space in
+           $('.space-detail-inner').fadeIn('400', function() {
+                resizeCarouselMapContainer();
+                initializeCarousel();
+            });
 
            detailsLat = data.location.latitude;
     	   detailsLon = data.location.longitude;
