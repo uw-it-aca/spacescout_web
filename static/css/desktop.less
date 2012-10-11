@@ -1,3 +1,11 @@
+/* Less Variables */
+
+@purple_text: #4c497e;
+@grey_light: #b2b2b2;
+@grey_dark: #4d4d4d;
+@grey_border: #d6d6d6;
+@grey_background: #e5e5e5;
+
 /* start overriding the mobile styles */
 
 #container { min-width:748px; max-width:1024px; margin: 10px; }
@@ -67,8 +75,8 @@
             .space-detail-inner { display:none; padding: 15px; background-color: #fff;
 
                 .space-detail-header { position: relative; height: 60px;
-                    .space-detail-type { color: #666; }
-                    .space-detail-name { font-size: 20px; color: #000; margin: 5px 0; }
+                    .space-detail-type { color: @grey_dark; }
+                    .space-detail-name { font-size: 20px; color: @purple_text; margin: 5px 0; }
                     .close { position: absolute; right: 0; top: 0; float: none; }
                 }
                 .space-detail-body { overflow-y: auto; -webkit-overflow-scrolling: touch; border-top: solid 1px #eee; border-bottom: solid 1px #eee; padding: 10px 0;
@@ -86,7 +94,7 @@
                         .space-info {
                             ul { margin: 0; }
                             li { list-style: none; margin-bottom: 5px;
-                              .space-info-label { width: 35%; margin-right: 10px; color: #ccc; overflow: hidden; text-overflow: ellipsis; }
+                              .space-info-label { width: 35%; margin-right: 10px; color: @grey_light; overflow: hidden; text-overflow: ellipsis; }
                               .space-info-detail { width: 60%; }
                             }
                         }
