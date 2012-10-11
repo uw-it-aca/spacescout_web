@@ -1,7 +1,7 @@
 body {
     min-height: 420px;
     /*font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;*/
-    font-family: Helvetica, Arial, "Lucida Grande", sans-serif;
+    /*font-family: Helvetica, Arial, "Lucida Grande", sans-serif;*/
     background-color: #e5e5e5;
 }
 
@@ -111,7 +111,7 @@ button {
                         .image-container, .map-container { max-height: 303px !important; }
 
                         .image-container {
-                            .carousel { background: #f8f8f8 url('/static/img/spinner.gif') no-repeat 50% 50%; background-size: 20px;  margin: 0; }
+                            .carousel { background: #f8f8f8 url('/static/img/spinner.gif') no-repeat 50% 50%; background-size: 20px;  margin: 0; min-height: 192px; }
                         }
 
                         .map-container { background: #f8f8f8 url('/static/img/spinner.gif') no-repeat 50% 50%; background-size: 20px; }
@@ -126,7 +126,15 @@ button {
                     }
                 }
 
-                .space-image-map-buttons { text-align:right; margin: -1px 0 0 0; }
+                .space-image-map-buttons { text-align:right; margin: -1px 0 0 0;
+                    button { border: solid 1px #ddd !important; padding: 4px 7px; }
+                    button.active { background-color: #fff; border-top: solid 1px #fff !important; }
+
+                    #carouselControl span { background: transparent url('/static/img/gallery_grey.png') no-repeat 50% 50%; display: inline-block; text-indent: -9999px; width: 30px; height: 25px; }
+                    #carouselControl.active span { background: transparent url('/static/img/gallery_purple.png') no-repeat 50% 50%; }
+                    #mapControl span { background: transparent url('/static/img/locate_grey.png') no-repeat 50% 50%; display: inline-block; text-indent: -9999px; width: 30px; height: 25px; }
+                    #mapControl.active span { background: transparent url('/static/img/locate_purple.png') no-repeat 50% 50%; }
+                }
 
                 .space-detail-footer { text-align: center; font-size: 12px; color: #ccc; height: 50px; padding-top: 10px; }
             }
@@ -263,7 +271,7 @@ select {
 
 }
 
-.carousel-control { top: 50% !important; }
+.carousel-control { top: 50% !important; border: 2px solid #fff; }
 .carousel-inner img { max-width: 100% !important; margin: 0 auto; }
 
 /* Override Select2 */
