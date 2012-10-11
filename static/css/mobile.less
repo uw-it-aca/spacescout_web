@@ -17,14 +17,9 @@ button {
     border-color: #3e3e3e !important;
 }
 
-#nav {
+#container { max-width: 768px; margin: 0 auto; }
 
-    /*box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-    -moz-box-shadow: 1px 1px 3px rgba(0,0,0, 0.5);
-    -webkit-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);*/
-
-    z-index: 1;
-
+#nav { z-index: 1;
 
     .logo { height: 50px; line-height: 50px; width: 130px; float:left; background: url('/static/img/spacescout_logo.png') no-repeat 10px 50%; background-size: 120px; text-indent: -9999px; }
     .actions { width: auto; float: right; text-align: right; height: 50px; line-height: 50px; margin-right: 10px;
@@ -32,7 +27,7 @@ button {
         #filter_button { background:#514d83 url('/static/img/down.png') no-repeat 8px 50%; display:inline-block; color: #8987ab; width: 30px; text-indent: -999px; }
         #view_results_button { background:#514d83 url('/static/img/check.png') no-repeat 10px 50%; display: none; color: #8987ab; width: 30px; text-indent: -999px; }
         #cancel_results_button { background: #e4e4e4 url('/static/img/cross.png') no-repeat 10px 50%; display: none; color: #646464; width: 30px; text-indent: -999px; }
-        
+
         #back_home_button { background:#514d83 url('/static/img/left.png') no-repeat 8px 50%; display:inline-block; color: #8987ab; width: 30px; text-indent: -999px; }
     }
 
@@ -99,16 +94,16 @@ button {
 
     #space_detail_container {
 
-        .space-detail { background: #fff; color: #333; padding: 10px;
+        .space-detail { background: #fff; color: #333;
 
             .space-detail-inner {
 
-                .space-detail-header { position: relative; height: 60px;
+                .space-detail-header { position: relative; min-height: 60px;
                     .space-detail-type { color: #666; }
-                    .space-detail-name { font-size: 20px; color: #000; margin: 5px 0; }
+                    .space-detail-name { font-size: 20px; color: #000; margin: 5px 0; line-height: 28px; }
                     .close { position: absolute; right: 0; top: 0; float: none; }
                 }
-                .space-detail-body { border-top: solid 1px #eee; border-bottom: solid 1px #eee; padding: 10px 0;
+                .space-detail-body { border-bottom: solid 1px #eee; padding: 10px 0;
                     .space-detail-body-inner {
 
                         .image-container, .map-container { max-height: 333px !important; }
@@ -143,6 +138,10 @@ button {
     /*min-height: 220px;*/
     background: #f7f7f7 url('/static/img/spinner.gif') no-repeat 50% 50%;
     background-size: 20px;
+
+    .map-control-container { position: absolute; top:0; right: 0; width: auto; z-index: 1; text-align: right; padding: 7px;
+        #center_all, #center_me { cursor: pointer; }
+    }
 }
 
 #info_list {
@@ -173,15 +172,16 @@ button {
     #info_items {
         ul { margin: 0;
 
+            .view-details { cursor: pointer; }
+
             li { background-color: #fff; color: #000; list-style: none; margin-bottom: 0px; padding: 10px; border-left:solid 1px #ddd; border-right:solid 1px #ddd; border-bottom:solid 1px #ddd;
-                .view-details { cursor: pointer; }
 
                 .space-detail-list-image { margin-right: 10px; display: inline-block; width: 100px;
                         .img { width: 100px; height: 67px; background: #eee url('/static/img/spinner.gif') no-repeat 50% 50%; background-size: 15px;}
                     }
 
-                .space-detail-list-item { width: 42%; display: inline-block;
-                    .space-detail-type { color: #666; }
+                .space-detail-list-item { width: 37%; display: inline-block;
+                    .space-detail-type { color: #666;  white-space: nowrap; overflow:hidden; text-overflow: ellipsis; }
                     .space-detail-name { font-size: 17px; line-height: 28px; white-space: nowrap; overflow:hidden; text-overflow: ellipsis; color: #000;
                         a { color: #000; text-decoration: none; }
                         a:hover { color: red; }
@@ -190,6 +190,7 @@ button {
                 }
             }
             li:first-child { border-top:solid 1px #ddd; }
+            li.no-spaces { background: none; border: none; color: #333; padding: 5px; }
         }
     }
 }
@@ -306,14 +307,14 @@ ul.select2-choices {
 @media screen and (min-width: 320px) {
 
     #nav {
-        
+
         .actions {
-            #back_home_button { width: 84px; padding-left: 30px; text-indent: 0; }
+            #back_home_button { width: 84px; padding-left: 25px; text-indent: 0; }
             #filter_button { width: 84px; padding-left: 30px; text-indent: 0; }
             #view_results_button {  width: 84px; padding-left: 30px; text-indent: 0; }
             #cancel_results_button { width: 84px; padding-left: 30px; text-indent: 0; }
         }
-        
+
         #filter_container {
             #filter_block {
                 #filter_hours {

@@ -118,7 +118,41 @@ function run_custom_search() {
     window.spacescout_search_options["capacity"] = $("#capacity option:selected").val();
 
     // hours
+    if ($('#day-from').val() != 'nopref') {
+        var from_query = new Array;
+        from_query.push($('#day-from').val());
+        if ($('#hour-from').val() != 'nopref') {
+            var time = $('#hour-from').val();
+            if ($('#ampm-from').val() == 'PM') {
+                var hour = time.split(':')[0];
+                var min = time.split(':')[1];
+                hour = Number(hour) + 12;
+                time = hour+':'+min;
+            }
+            from_query.push(time);
+        } else {
+            from_query.push('00:00');
+        }
+        window.spacescout_search_options["open_at"] = from_query.join(",");
+    }
 
+    if ($('#day-from').val() != 'nopref' && $('#day-until').val() != 'nopref') {
+        var until_query = new Array;
+        until_query.push($('#day-until').val());
+        if ($('#hour-until').val() != 'nopref') {
+            var time = $('#hour-until').val();
+            if ($('#ampm-until').val() == 'PM') {
+                var hour = time.split(':')[0];
+                var min = time.split(':')[1];
+                hour = Number(hour) + 12;
+                time = hour+':'+min;
+            }
+            until_query.push(time);
+        } else {
+            until_query.push('23:59');
+        }
+        window.spacescout_search_options["open_until"] = until_query.join(",");
+    }
     // location
     if ($('select#e9').val()) {
         window.spacescout_search_options["building_name"] = $('select#e9').val();
@@ -231,7 +265,8 @@ function load_map(latitude, longitude, zoom) {
         center: new google.maps.LatLng(latitude, longitude),
         zoom: zoom,
         mapTypeControl: false,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        streetViewControl: false
     };
 
     if (window.spacescout_map == null) {
@@ -241,7 +276,8 @@ function load_map(latitude, longitude, zoom) {
     }
     google.maps.event.addListener(window.spacescout_map, 'idle', reload_on_idle);
 
-
+    // append the centering buttons after map has loaded
+    displayMapCenteringButtons();
 }
 
 function display_search_results(data) {
@@ -286,7 +322,7 @@ function display_search_results(data) {
             position: new google.maps.LatLng(youarehere.latitude, youarehere.longitude),
             title: "You are here",
             map: spacescout_map,
-            icon: '/static/img/pins/blue-dot.png'
+            icon: '/static/img/pins/me_pin.png'
         });
         //window.spacescout_markers.push(my_marker);
     }
@@ -375,6 +411,13 @@ function distance_between_points(lat1, lon1, lat2, lon2) {
 function scrollToTop(id) {
     // Scroll
     $('html,body').animate({ scrollTop: $("#"+id).offset().top},'fast');
+}
+
+ function displayMapCenteringButtons() {
+    // build the template
+   var source = $('#map_controls').html();
+   var template = Handlebars.compile(source);
+   $('#map_canvas').append(template(template));
 }
 
 

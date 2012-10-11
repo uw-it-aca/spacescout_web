@@ -43,60 +43,8 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
 });
 
-Handlebars.registerHelper('formatHours', function(hours) {
-    //tomorrow_starts_at_midnight = true;
-    //tomorrow_is_24_hours = 
-    //if (start_time[0] == 0 && start_time[1] == 0 && end_time[0] == 23 && end_time[1] == 59 && tomorrow_starts_at_midnight && !tomorrow_is_24_hours && tomorrows_hour > 3) {
-        //dsf
-    //}
-    var formatted = [];
-    $.each(hours, function(day) {
-        dayMarker = day.charAt(0);
-        dayMarker = dayMarker.toUpperCase();
-        if (dayMarker == 'T' && day.charAt(1) == 'h' || dayMarker == 'S' && day.charAt(1) == 'u') {
-            dayMarker += day.charAt(1);
-        }
-        
-        formatted[dayMarker] = to12Hour(hours[day]);
-    });
-    formatted = sortDays(formatted);
-    return new Handlebars.SafeString(formatted.join("<br/>"));
-});
+(function(m) {
 
-function to12Hour(day) {
-    var data = [ day[0][0], day[0][1] ];
-    for (var i=0; i<data.length; i++) {
-        time = data[i].split(":");
-        if (time[0] > 12) {
-            time[0] -= 12;
-            time[1] += "PM";
-        }
-        else if (time[0] < 1) {
-            time[0] = 12;
-            time[1] += "AM";
-        }
-        else {
-            time[1] += "AM";
-        }
-        data[i] = time.join(":");
-    }
-    return data[0] +" - " +data[1];
-}
-function sortDays(days) {
-    var ordered = [];
-    order = ["M", "T", "W", "Th", "F", "S", "Su"];
-    $.each(order, function(day) {
-        ordered.push(order[day] +": " +days[order[day]] );
-    });
-    return ordered;
-}
-
-(function(w){
-
-	var sw = document.body.clientWidth,
-		breakpoint = 767,
-		speed = 600,
-		mobile = true;
 
     var deviceAgent = navigator.userAgent.toLowerCase();
 
@@ -113,53 +61,57 @@ function sortDays(days) {
 
 	$(document).ready(function() {
 
-    	// check if a map_canvas exists... populate it
-    	if ($("#map_canvas").length == 1) {
-          initialize();
+
+       var source = $('#mobile_hours').html();
+       var template = Handlebars.compile(source);
+       $('#mobile_hours_template').append(template(available_hours));
+
+		mobileContent();
+
+
+		// initialize the carousel for mobile standalone space page
+        initializeCarousel();
+        resizeCarouselMapContainer();
+
+        // scroll to the top of page
+        $('#top_link').click(function(e){
+              // Prevent a page reload when a link is pressed
+              e.preventDefault();
+              // Call the scroll function
+              scrollTo('top');
+        });
+
+        // scroll to top of filter list
+        $('#filter_link').click(function(e){
+              // Prevent a page reload when a link is pressed
+              e.preventDefault();
+              // Call the scroll function
+              scrollTo('info_list');
+        });
+
+        // back to spaces button on mobile space details page
+        $('#back_home_button').click(function() {
+            location.href = '/';
+        });
+
+        // for iphones (ios5-6) - check if they have the ios detector cookie, if they don't give them one and show the popup
+        // otherwise, don't do anything since they've already seen the popup
+        if (iphone && ios56) {
+            if (!$.cookie('showSpaceScoutiOS')){
+                $.cookie('showSpaceScoutiOS', 'true');
+                showIosCallout();
+            }
         }
 
-		checkMobile();
-		setDisplay();
 
-		if (mobile) {
-
-    		// initialize the carousel for mobile standalone space page
-            initializeCarousel();
-            resizeCarouselMapContainer();
-
-            // scroll to the top of page
-            $('#top_link').click(function(e){
-                  // Prevent a page reload when a link is pressed
-                  e.preventDefault();
-                  // Call the scroll function
-                  scrollTo('top');
-            });
-
-            // scroll to top of filter list
-            $('#filter_link').click(function(e){
-                  // Prevent a page reload when a link is pressed
-                  e.preventDefault();
-                  // Call the scroll function
-                  scrollTo('info_list');
-            });
-
-            // for iphones (ios5-6) - check if they have the ios detector cookie, if they don't give them one and show the popup
-            // otherwise, don't do anything since they've already seen the popup
-            if (iphone && ios56) {
-                if (!$.cookie('showSpaceScoutiOS')){
-                    $.cookie('showSpaceScoutiOS', 'true');
-                    showIosCallout();
-                }
-            }
-		}
 
 		// Toggle Filter display
 		$('#filter_button').click(function() {
 
     		// calculate the filter height for mobile browsers
-    		if (mobile) {
-        		$("#filter_block").height($(window).height() - $('#nav').height() - 10);
-    		}
+
+    		$("#filter_block").height($(window).height() - $('#nav').height() - 10);
+
 
     		if ($("#filter_block").is(":hidden")) {
 
@@ -169,26 +121,24 @@ function sortDays(days) {
                 $('#view_results_button').show();
                 $('#cancel_results_button').show();
 
-                if (mobile) {
+                // if mobile
+                $('#main_content').hide();
+                $('#footer').hide();
+                $('.back-top').hide();
 
-                    $('#main_content').hide();
-                    $('#footer').hide();
-                    $('.back-top').hide();
+                // handle scrolling for android froyo or newer
+        		if (android || gingerbreadOrNewer) {
+            		touchScroll("filter_block");
+        		}
 
-                    // handle scrolling for android gingerbread or newer
-            		if (gingerbreadOrNewer) {
-                		touchScroll("filter_block");
-            		}
-                }
 
             } else {
 
-                if (mobile) {
+                // if mobile
+                $('#main_content').show();
+                $('#footer').show();
+                $('.back-top').show();
 
-                    $('#main_content').show();
-                    $('#footer').show();
-                    $('.back-top').show();
-                }
 
                 $('#filter_button').show();
                 $('#view_results_button').hide();
@@ -204,11 +154,11 @@ function sortDays(days) {
             // reset the map
             clear_custom_search();
 
-            if (mobile) {
-                $('#main_content').show();
-                $('#footer').show();
-                $('.back-top').show();
-            }
+            // if mobile
+            $('#main_content').show();
+            $('#footer').show();
+            $('.back-top').show();
+
 
             $('#filter_button').show();
             $('#view_results_button').hide();
@@ -246,40 +196,20 @@ function sortDays(days) {
         $('.view-details').live('click', function(e){
 
             // get the space id
-            id =  $(this).attr('id');
+            id =  $(this).find('.space-detail-list-item').attr('id');
 
             e.preventDefault();
 
-            // clear previously selected space
-            $('#info_items li').removeClass('selected');
+            $.ajax({
+                url: '/space/'+id+'/json/',
+                success: showSpaceDetails
+            });
 
-            //highlight the selected space
-            $(this).parent().addClass('selected');
-
-            // if a space details already exists
-            if ($('#space_detail_container').is(':visible')) {
-                $.ajax({
-                    url: '/space/'+id+'/json/',
-                    success: replaceSpaceDetails
-                });
-            }
-            else {
-                $.ajax({
-                    url: '/space/'+id+'/json/',
-                    success: showSpaceDetails
-                });
-            }
-
-        });
-
-        $('#space_detail_container .close').live('click', function(e){
-            e.preventDefault();
-            hideSpaceDetails();
         });
 
         // fancy location select
         $("#e9").select2({
-                placeholder: "Select a building",
+                placeholder: "Select building(s)",
                 allowClear: true
             });
 
@@ -298,7 +228,6 @@ function sortDays(days) {
             $(this).parent().siblings().removeClass("selected");
 
             if ($('#hours_list_input').is(':checked')) {
-                //scrollTo('filter_hours');
                 $('#hours_list_container').show();
             }
             else {
@@ -311,7 +240,6 @@ function sortDays(days) {
             $(this).parent().siblings().removeClass("selected");
 
             if ($('#building_list_input').is(':checked')) {
-                //scrollTo('filter_location');
                 $('#building_list_container').show();
             }
             else {
@@ -337,116 +265,20 @@ function sortDays(days) {
 	});
 
 	// Update dimensions on resize
-	$(w).resize(function(){
+	$(m).resize(function(){
 
-	   sw = document.body.clientWidth;
-
-	   checkMobile();
-	   setDisplay();
-
-	   // if the space details is already open
-	   if ($('#space_detail_container').is(":visible")) {
-    	   $('#space_detail_container').height($('#map_canvas').height());
-    	   $('.space-detail-body').height($('.space-detail').height() - 172);
-	   }
-
+	   mobileContent();
+	   resizeCarouselMapContainer();
 
 	});
 
-	// Check if Mobile
-	function checkMobile() {
-		mobile = (sw > breakpoint) ? false : true;
-	}
-
-	// Set the proper display settings
-	function setDisplay() {
-    	if (mobile) {
-		  // mobile
-		  mobileContent();
-		} else {
-		  // desktop
-		  desktopContent();
-		}
-	}
 
 	// Show space details (sliding transition)
 	function showSpaceDetails(data) {
-
-    	if (mobile) {
-        	// change url
-        	location.href = '/space/' + data.id;
-    	}
-    	else {
-
-    	   // remove any open details
-    	   $('#space_detail_container').remove();
-
-        	// build the template
-    	   var source = $('#space_details').html();
-    	   var template = Handlebars.compile(source);
-    	   $('#map_canvas').append(template(data));
-
-    	   // set/reset initial state
-    	   $('.space-detail-inner').show();
-    	   $('#space_detail_container').show();
-
-    	   $('#space_detail_container').height($('#map_canvas').height());
-    	   $('.space-detail-body').height($('.space-detail').height() - 172);
-
-    	   $('.space-detail').show("slide", { direction: "right" }, 700);
-
-    	   initializeCarousel();
-    	   resizeCarouselMapContainer();
-
-    	   detailsLat = data.location.latitude;
-    	   detailsLon = data.location.longitude;
-
-    	}
-
+    	// change url
+    	location.href = '/space/' + data.id;
 	}
 
-	// Replace space details (inline loading of already slid panel)
-	function replaceSpaceDetails(data) {
-
-    	if (mobile) {
-        	// change url
-        	location.href = '/space/' + data.id;
-    	}
-    	else {
-        	// build the template
-    	   var source = $('#space_details_replace').html();
-    	   var template = Handlebars.compile(source);
-    	   $('#space_detail_container').html(template(data));
-
-    	   // set/reset initial state
-    	   $('.space-detail-inner').hide();
-    	   //$(".space-detail .loading").show();
-
-    	   $('.space-detail-body').height($('.space-detail').height() - 172);
-
-    	   $('.space-detail').show();
-
-    	   // wait before showing the new space
-    	   $(".space-detail-inner").delay(700).show(0, function() {
-        	   initializeCarousel();
-        	   resizeCarouselMapContainer();
-           });
-
-           detailsLat = data.location.latitude;
-    	   detailsLon = data.location.longitude;
-    	}
-
-
-	}
-
-	function hideSpaceDetails() {
-        $('.space-detail').hide("slide", { direction: "right" }, 700, function() {
-        	   $('#space_detail_container').remove();
-        });
-
-        // deselect selected space in list
-        $('#info_items li').removeClass('selected');
-	}
 
 	// ScrollTo a spot on the UI
 	function scrollTo(id) {
@@ -454,20 +286,6 @@ function sortDays(days) {
         $('html,body').animate({ scrollTop: $("#"+id).offset().top},'fast');
     }
 
-	// Desktop display defaults
-	function desktopContent() {
-
-    	var windowH = $(window).height();
-        var headerH = $('#nav').height();
-        var contentH = windowH - headerH;
-
-        $('#map_canvas').height(contentH - 100);
-        $('#info_list').height(contentH -80);
-
-        // make sure loading and list height fills the list container
-        $('#info_list .list-inner').css('min-height', contentH - 100);
-        //$('.loading').height(contentH);
-    }
 
     // Mobile display defaults
     function mobileContent() {
@@ -543,6 +361,7 @@ function sortDays(days) {
         });
     }
 
+    // enable div overflow scrolling for android
     function touchScroll(id) {
 
 		var el=document.getElementById(id);
@@ -550,15 +369,15 @@ function sortDays(days) {
 
 		document.getElementById(id).addEventListener("touchstart", function(event) {
 			scrollStartPos=this.scrollTop+event.touches[0].pageY;
-			event.preventDefault();
 		},false);
 
 		document.getElementById(id).addEventListener("touchmove", function(event) {
 			this.scrollTop=scrollStartPos-event.touches[0].pageY;
-			event.preventDefault();
 		},false);
 
     }
+
+
 
 
 })(this);
