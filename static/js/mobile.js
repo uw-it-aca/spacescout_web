@@ -61,6 +61,8 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
 	$(document).ready(function() {
 
+
+
 		mobileContent();
 
 

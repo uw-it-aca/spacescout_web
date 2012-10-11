@@ -36,6 +36,13 @@ def SpotView(request, spot_id, return_json=False):
     params = json.loads(content)
     params["last_modified"] = re.sub('-', '/', params["last_modified"][:10])
 
+    # See if django-compressor is being used to precompile less
+    if settings.COMPRESS_ENABLED:
+        less_not_compiled = False
+    else:
+        less_not_compiled = True
+
+    params["less_not_compiled"] = less_not_compiled
     request.session['spot_id'] = spot_id
     request.session['spot_name'] = json.loads(content)['name']
 

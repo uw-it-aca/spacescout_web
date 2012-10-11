@@ -44,6 +44,14 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
 (function(d){
 
+	var sw = document.body.clientWidth,
+		breakpoint = 767,
+		speed = 600,
+		mobile = true;
+
+    var deviceAgent = navigator.userAgent.toLowerCase();
+	var iphone = deviceAgent.match(/(iphone|ipod)/);
+
 	$(document).ready(function() {
 
 		desktopContent();
