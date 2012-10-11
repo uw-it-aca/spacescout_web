@@ -1,14 +1,17 @@
 /* Less Variables */
 
 @purple_text: #4c497e;
-@grey_light: orange;
-@grey_dark: red;
+@grey_light: #b2b2b2;
+@grey_dark: #4d4d4d;
+@grey_border: #d6d6d6;
+@grey_background: #e5e5e5;
+
 
 body {
     min-height: 420px;
     /*font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;*/
     /*font-family: Helvetica, Arial, "Lucida Grande", sans-serif;*/
-    background-color: #e5e5e5;
+    background-color: @grey_background;
 }
 
 button {
@@ -98,7 +101,7 @@ button {
 /* mobile only: space details page */
 #space_details_header { margin: 10px;
     .space-detail-type { font-size: 14px; color: @grey_dark; }
-    .space-detail-name { font-size: 20px; color: #000; margin: 5px 0;  color: @purple_text; width:85%; }
+    .space-detail-name { font-size: 20px; margin: 5px 0;  color: @purple_text; width:85%; }
     img { margin-top:8px; }
 }
 
@@ -112,7 +115,7 @@ button {
 
                 .space-detail-body {
 
-                    .space-detail-body-inner { background: #fff; border: solid 1px #ddd; padding: 5px;
+                    .space-detail-body-inner { background: #fff; border: solid 1px @grey_border; padding: 5px;
 
                         .image-container, .map-container { max-height: 303px !important; }
 
@@ -134,7 +137,7 @@ button {
                 }
 
                 .space-image-map-buttons { text-align:right; margin: -1px 0 0 0;
-                    button { border: solid 1px #ddd !important; padding: 4px 7px; }
+                    button { border: solid 1px @grey_border !important; padding: 4px 7px; }
                     button.active { background-color: #fff; border-top: solid 1px #fff !important; }
 
                     #carouselControl span { background: transparent url('/static/img/gallery_grey.png') no-repeat 50% 50%; display: inline-block; text-indent: -9999px; width: 30px; height: 25px; }
@@ -153,7 +156,7 @@ button {
 
 }
 
-#main_content { margin: 0 10px 10px 10px; padding: 10px; border: solid 1px #d6d6d6; background-color: #f7f7f7; }
+#main_content { margin: 0 10px 10px 10px; padding: 10px; border: solid 1px @grey_border; background-color: #f7f7f7; }
 
 #map_canvas {
     /*min-height: 220px;*/
@@ -170,7 +173,7 @@ button {
     padding: 0;
     height: 300px;
     background-color: #ededed;
-    border-top: solid 1px #d6d6d6;
+    border-top: solid 1px @grey_border;
     margin: -10px;
     margin-top: 10px;
 
@@ -182,9 +185,9 @@ button {
 
     .list-arrow { background-color: #ededed; position:absolute; top: -31px; z-index:1000; width:45px; line-height: 30px; left:50%; margin-left:-22.5px; text-align:center;
 
-        border-left: solid 1px #d6d6d6;
-        border-top: solid 1px #d6d6d6;
-        border-right: solid 1px #d6d6d6;
+        border-left: solid 1px @grey_border;
+        border-top: solid 1px @grey_border;
+        border-right: solid 1px @grey_border;
 
         #filter_link { display: block; width: 45px; height: 30px; }
     }
@@ -195,22 +198,19 @@ button {
 
             .view-details { cursor: pointer; }
 
-            li { background-color: #fff; color: #000; list-style: none; margin-bottom: 0px; padding: 10px; border-left:solid 1px #ddd; border-right:solid 1px #ddd; border-bottom:solid 1px #ddd;
+            li { background-color: #fff; color: #000; list-style: none; margin-bottom: 0px; padding: 10px; border-left:solid 1px @grey_border; border-right:solid 1px @grey_border; border-bottom:solid 1px @grey_border;
 
                 .space-detail-list-image { margin-right: 10px; display: inline-block; width: 100px;
                         .img { width: 100px; height: 67px; background: #eee url('/static/img/spinner.gif') no-repeat 50% 50%; background-size: 15px;}
                     }
 
                 .space-detail-list-item { width: 37%; display: inline-block;
-                    .space-detail-type { color: #666;  white-space: nowrap; overflow:hidden; text-overflow: ellipsis; }
-                    .space-detail-name { font-size: 17px; line-height: 28px; white-space: nowrap; overflow:hidden; text-overflow: ellipsis; color: #000;
-                        a { color: #000; text-decoration: none; }
-                        a:hover { color: red; }
-                    }
-                    .space-detail-desc { white-space: nowrap; overflow:hidden; text-overflow: ellipsis; color: #ddd; }
+                    .space-detail-type { color: @grey_dark;  white-space: nowrap; overflow:hidden; text-overflow: ellipsis; }
+                    .space-detail-name { font-size: 17px; line-height: 28px; white-space: nowrap; overflow:hidden; text-overflow: ellipsis; color: #000; }
+                    .space-detail-desc { white-space: nowrap; overflow:hidden; text-overflow: ellipsis; color: @grey_light; }
                 }
             }
-            li:first-child { border-top:solid 1px #ddd; }
+            li:first-child { border-top:solid 1px @grey_border; }
             li.no-spaces { background: none; border: none; color: #333; padding: 5px; }
         }
     }
