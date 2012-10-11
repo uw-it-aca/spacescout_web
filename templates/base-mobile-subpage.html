@@ -32,7 +32,9 @@
 
         {% block extra_css %}{% endblock %}
 
-        <!--<script type="text/javascript" src="{{ STATIC_URL }}libs/less.js"></script>-->
+        {% if less_not_compiled %}
+        <script type="text/javascript" src="{{ STATIC_URL }}libs/less.js"></script>
+        {% endif %}
         <link rel="shortcut icon" href="{{ STATIC_URL }}img/ico/favicon.ico">
 
     </head>
