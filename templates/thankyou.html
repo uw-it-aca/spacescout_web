@@ -1,0 +1,6 @@
+{% extends is_mobile|yesno:"base-mobile.html,base-desktop.html" %}
+
+{% block content %}
+<p>Thank you! Your email has been sent.</p>
+<a href='{{ back }}'>Back</a>
+{% endblock %}
