@@ -113,19 +113,19 @@
                                 <h3>Capacity</h3>
                                 Seats at least:
                                 <select id='capacity' style="width:60px;">
-                                  <option>1</option>
-                                  <option>2</option>
-                                  <option>3</option>
-                                  <option>4</option>
-                                  <option>5</option>
-                                  <option>6</option>
-                                  <option>7</option>
-                                  <option>8</option>
-                                  <option>9</option>
-                                  <option>10</option>
-                                  <option>15</option>
-                                  <option>20</option>
-                                  <option>25+</option>
+                                  <option value="1">1</option>
+                                  <option value="2">2</option>
+                                  <option value="3">3</option>
+                                  <option value="4">4</option>
+                                  <option value="5">5</option>
+                                  <option value="6">6</option>
+                                  <option value="7">7</option>
+                                  <option value="8">8</option>
+                                  <option value="9">9</option>
+                                  <option value="10">10</option>
+                                  <option value="15">15</option>
+                                  <option value="20">20</option>
+                                  <option value="25">25+</option>
                                 </select>
                             </div>
                         </div>
@@ -148,17 +148,17 @@
                         </div>
                         <div id="hours_list_container" style="margin-top:8px; display:none; ">
                             <div><span class="hours-from">from</span><select id="day-from">
-                              <option>No pref</option>
-                              <option>MON</option>
-                              <option>TUE</option>
-                              <option>WED</option>
-                              <option>THU</option>
-                              <option>FRI</option>
-                              <option>SAT</option>
-                              <option>SUN</option>
+                              <option value="nopref">No pref</option>
+                              <option value="Monday">MON</option>
+                              <option value="Tuesday">TUE</option>
+                              <option value="Wednesday">WED</option>
+                              <option value="Thursday">THU</option>
+                              <option value="Friday">FRI</option>
+                              <option value="Saturday">SAT</option>
+                              <option value="Sunday">SUN</option>
                             </select>
                             <select id="hour-from">
-                              <option>No pref</option>
+                              <option value="nopref">No pref</option>
                               <option>12:00</option>
                               <option>12:30</option>
                               <option>1:00</option>
@@ -185,22 +185,22 @@
                               <option>11:30</option>
                             </select>
                             <select class="ampm" id="ampm-from">
-                                <option>AM</option>
-                                <option>PM</option>
+                                <option value="AM">AM</option>
+                                <option value="PM">PM</option>
                             </select>
                             </div>
                             <div><span class="hours-until">until</span><select id="day-until">
-                              <option>No pref</option>
-                              <option>MON</option>
-                              <option>TUE</option>
-                              <option>WED</option>
-                              <option>THU</option>
-                              <option>FRI</option>
-                              <option>SAT</option>
-                              <option>SUN</option>
+                              <option value="nopref">No pref</option>
+                              <option value="Monday">MON</option>
+                              <option value="Tuesday">TUE</option>
+                              <option value="Wednesday">WED</option>
+                              <option value="Thursday">THU</option>
+                              <option value="Friday">FRI</option>
+                              <option value="Saturday">SAT</option>
+                              <option value="Sunday">SUN</option>
                             </select>
                             <select id="hour-until">
-                              <option>No pref</option>
+                              <option value="nopref">No pref</option>
                               <option>12:00</option>
                               <option>12:30</option>
                               <option>1:00</option>
@@ -227,8 +227,8 @@
                               <option>11:30</option>
                             </select>
                             <select class="ampm" id="ampm-until">
-                                <option>AM</option>
-                                <option>PM</option>
+                                <option value="AM">AM</option>
+                                <option value="PM">PM</option>
                             </select>
                             </div>
                         </div>
@@ -357,8 +357,8 @@
                 <div class="space-detail">
                     <div class="space-detail-inner">
                         <div class="space-detail-header">
-                            <div class="space-detail-type">{{type}}</div>
                             <div class="space-detail-name">{{name}}</div>
+                            <div class="space-detail-type">{{type}}</div>
                             <a class="close" href="#">&times;</a>
                         </div>
                         <div class="space-detail-body">
@@ -389,7 +389,17 @@
 
                                 <div class="space-info">
                                      <ul>
-                                        <li class="clearfix"><div class="space-info-label pull-left">Current hours</div><div class="space-info-detail pull-left">{{available_hours}}</div></li>
+                                                    <li class="clearfix">
+                                                        <div class="space-info-label pull-left">Notes</div>
+                                                        <div class="space-info-detail pull-left">
+                                                            {{#if extended_info.access_notes }}<p>{{extended_info.access_notes }}</p>{{/if}}
+                                                            {{#if extended_info.hours_notes }}<p>{{extended_info.hours_notes }}</p>{{/if}}
+                                                            {{#if extended_info.reservation_notes }}<p>{{extended_info.reservation_notes }}</p>{{/if}}
+                                                        </div>
+                                                    </li>
+
+
+                                        <li class="clearfix"><div class="space-info-label pull-left">Hours</div><div class="space-info-detail pull-left">{{formatHours available_hours}}</div></li>
                                         <li class="clearfix"><div class="space-info-label pull-left">Location</div><div class="space-info-detail pull-left">{{extended_info.location_description}}</div></li>
                                         <li class="clearfix">
                                             <div class="space-info-label pull-left">Resources</div>
@@ -399,7 +409,7 @@
                                                 {{#if extended_info.has_outlets }}Outlets&nbsp;{{/if}}
                                                 {{#if extended_info.has_printing }}Printing&nbsp;{{/if}}
                                                 {{#if extended_info.has_projector }}Projector&nbsp;{{/if}}
-                                                {{#if extended_info.has_scanner }}Scanner&nbsp;{{/if}}
+                                                {{#if extended_info.has_scanner }}Scanning&nbsp;{{/if}}
                                                 {{#if extended_info.has_whiteboards }}Whiteboards&nbsp;{{/if}}
                                             </div>
                                         </li>
@@ -455,7 +465,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="space-detail-footer">This space was last updated {{last_modified}}...  <a href="/contact/"><button type="button" class="btn btn-small btn-danger">report a problem</button></a></div>
+                        <div class="space-detail-footer">This space was last updated {{last_modified}}{{#if organization }} by {{organization}} {{/if}}<a href="/contact/"><button type="button" class="btn btn-small btn-danger">report a problem</button></a></div>
                     </div>
                 </div>
             </div>
@@ -464,8 +474,8 @@
                 <div class="space-detail">
                     <div class="space-detail-inner">
                         <div class="space-detail-header">
-                            <div class="space-detail-type">{{type}}</div>
                             <div class="space-detail-name">{{name}}</div>
+                            <div class="space-detail-type">{{type}}</div>
                             <a class="close" href="#">&times;</a>
                         </div>
                         <div class="space-detail-body">
@@ -496,7 +506,17 @@
                                 </div>
                                 <div class="space-info">
                                      <ul>
-                                        <li class="clearfix"><div class="space-info-label pull-left">Current hours</div><div class="space-info-detail pull-left">{{available_hours}}</div></li>
+
+                                        <li class="clearfix">
+                                            <div class="space-info-label pull-left">Notes</div>
+                                            <div class="space-info-detail pull-left">
+                                                {{#if extended_info.access_notes }}<p>{{extended_info.access_notes }}</p>{{/if}}
+                                                {{#if extended_info.hours_notes }}<p>{{extended_info.hours_notes }}</p>{{/if}}
+                                                {{#if extended_info.reservation_notes }}<p>{{extended_info.reservation_notes }}</p>{{/if}}
+                                            </div>
+                                        </li>
+
+                                        <li class="clearfix"><div class="space-info-label pull-left">Hours</div><div class="space-info-detail pull-left">{{formatHours available_hours}}</div></li>
                                         <li class="clearfix"><div class="space-info-label pull-left">Location</div><div class="space-info-detail pull-left">{{extended_info.location_description}}</div></li>
                                         <li class="clearfix">
                                             <div class="space-info-label pull-left">Resources</div>
@@ -506,7 +526,7 @@
                                                 {{#if extended_info.has_outlets }}Outlets&nbsp;{{/if}}
                                                 {{#if extended_info.has_printing }}Printing&nbsp;{{/if}}
                                                 {{#if extended_info.has_projector }}Projector&nbsp;{{/if}}
-                                                {{#if extended_info.has_scanner }}Scanner&nbsp;{{/if}}
+                                                {{#if extended_info.has_scanner }}Scanning&nbsp;{{/if}}
                                                 {{#if extended_info.has_whiteboards }}Whiteboards&nbsp;{{/if}}
                                             </div>
                                         </li>
@@ -562,7 +582,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="space-detail-footer">This space was last updated {{last_modified}}...  <a href="/contact/"><button type="button" class="btn btn-small btn-danger">report a problem</button></a></div>
+                        <div class="space-detail-footer">This space was last updated {{last_modified}}{{#if organization }} by {{organization}} {{/if}}<a href="/contact/"><button type="button" class="btn btn-small btn-danger">report a problem</button></a></div>
                     </div>
                 </div>
         {% endtplhandlebars %}

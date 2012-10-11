@@ -97,7 +97,7 @@ function run_custom_search() {
     }
     window.spacescout_markers = [];
     window.spacescout_marker_ids = {};
-    mc.clearMarkers();
+    window.mc.clearMarkers();
 
     // Set the search values, so they'll stick through zooms and pans
     window.spacescout_search_options = {};
@@ -118,10 +118,10 @@ function run_custom_search() {
     window.spacescout_search_options["capacity"] = $("#capacity option:selected").val();
 
     // hours
-    var from_query = new Array;
-    if ($('#day-from').val() != 'No preference') {
+    if ($('#day-from').val() != 'nopref') {
+        var from_query = new Array;
         from_query.push($('#day-from').val());
-        if ($('#hour-from').val() != 'No preference') {
+        if ($('#hour-from').val() != 'nopref') {
             var time = $('#hour-from').val();
             if ($('#ampm-from').val() == 'PM') {
                 var hour = time.split(':')[0];
@@ -136,10 +136,10 @@ function run_custom_search() {
         window.spacescout_search_options["open_at"] = from_query.join(",");
     }
 
-    var until_query = new Array;
-    if ($('#day-from').val() != 'No preference' && $('#day-until').val() != 'No preference') {
+    if ($('#day-from').val() != 'nopref' && $('#day-until').val() != 'nopref') {
+        var until_query = new Array;
         until_query.push($('#day-until').val());
-        if ($('#hour-until').val() != 'No preference') {
+        if ($('#hour-until').val() != 'nopref') {
             var time = $('#hour-until').val();
             if ($('#ampm-until').val() == 'PM') {
                 var hour = time.split(':')[0];
@@ -271,6 +271,20 @@ function load_map(latitude, longitude, zoom) {
 
     if (window.spacescout_map == null) {
         window.spacescout_map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+        var mcOpts = {
+            averageCenter: true,
+            zoomOnClick: false,
+            styles: [{
+                textColor: 'white',
+                textSize: 12,
+                fontWeight: 'normal',
+                anchor: [5, 0], // These values can only be positive
+                height: 40,
+                width: 35, // The icon width is actually 40, but the anchorIcon offset doesn't seem to work right, this gets the cluster icon centered on the number
+                url: '/static/img/pins/pin00.png',
+            }]
+        };
+        window.mc = new MarkerClusterer(spacescout_map, [], mcOpts);
     } else {
         window.spacescout_map.setCenter(new google.maps.LatLng(latitude, longitude));
     }
@@ -283,20 +297,6 @@ function load_map(latitude, longitude, zoom) {
 function display_search_results(data) {
     $('.loading').show();
 
-    var mcOpts = {
-        averageCenter: true,
-        zoomOnClick: false,
-        styles: [{
-            textColor: 'white',
-            textSize: 12,
-            fontWeight: 'normal',
-            anchor: [5, 0], // These values can only be positive
-            height: 40,
-            width: 35, // The icon width is actually 40, but the anchorIcon offset doesn't seem to work right, this gets the cluster icon centered on the number
-            url: '/static/img/pins/pin00.png',
-        }]
-    };
-    mc = new MarkerClusterer(spacescout_map, [], mcOpts);
     for (i = 0; i < data.length; i++) {
         if (!window.spacescout_marker_ids[data[i].id]) {
             marker = new google.maps.Marker({
@@ -306,14 +306,14 @@ function display_search_results(data) {
             });
 
             //marker.setMap(window.spacescout_map);
-            mc.addMarker(marker);
+            window.mc.addMarker(marker);
             addMarkerListener(marker, data[i]);
 
             window.spacescout_marker_ids[data[i].id] = true;
             window.spacescout_markers.push(marker);
         }
     }
-    addClusterListener(mc, data);
+    addClusterListener(window.mc, data);
     openAllMarkerInfoWindow(data);
 
     // you are here marker

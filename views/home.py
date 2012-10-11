@@ -3,6 +3,7 @@ from django.template import RequestContext
 from django.conf import settings
 import oauth2
 import simplejson as json
+from django.utils.datastructures import SortedDict
 
 
 def HomeView(request):
@@ -41,15 +42,17 @@ def HomeView(request):
     client = oauth2.Client(consumer)
 
     buildings = json.loads(get_building_json(client))
-    buildings.sort()
 
     # This could probably be a template tag, but didn't seem worth it for one-time use
-    buildingdict = {}
+    buildingdict = SortedDict()
     for building in buildings:
         if not building[0] in buildingdict.keys():  # building[0] is the first letter of the string
             buildingdict[building[0]] = []
 
         buildingdict[building[0]].append(building)
+
+
+
 
     # See if django-compressor is being used to precompile less
     if settings.COMPRESS_ENABLED:

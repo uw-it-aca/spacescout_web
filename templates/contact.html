@@ -1,23 +1,45 @@
-{% extends is_mobile|yesno:"base-mobile.html,base-desktop.html" %}
+{% extends is_mobile|yesno:"base-mobile-subpage.html,base-desktop.html" %}
 
 {% block content %}
-<form action="/contact/" method="post">{% csrf_token %}
-    {{ form.non_field_errors }}
-    {% for field in form %}
-        {% if field.name == "email_confirmation" %}
-            <div style="display: None;">
-                LEAVE BLANK {{ field }}
+
+    {% if is_mobile %}
+    <div style="margin:10px;">
+        <h1>Report a Problem</h1>
+        <img id="back_to_space_button" src="/static/img/details_arrow.png" />
+    </div>
+    {% else %}
+    <div id="nav" style="position:relative;">
+        <div class="clearfix">
+            <div class="logo">SPACESCOUT&trade;</div>
+            <div class="actions">
+                <button id="back_to_space_button" class="btn btn-inverse" type="button">Back to Space Detail</button>
             </div>
-        {% else %}
-            <div class="fieldWrapper">
-                {{ field.label_tag }}{{ field }}
-                {% for error in field.errors %}
-                    <strong>{{ error|escape }}</strong>
-                {% endfor %}
-            </div>
-        {% endif %}
-    {% endfor %}
-    <input type="submit" value="Send" />
-    <a href='{{ back }}'><button type="button" class="btn btn-small btn-danger">Cancel</button></a>
-</form>
+        </div>
+    </div>
+    {% endif %}
+
+    <div {% if is_mobile %}style="margin:10px; background:#fff;" {% else %}id="main_content"{% endif %}>
+
+    <form action="/contact/" method="post">{% csrf_token %}
+        {{ form.non_field_errors }}
+        {% for field in form %}
+            {% if field.name == "email_confirmation" %}
+                <div style="display: None;">
+                    LEAVE BLANK {{ field }}
+                </div>
+            {% else %}
+                <div class="fieldWrapper">
+                    {{ field.label_tag }}{{ field }}
+                    {% for error in field.errors %}
+                        <strong>{{ error|escape }}</strong>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endfor %}
+        <input type="submit" value="Send" />
+        <a href='{{ back }}'><button type="button" class="btn btn-small btn-danger">Cancel</button></a>
+    </form>
+
+</div>
+
 {% endblock %}
