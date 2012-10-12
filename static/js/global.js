@@ -1,3 +1,4 @@
+var requests = new Array();
 Handlebars.registerHelper('formatHours', function(hours) {
     //tomorrow_starts_at_midnight = true;
     //tomorrow_is_24_hours =

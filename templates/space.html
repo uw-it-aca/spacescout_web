@@ -20,7 +20,7 @@
             <div class="space-detail-name pull-left" style="">{{name}}</div>
              <img id="back_home_button" class="pull-right" src="/static/img/details_arrow.png" />
         </div>
-       <div class="space-detail-type">{% for t in type %}{{t}}{% endfor %}</div>
+       <div class="space-detail-type">{{ type|join:", " }}</div>
     </div>
 
 
@@ -115,11 +115,11 @@
                                     <div class="space-info-label pull-left">Coffee/Food</div>
                                     <div class="space-info-detail pull-left">
                                         {% if extended_info.food_nearby == "building" %}
-                                            In building
+                                            {% trans 'building' %}
                                         {% elif extended_info.food_nearby == "space"%}
-                                            In space
+                                            {% trans 'space' %}
                                         {% else %}
-                                            In neighboring building
+                                            {% trans 'neighboring' %}
                                         {% endif %}
                                     </div>
                                 </li>

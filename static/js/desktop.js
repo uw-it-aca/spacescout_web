@@ -136,18 +136,26 @@ Handlebars.registerHelper('ifany', function() {
             //highlight the selected space
             $(this).addClass('selected');
 
+            // clear any uneeded ajax window.requests
+            for (i = 0; i < window.requests.length; i++) {
+                window.requests[i].abort();
+            }
             // if a space details already exists
             if ($('#space_detail_container').is(':visible')) {
-                $.ajax({
-                    url: '/space/'+id+'/json/',
-                    success: replaceSpaceDetails
-                });
+                window.requests.push(
+                    $.ajax({
+                        url: '/space/'+id+'/json/',
+                        success: replaceSpaceDetails
+                    })
+                );
             }
             else {
-                $.ajax({
-                    url: '/space/'+id+'/json/',
-                    success: showSpaceDetails
-                });
+                window.requests.push(
+                    $.ajax({
+                        url: '/space/'+id+'/json/',
+                        success: showSpaceDetails
+                    })
+                );
             }
 
         });
