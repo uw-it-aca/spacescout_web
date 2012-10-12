@@ -115,11 +115,11 @@
                                     <div class="space-info-label pull-left">Coffee/Food</div>
                                     <div class="space-info-detail pull-left">
                                         {% if extended_info.food_nearby == "building" %}
-                                            In building
+                                            {% trans 'building' %}
                                         {% elif extended_info.food_nearby == "space"%}
-                                            In space
+                                            {% trans 'space' %}
                                         {% else %}
-                                            In neighboring building
+                                            {% trans 'neighboring' %}
                                         {% endif %}
                                     </div>
                                 </li>

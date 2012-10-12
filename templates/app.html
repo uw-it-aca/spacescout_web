@@ -291,13 +291,13 @@
                             <div id="filter_food_coffee" class="choice-group">
                                 <h3>Food/Coffee</h3>
                                 <label class="checkbox inline">
-                                  <input type="checkbox" id="in_space" name="food_nearby" value="space"> In space
+                                  <input type="checkbox" id="in_space" name="food_nearby" value="space"> {% trans 'space' %}
                                 </label>
                                 <label class="checkbox inline">
-                                  <input type="checkbox" id="in_building" name="food_nearby" value="building"> In building
+                                  <input type="checkbox" id="in_building" name="food_nearby" value="building"> {% trans 'building' %}
                                 </label>
                                 <label class="checkbox inline">
-                                  <input type="checkbox" id="neighboring" name="food_nearby" value="neighboring"> In neighboring building
+                                  <input type="checkbox" id="neighboring" name="food_nearby" value="neighboring"> {% trans 'neighboring' %}
                                 </label>
                             </div>
                         </div>
@@ -425,12 +425,12 @@
                                             <div class="space-info-detail pull-left">
 
                                               {{#compare extended_info.food_nearby "building" operator="=="}}
-                                                 In building
+                                                 {% verbatim %}{% trans 'building' %}{% endverbatim %}
                                               {{^}}
                                                     {{#compare extended_info.food_nearby "space" operator="=="}}
-                                                    In space
+                                                    {% verbatim %}{% trans 'space' %}{% endverbatim %}
                                                     {{^}}
-                                                    In neighboring building
+                                                    {% verbatim %}{% trans 'neighboring' %}{% endverbatim %}
                                                     {{/compare}}
                                               {{/compare}}
 
@@ -556,12 +556,12 @@
                                         <div class="space-info-detail pull-left">
 
                                           {{#compare extended_info.food_nearby "building" operator="=="}}
-                                             In building
+                                             {% verbatim %}{% trans 'building' %}{% endverbatim %}
                                           {{^}}
                                                 {{#compare extended_info.food_nearby "space" operator="=="}}
-                                                In space
+                                                {% verbatim %}{% trans 'space' %}{% endverbatim %}
                                                 {{^}}
-                                                In neighboring building
+                                                {% verbatim %}{% trans 'neighboring' %}{% endverbatim %}
                                                 {{/compare}}
                                           {{/compare}}
 
