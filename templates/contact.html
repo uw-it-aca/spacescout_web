@@ -12,7 +12,7 @@
         <div class="clearfix">
             <div class="logo">SPACESCOUT&trade;</div>
             <div class="actions">
-                <button id="back_to_space_button" class="btn btn-inverse" type="button">Back to Space Detail</button>
+                <a href='{{ back }}'><button id="back_to_space_button" class="btn btn-inverse" type="button">Back to Space Detail</button></a>
             </div>
         </div>
     </div>
@@ -37,7 +37,6 @@
             {% endif %}
         {% endfor %}
         <input type="submit" value="Send" />
-        <a href='{{ back }}'><button type="button" class="btn btn-small btn-danger">Cancel</button></a>
     </form>
 
 </div>
