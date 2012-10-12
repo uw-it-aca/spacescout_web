@@ -130,12 +130,6 @@ Handlebars.registerHelper('ifany', function() {
 
             e.preventDefault();
 
-            // clear previously selected space
-            $('#info_items li').removeClass('selected');
-
-            //highlight the selected space
-            $(this).addClass('selected');
-
             // clear any uneeded ajax window.requests
             for (i = 0; i < window.requests.length; i++) {
                 window.requests[i].abort();
@@ -157,6 +151,12 @@ Handlebars.registerHelper('ifany', function() {
                     })
                 );
             }
+
+             // clear previously selected space
+            $('#info_items li').removeClass('selected');
+
+            //highlight the selected space
+            $(this).addClass('selected');
 
         });
 
