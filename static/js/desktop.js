@@ -231,7 +231,7 @@ Handlebars.registerHelper('ifany', function() {
         // if the space details is already open
         if ($('#space_detail_container').is(":visible")) {
             $('#space_detail_container').height($('#map_canvas').height());
-            $('.space-detail-body').height($('.space-detail').height() - 92);
+            $('.space-detail-body').height($('.space-detail').height() - 98);
 
             resizeCarouselMapContainer();
         }
@@ -260,7 +260,7 @@ Handlebars.registerHelper('ifany', function() {
     	   $('#space_detail_container').show();
 
     	   $('#space_detail_container').height($('#map_canvas').height());
-    	   $('.space-detail-body').height($('.space-detail').height() - 92);
+    	   $('.space-detail-body').height($('.space-detail').height() - 98);
 
     	   $('.space-detail').show("slide", { direction: "right" }, 400);
 
@@ -289,7 +289,7 @@ Handlebars.registerHelper('ifany', function() {
     	   $('.space-detail-inner').hide();
     	   //$(".space-detail .loading").show();
 
-    	   $('.space-detail-body').height($('.space-detail').height() - 92);
+    	   $('.space-detail-body').height($('.space-detail').height() - 98);
 
     	   $('.space-detail').show();
 
