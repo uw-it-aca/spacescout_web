@@ -317,7 +317,6 @@
         {% tplhandlebars "map_controls" %}
             <div class="map-control-container">
                 <img id="center_all" src="/static/img/center_all.png" name="image" />&nbsp;
-                <img id="center_me" src="/static/img/center_me.png" name="image" />
             </div>
         {% endtplhandlebars %}
 
@@ -328,7 +327,7 @@
                         <div class="space-detail-header">
                             <div class="space-detail-name">{{name}}</div>
                             <div class="space-detail-type">{{type}}</div>
-                            <a class="close" href="#">&times;</a>
+                            <a class="close" href="#"><img src="/static/img/x.png" /></a>
                         </div>
                         <div class="space-detail-body">
 
@@ -461,7 +460,7 @@
                     <div class="space-detail-header">
                         <div class="space-detail-name">{{name}}</div>
                         <div class="space-detail-type">{{type}}</div>
-                        <a class="close" href="#">&times;</a>
+                        <a class="close" href="#"><img src="/static/img/x.png" /></a>
                     </div>
                     <div class="space-detail-body">
 

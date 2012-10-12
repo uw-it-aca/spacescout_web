@@ -65,14 +65,7 @@ function sortDays(days) {
             window.spacescout_map.setCenter(new google.maps.LatLng(window.default_latitude, window.default_longitude));
         });
 
-        $('#center_me').live('click', function(e){
-            window.spacescout_map.setCenter(new google.maps.LatLng(window.youarehere.latitude, window.youarehere.longitude));
-        });
-
 	});
-
-
-
 
 })(this);
 
