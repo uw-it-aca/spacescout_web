@@ -1,7 +1,6 @@
 {% extends is_mobile|yesno:"base-mobile-subpage.html,base-desktop.html" %}
 
 {% block content %}
-
     {% if is_mobile %}
     <div style="margin:10px;">
         <h1>Report a Problem</h1>
@@ -19,31 +18,6 @@
     {% endif %}
 
     <div {% if is_mobile %}style="margin:10px; background:#fff;" {% else %}id="main_content"{% endif %}>
-
-    <form action="/contact/" method="post">{% csrf_token %}
-        <div class="fieldWrapper">
-            Space<br />
-            {{ spot_name }}<br />
-            {{ spot_description }}
-        </div>
-        {{ form.non_field_errors }}
-        {% for field in form %}
-            {% if field.name == "email_confirmation" %}
-                <div style="display: None;">
-                    LEAVE BLANK {{ field }}
-                </div>
-            {% else %}
-                <div class="fieldWrapper">
-                    {{ field.label_tag }}{{ field }}
-                    {% for error in field.errors %}
-                        <strong>{{ error|escape }}</strong>
-                    {% endfor %}
-                </div>
-            {% endif %}
-        {% endfor %}
-        <input type="submit" value="Send" />
-    </form>
-
-</div>
-
+        {% block contact-content %}{% endblock %}
+    </div>
 {% endblock %}
