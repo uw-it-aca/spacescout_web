@@ -12,6 +12,7 @@
 {% endblock %}
 
 {% block content %}
+{% load i18n %}
 
     <div id="nav" style="position:relative;">
 
@@ -301,13 +302,13 @@
                                 <h3>Noise Level</h3>
                                 <div>
                                 <label class="checkbox inline">
-                                  <input type="checkbox" id="silent" name="noise_level" value="silent"> Silent
+                                  <input type="checkbox" id="silent" name="noise_level" value="silent"> {% trans 'silent' %}
                                 </label>
                                 <label class="checkbox inline">
-                                  <input type="checkbox" id="quiet" name="noise_level" value="quiet"> Low hum
+                                  <input type="checkbox" id="quiet" name="noise_level" value="quiet"> {% trans 'quiet' %}
                                 </label>
                                 <label class="checkbox inline">
-                                  <input type="checkbox" id="moderate" name="noise_level" value="moderate"> Chatter
+                                  <input type="checkbox" id="moderate" name="noise_level" value="moderate"> {% trans 'moderate' %}
                                 </label>
                                 </div>
                             </div>
