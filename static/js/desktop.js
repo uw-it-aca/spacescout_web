@@ -130,12 +130,6 @@ Handlebars.registerHelper('ifany', function() {
 
             e.preventDefault();
 
-            // clear previously selected space
-            $('#info_items li').removeClass('selected');
-
-            //highlight the selected space
-            $(this).addClass('selected');
-
             // clear any uneeded ajax window.requests
             for (i = 0; i < window.requests.length; i++) {
                 window.requests[i].abort();
@@ -157,6 +151,12 @@ Handlebars.registerHelper('ifany', function() {
                     })
                 );
             }
+
+             // clear previously selected space
+            $('#info_items li').removeClass('selected');
+
+            //highlight the selected space
+            $(this).addClass('selected');
 
         });
 
@@ -231,7 +231,7 @@ Handlebars.registerHelper('ifany', function() {
         // if the space details is already open
         if ($('#space_detail_container').is(":visible")) {
             $('#space_detail_container').height($('#map_canvas').height());
-            $('.space-detail-body').height($('.space-detail').height() - 92);
+            $('.space-detail-body').height($('.space-detail').height() - 98);
 
             resizeCarouselMapContainer();
         }
@@ -260,12 +260,11 @@ Handlebars.registerHelper('ifany', function() {
     	   $('#space_detail_container').show();
 
     	   $('#space_detail_container').height($('#map_canvas').height());
-    	   $('.space-detail-body').height($('.space-detail').height() - 92);
+    	   $('.space-detail-body').height($('.space-detail').height() - 98);
 
     	   $('.space-detail').show("slide", { direction: "right" }, 400);
 
     	   initializeCarousel();
-    	   resizeCarouselMapContainer();
 
     	   detailsLat = data.location.latitude;
     	   detailsLon = data.location.longitude;
@@ -290,7 +289,7 @@ Handlebars.registerHelper('ifany', function() {
     	   $('.space-detail-inner').hide();
     	   //$(".space-detail .loading").show();
 
-    	   $('.space-detail-body').height($('.space-detail').height() - 92);
+    	   $('.space-detail-body').height($('.space-detail').height() - 98);
 
     	   $('.space-detail').show();
 
@@ -300,11 +299,13 @@ Handlebars.registerHelper('ifany', function() {
            //   resizeCarouselMapContainer();
            //});
 
+            $('.space-detail-inner').show();
+            initializeCarousel();
+
            // fade the new space in
-           $('.space-detail-inner').fadeIn('400', function() {
-                resizeCarouselMapContainer();
+           /*$('.space-detail-inner').fadeIn('200', function() {
                 initializeCarousel();
-            });
+            });*/
 
            detailsLat = data.location.latitude;
     	   detailsLon = data.location.longitude;
@@ -353,6 +354,8 @@ Handlebars.registerHelper('ifany', function() {
             }
         });
 
+        resizeCarouselMapContainer();
+
     }
 
     function resizeCarouselMapContainer() {
@@ -364,6 +367,8 @@ Handlebars.registerHelper('ifany', function() {
 
         $('.carousel').height(containerH);
         $('.map-container').height(containerH);
+
+
     }
 
 })(this);

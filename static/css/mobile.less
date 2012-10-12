@@ -120,7 +120,7 @@ button {
                         .image-container, .map-container { max-height: 303px !important; }
 
                         .image-container {
-                            .carousel { background: #f8f8f8 url('/static/img/spinner.gif') no-repeat 50% 50%; background-size: 20px;  margin: 0; min-height: 192px; }
+                            .carousel { background: #f8f8f8 url('/static/img/spinner.gif') no-repeat 50% 50%; background-size: 20px;  margin: 0; }
                         }
 
                         .map-container { background: #f8f8f8 url('/static/img/spinner.gif') no-repeat 50% 50%; background-size: 20px; }
@@ -322,7 +322,18 @@ ul.select2-choices {
     .select2-search-field input { height: auto !important; }
 }
 
+.select2-container-multi .select2-choices {
+    cursor: default !important;
+    background-image: none;
+    background: #eaeaea url('/static/img/dropdown.png') no-repeat top right !important;
+    padding-right: 30px;
+    max-height: 80px;
+    overflow-y: auto;
+}
 
+.select2-container-multi .select2-choices .select2-search-field input { cursor: default !important; }
+
+.select2-results .select2-result-label { cursor: default; }
 
 /* iphone portrait */
 @media screen and (min-width: 320px) {
