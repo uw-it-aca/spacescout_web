@@ -1,0 +1,7 @@
+{% extends is_mobile|yesno:"base-mobile.html,base-desktop.html" %}
+
+{% block content %}
+<p>I'm sorry, there was an error and your email couldn't be sent.</p>
+<p><a href='mailto:{{ email }}'>Email</a> us directly.<br />
+<a href='{{ back }}'>Continue Space Scouting</a></p>
+{% endblock %}
