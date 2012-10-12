@@ -30,7 +30,12 @@ button {
 
 #nav { z-index: 1;
 
+    .logo-container { background-color: #ccc; }
     .logo { height: 50px; line-height: 50px; width: 130px; float:left; background: url('/static/img/spacescout_logo.png') no-repeat 10px 50%; background-size: 120px; text-indent: -9999px; }
+
+    #bubble_desktop { display: none; }
+    .bubble-inner { background-color:#fff; border: solid 1px @grey_border; padding: 0 8px; line-height: 30px; }
+
     .actions { width: auto; float: right; text-align: right; height: 50px; line-height: 50px; margin-right: 10px;
 
         #filter_button { background:#514d83 url('/static/img/down.png') no-repeat 8px 50%; display:inline-block; color: #8987ab; width: 30px; text-indent: -999px; }
@@ -39,6 +44,10 @@ button {
 
         #back_home_button { background:#514d83 url('/static/img/left.png') no-repeat 8px 50%; display:inline-block; color: #8987ab; width: 30px; text-indent: -999px; }
     }
+
+
+
+    #bubble_mobile {  margin: 10px 10px 5px 10px; }
 
     #filter_container { position: relative; margin: 0 10px;
 

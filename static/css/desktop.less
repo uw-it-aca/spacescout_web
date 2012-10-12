@@ -12,8 +12,16 @@
 
 #nav { z-index: 1000;
 
-    .logo { height: 80px; line-height: 80px; width: 172px; background: url('/static/img/spacescout_logo.png') no-repeat 0px 50%; background-size: auto; }
-    .actions { height: 80px; line-height: 80px; margin-right: 0; }
+    .logo-container { background-color: transparent; }
+
+     .logo { height: 80px; line-height: 80px; width: 172px; background: url('/static/img/spacescout_logo.png') no-repeat 0px 50%; background-size: auto; }
+
+      #bubble_desktop { margin: 0; display: block; float: right; height: 80px; margin-right: 20px; width: 50% }
+      .bubble-inner { margin-top: 25px; }
+
+      .actions { line-height: 80px; height: 80px; }
+
+    #bubble_mobile { display: none; }
 
     #filter_container {
          position:absolute; top:80px; left:0; right:0; margin: 0;
