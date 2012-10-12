@@ -1,6 +1,7 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.conf import settings
+from django.utils.translation import ugettext as _
 import oauth2
 import simplejson as json
 import re
@@ -34,7 +35,13 @@ def SpotView(request, spot_id, return_json=False):
         return response
 
     params = json.loads(content)
+    new_value = []
+    for value in params['type']:
+        new_value.append(_(value))
+    params["type"] = new_value
     params["last_modified"] = re.sub('-', '/', params["last_modified"][:10])
+
+    content = json.dumps(params)
 
     # See if django-compressor is being used to precompile less
     if settings.COMPRESS_ENABLED:

@@ -61,10 +61,7 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
 	$(document).ready(function() {
 
-
-
 		mobileContent();
-
 
 		// initialize the carousel for mobile standalone space page
         initializeCarousel();
@@ -100,15 +97,10 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
             }
         }
 
-
-
 		// Toggle Filter display
 		$('#filter_button').click(function() {
 
-    		// calculate the filter height for mobile browsers
-
-    		$("#filter_block").height($(window).height() - $('#nav').height() - 10);
-
+    		resizeFilterBlock();
 
     		if ($("#filter_block").is(":hidden")) {
 
@@ -161,7 +153,10 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
             $('#view_results_button').hide();
             $('#cancel_results_button').hide();
 
-            $("#filter_block").slideUp('slow');
+            $("#filter_block").slideUp('slow', function() {
+                // Animation complete.
+                mobileContent();
+            });
 
             // reset checkboxes
             $('input[type=checkbox]').each(function() {
@@ -197,10 +192,16 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
             e.preventDefault();
 
-            $.ajax({
-                url: '/space/'+id+'/json/',
-                success: showSpaceDetails
-            });
+            //clear any unneded pending ajax window.requests
+            for (i = 0; i < window.requests.length; i++) {
+                window.requests[i].abort();
+            }
+            window.requests.push(
+                $.ajax({
+                    url: '/space/'+id+'/json/',
+                    success: showSpaceDetails
+                })
+            );
 
         });
 
@@ -267,6 +268,10 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 	   mobileContent();
 	   resizeCarouselMapContainer();
 
+	   if ($('#filter_block').is(":visible")) {
+    	   resizeFilterBlock();
+	   }
+
 	});
 
 
@@ -297,12 +302,9 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
         $('#map_canvas').css({ minHeight: mapH })
         $('#info_list').height('auto');
 
-        //$("#filter_block").height(mapH + 60);
-
     }
 
     function initializeCarousel() {
-
 
         $('.carousel').each(function(){
             $(this).carousel({
@@ -318,7 +320,12 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
             }
         });
 
+    }
 
+
+    function resizeFilterBlock() {
+        var winH = $(window).height();
+        $("#filter_block").height(winH - 60);
     }
 
     function resizeCarouselMapContainer() {
