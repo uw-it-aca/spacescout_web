@@ -12,6 +12,7 @@
 {% endblock %}
 
 {% block content %}
+{% load i18n %}
 
     <div id="space_details_header">
 
@@ -19,7 +20,7 @@
             <div class="space-detail-name pull-left" style="">{{name}}</div>
              <img id="back_home_button" class="pull-right" src="/static/img/details_arrow.png" />
         </div>
-       <div class="space-detail-type">{{type}}</div>
+       <div class="space-detail-type">{{ type|join:", " }}</div>
     </div>
 
 
@@ -91,14 +92,14 @@
                                 <li class="clearfix">
                                     <div class="space-info-label pull-left">Noise Level</div>
                                     <div class="space-info-detail pull-left">
-                                        {% if extended_info.noise_level == "quite" %}
-                                            Low hum
+                                        {% if extended_info.noise_level == "quiet" %}
+                                            {% trans 'quiet' %}
                                         {% elif extended_info.noise_level == "moderate"%}
-                                            Chatter
-                                            {% elif extended_info.noise_level == "silent"%}
-                                            Silent
+                                            {% trans 'moderate' %}
+                                        {% elif extended_info.noise_level == "silent"%}
+                                            {% trans 'silent' %}
                                         {% else %}
-                                            Variable
+                                            {% trans 'variable' %}
                                         {% endif %}
                                     </div>
                                 </li>
@@ -114,11 +115,11 @@
                                     <div class="space-info-label pull-left">Coffee/Food</div>
                                     <div class="space-info-detail pull-left">
                                         {% if extended_info.food_nearby == "building" %}
-                                            In building
+                                            {% trans 'building' %}
                                         {% elif extended_info.food_nearby == "space"%}
-                                            In space
+                                            {% trans 'space' %}
                                         {% else %}
-                                            In neighboring building
+                                            {% trans 'neighboring' %}
                                         {% endif %}
                                     </div>
                                 </li>
