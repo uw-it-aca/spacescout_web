@@ -42,6 +42,12 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
 });
 
+
+Handlebars.registerHelper('ifany', function() {
+
+    // if anything passed is true, return true
+});
+
 (function(d){
 
 	var sw = document.body.clientWidth,

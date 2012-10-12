@@ -153,7 +153,10 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
             $('#view_results_button').hide();
             $('#cancel_results_button').hide();
 
-            $("#filter_block").slideUp('slow');
+            $("#filter_block").slideUp('slow', function() {
+                // Animation complete.
+                mobileContent();
+            });
 
             // reset checkboxes
             $('input[type=checkbox]').each(function() {
