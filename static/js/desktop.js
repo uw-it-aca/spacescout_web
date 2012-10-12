@@ -265,7 +265,6 @@ Handlebars.registerHelper('ifany', function() {
     	   $('.space-detail').show("slide", { direction: "right" }, 400);
 
     	   initializeCarousel();
-    	   resizeCarouselMapContainer();
 
     	   detailsLat = data.location.latitude;
     	   detailsLon = data.location.longitude;
@@ -300,11 +299,13 @@ Handlebars.registerHelper('ifany', function() {
            //   resizeCarouselMapContainer();
            //});
 
+            $('.space-detail-inner').show();
+            initializeCarousel();
+
            // fade the new space in
-           $('.space-detail-inner').fadeIn('400', function() {
-                resizeCarouselMapContainer();
+           /*$('.space-detail-inner').fadeIn('200', function() {
                 initializeCarousel();
-            });
+            });*/
 
            detailsLat = data.location.latitude;
     	   detailsLon = data.location.longitude;
@@ -352,6 +353,8 @@ Handlebars.registerHelper('ifany', function() {
                 $(this).find('.carousel-control').hide();
             }
         });
+
+        resizeCarouselMapContainer();
 
     }
 
