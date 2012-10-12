@@ -5,9 +5,11 @@ from spacescout_web.forms.contact import ContactForm
 from django.core.mail import send_mail
 from django.conf import settings
 
-def ContactView(request):
-    back = _SessionVariables(request)['back']
-    is_mobile = _SessionVariables(request)['is_mobile']
+def contact(request):
+    back = _session_variables(request)['back']
+    is_mobile = _session_variables(request)['is_mobile']
+    spot_name = _session_variables(request)['spot_name']
+    spot_description = _session_variables(request)['spot_description']
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
@@ -17,11 +19,7 @@ def ContactView(request):
             #feedback_choice = form.cleaned_data['feedback_choice']
             feedback_choice = 'problem'
             bot_test = form.cleaned_data['email_confirmation']
-            spot_id = _SessionVariables(request)['spot_id']
-            if 'spot_name' in request.session:
-                spot_name = request.session['spot_name']
-            else:
-                spot_name = 'Unknown'
+            spot_id = _session_variables(request)['spot_id']
 
             browser = request.META.get('HTTP_USER_AGENT', 'Unknown')
             subject = "SpaceScout %s from %s" %(feedback_choice, name)
@@ -29,10 +27,10 @@ def ContactView(request):
                 \n Browser Type = %s" %(feedback_choice, message, name, sender, spot_name, spot_id, browser)
 
             if bot_test == '':
-                #try:
-                send_mail(subject, email_message, sender, settings.FEEDBACK_EMAIL_RECIPIENT)
-                #except Exception:
-                    #return HttpResponseRedirect('/contact/sorry/')
+                try:
+                    send_mail(subject, email_message, sender, settings.FEEDBACK_EMAIL_RECIPIENT)
+                except:
+                    return HttpResponseRedirect('/contact/sorry/')
 
             return HttpResponseRedirect('/contact/thankyou/')
     else:
@@ -49,31 +47,43 @@ def ContactView(request):
         'is_mobile': is_mobile,
         'less_not_compiled': less_not_compiled,
         'back': back,
+        'spot_name': spot_name,
+        'spot_description': spot_description,
     }, context_instance=RequestContext(request))
 
-def ThankYouView(request):
-    back = _SessionVariables(request)['back']
+def thank_you(request):
+    back = _session_variables(request)['back']
     return render_to_response('thankyou.html', {'back': back}, context_instance=RequestContext(request))
 
-def SorryView(request):
-    back = _SessionVariables(request)['back']
+def sorry(request):
+    back = _session_variables(request)['back']
     email = settings.FEEDBACK_EMAIL_RECIPIENT.pop()
     return render_to_response('sorry.html', {'back': back, 'email': email}, context_instance=RequestContext(request))
 
-def _SessionVariables(request):
-    if request.MOBILE == 1:
-        is_mobile = True
+def _session_variables(request):
+    if 'spot_name' in request.session:
+        spot_name = request.session['spot_name']
     else:
-        is_mobile = False
+        spot_name = 'Unknown'
+
+    if 'spot_description' in request.session:
+        spot_description = request.session['spot_description']
+    else:
+        spot_description = ''
 
     if 'spot_id' in request.session:
         spot_id = request.session['spot_id']
     else:
-        spot_id = 'Unknown'
+        spot_id = 'Unknown'   
+
+    if request.MOBILE == 1:
+        is_mobile = True
+    else:
+        is_mobile = False
 
     if is_mobile and spot_id != 'Unknown':
         back = ('/space/' + spot_id)
     else:
         back = '/'
 
-    return {'is_mobile':is_mobile, 'spot_id':spot_id, 'back':back}
+    return {'spot_name':spot_name, 'spot_description': spot_description, 'spot_id':spot_id, 'is_mobile':is_mobile, 'back':back}

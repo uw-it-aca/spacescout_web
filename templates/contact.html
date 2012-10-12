@@ -21,6 +21,11 @@
     <div {% if is_mobile %}style="margin:10px; background:#fff;" {% else %}id="main_content"{% endif %}>
 
     <form action="/contact/" method="post">{% csrf_token %}
+        <div class="fieldWrapper">
+            Space<br />
+            {{ spot_name }}<br />
+            {{ spot_description }}
+        </div>
         {{ form.non_field_errors }}
         {% for field in form %}
             {% if field.name == "email_confirmation" %}
