@@ -364,6 +364,8 @@ Handlebars.registerHelper('ifany', function() {
 
         $('.carousel').height(containerH);
         $('.map-container').height(containerH);
+
+
     }
 
 })(this);
