@@ -42,7 +42,7 @@ def contact(request):
     else:
         less_not_compiled = True
 
-    return render_to_response('contact.html', {
+    return render_to_response('contact-form.html', {
         'form': form,
         'is_mobile': is_mobile,
         'less_not_compiled': less_not_compiled,
@@ -53,12 +53,13 @@ def contact(request):
 
 def thank_you(request):
     back = _session_variables(request)['back']
-    return render_to_response('thankyou.html', {'back': back}, context_instance=RequestContext(request))
+    return render_to_response('contact-thankyou.html', {'back': back}, context_instance=RequestContext(request))
 
 def sorry(request):
     back = _session_variables(request)['back']
-    email = settings.FEEDBACK_EMAIL_RECIPIENT.pop()
-    return render_to_response('sorry.html', {'back': back, 'email': email}, context_instance=RequestContext(request))
+    email = settings.FEEDBACK_EMAIL_RECIPIENT[0]
+    #should maybe do something here ^. raise improperly configured exception if there are no emails in the list in settings.py
+    return render_to_response('contact-sorry.html', {'back': back, 'email': email}, context_instance=RequestContext(request))
 
 def _session_variables(request):
     if 'spot_name' in request.session:
