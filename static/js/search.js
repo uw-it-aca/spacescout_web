@@ -1,5 +1,4 @@
 var spacescout_map = null, spacescout_infowindow, spacescout_marker_ids = {}, spacescout_markers = [], speed = 800, mc = null, youarehere = null;
-var requests = new Array();
 
 function openInfoWindow(marker, info) {
 
@@ -344,9 +343,9 @@ function reload_on_idle() {
 
 function fetch_data() {
     $('.loading').show();
-    // abort any pending ajax requests
-    for (i =0; i < requests.length; i++) {
-        requests[i].abort();
+    // abort any pending ajax window.requests
+    for (i =0; i < window.requests.length; i++) {
+        window.requests[i].abort();
     }
     var args = window.spacescout_search_options;
     if (!args) {
@@ -383,7 +382,7 @@ function fetch_data() {
 
     var query = url_args.join("");
 
-    requests.push(
+    window.requests.push(
         $.ajax({
             url: query,
             success: load_data

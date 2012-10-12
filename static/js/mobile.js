@@ -189,10 +189,16 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
             e.preventDefault();
 
-            $.ajax({
-                url: '/space/'+id+'/json/',
-                success: showSpaceDetails
-            });
+            //clear any unneded pending ajax window.requests
+            for (i = 0; i < window.requests.length; i++) {
+                window.requests[i].abort();
+            }
+            window.requests.push(
+                $.ajax({
+                    url: '/space/'+id+'/json/',
+                    success: showSpaceDetails
+                })
+            );
 
         });
 
