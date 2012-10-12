@@ -397,15 +397,15 @@
                                             <div class="space-info-detail pull-left">
 
                                                 {{#compare extended_info.noise_level "quiet" operator="=="}}
-                                                Low hum
+                                                {% verbatim %}{% trans 'quiet' %}{% endverbatim %}
                                                   {{^}}
                                                         {{#compare extended_info.noise_level "moderate" operator="=="}}
-                                                        Chatter
+                                                        {% verbatim %}{% trans 'moderate' %}{% endverbatim %}
                                                         {{^}}
                                                             {{#compare extended_info.noise_level "silent" operator="=="}}
-                                                            Silent
+                                                            {% verbatim %}{% trans 'silent' %}{% endverbatim %}
                                                             {{^}}
-                                                            Variable
+                                                            {% verbatim %}{% trans 'variable' %}{% endverbatim %}
                                                             {{/compare}}
                                                         {{/compare}}
                                                   {{/compare}}
@@ -528,15 +528,15 @@
                                         <div class="space-info-detail pull-left">
 
                                             {{#compare extended_info.noise_level "quiet" operator="=="}}
-                                            Low hum
+                                            {% verbatim %}{% trans 'quiet' %}{% endverbatim %}
                                               {{^}}
                                                     {{#compare extended_info.noise_level "moderate" operator="=="}}
-                                                    Chatter
+                                                    {% verbatim %}{% trans 'moderate' %}{% endverbatim %}
                                                     {{^}}
                                                         {{#compare extended_info.noise_level "silent" operator="=="}}
-                                                        Silent
+                                                        {% verbatim %}{% trans 'silent' %}{% endverbatim %}
                                                         {{^}}
-                                                        Variable
+                                                        {% verbatim %}{% trans 'variable' %}{% endverbatim %}
                                                         {{/compare}}
                                                     {{/compare}}
                                               {{/compare}}
