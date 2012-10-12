@@ -19,7 +19,7 @@
             <div class="space-detail-name pull-left" style="">{{name}}</div>
              <img id="back_home_button" class="pull-right" src="/static/img/details_arrow.png" />
         </div>
-       <div class="space-detail-type">{{type}}</div>
+       <div class="space-detail-type">{% for t in type %}{{t}}{% endfor %}</div>
     </div>
 
 

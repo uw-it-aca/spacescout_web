@@ -1,0 +1,20 @@
+# This file contains UW specific values on the server side to be localized.
+
+# Space Types
+_('alcove')
+_('cafe')
+_('classroom')
+_('computer_lab')
+_('lounge')
+_('open')
+_('outdoor')
+_('studio')
+_('study_area')
+_('study_room')
+
+# Noise Levels
+_('silent')
+_('quiet')
+_('moderate')
+_('loud')
+_('variable')
