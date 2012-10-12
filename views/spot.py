@@ -39,7 +39,8 @@ def SpotView(request, spot_id, return_json=False):
     for value in params['type']:
         new_value.append(_(value))
     params["type"] = new_value
-    params["last_modified"] = re.sub('-', '/', params["last_modified"][:10])
+    modified_date = params["last_modified"][5:10] + '-' + params["last_modified"][:4]
+    params["last_modified"] = re.sub('-', '/', modified_date)
 
     content = json.dumps(params)
 
