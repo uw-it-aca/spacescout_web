@@ -177,15 +177,73 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
             $('#open_now').parent().removeClass("selected");
             $('#hours_list_container').hide();
             $('#hours_list_input').parent().removeClass("selected");
+            var date = new Date();
+            var hour = date.getHours();
+            var min = date.getMinutes();
+
+
+            if (min < 16) {
+                min = "00";
+            }else if (min < 46) {
+                min = "30";
+            }else {
+                min = "00";
+                hour++;
+            }
+
+            if (hour > 11) {
+                $("#ampm-from").val("PM");
+            }else {
+                $("#ampm-from").val("AM");
+            }
+            if (hour > 12) {
+                hour = hour-12;
+            }
+            hour = ""+hour+":"+min;
+            $("#day-from").val(weekdays[date.getDay()])
+            $("#hour-from").val(hour)
+
+            $("#day-until").val("No pref")
+            $("#hour-until").val("No pref")
+            $("#ampm-until").val("AM")
 
             // reset location
             $('#entire_campus').prop('checked', true);
             $('#entire_campus').parent().removeClass("selected");
             $('#building_list_container').hide();
             $('#building_list_input').parent().removeClass("selected");
+            $('#building_list_container').children().children().children(".select2-search-choice").remove();
+            $('#building_list_container').children().children().children().children().val('Select Building(s)');
+            $('#building_list_container').children().children().children().children().attr('style', "");
 
         });
+        var weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        var date = new Date();
+        var hour = date.getHours();
+        var min = date.getMinutes();
 
+
+        if (min < 16) {
+            min = "00";
+        }else if (min < 46) {
+            min = "30";
+        }else {
+            min = "00";
+            hour++;
+        }
+
+        if (hour > 11) {
+            $("#ampm-from").val("PM");
+        }else {
+            $("#ampm-from").val("AM");
+        }
+        if (hour > 12) {
+            hour = hour-12;
+        }
+        hour = ""+hour+":"+min;
+        $("#day-from").val(weekdays[date.getDay()])
+        $("#hour-from").val(hour)
+ 
 
         // handle view details click
         $('.view-details').live('click', function(e){
