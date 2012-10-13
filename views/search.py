@@ -1,8 +1,10 @@
 from django.http import HttpResponse
 from django.conf import settings
+from django.utils.translation import ugettext as _
 import urllib
 import oauth2
 import types
+import simplejson
 
 
 def SearchView(request):
@@ -25,7 +27,15 @@ def SearchView(request):
         search_args[key] = request.GET.getlist(key)
 
     json = get_space_search_json(client, search_args)
-
+    json = simplejson.loads(json)
+    i18n_json = []
+    for space in json:
+        new_value = []
+        for value in space['type']:
+            new_value.append(_(value))
+        space['type'] = new_value
+        i18n_json.append(space)
+    json = simplejson.dumps(i18n_json)
     response = HttpResponse(json)
 
     response["Content-type"] = "application/json"

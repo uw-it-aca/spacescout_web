@@ -6,7 +6,7 @@ Handlebars.registerHelper('carouselimages', function(spacedata) {
     var elements = new Array;
     for (i=0; i < spacedata.images.length; i++) {
         image_id = spacedata.images[i].id;
-        elements.push('<div class="item"><img src="/space/'+space_id+'/image/'+image_id+'/thumb/600x400" class="img"></div>');
+        elements.push('<div class="item"><img src="/space/'+space_id+'/image/'+image_id+'/thumb/500x333" class="img"></div>');
     }
     return new Handlebars.SafeString(elements.join('\n'));
 });
@@ -42,7 +42,21 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
 });
 
+
+Handlebars.registerHelper('ifany', function() {
+
+    // if anything passed is true, return true
+});
+
 (function(d){
+
+	var sw = document.body.clientWidth,
+		breakpoint = 767,
+		speed = 600,
+		mobile = true;
+
+    var deviceAgent = navigator.userAgent.toLowerCase();
+	var iphone = deviceAgent.match(/(iphone|ipod)/);
 
 	$(document).ready(function() {
         
@@ -172,25 +186,33 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
             e.preventDefault();
 
-            // clear previously selected space
+            // clear any uneeded ajax window.requests
+            for (i = 0; i < window.requests.length; i++) {
+                window.requests[i].abort();
+            }
+            // if a space details already exists
+            if ($('#space_detail_container').is(':visible')) {
+                window.requests.push(
+                    $.ajax({
+                        url: '/space/'+id+'/json/',
+                        success: replaceSpaceDetails
+                    })
+                );
+            }
+            else {
+                window.requests.push(
+                    $.ajax({
+                        url: '/space/'+id+'/json/',
+                        success: showSpaceDetails
+                    })
+                );
+            }
+
+             // clear previously selected space
             $('#info_items li').removeClass('selected');
 
             //highlight the selected space
             $(this).addClass('selected');
-
-            // if a space details already exists
-            if ($('#space_detail_container').is(':visible')) {
-                $.ajax({
-                    url: '/space/'+id+'/json/',
-                    success: replaceSpaceDetails
-                });
-            }
-            else {
-                $.ajax({
-                    url: '/space/'+id+'/json/',
-                    success: showSpaceDetails
-                });
-            }
 
         });
 
@@ -265,7 +287,7 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
         // if the space details is already open
         if ($('#space_detail_container').is(":visible")) {
             $('#space_detail_container').height($('#map_canvas').height());
-            $('.space-detail-body').height($('.space-detail').height() - 172);
+            $('.space-detail-body').height($('.space-detail').height() - 98);
 
             resizeCarouselMapContainer();
         }
@@ -294,12 +316,11 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
     	   $('#space_detail_container').show();
 
     	   $('#space_detail_container').height($('#map_canvas').height());
-    	   $('.space-detail-body').height($('.space-detail').height() - 172);
+    	   $('.space-detail-body').height($('.space-detail').height() - 98);
 
     	   $('.space-detail').show("slide", { direction: "right" }, 400);
 
     	   initializeCarousel();
-    	   resizeCarouselMapContainer();
 
     	   detailsLat = data.location.latitude;
     	   detailsLon = data.location.longitude;
@@ -324,7 +345,7 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
     	   $('.space-detail-inner').hide();
     	   //$(".space-detail .loading").show();
 
-    	   $('.space-detail-body').height($('.space-detail').height() - 172);
+    	   $('.space-detail-body').height($('.space-detail').height() - 98);
 
     	   $('.space-detail').show();
 
@@ -334,11 +355,13 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
            //   resizeCarouselMapContainer();
            //});
 
+            $('.space-detail-inner').show();
+            initializeCarousel();
+
            // fade the new space in
-           $('.space-detail-inner').fadeIn('400', function() {
-                resizeCarouselMapContainer();
+           /*$('.space-detail-inner').fadeIn('200', function() {
                 initializeCarousel();
-            });
+            });*/
 
            detailsLat = data.location.latitude;
     	   detailsLon = data.location.longitude;
@@ -387,6 +410,8 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
             }
         });
 
+        resizeCarouselMapContainer();
+
     }
 
     function resizeCarouselMapContainer() {
@@ -398,6 +423,8 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
         $('.carousel').height(containerH);
         $('.map-container').height(containerH);
+
+
     }
 
 })(this);

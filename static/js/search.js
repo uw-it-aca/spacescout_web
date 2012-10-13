@@ -1,5 +1,4 @@
 var spacescout_map = null, spacescout_infowindow, spacescout_marker_ids = {}, spacescout_markers = [], speed = 800, mc = null, youarehere = null;
-var requests = new Array();
 
 function openInfoWindow(marker, info) {
 
@@ -97,7 +96,7 @@ function run_custom_search() {
     }
     window.spacescout_markers = [];
     window.spacescout_marker_ids = {};
-    mc.clearMarkers();
+    window.mc.clearMarkers();
 
     // Set the search values, so they'll stick through zooms and pans
     window.spacescout_search_options = {};
@@ -271,6 +270,20 @@ function load_map(latitude, longitude, zoom) {
 
     if (window.spacescout_map == null) {
         window.spacescout_map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+        var mcOpts = {
+            averageCenter: true,
+            zoomOnClick: false,
+            styles: [{
+                textColor: 'white',
+                textSize: 12,
+                fontWeight: 'normal',
+                anchor: [5, 0], // These values can only be positive
+                height: 40,
+                width: 35, // The icon width is actually 40, but the anchorIcon offset doesn't seem to work right, this gets the cluster icon centered on the number
+                url: '/static/img/pins/pin00.png',
+            }]
+        };
+        window.mc = new MarkerClusterer(spacescout_map, [], mcOpts);
     } else {
         window.spacescout_map.setCenter(new google.maps.LatLng(latitude, longitude));
     }
@@ -283,20 +296,6 @@ function load_map(latitude, longitude, zoom) {
 function display_search_results(data) {
     $('.loading').show();
 
-    var mcOpts = {
-        averageCenter: true,
-        zoomOnClick: false,
-        styles: [{
-            textColor: 'white',
-            textSize: 12,
-            fontWeight: 'normal',
-            anchor: [5, 0], // These values can only be positive
-            height: 40,
-            width: 35, // The icon width is actually 40, but the anchorIcon offset doesn't seem to work right, this gets the cluster icon centered on the number
-            url: '/static/img/pins/pin00.png',
-        }]
-    };
-    mc = new MarkerClusterer(spacescout_map, [], mcOpts);
     for (i = 0; i < data.length; i++) {
         if (!window.spacescout_marker_ids[data[i].id]) {
             marker = new google.maps.Marker({
@@ -306,14 +305,14 @@ function display_search_results(data) {
             });
 
             //marker.setMap(window.spacescout_map);
-            mc.addMarker(marker);
+            window.mc.addMarker(marker);
             addMarkerListener(marker, data[i]);
 
             window.spacescout_marker_ids[data[i].id] = true;
             window.spacescout_markers.push(marker);
         }
     }
-    addClusterListener(mc, data);
+    addClusterListener(window.mc, data);
     openAllMarkerInfoWindow(data);
 
     // you are here marker
@@ -344,9 +343,9 @@ function reload_on_idle() {
 
 function fetch_data() {
     $('.loading').show();
-    // abort any pending ajax requests
-    for (i =0; i < requests.length; i++) {
-        requests[i].abort();
+    // abort any pending ajax window.requests
+    for (i =0; i < window.requests.length; i++) {
+        window.requests[i].abort();
     }
     var args = window.spacescout_search_options;
     if (!args) {
@@ -383,7 +382,7 @@ function fetch_data() {
 
     var query = url_args.join("");
 
-    requests.push(
+    window.requests.push(
         $.ajax({
             url: query,
             success: load_data

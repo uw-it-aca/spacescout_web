@@ -12,15 +12,34 @@
 {% endblock %}
 
 {% block content %}
+{% load i18n %}
 
     <div id="nav" style="position:relative;">
 
-        <div class="clearfix">
+        <div class="logo-container clearfix">
             <div class="logo">SPACESCOUT&trade;</div>
+
             <div class="actions">
                 <button id="filter_button" class="btn btn-inverse" type="button">Filters</button>
                 <button id="cancel_results_button" class="btn" type="button">Clear</button>
                 <button id="view_results_button" class="btn btn-inverse" type="button">Done</button>
+            </div>
+
+            <div id="bubble_desktop">
+                <div class="bubble-inner clearfix" style="position:relative;">
+                <div style="width:15px; background: red; position:absolute; top: 10px; right: -15px;">tab</div>
+                <div class="pull-left">open now whiteboard blah blahb balj</div>
+                <div class="pull-right" style="background: red;">130<br/> spaces</div>
+            </div>
+            </div>
+
+        </div>
+
+        <div id="bubble_mobile">
+            <div class="bubble-inner clearfix" style="position:relative;">
+                <div style="width:15px; background: red; position:absolute; top: -20px; right: 15px;">tab</div>
+                <div class="pull-left">open now whiteboard blah blahb balj</div>
+                <div class="pull-right" style="background: red;">130<br/> spaces</div>
             </div>
         </div>
 
@@ -36,69 +55,37 @@
                             <p><small><em>Select preferred types of space, if any:</em></small></p>
 
                             <div id="filter_space_types" class="choice-group clearfix">
-                                <h3>Type of space: <!--<span><a href="#" id="view_space_descriptions" rel="popover">view descriptions</a></span>--></h3>
-                                <!--<div id="space_descriptions_list" style="display:none;">
-                                    <ul>
-                                        <li>Study Room<br/>
-                                            Enclosed space for individual or group
-                                        </li>
-                                        <li>Study Area<br/>
-                                            Unenclosed space for individual or group
-                                        </li>
-                                        <li>Computer Lab<br/>
-                                            Group of computer stations
-                                        </li>
-                                        <li>Production Studio<br/>
-                                            Work space with specialized equipment or technology
-                                        </li>
-                                        <li>Conference/Classroom<br/>
-                                            Larger-capacity rooms primarily used for classes, meetings, or workshops
-                                        </li>
-                                        <li>Open Space<br/>
-                                            Area for use by multiple individuals or groups
-                                        </li>
-                                        <li>Lounge<br/>
-                                            Indoor casual space
-                                        </li>
-                                        <li>Cafe<br/>
-                                            Space that functions primarily as an eatery
-                                        </li>
-                                        <li>Outdoor area<br/>
-                                            Outdoor casual space
-                                        </li>
-                                    </ul>
-                                    <div><a id="close_descriptions" href="#">Close</a></div>
-                                </div>-->
+                                <h3>Type of space:</h3>
                                 <div style="width:auto;float:left; margin-right: 15px;">
                                     <label class="checkbox">
-                                      <input type="checkbox" name="type" id="study_room" value="study_room"> Study room
+                                      <input type="checkbox" name="type" id="study_room" value="study_room"> {% trans 'study_room' %}
                                     </label>
                                     <label class="checkbox">
-                                      <input type="checkbox" name="type" id="study_area" value="study_area"> Study area
+                                      <input type="checkbox" name="type" id="study_area" value="study_area"> {% trans 'study_area' %}
                                     </label>
                                     <label class="checkbox">
-                                      <input type="checkbox" name="type" id="computer_lab" value="computer_lab"> Computer lab
+                                      <input type="checkbox" name="type" id="computer_lab" value="computer_lab"> {% trans 'computer_lab' %}
                                     </label>
                                     <label class="checkbox">
-                                      <input type="checkbox" name="type" id="studio" value="studio"> Production studio
+                                      <input type="checkbox" name="type" id="studio" value="studio"> {% trans 'studio' %}
                                     </label>
                                     <label class="checkbox">
-                                      <input type="checkbox" name="type" id="classroom" value="classroom"> Conference/Classroom
+                                      <input type="checkbox" name="type" id="classroom" value="classroom"> {% trans 'classroom' %}
                                     </label>
                                 </div>
 
                                 <div style="width:auto;float:left">
                                     <label class="checkbox">
-                                      <input type="checkbox" name="type" id="open" value="open"> Open space
+                                      <input type="checkbox" name="type" id="open" value="open"> {% trans 'open' %}
                                     </label>
                                     <label class="checkbox">
-                                      <input type="checkbox" name="type" id="lounge" value="lounge"> Lounge
+                                      <input type="checkbox" name="type" id="lounge" value="lounge"> {% trans 'lounge' %}
                                     </label>
                                     <label class="checkbox">
-                                      <input type="checkbox" name="type" id="cafe" value="cafe"> Cafe
+                                      <input type="checkbox" name="type" id="cafe" value="cafe"> {% trans 'cafe' %}
                                     </label>
                                     <label class="checkbox">
-                                      <input type="checkbox" name="type" id="outdoor" value="outdoor"> Outdoor area
+                                      <input type="checkbox" name="type" id="outdoor" value="outdoor"> {% trans 'outdoor' %}
                                     </label>
                                 </div>
 
@@ -113,19 +100,19 @@
                                 <h3>Capacity</h3>
                                 Seats at least:
                                 <select id='capacity' style="width:60px;">
-                                  <option>1</option>
-                                  <option>2</option>
-                                  <option>3</option>
-                                  <option>4</option>
-                                  <option>5</option>
-                                  <option>6</option>
-                                  <option>7</option>
-                                  <option>8</option>
-                                  <option>9</option>
-                                  <option>10</option>
-                                  <option>15</option>
-                                  <option>20</option>
-                                  <option>25+</option>
+                                  <option value="1">1</option>
+                                  <option value="2">2</option>
+                                  <option value="3">3</option>
+                                  <option value="4">4</option>
+                                  <option value="5">5</option>
+                                  <option value="6">6</option>
+                                  <option value="7">7</option>
+                                  <option value="8">8</option>
+                                  <option value="9">9</option>
+                                  <option value="10">10</option>
+                                  <option value="15">15</option>
+                                  <option value="20">20</option>
+                                  <option value="25">25+</option>
                                 </select>
                             </div>
                         </div>
@@ -301,13 +288,13 @@
                                 <h3>Noise Level</h3>
                                 <div>
                                 <label class="checkbox inline">
-                                  <input type="checkbox" id="silent" name="noise_level" value="silent"> Silent
+                                  <input type="checkbox" id="silent" name="noise_level" value="silent"> {% trans 'silent' %}
                                 </label>
                                 <label class="checkbox inline">
-                                  <input type="checkbox" id="quiet" name="noise_level" value="quiet"> Low hum
+                                  <input type="checkbox" id="quiet" name="noise_level" value="quiet"> {% trans 'quiet' %}
                                 </label>
                                 <label class="checkbox inline">
-                                  <input type="checkbox" id="moderate" name="noise_level" value="moderate"> Chatter
+                                  <input type="checkbox" id="moderate" name="noise_level" value="moderate"> {% trans 'moderate' %}
                                 </label>
                                 </div>
                             </div>
@@ -322,13 +309,13 @@
                             <div id="filter_food_coffee" class="choice-group">
                                 <h3>Food/Coffee</h3>
                                 <label class="checkbox inline">
-                                  <input type="checkbox" id="in_space" name="food_nearby" value="space"> In space
+                                  <input type="checkbox" id="in_space" name="food_nearby" value="space"> {% trans 'space' %}
                                 </label>
                                 <label class="checkbox inline">
-                                  <input type="checkbox" id="in_building" name="food_nearby" value="building"> In building
+                                  <input type="checkbox" id="in_building" name="food_nearby" value="building"> {% trans 'building' %}
                                 </label>
                                 <label class="checkbox inline">
-                                  <input type="checkbox" id="neighboring" name="food_nearby" value="neighboring"> In neighboring building
+                                  <input type="checkbox" id="neighboring" name="food_nearby" value="neighboring"> {% trans 'neighboring' %}
                                 </label>
                             </div>
                         </div>
@@ -348,7 +335,6 @@
         {% tplhandlebars "map_controls" %}
             <div class="map-control-container">
                 <img id="center_all" src="/static/img/center_all.png" name="image" />&nbsp;
-                <img id="center_me" src="/static/img/center_me.png" name="image" />
             </div>
         {% endtplhandlebars %}
 
@@ -357,51 +343,59 @@
                 <div class="space-detail">
                     <div class="space-detail-inner">
                         <div class="space-detail-header">
-                            <div class="space-detail-type">{{type}}</div>
                             <div class="space-detail-name">{{name}}</div>
-                            <a class="close" href="#">&times;</a>
+                            <div class="space-detail-type">{{type}}</div>
+                            <a class="close" href="#"><img src="/static/img/x.png" /></a>
                         </div>
                         <div class="space-detail-body">
-                            <div class="space-detail-body-inner clearfix">
 
-                                <div class="space-image">
-                                    <div id="spaceCarouselContainer" class="image-container">
-                                        <div id="myCarousel" class="carousel slide">
-                                          <!-- Carousel items -->
-                                          <div class="carousel-inner">
 
-                                            <!-- TODO: do an each loop of some sort -->
-                                            {{ carouselimages this }}
+                            <div class="clearfix">
 
-                                          </div>
-                                          <!-- Carousel nav -->
-                                          <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
-                                          <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+                                <div class="space-detail-body-inner pull-left">
+
+                                    <div class="space-image">
+                                        <div id="spaceCarouselContainer" class="image-container">
+                                            <div id="myCarousel" class="carousel slide">
+                                              <!-- Carousel items -->
+                                              <div class="carousel-inner">
+
+                                                <!-- TODO: do an each loop of some sort -->
+                                                {{ carouselimages this }}
+
+                                              </div>
+                                              <!-- Carousel nav -->
+                                              <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+                                              <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+                                            </div>
                                         </div>
+                                        <div id="spaceMap" class="map-container" style="display:none;">map goes here</div>
                                     </div>
-                                    <div id="spaceMap" class="map-container" style="display:none;">map goes here</div>
 
-                                    <div class="space-image-map-buttons btn-group" data-toggle="buttons-radio">
-                                      <button id="carouselControl" class="btn active">images</button>
-                                      <button id="mapControl" class="btn">map</button>
-                                    </div>
+                                </div>
+                                <div class="space-image-map-buttons btn-group pull-left" data-toggle="buttons-radio">
+                                  <button id="carouselControl" class="btn active"><span>gallery</span></button>
+                                  <button id="mapControl" class="btn"><span>map</span></button>
                                 </div>
 
+                            </div>
+
+                            <div style="margin: 0 20px 20px 20px;">
+
+                                <div class="space-info-header">Space Details:</div>
                                 <div class="space-info">
                                      <ul>
 
+                                        <li class="clearfix">
+                                            <div class="space-info-label pull-left">Notes</div>
+                                            <div class="space-info-detail pull-left">
+                                                {{#if extended_info.access_notes }}<p>{{extended_info.access_notes }}</p>{{/if}}
+                                                {{#if extended_info.hours_notes }}<p>{{extended_info.hours_notes }}</p>{{/if}}
+                                                {{#if extended_info.reservation_notes }}<p>{{extended_info.reservation_notes }}</p>{{/if}}
+                                            </div>
+                                        </li>
 
-                                                    <li class="clearfix">
-                                                        <div class="space-info-label pull-left">Notes</div>
-                                                        <div class="space-info-detail pull-left">
-                                                            {{#if extended_info.access_notes }}<p>{{extended_info.access_notes }}</p>{{/if}}
-                                                            {{#if extended_info.hours_notes }}<p>{{extended_info.hours_notes }}</p>{{/if}}
-                                                            {{#if extended_info.reservation_notes }}<p>{{extended_info.reservation_notes }}</p>{{/if}}
-                                                        </div>
-                                                    </li>
-
-
-                                        <li class="clearfix"><div class="space-info-label pull-left">Hours</div><div class="space-info-detail pull-left">{{available_hours}}</div></li>
+                                        <li class="clearfix"><div class="space-info-label pull-left">Hours</div><div class="space-info-detail pull-left">{{formatHours available_hours}}</div></li>
                                         <li class="clearfix"><div class="space-info-label pull-left">Location</div><div class="space-info-detail pull-left">{{extended_info.location_description}}</div></li>
                                         <li class="clearfix">
                                             <div class="space-info-label pull-left">Resources</div>
@@ -411,7 +405,7 @@
                                                 {{#if extended_info.has_outlets }}Outlets&nbsp;{{/if}}
                                                 {{#if extended_info.has_printing }}Printing&nbsp;{{/if}}
                                                 {{#if extended_info.has_projector }}Projector&nbsp;{{/if}}
-                                                {{#if extended_info.has_scanner }}Scanner&nbsp;{{/if}}
+                                                {{#if extended_info.has_scanner }}Scanning&nbsp;{{/if}}
                                                 {{#if extended_info.has_whiteboards }}Whiteboards&nbsp;{{/if}}
                                             </div>
                                         </li>
@@ -422,15 +416,15 @@
                                             <div class="space-info-detail pull-left">
 
                                                 {{#compare extended_info.noise_level "quiet" operator="=="}}
-                                                Low hum
+                                                {% verbatim %}{% trans 'quiet' %}{% endverbatim %}
                                                   {{^}}
                                                         {{#compare extended_info.noise_level "moderate" operator="=="}}
-                                                        Chatter
+                                                        {% verbatim %}{% trans 'moderate' %}{% endverbatim %}
                                                         {{^}}
                                                             {{#compare extended_info.noise_level "silent" operator="=="}}
-                                                            Silent
+                                                            {% verbatim %}{% trans 'silent' %}{% endverbatim %}
                                                             {{^}}
-                                                            Variable
+                                                            {% verbatim %}{% trans 'variable' %}{% endverbatim %}
                                                             {{/compare}}
                                                         {{/compare}}
                                                   {{/compare}}
@@ -450,12 +444,12 @@
                                             <div class="space-info-detail pull-left">
 
                                               {{#compare extended_info.food_nearby "building" operator="=="}}
-                                                 In building
+                                                 {% verbatim %}{% trans 'building' %}{% endverbatim %}
                                               {{^}}
                                                     {{#compare extended_info.food_nearby "space" operator="=="}}
-                                                    In space
+                                                    {% verbatim %}{% trans 'space' %}{% endverbatim %}
                                                     {{^}}
-                                                    In neighboring building
+                                                    {% verbatim %}{% trans 'neighboring' %}{% endverbatim %}
                                                     {{/compare}}
                                               {{/compare}}
 
@@ -465,23 +459,33 @@
 
                                     </ul>
                                 </div>
+
+                                <div class="space-detail-report">
+                                    <a href="/contact/"><img src="/static/img/mail.png" />&nbsp;Report a problem with this space</a>
+                                </div>
+
+                                <div class="space-detail-footer">This space was last updated on {{last_modified}} by<br/> {% if organization %}{{ organization }}{%else%}University of Washington Information Technology{% endif %}</div>
+
                             </div>
                         </div>
-                        <div class="space-detail-footer">This space was last updated {{last_modified}}{{#if organization }} by {{organization}} {{/if}}<a href="/contact/"><button type="button" class="btn btn-small btn-danger">report a problem</button></a></div>
                     </div>
                 </div>
             </div>
         {% endtplhandlebars %}
         {% tplhandlebars "space_details_replace" %}
-                <div class="space-detail">
-                    <div class="space-detail-inner">
-                        <div class="space-detail-header">
-                            <div class="space-detail-type">{{type}}</div>
-                            <div class="space-detail-name">{{name}}</div>
-                            <a class="close" href="#">&times;</a>
-                        </div>
-                        <div class="space-detail-body">
-                            <div class="space-detail-body-inner clearfix">
+            <div class="space-detail">
+                <div class="space-detail-inner">
+                    <div class="space-detail-header">
+                        <div class="space-detail-name">{{name}}</div>
+                        <div class="space-detail-type">{{type}}</div>
+                        <a class="close" href="#"><img src="/static/img/x.png" /></a>
+                    </div>
+                    <div class="space-detail-body">
+
+
+                        <div class="clearfix">
+
+                            <div class="space-detail-body-inner pull-left">
 
                                 <div class="space-image">
                                     <div id="spaceCarouselContainer" class="image-container">
@@ -498,95 +502,104 @@
                                           <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
                                         </div>
                                     </div>
-                                    <div id="spaceMap" class="map-container" style="display:none; "></div>
-
-                                     <div class="space-image-map-buttons btn-group" data-toggle="buttons-radio">
-                                      <button id="carouselControl" class="btn active">images</button>
-                                      <button id="mapControl" class="btn">map</button>
-                                    </div>
-
+                                    <div id="spaceMap" class="map-container" style="display:none;">map goes here</div>
                                 </div>
-                                <div class="space-info">
-                                     <ul>
 
-                                        <li class="clearfix">
-                                            <div class="space-info-label pull-left">Notes</div>
-                                            <div class="space-info-detail pull-left">
-                                                {{#if extended_info.access_notes }}<p>{{extended_info.access_notes }}</p>{{/if}}
-                                                {{#if extended_info.hours_notes }}<p>{{extended_info.hours_notes }}</p>{{/if}}
-                                                {{#if extended_info.reservation_notes }}<p>{{extended_info.reservation_notes }}</p>{{/if}}
-                                            </div>
-                                        </li>
+                            </div>
+                            <div class="space-image-map-buttons btn-group pull-left" data-toggle="buttons-radio">
+                              <button id="carouselControl" class="btn active"><span>gallery</span></button>
+                              <button id="mapControl" class="btn"><span>map</span></button>
+                            </div>
 
-                                        <li class="clearfix"><div class="space-info-label pull-left">Hours</div><div class="space-info-detail pull-left">{{available_hours}}</div></li>
-                                        <li class="clearfix"><div class="space-info-label pull-left">Location</div><div class="space-info-detail pull-left">{{extended_info.location_description}}</div></li>
-                                        <li class="clearfix">
-                                            <div class="space-info-label pull-left">Resources</div>
-                                            <div class="space-info-detail pull-left">
-                                                {{#if extended_info.has_computers }}Computers{{/if}}
-                                                {{#if extended_info.has_displays }}Displays&nbsp;{{/if}}
-                                                {{#if extended_info.has_outlets }}Outlets&nbsp;{{/if}}
-                                                {{#if extended_info.has_printing }}Printing&nbsp;{{/if}}
-                                                {{#if extended_info.has_projector }}Projector&nbsp;{{/if}}
-                                                {{#if extended_info.has_scanner }}Scanner&nbsp;{{/if}}
-                                                {{#if extended_info.has_whiteboards }}Whiteboards&nbsp;{{/if}}
-                                            </div>
-                                        </li>
+                        </div>
 
-                                        {{#if extended_info.noise_level }}
-                                        <li class="clearfix">
-                                            <div class="space-info-label pull-left">Noise Level</div>
-                                            <div class="space-info-detail pull-left">
+                        <div style="margin: 0 20px 20px 20px;">
 
-                                                {{#compare extended_info.noise_level "quiet" operator="=="}}
-                                                Low hum
-                                                  {{^}}
-                                                        {{#compare extended_info.noise_level "moderate" operator="=="}}
-                                                        Chatter
-                                                        {{^}}
-                                                            {{#compare extended_info.noise_level "silent" operator="=="}}
-                                                            Silent
-                                                            {{^}}
-                                                            Variable
-                                                            {{/compare}}
-                                                        {{/compare}}
-                                                  {{/compare}}
+                            <div class="space-info-header">Space Details:</div>
+                            <div class="space-info">
+                                 <ul>
+                                    <li class="clearfix">
+                                        <div class="space-info-label pull-left">Notes</div>
+                                        <div class="space-info-detail pull-left">
+                                            {{#if extended_info.access_notes }}<p>{{extended_info.access_notes }}</p>{{/if}}
+                                            {{#if extended_info.hours_notes }}<p>{{extended_info.hours_notes }}</p>{{/if}}
+                                            {{#if extended_info.reservation_notes }}<p>{{extended_info.reservation_notes }}</p>{{/if}}
+                                        </div>
+                                    </li>
+                                    <li class="clearfix"><div class="space-info-label pull-left">Hours</div><div class="space-info-detail pull-left">{{formatHours available_hours}}</div></li>
+                                    <li class="clearfix"><div class="space-info-label pull-left">Location</div><div class="space-info-detail pull-left">{{extended_info.location_description}}</div></li>
+                                    <li class="clearfix">
+                                        <div class="space-info-label pull-left">Resources</div>
+                                        <div class="space-info-detail pull-left">
+                                            {{#if extended_info.has_computers }}Computers{{/if}}
+                                            {{#if extended_info.has_displays }}Displays&nbsp;{{/if}}
+                                            {{#if extended_info.has_outlets }}Outlets&nbsp;{{/if}}
+                                            {{#if extended_info.has_printing }}Printing&nbsp;{{/if}}
+                                            {{#if extended_info.has_projector }}Projector&nbsp;{{/if}}
+                                            {{#if extended_info.has_scanner }}Scanning&nbsp;{{/if}}
+                                            {{#if extended_info.has_whiteboards }}Whiteboards&nbsp;{{/if}}
+                                        </div>
+                                    </li>
 
-                                            </div>
-                                        </li>
-                                        {{/if}}
+                                    {{#if extended_info.noise_level }}
+                                    <li class="clearfix">
+                                        <div class="space-info-label pull-left">Noise Level</div>
+                                        <div class="space-info-detail pull-left">
 
-                                        {{#if extended_info.has_natural_light }}
-                                        <li class="clearfix"><div class="space-info-label pull-left">Lighting</div><div class="space-info-detail pull-left">Natural light</div></li>
-                                        {{/if}}
-
-
-                                        {{#if extended_info.food_nearby }}
-                                        <li class="clearfix">
-                                            <div class="space-info-label pull-left">Coffee/Food</div>
-                                            <div class="space-info-detail pull-left">
-
-                                              {{#compare extended_info.food_nearby "building" operator="=="}}
-                                                 In building
+                                            {{#compare extended_info.noise_level "quiet" operator="=="}}
+                                            {% verbatim %}{% trans 'quiet' %}{% endverbatim %}
                                               {{^}}
-                                                    {{#compare extended_info.food_nearby "space" operator="=="}}
-                                                    In space
+                                                    {{#compare extended_info.noise_level "moderate" operator="=="}}
+                                                    {% verbatim %}{% trans 'moderate' %}{% endverbatim %}
                                                     {{^}}
-                                                    In neighboring building
+                                                        {{#compare extended_info.noise_level "silent" operator="=="}}
+                                                        {% verbatim %}{% trans 'silent' %}{% endverbatim %}
+                                                        {{^}}
+                                                        {% verbatim %}{% trans 'variable' %}{% endverbatim %}
+                                                        {{/compare}}
                                                     {{/compare}}
                                               {{/compare}}
 
-                                            </div>
-                                        </li>
-                                        {{/if}}
+                                        </div>
+                                    </li>
+                                    {{/if}}
 
-                                    </ul>
-                                </div>
+                                    {{#if extended_info.has_natural_light }}
+                                    <li class="clearfix"><div class="space-info-label pull-left">Lighting</div><div class="space-info-detail pull-left">Natural light</div></li>
+                                    {{/if}}
+
+
+                                    {{#if extended_info.food_nearby }}
+                                    <li class="clearfix">
+                                        <div class="space-info-label pull-left">Food/Coffee</div>
+                                        <div class="space-info-detail pull-left">
+
+                                          {{#compare extended_info.food_nearby "building" operator="=="}}
+                                             {% verbatim %}{% trans 'building' %}{% endverbatim %}
+                                          {{^}}
+                                                {{#compare extended_info.food_nearby "space" operator="=="}}
+                                                {% verbatim %}{% trans 'space' %}{% endverbatim %}
+                                                {{^}}
+                                                {% verbatim %}{% trans 'neighboring' %}{% endverbatim %}
+                                                {{/compare}}
+                                          {{/compare}}
+
+                                        </div>
+                                    </li>
+                                    {{/if}}
+
+                                </ul>
                             </div>
+
+                            <div class="space-detail-report">
+                                <a href="/contact/"><img src="/static/img/mail.png" />&nbsp;Report a problem with this space</a>
+                            </div>
+                            <div class="space-detail-footer">This space was last updated on {{last_modified}} by<br/> {% if organization %}{{ organization }}{%else%}University of Washington Information Technology{% endif %}</div>
+
                         </div>
-                        <div class="space-detail-footer">This space was last updated {{last_modified}}{{#if organization }} by {{organization}} {{/if}}<a href="/contact/"><button type="button" class="btn btn-small btn-danger">report a problem</button></a></div>
                     </div>
                 </div>
+            </div>
         {% endtplhandlebars %}
 
         <div id="info_list">

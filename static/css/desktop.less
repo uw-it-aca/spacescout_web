@@ -1,11 +1,27 @@
+/* Less Variables */
+
+@purple_text: #4c497e;
+@grey_light: #b2b2b2;
+@grey_dark: #4d4d4d;
+@grey_border: #d6d6d6;
+@grey_background: #e5e5e5;
+
 /* start overriding the mobile styles */
 
 #container { min-width:748px; max-width:1024px; margin: 10px; }
 
 #nav { z-index: 1000;
 
-    .logo { height: 80px; line-height: 80px; width: 172px; background: url('/static/img/spacescout_logo.png') no-repeat 0px 50%; background-size: auto; }
-    .actions { height: 80px; line-height: 80px; margin-right: 0; }
+    .logo-container { background-color: transparent; }
+
+     .logo { height: 80px; line-height: 80px; width: 172px; background: url('/static/img/spacescout_logo.png') no-repeat 0px 50%; background-size: auto; }
+
+      #bubble_desktop { margin: 0; display: block; float: right; height: 80px; margin-right: 30px; width: 50% }
+      .bubble-inner { margin-top: 20px; }
+
+      .actions { line-height: 80px; height: 80px; }
+
+    #bubble_mobile { display: none; }
 
     #filter_container {
          position:absolute; top:80px; left:0; right:0; margin: 0;
@@ -25,8 +41,6 @@
             }
 
             .filter-submit { text-align: right; }
-
-
 
         }
 
@@ -56,10 +70,6 @@
 
         .space-detail { display: none; background: #fff; background-size: 20px; position: absolute;  color: #333; /*width: 470px; top: 5px; bottom: 5px; right: 5px;*/ top: 10px; bottom: 10px; left: 10px; right: 0px; margin-right: 10px;
 
-            /*-webkit-border-radius: 2px;
-            -moz-border-radius: 2px;
-            border-radius: 2px;*/
-
             box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.5);
             -moz-box-shadow: 1px 1px 6px rgba(0,0,0, 0.5);
             -webkit-box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.5);
@@ -67,35 +77,49 @@
             .space-detail-inner { display:none; padding: 15px; background-color: #fff;
 
                 .space-detail-header { position: relative; height: 60px;
-                    .space-detail-type { color: #666; }
-                    .space-detail-name { font-size: 20px; color: #000; margin: 5px 0; }
+                    .space-detail-type { color: @grey_dark; }
+                    .space-detail-name { font-size: 20px; color: @purple_text; margin: 5px 0; }
                     .close { position: absolute; right: 0; top: 0; float: none; }
                 }
-                .space-detail-body { overflow-y: auto; -webkit-overflow-scrolling: touch; border-top: solid 1px #eee; border-bottom: solid 1px #eee; padding: 10px 0;
-                    .space-detail-body-inner {
+                .space-detail-body { overflow-y: auto; -webkit-overflow-scrolling: touch; border: solid 1px @grey_border; padding: 0; background-color: #EDEDED;
 
-                        .image-container, .map-container { width: 80%; margin: 0 auto; }
+                    .space-detail-body-inner { background: #fff; border: solid 1px @grey_border; padding: 5px; margin: 20px 0 20px 20px; width: 76%;
+                        .image-container, .map-container { margin: 0 auto; }
                         .image-container {
-                            .carousel { margin: 0; background: #f8f8f8 url('/static/img/spinner.gif') no-repeat 50% 50%; background-size: 20px; }
+                            .carousel { margin: 0; background: #f8f8f8 url('/static/img/spinner.gif') no-repeat 50% 50%; background-size: 20px; min-height: 201px; }
                         }
-
-                        .space-image { }
 
                         .map-container { background: #f8f8f8 url('/static/img/spinner.gif') no-repeat 50% 50%; background-size: 20px; }
 
-                        .space-info {
-                            ul { margin: 0; }
-                            li { list-style: none; margin-bottom: 5px;
-                              .space-info-label { width: 35%; margin-right: 10px; color: #ccc; overflow: hidden; text-overflow: ellipsis; }
-                              .space-info-detail { width: 60%; }
-                            }
-                        }
-
-                        .space-image-map-buttons { text-align:center; margin: 5px 0; }
-
                     }
                 }
-                .space-detail-footer { text-align: center; font-size: 12px; color: #ccc; height: 50px; padding-top: 10px; }
+
+                .space-info-header { margin-bottom: 15px; color: @purple_text; }
+                .space-info {
+                    ul { margin: 0; }
+                    li { list-style: none; margin-bottom: 5px;
+                      .space-info-label { width: 35%; margin-right: 10px; color: @grey_light; overflow: hidden; text-overflow: ellipsis; }
+                      .space-info-detail { width: 60%; }
+                    }
+                }
+
+                .space-image-map-buttons { text-align:right; margin: 20px 0 0 -1px; display: block;
+                    button { border: solid 1px @grey_border !important; padding: 4px 7px; display: block; margin: 0; }
+                    button.active { background-color: #fff; border-left: none !important; }
+
+                    #carouselControl span { background: transparent url('/static/img/gallery_grey.png') no-repeat 50% 50%; display: inline-block; text-indent: -9999px; width: 30px; height: 25px; }
+                    #carouselControl.active span { background: transparent url('/static/img/gallery_purple.png') no-repeat 50% 50%; width: 31px; }
+
+                    #mapControl span { background: transparent url('/static/img/locate_grey.png') no-repeat 50% 50%; display: inline-block; text-indent: -9999px; width: 30px; height: 25px; }
+                    #mapControl.active span { background: transparent url('/static/img/locate_purple.png') no-repeat 50% 50%; width: 31px; }
+                }
+
+                .space-detail-report { text-align:center;margin-top:20px;
+                    a, a:visited { vertical-align:bottom; color: @purple_text; }
+                }
+                .space-detail-footer { text-align: center; font-size: 12px; color: @grey_light; height: 50px; padding-top: 10px; }
+
+
             }
         }
     }
@@ -116,7 +140,7 @@
     #info_items {
         ul { margin: 0px;
             li {
-                .space-detail-list-item { width: 52%; }
+                .space-detail-list-item { width: 49%; }
             }
 
             li.selected { background-color: #6160a2;
@@ -158,7 +182,26 @@
             }
         }
     }
+    #map_canvas {
 
+        #space_detail_container {
+
+            .space-detail {
+
+                .space-detail-inner {
+
+                    .space-detail-body {
+
+                        .space-detail-body-inner { width: 82%;
+                            .image-container {
+                                .carousel { }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 
