@@ -322,7 +322,26 @@ ul.select2-choices {
     .select2-search-field input { height: auto !important; }
 }
 
+ul.space-info-resources-list {
+    display: inline;
+    margin: 0;
+    padding: 0;
+}
 
+ul.space-info-resources-list li {
+    display: inline;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+ul.space-info-resources-list li:after {
+    content: ", ";
+}
+
+ul.space-info-resources-list li:last-child:after {
+    content: "";
+}
 
 /* iphone portrait */
 @media screen and (min-width: 320px) {

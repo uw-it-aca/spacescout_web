@@ -79,13 +79,15 @@
                                 <li class="clearfix">
                                     <div class="space-info-label pull-left">Resources</div>
                                     <div class="space-info-detail pull-left">
-                                        {% if extended_info.has_computers %}Computers&nbsp;{% endif %}
-                                        {% if extended_info.has_displays %}Displays&nbsp;{% endif %}
-                                        {% if extended_info.has_outlets %}Outlets&nbsp;{% endif %}
-                                        {% if extended_info.has_printing %}Printing&nbsp;{% endif %}
-                                        {% if extended_info.has_projector %}Projector&nbsp;{% endif %}
-                                        {% if extended_info.has_scanner %}Scanner&nbsp;{% endif %}
-                                        {% if extended_info.has_whiteboards %}Whiteboards&nbsp;{% endif %}
+                                        <ul class='space-info-resources-list'>
+                                        {% if extended_info.has_computers %}<li>Computers</li>{% endif %}
+                                        {% if extended_info.has_displays %}<li>Displays</li>{% endif %}
+                                        {% if extended_info.has_outlets %}<li>Outlets</li>{% endif %}
+                                        {% if extended_info.has_printing %}<li>Printing</li>{% endif %}
+                                        {% if extended_info.has_projector %}<li>Projector</li>{% endif %}
+                                        {% if extended_info.has_scanner %}<li>Scanner</li>{% endif %}
+                                        {% if extended_info.has_whiteboards %}<li>Whiteboards</li>{% endif %}
+                                        </ul>
                                     </div>
                                 </li>
                                 {% if extended_info.noise_level %}
