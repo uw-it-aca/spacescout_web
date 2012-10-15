@@ -26,7 +26,7 @@ button {
     border-color: #3e3e3e !important;
 }
 
-#container { max-width: 768px; margin: 0 auto; }
+#container { max-width: 768px; margin: 0 auto; position: relative; }
 
 #nav { z-index: 1;
 
@@ -35,7 +35,16 @@ button {
 
     #bubble_desktop { display: none; }
 
-    .bubble-inner { background-color:#fff; border: solid 1px @grey_border; }
+    .bubble-inner { background-color:#fff; border: solid 1px @grey_border;
+
+        .bubble-tab { width:15px; background: red; position:absolute; top: -20px; right: 15px; }
+        .bubble-filters { width: 82%;
+            ul { list-style: none; margin: 0; margin-left: 4px; margin-top: 4px; height: 28px; overflow: hidden;
+                li { display: inline-block; background-color: #eee; padding: 2px 5px; margin-bottom: 4px; font-size: 11px; }
+            }
+        }
+        .bubble-info { background: #eee; width: 50px; height:32px; }
+    }
 
     .actions { width: auto; float: right; text-align: right; height: 50px; line-height: 50px; margin-right: 10px;
 
@@ -45,12 +54,10 @@ button {
 
         #back_home_button { background:#514d83 url('/static/img/left.png') no-repeat 8px 50%; display:inline-block; color: #8987ab; width: 30px; text-indent: -999px; }
     }
-
-
-
     #bubble_mobile {  margin: 10px 10px 5px 10px; }
+}
 
-    #filter_container { position: relative; margin: 0 10px;
+ #filter_container { position: relative; margin: 0 10px;
 
         #filter_block { display:none; background-color:#222; color: #666; overflow-y: auto; -webkit-overflow-scrolling: touch;
 
@@ -108,7 +115,6 @@ button {
             #filter_button { background-color:#514d83; display:inline-block;padding: 0 10px; }
         }*/
     }
-}
 
 /* mobile only: space details page */
 #space_details_header { margin: 10px;

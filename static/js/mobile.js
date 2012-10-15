@@ -240,7 +240,7 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
         hour = ""+hour+":"+min;
         $("#day-from").val(weekdays[date.getDay()])
         $("#hour-from").val(hour)
- 
+
 
         // handle view details click
         $('.view-details').live('click', function(e){
@@ -374,10 +374,9 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
     }
 
-
     function resizeFilterBlock() {
         var winH = $(window).height();
-        $("#filter_block").height(winH - 60);
+        $("#filter_block").height(winH - 110);
     }
 
     function resizeCarouselMapContainer() {
