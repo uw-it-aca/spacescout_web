@@ -237,9 +237,11 @@
                         <div id="building_list_container" style="margin-top:8px;display:none;">
                             <select class="building-location" name="e9" id="e9">
                                 {% for letter, buildings in buildingdict.items %}
+                                <optgroup label="{{ letter }}">
                                     {% for building in buildings%}
                                     <option value="{{ building }}">{{ building }}</option>
                                     {% endfor %}
+                                </optgroup>
                                 {% endfor %}
                             </select>
 
