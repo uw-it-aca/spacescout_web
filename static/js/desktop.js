@@ -59,7 +59,33 @@ Handlebars.registerHelper('ifany', function() {
 	var iphone = deviceAgent.match(/(iphone|ipod)/);
 
 	$(document).ready(function() {
-
+        
+        var weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']; 
+        var date = new Date();
+        var hour = date.getHours();
+        var min = date.getMinutes();
+        
+        
+        if (min < 16) {
+            min = "00";
+        }else if (min < 46) {
+            min = "30";
+        }else {
+            min = "00";
+            hour++;
+        }
+        
+        if (hour > 11) {
+            $("#ampm-from").val("PM");
+        }else {
+            $("#ampm-from").val("AM");
+        }
+        if (hour > 12) {
+            hour = hour-12;
+        }
+        hour = ""+hour+":"+min;
+        $("#day-from").val(weekdays[date.getDay()]);
+        $("#hour-from").val(hour);
 		desktopContent();
 
 		// Toggle Filter display
@@ -86,7 +112,7 @@ Handlebars.registerHelper('ifany', function() {
 
         // Close the filter display using Cancel button
         $('#cancel_results_button').click(function() {
-
+            
             // reset the map
             clear_custom_search();
 
@@ -112,13 +138,43 @@ Handlebars.registerHelper('ifany', function() {
             $('#open_now').parent().removeClass("selected");
             $('#hours_list_container').hide();
             $('#hours_list_input').parent().removeClass("selected");
-
+            var date = new Date();
+            var hour = date.getHours();
+            var min = date.getMinutes();
+            
+            
+            if (min < 16) {
+                min = "00";
+            }else if (min < 46) {
+                min = "30";
+            }else {
+                min = "00";
+                hour++;
+            }
+            
+            if (hour > 11) {
+                $("#ampm-from").val("PM");
+            }else {
+                $("#ampm-from").val("AM");
+            }
+            if (hour > 12) {
+                hour = hour-12;
+            }
+            hour = ""+hour+":"+min;
+            $("#day-from").val(weekdays[date.getDay()]);
+            $("#hour-from").val(hour);
+            
+            $("#day-until").val("No pref")
+            $("#hour-until").val("No pref")
+            $("#ampm-until").val("AM")
             // reset location
             $('#entire_campus').prop('checked', true);
             $('#entire_campus').parent().removeClass("selected");
             $('#building_list_container').hide();
             $('#building_list_input').parent().removeClass("selected");
-
+            $('#building_list_container').children().children().children(".select2-search-choice").remove();
+            $('#building_list_container').children().children().children().children().val('Select building(s)'); 
+            $('#building_list_container').children().children().children().children().attr('style', "");
         });
 
 
