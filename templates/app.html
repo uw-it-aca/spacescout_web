@@ -35,6 +35,7 @@
 
         </div>
 
+        {% if is_mobile %}
         <div id="bubble_mobile">
             <div class="bubble-inner clearfix" style="position:relative;">
                 <div style="width:15px; background: red; position:absolute; top: -20px; right: 15px;">tab</div>
@@ -42,6 +43,7 @@
                 <div class="pull-right" style="background: red;">130<br/> spaces</div>
             </div>
         </div>
+        {% endif %}
 
         <div id="filter_container">
         <form>
@@ -229,19 +231,18 @@
                               <input type="radio" name="optionsLocations" id="entire_campus" value="option1" checked> Entire campus
                             </label>
                             <label class="radio inline">
-                              <input type="radio" name="optionsLocations" id="building_list_input" value="option2"> Specific building(s)
+                              <input type="radio" name="optionsLocations" id="building_list_input" value="option2"> Specific building
                             </label>
                         </div>
                         <div id="building_list_container" style="margin-top:8px;display:none;">
-                            <select multiple="" name="e9" id="e9" style="display:none; " class="populate">
+                            <select class="building-location" name="e9" id="e9">
                                 {% for letter, buildings in buildingdict.items %}
-                                <optgroup label="{{ letter }}">
                                     {% for building in buildings%}
                                     <option value="{{ building }}">{{ building }}</option>
                                     {% endfor %}
-                                </optgroup>
                                 {% endfor %}
                             </select>
+
                         </div>
 
                     </div>

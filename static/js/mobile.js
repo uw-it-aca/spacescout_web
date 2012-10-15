@@ -205,12 +205,6 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
         });
 
-        // fancy location select
-        $("#e9").select2({
-                placeholder: "Select building(s)",
-                allowClear: true
-            });
-
         // handle checkbox and radio button clicks
         $('.checkbox input:checkbox').click(function() {
             if(this.checked) {
