@@ -348,7 +348,7 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
         var headerH = $('#nav').height();
         //var contentH = windowH - headerH;
         //var mainContentH = windowH - headerH + 35;
-        var mapH = windowH - headerH - 70; // enough to show the loading spinner at the bottom of the viewport
+        var mapH = windowH - headerH - 35; // enough to show the loading spinner at the bottom of the viewport
 
         $('#map_canvas').height(mapH);
         $('#map_canvas').css({ minHeight: mapH })
