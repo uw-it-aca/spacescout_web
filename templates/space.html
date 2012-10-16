@@ -20,7 +20,7 @@
             <div class="space-detail-name pull-left" style="">{{name}}</div>
             <img id="back_home_button" class="pull-right" src="/static/img/details_arrow.png" />
         </div>
-       <div class="space-detail-type">{{ type|join:", " }}</div>
+       <div class="space-detail-type">{{ type|join:", " }} {% if capacity %}<span class="space-detail-capacity">[Seats&nbsp;{{capacity}}]</span>{% endif %}</div>
     </div>
 
 
