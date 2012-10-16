@@ -153,7 +153,7 @@ function run_custom_search() {
         window.spacescout_search_options["open_until"] = until_query.join(",");
     }
     // location
-    if ($('select#e9').val()) {
+    if ($("#building_list_input").attr("checked") == "checked") {
         window.spacescout_search_options["building_name"] = $('select#e9').val();
     }
 
