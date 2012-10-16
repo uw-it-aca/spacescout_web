@@ -85,7 +85,9 @@
             .space-detail-inner { display:none; padding: 15px; background-color: #fff;
 
                 .space-detail-header { position: relative; height: 60px;
-                    .space-detail-type { color: @grey_dark; }
+                    .space-detail-type { color: @grey_dark;
+                        .space-detail-capacity { color: @grey_light; font-size: 11px; text-transform: uppercase; display: inline-block; margin-left: 5px; }
+                    }
                     .space-detail-name { font-size: 20px; color: @purple_text; margin: 5px 0; }
                     .close { position: absolute; right: 0; top: 0; float: none; }
                 }
@@ -148,7 +150,10 @@
     #info_items {
         ul { margin: 0px;
             li {
-                .space-detail-list-item { width: 49%; }
+                .space-detail-list-item { width: 49%;
+                    .space-detail-type-label { width: 70%; }
+                }
+
             }
 
             li.selected { background-color: #6160a2;
