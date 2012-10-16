@@ -221,18 +221,6 @@ function clear_custom_search() {
 function initialize() {
     var i;
 
-    /*$("#cancel_custom_search").click(function() {
-        $( "#dialog-modal" ).dialog("close");
-    });
-
-    $("#custom_search").click(function() {
-        $( "#dialog-modal" ).dialog({
-            height: 340,
-            width: 500,
-            modal: true
-        });
-    });
-    */
     $("#view_results_button").click(run_custom_search);
 
     window.spacescout_search_options = {};

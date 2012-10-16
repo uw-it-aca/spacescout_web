@@ -55,11 +55,6 @@ function sortDays(days) {
 
 	$(document).ready(function() {
 
-	   // check if a map_canvas exists... populate it
-    	if ($("#map_canvas").length == 1) {
-          initialize();
-        }
-
     	// handle clicking on map centering buttons
         $('#center_all').live('click', function(e){
             window.spacescout_map.setCenter(new google.maps.LatLng(window.default_latitude, window.default_longitude));

@@ -63,6 +63,11 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
 		mobileContent();
 
+	   // check if a map_canvas exists... populate it
+    	if ($("#map_canvas").length == 1) {
+          initialize();
+        }
+
 		// initialize the carousel for mobile standalone space page
         initializeCarousel();
         resizeCarouselMapContainer();

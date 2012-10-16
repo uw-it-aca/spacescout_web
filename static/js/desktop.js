@@ -88,6 +88,11 @@ Handlebars.registerHelper('ifany', function() {
         $("#hour-from").val(hour);
 		desktopContent();
 
+	   // check if a map_canvas exists... populate it
+    	if ($("#map_canvas").length == 1) {
+          initialize();
+        }
+
 		// Toggle Filter display
 		$('#filter_button').click(function() {
 
