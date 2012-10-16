@@ -26,7 +26,7 @@ button {
     border-color: #3e3e3e !important;
 }
 
-#container { max-width: 768px; margin: 0 auto; }
+#container { max-width: 768px; margin: 0 auto; position: relative; }
 
 #nav { z-index: 1;
 
@@ -35,7 +35,19 @@ button {
 
     #bubble_desktop { display: none; }
 
-    .bubble-inner { background-color:#fff; border: solid 1px @grey_border; }
+    .bubble-inner { background-color:#fff; border: solid 1px @grey_border;
+
+        .bubble-tab { width:15px; background: transparent url('/static/img/tri-up.png') no-repeat; position:absolute; top: -7px; right: 15px; text-indent: -9999px; }
+        .bubble-filters { width: 82%;
+            ul { list-style: none; margin: 0; margin-left: 4px; margin-top: 4px; height: 28px; overflow: hidden;
+                li { display: inline-block; background-color: #eee; padding: 2px 5px; margin-bottom: 4px; font-size: 11px; }
+            }
+        }
+        .bubble-info { background: #e5e5e5; width: 50px; height:32px;
+            .count { display: block; padding: 4px; text-align: center; font-weight: bold; color: @purple_text; font-size: 20px; margin-top: 1px; }
+            .spaces { display: block; text-align: center; font-size: 11px; text-transform: uppercase; color: @grey_light; }
+        }
+    }
 
     .actions { width: auto; float: right; text-align: right; height: 50px; line-height: 50px; margin-right: 10px;
 
@@ -45,12 +57,10 @@ button {
 
         #back_home_button { background:#514d83 url('/static/img/left.png') no-repeat 8px 50%; display:inline-block; color: #8987ab; width: 30px; text-indent: -999px; }
     }
-
-
-
     #bubble_mobile {  margin: 10px 10px 5px 10px; }
+}
 
-    #filter_container { position: relative; margin: 0 10px;
+ #filter_container { position: relative; margin: 0 10px;
 
         #filter_block { display:none; background-color:#222; color: #666; overflow-y: auto; -webkit-overflow-scrolling: touch;
 
@@ -108,7 +118,6 @@ button {
             #filter_button { background-color:#514d83; display:inline-block;padding: 0 10px; }
         }*/
     }
-}
 
 /* mobile only: space details page */
 #space_details_header { margin: 10px;
@@ -261,6 +270,9 @@ button {
 }
 
 
+.contact-header { font-size: 20px; margin: 5px 0;  color: @purple_text; width:85%; }
+
+
 /* Override default Bootstrap Popover styles */
 
 .close, .close:hover { opacity: 1; }
@@ -295,57 +307,6 @@ select {
 
 .carousel-control { top: 50% !important; border: 2px solid #fff; }
 .carousel-inner img { max-width: 100% !important; margin: 0 auto; }
-
-/* Override Select2 */
-.select2-container {
-    display: block;
-}
-
-.select2-drop {
-    margin-top: 5px !important;
-
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
-    border-radius: 2px;
-
-    box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.5);
-    -moz-box-shadow: 1px 2px 6px rgba(0,0,0, 0.5);
-    -webkit-box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.5);
-    border: none;
-}
-
-ul.select2-choices {
-    background-color: white;
-    border: 1px solid #CCC;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-    -webkit-transition: border linear 0.2s, box-shadow linear 0.2s;
-    -moz-transition: border linear 0.2s, box-shadow linear 0.2s;
-    -o-transition: border linear 0.2s, box-shadow linear 0.2s;
-    transition: border linear 0.2s, box-shadow linear 0.2s;
-    line-height: 20px;
-
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
-    border-radius: 2px;
-
-    .select2-search-choice { line-height: 18px !important; }
-    .select2-search-field input { height: auto !important; }
-}
-
-.select2-container-multi .select2-choices {
-    cursor: default !important;
-    background-image: none;
-    background: #eaeaea url('/static/img/dropdown.png') no-repeat top right !important;
-    padding-right: 30px;
-    max-height: 80px;
-    overflow-y: auto;
-}
-
-.select2-container-multi .select2-choices .select2-search-field input { cursor: default !important; }
-
-.select2-results .select2-result-label { cursor: default; }
 
 /* iphone portrait */
 @media screen and (min-width: 320px) {

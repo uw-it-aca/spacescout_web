@@ -17,6 +17,7 @@
     <div id="nav" style="position:relative;">
 
         <div class="logo-container clearfix">
+
             <div class="logo">SPACESCOUT&trade;</div>
 
             <div class="actions">
@@ -27,27 +28,63 @@
 
             <div id="bubble_desktop">
                 <div class="bubble-inner clearfix" style="position:relative;">
-                <div style="width:15px; background: red; position:absolute; top: 10px; right: -15px;">tab</div>
-                <div class="pull-left">open now whiteboard blah blahb balj</div>
-                <div class="pull-right" style="background: red;">130<br/> spaces</div>
-            </div>
+                    <div class="bubble-tab">tab</div>
+                    <div class="bubble-filters pull-left">
+                        <ul>
+                            <li>open now</li>
+                            <li>entire campus</li>
+                            <li>asldfkj</li>
+                            <li>aslkdjflaksd</li>
+                            <li>asdlkfj</li>
+                            <li>sadfsdaf</li>
+                            <li>bananas</li>
+                            <li>sadfasd</li>
+                            <li>asdfa</li>
+                            <li>asdlkfj</li>
+                            <li>sadfsdaf</li>
+                            <li>asdf</li>
+                            <li>sadfasd</li>
+                            <li>sadfsdaf</li>
+                            <li>asdf</li>
+                            <li>...</li>
+                        </ul>
+                    </div>
+                    <div class="pull-right bubble-info"><span class="count">130</span><span class="spaces">spaces</span></div>
+                </div>
             </div>
 
         </div>
+
 
         {% if is_mobile %}
         <div id="bubble_mobile">
             <div class="bubble-inner clearfix" style="position:relative;">
-                <div style="width:15px; background: red; position:absolute; top: -20px; right: 15px;">tab</div>
-                <div class="pull-left">open now whiteboard blah blahb balj</div>
-                <div class="pull-right" style="background: red;">130<br/> spaces</div>
+                <div class="bubble-tab" style="">tab</div>
+                <div class="bubble-filters pull-left" >
+                    <ul>
+                        <li>open now</li>
+                        <li>entire campus</li>
+                        <li>asldfkj</li>
+                        <li>...</li>
+                        <li>aslkdjflaksd</li>
+                        <li>asdlkfj</li>
+                        <li>sadfsdaf</li>
+                        <li>asdlkfj</li>
+                        <li>sadfsdaf</li>
+                        <li>asdf</li>
+                        <li>sadfasd</li>
+                        <li>asdfa</li>
+                    </ul>
+                </div>
+                <div class="pull-right bubble-info" style=""><span class="count">130</span></div>
             </div>
         </div>
         {% endif %}
 
-        <div id="filter_container">
-        <form>
+    </div>
 
+    <div id="filter_container">
+        <form>
             <div id="filter_block" style="display:none;">
                 <div class="inner clearfix">
 
@@ -288,7 +325,7 @@
                             <p><small><em>Select preferred conditions, if any:</em></small></p>
 
                             <div id="filter_noise_level" class="choice-group">
-                                <h3>Noise Level</h3>
+                                <h3>Noise level</h3>
                                 <div>
                                 <label class="checkbox inline">
                                   <input type="checkbox" id="silent" name="noise_level" value="silent"> {% trans 'silent' %}
@@ -324,10 +361,7 @@
                         </div>
                     </div>
                 </div>
-
             </div>
-
-        </div>
         </form>
     </div>
 

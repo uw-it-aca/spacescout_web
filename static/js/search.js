@@ -265,7 +265,13 @@ function load_map(latitude, longitude, zoom) {
         zoom: zoom,
         mapTypeControl: false,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
-        streetViewControl: false
+        streetViewControl: false,
+        styles: [{
+            featureType: "poi.place_of_worship",
+            stylers: [
+              { "visibility": "off" }
+                ]
+        }]
     };
 
     if (window.spacescout_map == null) {
@@ -280,7 +286,7 @@ function load_map(latitude, longitude, zoom) {
                 anchor: [5, 0], // These values can only be positive
                 height: 40,
                 width: 35, // The icon width is actually 40, but the anchorIcon offset doesn't seem to work right, this gets the cluster icon centered on the number
-                url: '/static/img/pins/pin00.png',
+                url: '/static/img/pins/pin00.png'
             }]
         };
         window.mc = new MarkerClusterer(spacescout_map, [], mcOpts);

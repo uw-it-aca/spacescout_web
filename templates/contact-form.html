@@ -1,6 +1,8 @@
 {% extends "contact.html" %}
 
 {% block contact-content %}
+
+    {% if not is_mobile %}<div class="contact-header">Report a problem</div>{% endif %}
     <form action="/contact/" method="post">{% csrf_token %}
         <div class="fieldWrapper">
             Space<br />

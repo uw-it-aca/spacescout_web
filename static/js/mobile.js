@@ -240,7 +240,7 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
         hour = ""+hour+":"+min;
         $("#day-from").val(weekdays[date.getDay()])
         $("#hour-from").val(hour)
- 
+
 
         // handle view details click
         $('.view-details').live('click', function(e){
@@ -348,7 +348,7 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
         var headerH = $('#nav').height();
         //var contentH = windowH - headerH;
         //var mainContentH = windowH - headerH + 35;
-        var mapH = windowH - headerH - 70; // enough to show the loading spinner at the bottom of the viewport
+        var mapH = windowH - headerH - 35; // enough to show the loading spinner at the bottom of the viewport
 
         $('#map_canvas').height(mapH);
         $('#map_canvas').css({ minHeight: mapH })
@@ -374,10 +374,9 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
     }
 
-
     function resizeFilterBlock() {
         var winH = $(window).height();
-        $("#filter_block").height(winH - 60);
+        $("#filter_block").height(winH - 110);
     }
 
     function resizeCarouselMapContainer() {
