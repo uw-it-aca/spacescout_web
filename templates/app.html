@@ -18,7 +18,11 @@
 
         <div class="logo-container clearfix">
 
+<<<<<<< HEAD
             <div class="logo"><h1 class="visuallyhidden">SPACESCOUT&trade;</h1></div>
+=======
+            <div class="logo">SPACESCOUT&trade;</div>
+>>>>>>> 51d514f649f397af3d3bcf11cc369718725f1725
 
             <div class="actions">
                 <button id="filter_button" class="btn btn-inverse" type="button">Filters</button>
@@ -388,7 +392,7 @@
                         <div class="space-detail-header">
                             <div class="space-detail-name">{{name}}</div>
                             <div class="space-detail-type">{{type}}</div>
-                            <a class="close" href="#"><img src="/static/img/x.png" /></a>
+                            <a class="close" href="#" title="close"><img src="/static/img/x.png" /></a>
                         </div>
                         <div class="space-detail-body">
 
@@ -408,8 +412,8 @@
 
                                               </div>
                                               <!-- Carousel nav -->
-                                              <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
-                                              <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+                                              <a class="carousel-control left" href="#myCarousel" title="previous image" data-slide="prev">&lsaquo;</a>
+                                              <a class="carousel-control right" href="#myCarousel" title="next image" data-slide="next">&rsaquo;</a>
                                             </div>
                                         </div>
                                         <div id="spaceMap" class="map-container" style="display:none;">map goes here</div>
@@ -521,7 +525,7 @@
                     <div class="space-detail-header">
                         <div class="space-detail-name">{{name}}</div>
                         <div class="space-detail-type">{{type}}</div>
-                        <a class="close" href="#"><img src="/static/img/x.png" /></a>
+                        <a class="close" href="#" title="close"><img src="/static/img/x.png" /></a>
                     </div>
                     <div class="space-detail-body">
 
@@ -541,8 +545,8 @@
 
                                           </div>
                                           <!-- Carousel nav -->
-                                          <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
-                                          <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+                                          <a class="carousel-control left" href="#myCarousel" title="previous image" data-slide="prev">&lsaquo;</a>
+                                          <a class="carousel-control right" href="#myCarousel" title="next image" data-slide="next">&rsaquo;</a>
                                         </div>
                                     </div>
                                     <div id="spaceMap" class="map-container" style="display:none;">map goes here</div>
@@ -647,7 +651,7 @@
 
         <div id="info_list">
             <div class="list-inner">
-                <div class="list-arrow"><a id="filter_link" href="#"><img src="{{ STATIC_URL }}img/list.png" /></a></div>
+                <div class="list-arrow"><a id="filter_link" title="List of spaces" href="#"><img src="{{ STATIC_URL }}img/list.png" /></a></div>
 
                 <!-- TODO: need to implement if/else logic for spinner and info_items -->
                 <div class="loading"><div class="loading-inner"><img src="{{ STATIC_URL }}img/spinner.gif" />&nbsp;&nbsp;Loading spaces...</div></div>
