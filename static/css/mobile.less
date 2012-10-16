@@ -31,7 +31,7 @@ button {
 #nav { z-index: 1;
 
     .logo-container { background-color: #ccc; }
-    .logo { height: 50px; line-height: 50px; width: 130px; float:left; background: url('/static/img/spacescout_logo.png') no-repeat 10px 50%; background-size: 120px; text-indent: -9999px; }
+    .logo { height: 50px; line-height: 50px; width: 130px; float:left; background: url('/static/img/logo_retina.png') no-repeat 10px 50%; background-size: 90%; position: relative; }
 
     #bubble_desktop { display: none; }
 
@@ -302,11 +302,22 @@ select {
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     border-radius: 2px;
-
 }
 
 .carousel-control { top: 50% !important; border: 2px solid #fff; }
 .carousel-inner img { max-width: 100% !important; margin: 0 auto; }
+
+
+.visuallyhidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
 
 /* iphone portrait */
 @media screen and (min-width: 320px) {
