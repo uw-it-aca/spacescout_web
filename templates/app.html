@@ -373,8 +373,8 @@
 
     {% load templatetag_handlebars %}
     <div id="main_content" class="clearfix">
-
-        <div id="map_canvas"></div>
+<h2 id="map_header" class="visuallyhidden">Map of Spaces</h2>
+        <div id="map_canvas" aria-labelledby="map_header"></div>
         {% tplhandlebars "map_controls" %}
             <div class="map-control-container">
                 <img id="center_all" src="/static/img/center_all.png" name="image" />&nbsp;
@@ -646,7 +646,8 @@
         {% endtplhandlebars %}
 
         <div id="info_list">
-            <div class="list-inner">
+        <h2 id="space_list_header" class="visuallyhidden">List of Spaces</h2>
+            <div class="list-inner" aria-labelledby="space_list_header">
                 <div class="list-arrow"><a id="filter_link" title="List of spaces" href="#"><img src="{{ STATIC_URL }}img/list.png" /></a></div>
 
                 <!-- TODO: need to implement if/else logic for spinner and info_items -->
