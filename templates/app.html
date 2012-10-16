@@ -19,9 +19,10 @@
         <div class="logo-container clearfix">
 
             <div class="logo"><h1 class="visuallyhidden">SPACESCOUT&trade;</h1></div>
-
+            <h2 id="filter_group_header" class="visuallyhidden">Space Filters</h2>
+            <div aria-labelledby="filter_group_header">
             <div class="actions">
-                <button id="filter_button" class="btn btn-inverse" type="button" aria-label="Filter spaces by..." >Filters</button>
+                <button id="filter_button" class="btn btn-inverse" type="button" aria-label="Filter settings..." >Filters</button>
                 <button id="cancel_results_button" class="btn" type="button">Clear</button>
                 <button id="view_results_button" class="btn btn-inverse" type="button">Done</button>
             </div>
@@ -30,8 +31,8 @@
                 <div class="bubble-inner clearfix" style="position:relative;">
                     <div class="bubble-tab">tab</div>
                     <div class="bubble-filters pull-left">
-
-                        <ul>
+            <h3 id="current_filters" class="visuallyhidden">Current Filters:</h3>
+                        <ul aria-labelledby="current_filters">
                             <li>open now</li>
                             <li>entire campus</li>
                             <li>asldfkj</li>
@@ -52,13 +53,13 @@
 
                     </div>
                     <div class="pull-right bubble-info">
-
-                        <span class="count">999</span><span class="spaces">spaces</span>
+            <h3 id="spaces_match_header" class="visuallyhidden">Your current filters return:</h3>
+                        <span aria-labelledby="spaces_match_header"><span class="count">999</span><span class="spaces">spaces</span></span>
 
                     </div>
                 </div>
             </div>
-
+            </div>
         </div>
 
 
