@@ -141,10 +141,10 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
         $('#cancel_results_button').click(function() {
 
             // reset the map
-            clear_custom_search();
+            //clear_custom_search();
 
             // if mobile
-            $('#main_content').show();
+            /*$('#main_content').show();
             $('#footer').show();
             $('.back-top').show();
 
@@ -156,7 +156,7 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
             $("#filter_block").slideUp('slow', function() {
                 // Animation complete.
                 mobileContent();
-            });
+            });*/
 
             // reset checkboxes
             $('input[type=checkbox]').each(function() {
