@@ -42,6 +42,12 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
 });
 
+
+Handlebars.registerHelper('ifany', function() {
+
+    // if anything passed is true, return true
+});
+
 (function(d){
 
 	var sw = document.body.clientWidth,
@@ -54,6 +60,32 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
 	$(document).ready(function() {
 
+        var weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        var date = new Date();
+        var hour = date.getHours();
+        var min = date.getMinutes();
+
+
+        if (min < 16) {
+            min = "00";
+        }else if (min < 46) {
+            min = "30";
+        }else {
+            min = "00";
+            hour++;
+        }
+
+        if (hour > 11) {
+            $("#ampm-from").val("PM");
+        }else {
+            $("#ampm-from").val("AM");
+        }
+        if (hour > 12) {
+            hour = hour-12;
+        }
+        hour = ""+hour+":"+min;
+        $("#day-from").val(weekdays[date.getDay()]);
+        $("#hour-from").val(hour);
 		desktopContent();
 
 	   // check if a map_canvas exists... populate it
@@ -87,13 +119,11 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
         $('#cancel_results_button').click(function() {
 
             // reset the map
-            clear_custom_search();
-
-            $('#filter_button').show();
-            $('#view_results_button').hide();
-            $('#cancel_results_button').hide();
-
-            $("#filter_block").slideUp('slow');
+            //clear_custom_search();
+            //$('#filter_button').show();
+            //$('#view_results_button').hide();
+            //$('#cancel_results_button').hide();
+            //$("#filter_block").slideUp('slow');
 
             // reset checkboxes
             $('input[type=checkbox]').each(function() {
@@ -111,13 +141,43 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
             $('#open_now').parent().removeClass("selected");
             $('#hours_list_container').hide();
             $('#hours_list_input').parent().removeClass("selected");
+            var date = new Date();
+            var hour = date.getHours();
+            var min = date.getMinutes();
 
+
+            if (min < 16) {
+                min = "00";
+            }else if (min < 46) {
+                min = "30";
+            }else {
+                min = "00";
+                hour++;
+            }
+
+            if (hour > 11) {
+                $("#ampm-from").val("PM");
+            }else {
+                $("#ampm-from").val("AM");
+            }
+            if (hour > 12) {
+                hour = hour-12;
+            }
+            hour = ""+hour+":"+min;
+            $("#day-from").val(weekdays[date.getDay()]);
+            $("#hour-from").val(hour);
+
+            $("#day-until").val("No pref")
+            $("#hour-until").val("No pref")
+            $("#ampm-until").val("AM")
             // reset location
             $('#entire_campus').prop('checked', true);
             $('#entire_campus').parent().removeClass("selected");
             $('#building_list_container').hide();
             $('#building_list_input').parent().removeClass("selected");
-
+            $('#building_list_container').children().children().children(".select2-search-choice").remove();
+            $('#building_list_container').children().children().children().children().val('Select building(s)');
+            $('#building_list_container').children().children().children().children().attr('style', "");
         });
 
 
@@ -128,12 +188,6 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
             id =  $(this).find('.space-detail-list-item').attr('id');
 
             e.preventDefault();
-
-            // clear previously selected space
-            $('#info_items li').removeClass('selected');
-
-            //highlight the selected space
-            $(this).addClass('selected');
 
             // clear any uneeded ajax window.requests
             for (i = 0; i < window.requests.length; i++) {
@@ -157,18 +211,18 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
                 );
             }
 
+             // clear previously selected space
+            $('#info_items li').removeClass('selected');
+
+            //highlight the selected space
+            $(this).addClass('selected');
+
         });
 
         $('#space_detail_container .close').live('click', function(e){
             e.preventDefault();
             hideSpaceDetails();
         });
-
-        // fancy location select
-        $("#e9").select2({
-                placeholder: "Select building(s)",
-                allowClear: true
-            });
 
         // handle checkbox and radio button clicks
         $('.checkbox input:checkbox').click(function() {
@@ -230,7 +284,7 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
         // if the space details is already open
         if ($('#space_detail_container').is(":visible")) {
             $('#space_detail_container').height($('#map_canvas').height());
-            $('.space-detail-body').height($('.space-detail').height() - 92);
+            $('.space-detail-body').height($('.space-detail').height() - 98);
 
             resizeCarouselMapContainer();
         }
@@ -259,12 +313,11 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
     	   $('#space_detail_container').show();
 
     	   $('#space_detail_container').height($('#map_canvas').height());
-    	   $('.space-detail-body').height($('.space-detail').height() - 92);
+    	   $('.space-detail-body').height($('.space-detail').height() - 98);
 
     	   $('.space-detail').show("slide", { direction: "right" }, 400);
 
     	   initializeCarousel();
-    	   resizeCarouselMapContainer();
 
     	   detailsLat = data.location.latitude;
     	   detailsLon = data.location.longitude;
@@ -289,7 +342,7 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
     	   $('.space-detail-inner').hide();
     	   //$(".space-detail .loading").show();
 
-    	   $('.space-detail-body').height($('.space-detail').height() - 92);
+    	   $('.space-detail-body').height($('.space-detail').height() - 98);
 
     	   $('.space-detail').show();
 
@@ -299,11 +352,13 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
            //   resizeCarouselMapContainer();
            //});
 
+            $('.space-detail-inner').show();
+            initializeCarousel();
+
            // fade the new space in
-           $('.space-detail-inner').fadeIn('400', function() {
-                resizeCarouselMapContainer();
+           /*$('.space-detail-inner').fadeIn('200', function() {
                 initializeCarousel();
-            });
+            });*/
 
            detailsLat = data.location.latitude;
     	   detailsLon = data.location.longitude;
@@ -352,6 +407,8 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
             }
         });
 
+        resizeCarouselMapContainer();
+
     }
 
     function resizeCarouselMapContainer() {
@@ -363,6 +420,8 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
         $('.carousel').height(containerH);
         $('.map-container').height(containerH);
+
+
     }
 
 })(this);

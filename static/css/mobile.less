@@ -26,11 +26,29 @@ button {
     border-color: #3e3e3e !important;
 }
 
-#container { max-width: 768px; margin: 0 auto; }
+#container { max-width: 768px; margin: 0 auto; position: relative; }
 
 #nav { z-index: 1;
 
-    .logo { height: 50px; line-height: 50px; width: 130px; float:left; background: url('/static/img/spacescout_logo.png') no-repeat 10px 50%; background-size: 120px; text-indent: -9999px; }
+    .logo-container { background-color: #ccc; }
+    .logo { height: 50px; line-height: 50px; width: 130px; float:left; background: url('/static/img/logo_retina.png') no-repeat 10px 50%; background-size: 90%; position: relative; }
+
+    #bubble_desktop { display: none; }
+
+    .bubble-inner { background-color:#fff; border: solid 1px @grey_border;
+
+        .bubble-tab { width:15px; background: transparent url('/static/img/tri-up.png') no-repeat; position:absolute; top: -7px; right: 15px; text-indent: -9999px; }
+        .bubble-filters { width: 82%;
+            ul { list-style: none; margin: 0; margin-left: 4px; margin-top: 4px; height: 28px; overflow: hidden;
+                li { display: inline-block; background-color: #eee; padding: 2px 5px; margin-bottom: 4px; font-size: 11px; }
+            }
+        }
+        .bubble-info { background: #e5e5e5; width: 50px; height:32px;
+            .count { display: block; padding: 4px; text-align: center; font-weight: bold; color: @purple_text; font-size: 20px; margin-top: 1px; }
+            .spaces { display: block; text-align: center; font-size: 11px; text-transform: uppercase; color: @grey_light; }
+        }
+    }
+
     .actions { width: auto; float: right; text-align: right; height: 50px; line-height: 50px; margin-right: 10px;
 
         #filter_button { background:#514d83 url('/static/img/down.png') no-repeat 8px 50%; display:inline-block; color: #8987ab; width: 30px; text-indent: -999px; }
@@ -39,8 +57,10 @@ button {
 
         #back_home_button { background:#514d83 url('/static/img/left.png') no-repeat 8px 50%; display:inline-block; color: #8987ab; width: 30px; text-indent: -999px; }
     }
+    #bubble_mobile {  margin: 10px 10px 5px 10px; }
+}
 
-    #filter_container { position: relative; margin: 0 10px;
+ #filter_container { position: relative; margin: 0 10px;
 
         #filter_block { display:none; background-color:#222; color: #666; overflow-y: auto; -webkit-overflow-scrolling: touch;
 
@@ -52,9 +72,9 @@ button {
 
             .selected { color: #fff; }
 
-            h2 { color: #8681b9; border-top: 1px dotted #aaa; margin: 0; font-size: 15px; line-height: 18px; padding-top: 10px; }
+            h4 { color: #8681b9; border-top: 1px dotted #aaa; margin: 0; font-size: 15px; line-height: 18px; padding-top: 10px; }
 
-            h3 { color: #fff; font-size: 13px; line-height: 14px; margin: 0 0 5px 0;
+            h5 { color: #fff; font-size: 13px; line-height: 14px; margin: 0 0 5px 0;
                 span { font-weight: normal; font-size: 12px; }
             }
             em { color: #fff; }
@@ -74,6 +94,8 @@ button {
                 .radio { width: auto; margin-right: 15px; white-space: nowrap; line-height: 30px; padding-top: 0; margin-left: 0;
                     input[type="radio"] { margin-top: -3px; width: 15px; height: 15px; float: none; }
                 }
+
+                .building-location { width: 100%; }
             }
 
             #filter_hours {
@@ -96,11 +118,12 @@ button {
             #filter_button { background-color:#514d83; display:inline-block;padding: 0 10px; }
         }*/
     }
-}
 
 /* mobile only: space details page */
 #space_details_header { margin: 10px;
-    .space-detail-type { font-size: 14px; color: @grey_dark; }
+    .space-detail-type { font-size: 14px; color: @grey_dark;
+        .space-detail-capacity { color: @grey_light; font-size: 11px; text-transform: uppercase; display: inline-block; margin-left: 5px; }
+    }
     .space-detail-name { font-size: 20px; margin: 5px 0;  color: @purple_text; width:85%; }
     img { margin-top:8px; }
 }
@@ -120,7 +143,7 @@ button {
                         .image-container, .map-container { max-height: 303px !important; }
 
                         .image-container {
-                            .carousel { background: #f8f8f8 url('/static/img/spinner.gif') no-repeat 50% 50%; background-size: 20px;  margin: 0; min-height: 192px; }
+                            .carousel { background: #f8f8f8 url('/static/img/spinner.gif') no-repeat 50% 50%; background-size: 20px;  margin: 0; }
                         }
 
                         .map-container { background: #f8f8f8 url('/static/img/spinner.gif') no-repeat 50% 50%; background-size: 20px; }
@@ -205,6 +228,8 @@ button {
                     }
 
                 .space-detail-list-item { width: 37%; display: inline-block;
+                    .space-detail-capacity { color: @grey_light; font-size: 11px; display: inline-block; text-transform: uppercase; }
+                    .space-detail-type-label { display: inline-block; width: 55%; overflow: hidden; text-overflow: ellipsis; }
                     .space-detail-type { color: @grey_dark;  white-space: nowrap; overflow:hidden; text-overflow: ellipsis; }
                     .space-detail-name { font-size: 17px; line-height: 28px; white-space: nowrap; overflow:hidden; text-overflow: ellipsis; color: #000; }
                     .space-detail-desc { white-space: nowrap; overflow:hidden; text-overflow: ellipsis; color: @grey_light; }
@@ -249,9 +274,12 @@ button {
 }
 
 
+.contact-header { font-size: 20px; margin: 5px 0;  color: @purple_text; width:85%; }
+
+
 /* Override default Bootstrap Popover styles */
 
-
+.close, .close:hover { opacity: 1; }
 
 .popover { background-color: #333 !important; color: #fff;
     -webkit-box-shadow:  0px 4px 5px 1px rgba(0, 0, 0, .2);
@@ -278,51 +306,22 @@ select {
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     border-radius: 2px;
-
 }
 
 .carousel-control { top: 50% !important; border: 2px solid #fff; }
 .carousel-inner img { max-width: 100% !important; margin: 0 auto; }
 
-/* Override Select2 */
-.select2-container {
-    display: block;
+
+.visuallyhidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
 }
-
-.select2-drop {
-    margin-top: 5px !important;
-
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
-    border-radius: 2px;
-
-    box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.5);
-    -moz-box-shadow: 1px 2px 6px rgba(0,0,0, 0.5);
-    -webkit-box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.5);
-    border: none;
-}
-
-ul.select2-choices {
-    background-color: white;
-    border: 1px solid #CCC;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-    -webkit-transition: border linear 0.2s, box-shadow linear 0.2s;
-    -moz-transition: border linear 0.2s, box-shadow linear 0.2s;
-    -o-transition: border linear 0.2s, box-shadow linear 0.2s;
-    transition: border linear 0.2s, box-shadow linear 0.2s;
-    line-height: 20px;
-
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
-    border-radius: 2px;
-
-    .select2-search-choice { line-height: 18px !important; }
-    .select2-search-field input { height: auto !important; }
-}
-
-
 
 /* iphone portrait */
 @media screen and (min-width: 320px) {

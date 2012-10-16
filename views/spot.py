@@ -39,7 +39,8 @@ def SpotView(request, spot_id, return_json=False):
     for value in params['type']:
         new_value.append(_(value))
     params["type"] = new_value
-    params["last_modified"] = re.sub('-', '/', params["last_modified"][:10])
+    modified_date = params["last_modified"][5:10] + '-' + params["last_modified"][:4]
+    params["last_modified"] = re.sub('-', '/', modified_date)
 
     content = json.dumps(params)
 
@@ -51,6 +52,11 @@ def SpotView(request, spot_id, return_json=False):
 
     params["less_not_compiled"] = less_not_compiled
     request.session['spot_id'] = spot_id
+    if 'name' in params:
+        request.session['spot_name'] = params['name']
+    if 'extended_info' in params:
+        if 'location_description' in params['extended_info']:
+            request.session['spot_description'] = params['extended_info']['location_description']
 
     if return_json:
         return HttpResponse(content, mimetype='application/json')

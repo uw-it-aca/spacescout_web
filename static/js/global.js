@@ -1,11 +1,11 @@
 var requests = new Array();
 Handlebars.registerHelper('formatHours', function(hours) {
     //tomorrow_starts_at_midnight = true;
-    //tomorrow_is_24_hours = 
+    //tomorrow_is_24_hours =
     //if (start_time[0] == 0 && start_time[1] == 0 && end_time[0] == 23 && end_time[1] == 59 && tomorrow_starts_at_midnight && !tomorrow_is_24_hours && tomorrows_hour > 3) {
         //dsf
-    //} 
-    var formatted = []; 
+    //}
+    var formatted = [];
     $.each(hours, function(day) {
         if (hours[day].length > 0) {
             dayMarker = day.charAt(0);
@@ -60,14 +60,7 @@ function sortDays(days) {
             window.spacescout_map.setCenter(new google.maps.LatLng(window.default_latitude, window.default_longitude));
         });
 
-        $('#center_me').live('click', function(e){
-            window.spacescout_map.setCenter(new google.maps.LatLng(window.youarehere.latitude, window.youarehere.longitude));
-        });
-
 	});
-
-
-
 
 })(this);
 

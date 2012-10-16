@@ -1,47 +1,23 @@
 {% extends is_mobile|yesno:"base-mobile-subpage.html,base-desktop.html" %}
 
 {% block content %}
-
-
-
     {% if is_mobile %}
-    <div style="margin:10px;">
-        <h1>Report a Problem</h1>
-        <img id="back_to_space_button" src="/static/img/details_arrow.png" />
+    <div style="margin:10px;" class="clearfix">
+        <div class="contact-header pull-left" style="width:auto;">Report a Problem</div>
+        <div class="pull-right" style="display:inline-block;margin-top:8px;"><a href='{{ back }}'><img id="back_to_space_button" src="/static/img/details_arrow.png" /></a></div>
     </div>
     {% else %}
     <div id="nav" style="position:relative;">
         <div class="clearfix">
-            <div class="logo">SPACESCOUT&trade;</div>
+            <div class="logo"><h1 class="visuallyhidden">SPACESCOUT&trade;</h1></div>
             <div class="actions">
-                <button id="back_to_space_button" class="btn btn-inverse" type="button">Back to Space Detail</button>
+                <a href='{{ back }}'><img id="back_to_space_button" src="/static/img/details_arrow.png" /></button></a>
             </div>
         </div>
     </div>
     {% endif %}
 
-    <div {% if is_mobile %}style="margin:10px; background:#fff;" {% else %}id="main_content"{% endif %}>
-
-    <form action="/contact/" method="post">{% csrf_token %}
-        {{ form.non_field_errors }}
-        {% for field in form %}
-            {% if field.name == "email_confirmation" %}
-                <div style="display: None;">
-                    LEAVE BLANK {{ field }}
-                </div>
-            {% else %}
-                <div class="fieldWrapper">
-                    {{ field.label_tag }}{{ field }}
-                    {% for error in field.errors %}
-                        <strong>{{ error|escape }}</strong>
-                    {% endfor %}
-                </div>
-            {% endif %}
-        {% endfor %}
-        <input type="submit" value="Send" />
-    </form>
-
-
-</div>
-
+    <div {% if is_mobile %}style="margin:10px; background:#fff;" {% else %}id="main_content" style="padding: 80px;"{% endif %}>
+        {% block contact-content %}{% endblock %}
+    </div>
 {% endblock %}
