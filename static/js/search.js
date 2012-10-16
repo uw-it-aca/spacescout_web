@@ -214,6 +214,8 @@ function run_custom_search() {
 
     $("#filter_block").slideUp(speed);
 
+    // Populate the bubble
+
 }
 
 function clear_custom_search() {
@@ -326,6 +328,12 @@ function display_search_results(data) {
 }
 
 function load_data(data) {
+    // set the # of spaces in the bubble
+    var source = $('#space_count').html();
+    var template = Handlebars.compile(source);
+    $('#space_count_container').html(template({count: data.length}));
+
+    // update the map
     display_search_results(data);
 }
 

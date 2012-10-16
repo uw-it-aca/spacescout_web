@@ -13,6 +13,7 @@
 
 {% block content %}
 {% load i18n %}
+{% load templatetag_handlebars %}
 
     <div id="nav" style="position:relative;">
 
@@ -27,6 +28,7 @@
                 <button id="view_results_button" class="btn btn-inverse" type="button" aria-label="Apply Filters">Done</button>
             </div>
 
+            {% if not is_mobile %}
             <div id="bubble_desktop">
                 <div class="bubble-inner clearfix" style="position:relative;">
                     <div class="bubble-tab">tab</div>
@@ -54,11 +56,16 @@
                     </div>
                     <div class="pull-right bubble-info">
             <h3 id="spaces_match_header" class="visuallyhidden">Your current filters return:</h3>
-                        <span aria-labelledby="spaces_match_header"><span class="count">999</span><span class="spaces">spaces</span></span>
+                        <span id="space_count_container" aria-labelledby="spaces_match_header"></span>
+
+                        {% tplhandlebars "space_count" %}
+                        <span class="count">{{count}}</span><span class="spaces">spaces</span>
+                        {% endtplhandlebars %}
 
                     </div>
                 </div>
             </div>
+        {% endif %}
             </div>
         </div>
 
@@ -83,7 +90,11 @@
                         <li>asdfa</li>
                     </ul>
                 </div>
-                <div class="pull-right bubble-info" style=""><span class="count">999</span></div>
+                <div id="space_count_container" class="pull-right bubble-info" style=""></div>
+
+                {% tplhandlebars "space_count" %}
+                <span class="count">{{count}}</span>
+                {% endtplhandlebars %}
             </div>
         </div>
         {% endif %}
@@ -372,7 +383,6 @@
         </form>
     </div>
 
-    {% load templatetag_handlebars %}
     <div id="main_content" class="clearfix">
 <h2 id="map_header" class="visuallyhidden">Map of Spaces</h2>
         <div id="map_canvas" aria-labelledby="map_header"></div>
