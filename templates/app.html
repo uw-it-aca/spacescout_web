@@ -32,28 +32,20 @@
             <div id="bubble_desktop">
                 <div class="bubble-inner clearfix" style="position:relative;">
                     <div class="bubble-tab">tab</div>
-                    <div class="bubble-filters pull-left">
-            <h3 id="current_filters" class="visuallyhidden">Current Filters:</h3>
+                   
+                   <div id="bubble_filters_container" class="bubble-filters pull-left"></div>
+
+                    {% tplhandlebars "filter_list" %}
+                    <h3 id="current_filters" class="visuallyhidden">Current Filters:</h3>
                         <ul aria-labelledby="current_filters">
-                            <li>open now</li>
-                            <li>entire campus</li>
-                            <li>asldfkj</li>
-                            <li>aslkdjflaksd</li>
-                            <li>asdlkfj</li>
-                            <li>sadfsdaf</li>
-                            <li>bananas</li>
-                            <li>sadfasd</li>
-                            <li>asdfa</li>
-                            <li>asdlkfj</li>
-                            <li>sadfsdaf</li>
-                            <li>asdf</li>
-                            <li>sadfasd</li>
-                            <li>sadfsdaf</li>
-                            <li>asdf</li>
+                            {{#if open_at}}<li>specific time</li>{{else}}<li>open now</li>{{/if}}
+                            {{#if capacity}}<li>capacity: {{capacity}}</li>{{/if}}
+                            {{#each type}}<li>{{this}}</li>{{/each}}
+                            {{#if reservable}}<li>reservable</li>{{/if}}
                             <li>...</li>
                         </ul>
+                    {% endtplhandlebars %}
 
-                    </div>
                     <div class="pull-right bubble-info">
             <h3 id="spaces_match_header" class="visuallyhidden">Your current filters return:</h3>
                         <span id="space_count_container" aria-labelledby="spaces_match_header"></span>

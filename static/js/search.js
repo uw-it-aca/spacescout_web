@@ -174,7 +174,9 @@ function run_custom_search() {
     $.each($("input[name='noise_level']:checked"), function() {
         checked.push($(this).val());
     });
-    window.spacescout_search_options["extended_info:noise_level"] = checked;
+    if (checked.length > 0) {
+        window.spacescout_search_options["extended_info:noise_level"] = checked;
+    }
 
     // lighting
     if ( $("#lighting").is(":checked") ) {
@@ -186,7 +188,9 @@ function run_custom_search() {
     $.each($("input[name='food_nearby']:checked"), function() {
         checked.push($(this).val());
     });
-    window.spacescout_search_options["extended_info:food_nearby"] = checked;
+    if (checked.length > 0) {
+        window.spacescout_search_options["extended_info:food_nearby"] = checked;
+    }
 
     // close space detail if visible (desktop)
     if ($('#space_detail_container').is(":visible")) {
@@ -208,8 +212,9 @@ function run_custom_search() {
         $('.back-top').show();
     }
 
+
     // Run the search
-    //console.log(window.spacescout_search_options);
+    console.log(window.spacescout_search_options);
     fetch_data();
 
     $("#filter_block").slideUp(speed);
@@ -370,6 +375,14 @@ function fetch_data() {
     args["open_now"] = 1;
     args["distance"] = distance;
     args["limit"] = 0;
+
+    // Populate the bubble with which filters are used
+
+    window.spacescout_search_options["reservable"] = (window.spacescout_search_options["extended_info:reservable"] != null);
+
+    var source = $('#filter_list').html();
+    var template = Handlebars.compile(source);
+    $('#bubble_filters_container').html(template(window.spacescout_search_options));
 
     var url_args = ["/search/?"];
     for (var key in args) {
