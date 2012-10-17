@@ -5,7 +5,7 @@
 @grey_dark: #4d4d4d;
 @grey_border: #d6d6d6;
 @grey_background: #e5e5e5;
-
+@grey_medium: #aaa;
 
 body {
     //min-height: 420px;
@@ -25,8 +25,6 @@ button {
 
     border-color: #3e3e3e !important;
 }
-
-
 
 #container { max-width: 768px; margin: 0 auto; position: relative; }
 
@@ -64,7 +62,7 @@ button {
 
  #filter_container { position: relative; margin: 0 10px;
 
-        #filter_block { display:none; background-color:#222; color: #666; overflow-y: auto; -webkit-overflow-scrolling: touch;
+        #filter_block { display:none; background-color:#222; color: @grey_medium; overflow-y: auto; -webkit-overflow-scrolling: touch;
 
             .inner { padding: 15px; }
 
