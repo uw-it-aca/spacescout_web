@@ -105,7 +105,7 @@
         <form>
             <div id="filter_block" style="display:none;">
                 <div class="inner clearfix">
-                
+
                     <div class="inner-column">
                         <div class="inner-block-left">
                             <h4>Type &amp; Capacity</h4>
@@ -440,17 +440,19 @@
                                 <div class="space-info">
                                      <ul>
 
+                                        {{#if has_notes }}
                                         <li class="clearfix">
                                             <div class="space-info-label pull-left">Notes</div>
                                             <div class="space-info-detail pull-left">
-                                                {{#if extended_info.access_notes }}<p>{{extended_info.access_notes }}</p>{{/if}}
-                                                {{#if extended_info.hours_notes }}<p>{{extended_info.hours_notes }}</p>{{/if}}
-                                                {{#if extended_info.reservation_notes }}<p>{{extended_info.reservation_notes }}</p>{{/if}}
+                                                <p>{{extended_info.access_notes}}</p>
+                                                <p>{{extended_info.reservation_notes }}</p>
                                             </div>
                                         </li>
+                                        {{/if}}
 
                                         <li class="clearfix"><div class="space-info-label pull-left">Hours</div><div class="space-info-detail pull-left">{{formatHours available_hours}}</div></li>
                                         <li class="clearfix"><div class="space-info-label pull-left">Location</div><div class="space-info-detail pull-left">{{extended_info.location_description}}</div></li>
+                                        {{#if has_resources }}
                                         <li class="clearfix">
                                             <div class="space-info-label pull-left">Resources</div>
                                             <div class="space-info-detail pull-left">
@@ -463,6 +465,7 @@
                                                 {{#if extended_info.has_whiteboards }}Whiteboards&nbsp;{{/if}}
                                             </div>
                                         </li>
+                                        {{/if}}
 
                                         {{#if extended_info.noise_level }}
                                         <li class="clearfix">
@@ -572,16 +575,26 @@
                             <div class="space-info-header">Space Details:</div>
                             <div class="space-info">
                                  <ul>
+
+                                    {{#if has_notes }}
                                     <li class="clearfix">
                                         <div class="space-info-label pull-left">Notes</div>
                                         <div class="space-info-detail pull-left">
-                                            {{#if extended_info.access_notes }}<p>{{extended_info.access_notes }}</p>{{/if}}
-                                            {{#if extended_info.hours_notes }}<p>{{extended_info.hours_notes }}</p>{{/if}}
-                                            {{#if extended_info.reservation_notes }}<p>{{extended_info.reservation_notes }}</p>{{/if}}
+                                            <p>{{extended_info.access_notes}}</p>
+                                            <p>{{extended_info.reservation_notes }}</p>
                                         </div>
                                     </li>
+                                    {{/if}}
+
+                                    {{#if available_hours }}
                                     <li class="clearfix"><div class="space-info-label pull-left">Hours</div><div class="space-info-detail pull-left">{{formatHours available_hours}}</div></li>
+                                    {{/if}}
+
+                                    {{#if extended_info.location_description }}
                                     <li class="clearfix"><div class="space-info-label pull-left">Location</div><div class="space-info-detail pull-left">{{extended_info.location_description}}</div></li>
+                                    {{/if}}
+
+                                    {{#if has_resources }}
                                     <li class="clearfix">
                                         <div class="space-info-label pull-left">Resources</div>
                                         <div class="space-info-detail pull-left">
@@ -594,6 +607,7 @@
                                             {{#if extended_info.has_whiteboards }}Whiteboards&nbsp;{{/if}}
                                         </div>
                                     </li>
+                                    {{/if}}
 
                                     {{#if extended_info.noise_level }}
                                     <li class="clearfix">

@@ -43,9 +43,12 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 });
 
 
-Handlebars.registerHelper('ifany', function() {
+Handlebars.registerHelper('ifany', function(a, b) {
 
     // if anything passed is true, return true
+    if (a || b) {
+        return fn(this);
+    }
 });
 
 (function(d){
@@ -300,6 +303,10 @@ Handlebars.registerHelper('ifany', function() {
            var year = last_mod.getFullYear();
            data["last_modified"] = month + "/" + day + "/" + year;
 
+           // check to see if the space has the following
+           data["has_notes"] = ( ( data.extended_info.access_notes != null) || ( data.extended_info.reservation_notes != null) );
+           data["has_resources"] = ( data.extended_info.has_computers != null || data.extended_info.has_displays != null || data.extended_info.has_outlets != null || data.extended_info.has_printing != null || data.extended_info.has_projector != null || data.extended_info.has_scanner != null || data.extended_info.has_whiteboards != null );
+
     	   // remove any open details
     	   $('#space_detail_container').remove();
 
@@ -332,6 +339,10 @@ Handlebars.registerHelper('ifany', function() {
            var day = last_mod.getDate();
            var year = last_mod.getFullYear();
            data["last_modified"] = month + "/" + day + "/" + year;
+
+           // check to see if the space has the following
+           data["has_notes"] = ( ( data.extended_info.access_notes != null) || ( data.extended_info.reservation_notes != null) );
+           data["has_resources"] = ( data.extended_info.has_computers != null || data.extended_info.has_displays != null || data.extended_info.has_outlets != null || data.extended_info.has_printing != null || data.extended_info.has_projector != null || data.extended_info.has_scanner != null || data.extended_info.has_whiteboards != null );
 
         	// build the template
     	   var source = $('#space_details_replace').html();
