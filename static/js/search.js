@@ -214,7 +214,7 @@ function run_custom_search() {
 
 
     // Run the search
-    console.log(window.spacescout_search_options);
+    //console.log(window.spacescout_search_options);
     fetch_data();
 
     $("#filter_block").slideUp(speed);
@@ -386,13 +386,26 @@ function fetch_data() {
     args["distance"] = distance;
     args["limit"] = 0;
 
-    // Populate the bubble with which filters are used
+    // "type" needs to exist as something
+    if (!window.spacescout_search_options["type"]) {
+        window.spacescout_search_options["type"] = [];
+    }
 
-    window.spacescout_search_options["reservable"] = (window.spacescout_search_options["extended_info:reservable"] != null);
+    // Populate the bubble with which filters are used
+    var bubble_filters = $().extend({}, window.spacescout_search_options);
+
+    bubble_filters["space_type"] = (window.spacescout_search_options["type"].length > 0);
+    bubble_filters["true_capacity"] = parseInt(window.spacescout_search_options["capacity"]) > 1;
+
+    bubble_filters["reservable"] = (window.spacescout_search_options["extended_info:reservable"] != null);
+    bubble_filters["noise"] = (window.spacescout_search_options["extended_info:noise_level"] != null);
+    bubble_filters["lighting"] = (window.spacescout_search_options["extended_info:has_natural_light"] != null);
+    bubble_filters["food"] = (window.spacescout_search_options["extended_info:food_nearby"] != null);
+    bubble_filters["resources"] = (window.spacescout_search_options["extended_info:has_computers"] != null) || (window.spacescout_search_options["extended_info:has_displays"] != null) || (window.spacescout_search_options["extended_info:has_outlets"] != null) || (window.spacescout_search_options["extended_info:has_printing"] != null) || (window.spacescout_search_options["extended_info:has_projector"] != null) || (window.spacescout_search_options["extended_info:has_scanner"] != null) || (window.spacescout_search_options["extended_info:has_whiteboards"] != null);
 
     var source = $('#filter_list').html();
     var template = Handlebars.compile(source);
-    $('#bubble_filters_container').html(template(window.spacescout_search_options));
+    $('#bubble_filters_container').html(template(bubble_filters));
 
     var url_args = ["/search/?"];
     for (var key in args) {

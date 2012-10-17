@@ -23,7 +23,7 @@
             <h2 id="filter_group_header" class="visuallyhidden">Space Filters</h2>
             <div aria-labelledby="filter_group_header">
             <div class="actions">
-                <button id="filter_button" class="btn btn-inverse" type="button" aria-label="Filter settings..." >Filters</button>
+                <button id="filter_button" class="btn btn-inverse" type="button" aria-label="Filter settings..." aria-owns="filter_container" >Filters</button>
                 <button id="cancel_results_button" class="btn" type="button" aria-label="Clear Filters">Clear</button>
                 <button id="view_results_button" class="btn btn-inverse" type="button" aria-label="Apply Filters">Done</button>
             </div>
@@ -32,22 +32,30 @@
             <div id="bubble_desktop">
                 <div class="bubble-inner clearfix" style="position:relative;">
                     <div class="bubble-tab">tab</div>
-                   
+
                    <div id="bubble_filters_container" class="bubble-filters pull-left"></div>
 
                     {% tplhandlebars "filter_list" %}
                     <h3 id="current_filters" class="visuallyhidden">Current Filters:</h3>
-                        <ul aria-labelledby="current_filters">
-                            {{#if open_at}}<li>specific time</li>{{else}}<li>open now</li>{{/if}}
-                            {{#if capacity}}<li>capacity: {{capacity}}</li>{{/if}}
-                            {{#each type}}<li>{{this}}</li>{{/each}}
-                            {{#if reservable}}<li>reservable</li>{{/if}}
-                            <li>...</li>
-                        </ul>
+                    <ul aria-labelledby="current_filters">
+
+                        <!-- TODO: show the ... if more than 7 li -->
+                        {{#if open_at}}<li>specific time</li>{{else}}<li>open now</li>{{/if}}
+                        {{#if building_name}}<li>specific building</li>{{else}}<li>entire campus</li>{{/if}}
+                        {{#if space_type}}<li>type of space</li>{{/if}}
+                        {{#if true_capacity}}<li>seats > {{capacity}}</li>{{/if}}
+                        {{#if reservable}}<li>reservable</li>{{/if}}
+                        {{#if noise}}<li>noise/level</li>{{/if}}
+                        {{#if lighting}}<li>natural light</li>{{/if}}
+                        {{#if resources}}<li>specific resource</li>{{/if}}
+                        {{#if food}}<li>food/coffee</li>{{/if}}
+                        <!-- eventually? <li>...</li> -->
+
+                    </ul>
                     {% endtplhandlebars %}
 
                     <div class="pull-right bubble-info">
-            <h3 id="spaces_match_header" class="visuallyhidden">Your current filters return:</h3>
+                        <h3 id="spaces_match_header" class="visuallyhidden">Your current filters return:</h3>
                         <span id="space_count_container" aria-labelledby="spaces_match_header"></span>
 
                         {% tplhandlebars "space_count" %}
@@ -66,22 +74,17 @@
         <div id="bubble_mobile">
             <div class="bubble-inner clearfix" style="position:relative;">
                 <div class="bubble-tab" style="">tab</div>
-                <div class="bubble-filters pull-left" >
-                    <ul>
-                        <li>open now</li>
-                        <li>entire campus</li>
-                        <li>asldfkj</li>
-                        <li>...</li>
-                        <li>aslkdjflaksd</li>
-                        <li>asdlkfj</li>
-                        <li>sadfsdaf</li>
-                        <li>asdlkfj</li>
-                        <li>sadfsdaf</li>
-                        <li>asdf</li>
-                        <li>sadfasd</li>
-                        <li>asdfa</li>
-                    </ul>
-                </div>
+                <div id="bubble_filters_container" class="bubble-filters pull-left" ></div>
+
+                {% tplhandlebars "filter_list" %}
+                <ul>
+                    {{#if open_at}}<li>specific time</li>{{else}}<li>open now</li>{{/if}}
+                    {{#if building_name}}<li>specific building</li>{{else}}<li>entire campus</li>{{/if}}
+                    <li>...</li>
+                </ul>
+                {% endtplhandlebars %}
+
+
                 <div id="space_count_container" class="pull-right bubble-info" style=""></div>
 
                 {% tplhandlebars "space_count" %}
@@ -387,10 +390,10 @@
         {% tplhandlebars "space_details" %}
             <div id="space_detail_container" class="">
                 <div class="space-detail">
-                    <div class="space-detail-inner">
+                    <div class="space-detail-inner" id="detail_container_{{id}}">
                         <div class="space-detail-header">
                             <div class="space-detail-name">{{name}}</div>
-                            <div class="space-detail-type">{{type}} {{#if capacity }}<span class="space-detail-capacity">[Seats&nbsp;{{capacity}}]</span>{{/if}}</div>
+                            <div class="space-detail-type">{{type}} {{#if capacity }}<span class="space-detail-capacity">Seats&nbsp;{{capacity}}</span>{{/if}}</div>
                             <a class="close" href="#" title="close"><img src="/static/img/x.png" /></a>
                         </div>
                         <div class="space-detail-body">
@@ -420,7 +423,7 @@
 
                                 </div>
                                 <div class="space-image-map-buttons btn-group pull-left" data-toggle="buttons-radio">
-                                  <button id="carouselControl" class="btn active"><span>gallery</span></button>
+                                  <button id="carouselControl" class="btn active"><span>image gallery</span></button>
                                   <button id="mapControl" class="btn"><span>map</span></button>
                                 </div>
 
@@ -523,10 +526,10 @@
         {% endtplhandlebars %}
         {% tplhandlebars "space_details_replace" %}
             <div class="space-detail">
-                <div class="space-detail-inner">
+                <div class="space-detail-inner" id="detail_container_{{id}}">
                     <div class="space-detail-header">
                         <div class="space-detail-name">{{name}}</div>
-                        <div class="space-detail-type">{{type}} {{#if capacity }}<span class="space-detail-capacity">[Seats&nbsp;{{capacity}}]</span>{{/if}}</div>
+                        <div class="space-detail-type">{{type}} {{#if capacity }}<span class="space-detail-capacity">Seats&nbsp;{{capacity}}</span>{{/if}}</div>
                         <a class="close" href="#" title="close"><img src="/static/img/x.png" /></a>
                     </div>
                     <div class="space-detail-body">
@@ -556,7 +559,7 @@
 
                             </div>
                             <div class="space-image-map-buttons btn-group pull-left" data-toggle="buttons-radio">
-                              <button id="carouselControl" class="btn active"><span>gallery</span></button>
+                              <button id="carouselControl" class="btn active"><span>image gallery</span></button>
                               <button id="mapControl" class="btn"><span>map</span></button>
                             </div>
 
@@ -680,8 +683,8 @@
                             <li class="clearfix view-details">
                                 <div class="space-detail-list-image pull-left"><img src="/static/img/transparent.gif" data-original='space/{{id}}/image/{{images.0.id}}/thumb/100x67' class='img lazy'></div>
 
-                                <button id="{{id}}" class="space-detail-list-item pull-left" type="button" aria-label="Get space details for {{name}}">
-                                    <div class="space-detail-type clearfix"><span class="space-detail-type-label">{{type}}</span>{{#if capacity }}<span class="space-detail-capacity pull-right">[Seats&nbsp;{{capacity}}]</span>{{/if}}</div>
+                                <button id="{{id}}" class="space-detail-list-item pull-left" type="button" aria-label="Get space details for {{name}}" aria-owns="detail_container_{{id}}">
+                                    <div class="space-detail-type clearfix"><span class="space-detail-type-label pull-left">{{type}}</span>{{#if capacity }}<span class="space-detail-capacity pull-right">Seats&nbsp;{{capacity}}</span>{{/if}}</div>
                                     <div class="space-detail-name">{{name}}</div>
                                     <div class="space-detail-desc">{{extended_info.location_description}}</div>
                                 </button>
@@ -700,8 +703,8 @@
                             {{#each data}}
                             <li class="clearfix view-details">
                                 <div class="space-detail-list-image pull-left"><img src='space/{{id}}/image/{{images.0.id}}/thumb/100x67' class='img'></div>
-                                <button  id="{{id}}" class="space-detail-list-item pull-left" type="button" aria-label="Get space details for {{name}}">
-                                    <div class="space-detail-type"><span class="space-detail-type-label">{{type}}</span>{{#if capacity }}<span class="space-detail-capacity pull-right">[Seats&nbsp;{{capacity}}]</span>{{/if}}</div>
+                                <button  id="{{id}}" class="space-detail-list-item pull-left" type="button" aria-label="Get space details for {{name}}" aria-owns="detail_container_{{id}}">
+                                    <div class="space-detail-type"><span class="space-detail-type-label pull-left">{{type}}</span>{{#if capacity }}<span class="space-detail-capacity pull-right">Seats&nbsp;{{capacity}}</span>{{/if}}</div>
                                     <div class="space-detail-name">{{name}}</div>
                                     <div class="space-detail-desc">{{extended_info.location_description}}</div>
                                 </button>
@@ -717,8 +720,8 @@
                     <ul>
                         <li class="clearfix view-details">
                             <div class="space-detail-list-image pull-left"><img src='space/{{id}}/image/{{images.0.id}}/thumb/100x67' class='img'></div>
-                            <button id="{{id}}" class="space-detail-list-item pull-left" type="button" aria-label="Get space details for {{name}}">
-                                <div class="space-detail-type"><span class="space-detail-type-label">{{type}}</span>{{#if capacity }}<span class="space-detail-capacity pull-right">[Seats&nbsp;{{capacity}}]</span>{{/if}}</div>
+                            <button id="{{id}}" class="space-detail-list-item pull-left" type="button" aria-label="Get space details for {{name}}" aria-owns="detail_container_{{id}}">
+                                <div class="space-detail-type"><span class="space-detail-type-label pull-left">{{type}}</span>{{#if capacity }}<span class="space-detail-capacity pull-right">Seats&nbsp;{{capacity}}</span>{{/if}}</div>
                                 <div class="space-detail-name">{{name}}</div>
                                 <div class="space-detail-desc">{{extended_info.location_description}}</div>
                             </button>
