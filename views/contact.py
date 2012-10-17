@@ -53,13 +53,15 @@ def contact(request):
 
 def thank_you(request):
     back = _session_variables(request)['back']
-    return render_to_response('contact-thankyou.html', {'back': back}, context_instance=RequestContext(request))
+    is_mobile = _session_variables(request)['is_mobile']
+    return render_to_response('contact-thankyou.html', {'back': back, 'is_mobile': is_mobile}, context_instance=RequestContext(request))
 
 def sorry(request):
     back = _session_variables(request)['back']
     email = settings.FEEDBACK_EMAIL_RECIPIENT[0]
+    is_mobile = _session_variables(request)['is_mobile']
     #should maybe do something here ^. raise improperly configured exception if there are no emails in the list in settings.py
-    return render_to_response('contact-sorry.html', {'back': back, 'email': email}, context_instance=RequestContext(request))
+    return render_to_response('contact-sorry.html', {'back': back, 'email': email, 'is_mobile': is_mobile}, context_instance=RequestContext(request))
 
 def _session_variables(request):
     if 'spot_name' in request.session:
