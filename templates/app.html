@@ -32,16 +32,31 @@
             <div id="bubble_desktop">
                 <div class="bubble-inner clearfix" style="position:relative;">
                     <div class="bubble-tab">tab</div>
-                   
+
                    <div id="bubble_filters_container" class="bubble-filters pull-left"></div>
 
                     {% tplhandlebars "filter_list" %}
                     <h3 id="current_filters" class="visuallyhidden">Current Filters:</h3>
                         <ul aria-labelledby="current_filters">
+
                             {{#if open_at}}<li>specific time</li>{{else}}<li>open now</li>{{/if}}
-                            {{#if capacity}}<li>capacity: {{capacity}}</li>{{/if}}
-                            {{#each type}}<li>{{this}}</li>{{/each}}
+
+                            {{#if building_name}}<li>specific building</li>{{else}}<li>entire campus</li>{{/if}}
+
+                            {{#if space_type}}<li>type of space</li>{{/if}}
+
+                            {{#if capacity}}<li>seats > {{capacity}}</li>{{/if}}
+
                             {{#if reservable}}<li>reservable</li>{{/if}}
+
+                            {{#if noise}}<li>noise/level</li>{{/if}}
+
+                            {{#if lighting}}<li>natural light</li>{{/if}}
+
+                            {{#if resources}}<li>specific resource</li>{{/if}}
+
+                            {{#if food}}<li>food/coffee</li>{{/if}}
+
                             <li>...</li>
                         </ul>
                     {% endtplhandlebars %}
