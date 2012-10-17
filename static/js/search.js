@@ -389,6 +389,8 @@ function fetch_data() {
     // Populate the bubble with which filters are used
 
     window.spacescout_search_options["space_type"] = (window.spacescout_search_options["type"].length > 0);
+    window.spacescout_search_options["true_capacity"] = parseInt(window.spacescout_search_options["capacity"]) > 1;
+
     window.spacescout_search_options["reservable"] = (window.spacescout_search_options["extended_info:reservable"] != null);
     window.spacescout_search_options["noise"] = (window.spacescout_search_options["extended_info:noise_level"] != null);
     window.spacescout_search_options["lighting"] = (window.spacescout_search_options["extended_info:has_natural_light"] != null);
