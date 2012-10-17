@@ -26,13 +26,7 @@ button {
     border-color: #3e3e3e !important;
 }
 
-.view-details button {
 
-    border: none !important;
-    background: none !important;
-    text-align: left !important;
-
-}
 
 #container { max-width: 768px; margin: 0 auto; position: relative; }
 
@@ -227,7 +221,14 @@ button {
     #info_items {
         ul { margin: 0;
 
-            .view-details { cursor: pointer; }
+            .view-details { cursor: pointer;
+                button {
+                    border: none !important;
+                    background: none !important;
+                    text-align: left !important;
+                    padding: 0 !important;
+                }
+            }
 
             li { background-color: #fff; color: #000; list-style: none; margin-bottom: 0px; padding: 10px; border-left:solid 1px @grey_border; border-right:solid 1px @grey_border; border-bottom:solid 1px @grey_border;
 
@@ -237,7 +238,7 @@ button {
 
                 .space-detail-list-item { width: 37%; display: inline-block;
                     .space-detail-capacity { color: @grey_light; font-size: 11px; display: inline-block; text-transform: uppercase; }
-                    .space-detail-type-label { display: inline-block; width: 55%; overflow: hidden; text-overflow: ellipsis; }
+                    .space-detail-type-label { display: inline-block; width: 55%; overflow: hidden; text-overflow: ellipsis;  background-color: yellow; }
                     .space-detail-type { color: @grey_dark;  white-space: nowrap; overflow:hidden; text-overflow: ellipsis; }
                     .space-detail-name { font-size: 17px; line-height: 28px; white-space: nowrap; overflow:hidden; text-overflow: ellipsis; color: #000; }
                     .space-detail-desc { white-space: nowrap; overflow:hidden; text-overflow: ellipsis; color: @grey_light; }
