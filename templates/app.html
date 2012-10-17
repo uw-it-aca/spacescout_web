@@ -677,8 +677,7 @@
 
                 {% tplhandlebars "all_markers" %}
                     <ul>
-
-                        {{#if data }}
+                        {{#if data}}
                             {{#each data}}
                             <li class="clearfix view-details">
                                 <div class="space-detail-list-image pull-left"><img src="/static/img/transparent.gif" data-original='space/{{id}}/image/{{images.0.id}}/thumb/100x67' class='img lazy'></div>
@@ -693,7 +692,6 @@
                         {{else}}
                             <li class="no-spaces">Sorry, no spaces match your filters!</li>
                         {{/if}}
-
                     </ul>
                 {% endtplhandlebars %}
 
