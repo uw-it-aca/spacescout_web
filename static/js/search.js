@@ -365,11 +365,21 @@ function fetch_data() {
     var display_bounds = window.spacescout_map.getBounds();
     var ne = display_bounds.getNorthEast();
     var sw = display_bounds.getSouthWest();
-    var distance = distance_between_points(ne.lat(), ne.lng(), sw.lat(), sw.lng());
+    var center = window.spacescout_map.getCenter();
+
+    // which is longer?
+    var north = distance_between_points(center.lat(), center.lng(), ne.lat(), center.lng());
+    var east = distance_between_points(center.lat(), center.lng(), center.lat(), ne.lng());
+
+    if (north > east) {
+        var distance = north;
+    } else {
+        var distance = east;
+    }
+
     // Calculated in KM
     distance = distance * 1000;
 
-    var center = window.spacescout_map.getCenter();
     args["center_latitude"] = [center.lat()];
     args["center_longitude"] = center.lng();
     args["open_now"] = 1;
