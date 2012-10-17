@@ -388,7 +388,12 @@ function fetch_data() {
 
     // Populate the bubble with which filters are used
 
+    window.spacescout_search_options["space_type"] = (window.spacescout_search_options["type"].length > 0);
     window.spacescout_search_options["reservable"] = (window.spacescout_search_options["extended_info:reservable"] != null);
+    window.spacescout_search_options["noise"] = (window.spacescout_search_options["extended_info:noise_level"] != null);
+    window.spacescout_search_options["lighting"] = (window.spacescout_search_options["extended_info:has_natural_light"] != null);
+    window.spacescout_search_options["food"] = (window.spacescout_search_options["extended_info:food_nearby"] != null);
+    window.spacescout_search_options["resources"] = (window.spacescout_search_options["extended_info:has_computers"] != null) || (window.spacescout_search_options["extended_info:has_displays"] != null) || (window.spacescout_search_options["extended_info:has_outlets"] != null) || (window.spacescout_search_options["extended_info:has_printing"] != null) || (window.spacescout_search_options["extended_info:has_projector"] != null) || (window.spacescout_search_options["extended_info:has_scanner"] != null) || (window.spacescout_search_options["extended_info:has_whiteboards"] != null);
 
     var source = $('#filter_list').html();
     var template = Handlebars.compile(source);
