@@ -39,15 +39,14 @@
                     <h3 id="current_filters" class="visuallyhidden">Current Filters:</h3>
                     <ul aria-labelledby="current_filters">
 
-                        <!-- TODO: show the ... if more than 7 li -->
                         {{#if open_at}}<li>specific time</li>{{else}}<li>open now</li>{{/if}}
                         {{#if building_name}}<li>specific building</li>{{else}}<li>entire campus</li>{{/if}}
                         {{#if space_type}}<li>type of space</li>{{/if}}
-                        {{#if true_capacity}}<li>seats > {{capacity}}</li>{{/if}}
+                        {{#if true_capacity}}<li>seats {{capacity}}</li>{{/if}}
                         {{#if reservable}}<li>reservable</li>{{/if}}
-                        {{#if noise}}<li>noise/level</li>{{/if}}
+                        {{#if noise}}<li>noise level</li>{{/if}}
                         {{#if lighting}}<li>natural light</li>{{/if}}
-                        {{#if resources}}<li>specific resource</li>{{/if}}
+                        {{#if resources}}<li>resources</li>{{/if}}
                         {{#if food}}<li>food/coffee</li>{{/if}}
                         <!-- eventually? <li>...</li> -->
 
