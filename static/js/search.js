@@ -63,11 +63,55 @@ function addClusterListener(markerCluster, data) {
 function openAllMarkerInfoWindow(data) {
     var source = $('#all_markers').html();
     var template = Handlebars.compile(source);
-    $('#info_items').html(template({data: data}));
+    data = sortByBuildingName(data);
+    $('#info_items').html(template({'data': data}));
     $('.loading').slideUp('fast');
 
     lazyLoadSpaceImages();
 
+}
+
+function sortByBuildingName(data) {
+    data.sort(function(one, two){
+        var abuilding=one.location.building_name.toLowerCase(), bbuilding=two.location.building_name.toLowerCase()
+        if (abuilding < bbuilding)
+            return -1
+        if (abuilding > bbuilding)
+            return 1
+        return 0
+    })
+    return data;
+}
+
+function buildingNameHeaders(data) {
+    var byBuilding = {};
+    var hash = {};
+    var nobuilding = 'no building';
+    for (i=0; i<data.length; i++) {
+        var bname = data[i].location.building_name;
+        if (bname === null) {
+            if (!byBuilding.hasOwnProperty(nobuilding)) {
+                byBuilding[nobuilding] = [data[i]];
+            }
+            byBuilding[nobuilding].push(data[i]);
+        }
+        else {
+            if (!byBuilding.hasOwnProperty(bname)) {
+                byBuilding[bname] = [data[i]];
+            }
+            else {
+                byBuilding[bname].push(data[i]);
+            }
+        }
+    }
+    var keys = [];
+    for (i in byBuilding) {
+        keys.push(i);
+        //console.log(i);
+        hash[i] = keys;
+    }
+    hash['keys'] = keys;
+    return hash;
 }
 
 // jquery function to check if scrollable
@@ -361,6 +405,10 @@ function fetch_data() {
     if (!args) {
         args = {};
     }
+    // it's a hack, but it should work
+    if (!args["open_at"]) {
+        args["open_now"] = 1;
+    }
 
     var display_bounds = window.spacescout_map.getBounds();
     var ne = display_bounds.getNorthEast();
@@ -382,7 +430,7 @@ function fetch_data() {
 
     args["center_latitude"] = [center.lat()];
     args["center_longitude"] = center.lng();
-    args["open_now"] = 1;
+    //args["open_now"] = 1;
     args["distance"] = distance;
     args["limit"] = 0;
 
