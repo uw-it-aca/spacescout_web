@@ -39,15 +39,14 @@
                     <h3 id="current_filters" class="visuallyhidden">Current Filters:</h3>
                     <ul aria-labelledby="current_filters">
 
-                        <!-- TODO: show the ... if more than 7 li -->
                         {{#if open_at}}<li>specific time</li>{{else}}<li>open now</li>{{/if}}
                         {{#if building_name}}<li>specific building</li>{{else}}<li>entire campus</li>{{/if}}
                         {{#if space_type}}<li>type of space</li>{{/if}}
-                        {{#if true_capacity}}<li>seats > {{capacity}}</li>{{/if}}
+                        {{#if true_capacity}}<li>seats {{capacity}}</li>{{/if}}
                         {{#if reservable}}<li>reservable</li>{{/if}}
-                        {{#if noise}}<li>noise/level</li>{{/if}}
+                        {{#if noise}}<li>noise level</li>{{/if}}
                         {{#if lighting}}<li>natural light</li>{{/if}}
-                        {{#if resources}}<li>specific resource</li>{{/if}}
+                        {{#if resources}}<li>resources</li>{{/if}}
                         {{#if food}}<li>food/coffee</li>{{/if}}
                         <!-- eventually? <li>...</li> -->
 
@@ -393,7 +392,7 @@
                     <div class="space-detail-inner" id="detail_container_{{id}}">
                         <div class="space-detail-header">
                             <div class="space-detail-name">{{name}}</div>
-                            <div class="space-detail-type">{{type}} {{#if capacity }}<span class="space-detail-capacity">Seats&nbsp;{{capacity}}</span>{{/if}}</div>
+                            <div class="space-detail-type">{{type}} {{#if capacity }}<span class="space-detail-capacity">[Seats&nbsp;{{capacity}}]</span>{{/if}}</div>
                             <a class="close" href="#" title="close"><img src="/static/img/x.png" /></a>
                         </div>
                         <div class="space-detail-body">
@@ -529,7 +528,7 @@
                 <div class="space-detail-inner" id="detail_container_{{id}}">
                     <div class="space-detail-header">
                         <div class="space-detail-name">{{name}}</div>
-                        <div class="space-detail-type">{{type}} {{#if capacity }}<span class="space-detail-capacity">Seats&nbsp;{{capacity}}</span>{{/if}}</div>
+                        <div class="space-detail-type">{{type}} {{#if capacity }}<span class="space-detail-capacity">[Seats&nbsp;{{capacity}}]</span>{{/if}}</div>
                         <a class="close" href="#" title="close"><img src="/static/img/x.png" /></a>
                     </div>
                     <div class="space-detail-body">
