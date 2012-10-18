@@ -186,6 +186,27 @@ function repopulate_filters() {
         }
 
         // set resources
+        if (form_opts["extended_info:has_whiteboards"]) {
+            $('#has_whiteboards').prop('checked', true);
+        }
+        if (form_opts["extended_info:has_outlets"]) {
+            $('#has_outlets').prop('checked', true);
+        }
+        if (form_opts["extended_info:has_computers"]) {
+            $('#has_computers').prop('checked', true);
+        }
+        if (form_opts["extended_info:has_scanner"]) {
+            $('#has_scanner').prop('checked', true);
+        }
+        if (form_opts["extended_info:has_projector"]) {
+            $('#has_projector').prop('checked', true);
+        }
+        if (form_opts["extended_info:has_printing"]) {
+            $('#has_printing').prop('checked', true);
+        }
+        if (form_opts["extended_info:has_displays"]) {
+            $('#has_displays').prop('checked', true);
+        }
 
         // set noise level
 
