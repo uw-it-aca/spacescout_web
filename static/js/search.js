@@ -262,8 +262,7 @@ function run_custom_search() {
     fetch_data();
 
     $("#filter_block").slideUp(speed);
-
-    // Populate the bubble
+    $.cookie('spacescout_search_opts', JSON.stringify(window.spacescout_search_options));
 
 }
 
