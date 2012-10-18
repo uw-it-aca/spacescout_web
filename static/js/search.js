@@ -227,7 +227,6 @@ function repopulate_filters() {
             }
         }
 
-        console.log(form_opts);
     }
 }
 
