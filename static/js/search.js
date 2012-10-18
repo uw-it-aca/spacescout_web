@@ -211,6 +211,9 @@ function repopulate_filters() {
         // set noise level
 
         // set lighting
+        if (form_opts["extended_info:has_natural_light"]) {
+            $('#lighting').prop('checked', true);
+        }
 
         // set food/coffee
 
