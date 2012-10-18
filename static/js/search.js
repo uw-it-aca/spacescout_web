@@ -209,6 +209,11 @@ function repopulate_filters() {
         }
 
         // set noise level
+        if (form_opts["extended_info:noise_level"]) {
+            for (i=0; i < form_opts["extended_info:noise_level"].length; i++) {
+                $('#'+form_opts["extended_info:noise_level"][i]).prop('checked', true);
+            }
+        }
 
         // set lighting
         if (form_opts["extended_info:has_natural_light"]) {
@@ -216,6 +221,11 @@ function repopulate_filters() {
         }
 
         // set food/coffee
+        if (form_opts["extended_info:food_nearby"]) {
+            for (i=0; i < form_opts["extended_info:food_nearby"].length; i++) {
+                $('#'+form_opts["extended_info:food_nearby"][i]).prop('checked', true);
+            }
+        }
 
         console.log(form_opts);
     }
