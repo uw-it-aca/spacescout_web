@@ -151,8 +151,39 @@ function repopulate_filters() {
         $('#capacity').val(form_opts["capacity"]);
 
         // set hours
+        if (form_opts["open_at"]) {
+            var day = form_opts["open_at"].split(',')[0];
+            var time = form_opts["open_at"].split(',')[1];
+            time = time.split(':');
+            var ampm = 'AM';
+            if (Number(time[0]) > 12) {
+                time[0] = Number(time[0]) - 12;
+                ampm = 'PM';
+            }
+            time = time.join(':');
+            $('#day-from').val(day);
+            $('#hour-from').val(time);
+            $('#ampm-from').val(ampm);
+        }
+        if (form_opts["open_until"]) {
+            var day = form_opts["open_until"].split(',')[0];
+            var time = form_opts["open_until"].split(',')[1];
+            time = time.split(':');
+            var ampm = 'AM';
+            if (Number(time[0]) > 12) {
+                time[0] = Number(time[0]) - 12;
+                ampm = 'PM';
+            }
+            time = time.join(':');
+            $('#day-until').val(day);
+            $('#hour-until').val(time);
+            $('#ampm-until').val(ampm);
+        }
 
         // set location
+        if (form_opts["building_name"]) {
+            $('#e9').val(form_opts["building_name"]);
+        }
 
         // set resources
 
