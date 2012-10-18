@@ -133,6 +133,39 @@ function lazyLoadSpaceImages() {
     }
 }
 
+function repopulate_filters() {
+    if ($.cookie('spacescout_search_opts')) {
+        var form_opts = JSON.parse($.cookie('spacescout_search_opts'));
+
+        // set types
+        for (i=0; i < form_opts["type"].length; i++) {
+            $('#'+form_opts["type"][i]).prop('checked', true);
+        }
+
+        // set reservability
+        if (form_opts["extended_info:reservable"]) {
+            $('#reservable').prop('checked', true);
+        }
+
+        // set capacity
+        $('#capacity').val(form_opts["capacity"]);
+
+        // set hours
+
+        // set location
+
+        // set resources
+
+        // set noise level
+
+        // set lighting
+
+        // set food/coffee
+
+        console.log(form_opts);
+    }
+}
+
 function run_custom_search() {
     // Clear the map
     for (var i = 0; i < window.spacescout_markers.length; i++) {
@@ -293,9 +326,15 @@ function clear_custom_search() {
 function initialize() {
     var i;
 
+    // get any form values from a cookie
     $("#view_results_button").click(run_custom_search);
 
     window.spacescout_search_options = {};
+
+    repopulate_filters();
+    if ($.cookie('spacescout_search_opts')) {
+        window.spacescout_search_options = JSON.parse($.cookie('spacescout_search_opts'));
+    }
 
     if (navigator.geolocation) {
         // Doing a timeout here, to make sure we load something...
