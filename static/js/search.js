@@ -144,21 +144,29 @@ function run_custom_search() {
 
     // Set the search values, so they'll stick through zooms and pans
     window.spacescout_search_options = {};
+    var set_cookie = false;
 
     // type
     var checked = new Array();
     $.each($("input[name='type']:checked"), function() {
         checked.push($(this).val());
     });
-    window.spacescout_search_options["type"] = checked;
+    if (checked.length > 0) {
+        window.spacescout_search_options["type"] = checked;
+        set_cookie = true;
+    }
 
     // reservable
     if ( $("#reservable").is(":checked") ) {
         window.spacescout_search_options["extended_info:reservable"] = "true";
+        set_cookie = true;
     }
 
     // capacity
     window.spacescout_search_options["capacity"] = $("#capacity option:selected").val();
+    if (window.spacescout_search_options["capacity"] != 1) {
+        set_cookie = true;
+    }
 
     // hours
     if ($("#hours_list_input").attr("checked") == "checked") {
@@ -197,11 +205,13 @@ function run_custom_search() {
             }
             window.spacescout_search_options["open_until"] = until_query.join(",");
         }
+        set_cookie = true;
     }
 
     // location
     if ($("#building_list_input").attr("checked") == "checked") {
         window.spacescout_search_options["building_name"] = $('select#e9').val();
+        set_cookie = true;
     }
 
     // equipment
@@ -212,6 +222,9 @@ function run_custom_search() {
     for (i=0; i < checked.length; i++) {
         window.spacescout_search_options["extended_info:" + checked[i]] = true;
     }
+    if (checked.length > 0) {
+        set_cookie = true;
+    }
 
     // noise
     checked = [];
@@ -220,11 +233,13 @@ function run_custom_search() {
     });
     if (checked.length > 0) {
         window.spacescout_search_options["extended_info:noise_level"] = checked;
+        set_cookie = true;
     }
 
     // lighting
     if ( $("#lighting").is(":checked") ) {
         window.spacescout_search_options["extended_info:has_natural_light"] = "true";
+        set_cookie = true;
     }
 
     // food/coffee
@@ -234,6 +249,7 @@ function run_custom_search() {
     });
     if (checked.length > 0) {
         window.spacescout_search_options["extended_info:food_nearby"] = checked;
+        set_cookie = true;
     }
 
     // close space detail if visible (desktop)
@@ -262,10 +278,13 @@ function run_custom_search() {
     fetch_data();
 
     $("#filter_block").slideUp(speed);
-    $.cookie('spacescout_search_opts', JSON.stringify(window.spacescout_search_options));
+    if (set_cookie) {
+        $.cookie('spacescout_search_opts', JSON.stringify(window.spacescout_search_options));
+    }
 
 }
 
+// TODO: is this used anymore?
 function clear_custom_search() {
     window.spacescout_search_options = [];
     fetch_data();
