@@ -121,6 +121,11 @@ Handlebars.registerHelper('ifany', function(a, b) {
         // Close the filter display using Cancel button
         $('#cancel_results_button').click(function() {
 
+            // clear saved search options
+            if ($.cookie('spacescout_search_opts')) {
+                $.removeCookie('spacescout_search_opts');
+            }
+
             // reset the map
             //clear_custom_search();
             //$('#filter_button').show();
