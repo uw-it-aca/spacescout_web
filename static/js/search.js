@@ -107,7 +107,7 @@ function buildingNameHeaders(data) {
     var keys = [];
     for (i in byBuilding) {
         keys.push(i);
-        console.log(i);
+        //console.log(i);
         hash[i] = keys;
     }
     hash['keys'] = keys;
@@ -258,7 +258,7 @@ function run_custom_search() {
 
 
     // Run the search
-    //console.log(window.spacescout_search_options);
+    console.log(window.spacescout_search_options);
     fetch_data();
 
     $("#filter_block").slideUp(speed);
@@ -405,6 +405,10 @@ function fetch_data() {
     if (!args) {
         args = {};
     }
+    // it's a hack, but it should work
+    if (!args["open_at"]) {
+        args["open_now"] = 1;
+    }
 
     var display_bounds = window.spacescout_map.getBounds();
     var ne = display_bounds.getNorthEast();
@@ -426,7 +430,7 @@ function fetch_data() {
 
     args["center_latitude"] = [center.lat()];
     args["center_longitude"] = center.lng();
-    args["open_now"] = 1;
+    //args["open_now"] = 1;
     args["distance"] = distance;
     args["limit"] = 0;
 
