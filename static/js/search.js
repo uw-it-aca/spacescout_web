@@ -242,7 +242,11 @@ function run_custom_search() {
 
     // Set the search values, so they'll stick through zooms and pans
     window.spacescout_search_options = {};
-    var set_cookie = false;
+    if ($.cookie('spacescout_search_opts')) {
+        var set_cookie = true; // if there is a cookie, we'd better reset it, or else we get filters that are too sticky
+    } else {
+        var set_cookie = false;
+    }
 
     // type
     var checked = new Array();
