@@ -450,13 +450,15 @@
                                         <li class="clearfix">
                                             <h5 class="space-info-label pull-left">Resources</h5>
                                             <div class="space-info-detail pull-left">
-                                                {{#if extended_info.has_computers }}Computers{{/if}}
-                                                {{#if extended_info.has_displays }}Displays&nbsp;{{/if}}
-                                                {{#if extended_info.has_outlets }}Outlets&nbsp;{{/if}}
-                                                {{#if extended_info.has_printing }}Printing&nbsp;{{/if}}
-                                                {{#if extended_info.has_projector }}Projector&nbsp;{{/if}}
-                                                {{#if extended_info.has_scanner }}Scanning&nbsp;{{/if}}
-                                                {{#if extended_info.has_whiteboards }}Whiteboards&nbsp;{{/if}}
+                                                <ul class='space-info-resources-list'>
+                                                {{#if extended_info.has_computers }}<li>Computers</li>{{/if}}
+                                                {{#if extended_info.has_displays }}<li>Display</li>{{/if}}
+                                                {{#if extended_info.has_outlets }}<li>Outlets</li>{{/if}}
+                                                {{#if extended_info.has_printing }}<li>Printing</li>{{/if}}
+                                                {{#if extended_info.has_projector }}<li>Projector</li>{{/if}}
+                                                {{#if extended_info.has_scanner }}<li>Scanning</li>{{/if}}
+                                                {{#if extended_info.has_whiteboards }}<li>Whiteboards</li>{{/if}}
+                                                </ul>
                                             </div>
                                         </li>
                                         {{/if}}
