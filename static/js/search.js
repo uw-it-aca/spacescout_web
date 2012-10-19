@@ -383,7 +383,7 @@ function run_custom_search() {
 
     $("#filter_block").slideUp(speed);
     if (set_cookie) {
-        $.cookie('spacescout_search_opts', JSON.stringify(window.spacescout_search_options));
+        $.cookie('spacescout_search_opts', JSON.stringify(window.spacescout_search_options), { expires: 1 });
     }
 
 }
