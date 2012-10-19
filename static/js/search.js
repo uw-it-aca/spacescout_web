@@ -352,7 +352,7 @@ function run_custom_search() {
         window.spacescout_search_options["extended_info:food_nearby"] = checked;
         set_cookie = true;
     }
-
+    
     // close space detail if visible (desktop)
     if ($('#space_detail_container').is(":visible")) {
         $('#info_items li').removeClass('selected');
@@ -382,7 +382,19 @@ function run_custom_search() {
     if (set_cookie) {
         $.cookie('spacescout_search_opts', JSON.stringify(window.spacescout_search_options));
     }
+}
 
+function fix_filter_overflow() {
+    $('#filter_display_list > li').each(function(){
+        oScrollTop = $('#filter_display_list').height();
+        var thisItemIsVisible = ($(this).position().top < oScrollTop);
+        console.log($(this).text());
+        if (!thisItemIsVisible) {
+            $(this).html("...");
+            console.log($(this).text());
+            console.log($(this));
+        }
+    });
 }
 
 // TODO: is this used anymore?
@@ -579,6 +591,8 @@ function fetch_data() {
     var source = $('#filter_list').html();
     var template = Handlebars.compile(source);
     $('#bubble_filters_container').html(template(bubble_filters));
+
+    fix_filter_overflow();
 
     var url_args = ["/search/?"];
     for (var key in args) {
