@@ -2,10 +2,9 @@
 
 {% block contact-content %}
 
-    {% if not is_mobile %}<div class="contact-header">Report a problem</div>{% endif %}
+    {% if not is_mobile %}<h2 class="contact-header">Report a problem</h2>{% endif %}
     <form action="/contact/" method="post">{% csrf_token %}
         <div class="fieldWrapper">
-            Space<br />
             {{ spot_name }}<br />
             {{ spot_description }}
         </div>
@@ -19,7 +18,7 @@
                 <div class="fieldWrapper">
                     {{ field.label_tag }}{{ field }}
                     {% for error in field.errors %}
-                        <strong>{{ error|escape }}</strong>
+                        <strong class="alert">{{ error|escape }}</strong>
                     {% endfor %}
                 </div>
             {% endif %}
