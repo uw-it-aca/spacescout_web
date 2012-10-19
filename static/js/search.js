@@ -373,6 +373,9 @@ function run_custom_search() {
         $('.back-top').show();
     }
 
+    // reset the map center and zoom
+    window.spacescout_map.setCenter(new google.maps.LatLng(window.default_latitude, window.default_longitude));
+    window.spacescout_map.setZoom(window.default_zoom);
 
     // Run the search
     //console.log(window.spacescout_search_options);
@@ -394,7 +397,6 @@ function clear_custom_search() {
 function initialize() {
     var i;
 
-    // get any form values from a cookie
     $("#view_results_button").click(run_custom_search);
 
     window.spacescout_search_options = {};
@@ -415,7 +417,7 @@ function initialize() {
             function(position) {
                 window.clearTimeout(window.position_timeout);
                 youarehere = position.coords;
-                load_map(position.coords.latitude, position.coords.longitude, window.default_zoom);
+                load_map(window.default_latitude, window.default_longitude, window.default_zoom);
             }
         );
     }
