@@ -1,0 +1,28 @@
+{% extends "contact.html" %}
+
+{% block contact-content %}
+
+    {% if not is_mobile %}<h2 class="contact-header">Report a problem</h2>{% endif %}
+    <form action="/contact/" method="post">{% csrf_token %}
+        <div class="fieldWrapper">
+            {{ spot_name }}<br />
+            {{ spot_description }}
+        </div>
+        {{ form.non_field_errors }}
+        {% for field in form %}
+            {% if field.name == "email_confirmation" %}
+                <div style="display: None;">
+                    LEAVE BLANK {{ field }}
+                </div>
+            {% else %}
+                <div class="fieldWrapper">
+                    {{ field.label_tag }}{{ field }}
+                    {% for error in field.errors %}
+                        <strong class="alert">{{ error|escape }}</strong>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endfor %}
+        <input type="submit" value="Send" />
+    </form>
+{% endblock %}

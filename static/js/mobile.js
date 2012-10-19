@@ -63,6 +63,11 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
 		mobileContent();
 
+	   // check if a map_canvas exists... populate it
+    	if ($("#map_canvas").length == 1) {
+          initialize();
+        }
+
 		// initialize the carousel for mobile standalone space page
         initializeCarousel();
         resizeCarouselMapContainer();
@@ -140,11 +145,16 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
         // Close the filter display using Cancel button
         $('#cancel_results_button').click(function() {
 
+            // clear saved search options
+            if ($.cookie('spacescout_search_opts')) {
+                $.removeCookie('spacescout_search_opts');
+            }
+
             // reset the map
-            clear_custom_search();
+            //clear_custom_search();
 
             // if mobile
-            $('#main_content').show();
+            /*$('#main_content').show();
             $('#footer').show();
             $('.back-top').show();
 
@@ -153,7 +163,10 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
             $('#view_results_button').hide();
             $('#cancel_results_button').hide();
 
-            $("#filter_block").slideUp('slow');
+            $("#filter_block").slideUp('slow', function() {
+                // Animation complete.
+                mobileContent();
+            });*/
 
             // reset checkboxes
             $('input[type=checkbox]').each(function() {
@@ -171,14 +184,73 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
             $('#open_now').parent().removeClass("selected");
             $('#hours_list_container').hide();
             $('#hours_list_input').parent().removeClass("selected");
+            var date = new Date();
+            var hour = date.getHours();
+            var min = date.getMinutes();
+
+
+            if (min < 16) {
+                min = "00";
+            }else if (min < 46) {
+                min = "30";
+            }else {
+                min = "00";
+                hour++;
+            }
+
+            if (hour > 11) {
+                $("#ampm-from").val("PM");
+            }else {
+                $("#ampm-from").val("AM");
+            }
+            if (hour > 12) {
+                hour = hour-12;
+            }
+            hour = ""+hour+":"+min;
+            $("#day-from").val(weekdays[date.getDay()])
+            $("#hour-from").val(hour)
+
+            $("#day-until").val("No pref")
+            $("#hour-until").val("No pref")
+            $("#ampm-until").val("AM")
 
             // reset location
             $('#entire_campus').prop('checked', true);
             $('#entire_campus').parent().removeClass("selected");
+            $('#e9.building-location')[0].options[0].selected = true; // grabs first location in drop down and selects it. could be prettier
             $('#building_list_container').hide();
             $('#building_list_input').parent().removeClass("selected");
+            $('#building_list_container').children().children().children(".select2-search-choice").remove();
+            $('#building_list_container').children().children().children().children().val('Select Building(s)');
+            $('#building_list_container').children().children().children().children().attr('style', "");
 
         });
+        var weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        var date = new Date();
+        var hour = date.getHours();
+        var min = date.getMinutes();
+
+
+        if (min < 16) {
+            min = "00";
+        }else if (min < 46) {
+            min = "30";
+        }else {
+            min = "00";
+            hour++;
+        }
+
+        if (hour > 11) {
+            $("#ampm-from").val("PM");
+        }else {
+            $("#ampm-from").val("AM");
+        }
+        if (hour > 12) {
+            hour = hour-12;
+        }
+        hour = ""+hour+":"+min;
+        $("#day-from").val(weekdays[date.getDay()])
+        $("#hour-from").val(hour)
 
 
         // handle view details click
@@ -189,18 +261,18 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
             e.preventDefault();
 
-            $.ajax({
-                url: '/space/'+id+'/json/',
-                success: showSpaceDetails
-            });
+            //clear any unneded pending ajax window.requests
+            for (i = 0; i < window.requests.length; i++) {
+                window.requests[i].abort();
+            }
+            window.requests.push(
+                $.ajax({
+                    url: '/space/'+id+'/json/',
+                    success: showSpaceDetails
+                })
+            );
 
         });
-
-        // fancy location select
-        $("#e9").select2({
-                placeholder: "Select building(s)",
-                allowClear: true
-            });
 
         // handle checkbox and radio button clicks
         $('.checkbox input:checkbox').click(function() {
@@ -285,9 +357,7 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
         var windowH = $(window).height();
         var headerH = $('#nav').height();
-        //var contentH = windowH - headerH;
-        //var mainContentH = windowH - headerH + 35;
-        var mapH = windowH - headerH - 70; // enough to show the loading spinner at the bottom of the viewport
+        var mapH = windowH - headerH - 50; // enough to show the loading spinner at the bottom of the viewport
 
         $('#map_canvas').height(mapH);
         $('#map_canvas').css({ minHeight: mapH })
@@ -313,10 +383,9 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
     }
 
-
     function resizeFilterBlock() {
         var winH = $(window).height();
-        $("#filter_block").height(winH - 60);
+        $("#filter_block").height(winH - 110);
     }
 
     function resizeCarouselMapContainer() {

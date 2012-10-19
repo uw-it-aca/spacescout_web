@@ -1,5 +1,4 @@
 var spacescout_map = null, spacescout_infowindow, spacescout_marker_ids = {}, spacescout_markers = [], speed = 800, mc = null, youarehere = null;
-var requests = new Array();
 
 function openInfoWindow(marker, info) {
 
@@ -108,7 +107,7 @@ function buildingNameHeaders(data) {
     var keys = [];
     for (i in byBuilding) {
         keys.push(i);
-        console.log(i);
+        //console.log(i);
         hash[i] = keys;
     }
     hash['keys'] = keys;
@@ -134,6 +133,103 @@ function lazyLoadSpaceImages() {
     }
 }
 
+function repopulate_filters() {
+    if ($.cookie('spacescout_search_opts')) {
+        var form_opts = JSON.parse($.cookie('spacescout_search_opts'));
+
+        // set types
+        for (i=0; i < form_opts["type"].length; i++) {
+            $('#'+form_opts["type"][i]).prop('checked', true);
+        }
+
+        // set reservability
+        if (form_opts["extended_info:reservable"]) {
+            $('#reservable').prop('checked', true);
+        }
+
+        // set capacity
+        $('#capacity').val(form_opts["capacity"]);
+
+        // set hours
+        if (form_opts["open_at"]) {
+            var day = form_opts["open_at"].split(',')[0];
+            var time = form_opts["open_at"].split(',')[1];
+            time = time.split(':');
+            var ampm = 'AM';
+            if (Number(time[0]) > 12) {
+                time[0] = Number(time[0]) - 12;
+                ampm = 'PM';
+            }
+            time = time.join(':');
+            $('#day-from').val(day);
+            $('#hour-from').val(time);
+            $('#ampm-from').val(ampm);
+        }
+        if (form_opts["open_until"]) {
+            var day = form_opts["open_until"].split(',')[0];
+            var time = form_opts["open_until"].split(',')[1];
+            time = time.split(':');
+            var ampm = 'AM';
+            if (Number(time[0]) > 12) {
+                time[0] = Number(time[0]) - 12;
+                ampm = 'PM';
+            }
+            time = time.join(':');
+            $('#day-until').val(day);
+            $('#hour-until').val(time);
+            $('#ampm-until').val(ampm);
+        }
+
+        // set location
+        if (form_opts["building_name"]) {
+            $('#e9').val(form_opts["building_name"]);
+        }
+
+        // set resources
+        if (form_opts["extended_info:has_whiteboards"]) {
+            $('#has_whiteboards').prop('checked', true);
+        }
+        if (form_opts["extended_info:has_outlets"]) {
+            $('#has_outlets').prop('checked', true);
+        }
+        if (form_opts["extended_info:has_computers"]) {
+            $('#has_computers').prop('checked', true);
+        }
+        if (form_opts["extended_info:has_scanner"]) {
+            $('#has_scanner').prop('checked', true);
+        }
+        if (form_opts["extended_info:has_projector"]) {
+            $('#has_projector').prop('checked', true);
+        }
+        if (form_opts["extended_info:has_printing"]) {
+            $('#has_printing').prop('checked', true);
+        }
+        if (form_opts["extended_info:has_displays"]) {
+            $('#has_displays').prop('checked', true);
+        }
+
+        // set noise level
+        if (form_opts["extended_info:noise_level"]) {
+            for (i=0; i < form_opts["extended_info:noise_level"].length; i++) {
+                $('#'+form_opts["extended_info:noise_level"][i]).prop('checked', true);
+            }
+        }
+
+        // set lighting
+        if (form_opts["extended_info:has_natural_light"]) {
+            $('#lighting').prop('checked', true);
+        }
+
+        // set food/coffee
+        if (form_opts["extended_info:food_nearby"]) {
+            for (i=0; i < form_opts["extended_info:food_nearby"].length; i++) {
+                $('#'+form_opts["extended_info:food_nearby"][i]).prop('checked', true);
+            }
+        }
+
+    }
+}
+
 function run_custom_search() {
     // Clear the map
     for (var i = 0; i < window.spacescout_markers.length; i++) {
@@ -145,61 +241,78 @@ function run_custom_search() {
 
     // Set the search values, so they'll stick through zooms and pans
     window.spacescout_search_options = {};
+    if ($.cookie('spacescout_search_opts')) {
+        var set_cookie = true; // if there is a cookie, we'd better reset it, or else we get filters that are too sticky
+    } else {
+        var set_cookie = false;
+    }
 
     // type
     var checked = new Array();
     $.each($("input[name='type']:checked"), function() {
         checked.push($(this).val());
     });
-    window.spacescout_search_options["type"] = checked;
+    if (checked.length > 0) {
+        window.spacescout_search_options["type"] = checked;
+        set_cookie = true;
+    }
 
     // reservable
     if ( $("#reservable").is(":checked") ) {
         window.spacescout_search_options["extended_info:reservable"] = "true";
+        set_cookie = true;
     }
 
     // capacity
     window.spacescout_search_options["capacity"] = $("#capacity option:selected").val();
+    if (window.spacescout_search_options["capacity"] != 1) {
+        set_cookie = true;
+    }
 
     // hours
-    if ($('#day-from').val() != 'nopref') {
-        var from_query = new Array;
-        from_query.push($('#day-from').val());
-        if ($('#hour-from').val() != 'nopref') {
-            var time = $('#hour-from').val();
-            if ($('#ampm-from').val() == 'PM') {
-                var hour = time.split(':')[0];
-                var min = time.split(':')[1];
-                hour = Number(hour) + 12;
-                time = hour+':'+min;
+    if ($("#hours_list_input").attr("checked") == "checked") {
+        if ($('#day-from').val() != 'nopref') {
+            var from_query = new Array;
+            from_query.push($('#day-from').val());
+            if ($('#hour-from').val() != 'nopref') {
+                var time = $('#hour-from').val();
+                if ($('#ampm-from').val() == 'PM') {
+                    var hour = time.split(':')[0];
+                    var min = time.split(':')[1];
+                    hour = Number(hour) + 12;
+                    time = hour+':'+min;
+                }
+                from_query.push(time);
+            } else {
+                from_query.push('00:00');
             }
-            from_query.push(time);
-        } else {
-            from_query.push('00:00');
+            window.spacescout_search_options["open_at"] = from_query.join(",");
         }
-        window.spacescout_search_options["open_at"] = from_query.join(",");
+
+        if ($('#day-from').val() != 'nopref' && $('#day-until').val() != 'nopref') {
+            var until_query = new Array;
+            until_query.push($('#day-until').val());
+            if ($('#hour-until').val() != 'nopref') {
+                var time = $('#hour-until').val();
+                if ($('#ampm-until').val() == 'PM') {
+                    var hour = time.split(':')[0];
+                    var min = time.split(':')[1];
+                    hour = Number(hour) + 12;
+                    time = hour+':'+min;
+                }
+                until_query.push(time);
+            } else {
+                until_query.push('23:59');
+            }
+            window.spacescout_search_options["open_until"] = until_query.join(",");
+        }
+        set_cookie = true;
     }
 
-    if ($('#day-from').val() != 'nopref' && $('#day-until').val() != 'nopref') {
-        var until_query = new Array;
-        until_query.push($('#day-until').val());
-        if ($('#hour-until').val() != 'nopref') {
-            var time = $('#hour-until').val();
-            if ($('#ampm-until').val() == 'PM') {
-                var hour = time.split(':')[0];
-                var min = time.split(':')[1];
-                hour = Number(hour) + 12;
-                time = hour+':'+min;
-            }
-            until_query.push(time);
-        } else {
-            until_query.push('23:59');
-        }
-        window.spacescout_search_options["open_until"] = until_query.join(",");
-    }
     // location
-    if ($('select#e9').val()) {
+    if ($("#building_list_input").attr("checked") == "checked") {
         window.spacescout_search_options["building_name"] = $('select#e9').val();
+        set_cookie = true;
     }
 
     // equipment
@@ -210,17 +323,24 @@ function run_custom_search() {
     for (i=0; i < checked.length; i++) {
         window.spacescout_search_options["extended_info:" + checked[i]] = true;
     }
+    if (checked.length > 0) {
+        set_cookie = true;
+    }
 
     // noise
     checked = [];
     $.each($("input[name='noise_level']:checked"), function() {
         checked.push($(this).val());
     });
-    window.spacescout_search_options["extended_info:noise_level"] = checked;
+    if (checked.length > 0) {
+        window.spacescout_search_options["extended_info:noise_level"] = checked;
+        set_cookie = true;
+    }
 
     // lighting
     if ( $("#lighting").is(":checked") ) {
         window.spacescout_search_options["extended_info:has_natural_light"] = "true";
+        set_cookie = true;
     }
 
     // food/coffee
@@ -228,7 +348,10 @@ function run_custom_search() {
     $.each($("input[name='food_nearby']:checked"), function() {
         checked.push($(this).val());
     });
-    window.spacescout_search_options["extended_info:food_nearby"] = checked;
+    if (checked.length > 0) {
+        window.spacescout_search_options["extended_info:food_nearby"] = checked;
+        set_cookie = true;
+    }
 
     // close space detail if visible (desktop)
     if ($('#space_detail_container').is(":visible")) {
@@ -250,14 +373,19 @@ function run_custom_search() {
         $('.back-top').show();
     }
 
+
     // Run the search
     //console.log(window.spacescout_search_options);
     fetch_data();
 
     $("#filter_block").slideUp(speed);
+    if (set_cookie) {
+        $.cookie('spacescout_search_opts', JSON.stringify(window.spacescout_search_options));
+    }
 
 }
 
+// TODO: is this used anymore?
 function clear_custom_search() {
     window.spacescout_search_options = [];
     fetch_data();
@@ -266,21 +394,15 @@ function clear_custom_search() {
 function initialize() {
     var i;
 
-    /*$("#cancel_custom_search").click(function() {
-        $( "#dialog-modal" ).dialog("close");
-    });
-
-    $("#custom_search").click(function() {
-        $( "#dialog-modal" ).dialog({
-            height: 340,
-            width: 500,
-            modal: true
-        });
-    });
-    */
+    // get any form values from a cookie
     $("#view_results_button").click(run_custom_search);
 
     window.spacescout_search_options = {};
+
+    repopulate_filters();
+    if ($.cookie('spacescout_search_opts')) {
+        window.spacescout_search_options = JSON.parse($.cookie('spacescout_search_opts'));
+    }
 
     if (navigator.geolocation) {
         // Doing a timeout here, to make sure we load something...
@@ -310,7 +432,13 @@ function load_map(latitude, longitude, zoom) {
         zoom: zoom,
         mapTypeControl: false,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
-        streetViewControl: false
+        streetViewControl: false,
+        styles: [{
+            featureType: "poi.place_of_worship",
+            stylers: [
+              { "visibility": "off" }
+                ]
+        }]
     };
 
     if (window.spacescout_map == null) {
@@ -325,7 +453,7 @@ function load_map(latitude, longitude, zoom) {
                 anchor: [5, 0], // These values can only be positive
                 height: 40,
                 width: 35, // The icon width is actually 40, but the anchorIcon offset doesn't seem to work right, this gets the cluster icon centered on the number
-                url: '/static/img/pins/pin00.png',
+                url: '/static/img/pins/pin00.png'
             }]
         };
         window.mc = new MarkerClusterer(spacescout_map, [], mcOpts);
@@ -374,6 +502,12 @@ function display_search_results(data) {
 }
 
 function load_data(data) {
+    // set the # of spaces in the bubble
+    var source = $('#space_count').html();
+    var template = Handlebars.compile(source);
+    $('#space_count_container').html(template({count: data.length}));
+
+    // update the map
     display_search_results(data);
 }
 
@@ -388,28 +522,63 @@ function reload_on_idle() {
 
 function fetch_data() {
     $('.loading').show();
-    // abort any pending ajax requests
-    for (i =0; i < requests.length; i++) {
-        requests[i].abort();
+    // abort any pending ajax window.requests
+    for (i =0; i < window.requests.length; i++) {
+        window.requests[i].abort();
     }
     var args = window.spacescout_search_options;
     if (!args) {
         args = {};
     }
+    // it's a hack, but it should work
+    if (!args["open_at"]) {
+        args["open_now"] = 1;
+    }
 
     var display_bounds = window.spacescout_map.getBounds();
     var ne = display_bounds.getNorthEast();
     var sw = display_bounds.getSouthWest();
-    var distance = distance_between_points(ne.lat(), ne.lng(), sw.lat(), sw.lng());
+    var center = window.spacescout_map.getCenter();
+
+    // which is longer?
+    var north = distance_between_points(center.lat(), center.lng(), ne.lat(), center.lng());
+    var east = distance_between_points(center.lat(), center.lng(), center.lat(), ne.lng());
+
+    if (north > east) {
+        var distance = north;
+    } else {
+        var distance = east;
+    }
+
     // Calculated in KM
     distance = distance * 1000;
 
-    var center = window.spacescout_map.getCenter();
     args["center_latitude"] = [center.lat()];
     args["center_longitude"] = center.lng();
-    args["open_now"] = 1;
+    //args["open_now"] = 1;
     args["distance"] = distance;
     args["limit"] = 0;
+
+    // "type" needs to exist as something
+    if (!window.spacescout_search_options["type"]) {
+        window.spacescout_search_options["type"] = [];
+    }
+
+    // Populate the bubble with which filters are used
+    var bubble_filters = $().extend({}, window.spacescout_search_options);
+
+    bubble_filters["space_type"] = (window.spacescout_search_options["type"].length > 0);
+    bubble_filters["true_capacity"] = parseInt(window.spacescout_search_options["capacity"]) > 1;
+
+    bubble_filters["reservable"] = (window.spacescout_search_options["extended_info:reservable"] != null);
+    bubble_filters["noise"] = (window.spacescout_search_options["extended_info:noise_level"] != null);
+    bubble_filters["lighting"] = (window.spacescout_search_options["extended_info:has_natural_light"] != null);
+    bubble_filters["food"] = (window.spacescout_search_options["extended_info:food_nearby"] != null);
+    bubble_filters["resources"] = (window.spacescout_search_options["extended_info:has_computers"] != null) || (window.spacescout_search_options["extended_info:has_displays"] != null) || (window.spacescout_search_options["extended_info:has_outlets"] != null) || (window.spacescout_search_options["extended_info:has_printing"] != null) || (window.spacescout_search_options["extended_info:has_projector"] != null) || (window.spacescout_search_options["extended_info:has_scanner"] != null) || (window.spacescout_search_options["extended_info:has_whiteboards"] != null);
+
+    var source = $('#filter_list').html();
+    var template = Handlebars.compile(source);
+    $('#bubble_filters_container').html(template(bubble_filters));
 
     var url_args = ["/search/?"];
     for (var key in args) {
@@ -427,7 +596,7 @@ function fetch_data() {
 
     var query = url_args.join("");
 
-    requests.push(
+    window.requests.push(
         $.ajax({
             url: query,
             success: load_data

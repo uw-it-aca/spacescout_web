@@ -12,35 +12,51 @@
 
 #nav { z-index: 1000;
 
-    .logo { height: 80px; line-height: 80px; width: 172px; background: url('/static/img/spacescout_logo.png') no-repeat 0px 50%; background-size: auto; }
-    .actions { height: 80px; line-height: 80px; margin-right: 0; }
+    .logo-container { background-color: transparent; }
 
-    #filter_container {
-         position:absolute; top:80px; left:0; right:0; margin: 0;
+     .logo { height: 80px; line-height: 80px; width: 240px; background: url('/static/img/logo_retina.png') no-repeat 0px 50%; background-size: 100%; }
 
-         #filter_block { background: rgba(0, 0, 0, 0.9); height: auto;
+      #bubble_desktop { margin: 0; display: block; float: right; height: 80px; margin-right: 15px; width: 40% }
+      .bubble-inner { margin-top: 9px; height: 60px;
 
-            h2 { border: none; padding-top: 0;}
+          .bubble-tab { top: 22px; right: -15px; background: transparent url('/static/img/tri-right.png') no-repeat; }
+          .bubble-filters { width: 79%; height: 60px;
+              ul { height: 56px; overflow: hidden; height: 56px; }
+          }
+          .bubble-info { height:60px; width: 60px;
+              .count { font-size: 25px; margin-top: 6px; }
+          }
+      }
 
-            .inner-column { width: 33.3%; float: left;
-                .inner-block-left { padding-right: 20px; }
-                .inner-block-right { padding-left: 20px; }
-            }
+      .actions { line-height: 80px; height: 80px; }
 
-            #filter_hours {
-                .hours-from, .hours-until { display: block; width: 35px; }
-                select { width: 33%; }
-            }
+      #bubble_mobile { display: none; }
+}
 
-            .filter-submit { text-align: right; }
+#filter_container {
+     position:absolute; top:80px; left:0; right:0; margin: 0; z-index: 100;
 
+     #filter_block { background: rgba(0, 0, 0, 0.9); height: 450px;
+
+        h4 { border: none; padding-top: 0;}
+
+        .inner-column { width: 33.3%; float: left;
+            .inner-block-left { padding-right: 20px; }
+            .inner-block-right { padding-left: 20px; }
         }
 
-        #filter_button_container { /*height: 30px; width: auto; text-align:center; line-height:30px; position:absolute; left:0; right:0; top: auto; bottom:-30px; z-index: 999;*/ width: auto; top: -60px;
-            .filter-button-text { display: inline-block; margin-left: 3px; color: #eee; }
-            #filter_button { display:inline-block;padding: 0 10px; }
+        #filter_hours {
+            .hours-from, .hours-until { display: block; width: 35px; }
+            select { width: 33%; }
         }
 
+        .filter-submit { text-align: right; }
+
+    }
+
+    #filter_button_container { /*height: 30px; width: auto; text-align:center; line-height:30px; position:absolute; left:0; right:0; top: auto; bottom:-30px; z-index: 999;*/ width: auto; top: -60px;
+        .filter-button-text { display: inline-block; margin-left: 3px; color: #eee; }
+        #filter_button { display:inline-block;padding: 0 10px; }
     }
 
 }
@@ -69,11 +85,13 @@
             .space-detail-inner { display:none; padding: 15px; background-color: #fff;
 
                 .space-detail-header { position: relative; height: 60px;
-                    .space-detail-type { color: @grey_dark; }
-                    .space-detail-name { font-size: 20px; color: @purple_text; margin: 5px 0; }
+                    .space-detail-type { color: @grey_dark;
+                        .space-detail-capacity { color: @grey_light; font-size: 11px; text-transform: uppercase; display: inline-block; margin-left: 5px; }
+                    }
+                    .space-detail-name { font-size: 20px; color: @purple_text; margin: 5px 0;  line-height:20px; font-weight:normal; }
                     .close { position: absolute; right: 0; top: 0; float: none; }
                 }
-                .space-detail-body { overflow-y: auto; -webkit-overflow-scrolling: touch; border: solid 1px @grey_border; padding: 0; background-color: @grey_background;
+                .space-detail-body { overflow-y: auto; -webkit-overflow-scrolling: touch; border: solid 1px @grey_border; padding: 0; background-color: #EDEDED;
 
                     .space-detail-body-inner { background: #fff; border: solid 1px @grey_border; padding: 5px; margin: 20px 0 20px 20px; width: 76%;
                         .image-container, .map-container { margin: 0 auto; }
@@ -86,11 +104,11 @@
                     }
                 }
 
-                .space-info-header { margin-bottom: 15px; color: @purple_text; }
+                .space-info-header { margin-bottom: 15px; color: @purple_text; font-size:14px; font-weight:normal; }
                 .space-info {
                     ul { margin: 0; }
                     li { list-style: none; margin-bottom: 5px;
-                      .space-info-label { width: 35%; margin-right: 10px; color: @grey_light; overflow: hidden; text-overflow: ellipsis; }
+                      .space-info-label { width: 35%; margin-right: 10px; color: @grey_light; overflow: hidden; text-overflow: ellipsis; font-weight: normal; margin:0; }
                       .space-info-detail { width: 60%; }
                     }
                 }
@@ -132,12 +150,16 @@
     #info_items {
         ul { margin: 0px;
             li {
-                .space-detail-list-item { width: 52%; }
+                .space-detail-list-item { width: 49%;
+                    .space-detail-type-label { width: 68%; }
+                }
+                button:focus { outline: grey dashed thin; }
+                button div { padding: 0 2px; }
             }
 
             li.selected { background-color: #6160a2;
                 .space-detail-type { color: #ccc; }
-                .space-detail-name { color: #fff; }
+                .space-detail-desc,.space-detail-name { color: #fff; }
             }
         }
     }
@@ -169,7 +191,7 @@
         #info_items {
             ul {
                 li {
-                    .space-detail-list-item { width: 65%; }
+                    .space-detail-list-item { width: 64%; }
                 }
             }
         }
@@ -186,7 +208,7 @@
 
                         .space-detail-body-inner { width: 82%;
                             .image-container {
-                                .carousel { min-height: 305px; }
+                                .carousel { }
                             }
                         }
                     }
