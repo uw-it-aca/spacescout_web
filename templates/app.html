@@ -391,7 +391,7 @@
                 <div class="space-detail">
                     <div class="space-detail-inner" id="detail_container_{{id}}">
                         <div class="space-detail-header">
-                            <div class="space-detail-name">{{name}}</div>
+                            <h3 class="space-detail-name">{{name}}</h3>
                             <div class="space-detail-type">{{type}} {{#if capacity }}<span class="space-detail-capacity">[Seats&nbsp;{{capacity}}]</span>{{/if}}</div>
                             <a class="close" href="#" title="close"><img src="/static/img/x.png" /></a>
                         </div>
@@ -430,13 +430,13 @@
 
                             <div style="margin: 0 20px 20px 20px;">
 
-                                <div class="space-info-header">Space Details:</div>
+                                <h4 class="space-info-header">Space Details:</h4>
                                 <div class="space-info">
                                      <ul>
 
                                         {{#if has_notes }}
                                         <li class="clearfix">
-                                            <div class="space-info-label pull-left">Notes</div>
+                                            <h5 class="space-info-label pull-left">Notes</h5>
                                             <div class="space-info-detail pull-left">
                                                 <p>{{extended_info.access_notes}}</p>
                                                 <p>{{extended_info.reservation_notes }}</p>
@@ -444,11 +444,11 @@
                                         </li>
                                         {{/if}}
 
-                                        <li class="clearfix"><div class="space-info-label pull-left">Hours</div><div class="space-info-detail pull-left">{{formatHours available_hours}}</div></li>
-                                        <li class="clearfix"><div class="space-info-label pull-left">Location</div><div class="space-info-detail pull-left">{{extended_info.location_description}}</div></li>
+                                        <li class="clearfix"><h5 class="space-info-label pull-left">Hours</h5><div class="space-info-detail pull-left">{{formatHours available_hours}}</div></li>
+                                        <li class="clearfix"><h5 class="space-info-label pull-left">Location</h5><div class="space-info-detail pull-left">{{extended_info.location_description}}</div></li>
                                         {{#if has_resources }}
                                         <li class="clearfix">
-                                            <div class="space-info-label pull-left">Resources</div>
+                                            <h5 class="space-info-label pull-left">Resources</h5>
                                             <div class="space-info-detail pull-left">
                                                 {{#if extended_info.has_computers }}Computers{{/if}}
                                                 {{#if extended_info.has_displays }}Displays&nbsp;{{/if}}
@@ -463,7 +463,7 @@
 
                                         {{#if extended_info.noise_level }}
                                         <li class="clearfix">
-                                            <div class="space-info-label pull-left">Noise Level</div>
+                                            <h5 class="space-info-label pull-left">Noise Level</h5>
                                             <div class="space-info-detail pull-left">
 
                                                 {{#compare extended_info.noise_level "quiet" operator="=="}}
@@ -485,13 +485,13 @@
                                         {{/if}}
 
                                         {{#if extended_info.has_natural_light }}
-                                        <li class="clearfix"><div class="space-info-label pull-left">Lighting</div><div class="space-info-detail pull-left">Natural light</div></li>
+                                        <li class="clearfix"><h5 class="space-info-label pull-left">Lighting</h5><div class="space-info-detail pull-left">Natural light</div></li>
                                         {{/if}}
 
 
                                         {{#if extended_info.food_nearby }}
                                         <li class="clearfix">
-                                            <div class="space-info-label pull-left">Food/Coffee</div>
+                                            <h5 class="space-info-label pull-left">Food/Coffee</h5>
                                             <div class="space-info-detail pull-left">
 
                                               {{#compare extended_info.food_nearby "building" operator="=="}}
@@ -566,13 +566,13 @@
 
                         <div style="margin: 0 20px 20px 20px;">
 
-                            <div class="space-info-header">Space Details:</div>
+                            <h4 class="space-info-header">Space Details:</h4>
                             <div class="space-info">
                                  <ul>
 
                                     {{#if has_notes }}
                                     <li class="clearfix">
-                                        <div class="space-info-label pull-left">Notes</div>
+                                        <h5 class="space-info-label pull-left">Notes</h5>
                                         <div class="space-info-detail pull-left">
                                             <p>{{extended_info.access_notes}}</p>
                                             <p>{{extended_info.reservation_notes }}</p>
@@ -581,16 +581,16 @@
                                     {{/if}}
 
                                     {{#if available_hours }}
-                                    <li class="clearfix"><div class="space-info-label pull-left">Hours</div><div class="space-info-detail pull-left">{{formatHours available_hours}}</div></li>
+                                    <li class="clearfix"><h5 class="space-info-label pull-left">Hours</h5><div class="space-info-detail pull-left">{{formatHours available_hours}}</div></li>
                                     {{/if}}
 
                                     {{#if extended_info.location_description }}
-                                    <li class="clearfix"><div class="space-info-label pull-left">Location</div><div class="space-info-detail pull-left">{{extended_info.location_description}}</div></li>
+                                    <li class="clearfix"><h5 class="space-info-label pull-left">Location</h5><div class="space-info-detail pull-left">{{extended_info.location_description}}</div></li>
                                     {{/if}}
 
                                     {{#if has_resources }}
                                     <li class="clearfix">
-                                        <div class="space-info-label pull-left">Resources</div>
+                                        <h5 class="space-info-label pull-left">Resources</h5>
                                         <div class="space-info-detail pull-left">
                                             {{#if extended_info.has_computers }}Computers{{/if}}
                                             {{#if extended_info.has_displays }}Displays&nbsp;{{/if}}
@@ -605,7 +605,7 @@
 
                                     {{#if extended_info.noise_level }}
                                     <li class="clearfix">
-                                        <div class="space-info-label pull-left">Noise Level</div>
+                                        <h5 class="space-info-label pull-left">Noise Level</h5>
                                         <div class="space-info-detail pull-left">
 
                                             {{#compare extended_info.noise_level "quiet" operator="=="}}
@@ -627,13 +627,13 @@
                                     {{/if}}
 
                                     {{#if extended_info.has_natural_light }}
-                                    <li class="clearfix"><div class="space-info-label pull-left">Lighting</div><div class="space-info-detail pull-left">Natural light</div></li>
+                                    <li class="clearfix"><h5 class="space-info-label pull-left">Lighting</h5><div class="space-info-detail pull-left">Natural light</div></li>
                                     {{/if}}
 
 
                                     {{#if extended_info.food_nearby }}
                                     <li class="clearfix">
-                                        <div class="space-info-label pull-left">Food/Coffee</div>
+                                        <h5 class="space-info-label pull-left">Food/Coffee</h5>
                                         <div class="space-info-detail pull-left">
 
                                           {{#compare extended_info.food_nearby "building" operator="=="}}
