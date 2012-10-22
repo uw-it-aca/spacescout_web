@@ -395,9 +395,8 @@ function clear_custom_search() {
 }
 
 function initialize() {
-    var i;
 
-    $("#view_results_button").click(run_custom_search);
+    var i;
 
     window.spacescout_search_options = {};
 
