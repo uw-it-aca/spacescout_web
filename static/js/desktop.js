@@ -96,42 +96,24 @@ Handlebars.registerHelper('ifany', function(a, b) {
           initialize();
         }
 
-		// Toggle Filter display
+		// show filter panel
 		$('#filter_button').click(function() {
 
-    		if ($("#filter_block").is(":hidden")) {
+            $("#filter_block").slideDown('slow');
 
-                $("#filter_block").slideDown('slow');
+            $('#filter_button').hide();
+            $('#view_results_button').show();
+            $('#cancel_results_button').show();
 
-                $('#filter_button').hide();
-                $('#view_results_button').show();
-                $('#cancel_results_button').show();
-
-
-            } else {
-
-                $('#filter_button').show();
-                $('#view_results_button').hide();
-                $('#cancel_results_button').hide();
-
-                $("#filter_block").slideUp('slow');
-            }
         });
 
-        // Close the filter display using Cancel button
+        // clear filters
         $('#cancel_results_button').click(function() {
 
             // clear saved search options
             if ($.cookie('spacescout_search_opts')) {
                 $.removeCookie('spacescout_search_opts');
             }
-
-            // reset the map
-            //clear_custom_search();
-            //$('#filter_button').show();
-            //$('#view_results_button').hide();
-            //$('#cancel_results_button').hide();
-            //$("#filter_block").slideUp('slow');
 
             // reset checkboxes
             $('input[type=checkbox]').each(function() {

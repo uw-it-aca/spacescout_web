@@ -45,7 +45,6 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
 (function(m) {
 
-
     var deviceAgent = navigator.userAgent.toLowerCase();
 
     // detect ios versions
@@ -115,6 +114,7 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
             // TODO: temporarily comment out to fix filters resetting!
             // $('#main_content').hide();
+
             $('#footer').hide();
             $('.back-top').hide();
 
@@ -125,7 +125,7 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
         });
 
-        // clear filter buttons
+        // clear filters
         $('#cancel_results_button').click(function() {
 
             // clear saved search options
