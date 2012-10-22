@@ -1,4 +1,4 @@
-var spacescout_map = null, spacescout_infowindow, spacescout_marker_ids = {}, spacescout_markers = [], speed = 800, mc = null, youarehere = null;
+var spacescout_map = null, spacescout_infowindow, spacescout_marker_ids = {}, spacescout_markers = [], speed = 800, mc = null, youarehere = null, update_count = null;
 
 function openInfoWindow(marker, info) {
 
@@ -231,6 +231,9 @@ function repopulate_filters() {
 }
 
 function run_custom_search() {
+    // if searching, reset that spot count
+    window.update_count = true;
+
     // Clear the map
     for (var i = 0; i < window.spacescout_markers.length; i++) {
         window.spacescout_markers[i].setMap(null);
@@ -410,6 +413,7 @@ function initialize() {
     var i;
 
     window.spacescout_search_options = {};
+    window.update_count = true;
 
     repopulate_filters();
     if ($.cookie('spacescout_search_opts')) {
@@ -511,10 +515,17 @@ function display_search_results(data) {
         //window.spacescout_markers.push(my_marker);
     }
 
-    // set the # of spaces in the bubble
-    var source = $('#space_count').html();
-    var template = Handlebars.compile(source);
-    $('#space_count_container').html(template({count: data.length}));
+    // set the # of spaces in the bubble if epdate_count is true
+    if (update_count) {
+        var source = $('#space_count').html();
+        var template = Handlebars.compile(source);
+        $('#space_count_container').html(template({count: data.length}));
+    }
+
+    // if this was true, now that we've updated the count don't do it again unless a custom search was run
+    if (window.update_count == true) {
+        window.update_count = false;
+    }
 
 }
 
