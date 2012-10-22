@@ -106,14 +106,16 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
     		resizeFilterBlock();
 
-            $("#filter_block").slideDown('slow');
+            $("#filter_block").slideDown('slow', function() {
+                // hide the main content container
+
+                $('#main_content').addClass('visuallyhidden'); // variation 1: use visually hidden class
+                //$('#main_content').hide();    // variation 2: use display:none
+            });
 
             $('#filter_button').hide();
             $('#view_results_button').show();
             $('#cancel_results_button').show();
-
-            // TODO: temporarily comment out to fix filters resetting!
-            // $('#main_content').hide();
 
             $('#footer').hide();
             $('.back-top').hide();

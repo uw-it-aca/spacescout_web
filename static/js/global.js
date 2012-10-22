@@ -61,7 +61,6 @@ function sortDays(days) {
             window.spacescout_map.setZoom(window.default_zoom);
         });
 
-
         // handle clicking on the "done" button for filters
         $("#view_results_button").click(function() {
             run_custom_search();

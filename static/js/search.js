@@ -366,12 +366,23 @@ function run_custom_search() {
     $('#view_results_button').hide();
     $('#cancel_results_button').hide();
 
-    // show the main content if it is hidden (mobile)
+    // variation 1: show the main content if display:none was used
     if ($('#main_content').is(":hidden")) {
         $('#main_content').show();
         $('#footer').show();
         $('.back-top').show();
     }
+
+    // variation 2: show the main content if it's been visually hidden
+    if ($('#main_content').hasClass('visuallyhidden')) {
+        $('#main_content').removeClass('visuallyhidden');
+        $('#footer').show();
+        $('.back-top').show();
+    }
+
+    $('#main_content').removeClass('visuallyhidden');
+    $('#footer').show();
+    $('.back-top').show();
 
     // reset the map center and zoom
     window.spacescout_map.setCenter(new google.maps.LatLng(window.default_latitude, window.default_longitude));
