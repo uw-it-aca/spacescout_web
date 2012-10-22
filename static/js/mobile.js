@@ -109,8 +109,15 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
             $("#filter_block").slideDown('slow', function() {
                 // hide the main content container
 
-                $('#main_content').addClass('visuallyhidden'); // variation 1: use visually hidden class
-                //$('#main_content').hide();    // variation 2: use display:none
+                //$('#main_content').addClass('visuallyhidden'); // variation 1: use visually hidden class
+                //$('#main_content').hide();    // variation 2: use display:none]
+
+                $('#container').height( 355 ); // variation 3: set height of container and hide overflow, so map is not show, but still rendered
+                $('#container').css({
+                    background: 'Red',
+                    overflow: 'hidden',
+                });
+
             });
 
             $('#filter_button').hide();

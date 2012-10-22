@@ -383,7 +383,14 @@ function run_custom_search() {
         $('.back-top').show();
     }
 
-    $('#main_content').removeClass('visuallyhidden');
+    // variation 3: map was not hidden, remove overflow hidden
+    $('#container').height('auto');
+    $('#container').css({
+        background: 'yellow',
+        overflow: 'visible',
+    });
+
+
     $('#footer').show();
     $('.back-top').show();
 
@@ -395,7 +402,9 @@ function run_custom_search() {
     //console.log(window.spacescout_search_options);
     fetch_data();
 
+    // slide the filter up
     $("#filter_block").slideUp(speed);
+
     if (set_cookie) {
         $.cookie('spacescout_search_opts', JSON.stringify(window.spacescout_search_options), { expires: 1 });
     }
