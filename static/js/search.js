@@ -500,13 +500,14 @@ function display_search_results(data) {
         //window.spacescout_markers.push(my_marker);
     }
 
-}
-
-function load_data(data) {
     // set the # of spaces in the bubble
     var source = $('#space_count').html();
     var template = Handlebars.compile(source);
     $('#space_count_container').html(template({count: data.length}));
+
+}
+
+function load_data(data) {
 
     // update the map
     display_search_results(data);
