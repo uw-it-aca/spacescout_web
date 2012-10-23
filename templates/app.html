@@ -685,7 +685,9 @@
                 {% tplhandlebars "all_markers" %}
                     <ul>
                         {{#if data}}
-                            {{#each data}}
+                        {{#each data}}
+                            <li>{{this.name}}</li>
+                            {{#each this.spots}}
                             <li class="clearfix view-details">
                                 <div class="space-detail-list-image pull-left"><img src="/static/img/transparent.gif" data-original='space/{{id}}/image/{{images.0.id}}/thumb/100x67' class='img lazy'></div>
 
@@ -696,6 +698,7 @@
                                 </button>
                             </li>
                             {{/each}}
+                        {{/each}}
                         {{else}}
                             <li class="no-spaces">Sorry, no spaces match your filters!</li>
                         {{/if}}

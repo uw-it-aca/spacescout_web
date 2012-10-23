@@ -63,6 +63,8 @@ function sortDays(days) {
 
         // handle clicking on the "done" button for filters
         $("#view_results_button").click(function() {
+            $('.count').hide();
+            $('.spaces').hide();
             run_custom_search();
         });
 
