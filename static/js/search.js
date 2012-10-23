@@ -1,4 +1,4 @@
-var spacescout_map = null, spacescout_infowindow, spacescout_marker_ids = {}, spacescout_markers = [], speed = 800, mc = null, youarehere = null;
+var spacescout_map = null, spacescout_infowindow, spacescout_marker_ids = {}, spacescout_markers = [], speed = 800, mc = null, youarehere = null, update_count = null;
 
 function openInfoWindow(marker, info) {
 
@@ -63,7 +63,7 @@ function addClusterListener(markerCluster, data) {
 function openAllMarkerInfoWindow(data) {
     var source = $('#all_markers').html();
     var template = Handlebars.compile(source);
-    data = sortByBuildingName(data);
+    data = buildingNameHeaders(data);
     $('#info_items').html(template({'data': data}));
     $('.loading').slideUp('fast');
 
@@ -84,8 +84,9 @@ function sortByBuildingName(data) {
 }
 
 function buildingNameHeaders(data) {
+    data = sortByBuildingName(data);
     var byBuilding = {};
-    var hash = {};
+    var big_list = [];
     var nobuilding = 'no building';
     for (i=0; i<data.length; i++) {
         var bname = data[i].location.building_name;
@@ -104,14 +105,14 @@ function buildingNameHeaders(data) {
             }
         }
     }
-    var keys = [];
     for (i in byBuilding) {
-        keys.push(i);
-        //console.log(i);
-        hash[i] = keys;
+        var small_json = {};
+        small_json.name = i;
+        small_json.spots = byBuilding[i];
+        big_list.push(small_json);
+
     }
-    hash['keys'] = keys;
-    return hash;
+    return big_list;
 }
 
 // jquery function to check if scrollable
@@ -231,6 +232,9 @@ function repopulate_filters() {
 }
 
 function run_custom_search() {
+    // if searching, reset that spot count
+    window.update_count = true;
+
     // Clear the map
     for (var i = 0; i < window.spacescout_markers.length; i++) {
         window.spacescout_markers[i].setMap(null);
@@ -353,7 +357,7 @@ function run_custom_search() {
         set_cookie = true;
     }
 
-    // close space detail if visible (desktop)
+    // close space detail if visible (desktop only)
     if ($('#space_detail_container').is(":visible")) {
         $('#info_items li').removeClass('selected');
         $('.space-detail').hide("slide", { direction: "right" }, 700, function() {
@@ -361,28 +365,11 @@ function run_custom_search() {
         });
     }
 
-    // toggle the correct buttons
+
+    // show the correct buttons
     $('#filter_button').show();
     $('#view_results_button').hide();
     $('#cancel_results_button').hide();
-
-    // variation 1: show the main content if display:none was used
-    if ($('#main_content').is(":hidden")) {
-        $('#main_content').show();
-        $('#footer').show();
-        $('.back-top').show();
-    }
-
-    // variation 2: show the main content if it's been visually hidden
-    if ($('#main_content').hasClass('visuallyhidden')) {
-        $('#main_content').removeClass('visuallyhidden');
-        $('#footer').show();
-        $('.back-top').show();
-    }
-
-    $('#main_content').removeClass('visuallyhidden');
-    $('#footer').show();
-    $('.back-top').show();
 
     // reset the map center and zoom
     window.spacescout_map.setCenter(new google.maps.LatLng(window.default_latitude, window.default_longitude));
@@ -392,7 +379,18 @@ function run_custom_search() {
     //console.log(window.spacescout_search_options);
     fetch_data();
 
-    $("#filter_block").slideUp(speed);
+    // slide the filter up
+    $("#filter_block").slideUp(speed, function() {
+
+        // check to see if the style attribute was added to the container (mobile only)
+        if ($('#container').attr("style")) {
+            // undo fixed height and show all overflowing content
+            $('#container').height('auto');
+            $('#container').css('overflow','visible');
+        }
+
+    });
+
     if (set_cookie) {
         $.cookie('spacescout_search_opts', JSON.stringify(window.spacescout_search_options), { expires: 1 });
     }
@@ -410,6 +408,7 @@ function initialize() {
     var i;
 
     window.spacescout_search_options = {};
+    window.update_count = true;
 
     repopulate_filters();
     if ($.cookie('spacescout_search_opts')) {
@@ -511,10 +510,17 @@ function display_search_results(data) {
         //window.spacescout_markers.push(my_marker);
     }
 
-    // set the # of spaces in the bubble
-    var source = $('#space_count').html();
-    var template = Handlebars.compile(source);
-    $('#space_count_container').html(template({count: data.length}));
+    // set the # of spaces in the bubble if epdate_count is true
+    if (update_count) {
+        var source = $('#space_count').html();
+        var template = Handlebars.compile(source);
+        $('#space_count_container').html(template({count: data.length}));
+    }
+
+    // if this was true, now that we've updated the count don't do it again unless a custom search was run
+    if (window.update_count == true) {
+        window.update_count = false;
+    }
 
 }
 
