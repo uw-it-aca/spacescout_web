@@ -44,7 +44,8 @@ function openClusterInfoWindow(cluster, data) {
     }
     var source = $('#cluster_list').html();
     var template = Handlebars.compile(source);
-    $('#info_items').html(template({data: spaces}));
+    data = buildingNameHeaders(spaces);
+    $('#info_items').html(template({data: data}));
 
     scrollToTop('info_list');
     $('.loading').slideUp('fast');
