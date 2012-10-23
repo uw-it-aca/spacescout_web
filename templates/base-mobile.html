@@ -62,12 +62,12 @@
 
           <!-- jQuery -->
           <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-          <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
 
           <!-- Google Maps -->
           <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=true"></script>
 
           {% compress js %}
+            <script type="text/javascript" src="{{ STATIC_URL }}libs/slide.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/cookie.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap/js/bootstrap-transition.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap/js/bootstrap-button.js"></script>
@@ -75,7 +75,6 @@
             <script type="text/javascript" src="{{ STATIC_URL }}libs/markerclusterer.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/handlebars.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/lazyload.js"></script>
-
 
             <script type="text/javascript" src="{{ STATIC_URL }}js/global.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}js/search.js"></script>
