@@ -108,7 +108,7 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
     		resizeFilterBlock();
 
     		// slide down the filter block
-            $("#filter_block").slideDown('slow', function() {
+            $("#filter_block").slideDown(400, function() {
                 // hide the main content (map and list) by setting a height on the main container and hiding overflow
                 setFilterContainer();
             });

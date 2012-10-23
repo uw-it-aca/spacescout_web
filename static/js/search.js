@@ -380,7 +380,7 @@ function run_custom_search() {
     fetch_data();
 
     // slide the filter up
-    $("#filter_block").slideUp(speed, function() {
+    $("#filter_block").slideUp(400, function() {
 
         // check to see if the style attribute was added to the container (mobile only)
         if ($('#container').attr("style")) {

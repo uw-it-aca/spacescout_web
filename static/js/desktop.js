@@ -99,7 +99,7 @@ Handlebars.registerHelper('ifany', function(a, b) {
 		// show filter panel
 		$('#filter_button').click(function() {
 
-            $("#filter_block").slideDown('slow');
+            $("#filter_block").slideDown(400);
 
             $('#filter_button').hide();
             $('#view_results_button').show();
