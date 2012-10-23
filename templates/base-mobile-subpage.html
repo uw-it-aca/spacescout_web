@@ -25,7 +25,7 @@
 
         {% load compress %}
         {% compress css %}
-        <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}libs/bootstrap/css/bootstrap.min.css" charset="utf-8" />
+        <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}libs/bootstrap/css/bootstrap-custom.min.css" charset="utf-8" />
         <link rel="stylesheet" type="text/less" href="{{ STATIC_URL }}css/mobile.less" media="screen, handheld" />
         {% endcompress %}
 
@@ -52,6 +52,7 @@
           <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=true"></script>
 
           {% compress js %}
+            <script type="text/javascript" src="{{ STATIC_URL }}libs/slide.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/cookie.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap/js/bootstrap-transition.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap/js/bootstrap-button.js"></script>
