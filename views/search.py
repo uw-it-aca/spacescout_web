@@ -30,10 +30,13 @@ def SearchView(request):
     json = simplejson.loads(json)
     i18n_json = []
     for space in json:
-        new_value = []
-        for value in space['type']:
-            new_value.append(_(value))
-        space['type'] = new_value
+        string_val = ''
+        for x in range(0, len(space['type'])):
+            if x is 0:
+                string_val = _(space['type'][x])
+            else:
+                string_val = string_val + ', ' + _(space['type'][x])
+        space['type'] = string_val
         i18n_json.append(space)
     json = simplejson.dumps(i18n_json)
     response = HttpResponse(json)
