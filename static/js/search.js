@@ -44,7 +44,8 @@ function openClusterInfoWindow(cluster, data) {
     }
     var source = $('#cluster_list').html();
     var template = Handlebars.compile(source);
-    $('#info_items').html(template({data: spaces}));
+    data = buildingNameHeaders(spaces);
+    $('#info_items').html(template({data: data}));
 
     scrollToTop('info_list');
     $('.loading').slideUp('fast');
@@ -280,10 +281,13 @@ function run_custom_search() {
             from_query.push($('#day-from').val());
             if ($('#hour-from').val() != 'nopref') {
                 var time = $('#hour-from').val();
-                if ($('#ampm-from').val() == 'PM') {
-                    var hour = time.split(':')[0];
-                    var min = time.split(':')[1];
+                var hour = time.split(':')[0];
+                var min = time.split(':')[1];
+                if ($('#ampm-from').val() == 'PM' && hour != 12) {
                     hour = Number(hour) + 12;
+                    time = hour+':'+min;
+                } else if ($('#ampm-from').val() == 'AM' && hour == 12) {
+                    hour = 0;
                     time = hour+':'+min;
                 }
                 from_query.push(time);
@@ -298,10 +302,13 @@ function run_custom_search() {
             until_query.push($('#day-until').val());
             if ($('#hour-until').val() != 'nopref') {
                 var time = $('#hour-until').val();
-                if ($('#ampm-until').val() == 'PM') {
-                    var hour = time.split(':')[0];
-                    var min = time.split(':')[1];
+                var hour = time.split(':')[0];
+                var min = time.split(':')[1];
+                if ($('#ampm-until').val() == 'PM' && hour != 12) {
                     hour = Number(hour) + 12;
+                    time = hour+':'+min;
+                } else if ($('#ampm-until').val() == 'AM' && hour == 12) {
+                    hour = 0;
                     time = hour+':'+min;
                 }
                 until_query.push(time);

@@ -106,8 +106,8 @@
                             <p><small><em>Select preferred types of space, if any:</em></small></p>
 
                             <div id="filter_space_types" class="choice-group clearfix">
-                                <h5>Type of space:</h5>
-                                <div style="width:auto;float:left; margin-right: 15px;">
+                                <h5 id="type_header">Type of space:</h5>
+                                <div  aria-labelledby="type_header"><div style="width:auto;float:left; margin-right: 15px;">
                                     <label class="checkbox">
                                       <input type="checkbox" name="type" id="study_room" value="study_room"> {% trans 'study_room' %}
                                     </label>
@@ -138,19 +138,18 @@
                                     <label class="checkbox">
                                       <input type="checkbox" name="type" id="outdoor" value="outdoor"> {% trans 'outdoor' %}
                                     </label>
-                                </div>
+                                </div></div>
 
                             </div>
                             <div id="filter_reservability"  class="choice-group">
-                                <h5>Reservability:</h5>
+                                <h5 id="reservation-header">Reservability:</h5>
                                 <label class="checkbox inline">
-                                  <input type="checkbox" id="reservable" value="true"> Show reservable spaces only
-                                </label>
+                                  <input type="checkbox" id="reservable" value="true" aria-labelledby="reservation-header"> Show reservable spaces only</label>
                             </div>
                             <div class="choice-group">
-                                <h5>Capacity</h5>
-                                Seats at least:
-                                <select id='capacity' style="width:60px;">
+                                <h5 id="capacity-header">Capacity</h5>
+                                <label for="capacity">Seats at least:</label>
+                                <select id="capacity" style="width:60px;">
                                   <option value="1">1</option>
                                   <option value="2">2</option>
                                   <option value="3">3</option>
@@ -171,9 +170,9 @@
 
                     <div class="inner-column">
                     <h4>Hours</h4>
-                    <p><small><em>Select open hours</em></small></p>
+                    <p id="open_hours_header"><small><em>Select open hours</em></small></p>
 
-                    <div id="filter_hours" class="choice-group">
+                    <div id="filter_hours" class="choice-group" aria-labelledby="open_hours_header">
                         <div>
                             <label class="radio inline">
                               <input type="radio" name="optionsHours" id="open_now" value="option1" checked>
@@ -184,8 +183,9 @@
                               Specify day &amp; time
                             </label>
                         </div>
-                        <div id="hours_list_container" style="margin-top:8px; display:none; ">
-                            <div><span class="hours-from">from</span><select id="day-from">
+                        <div id="hours_list_container" style="margin-top:8px; display:none; " aria-labelledby="from-time-heading">
+                            <div><span class="hours-from" id="from-time-heading">from</span>
+                            <label class="hours-from  visuallyhidden" for="day-from">from day:</label><select id="day-from">
                               <option value="nopref">No pref</option>
                               <option value="Monday">MON</option>
                               <option value="Tuesday">TUE</option>
@@ -195,7 +195,7 @@
                               <option value="Saturday">SAT</option>
                               <option value="Sunday">SUN</option>
                             </select>
-                            <select id="hour-from">
+                            <label class="hours-from visuallyhidden" for="hour-from">from time:</label><select id="hour-from">
                               <option value="nopref">No pref</option>
                               <option>12:00</option>
                               <option>12:30</option>
@@ -222,12 +222,16 @@
                               <option>11:00</option>
                               <option>11:30</option>
                             </select>
+                            <label class="hours-from visuallyhidden" for="ampm-from">from time:</label>
                             <select class="ampm" id="ampm-from">
                                 <option value="AM">AM</option>
                                 <option value="PM">PM</option>
                             </select>
                             </div>
-                            <div><span class="hours-until">until</span><select id="day-until">
+                            <div aria-labelledby="until-time-heading">
+                            <span class="hours-from" id="until-time-heading">until</span>
+                            <label class="hour-until visuallyhidden" for="day-until">until day:</label>
+                            <select id="day-until">
                               <option value="nopref">No pref</option>
                               <option value="Monday">MON</option>
                               <option value="Tuesday">TUE</option>
@@ -237,7 +241,7 @@
                               <option value="Saturday">SAT</option>
                               <option value="Sunday">SUN</option>
                             </select>
-                            <select id="hour-until">
+                            <label class="hour-until visuallyhidden" for="hour-until">until time:</label><select id="hour-until">
                               <option value="nopref">No pref</option>
                               <option>12:00</option>
                               <option>12:30</option>
@@ -264,6 +268,7 @@
                               <option>11:00</option>
                               <option>11:30</option>
                             </select>
+                            <label class="hour-until visuallyhidden" for="ampm-until">until time:</label>
                             <select class="ampm" id="ampm-until">
                                 <option value="AM">AM</option>
                                 <option value="PM">PM</option>
@@ -272,18 +277,19 @@
                         </div>
                     </div>
 
-                    <h4>Location</h4>
+                    <h4 id="filter-location-header">Location</h4>
 
-                    <div id="filter_location" class="choice-group">
+                    <div id="filter_location" class="choice-group" aria-labelledby="filter-location-header">
                         <div>
-                            <label class="radio inline">
+                            <label class="radio inline" for="entire_campus">
                               <input type="radio" name="optionsLocations" id="entire_campus" value="option1" checked> Entire campus
                             </label>
-                            <label class="radio inline">
+                            <label class="radio inline" for="building_list_input">
                               <input type="radio" name="optionsLocations" id="building_list_input" value="option2"> Specific building
                             </label>
                         </div>
                         <div id="building_list_container" style="margin-top:8px;display:none;">
+                        <label class="visuallyhidden" for="e9">Choose a buiding:</label>
                             <select class="building-location" name="e9" id="e9">
                                 {% for letter, buildings in buildingdict.items %}
                                 <optgroup label="{{ letter }}">
@@ -298,33 +304,33 @@
 
                     </div>
 
-                    <h4>Resources</h4>
+                    <h4 id="resources-filter-header">Resources</h4>
                     <p><small><em>Select resources needed</em></small></p>
 
-                    <div id="filter_equipment_types" class="choice-group clearfix" style="margin-bottom:0px;">
+                    <div id="filter_equipment_types" class="choice-group clearfix" style="margin-bottom:0px;" aria-labelledby="resources-filter-header">
                         <div style="width:auto;float:left; margin-right:15px;">
-                            <label class="checkbox">
+                            <label class="checkbox" for="has_whiteboards">
                               <input type="checkbox" id="has_whiteboards" name="equipment" value="has_whiteboards"> Whiteboard
                             </label>
-                            <label class="checkbox">
+                            <label class="checkbox" for="has_outlets">
                               <input type="checkbox" id="has_outlets" name="equipment" value="has_outlets"> Outlets
                             </label>
-                            <label class="checkbox">
+                            <label class="checkbox" for="has_computers">
                               <input type="checkbox" id="has_computers" name="equipment" value="has_computers"> Computer
                             </label>
-                            <label class="checkbox">
+                            <label class="checkbox" for="has_scanner">
                               <input type="checkbox" id="has_scanner" name="equipment" value="has_scanner"> Scanning
                             </label>
                         </div>
 
                         <div style="width:auto;float:left;">
-                            <label class="checkbox">
+                            <label class="checkbox" for="has_displays">
                               <input type="checkbox" id="has_displays" name="equipment" value="has_displays"> Large display (for laptop)
                             </label>
-                            <label class="checkbox">
+                            <label class="checkbox" for="has_projector">
                               <input type="checkbox" id="has_projector" name="equipment" value="has_projector"> Projector
                             </label>
-                            <label class="checkbox">
+                            <label class="checkbox" for="has_printing">
                               <input type="checkbox" id="has_printing" name="equipment" value="has_printing"> Printing
                             </label>
                         </div>
@@ -336,37 +342,37 @@
                             <h4>Environment</h4>
                             <p><small><em>Select preferred conditions, if any:</em></small></p>
 
-                            <div id="filter_noise_level" class="choice-group">
-                                <h5>Noise level</h5>
-                                <div>
-                                <label class="checkbox inline">
+                            <div id="filter_noise_level" class="choice-group" >
+                                <h5 id="filter_noise_header">Noise level</h5>
+                                <div aria-labelledby="filter_noise_header">
+                                <label class="checkbox inline" for="silent">
                                   <input type="checkbox" id="silent" name="noise_level" value="silent"> {% trans 'silent' %}
                                 </label>
-                                <label class="checkbox inline">
+                                <label class="checkbox inline" for="quiet">
                                   <input type="checkbox" id="quiet" name="noise_level" value="quiet"> {% trans 'quiet' %}
                                 </label>
-                                <label class="checkbox inline">
+                                <label class="checkbox inline" for="moderate">
                                   <input type="checkbox" id="moderate" name="noise_level" value="moderate"> {% trans 'moderate' %}
                                 </label>
                                 </div>
                             </div>
 
-                            <div id="filter_lighting" class="choice-group">
-                                <h5>Lighting</h5>
-                                <label class="checkbox inline">
+                            <div id="filter_lighting" class="choice-group" aria-labelledby="lighting_filter">
+                                <h5 id="lighting_filter">Lighting</h5>
+                                <label class="checkbox inline" for="lighting">
                                   <input type="checkbox" id="lighting" name="has_natural_light"  value="true"> Natural light
                                 </label>
                             </div>
 
-                            <div id="filter_food_coffee" class="choice-group">
-                                <h5>Food/Coffee</h5>
-                                <label class="checkbox inline">
+                            <div id="filter_food_coffee" class="choice-group" aria-labelledby="filter_food_header">
+                                <h5 id="filter_food_header">Food/Coffee</h5>
+                                <label class="checkbox inline" for="space">
                                   <input type="checkbox" id="space" name="food_nearby" value="space"> {% trans 'space' %}
                                 </label>
-                                <label class="checkbox inline">
+                                <label class="checkbox inline" for="building">
                                   <input type="checkbox" id="building" name="food_nearby" value="building"> {% trans 'building' %}
                                 </label>
-                                <label class="checkbox inline">
+                                <label class="checkbox inline" for="neighboring">
                                   <input type="checkbox" id="neighboring" name="food_nearby" value="neighboring"> {% trans 'neighboring' %}
                                 </label>
                             </div>
@@ -702,7 +708,9 @@
                 {% tplhandlebars "cluster_list" %}
                     <ul>
                         {{#if data }}
-                            {{#each data}}
+                        {{#each data}}
+                            <li>{{this.name}}</li>
+                            {{#each this.spots}}
                             <li class="clearfix view-details">
                                 <div class="space-detail-list-image pull-left"><img src='space/{{id}}/image/{{images.0.id}}/thumb/100x67' class='img'></div>
                                 <button  id="{{id}}" class="space-detail-list-item pull-left" type="button" aria-label="Get space details for {{name}}" aria-owns="detail_container_{{id}}">
@@ -712,6 +720,7 @@
                                 </button>
                             </li>
                             {{/each}}
+                        {{/each}}
                         {{else}}
                             <li class="no-spaces">Sorry, no spaces match your filters!</li>
                         {{/if}}
@@ -720,6 +729,7 @@
 
                 {% tplhandlebars "spot_info" %}
                     <ul>
+                        <li>{{location.building_name}}</li>
                         <li class="clearfix view-details">
                             <div class="space-detail-list-image pull-left"><img src='space/{{id}}/image/{{images.0.id}}/thumb/100x67' class='img'></div>
                             <button id="{{id}}" class="space-detail-list-item pull-left" type="button" aria-label="Get space details for {{name}}" aria-owns="detail_container_{{id}}">
