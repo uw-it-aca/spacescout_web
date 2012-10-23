@@ -370,16 +370,6 @@ function run_custom_search() {
     $('#view_results_button').hide();
     $('#cancel_results_button').hide();
 
-
-    // check to see if the style attribute was added to the container (mobile only)
-    if ($('#container').attr("style")) {
-        // undo fixed height and show all overflowing content
-        $('#container').height('auto');
-        $('#container').css({
-            overflow: 'visible',
-        });
-    }
-
     // reset the map center and zoom
     window.spacescout_map.setCenter(new google.maps.LatLng(window.default_latitude, window.default_longitude));
     window.spacescout_map.setZoom(window.default_zoom);
@@ -390,6 +380,15 @@ function run_custom_search() {
 
     // slide the filter up
     $("#filter_block").slideUp(speed);
+
+    // check to see if the style attribute was added to the container (mobile only)
+    if ($('#container').attr("style")) {
+        // undo fixed height and show all overflowing content
+        $('#container').height('auto');
+        $('#container').css({
+            overflow: 'visible',
+        });
+    }
 
     if (set_cookie) {
         $.cookie('spacescout_search_opts', JSON.stringify(window.spacescout_search_options), { expires: 1 });
