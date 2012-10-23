@@ -365,6 +365,7 @@ function run_custom_search() {
         });
     }
 
+
     // show the correct buttons
     $('#filter_button').show();
     $('#view_results_button').hide();
@@ -379,16 +380,16 @@ function run_custom_search() {
     fetch_data();
 
     // slide the filter up
-    $("#filter_block").slideUp(speed);
+    $("#filter_block").slideUp(speed, function() {
 
-    // check to see if the style attribute was added to the container (mobile only)
-    if ($('#container').attr("style")) {
-        // undo fixed height and show all overflowing content
-        $('#container').height('auto');
-        $('#container').css({
-            overflow: 'visible',
-        });
-    }
+        // check to see if the style attribute was added to the container (mobile only)
+        if ($('#container').attr("style")) {
+            // undo fixed height and show all overflowing content
+            $('#container').height('auto');
+            $('#container').css('overflow','visible');
+        }
+
+    });
 
     if (set_cookie) {
         $.cookie('spacescout_search_opts', JSON.stringify(window.spacescout_search_options), { expires: 1 });
