@@ -104,28 +104,19 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 		// show filter panel
 		$('#filter_button').click(function() {
 
+    		// calculate the filter block height
     		resizeFilterBlock();
 
+    		// slide down the filter block
             $("#filter_block").slideDown('slow', function() {
-                // hide the main content container
-
-                //$('#main_content').addClass('visuallyhidden'); // variation 1: use visually hidden class
-                //$('#main_content').hide();    // variation 2: use display:none]
-
-                $('#container').height( 355 ); // variation 3: set height of container and hide overflow, so map is not show, but still rendered
-                $('#container').css({
-                    background: 'Red',
-                    overflow: 'hidden',
-                });
-
+                // hide the main content (map and list) by setting a height on the main container and hiding overflow
+                setFilterContainer();
             });
 
+            // show the correct buttons
             $('#filter_button').hide();
             $('#view_results_button').show();
             $('#cancel_results_button').show();
-
-            $('#footer').hide();
-            $('.back-top').hide();
 
             // handle scrolling for android froyo or newer
     		if (android || gingerbreadOrNewer) {
@@ -232,9 +223,6 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
         $("#hour-from").val(hour)
 
 
-
-
-
         // handle view details click
         $('.view-details').live('click', function(e){
 
@@ -315,10 +303,22 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
 	   if ($('#filter_block').is(":visible")) {
     	   resizeFilterBlock();
+    	   setFilterContainer();
 	   }
 
 	});
 
+
+	// set a height for main container and hide any overflowing
+	function setFilterContainer() {
+
+        var filterH = $(window).height();
+
+        $('#container').height(filterH);
+        $('#container').css({
+            overflow: 'hidden',
+        });
+	}
 
 	// Show space details (sliding transition)
 	function showSpaceDetails(data) {
@@ -344,7 +344,6 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
         $('#map_canvas').height(mapH);
         $('#map_canvas').css({ minHeight: mapH })
         $('#info_list').height('auto');
-
     }
 
     function initializeCarousel() {

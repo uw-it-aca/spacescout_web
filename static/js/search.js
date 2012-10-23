@@ -356,7 +356,7 @@ function run_custom_search() {
         set_cookie = true;
     }
 
-    // close space detail if visible (desktop)
+    // close space detail if visible (desktop only)
     if ($('#space_detail_container').is(":visible")) {
         $('#info_items li').removeClass('selected');
         $('.space-detail').hide("slide", { direction: "right" }, 700, function() {
@@ -364,35 +364,20 @@ function run_custom_search() {
         });
     }
 
-    // toggle the correct buttons
+    // show the correct buttons
     $('#filter_button').show();
     $('#view_results_button').hide();
     $('#cancel_results_button').hide();
 
-    // variation 1: show the main content if display:none was used
-    if ($('#main_content').is(":hidden")) {
-        $('#main_content').show();
-        $('#footer').show();
-        $('.back-top').show();
+
+    // check to see if the style attribute was added to the container (mobile only)
+    if ($('#container').attr("style")) {
+        // undo fixed height and show all overflowing content
+        $('#container').height('auto');
+        $('#container').css({
+            overflow: 'visible',
+        });
     }
-
-    // variation 2: show the main content if it's been visually hidden
-    if ($('#main_content').hasClass('visuallyhidden')) {
-        $('#main_content').removeClass('visuallyhidden');
-        $('#footer').show();
-        $('.back-top').show();
-    }
-
-    // variation 3: map was not hidden, remove overflow hidden
-    $('#container').height('auto');
-    $('#container').css({
-        background: 'yellow',
-        overflow: 'visible',
-    });
-
-
-    $('#footer').show();
-    $('.back-top').show();
 
     // reset the map center and zoom
     window.spacescout_map.setCenter(new google.maps.LatLng(window.default_latitude, window.default_longitude));
