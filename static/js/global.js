@@ -57,6 +57,8 @@ function sortDays(days) {
 
     	// handle clicking on map centering buttons
         $('#center_all').live('click', function(e){
+
+            e.preventDefault();
             window.spacescout_map.setCenter(new google.maps.LatLng(window.default_latitude, window.default_longitude));
             window.spacescout_map.setZoom(window.default_zoom);
         });
