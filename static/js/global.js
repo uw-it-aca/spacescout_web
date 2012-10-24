@@ -59,8 +59,10 @@ function sortDays(days) {
         $('#center_all').live('click', function(e){
 
             e.preventDefault();
+            if (window.spacescout_map.getZoom() != window.default_zoom) {
+                window.spacescout_map.setZoom(window.default_zoom);
+            }
             window.spacescout_map.setCenter(new google.maps.LatLng(window.default_latitude, window.default_longitude));
-            window.spacescout_map.setZoom(window.default_zoom);
         });
 
         // handle clicking on the "done" button for filters
