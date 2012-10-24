@@ -683,11 +683,11 @@
                 <div id="info_items"></div>
 
                 {% tplhandlebars "all_markers" %}
-                    <ul>
-                        {{#if data}}
+                    
+                        {{#if data}}<ol>
                         {{#each data}}
-                            <li>{{this.name}}</li>
-                            {{#each this.spots}}
+                            <li class="building_header">{{this.name}}</li>
+                            <ol>{{#each this.spots}}
                             <li class="clearfix view-details">
                                 <div class="space-detail-list-image pull-left"><img src="/static/img/transparent.gif" data-original='space/{{id}}/image/{{images.0.id}}/thumb/100x67' class='img lazy'></div>
 
@@ -697,19 +697,19 @@
                                     <div class="space-detail-desc">{{extended_info.location_description}}</div>
                                 </button>
                             </li>
-                            {{/each}}
-                        {{/each}}
+                            {{/each}}</ol>
+                        {{/each}}</ol>
                         {{else}}
                             <li class="no-spaces">Sorry, no spaces match your filters!</li>
                         {{/if}}
-                    </ul>
+                    
                 {% endtplhandlebars %}
 
                 {% tplhandlebars "cluster_list" %}
-                    <ul>
-                        {{#if data }}
+                    
+                        {{#if data }}<ol>
                         {{#each data}}
-                            <li>{{this.name}}</li>
+                            <li class="building_header">{{this.name}}</li><ol>
                             {{#each this.spots}}
                             <li class="clearfix view-details">
                                 <div class="space-detail-list-image pull-left"><img src='space/{{id}}/image/{{images.0.id}}/thumb/100x67' class='img'></div>
@@ -719,26 +719,26 @@
                                     <div class="space-detail-desc">{{extended_info.location_description}}</div>
                                 </button>
                             </li>
-                            {{/each}}
-                        {{/each}}
+                            {{/each}}</ol>
+                        {{/each}}</ol>
                         {{else}}
                             <li class="no-spaces">Sorry, no spaces match your filters!</li>
                         {{/if}}
-                    </ul>
+                    
                 {% endtplhandlebars %}
 
                 {% tplhandlebars "spot_info" %}
-                    <ul>
-                        <li>{{location.building_name}}</li>
-                        <li class="clearfix view-details">
+                    <ol>
+                        <li class="building_header">{{location.building_name}}</li>
+                        <ol><li class="clearfix view-details">
                             <div class="space-detail-list-image pull-left"><img src='space/{{id}}/image/{{images.0.id}}/thumb/100x67' class='img'></div>
                             <button id="{{id}}" class="space-detail-list-item pull-left" type="button" aria-label="Get space details for {{name}}" aria-owns="detail_container_{{id}}">
                                 <div class="space-detail-type"><span class="space-detail-type-label pull-left">{{type}}</span>{{#if capacity }}<span class="space-detail-capacity pull-right">Seats&nbsp;{{capacity}}</span>{{/if}}</div>
                                 <div class="space-detail-name">{{name}}</div>
                                 <div class="space-detail-desc">{{extended_info.location_description}}</div>
                             </button>
-                        </li>
-                    </ul>
+                        </li></ol>
+                    </ol>
                 {% endtplhandlebars %}
             </div>
         </div>
