@@ -387,14 +387,25 @@ function run_custom_search() {
 }
 
 function fix_filter_overflow() {
+    var old;
+    var outofspace = false;
     $('#filter_display_list > li').each(function(){
-        oScrollTop = $('#filter_display_list').height();
-        var thisItemIsVisible = ($(this).position().top < oScrollTop);
-        console.log($(this).text());
-        if (!thisItemIsVisible) {
-            $(this).html("...");
-            console.log($(this).text());
-            console.log($(this));
+        if (outofspace) {
+            $(this).hide();
+        }
+        else {
+            oScrollTop = $('#filter_display_list').height();
+            var thisItemIsVisible = ($(this).position().top < oScrollTop);
+            if (!thisItemIsVisible) {
+                $(this).html("...");
+                outofspace = true;
+                thisItemIsVisible = ($(this).position().top < oScrollTop);
+                if (!thisItemIsVisible) {
+                    $(old).html("...");
+                    $(this).hide();
+                }
+            }
+            old = this;
         }
     });
 }
