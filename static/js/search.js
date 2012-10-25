@@ -1,4 +1,4 @@
-var spacescout_map = null, spacescout_infowindow, spacescout_marker_ids = {}, spacescout_markers = [], speed = 800, mc = null, youarehere = null;
+var spacescout_map = null, spacescout_infowindow, spacescout_marker_ids = {}, spacescout_markers = [], speed = 800, mc = null, youarehere = null, update_count = null;
 
 function openInfoWindow(marker, info) {
 
@@ -233,6 +233,9 @@ function repopulate_filters() {
 }
 
 function run_custom_search() {
+    // if searching, reset that spot count
+    window.update_count = true;
+
     // Clear the map
     for (var i = 0; i < window.spacescout_markers.length; i++) {
         window.spacescout_markers[i].setMap(null);
@@ -278,10 +281,13 @@ function run_custom_search() {
             from_query.push($('#day-from').val());
             if ($('#hour-from').val() != 'nopref') {
                 var time = $('#hour-from').val();
-                if ($('#ampm-from').val() == 'PM') {
-                    var hour = time.split(':')[0];
-                    var min = time.split(':')[1];
+                var hour = time.split(':')[0];
+                var min = time.split(':')[1];
+                if ($('#ampm-from').val() == 'PM' && hour != 12) {
                     hour = Number(hour) + 12;
+                    time = hour+':'+min;
+                } else if ($('#ampm-from').val() == 'AM' && hour == 12) {
+                    hour = 0;
                     time = hour+':'+min;
                 }
                 from_query.push(time);
@@ -296,10 +302,13 @@ function run_custom_search() {
             until_query.push($('#day-until').val());
             if ($('#hour-until').val() != 'nopref') {
                 var time = $('#hour-until').val();
-                if ($('#ampm-until').val() == 'PM') {
-                    var hour = time.split(':')[0];
-                    var min = time.split(':')[1];
+                var hour = time.split(':')[0];
+                var min = time.split(':')[1];
+                if ($('#ampm-until').val() == 'PM' && hour != 12) {
                     hour = Number(hour) + 12;
+                    time = hour+':'+min;
+                } else if ($('#ampm-until').val() == 'AM' && hour == 12) {
+                    hour = 0;
                     time = hour+':'+min;
                 }
                 until_query.push(time);
@@ -363,26 +372,34 @@ function run_custom_search() {
         });
     }
 
-    // toggle the correct buttons
+
+    // show the correct buttons
     $('#filter_button').show();
     $('#view_results_button').hide();
     $('#cancel_results_button').hide();
 
-    // show the main content if it is hidden (mobile)
-    if ($('#main_content').is(":hidden")) {
-        $('#main_content').show();
-        $('#footer').show();
-        $('.back-top').show();
-    }
-
+    // reset the map center and zoom
+    window.spacescout_map.setCenter(new google.maps.LatLng(window.default_latitude, window.default_longitude));
+    window.spacescout_map.setZoom(window.default_zoom);
 
     // Run the search
     //console.log(window.spacescout_search_options);
     fetch_data();
 
-    $("#filter_block").slideUp(speed);
+    // slide the filter up
+    $("#filter_block").slideUp(400, function() {
+
+        // check to see if the style attribute was added to the container (mobile only)
+        if ($('#container').attr("style")) {
+            // undo fixed height and show all overflowing content
+            $('#container').height('auto');
+            $('#container').css('overflow','visible');
+        }
+
+    });
+
     if (set_cookie) {
-        $.cookie('spacescout_search_opts', JSON.stringify(window.spacescout_search_options));
+        $.cookie('spacescout_search_opts', JSON.stringify(window.spacescout_search_options), { expires: 1 });
     }
 }
 
@@ -417,12 +434,11 @@ function clear_custom_search() {
 }
 
 function initialize() {
+
     var i;
 
-    // get any form values from a cookie
-    $("#view_results_button").click(run_custom_search);
-
     window.spacescout_search_options = {};
+    window.update_count = true;
 
     repopulate_filters();
     if ($.cookie('spacescout_search_opts')) {
@@ -440,7 +456,7 @@ function initialize() {
             function(position) {
                 window.clearTimeout(window.position_timeout);
                 youarehere = position.coords;
-                load_map(position.coords.latitude, position.coords.longitude, window.default_zoom);
+                load_map(window.default_latitude, window.default_longitude, window.default_zoom);
             }
         );
     }
@@ -524,13 +540,21 @@ function display_search_results(data) {
         //window.spacescout_markers.push(my_marker);
     }
 
+    // set the # of spaces in the bubble if epdate_count is true
+    if (update_count) {
+        var source = $('#space_count').html();
+        var template = Handlebars.compile(source);
+        $('#space_count_container').html(template({count: data.length}));
+    }
+
+    // if this was true, now that we've updated the count don't do it again unless a custom search was run
+    if (window.update_count == true) {
+        window.update_count = false;
+    }
+
 }
 
 function load_data(data) {
-    // set the # of spaces in the bubble
-    var source = $('#space_count').html();
-    var template = Handlebars.compile(source);
-    $('#space_count_container').html(template({count: data.length}));
 
     // update the map
     display_search_results(data);

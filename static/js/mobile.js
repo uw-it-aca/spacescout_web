@@ -45,7 +45,6 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
 (function(m) {
 
-
     var deviceAgent = navigator.userAgent.toLowerCase();
 
     // detect ios versions
@@ -102,71 +101,37 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
             }
         }
 
-		// Toggle Filter display
+		// show filter panel
 		$('#filter_button').click(function() {
 
+    		// calculate the filter block height
     		resizeFilterBlock();
 
-    		if ($("#filter_block").is(":hidden")) {
+    		// slide down the filter block
+            $("#filter_block").slideDown(400, function() {
+                // hide the main content (map and list) by setting a height on the main container and hiding overflow
+                setFilterContainer();
+            });
 
-                $("#filter_block").slideDown('slow');
+            // show the correct buttons
+            $('#filter_button').hide();
+            $('#view_results_button').show();
+            $('#cancel_results_button').show();
 
-                $('#filter_button').hide();
-                $('#view_results_button').show();
-                $('#cancel_results_button').show();
+            // handle scrolling for android froyo or newer
+    		if (android || gingerbreadOrNewer) {
+        		touchScroll("filter_block");
+    		}
 
-                // if mobile
-                $('#main_content').hide();
-                $('#footer').hide();
-                $('.back-top').hide();
-
-                // handle scrolling for android froyo or newer
-        		if (android || gingerbreadOrNewer) {
-            		touchScroll("filter_block");
-        		}
-
-
-            } else {
-
-                // if mobile
-                $('#main_content').show();
-                $('#footer').show();
-                $('.back-top').show();
-
-
-                $('#filter_button').show();
-                $('#view_results_button').hide();
-                $('#cancel_results_button').hide();
-
-                $("#filter_block").slideUp('slow');
-            }
         });
 
-        // Close the filter display using Cancel button
+        // clear filters
         $('#cancel_results_button').click(function() {
 
             // clear saved search options
             if ($.cookie('spacescout_search_opts')) {
                 $.removeCookie('spacescout_search_opts');
             }
-
-            // reset the map
-            //clear_custom_search();
-
-            // if mobile
-            /*$('#main_content').show();
-            $('#footer').show();
-            $('.back-top').show();
-
-
-            $('#filter_button').show();
-            $('#view_results_button').hide();
-            $('#cancel_results_button').hide();
-
-            $("#filter_block").slideUp('slow', function() {
-                // Animation complete.
-                mobileContent();
-            });*/
 
             // reset checkboxes
             $('input[type=checkbox]').each(function() {
@@ -225,6 +190,11 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
             $('#building_list_container').children().children().children().children().attr('style', "");
 
         });
+
+
+
+        //TODO: what's going on here?????
+
         var weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         var date = new Date();
         var hour = date.getHours();
@@ -333,10 +303,22 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
 	   if ($('#filter_block').is(":visible")) {
     	   resizeFilterBlock();
+    	   setFilterContainer();
 	   }
 
 	});
 
+
+	// set a height for main container and hide any overflowing
+	function setFilterContainer() {
+
+        var filterH = $(window).height();
+
+        $('#container').height(filterH);
+        $('#container').css({
+            overflow: 'hidden',
+        });
+	}
 
 	// Show space details (sliding transition)
 	function showSpaceDetails(data) {
@@ -362,7 +344,6 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
         $('#map_canvas').height(mapH);
         $('#map_canvas').css({ minHeight: mapH })
         $('#info_list').height('auto');
-
     }
 
     function initializeCarousel() {

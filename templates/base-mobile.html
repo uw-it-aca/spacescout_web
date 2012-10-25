@@ -25,8 +25,7 @@
 
         {% load compress %}
         {% compress css %}
-        <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}libs/bootstrap/css/bootstrap.min.css" charset="utf-8" />
-        <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}libs/select2/select2.css" charset="utf-8" />
+        <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}libs/bootstrap/css/bootstrap-custom.css" charset="utf-8" />
         <link rel="stylesheet" type="text/less" href="{{ STATIC_URL }}css/mobile.less" media="screen, handheld" />
         {% endcompress %}
 
@@ -73,11 +72,9 @@
             <script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap/js/bootstrap-transition.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap/js/bootstrap-button.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap/js/bootstrap-carousel.js"></script>
-            <script type="text/javascript" src="{{ STATIC_URL }}libs/select2/select2.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/markerclusterer.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/handlebars.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/lazyload.js"></script>
-
 
             <script type="text/javascript" src="{{ STATIC_URL }}js/global.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}js/search.js"></script>
