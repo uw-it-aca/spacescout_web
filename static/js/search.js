@@ -44,7 +44,8 @@ function openClusterInfoWindow(cluster, data) {
     }
     var source = $('#cluster_list').html();
     var template = Handlebars.compile(source);
-    $('#info_items').html(template({data: spaces}));
+    data = buildingNameHeaders(spaces);
+    $('#info_items').html(template({data: data}));
 
     scrollToTop('info_list');
     $('.loading').slideUp('fast');
@@ -63,7 +64,7 @@ function addClusterListener(markerCluster, data) {
 function openAllMarkerInfoWindow(data) {
     var source = $('#all_markers').html();
     var template = Handlebars.compile(source);
-    data = sortByBuildingName(data);
+    data = buildingNameHeaders(data);
     $('#info_items').html(template({'data': data}));
     $('.loading').slideUp('fast');
 
@@ -84,8 +85,9 @@ function sortByBuildingName(data) {
 }
 
 function buildingNameHeaders(data) {
+    data = sortByBuildingName(data);
     var byBuilding = {};
-    var hash = {};
+    var big_list = [];
     var nobuilding = 'no building';
     for (i=0; i<data.length; i++) {
         var bname = data[i].location.building_name;
@@ -104,14 +106,14 @@ function buildingNameHeaders(data) {
             }
         }
     }
-    var keys = [];
     for (i in byBuilding) {
-        keys.push(i);
-        //console.log(i);
-        hash[i] = keys;
+        var small_json = {};
+        small_json.name = i;
+        small_json.spots = byBuilding[i];
+        big_list.push(small_json);
+
     }
-    hash['keys'] = keys;
-    return hash;
+    return big_list;
 }
 
 // jquery function to check if scrollable

@@ -684,7 +684,9 @@
                 {% tplhandlebars "all_markers" %}
                     <ul>
                         {{#if data}}
-                            {{#each data}}
+                        {{#each data}}
+                            <li>{{this.name}}</li>
+                            {{#each this.spots}}
                             <li class="clearfix view-details">
                                 <div class="space-detail-list-image pull-left"><img src="/static/img/transparent.gif" data-original='space/{{id}}/image/{{images.0.id}}/thumb/100x67' class='img lazy'></div>
 
@@ -695,6 +697,7 @@
                                 </button>
                             </li>
                             {{/each}}
+                        {{/each}}
                         {{else}}
                             <li class="no-spaces">Sorry, no spaces match your filters!</li>
                         {{/if}}
@@ -704,7 +707,9 @@
                 {% tplhandlebars "cluster_list" %}
                     <ul>
                         {{#if data }}
-                            {{#each data}}
+                        {{#each data}}
+                            <li>{{this.name}}</li>
+                            {{#each this.spots}}
                             <li class="clearfix view-details">
                                 <div class="space-detail-list-image pull-left"><img src='space/{{id}}/image/{{images.0.id}}/thumb/100x67' class='img'></div>
                                 <button  id="{{id}}" class="space-detail-list-item pull-left" type="button" aria-label="Get space details for {{name}}" aria-owns="detail_container_{{id}}">
@@ -714,6 +719,7 @@
                                 </button>
                             </li>
                             {{/each}}
+                        {{/each}}
                         {{else}}
                             <li class="no-spaces">Sorry, no spaces match your filters!</li>
                         {{/if}}
@@ -722,6 +728,7 @@
 
                 {% tplhandlebars "spot_info" %}
                     <ul>
+                        <li>{{location.building_name}}</li>
                         <li class="clearfix view-details">
                             <div class="space-detail-list-image pull-left"><img src='space/{{id}}/image/{{images.0.id}}/thumb/100x67' class='img'></div>
                             <button id="{{id}}" class="space-detail-list-item pull-left" type="button" aria-label="Get space details for {{name}}" aria-owns="detail_container_{{id}}">
