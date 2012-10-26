@@ -378,7 +378,6 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
                         html += '</ul></li>';
                         $(this).before(html);
-                        $('.carousel-control.left[href="#' + $(this).attr('id') + '"]').hide();
                 }
         ).bind('slid',
                 function(e) {
@@ -388,18 +387,6 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
                         nav.find('li a.active').removeClass('active');
                         $(item).find('a').addClass('active');
-
-                        if(index == 0) {
-                                $('.carousel-control.left[href="#' + $(this).attr('id') + '"]').fadeOut();
-                        } else {
-                                $('.carousel-control.left[href="#' + $(this).attr('id') + '"]').fadeIn();
-                        }
-
-                        if(index == nav.find('li').size() - 1) {
-                                $('.carousel-control.right[href="#' + $(this).attr('id') + '"]').fadeOut();
-                        } else {
-                                $('.carousel-control.right[href="#' + $(this).attr('id') + '"]').fadeIn();
-                        }
                 }
         );
 
