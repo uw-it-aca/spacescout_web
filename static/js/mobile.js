@@ -108,7 +108,7 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
     		resizeFilterBlock();
 
     		// slide down the filter block
-            $("#filter_block").slideDown('slow', function() {
+            $("#filter_block").slideDown(400, function() {
                 // hide the main content (map and list) by setting a height on the main container and hiding overflow
                 setFilterContainer();
             });
@@ -360,6 +360,44 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
                  $(this).find('.carousel-control').hide();
             }
         });
+
+        // add carousel pagination
+        $('.carousel').each(
+                function() {
+                        var html = '<div class="carousel-nav" data-target="' + $(this).attr('id') + '"><ul>';
+
+                        for(var i = 0; i < $(this).find('.item').size(); i ++) {
+                                html += '<li><a';
+                                if(i == 0) {
+                                        html += ' class="active"';
+                                }
+
+                                html += ' href="#">•</a></li>';
+                        }
+
+                        html += '</ul></li>';
+                        $(this).before(html);
+                }
+        ).bind('slid',
+                function(e) {
+                        var nav = $('.carousel-nav[data-target="' + $(this).attr('id') + '"] ul');
+                        var index = $(this).find('.item.active').index();
+                        var item = nav.find('li').get(index);
+
+                        nav.find('li a.active').removeClass('active');
+                        $(item).find('a').addClass('active');
+                }
+        );
+
+        $('.carousel-nav a').bind('click',
+                function(e) {
+                        var index = $(this).parent().index();
+                        var carousel = $('#' + $(this).closest('.carousel-nav').attr('data-target'));
+
+                        carousel.carousel(index);
+                        e.preventDefault();
+                }
+        );
 
     }
 

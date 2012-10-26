@@ -99,7 +99,7 @@ Handlebars.registerHelper('ifany', function(a, b) {
 		// show filter panel
 		$('#filter_button').click(function() {
 
-            $("#filter_block").slideDown('slow');
+            $("#filter_block").slideDown(400);
 
             $('#filter_button').hide();
             $('#view_results_button').show();
@@ -265,6 +265,10 @@ Handlebars.registerHelper('ifany', function(a, b) {
             }
         });
 
+
+
+
+
 	});
 
 	// Update dimensions on resize
@@ -406,6 +410,44 @@ Handlebars.registerHelper('ifany', function(a, b) {
                 $(this).find('.carousel-control').hide();
             }
         });
+
+        // add carousel pagination
+        $('.carousel').each(
+                function() {
+                        var html = '<div class="carousel-nav" data-target="' + $(this).attr('id') + '"><ul>';
+
+                        for(var i = 0; i < $(this).find('.item').size(); i ++) {
+                                html += '<li><a';
+                                if(i == 0) {
+                                        html += ' class="active"';
+                                }
+
+                                html += ' href="#">•</a></li>';
+                        }
+
+                        html += '</ul></li>';
+                        $(this).before(html);
+                }
+        ).bind('slid',
+                function(e) {
+                        var nav = $('.carousel-nav[data-target="' + $(this).attr('id') + '"] ul');
+                        var index = $(this).find('.item.active').index();
+                        var item = nav.find('li').get(index);
+
+                        nav.find('li a.active').removeClass('active');
+                        $(item).find('a').addClass('active');
+                }
+        );
+
+        $('.carousel-nav a').bind('click',
+                function(e) {
+                        var index = $(this).parent().index();
+                        var carousel = $('#' + $(this).closest('.carousel-nav').attr('data-target'));
+
+                        carousel.carousel(index);
+                        e.preventDefault();
+                }
+        );
 
         resizeCarouselMapContainer();
 

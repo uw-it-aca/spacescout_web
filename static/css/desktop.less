@@ -14,7 +14,7 @@
 
     .logo-container { background-color: transparent; }
 
-     .logo { height: 80px; line-height: 80px; width: 240px; background: url('/static/img/logo_retina.png') no-repeat 0px 50%; background-size: 100%; }
+     .logo { height: 80px; line-height: 80px; width: 240px; background: url('/static/img/spacescout_logo.png') no-repeat -30px 50%; background-size: 100%; }
 
       #bubble_desktop { margin: 0; display: block; float: right; height: 80px; margin-right: 15px; width: 40% }
       .bubble-inner { margin-top: 9px; height: 60px;
@@ -62,6 +62,7 @@
 }
 
 #main_content { margin: 0; }
+
 #map_canvas {
     width: 62%;
     float: left;
@@ -95,7 +96,14 @@
 
                     .space-detail-body-inner { background: #fff; border: solid 1px @grey_border; padding: 5px; margin: 20px 0 20px 20px; width: 76%;
                         .image-container, .map-container { margin: 0 auto; }
-                        .image-container {
+                        .image-container { position: relative;
+                            .carousel-nav { position: absolute; bottom: 0; background: none; z-index: 100; width: 100%; text-align: center;
+                                ul { padding: 0; margin: 0; font-size: 60px; }
+                                li { list-style: none; display: inline-block;
+                                    a { line-height: normal; text-decoration: none; color: #fff; }
+                                }
+                                li a.active { color: @purple_text; }
+                            }
                             .carousel { margin: 0; background: #f8f8f8 url('/static/img/spinner.gif') no-repeat 50% 50%; background-size: 20px; min-height: 201px; }
                         }
 
@@ -109,7 +117,31 @@
                     ul { margin: 0; }
                     li { list-style: none; margin-bottom: 5px;
                       .space-info-label { width: 35%; margin-right: 10px; color: @grey_light; overflow: hidden; text-overflow: ellipsis; font-weight: normal; margin:0; }
-                      .space-info-detail { width: 60%; }
+                      .space-info-detail { width: 60%;
+
+                            // styles for space details, adds commas
+                            ul.space-info-resources-list {
+                                display: inline;
+                                margin: 0;
+                                padding: 0;
+                            }
+
+                            ul.space-info-resources-list li {
+                                display: inline;
+                                list-style: none;
+                                margin: 0;
+                                padding: 0;
+                            }
+
+                            ul.space-info-resources-list li:after {
+                                content: ", ";
+                            }
+
+                            ul.space-info-resources-list li:last-child:after {
+                                content: "";
+                            }
+
+                      }
                     }
                 }
 
@@ -148,16 +180,16 @@
     .list-arrow { display: none; }
 
     #info_items {
-        ul { margin: 0px;
+        ol { margin: 0px; list-style: none;
             li {
                 .space-detail-list-item { width: 49%;
-                    .space-detail-type-label { width: 68%; }
+                    .space-detail-type-label { width: 55%; }
                 }
                 button:focus { outline: grey dashed thin; }
                 button div { padding: 0 2px; }
             }
 
-            li.selected { background-color: #6160a2;
+            li.selected { background: #6160a2 url('/static/img/list_item_selected.png') bottom repeat-x;
                 .space-detail-type { color: #ccc; }
                 .space-detail-desc,.space-detail-name { color: #fff; }
             }
@@ -189,9 +221,11 @@
 
     #info_list {
         #info_items {
-            ul {
+            ol {
                 li {
-                    .space-detail-list-item { width: 64%; }
+                    .space-detail-list-item { width: 64%;
+                        .space-detail-type-label { width: 68%; }
+                    }
                 }
             }
         }
@@ -216,13 +250,4 @@
             }
         }
     }
-}
-
-
-/* Override default Bootstrap Popover styles */
-.popover { width: 600px; }
-
-.popover-desktop-override {
-    top: 150px !important;
-    .arrow { /*top: 20px !important;*/ display: none !important; }
 }
