@@ -69,6 +69,16 @@ function openAllMarkerInfoWindow(data) {
 
     lazyLoadSpaceImages();
 
+    $(document).ready(function() {
+        if ($.cookie('spot_id') != null) {
+            if ($("#" + $.cookie('spot_id')).parent().prev().prev().children()[1] != null) {
+                window.location.hash = $("#" + $.cookie('spot_id')).parent().prev().prev().children()[1].id;
+            }
+            $("#" + $.cookie('spot_id')).click();
+            $.removeCookie('spot_id');
+        }
+    });
+
 }
 
 function sortByBuildingName(data) {
