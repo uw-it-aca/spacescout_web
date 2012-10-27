@@ -72,8 +72,12 @@ function openAllMarkerInfoWindow(data) {
 
     $(document).ready(function() {
         if ($.cookie('spot_id') != null) {
-            if ($("#" + $.cookie('spot_id')).parent().prev().prev().children()[1] != null) {
+            if ($("#" + $.cookie('spot_id')).parent().prev().prev().children()[1] != null) { // for normal case when there are two before clicked in ol
                 window.location.hash = $("#" + $.cookie('spot_id')).parent().prev().prev().children()[1].id;
+            } else if ($("#" + $.cookie('spot_id')).parent().parent().prev().prev()[0] != null) { // if there is an ol before the current one
+                if ($("#" + $.cookie('spot_id')).parent().prev()[0] == null || $("#" + $.cookie('spot_id')).parent().prev().prev()[0] == null) { // if there are two or less spots     before the one clicked in the current ol 
+                    window.location.hash = $("#" + $.cookie('spot_id')).parent().parent().prev().prev().children().children().last()[0].id;
+                }
             }
             $("#" + $.cookie('spot_id')).click();
             $.removeCookie('spot_id');
