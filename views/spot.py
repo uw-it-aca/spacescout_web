@@ -44,6 +44,7 @@ def SpotView(request, spot_id, return_json=False):
     params["type"] = string_val
     modified_date = params["last_modified"][5:10] + '-' + params["last_modified"][:4]
     params["last_modified"] = re.sub('-', '/', modified_date)
+    params["ga_tracking_id"] = settings.GA_TRACKING_ID
 
     content = json.dumps(params)
 
