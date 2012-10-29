@@ -69,6 +69,7 @@ def HomeView(request):
         'buildingdict': buildingdict,
         'is_mobile': request.MOBILE,
         'less_not_compiled': less_not_compiled,
+        'ga_tracking_id': settings.GA_TRACKING_ID,
     }, context_instance=RequestContext(request))
 
 
