@@ -402,6 +402,8 @@ function run_custom_search() {
         $.cookie('spacescout_search_opts', JSON.stringify(window.spacescout_search_options), { expires: 1 });
     }
 
+    // reset the scroll to top of container
+    $('#info_list').scrollTop(0);
 }
 
 // TODO: is this used anymore?
