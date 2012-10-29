@@ -36,6 +36,7 @@
         {% endif %}
         <link rel="shortcut icon" href="{{ STATIC_URL }}img/ico/favicon.ico">
 
+        {% if ga_tracking_id %}
         <!-- Google Analytics tracking -->
         <script type="text/javascript">
 
@@ -50,6 +51,7 @@
           })();
 
         </script>
+        {% endif %}
     </head>
 
       <body id="top">
