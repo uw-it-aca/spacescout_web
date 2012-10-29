@@ -480,10 +480,22 @@ function load_map(latitude, longitude, zoom) {
     } else {
         window.spacescout_map.setCenter(new google.maps.LatLng(latitude, longitude));
     }
+
     google.maps.event.addListener(window.spacescout_map, 'idle', reload_on_idle);
+
+    // add listeners to disable click events for points of interest
+    // http://stackoverflow.com/questions/7950030/can-i-remove-just-the-popup-bubbles-of-pois-in-google-maps-api-v3
+    google.maps.event.addListener(spacescout_map, "mouseup",function(event){
+        setInterval(function(){$('[src$="/mv/imgs8.png"]').trigger('click'); },1);
+    });
+    google.maps.event.addListener(spacescout_map, "dragstart",function(event){
+        setInterval(function(){$('[src="http://maps.gstatic.com/mapfiles/mv/imgs8.png"]').trigger('click'); },1);
+    });
+    google.maps.event.trigger(spacescout_map, 'mouseup'); // prime the cover.
 
     // append the centering buttons after map has loaded
     displayMapCenteringButtons();
+
 }
 
 function display_search_results(data) {
