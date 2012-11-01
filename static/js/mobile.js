@@ -1,48 +1,3 @@
-var detailsLat, detailsLon;
-
-// Handlebars helpers
-
-Handlebars.registerHelper('carouselimages', function(spacedata) {
-    var space_id = spacedata.id;
-    var elements = new Array;
-    for (i=0; i < spacedata.images.length; i++) {
-        image_id = spacedata.images[i].id;
-        elements.push('<div class="item"><img src="/space/'+space_id+'/image/'+image_id+'/thumb/600x400" class="img"></div>');
-    }
-    return new Handlebars.SafeString(elements.join('\n'));
-});
-
-Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
-
-    if (arguments.length < 3)
-        throw new Error("Handlerbars Helper 'compare' needs 2 parameters");
-
-    operator = options.hash.operator || "==";
-
-    var operators = {
-        '==':       function(l,r) { return l == r; },
-        '===':      function(l,r) { return l === r; },
-        '!=':       function(l,r) { return l != r; },
-        '<':        function(l,r) { return l < r; },
-        '>':        function(l,r) { return l > r; },
-        '<=':       function(l,r) { return l <= r; },
-        '>=':       function(l,r) { return l >= r; },
-        'typeof':   function(l,r) { return typeof l == r; }
-    }
-
-    if (!operators[operator])
-        throw new Error("Handlerbars Helper 'compare' doesn't know the operator "+operator);
-
-    var result = operators[operator](lvalue,rvalue);
-
-    if( result ) {
-        return options.fn(this);
-    } else {
-        return options.inverse(this);
-    }
-
-});
-
 (function(m) {
 
     var deviceAgent = navigator.userAgent.toLowerCase();
@@ -153,7 +108,6 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
             var hour = date.getHours();
             var min = date.getMinutes();
 
-
             if (min < 16) {
                 min = "00";
             }else if (min < 46) {
@@ -191,15 +145,12 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
         });
 
-
-
         //TODO: what's going on here?????
 
         var weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         var date = new Date();
         var hour = date.getHours();
         var min = date.getMinutes();
-
 
         if (min < 16) {
             min = "00";
@@ -221,7 +172,6 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
         hour = ""+hour+":"+min;
         $("#day-from").val(weekdays[date.getDay()])
         $("#hour-from").val(hour)
-
 
         // handle view details click
         $('.view-details').live('click', function(e){
@@ -308,7 +258,6 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
 	});
 
-
 	// set a height for main container and hide any overflowing
 	function setFilterContainer() {
 
@@ -320,7 +269,7 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
         });
 	}
 
-	// Show space details (sliding transition)
+	// Show space details
 	function showSpaceDetails(data) {
     	// change url
     	location.href = '/space/' + data.id;
@@ -332,7 +281,6 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
         // Scroll
         $('html,body').animate({ scrollTop: $("#"+id).offset().top},'fast');
     }
-
 
     // Mobile display defaults
     function mobileContent() {
@@ -457,8 +405,5 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 		},false);
 
     }
-
-
-
 
 })(this);

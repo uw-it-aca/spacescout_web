@@ -1,48 +1,3 @@
-var detailsLat, detailsLon;
-
-// Handlebars helpers
-Handlebars.registerHelper('carouselimages', function(spacedata) {
-    var space_id = spacedata.id;
-    var elements = new Array;
-    for (i=0; i < spacedata.images.length; i++) {
-        image_id = spacedata.images[i].id;
-        elements.push('<div class="item"><img src="/space/'+space_id+'/image/'+image_id+'/thumb/500x333" class="img"></div>');
-    }
-    return new Handlebars.SafeString(elements.join('\n'));
-});
-
-Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
-
-    if (arguments.length < 3)
-        throw new Error("Handlerbars Helper 'compare' needs 2 parameters");
-
-    operator = options.hash.operator || "==";
-
-    var operators = {
-        '==':       function(l,r) { return l == r; },
-        '===':      function(l,r) { return l === r; },
-        '!=':       function(l,r) { return l != r; },
-        '<':        function(l,r) { return l < r; },
-        '>':        function(l,r) { return l > r; },
-        '<=':       function(l,r) { return l <= r; },
-        '>=':       function(l,r) { return l >= r; },
-        'typeof':   function(l,r) { return typeof l == r; }
-    }
-
-    if (!operators[operator])
-        throw new Error("Handlerbars Helper 'compare' doesn't know the operator "+operator);
-
-    var result = operators[operator](lvalue,rvalue);
-
-    if( result ) {
-        return options.fn(this);
-    } else {
-        return options.inverse(this);
-    }
-
-});
-
-
 Handlebars.registerHelper('ifany', function(a, b) {
 
     // if anything passed is true, return true
@@ -264,10 +219,6 @@ Handlebars.registerHelper('ifany', function(a, b) {
             }
         });
 
-
-
-
-
 	});
 
 	// Update dimensions on resize
@@ -377,8 +328,6 @@ Handlebars.registerHelper('ifany', function(a, b) {
         $('#info_items li').removeClass('selected');
 	}
 
-
-
 	// Desktop display defaults
 	function desktopContent() {
 
@@ -457,7 +406,6 @@ Handlebars.registerHelper('ifany', function(a, b) {
 
         $('.carousel').height(containerH);
         $('.map-container').height(containerH);
-
 
     }
 
