@@ -120,7 +120,6 @@ function sortDays(days) {
 
 })(this);
 
-
 function getSpaceMap(lat, lon) {
 
   if (window.space_latitude) {
@@ -130,7 +129,6 @@ function getSpaceMap(lat, lon) {
   if (window.space_longitude) {
     lon = window.space_longitude
   }
-
 
   var mapOptions = {
     zoom: 17,

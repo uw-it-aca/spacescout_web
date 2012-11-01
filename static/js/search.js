@@ -372,7 +372,6 @@ function run_custom_search() {
         });
     }
 
-
     // show the correct buttons
     $('#filter_button').show();
     $('#view_results_button').hide();
@@ -672,5 +671,3 @@ function scrollToTop(id) {
    var template = Handlebars.compile(source);
    $('#map_canvas').append(template(template));
 }
-
-
