@@ -45,6 +45,13 @@ def SpotView(request, spot_id, return_json=False):
     modified_date = params["last_modified"][5:10] + '-' + params["last_modified"][:4]
     params["last_modified"] = re.sub('-', '/', modified_date)
 
+    # See if there is a Google Analytics web property id
+    try:
+        ga_tracking_id = settings.GA_TRACKING_ID
+    except:
+        ga_tracking_id = None
+    params["ga_tracking_id"] = ga_tracking_id 
+
     content = json.dumps(params)
 
     # See if django-compressor is being used to precompile less
