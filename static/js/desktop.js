@@ -139,23 +139,12 @@ Handlebars.registerHelper('ifany', function(a, b) {
             for (i = 0; i < window.requests.length; i++) {
                 window.requests[i].abort();
             }
-            // if a space details already exists
-            if ($('#space_detail_container').is(':visible')) {
-                window.requests.push(
-                    $.ajax({
-                        url: '/space/'+id+'/json/',
-                        success: replaceSpaceDetails
-                    })
-                );
-            }
-            else {
-                window.requests.push(
-                    $.ajax({
-                        url: '/space/'+id+'/json/',
-                        success: showSpaceDetails
-                    })
-                );
-            }
+            window.requests.push(
+                $.ajax({
+                    url: '/space/'+id+'/json/',
+                    success: showSpaceDetails
+                })
+            );
 
              // clear previously selected space
             $('#info_items li').removeClass('selected');
@@ -251,70 +240,33 @@ Handlebars.registerHelper('ifany', function(a, b) {
            data["has_resources"] = ( data.extended_info.has_computers != null || data.extended_info.has_displays != null || data.extended_info.has_outlets != null || data.extended_info.has_printing != null || data.extended_info.has_projector != null || data.extended_info.has_scanner != null || data.extended_info.has_whiteboards != null );
 
     	   // remove any open details
-    	   $('#space_detail_container').remove();
+    	   if (!$('#space_detail_container').is(':visible')) {
+               var open = false;
+           }else {
+               var open = true;
+           }
+           $('#space_detail_container').remove();
 
         	// build the template
     	   var source = $('#space_details').html();
     	   var template = Handlebars.compile(source);
     	   $('#map_canvas').append(template(data));
-
+           
     	   // set/reset initial state
-    	   $('.space-detail-inner').show();
-    	   $('#space_detail_container').show();
+    	        
+           $('.space-detail-inner').show();
+           $('#space_detail_container').show();
 
-    	   $('#space_detail_container').height($('#map_canvas').height());
-    	   $('.space-detail-body').height($('.space-detail').height() - 98);
-
-    	   $('.space-detail').show("slide", { direction: "right" }, 400);
-
+           $('#space_detail_container').height($('#map_canvas').height());
+           $('.space-detail-body').height($('.space-detail').height() - 98);
+           if (!open) {
+               $('.space-detail').show("slide", { direction: "right" }, 400);
+           }else {
+               $('.space-detail').show(); 
+           }
     	   initializeCarousel();
 
     	   detailsLat = data.location.latitude;
-    	   detailsLon = data.location.longitude;
-
-	}
-
-	// Replace space details (inline loading of already slid panel)
-	function replaceSpaceDetails(data) {
-           // format last modified date
-           var last_mod= new Date(data["last_modified"]);
-           var month = last_mod.getMonth();
-           var day = last_mod.getDate();
-           var year = last_mod.getFullYear();
-           data["last_modified"] = month + "/" + day + "/" + year;
-
-           // check to see if the space has the following
-           data["has_notes"] = ( ( data.extended_info.access_notes != null) || ( data.extended_info.reservation_notes != null) );
-           data["has_resources"] = ( data.extended_info.has_computers != null || data.extended_info.has_displays != null || data.extended_info.has_outlets != null || data.extended_info.has_printing != null || data.extended_info.has_projector != null || data.extended_info.has_scanner != null || data.extended_info.has_whiteboards != null );
-
-        	// build the template
-    	   var source = $('#space_details_replace').html();
-    	   var template = Handlebars.compile(source);
-    	   $('#space_detail_container').html(template(data));
-
-    	   // set/reset initial state
-    	   $('.space-detail-inner').hide();
-    	   //$(".space-detail .loading").show();
-
-    	   $('.space-detail-body').height($('.space-detail').height() - 98);
-
-    	   $('.space-detail').show();
-
-    	   // wait before showing the new space
-    	   //$(".space-detail-inner").delay(300).show(0, function() {
-           //   initializeCarousel();
-           //   resizeCarouselMapContainer();
-           //});
-
-            $('.space-detail-inner').show();
-            initializeCarousel();
-
-           // fade the new space in
-           /*$('.space-detail-inner').fadeIn('200', function() {
-                initializeCarousel();
-            });*/
-
-           detailsLat = data.location.latitude;
     	   detailsLon = data.location.longitude;
 
 	}
