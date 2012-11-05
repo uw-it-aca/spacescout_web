@@ -95,6 +95,35 @@ function sortDays(days) {
     return ordered;
 }
 
+function default_open_at_filter() {
+    // set the default open_at filter to close to now
+    var weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    var date = new Date();
+    var hour = date.getHours();
+    var min = date.getMinutes();
+
+    if (min < 16) {
+        min = "00";
+    }else if (min < 46) {
+        min = "30";
+    }else {
+        min = "00";
+        hour++;
+    }
+
+    if (hour > 11) {
+        $("#ampm-from").val("PM");
+    }else {
+        $("#ampm-from").val("AM");
+    }
+    if (hour > 12) {
+        hour = hour-12;
+    }
+    hour = ""+hour+":"+min;
+    $("#day-from").val(weekdays[date.getDay()]);
+    $("#hour-from").val(hour);
+}
+
 (function(g){
 
 	$(document).ready(function() {
@@ -115,6 +144,8 @@ function sortDays(days) {
             $('.spaces').hide();
             run_custom_search();
         });
+
+        default_open_at_filter();
 
 	});
 
