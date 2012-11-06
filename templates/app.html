@@ -37,7 +37,7 @@
 
                     {% tplhandlebars "filter_list" %}
                     <h3 id="current_filters" class="visuallyhidden">Current Filters:</h3>
-                    <ul aria-labelledby="current_filters">
+                    <ul id='filter_display_list' aria-labelledby="current_filters">
 
                         {{#if open_at}}<li>specific time</li>{{else}}<li>open now</li>{{/if}}
                         {{#if building_name}}<li>specific building</li>{{else}}<li>entire campus</li>{{/if}}
@@ -48,7 +48,6 @@
                         {{#if lighting}}<li>natural light</li>{{/if}}
                         {{#if resources}}<li>resources</li>{{/if}}
                         {{#if food}}<li>food/coffee</li>{{/if}}
-                        <!-- eventually? <li>...</li> -->
 
                     </ul>
                     {% endtplhandlebars %}
@@ -76,10 +75,16 @@
                 <div id="bubble_filters_container" class="bubble-filters pull-left" ></div>
 
                 {% tplhandlebars "filter_list" %}
-                <ul>
+                <ul id='filter_display_list'>
                     {{#if open_at}}<li>specific time</li>{{else}}<li>open now</li>{{/if}}
                     {{#if building_name}}<li>specific building</li>{{else}}<li>entire campus</li>{{/if}}
-                    <li>...</li>
+                    {{#if space_type}}<li>type of space</li>{{/if}}
+                    {{#if true_capacity}}<li>seats {{capacity}}</li>{{/if}}
+                    {{#if reservable}}<li>reservable</li>{{/if}}
+                    {{#if noise}}<li>noise level</li>{{/if}}
+                    {{#if lighting}}<li>natural light</li>{{/if}}
+                    {{#if resources}}<li>resources</li>{{/if}}
+                    {{#if food}}<li>food/coffee</li>{{/if}}
                 </ul>
                 {% endtplhandlebars %}
 
