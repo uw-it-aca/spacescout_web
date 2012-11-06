@@ -1,48 +1,3 @@
-var detailsLat, detailsLon;
-
-// Handlebars helpers
-Handlebars.registerHelper('carouselimages', function(spacedata) {
-    var space_id = spacedata.id;
-    var elements = new Array;
-    for (i=0; i < spacedata.images.length; i++) {
-        image_id = spacedata.images[i].id;
-        elements.push('<div class="item"><img src="/space/'+space_id+'/image/'+image_id+'/thumb/500x333" class="img"></div>');
-    }
-    return new Handlebars.SafeString(elements.join('\n'));
-});
-
-Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
-
-    if (arguments.length < 3)
-        throw new Error("Handlerbars Helper 'compare' needs 2 parameters");
-
-    operator = options.hash.operator || "==";
-
-    var operators = {
-        '==':       function(l,r) { return l == r; },
-        '===':      function(l,r) { return l === r; },
-        '!=':       function(l,r) { return l != r; },
-        '<':        function(l,r) { return l < r; },
-        '>':        function(l,r) { return l > r; },
-        '<=':       function(l,r) { return l <= r; },
-        '>=':       function(l,r) { return l >= r; },
-        'typeof':   function(l,r) { return typeof l == r; }
-    }
-
-    if (!operators[operator])
-        throw new Error("Handlerbars Helper 'compare' doesn't know the operator "+operator);
-
-    var result = operators[operator](lvalue,rvalue);
-
-    if( result ) {
-        return options.fn(this);
-    } else {
-        return options.inverse(this);
-    }
-
-});
-
-
 Handlebars.registerHelper('ifany', function(a, b) {
 
     // if anything passed is true, return true
@@ -63,32 +18,6 @@ Handlebars.registerHelper('ifany', function(a, b) {
 
 	$(document).ready(function() {
 
-        var weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-        var date = new Date();
-        var hour = date.getHours();
-        var min = date.getMinutes();
-
-
-        if (min < 16) {
-            min = "00";
-        }else if (min < 46) {
-            min = "30";
-        }else {
-            min = "00";
-            hour++;
-        }
-
-        if (hour > 11) {
-            $("#ampm-from").val("PM");
-        }else {
-            $("#ampm-from").val("AM");
-        }
-        if (hour > 12) {
-            hour = hour-12;
-        }
-        hour = ""+hour+":"+min;
-        $("#day-from").val(weekdays[date.getDay()]);
-        $("#hour-from").val(hour);
 		desktopContent();
 
 	   // check if a map_canvas exists... populate it
@@ -131,32 +60,7 @@ Handlebars.registerHelper('ifany', function(a, b) {
             $('#open_now').parent().removeClass("selected");
             $('#hours_list_container').hide();
             $('#hours_list_input').parent().removeClass("selected");
-            var date = new Date();
-            var hour = date.getHours();
-            var min = date.getMinutes();
-
-
-            if (min < 16) {
-                min = "00";
-            }else if (min < 46) {
-                min = "30";
-            }else {
-                min = "00";
-                hour++;
-            }
-
-            if (hour > 11) {
-                $("#ampm-from").val("PM");
-            }else {
-                $("#ampm-from").val("AM");
-            }
-            if (hour > 12) {
-                hour = hour-12;
-            }
-            hour = ""+hour+":"+min;
-            $("#day-from").val(weekdays[date.getDay()]);
-            $("#hour-from").val(hour);
-
+            default_open_at_filter();
             $("#day-until").val("No pref")
             $("#hour-until").val("No pref")
             $("#ampm-until").val("AM")
@@ -185,23 +89,12 @@ Handlebars.registerHelper('ifany', function(a, b) {
             for (i = 0; i < window.requests.length; i++) {
                 window.requests[i].abort();
             }
-            // if a space details already exists
-            if ($('#space_detail_container').is(':visible')) {
-                window.requests.push(
-                    $.ajax({
-                        url: '/space/'+id+'/json/',
-                        success: replaceSpaceDetails
-                    })
-                );
-            }
-            else {
-                window.requests.push(
-                    $.ajax({
-                        url: '/space/'+id+'/json/',
-                        success: showSpaceDetails
-                    })
-                );
-            }
+            window.requests.push(
+                $.ajax({
+                    url: '/space/'+id+'/json/',
+                    success: showSpaceDetails
+                })
+            );
 
              // clear previously selected space
             $('#info_items li').removeClass('selected');
@@ -265,10 +158,6 @@ Handlebars.registerHelper('ifany', function(a, b) {
             }
         });
 
-
-
-
-
 	});
 
 	// Update dimensions on resize
@@ -301,70 +190,33 @@ Handlebars.registerHelper('ifany', function(a, b) {
            data["has_resources"] = ( data.extended_info.has_computers != null || data.extended_info.has_displays != null || data.extended_info.has_outlets != null || data.extended_info.has_printing != null || data.extended_info.has_projector != null || data.extended_info.has_scanner != null || data.extended_info.has_whiteboards != null );
 
     	   // remove any open details
-    	   $('#space_detail_container').remove();
+    	   if (!$('#space_detail_container').is(':visible')) {
+               var open = false;
+           }else {
+               var open = true;
+           }
+           $('#space_detail_container').remove();
 
         	// build the template
     	   var source = $('#space_details').html();
     	   var template = Handlebars.compile(source);
     	   $('#map_canvas').append(template(data));
-
+           
     	   // set/reset initial state
-    	   $('.space-detail-inner').show();
-    	   $('#space_detail_container').show();
+    	        
+           $('.space-detail-inner').show();
+           $('#space_detail_container').show();
 
-    	   $('#space_detail_container').height($('#map_canvas').height());
-    	   $('.space-detail-body').height($('.space-detail').height() - 98);
-
-    	   $('.space-detail').show("slide", { direction: "right" }, 400);
-
+           $('#space_detail_container').height($('#map_canvas').height());
+           $('.space-detail-body').height($('.space-detail').height() - 98);
+           if (!open) {
+               $('.space-detail').show("slide", { direction: "right" }, 400);
+           }else {
+               $('.space-detail').show(); 
+           }
     	   initializeCarousel();
 
     	   detailsLat = data.location.latitude;
-    	   detailsLon = data.location.longitude;
-
-	}
-
-	// Replace space details (inline loading of already slid panel)
-	function replaceSpaceDetails(data) {
-           // format last modified date
-           var last_mod= new Date(data["last_modified"]);
-           var month = last_mod.getMonth();
-           var day = last_mod.getDate();
-           var year = last_mod.getFullYear();
-           data["last_modified"] = month + "/" + day + "/" + year;
-
-           // check to see if the space has the following
-           data["has_notes"] = ( ( data.extended_info.access_notes != null) || ( data.extended_info.reservation_notes != null) );
-           data["has_resources"] = ( data.extended_info.has_computers != null || data.extended_info.has_displays != null || data.extended_info.has_outlets != null || data.extended_info.has_printing != null || data.extended_info.has_projector != null || data.extended_info.has_scanner != null || data.extended_info.has_whiteboards != null );
-
-        	// build the template
-    	   var source = $('#space_details_replace').html();
-    	   var template = Handlebars.compile(source);
-    	   $('#space_detail_container').html(template(data));
-
-    	   // set/reset initial state
-    	   $('.space-detail-inner').hide();
-    	   //$(".space-detail .loading").show();
-
-    	   $('.space-detail-body').height($('.space-detail').height() - 98);
-
-    	   $('.space-detail').show();
-
-    	   // wait before showing the new space
-    	   //$(".space-detail-inner").delay(300).show(0, function() {
-           //   initializeCarousel();
-           //   resizeCarouselMapContainer();
-           //});
-
-            $('.space-detail-inner').show();
-            initializeCarousel();
-
-           // fade the new space in
-           /*$('.space-detail-inner').fadeIn('200', function() {
-                initializeCarousel();
-            });*/
-
-           detailsLat = data.location.latitude;
     	   detailsLon = data.location.longitude;
 
 	}
@@ -377,8 +229,6 @@ Handlebars.registerHelper('ifany', function(a, b) {
         // deselect selected space in list
         $('#info_items li').removeClass('selected');
 	}
-
-
 
 	// Desktop display defaults
 	function desktopContent() {
@@ -458,7 +308,6 @@ Handlebars.registerHelper('ifany', function(a, b) {
 
         $('.carousel').height(containerH);
         $('.map-container').height(containerH);
-
 
     }
 

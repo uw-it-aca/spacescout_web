@@ -377,15 +377,14 @@ function run_custom_search() {
         window.spacescout_search_options["extended_info:food_nearby"] = checked;
         set_cookie = true;
     }
-
-    // close space detail if visible (desktop only)
+    
+    // close space detail if visible (desktop)
     if ($('#space_detail_container').is(":visible")) {
         $('#info_items li').removeClass('selected');
         $('.space-detail').hide("slide", { direction: "right" }, 700, function() {
         	   $('#space_detail_container').remove();
         });
     }
-
 
     // show the correct buttons
     $('#filter_button').show();
@@ -415,9 +414,34 @@ function run_custom_search() {
     if (set_cookie) {
         $.cookie('spacescout_search_opts', JSON.stringify(window.spacescout_search_options), { expires: 1 });
     }
+}
 
     // reset the scroll to top of container
     $('#info_list').scrollTop(0);
+
+function fix_filter_overflow() {
+    var old;
+    var outofspace = false;
+    $('#filter_display_list > li').each(function(){
+        if (outofspace) {
+            $(this).hide();
+        }
+        else {
+            oScrollTop = $('#filter_display_list').height();
+            var thisItemIsVisible = ($(this).position().top < oScrollTop);
+            if (!thisItemIsVisible) {
+                $(this).html("...");
+                outofspace = true;
+                thisItemIsVisible = ($(this).position().top < oScrollTop);
+                if (!thisItemIsVisible) {
+                    $(old).html("...");
+                    $(this).hide();
+                }
+            }
+            old = this;
+        }
+    });
+
 }
 
 // TODO: is this used anymore?
@@ -494,10 +518,22 @@ function load_map(latitude, longitude, zoom) {
     } else {
         window.spacescout_map.setCenter(new google.maps.LatLng(latitude, longitude));
     }
+
     google.maps.event.addListener(window.spacescout_map, 'idle', reload_on_idle);
+
+    // add listeners to disable click events for points of interest
+    // http://stackoverflow.com/questions/7950030/can-i-remove-just-the-popup-bubbles-of-pois-in-google-maps-api-v3
+    google.maps.event.addListener(spacescout_map, "mouseup",function(event){
+        setInterval(function(){$('[src$="/mv/imgs8.png"]').trigger('click'); },1);
+    });
+    google.maps.event.addListener(spacescout_map, "dragstart",function(event){
+        setInterval(function(){$('[src="http://maps.gstatic.com/mapfiles/mv/imgs8.png"]').trigger('click'); },1);
+    });
+    google.maps.event.trigger(spacescout_map, 'mouseup'); // prime the cover.
 
     // append the centering buttons after map has loaded
     displayMapCenteringButtons();
+
 }
 
 function display_search_results(data) {
@@ -622,6 +658,8 @@ function fetch_data() {
     var template = Handlebars.compile(source);
     $('#bubble_filters_container').html(template(bubble_filters));
 
+    fix_filter_overflow();
+
     var url_args = ["/search/?"];
     for (var key in args) {
         if (typeof(args[key]) == "object") {
@@ -674,5 +712,3 @@ function scrollToTop(id) {
    var template = Handlebars.compile(source);
    $('#map_canvas').append(template(template));
 }
-
-

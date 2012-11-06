@@ -1,4 +1,48 @@
+var detailsLat, detailsLon;
 var requests = new Array();
+
+// Handlebars helpers
+Handlebars.registerHelper('carouselimages', function(spacedata) {
+    var space_id = spacedata.id;
+    var elements = new Array;
+    for (i=0; i < spacedata.images.length; i++) {
+        image_id = spacedata.images[i].id;
+        elements.push('<div class="item"><img src="/space/'+space_id+'/image/'+image_id+'/thumb/500x333" class="img"></div>');
+    }
+    return new Handlebars.SafeString(elements.join('\n'));
+});
+
+Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
+
+    if (arguments.length < 3)
+        throw new Error("Handlerbars Helper 'compare' needs 2 parameters");
+
+    operator = options.hash.operator || "==";
+
+    var operators = {
+        '==':       function(l,r) { return l == r; },
+        '===':      function(l,r) { return l === r; },
+        '!=':       function(l,r) { return l != r; },
+        '<':        function(l,r) { return l < r; },
+        '>':        function(l,r) { return l > r; },
+        '<=':       function(l,r) { return l <= r; },
+        '>=':       function(l,r) { return l >= r; },
+        'typeof':   function(l,r) { return typeof l == r; }
+    }
+
+    if (!operators[operator])
+        throw new Error("Handlerbars Helper 'compare' doesn't know the operator "+operator);
+
+    var result = operators[operator](lvalue,rvalue);
+
+    if( result ) {
+        return options.fn(this);
+    } else {
+        return options.inverse(this);
+    }
+
+});
+
 Handlebars.registerHelper('formatHours', function(hours) {
     //tomorrow_starts_at_midnight = true;
     //tomorrow_is_24_hours =
@@ -51,6 +95,35 @@ function sortDays(days) {
     return ordered;
 }
 
+function default_open_at_filter() {
+    // set the default open_at filter to close to now
+    var weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    var date = new Date();
+    var hour = date.getHours();
+    var min = date.getMinutes();
+
+    if (min < 16) {
+        min = "00";
+    }else if (min < 46) {
+        min = "30";
+    }else {
+        min = "00";
+        hour++;
+    }
+
+    if (hour > 11) {
+        $("#ampm-from").val("PM");
+    }else {
+        $("#ampm-from").val("AM");
+    }
+    if (hour > 12) {
+        hour = hour-12;
+    }
+    hour = ""+hour+":"+min;
+    $("#day-from").val(weekdays[date.getDay()]);
+    $("#hour-from").val(hour);
+}
+
 (function(g){
 
 	$(document).ready(function() {
@@ -72,10 +145,11 @@ function sortDays(days) {
             run_custom_search();
         });
 
+        default_open_at_filter();
+
 	});
 
 })(this);
-
 
 function getSpaceMap(lat, lon) {
 
@@ -86,7 +160,6 @@ function getSpaceMap(lat, lon) {
   if (window.space_longitude) {
     lon = window.space_longitude
   }
-
 
   var mapOptions = {
     zoom: 17,

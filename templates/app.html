@@ -37,7 +37,7 @@
 
                     {% tplhandlebars "filter_list" %}
                     <h3 id="current_filters" class="visuallyhidden">Current Filters:</h3>
-                    <ul aria-labelledby="current_filters">
+                    <ul id='filter_display_list' aria-labelledby="current_filters">
 
                         {{#if open_at}}<li>specific time</li>{{else}}<li>open now</li>{{/if}}
                         {{#if building_name}}<li>specific building</li>{{else}}<li>entire campus</li>{{/if}}
@@ -48,7 +48,6 @@
                         {{#if lighting}}<li>natural light</li>{{/if}}
                         {{#if resources}}<li>resources</li>{{/if}}
                         {{#if food}}<li>food/coffee</li>{{/if}}
-                        <!-- eventually? <li>...</li> -->
 
                     </ul>
                     {% endtplhandlebars %}
@@ -76,10 +75,16 @@
                 <div id="bubble_filters_container" class="bubble-filters pull-left" ></div>
 
                 {% tplhandlebars "filter_list" %}
-                <ul>
+                <ul id='filter_display_list'>
                     {{#if open_at}}<li>specific time</li>{{else}}<li>open now</li>{{/if}}
                     {{#if building_name}}<li>specific building</li>{{else}}<li>entire campus</li>{{/if}}
-                    <li>...</li>
+                    {{#if space_type}}<li>type of space</li>{{/if}}
+                    {{#if true_capacity}}<li>seats {{capacity}}</li>{{/if}}
+                    {{#if reservable}}<li>reservable</li>{{/if}}
+                    {{#if noise}}<li>noise level</li>{{/if}}
+                    {{#if lighting}}<li>natural light</li>{{/if}}
+                    {{#if resources}}<li>resources</li>{{/if}}
+                    {{#if food}}<li>food/coffee</li>{{/if}}
                 </ul>
                 {% endtplhandlebars %}
 
@@ -526,148 +531,6 @@
                                 <div class="space-detail-footer">This space was last updated on {{last_modified}} by<br/> {% if organization %}{{ organization }}{%else%}University of Washington Information Technology{% endif %}</div>
 
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        {% endtplhandlebars %}
-        {% tplhandlebars "space_details_replace" %}
-            <div class="space-detail">
-                <div class="space-detail-inner" id="detail_container_{{id}}">
-                    <div class="space-detail-header">
-                        <div class="space-detail-name">{{name}}</div>
-                        <div class="space-detail-type">{{type}} {{#if capacity }}<span class="space-detail-capacity">[Seats&nbsp;{{capacity}}]</span>{{/if}}</div>
-                        <a class="close" href="#" title="close"><img src="/static/img/x.png" /></a>
-                    </div>
-                    <div class="space-detail-body">
-
-
-                        <div class="clearfix">
-
-                            <div class="space-detail-body-inner pull-left">
-
-                                <div class="space-image">
-                                    <div id="spaceCarouselContainer" class="image-container">
-                                        <div id="myCarousel" class="carousel slide">
-                                          <!-- Carousel items -->
-                                          <div class="carousel-inner">
-
-                                            <!-- TODO: do an each loop of some sort -->
-                                            {{ carouselimages this }}
-
-                                          </div>
-                                          <!-- Carousel nav -->
-                                          <a class="carousel-control left" href="#myCarousel" title="previous image" data-slide="prev">&lsaquo;</a>
-                                          <a class="carousel-control right" href="#myCarousel" title="next image" data-slide="next">&rsaquo;</a>
-                                        </div>
-                                    </div>
-                                    <div id="spaceMap" class="map-container" style="display:none;">map goes here</div>
-                                </div>
-
-                            </div>
-                            <div class="space-image-map-buttons btn-group pull-left" data-toggle="buttons-radio">
-                              <button id="carouselControl" class="btn active"><span>image gallery</span></button>
-                              <button id="mapControl" class="btn"><span>map</span></button>
-                            </div>
-
-                        </div>
-
-                        <div style="margin: 0 20px 20px 20px;">
-
-                            <h4 class="space-info-header">Space Details:</h4>
-                            <div class="space-info">
-                                 <ul>
-
-                                    {{#if has_notes }}
-                                    <li class="clearfix">
-                                        <h5 class="space-info-label pull-left">Notes</h5>
-                                        <div class="space-info-detail pull-left">
-                                            <p>{{extended_info.access_notes}}</p>
-                                            <p>{{extended_info.reservation_notes }}</p>
-                                        </div>
-                                    </li>
-                                    {{/if}}
-
-                                    {{#if available_hours }}
-                                    <li class="clearfix"><h5 class="space-info-label pull-left">Hours</h5><div class="space-info-detail pull-left">{{formatHours available_hours}}</div></li>
-                                    {{/if}}
-
-                                    {{#if extended_info.location_description }}
-                                    <li class="clearfix"><h5 class="space-info-label pull-left">Location</h5><div class="space-info-detail pull-left">{{extended_info.location_description}}</div></li>
-                                    {{/if}}
-
-                                    {{#if has_resources }}
-                                    <li class="clearfix">
-                                        <h5 class="space-info-label pull-left">Resources</h5>
-                                        <div class="space-info-detail pull-left">
-                                            <ul class='space-info-resources-list'>
-                                            {{#if extended_info.has_computers }}<li>Computers</li>{{/if}}
-                                            {{#if extended_info.has_displays }}<li>Displays</li>{{/if}}
-                                            {{#if extended_info.has_outlets }}<li>Outlets</li>{{/if}}
-                                            {{#if extended_info.has_printing }}<li>Printing</li>{{/if}}
-                                            {{#if extended_info.has_projector }}<li>Projector</li>{{/if}}
-                                            {{#if extended_info.has_scanner }}<li>Scanning</li>{{/if}}
-                                            {{#if extended_info.has_whiteboards }}<li>Whiteboards</li>{{/if}}
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    {{/if}}
-
-                                    {{#if extended_info.noise_level }}
-                                    <li class="clearfix">
-                                        <h5 class="space-info-label pull-left">Noise Level</h5>
-                                        <div class="space-info-detail pull-left">
-
-                                            {{#compare extended_info.noise_level "quiet" operator="=="}}
-                                            {% verbatim %}{% trans 'quiet' %}{% endverbatim %}
-                                              {{^}}
-                                                    {{#compare extended_info.noise_level "moderate" operator="=="}}
-                                                    {% verbatim %}{% trans 'moderate' %}{% endverbatim %}
-                                                    {{^}}
-                                                        {{#compare extended_info.noise_level "silent" operator="=="}}
-                                                        {% verbatim %}{% trans 'silent' %}{% endverbatim %}
-                                                        {{^}}
-                                                        {% verbatim %}{% trans 'variable' %}{% endverbatim %}
-                                                        {{/compare}}
-                                                    {{/compare}}
-                                              {{/compare}}
-
-                                        </div>
-                                    </li>
-                                    {{/if}}
-
-                                    {{#if extended_info.has_natural_light }}
-                                    <li class="clearfix"><h5 class="space-info-label pull-left">Lighting</h5><div class="space-info-detail pull-left">Natural light</div></li>
-                                    {{/if}}
-
-
-                                    {{#if extended_info.food_nearby }}
-                                    <li class="clearfix">
-                                        <h5 class="space-info-label pull-left">Food/Coffee</h5>
-                                        <div class="space-info-detail pull-left">
-
-                                          {{#compare extended_info.food_nearby "building" operator="=="}}
-                                             {% verbatim %}{% trans 'building' %}{% endverbatim %}
-                                          {{^}}
-                                                {{#compare extended_info.food_nearby "space" operator="=="}}
-                                                {% verbatim %}{% trans 'space' %}{% endverbatim %}
-                                                {{^}}
-                                                {% verbatim %}{% trans 'neighboring' %}{% endverbatim %}
-                                                {{/compare}}
-                                          {{/compare}}
-
-                                        </div>
-                                    </li>
-                                    {{/if}}
-
-                                </ul>
-                            </div>
-
-                            <div class="space-detail-report">
-                                <a href="/contact/"><img src="/static/img/mail.png" />&nbsp;Report a problem with this space</a>
-                            </div>
-                            <div class="space-detail-footer">This space was last updated on {{last_modified}} by<br/> {% if organization %}{{ organization }}{%else%}University of Washington Information Technology{% endif %}</div>
-
                         </div>
                     </div>
                 </div>
