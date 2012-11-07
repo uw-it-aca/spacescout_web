@@ -68,20 +68,40 @@ function to12Hour(day) {
     var data = [ day[0][0], day[0][1] ];
     for (var i=0; i<data.length; i++) {
         time = data[i].split(":");
-        if (time[0] > 12) {
-            time[0] -= 12;
-            time[1] += "PM";
+        if(time[0]=="23" & time[1] == "59") {
+            data[i] = "Midnight";        
         }
-        else if (time[0] < 1) {
-            time[0] = 12;
-            time[1] += "AM";
+        else if (time[0] =="12" & time[1] =="00") {
+            data[i] = "Noon";
+        }else {
+            if (time[0] > 12) {
+                time[0] -= 12;
+                
+                time[1] += "PM";
+            }
+            else if (time[0] < 1) {
+                time[0] = 12;
+                time[1] += "AM";
+            }
+            else {
+                time[1] += "AM";
+            }
+            if (time[1] == "00AM") { 
+                data[i] = time[0];
+                data[i] += "AM";
+            } else if (time[1] == "00PM") {
+                data[i] = time[0];
+                data[i] += "PM"
+            }else {
+                data[i] = time.join(":");
+            }
         }
-        else {
-            time[1] += "AM";
-        }
-        data[i] = time.join(":");
     }
-    return data[0] +" - " +data[1];
+    if(data[0]=="12AM" & data[1]=="Midnight") {
+        return "Open 24 Hours";
+    }else {
+        return data[0] +" - " +data[1];
+    }
 }
 
 function sortDays(days) {
