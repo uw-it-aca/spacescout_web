@@ -7,7 +7,7 @@ Handlebars.registerHelper('carouselimages', function(spacedata) {
     var elements = new Array;
     for (i=0; i < spacedata.images.length; i++) {
         image_id = spacedata.images[i].id;
-        elements.push('<div class="item"><img src="/space/'+space_id+'/image/'+image_id+'/thumb/500x333" class="img"></div>');
+        elements.push('<div class="item"><img src="/space/'+space_id+'/image/'+image_id+'/thumb/constrain/width:500,height:333" class="img"></div>');
     }
     return new Handlebars.SafeString(elements.join('\n'));
 });
