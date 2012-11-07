@@ -2,10 +2,10 @@
 
 {% block extra_js %}
 <script>
-    var spot_id = {{ spot_id }};
-    if (typeof(spot_id) == "undefined") {
-        spot_id = null;
-    }
+    if ("{{spot_id}}" == "None")
+        var spot_id = null;
+    else
+        var spot_id = {{ spot_id }};
     $("#cookieSet").click(function () {
         $.cookie('spot_id', spot_id, {path: '/'});
     });
