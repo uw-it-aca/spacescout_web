@@ -308,6 +308,8 @@
         var containerH = containerW / 1.5;
 
         $('.carousel').height(containerH);
+        $('.carousel-inner-image').height(containerH);
+        $('.carousel-inner-image-inner').height(containerH);
         $('.map-container').height(containerH);
     }
 

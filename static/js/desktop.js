@@ -200,9 +200,9 @@ Handlebars.registerHelper('ifany', function(a, b) {
     	   var source = $('#space_details').html();
     	   var template = Handlebars.compile(source);
     	   $('#map_canvas').append(template(data));
-           
+
     	   // set/reset initial state
-    	        
+
            $('.space-detail-inner').show();
            $('#space_detail_container').show();
 
@@ -211,7 +211,7 @@ Handlebars.registerHelper('ifany', function(a, b) {
            if (!open) {
                $('.space-detail').show("slide", { direction: "right" }, 400);
            }else {
-               $('.space-detail').show(); 
+               $('.space-detail').show();
            }
     	   initializeCarousel();
 
@@ -306,6 +306,8 @@ Handlebars.registerHelper('ifany', function(a, b) {
         var containerH = containerW / 1.5;
 
         $('.carousel').height(containerH);
+        $('.carousel-inner-image').height(containerH);
+        $('.carousel-inner-image-inner').height(containerH);
         $('.map-container').height(containerH);
 
     }
