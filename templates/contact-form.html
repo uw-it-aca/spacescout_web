@@ -3,7 +3,7 @@
 {% block contact-content %}
 
     {% if not is_mobile %}<h2 class="contact-header">Report a problem</h2>{% endif %}
-    <form action="/contact/" method="post">{% csrf_token %}
+    <form action="/contact/{{ spot_id }}/" method="post">{% csrf_token %}
         <div class="fieldWrapper">
             {{ spot_name }}<br />
             {{ spot_description }}

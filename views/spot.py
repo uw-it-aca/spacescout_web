@@ -5,7 +5,6 @@ from django.utils.translation import ugettext as _
 import oauth2
 import simplejson as json
 import re
-
 from django.http import HttpResponse
 
 
@@ -61,12 +60,6 @@ def SpotView(request, spot_id, return_json=False):
         less_not_compiled = True
 
     params["less_not_compiled"] = less_not_compiled
-    request.session['spot_id'] = spot_id
-    if 'name' in params:
-        request.session['spot_name'] = params['name']
-    if 'extended_info' in params:
-        if 'location_description' in params['extended_info']:
-            request.session['spot_description'] = params['extended_info']['location_description']
 
     if return_json:
         return HttpResponse(content, mimetype='application/json')
