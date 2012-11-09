@@ -14,7 +14,8 @@
 
     .logo-container { background-color: transparent; }
 
-     .logo { height: 80px; line-height: 80px; width: 240px; background: url('/static/img/spacescout_logo.png') no-repeat -30px 50%; background-size: 100%; }
+
+     .logo { height: 80px; line-height: 80px; width: 240px; background: url('/static/img/spacescout_logo.png') no-repeat -30px 50%; background-size: 81%;}
 
       #bubble_desktop { margin: 0; display: block; float: right; height: 80px; margin-right: 15px; width: 40% }
       .bubble-inner { margin-top: 9px; height: 60px;
@@ -254,4 +255,9 @@
             }
         }
     }
+}
+
+/*** Override older IE versions ***/
+.lt-ie9 {
+    .logo { height: 80px; line-height: 80px; width: 240px; background: url('/static/img/spacescout_logo_small.png') no-repeat -30px 50% !important; }
 }
