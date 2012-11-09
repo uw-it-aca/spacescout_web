@@ -64,10 +64,11 @@ Handlebars.registerHelper('ifany', function(a, b) {
             $("#day-until").val("No pref")
             $("#hour-until").val("No pref")
             $("#ampm-until").val("AM")
+
             // reset location
             $('#entire_campus').prop('checked', true);
             $('#entire_campus').parent().removeClass("selected");
-            $('#e9.building-location')[0].options[0].selected = true; // grabs first location in drop down and selects it. could be prettier
+            $('#e9.building-location').children().children().first()[0].selected = true; // grabs first location in drop down and selects it
             $('#building_list_container').hide();
             $('#building_list_input').parent().removeClass("selected");
             $('#building_list_container').children().children().children(".select2-search-choice").remove();
@@ -200,9 +201,9 @@ Handlebars.registerHelper('ifany', function(a, b) {
     	   var source = $('#space_details').html();
     	   var template = Handlebars.compile(source);
     	   $('#map_canvas').append(template(data));
-           
+
     	   // set/reset initial state
-    	        
+
            $('.space-detail-inner').show();
            $('#space_detail_container').show();
 
@@ -211,7 +212,7 @@ Handlebars.registerHelper('ifany', function(a, b) {
            if (!open) {
                $('.space-detail').show("slide", { direction: "right" }, 400);
            }else {
-               $('.space-detail').show(); 
+               $('.space-detail').show();
            }
     	   initializeCarousel();
 
@@ -306,6 +307,8 @@ Handlebars.registerHelper('ifany', function(a, b) {
         var containerH = containerW / 1.5;
 
         $('.carousel').height(containerH);
+        $('.carousel-inner-image').height(containerH);
+        $('.carousel-inner-image-inner').height(containerH);
         $('.map-container').height(containerH);
 
     }

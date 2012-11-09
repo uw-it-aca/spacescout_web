@@ -104,7 +104,11 @@
                                 }
                                 li a.active { color: @purple_text; }
                             }
-                            .carousel { margin: 0; background: #f8f8f8 url('/static/img/spinner.gif') no-repeat 50% 50%; background-size: 20px; min-height: 201px; }
+                            .carousel { margin: 0; background: #f8f8f8 url('/static/img/spinner.gif') no-repeat 50% 50%; background-size: 20px; min-height: 201px;
+
+                                .carousel-inner-image { overflow: hidden; width: 100%; }
+                                .carousel-inner-image-inner { background-repeat: no-repeat !important; background-position: 50% 50% !important; width: 100%; }
+                            }
                         }
 
                         .map-container { background: #f8f8f8 url('/static/img/spinner.gif') no-repeat 50% 50%; background-size: 20px; }

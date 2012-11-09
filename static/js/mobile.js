@@ -111,13 +111,12 @@
             // reset location
             $('#entire_campus').prop('checked', true);
             $('#entire_campus').parent().removeClass("selected");
-            $('#e9.building-location')[0].options[0].selected = true; // grabs first location in drop down and selects it. could be prettier
+            $('#e9.building-location').children().children().first()[0].selected = true; // grabs first location in drop down and selects it
             $('#building_list_container').hide();
             $('#building_list_input').parent().removeClass("selected");
             $('#building_list_container').children().children().children(".select2-search-choice").remove();
-            $('#building_list_container').children().children().children().children().val('Select Building(s)');
+            $('#building_list_container').children().children().children().children().val('Select building(s)');
             $('#building_list_container').children().children().children().children().attr('style', "");
-
         });
 
         // handle view details click
@@ -308,6 +307,8 @@
         var containerH = containerW / 1.5;
 
         $('.carousel').height(containerH);
+        $('.carousel-inner-image').height(containerH);
+        $('.carousel-inner-image-inner').height(containerH);
         $('.map-container').height(containerH);
     }
 
