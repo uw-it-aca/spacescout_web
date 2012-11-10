@@ -5,6 +5,8 @@ from django.utils.translation import ugettext as _
 import oauth2
 import simplejson as json
 import re
+from django.http import Http404
+
 from django.http import HttpResponse
 
 
@@ -23,11 +25,10 @@ def SpotView(request, spot_id, return_json=False):
     url = "{0}/api/v1/spot/{1}".format(settings.SS_WEB_SERVER_HOST, spot_id)
 
     resp, content = client.request(url, 'GET')
-
     if resp.status == 404:
-        response = HttpResponse("Not found")
-        response.status_code = 404
-        return response
+        url = request.get_host()
+        url =url+"/contact"
+        raise Http404
     elif resp.status != 200:
         response = HttpResponse("Error loading spot")
         response.status_code = resp.status_code
