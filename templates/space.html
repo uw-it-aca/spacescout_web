@@ -36,7 +36,9 @@
                                       <!-- Carousel items -->
                                       <div class="carousel-inner">
                                         {% for image in images %}
-                                        <div class="item"><img src="/space/{{ id }}/image/{{ image.id }}/thumb/constrain/width:500,height:333" class="img"></div>
+                                        <div class="carousel-inner-image item">
+                                            <div class="carousel-inner-image-inner" style="background:url('/space/{{ id }}/image/{{ image.id }}/thumb/constrain/width:500,height:333') no-repeat 50% 50%; background-size:100%;">&nbsp;</div>
+                                        </div>
                                         {% endfor %}
 
                                       </div>

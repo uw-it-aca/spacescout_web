@@ -7,7 +7,7 @@
     else
         var spot_id = {{ spot_id }};
     $("#cookieSet").click(function () {
-        $.cookie('spot_id', spot_id, {path: '/'});
+        $.cookie('spot_id', spot_id, {path: '/', expires: 1});
     });
 </script>
 {% endblock %}
