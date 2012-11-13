@@ -321,6 +321,8 @@ Handlebars.registerHelper('ifany', function(a, b) {
     	   detailsLat = data.location.latitude;
     	   detailsLon = data.location.longitude;
 
+            replaceUrls();
+
 	}
 
 	// Replace space details (inline loading of already slid panel)
@@ -341,6 +343,7 @@ Handlebars.registerHelper('ifany', function(a, b) {
     	   var template = Handlebars.compile(source);
     	   $('#space_detail_container').html(template(data));
 
+
     	   // set/reset initial state
     	   $('.space-detail-inner').hide();
     	   //$(".space-detail .loading").show();
@@ -358,15 +361,17 @@ Handlebars.registerHelper('ifany', function(a, b) {
             $('.space-detail-inner').show();
             initializeCarousel();
 
-           // fade the new space in
-           /*$('.space-detail-inner').fadeIn('200', function() {
+            // fade the new space in
+            /*$('.space-detail-inner').fadeIn('200', function() {
                 initializeCarousel();
             });*/
 
            detailsLat = data.location.latitude;
     	   detailsLon = data.location.longitude;
 
+
 	}
+
 
 	function hideSpaceDetails() {
         $('.space-detail').hide("slide", { direction: "right" }, 400, function() {
@@ -460,5 +465,6 @@ Handlebars.registerHelper('ifany', function(a, b) {
 
 
     }
+
 
 })(this);

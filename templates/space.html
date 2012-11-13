@@ -63,7 +63,7 @@
                                     <div class="space-info-label pull-left">Notes</div>
                                     <div class="space-info-detail pull-left">
                                         {% if extended_info.access_notes %}<p>{{extended_info.access_notes }}</p>{% endif %}
-                                        {% if extended_info.reservation_notes %}<p>{{extended_info.reservation_notes }}</p>{% endif %}
+                                        {% if extended_info.reservation_notes %}<p id="ei_reservation_notes">{{extended_info.reservation_notes }}</p>{% endif %}
                                     </div>
                                 </li>
                                 {% endif %}
