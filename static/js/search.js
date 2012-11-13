@@ -15,7 +15,7 @@ function openInfoWindow(marker, info) {
     scrollToTop('info_list');
     $('.loading').slideUp('fast');
 
-    lazyLoadSpaceImages();
+    //lazyLoadSpaceImages();
 
 }
 
@@ -50,7 +50,7 @@ function openClusterInfoWindow(cluster, data) {
     scrollToTop('info_list');
     $('.loading').slideUp('fast');
 
-    lazyLoadSpaceImages();
+    //lazyLoadSpaceImages();
 
 }
 
@@ -68,7 +68,7 @@ function openAllMarkerInfoWindow(data) {
     $('#info_items').html(template({'data': data}));
     $('.loading').slideUp('fast');
 
-    lazyLoadSpaceImages();
+    //lazyLoadSpaceImages();
 
     $(document).ready(function() {
         if ($.cookie('spot_id') != null) {

@@ -6,6 +6,20 @@
 @grey_border: #d6d6d6;
 @grey_background: #e5e5e5;
 
+// retina.less
+// A helper mixin for applying high-resolution background images (http://www.retinajs.com)
+
+.at2x(@path, @w: auto, @h: auto) {
+  background-image: url(@path);
+  @at2x_path: ~`"@{path}".split('.').slice(0, "@{path}".split('.').length - 1).join(".") + "@2x" + "." + "@{path}".split('.')["@{path}".split('.').length - 1]`;
+
+  @media all and (-webkit-min-device-pixel-ratio : 1.5) {
+    background-image: url(@at2x_path);
+    background-size: @w @h;
+  }
+}
+
+
 /* start overriding the mobile styles */
 
 #container { min-width:748px; max-width:1024px; margin: 10px; }
@@ -15,7 +29,10 @@
     .logo-container { background-color: transparent; }
 
 
-     .logo { height: 80px; line-height: 80px; width: 240px; background: url('/static/img/spacescout_logo.png') no-repeat -30px 50%; background-size: 81%;}
+     .logo { height: 80px; line-height: 80px; width: 240px;
+        .at2x('/static/img/spacescout_logo.png', 240px, 80px);
+        background-repeat: no-repeat;
+     }
 
       #bubble_desktop { margin: 0; display: block; float: right; height: 80px; margin-right: 15px; width: 40% }
       .bubble-inner { margin-top: 9px; height: 60px;
@@ -255,9 +272,4 @@
             }
         }
     }
-}
-
-/*** Override older IE versions ***/
-.lt-ie9 {
-    .logo { height: 80px; line-height: 80px; width: 240px; background: url('/static/img/spacescout_logo_small.png') no-repeat -30px 50% !important; }
 }
