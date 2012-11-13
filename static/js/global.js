@@ -56,7 +56,8 @@ Handlebars.registerHelper('formatHours', function(hours) {
         if (hours[day].length > 0) {
             dayMarker = day.charAt(0);
             dayMarker = dayMarker.toUpperCase();
-            if (dayMarker == 'T' && day.charAt(1) == 'h' || dayMarker == 'S' && day.charAt(1) == 'u') {
+            // Show two characters for Th, Sa, Su
+            if (dayMarker == 'T' && day.charAt(1) == 'h' || dayMarker == 'S' && day.charAt(1) == 'a' || dayMarker == 'S' && day.charAt(1) == 'u') {
                 dayMarker += day.charAt(1);
             }
             formatted[dayMarker] = to12Hour(hours[day]);
@@ -108,7 +109,7 @@ function to12Hour(day) {
 
 function sortDays(days) {
     var ordered = [];
-    order = ["M", "T", "W", "Th", "F", "S", "Su"];
+    order = ["M", "T", "W", "Th", "F", "Sa", "Su"];
     $.each(order, function(day) {
         if (days[order[day]]) {
             ordered.push(order[day] +": " +days[order[day]] );
