@@ -19,12 +19,13 @@ def ImageView(request, spot_id, image_id, thumb_width=None, thumb_height=None, c
     consumer = oauth2.Consumer(key=settings.SS_WEB_OAUTH_KEY, secret=settings.SS_WEB_OAUTH_SECRET)
     client = oauth2.Client(consumer)
 
+    #TODO: really, rather than increase the size of the missing value, we should be able to pass None to get_image
     if constrain is True:
         if thumb_width is None:
-            thumb_width = thumb_height
+            thumb_width = thumb_height * 999
 
         if thumb_height is None:
-            thumb_height = thumb_width
+            thumb_height = thumb_width * 999
 
     contenttype, img = get_image(client, spot_id, image_id, thumb_width, thumb_height, constrain)
 
