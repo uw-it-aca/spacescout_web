@@ -7,6 +7,20 @@
 @grey_background: #e5e5e5;
 @grey_medium: #aaa;
 
+// retina.less
+// A helper mixin for applying high-resolution background images (http://www.retinajs.com)
+
+.at2x(@path, @w: auto, @h: auto) {
+  background-image: url(@path);
+  @at2x_path: ~`"@{path}".split('.').slice(0, "@{path}".split('.').length - 1).join(".") + "@2x" + "." + "@{path}".split('.')["@{path}".split('.').length - 1]`;
+
+  @media all and (-webkit-min-device-pixel-ratio : 1.5) {
+    background-image: url(@at2x_path);
+    background-size: @w @h;
+  }
+}
+
+
 body {
     background-color: @grey_background;
 }
@@ -28,7 +42,10 @@ button {
 #nav { z-index: 1;
 
     .logo-container { background-color: #ccc; }
-    .logo { height: 50px; line-height: 50px; width: 130px; float:left; background: url('/static/img/spacescout_logo.png') no-repeat 0px 50%; background-size: 95%; position: relative; }
+    .logo { height: 50px; line-height: 50px; width: 130px; float:left; position: relative;
+        .at2x('/static/img/spacescout_logo_mobile.png', 130px, 50px);
+        background-repeat: no-repeat;
+    }
 
     #bubble_desktop { display: none; }
 
