@@ -15,6 +15,11 @@ except:
 
 def contact(request, spot_id=None):
     contact_variables = _contact_variables(request, spot_id)
+    if spot_id == None:
+        spot_id = ''
+        displayed_spot_id = 'Unknown'
+    else:
+        displayed_spot_id = spot_id
 
     back = contact_variables['back']
     is_mobile = contact_variables['is_mobile']
@@ -31,11 +36,6 @@ def contact(request, spot_id=None):
             feedback_choice = 'problem'
             bot_test = form.cleaned_data['email_confirmation']
 
-            if spot_id == None:
-                spot_id = ''
-                displayed_spot_id = 'Unknown'
-            else:
-                displayed_spot_id = spot_id
             browser = request.META.get('HTTP_USER_AGENT', 'Unknown')
 
             subject = "SpaceScout %s from %s" %(feedback_choice, name)
@@ -102,7 +102,7 @@ def _contact_variables(request, spot_id):
     spot_description = ''
 
     if spot_id != None:
-        url = "{0}/space/{1}/json".format("http://butterfinger.cac.washington.edu:8001", spot_id)
+        url = "{0}/space/{1}/json".format("http://" + request.get_host(), spot_id)
         try:
             content = urllib2.urlopen(url).read()
             params = json.loads(content)
