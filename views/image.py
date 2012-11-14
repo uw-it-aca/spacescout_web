@@ -19,15 +19,7 @@ def ImageView(request, spot_id, image_id, thumb_width=None, thumb_height=None, c
     consumer = oauth2.Consumer(key=settings.SS_WEB_OAUTH_KEY, secret=settings.SS_WEB_OAUTH_SECRET)
     client = oauth2.Client(consumer)
 
-    #TODO: really, rather than increase the size of the missing value, we should be able to pass None to get_image
-    if constrain is True:
-        if thumb_width is None:
-            thumb_width = thumb_height * 999
-
-        if thumb_height is None:
-            thumb_height = thumb_width * 999
-
-    contenttype, img = get_image(client, spot_id, image_id, thumb_width, thumb_height, constrain)
+    contenttype, img = get_image(client, spot_id, image_id, constrain, thumb_width, thumb_height)
 
     response = HttpResponse(img)
 
@@ -36,9 +28,14 @@ def ImageView(request, spot_id, image_id, thumb_width=None, thumb_height=None, c
     return response
 
 
-def get_image(client, spot_id, image_id, thumb_width, thumb_height, constrain):
+def get_image(client, spot_id, image_id, constrain, thumb_width=None, thumb_height=None):
     if constrain is True:
-        url = "{0}/api/v1/spot/{1}/image/{2}/thumb/constrain/width:{3},height:{4}".format(settings.SS_WEB_SERVER_HOST, spot_id, image_id, thumb_width, thumb_height)
+        constraint = []
+        if thumb_width:
+            constraint.append("width:%s" % thumb_width)
+        if thumb_height:
+            constraint.append("height:%s" % thumb_height)
+        url = "{0}/api/v1/spot/{1}/image/{2}/thumb/constrain/{3}".format(settings.SS_WEB_SERVER_HOST, spot_id, image_id, ','.join(constraint))
     else:
         url = "{0}/api/v1/spot/{1}/image/{2}/thumb/{3}x{4}".format(settings.SS_WEB_SERVER_HOST, spot_id, image_id, thumb_width, thumb_height)
 
