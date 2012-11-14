@@ -147,9 +147,21 @@ function default_open_at_filter() {
     $("#hour-from").val(hour);
 }
 
+// Found at http://stackoverflow.com/questions/476679/preloading-images-with-jquery
+function preload(arrayOfImages) {
+    $(arrayOfImages).each(function(){
+        $('<img/>')[0].src = this;
+        // Alternatively you could use:
+        // (new Image()).src = this;
+    });
+}
+
 (function(g){
 
 	$(document).ready(function() {
+
+        var pinimgs = ['/static/img/pins/pin00.png', '/static/img/pins/pin01.png'];
+        preload(pinimgs);
 
     	// handle clicking on map centering buttons
         $('#center_all').live('click', function(e){
@@ -203,4 +215,15 @@ function getSpaceMap(lat, lon) {
       icon: image
   });
 
+}
+
+function replaceUrls(){
+    // Replace urls in reservation notes with actual links.
+    var text = $("#ei_reservation_notes").html();
+    var patt = /\b(?:https?|ftp):\/\/[a-z0-9-+&@#\/%?=~_|!:,.;]*[a-z0-9-+&@#\/%=~_|]/gim;
+    var url = patt.exec(text);
+    if (url != null) {
+        text = text.replace(url, "<a href='" + url + "'>" + url + "</a>");
+        $("#ei_reservation_notes").html(text);
+    }
 }

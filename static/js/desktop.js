@@ -219,6 +219,8 @@ Handlebars.registerHelper('ifany', function(a, b) {
     	   detailsLat = data.location.latitude;
     	   detailsLon = data.location.longitude;
 
+           replaceUrls();
+
 	}
 
 	function hideSpaceDetails() {
@@ -312,5 +314,6 @@ Handlebars.registerHelper('ifany', function(a, b) {
         $('.map-container').height(containerH);
 
     }
+
 
 })(this);
