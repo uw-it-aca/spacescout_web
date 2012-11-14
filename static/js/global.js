@@ -151,6 +151,13 @@ function default_open_at_filter() {
 
 	$(document).ready(function() {
 
+        $.fn.preload = function() {
+            this.each(function(){
+                $('<img/>')[0].src = this;
+            });
+        }
+        $('/static/img/pins/pin00.png', '/static/img/pins/pin01.png').preload();
+
     	// handle clicking on map centering buttons
         $('#center_all').live('click', function(e){
 
