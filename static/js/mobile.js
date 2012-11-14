@@ -25,6 +25,7 @@
 		// initialize the carousel for mobile standalone space page
         initializeCarousel();
         resizeCarouselMapContainer();
+        replaceUrls();
 
         // scroll to the top of page
         $('#top_link').click(function(e){

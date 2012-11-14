@@ -219,7 +219,7 @@ Handlebars.registerHelper('ifany', function(a, b) {
     	   detailsLat = data.location.latitude;
     	   detailsLon = data.location.longitude;
 
-            replaceUrls();
+           replaceUrls();
 
 	}
 
