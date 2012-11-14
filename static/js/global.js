@@ -1,4 +1,50 @@
+var detailsLat, detailsLon;
 var requests = new Array();
+
+// Handlebars helpers
+Handlebars.registerHelper('carouselimages', function(spacedata) {
+    var space_id = spacedata.id;
+    var elements = new Array;
+    for (i=0; i < spacedata.images.length; i++) {
+        image_id = spacedata.images[i].id;
+        image_url = "background:url(/space/" + space_id + "/image/" + image_id + "/thumb/constrain/width:500)";
+        div_string = "<div class='carousel-inner-image item'><div class='carousel-inner-image-inner' style='" + image_url + "'>&nbsp;</div></div>"
+        elements.push(div_string);
+    }
+    return new Handlebars.SafeString(elements.join('\n'));
+});
+
+Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
+
+    if (arguments.length < 3)
+        throw new Error("Handlerbars Helper 'compare' needs 2 parameters");
+
+    operator = options.hash.operator || "==";
+
+    var operators = {
+        '==':       function(l,r) { return l == r; },
+        '===':      function(l,r) { return l === r; },
+        '!=':       function(l,r) { return l != r; },
+        '<':        function(l,r) { return l < r; },
+        '>':        function(l,r) { return l > r; },
+        '<=':       function(l,r) { return l <= r; },
+        '>=':       function(l,r) { return l >= r; },
+        'typeof':   function(l,r) { return typeof l == r; }
+    }
+
+    if (!operators[operator])
+        throw new Error("Handlerbars Helper 'compare' doesn't know the operator "+operator);
+
+    var result = operators[operator](lvalue,rvalue);
+
+    if( result ) {
+        return options.fn(this);
+    } else {
+        return options.inverse(this);
+    }
+
+});
+
 Handlebars.registerHelper('formatHours', function(hours) {
     //tomorrow_starts_at_midnight = true;
     //tomorrow_is_24_hours =
@@ -10,7 +56,8 @@ Handlebars.registerHelper('formatHours', function(hours) {
         if (hours[day].length > 0) {
             dayMarker = day.charAt(0);
             dayMarker = dayMarker.toUpperCase();
-            if (dayMarker == 'T' && day.charAt(1) == 'h' || dayMarker == 'S' && day.charAt(1) == 'u') {
+            // Show two characters for Th, Sa, Su
+            if (dayMarker == 'T' && day.charAt(1) == 'h' || dayMarker == 'S' && day.charAt(1) == 'a' || dayMarker == 'S' && day.charAt(1) == 'u') {
                 dayMarker += day.charAt(1);
             }
             formatted[dayMarker] = to12Hour(hours[day]);
@@ -24,31 +71,80 @@ function to12Hour(day) {
     var data = [ day[0][0], day[0][1] ];
     for (var i=0; i<data.length; i++) {
         time = data[i].split(":");
-        if (time[0] > 12) {
-            time[0] -= 12;
-            time[1] += "PM";
+        if(time[0]=="23" & time[1] == "59") {
+            data[i] = "Midnight";
         }
-        else if (time[0] < 1) {
-            time[0] = 12;
-            time[1] += "AM";
+        else if (time[0] =="12" & time[1] =="00") {
+            data[i] = "Noon";
+        }else {
+            if (time[0] > 12) {
+                time[0] -= 12;
+
+                time[1] += "PM";
+            }
+            else if (time[0] < 1) {
+                time[0] = 12;
+                time[1] += "AM";
+            }
+            else {
+                time[1] += "AM";
+            }
+            if (time[1] == "00AM") {
+                data[i] = time[0];
+                data[i] += "AM";
+            } else if (time[1] == "00PM") {
+                data[i] = time[0];
+                data[i] += "PM"
+            }else {
+                data[i] = time.join(":");
+            }
         }
-        else {
-            time[1] += "AM";
-        }
-        data[i] = time.join(":");
     }
-    return data[0] +" - " +data[1];
+    if(data[0]=="12AM" & data[1]=="Midnight") {
+        return "Open 24 Hours";
+    }else {
+        return data[0] +" - " +data[1];
+    }
 }
 
 function sortDays(days) {
     var ordered = [];
-    order = ["M", "T", "W", "Th", "F", "S", "Su"];
+    order = ["M", "T", "W", "Th", "F", "Sa", "Su"];
     $.each(order, function(day) {
         if (days[order[day]]) {
             ordered.push(order[day] +": " +days[order[day]] );
         }
     });
     return ordered;
+}
+
+function default_open_at_filter() {
+    // set the default open_at filter to close to now
+    var weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    var date = new Date();
+    var hour = date.getHours();
+    var min = date.getMinutes();
+
+    if (min < 16) {
+        min = "00";
+    }else if (min < 46) {
+        min = "30";
+    }else {
+        min = "00";
+        hour++;
+    }
+
+    if (hour > 11) {
+        $("#ampm-from").val("PM");
+    }else {
+        $("#ampm-from").val("AM");
+    }
+    if (hour > 12) {
+        hour = hour-12;
+    }
+    hour = ""+hour+":"+min;
+    $("#day-from").val(weekdays[date.getDay()]);
+    $("#hour-from").val(hour);
 }
 
 (function(g){
@@ -72,10 +168,11 @@ function sortDays(days) {
             run_custom_search();
         });
 
+        default_open_at_filter();
+
 	});
 
 })(this);
-
 
 function getSpaceMap(lat, lon) {
 
@@ -86,7 +183,6 @@ function getSpaceMap(lat, lon) {
   if (window.space_longitude) {
     lon = window.space_longitude
   }
-
 
   var mapOptions = {
     zoom: 17,
@@ -116,7 +212,6 @@ function replaceUrls(){
     var url = patt.exec(text);
     if (url != null) {
         text = text.replace(url, "<a href='" + url + "'>" + url + "</a>");
-        alert(text);
         $("#ei_reservation_notes").html(text);
     }
 }

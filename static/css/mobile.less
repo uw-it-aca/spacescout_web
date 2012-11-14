@@ -7,6 +7,20 @@
 @grey_background: #e5e5e5;
 @grey_medium: #aaa;
 
+// retina.less
+// A helper mixin for applying high-resolution background images (http://www.retinajs.com)
+
+.at2x(@path, @w: auto, @h: auto) {
+  background-image: url("@path");
+  @at2x_path: ~`"@{path}".split('.').slice(0, "@{path}".split('.').length - 1).join(".") + "@2x" + "." + "@{path}".split('.')["@{path}".split('.').length - 1]`;
+
+  @media all and (-webkit-min-device-pixel-ratio : 1.5) {
+    background-image: url("@at2x_path");
+    background-size: @w @h;
+  }
+}
+
+
 body {
     background-color: @grey_background;
 }
@@ -28,7 +42,10 @@ button {
 #nav { z-index: 1;
 
     .logo-container { background-color: #ccc; }
-    .logo { height: 50px; line-height: 50px; width: 130px; float:left; background: url('/static/img/spacescout_logo.png') no-repeat 0px 50%; background-size: 95%; position: relative; }
+    .logo { height: 50px; line-height: 50px; width: 130px; float:left; position: relative;
+        .at2x('/static/img/spacescout_logo_mobile.png', 130px, 50px);
+        background-repeat: no-repeat;
+    }
 
     #bubble_desktop { display: none; }
 
@@ -143,7 +160,7 @@ button {
                                 }
                                 li a.active { color: @purple_text; }
                             }
-                            .carousel { background: #f8f8f8 url('/static/img/spinner.gif') no-repeat 50% 50%; background-size: 20px;  margin: 0; min-height: 190px; }
+                            .carousel { background: #f8f8f8 url('/static/img/spinner.gif') no-repeat 50% 50%; background-size: 20px;  margin: 0; min-height: 190px; overflow: hidden; }
                         }
 
                         .map-container { background: #f8f8f8 url('/static/img/spinner.gif') no-repeat 50% 50%; background-size: 20px; }
@@ -250,8 +267,11 @@ button {
 
             li { background-color: #fff; color: #000; list-style: none; margin-bottom: 0px; padding: 10px; border-left:solid 1px @grey_border; border-right:solid 1px @grey_border; border-bottom:solid 1px @grey_border;
 
-                .space-detail-list-image { margin-right: 10px; display: inline-block; width: 100px;
-                        .img { width: 100px; height: 67px; background: #eee url('/static/img/spinner.gif') no-repeat 50% 50%; background-size: 15px; border: solid 1px #fff; }
+                .space-detail-list-image { margin-right: 10px; display: inline-block; width: 100px; height: 67px; border: solid 1px #fff; background: #eee url('/static/img/spinner.gif') no-repeat 50% 50%; background-size: 15px;
+
+                        .img { width: 100px; }
+
+                        .space-detail-list-image-inner { width: 100px; height: 67px; overflow: hidden; }
                     }
 
                 .space-detail-list-item { width: 37%; display: inline-block;
@@ -320,6 +340,7 @@ select {
     border-radius: 2px;
 }
 
+.carousel { overflow: hidden; }
 .carousel-control { top: 50% !important; border: 2px solid #fff; }
 .carousel-inner { position: relative;
     img { max-width: 100% !important; margin: 0 auto; }
@@ -368,7 +389,7 @@ select {
         #info_items {
             ol {
                 li {
-                    .space-detail-list-item { width: 57%; }
+                    .space-detail-list-item { width: 53%; }
                 }
             }
         }
@@ -395,7 +416,7 @@ select {
         #info_items {
             ol {
                 li {
-                    .space-detail-list-item { width: 73%; }
+                    .space-detail-list-item { width: 70%; }
                 }
             }
         }

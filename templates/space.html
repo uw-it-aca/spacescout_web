@@ -36,7 +36,9 @@
                                       <!-- Carousel items -->
                                       <div class="carousel-inner">
                                         {% for image in images %}
-                                        <div class="item"><img src="/space/{{ id }}/image/{{ image.id }}/thumb/500x333" class="img"></div>
+                                        <div class="carousel-inner-image item">
+                                            <div class="carousel-inner-image-inner" style="background:url('/space/{{ id }}/image/{{ image.id }}/thumb/constrain/width:500,height:333') no-repeat 50% 50%; background-size:100%;">&nbsp;</div>
+                                        </div>
                                         {% endfor %}
 
                                       </div>
@@ -136,7 +138,7 @@
                         </div>
 
                         <div class="space-detail-report">
-                            <a href="/contact/"><img src="/static/img/mail.png" />&nbsp;Report a problem with this space</a>
+                            <a href="/contact/{{ id }}/"><img src="/static/img/mail.png" />&nbsp;Report a problem with this space</a>
                         </div>
                         <div class="space-detail-footer">This space was last updated on {{last_modified}} by<br/> {% if organization %}{{ organization }}{%else%}University of Washington Information Technology{% endif %}</div>
                     </div>

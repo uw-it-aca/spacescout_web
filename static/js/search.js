@@ -15,7 +15,7 @@ function openInfoWindow(marker, info) {
     scrollToTop('info_list');
     $('.loading').slideUp('fast');
 
-    lazyLoadSpaceImages();
+    //lazyLoadSpaceImages();
 
 }
 
@@ -50,7 +50,7 @@ function openClusterInfoWindow(cluster, data) {
     scrollToTop('info_list');
     $('.loading').slideUp('fast');
 
-    lazyLoadSpaceImages();
+    //lazyLoadSpaceImages();
 
 }
 
@@ -68,7 +68,23 @@ function openAllMarkerInfoWindow(data) {
     $('#info_items').html(template({'data': data}));
     $('.loading').slideUp('fast');
 
-    lazyLoadSpaceImages();
+    //lazyLoadSpaceImages();
+
+    $(document).ready(function() {
+        if ($.cookie('spot_id') != null) {
+            if ($("#" + $.cookie('spot_id')).parent().prev().prev().children()[1] != null) { // for normal case when there are two before clicked in ol
+                scroll_spot_id = $("#" + $.cookie('spot_id')).parent().prev().prev().children()[1].id;
+                document.getElementById(scroll_spot_id).scrollIntoView();
+            } else if ($("#" + $.cookie('spot_id')).parent().parent().prev().prev()[0] != null) { // if there is an ol before the current one
+                if ($("#" + $.cookie('spot_id')).parent().prev()[0] == null || $("#" + $.cookie('spot_id')).parent().prev().prev()[0] == null) { // if there are two or less spots before the one clicked in the current ol 
+                    scroll_spot_id = $("#" + $.cookie('spot_id')).parent().parent().prev().prev().children().children().last()[0].id;
+                    document.getElementById(scroll_spot_id).scrollIntoView();
+                }
+            }
+            $("#" + $.cookie('spot_id')).click();
+            $.removeCookie('spot_id');
+        }
+    });
 
 }
 
@@ -363,15 +379,14 @@ function run_custom_search() {
         window.spacescout_search_options["extended_info:food_nearby"] = checked;
         set_cookie = true;
     }
-
-    // close space detail if visible (desktop only)
+    
+    // close space detail if visible (desktop)
     if ($('#space_detail_container').is(":visible")) {
         $('#info_items li').removeClass('selected');
         $('.space-detail').hide("slide", { direction: "right" }, 700, function() {
         	   $('#space_detail_container').remove();
         });
     }
-
 
     // show the correct buttons
     $('#filter_button').show();
@@ -401,9 +416,34 @@ function run_custom_search() {
     if (set_cookie) {
         $.cookie('spacescout_search_opts', JSON.stringify(window.spacescout_search_options), { expires: 1 });
     }
+}
 
     // reset the scroll to top of container
     $('#info_list').scrollTop(0);
+
+function fix_filter_overflow() {
+    var old;
+    var outofspace = false;
+    $('#filter_display_list > li').each(function(){
+        if (outofspace) {
+            $(this).hide();
+        }
+        else {
+            oScrollTop = $('#filter_display_list').height();
+            var thisItemIsVisible = ($(this).position().top < oScrollTop);
+            if (!thisItemIsVisible) {
+                $(this).html("...");
+                outofspace = true;
+                thisItemIsVisible = ($(this).position().top < oScrollTop);
+                if (!thisItemIsVisible) {
+                    $(old).html("...");
+                    $(this).hide();
+                }
+            }
+            old = this;
+        }
+    });
+
 }
 
 // TODO: is this used anymore?
@@ -620,6 +660,8 @@ function fetch_data() {
     var template = Handlebars.compile(source);
     $('#bubble_filters_container').html(template(bubble_filters));
 
+    fix_filter_overflow();
+
     var url_args = ["/search/?"];
     for (var key in args) {
         if (typeof(args[key]) == "object") {
@@ -672,5 +714,3 @@ function scrollToTop(id) {
    var template = Handlebars.compile(source);
    $('#map_canvas').append(template(template));
 }
-
-

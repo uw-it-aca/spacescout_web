@@ -1,0 +1,22 @@
+{% extends "base-desktop.html" %}
+
+{% block content %}
+    <div id="nav" style="position:relative;">
+        <div class="clearfix">
+            <div class="logo"><h1 class="visuallyhidden">SPACESCOUT&trade;</h1></div>
+            <div class="actions">
+                <a href='/' title="back"><img id="back_to_space_button" src="/static/img/details_arrow.png" alt="Back"/></button></a>
+            </div>
+        </div>
+    </div>
+
+    <div id="main_content" style="padding: 80px;">
+        <h2 class="contact-header">Page Not Found (404)</h2>
+        <div>
+        <img src="{{ STATIC_URL }}/img/scout.png" />
+        Sorry! Scout couldn't fetch the page at {{ request_path }}.
+        <br />
+        Return to the <a href="/">app</a>, or go to our <a href="http://www.washington.edu/lst/help/spacescout-faq">FAQ</a>.
+        </div>
+    </div>
+{% endblock %}
