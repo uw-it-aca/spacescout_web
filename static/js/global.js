@@ -147,16 +147,21 @@ function default_open_at_filter() {
     $("#hour-from").val(hour);
 }
 
+// Found at http://stackoverflow.com/questions/476679/preloading-images-with-jquery
+function preload(arrayOfImages) {
+    $(arrayOfImages).each(function(){
+        $('<img/>')[0].src = this;
+        // Alternatively you could use:
+        // (new Image()).src = this;
+    });
+}
+
 (function(g){
 
 	$(document).ready(function() {
 
-        $.fn.preload = function() {
-            this.each(function(){
-                $('<img/>')[0].src = this;
-            });
-        }
-        $('/static/img/pins/pin00.png', '/static/img/pins/pin01.png').preload();
+        var pinimgs = ['/static/img/pins/pin00.png', '/static/img/pins/pin01.png'];
+        preload(pinimgs);
 
     	// handle clicking on map centering buttons
         $('#center_all').live('click', function(e){
