@@ -31,6 +31,7 @@ def HomeView(request):
     consumer = oauth2.Consumer(key=settings.SS_WEB_OAUTH_KEY, secret=settings.SS_WEB_OAUTH_SECRET)
     client = oauth2.Client(consumer)
 
+    locations = settings.SS_LOCATIONS
     buildings = json.loads(get_building_json(client))
 
     # This could probably be a template tag, but didn't seem worth it for one-time use
@@ -57,6 +58,7 @@ def HomeView(request):
         'center_latitude': center_latitude,
         'center_longitude': center_longitude,
         'zoom_level': zoom_level,
+        'locations': locations,
         'buildingdict': buildingdict,
         'is_mobile': request.MOBILE,
         'less_not_compiled': less_not_compiled,
