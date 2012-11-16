@@ -7,21 +7,15 @@ from django.utils.datastructures import SortedDict
 
 
 def HomeView(request):
-
-    # Default to zooming in on the UW Seattle campus
-    if hasattr(settings, 'DEFAULT_CENTER_LATITUDE'):
-        center_latitude = settings.DEFAULT_CENTER_LATITUDE
+    # Default to zooming in on the UW Seattle campus if no default location is set
+    if hasattr(settings, 'SS_DEFAULT_LOCATION'):
+        loc = settings.SS_LOCATIONS[settings.SS_DEFAULT_LOCATION]
+        center_latitude = loc['CENTER_LATITUDE']
+        center_longitude = loc['CENTER_LONGITUDE']
+        zoom_level = loc['ZOOM_LEVEL']
     else:
         center_latitude = '47.655003'
-
-    if hasattr(settings, 'DEFAULT_CENTER_LONGITUDE'):
-        center_longitude = settings.DEFAULT_CENTER_LONGITUDE
-    else:
         center_longitude = '-122.306864'
-
-    if hasattr(settings, 'DEFAULT_ZOOM_LEVEL'):
-        zoom_level = settings.DEFAULT_ZOOM_LEVEL
-    else:
         zoom_level = '15'
 
     search_args = {
