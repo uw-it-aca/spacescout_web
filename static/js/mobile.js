@@ -248,7 +248,7 @@
                 mapH = mapH - 150; // give plenty of room to show space list
             }
             else {
-                mapH = mapH - 350; // give plenty of room to show space list
+                mapH = mapH - 380; // give plenty of room to show space list
             }
         }
         else
