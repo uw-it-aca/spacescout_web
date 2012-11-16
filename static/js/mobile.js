@@ -199,6 +199,8 @@
 	// Update dimensions on orientation change
 	$(m).bind('orientationchange', function() {
 
+        landscape = (window.orientation) == 90 || (window.orientation == -90);
+
         setMobileContentHeights();
         resizeCarouselMapContainer();
 
