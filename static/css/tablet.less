@@ -1,6 +1,30 @@
 /* start overriding the mobile styles */
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 748px) {
 
-    #container { min-width:768px; max-width:1024px; margin: 0px; }
+    #container { min-width:748px; max-width:1024px; margin: 0px; }
+
+    #info_list {
+        #info_items {
+            ol {
+                li {
+                    .space-detail-list-item { width: 82%; }
+                }
+            }
+        }
+    }
+
+}
+
+@media screen and (min-width: 1000px) {
+
+    #info_list {
+        #info_items {
+            ol {
+                li {
+                    .space-detail-list-item { width: 87%; }
+                }
+            }
+        }
+    }
 
 }
