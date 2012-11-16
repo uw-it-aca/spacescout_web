@@ -2,8 +2,12 @@
 
     var deviceAgent = navigator.userAgent.toLowerCase();
 
+    // detect ladscape orientation
+    var landscape = (window.orientation) == 90 || (window.orientation == -90);
+
     // detect ios versions
-	var iphone = deviceAgent.match(/(ipad|iphone)/);
+	var iphone = deviceAgent.match(/(iphone)/);
+	var ipad = deviceAgent.match(/(ipad)/);
 	var ios56 = navigator.userAgent.match(/OS [56](_\d)+ like Mac OS X/i);
 
     // detect android versions
@@ -15,7 +19,7 @@
 
 	$(document).ready(function() {
 
-		mobileContent();
+		setMobileContentHeights();
 
 	   // check if a map_canvas exists... populate it
     	if ($("#map_canvas").length == 1) {
@@ -192,18 +196,21 @@
 
 	});
 
-	// Update dimensions on resize
-	$(m).resize(function(){
+	// Update dimensions on orientation change
+	$(m).bind('orientationchange', function() {
 
-	   mobileContent();
-	   resizeCarouselMapContainer();
+        landscape = (window.orientation) == 90 || (window.orientation == -90);
 
-	   if ($('#filter_block').is(":visible")) {
+        setMobileContentHeights();
+        resizeCarouselMapContainer();
+
+        if ($('#filter_block').is(":visible")) {
     	   resizeFilterBlock();
     	   setFilterContainer();
-	   }
+        }
 
-	});
+    });
+
 
 	// set a height for main container and hide any overflowing
 	function setFilterContainer() {
@@ -230,11 +237,24 @@
     }
 
     // Mobile display defaults
-    function mobileContent() {
+    function setMobileContentHeights() {
 
         var windowH = $(window).height();
         var headerH = $('#nav').height();
-        var mapH = windowH - headerH - 50; // enough to show the loading spinner at the bottom of the viewport
+        var mapH = windowH - headerH;
+
+        if (ipad) {
+            if (landscape) {
+                mapH = mapH - 150; // give plenty of room to show space list
+            }
+            else {
+                mapH = mapH - 350; // give plenty of room to show space list
+            }
+        }
+        else
+        {
+            mapH = mapH - 50; // enough to show the loading spinner at the bottom of the viewport
+        }
 
         $('#map_canvas').height(mapH);
         $('#map_canvas').css({ minHeight: mapH })
