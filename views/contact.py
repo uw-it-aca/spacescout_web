@@ -113,7 +113,7 @@ def _contact_variables(request, spot_id):
                     spot_description = params['extended_info']['location_description']
         except urllib2.HTTPError as e:
             spot_id = None
-            print e.code
+            print >> sys.stderr, "E: ", e.code
 
     if request.MOBILE == 1:
         is_mobile = True
