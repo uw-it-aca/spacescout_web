@@ -27,6 +27,7 @@
         {% compress css %}
         <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}libs/bootstrap/css/bootstrap-custom.css" charset="utf-8" />
         <link rel="stylesheet" type="text/less" href="{{ STATIC_URL }}css/mobile.less" media="screen, handheld" />
+        <link rel="stylesheet" type="text/less" href="{{ STATIC_URL }}css/tablet.less" media="screen, handheld" />
         {% endcompress %}
 
         {% block extra_css %}{% endblock %}
@@ -90,7 +91,6 @@
             <script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap/js/bootstrap-carousel.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/markerclusterer.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/handlebars.js"></script>
-            <script type="text/javascript" src="{{ STATIC_URL }}libs/retina.js"></script>
 
             <script type="text/javascript" src="{{ STATIC_URL }}js/global.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}js/search.js"></script>

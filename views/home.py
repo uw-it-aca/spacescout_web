@@ -7,21 +7,15 @@ from django.utils.datastructures import SortedDict
 
 
 def HomeView(request):
-
-    # Default to zooming in on the UW Seattle campus
-    if hasattr(settings, 'DEFAULT_CENTER_LATITUDE'):
-        center_latitude = settings.DEFAULT_CENTER_LATITUDE
+    # Default to zooming in on the UW Seattle campus if no default location is set
+    if hasattr(settings, 'SS_DEFAULT_LOCATION'):
+        loc = settings.SS_LOCATIONS[settings.SS_DEFAULT_LOCATION]
+        center_latitude = loc['CENTER_LATITUDE']
+        center_longitude = loc['CENTER_LONGITUDE']
+        zoom_level = loc['ZOOM_LEVEL']
     else:
         center_latitude = '47.655003'
-
-    if hasattr(settings, 'DEFAULT_CENTER_LONGITUDE'):
-        center_longitude = settings.DEFAULT_CENTER_LONGITUDE
-    else:
         center_longitude = '-122.306864'
-
-    if hasattr(settings, 'DEFAULT_ZOOM_LEVEL'):
-        zoom_level = settings.DEFAULT_ZOOM_LEVEL
-    else:
         zoom_level = '15'
 
     search_args = {
@@ -37,6 +31,7 @@ def HomeView(request):
     consumer = oauth2.Consumer(key=settings.SS_WEB_OAUTH_KEY, secret=settings.SS_WEB_OAUTH_SECRET)
     client = oauth2.Client(consumer)
 
+    locations = settings.SS_LOCATIONS
     buildings = json.loads(get_building_json(client))
 
     # This could probably be a template tag, but didn't seem worth it for one-time use
@@ -63,6 +58,7 @@ def HomeView(request):
         'center_latitude': center_latitude,
         'center_longitude': center_longitude,
         'zoom_level': zoom_level,
+        'locations': locations,
         'buildingdict': buildingdict,
         'is_mobile': request.MOBILE,
         'less_not_compiled': less_not_compiled,

@@ -1,17 +1,29 @@
-{% extends "base-mobile-subpage.html" %}
+{% extends "base-mobile.html" %}
 
 {% block content %}
-    <div style="margin:10px;" class="clearfix">
-        <h2 class="contact-header pull-left" style="width:auto;">Page Not Found (404)</h2>
-        <div class="pull-right" style="display:inline-block;margin-top:8px;"><a href='/' title="back" ><img id="back_to_space_button" src="/static/img/details_arrow.png" alt="Back" /></a></div>
+
+    <div id="nav" style="position:relative;">
+        <div class="clearfix">
+            <div class="logo"><h1 class="visuallyhidden">SPACESCOUT&trade;</h1></div>
+            <div class="actions">
+                <a href='/' title="back"><img id="back_to_space_button" src="/static/img/details_arrow.png" alt="Back"/></button></a>
+            </div>
+        </div>
     </div>
-    <div style="margin:10px; background:#fff;">
-        <div>
+    <div id="main_content">
+
+
+        <div style="padding:10px;">
+        <h2 class="contact-header pull-left" style="width:auto;">Page Not Found (404)</h2>
+
         <img src="{{ STATIC_URL }}/img/scout.png" />
         <br />
         Sorry! Scout couldn't fetch the page at {{ request_path }}.
         <br />
         Return to the <a href="/">app</a>, or go to our <a href="http://www.washington.edu/lst/help/spacescout-faq">FAQ</a>.
+        <div class="space-detail-report">
+            <a href="/contact/"><img src="/static/img/mail.png" />&nbsp;Report a problem with a space</a>
+        </div>
         </div>
     </div>
 {% endblock %}

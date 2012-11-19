@@ -13,7 +13,7 @@
   background-image: e(%("url(%s)", @path));
   @at2x_path: ~`"@{path}".split('.').slice(0, "@{path}".split('.').length - 1).join(".") + "@2x" + "." + "@{path}".split('.')["@{path}".split('.').length - 1]`;
 
-  @media all and (-webkit-min-device-pixel-ratio : 1.5) {
+  @media only screen and (-webkit-min-device-pixel-ratio : 2), only screen and (min--moz-device-pixel-ratio: 2) {
     background-image: e(%("url(%s)", @at2x_path));
     background-size: @w @h;
   }
