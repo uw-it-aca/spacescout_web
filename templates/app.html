@@ -28,7 +28,7 @@
                 <button id="view_results_button" class="btn btn-inverse" type="button" aria-label="Apply Filters">Done</button>
             </div>
 
-            <select>
+            <select id='location_select'>
                 {% for key, value in locations.items %}
                     <option value="{{ value.CENTER_LATITUDE }},{{ value.CENTER_LONGITUDE }}">{{ value.NAME }}</option>
                 {% endfor %}

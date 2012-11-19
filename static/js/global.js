@@ -163,6 +163,16 @@ function preload(arrayOfImages) {
         var pinimgs = ['/static/img/pins/pin00.png', '/static/img/pins/pin01.png'];
         preload(pinimgs);
 
+        // handle changing of the location select
+        $('#location_select').change(function() {
+            window.default_latitude = $(this).val().split(',')[0];
+            window.default_longitude = $(this).val().split(',')[1];
+            // in case a new location gets selected before the map loads
+            if (window.spacescout_map != null) {
+                window.spacescout_map.setCenter(new google.maps.LatLng(window.default_latitude, window.default_longitude));
+            }
+        });
+
     	// handle clicking on map centering buttons
         $('#center_all').live('click', function(e){
 
