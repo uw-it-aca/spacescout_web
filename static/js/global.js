@@ -57,7 +57,6 @@ Handlebars.registerHelper('formatHours', function(hours) {
             $.each(hours[day], function() {
                 this[0] = this[0].replace(/^0+/, '');
                 this[1] = this[1].replace(/^0+/, '');
-                console.log(this);
             });
             dayMarker = day.charAt(0);
             dayMarker = dayMarker.toUpperCase();
