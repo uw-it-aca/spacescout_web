@@ -65,8 +65,47 @@ Handlebars.registerHelper('formatHours', function(hours) {
         }
     });
     formatted = sortDays(formatted);
+    formatted = groupHours(formatted);
     return new Handlebars.SafeString(formatted.join("<br/>"));
 });
+
+function groupHours(days) {
+    var days1 = [];
+    var hours = [];
+    var daycount =0;
+    var hourscount = 0;
+    var final_hours = [];
+    var final_hours_count=0;
+    for(var i=0;i < days.length; i++) {
+        var split = days[i].split(": ");
+        var day = split[0];
+        var hours1 = split[1].split(", ");
+        for(hour in hours1) {
+            days1[daycount]=day;
+            hours[hourscount]= hours1[hour];
+            daycount++;
+            hourscount++;
+        }
+
+    }
+    for(var i=0; i<hours.length; i++) {
+        if (hours[i] != "null" && i != hours.length-1) {
+            for(var j =i+1; j<hours.length; j++) {
+                if(hours[i]==hours[j]) {
+                    days1[i]+= ", "+days1[j];
+                    hours[j]="null";
+                }
+            }
+        }
+    }
+    for(var i=0; i<hours.length; i++) {
+        if( hours[i] != "null") {
+            final_hours[final_hours_count]=days1[i]+": "+ hours[i];
+            final_hours_count++;
+        }
+    }
+    return final_hours;
+}
 
 function to12Hour(day) {
     var retData = [];
