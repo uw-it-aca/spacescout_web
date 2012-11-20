@@ -54,6 +54,11 @@ Handlebars.registerHelper('formatHours', function(hours) {
     var formatted = {};
     $.each(hours, function(day) {
         if (hours[day].length > 0) {
+            $.each(hours[day], function() {
+                this[0] = this[0].replace(/^0+/, '');
+                this[1] = this[1].replace(/^0+/, '');
+                console.log(this);
+            });
             dayMarker = day.charAt(0);
             dayMarker = dayMarker.toUpperCase();
             // Show two characters for Th, Sa, Su
