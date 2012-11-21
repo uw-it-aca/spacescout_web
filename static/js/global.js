@@ -93,8 +93,22 @@ function groupHours(days) {
 
     }
     for(var i=0; i<hours.length; i++) {
+        var hour = hours[i].split(" - ");
+        if(hours[i] != "Open 24 Hours"&& hour[1]=="Midnight") {
+            for( var j=i+1; j<hours.length; j++) {
+                var new_hour=hours[j].split(" - ");
+                if(days[i]!=days[j]&& new_hour[0]=="12AM") {
+                    hour[1]=new_hour[1];
+                    hours[j]="null";
+                }
+            }
+            hours[i]=hour[0]+" - "+ hour[1];
+        }
+    }
+    for(var i=0; i<hours.length; i++) {
         if (hours[i] != "null" && i != hours.length-1) {
             for(var j =i+1; j<hours.length; j++) {
+                
                 if(hours[i]==hours[j]) {
                     days1[i]+= ", "+days1[j];
                     hours[j]="null";
