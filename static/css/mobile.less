@@ -42,7 +42,18 @@ button {
 
 #nav { z-index: 1;
 
-    .logo-container { background-color: #ccc; }
+    .logo-container { background-color: #ccc;
+
+        #location_select {
+            background: yellow;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            color: red;
+            border: none;
+            width: 130px;
+            line-height: 18px;
+        }
+    }
     .logo { height: 50px; line-height: 50px; width: 130px; float:left; position: relative;
         .at2x('/static/img/spacescout_logo_mobile.png', 130px, 50px);
         background-repeat: no-repeat;

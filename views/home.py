@@ -4,9 +4,11 @@ from django.conf import settings
 import oauth2
 import simplejson as json
 from django.utils.datastructures import SortedDict
+from mobility.decorators import mobile_template
 
 
-def HomeView(request):
+@mobile_template('{mobile/}app.html')
+def HomeView(request, template=None):
     # Default to zooming in on the UW Seattle campus if no default location is set
     if hasattr(settings, 'SS_DEFAULT_LOCATION'):
         loc = settings.SS_LOCATIONS[settings.SS_DEFAULT_LOCATION]
@@ -54,7 +56,7 @@ def HomeView(request):
     except:
         ga_tracking_id = None
 
-    return render_to_response('app.html', {
+    return render_to_response(template, {
         'center_latitude': center_latitude,
         'center_longitude': center_longitude,
         'zoom_level': zoom_level,
