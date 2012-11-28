@@ -44,23 +44,27 @@ button {
 
     .logo-container { background-color: #ccc;
 
-        #location_select {
-            background: none;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            color: @purple_text;
-            border: none;
-            line-height: 18px;
-            position: absolute;
-            bottom: 5px;
-            right: 0;
-            margin: 0;
-            padding: 0;
+        .logo { height: 50px; line-height: 50px; width: 130px; float:left; position: relative;
+
+            .at2x('/static/img/spacescout_new.png', 130px, 50px);
+            background-repeat: no-repeat;
+            background-position: 0 50%;
+
+            #location_select {
+                background: none;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                color: @purple_text;
+                border: none;
+                line-height: 18px;
+                position: absolute;
+                bottom: 5px;
+                margin: 0;
+                padding: 0;
+                left: 63px;
+                width: 140px;
+            }
         }
-    }
-    .logo { height: 50px; line-height: 50px; width: 130px; float:left; position: relative;
-        .at2x('/static/img/spacescout_logo_mobile.png', 130px, 50px);
-        background-repeat: no-repeat;
     }
 
     #bubble_desktop { display: none; }

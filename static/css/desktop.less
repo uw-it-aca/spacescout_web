@@ -26,29 +26,32 @@
 
 #nav { z-index: 1000;
 
-    .logo-container { background-color: transparent; }
+
+    .logo-container { background-color: transparent;
+
+        .logo { height: 80px; line-height: 80px; width: 284px; position: relative;
+            .at2x('/static/img/spacescout_new.png', 284px, 62px);
+            background-repeat: no-repeat;
+            background-position: 0 50%;
+         }
+    }
 
 
-     .logo { height: 80px; line-height: 80px; width: 284px; position: relative;
-        .at2x('/static/img/spacescout_new.png', 284px, 62px);
-        background-position: 0 50%;
-     }
+    #bubble_desktop { margin: 0; display: block; float: right; height: 80px; margin-right: 15px; width: 40% }
+    .bubble-inner { margin-top: 9px; height: 60px;
 
-      #bubble_desktop { margin: 0; display: block; float: right; height: 80px; margin-right: 15px; width: 40% }
-      .bubble-inner { margin-top: 9px; height: 60px;
-
-          .bubble-tab { top: 22px; right: -15px; background: transparent url('/static/img/tri-right.png') no-repeat; }
-          .bubble-filters { width: 79%; height: 60px;
-              ul { height: 56px; overflow: hidden; height: 56px; }
-          }
-          .bubble-info { height:60px; width: 60px;
-              .count { font-size: 25px; margin-top: 6px; }
-          }
+      .bubble-tab { top: 22px; right: -15px; background: transparent url('/static/img/tri-right.png') no-repeat; }
+      .bubble-filters { width: 79%; height: 60px;
+          ul { height: 56px; overflow: hidden; height: 56px; }
       }
+      .bubble-info { height:60px; width: 60px;
+          .count { font-size: 25px; margin-top: 6px; }
+      }
+    }
 
-      .actions { line-height: 80px; height: 80px; }
+    .actions { line-height: 80px; height: 80px; }
 
-      #bubble_mobile { display: none; }
+    #bubble_mobile { display: none; }
 }
 
 #filter_container {
