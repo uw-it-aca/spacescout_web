@@ -80,6 +80,7 @@ function groupHours(days) {
     var hourscount = 0;
     var final_hours = [];
     var final_hours_count=0;
+    
     for(var i=0;i < days.length; i++) {
         var split = days[i].split(": ");
         var day = split[0];
@@ -92,19 +93,48 @@ function groupHours(days) {
         }
 
     }
+    
     for(var i=0; i<hours.length; i++) {
         var hour = hours[i].split(" - ");
+        
         if(hours[i] != "Open 24 Hours"&& hour[1]=="Midnight") {
-            for( var j=i+1; j<hours.length; j++) {
-                var new_hour=hours[j].split(" - ");
-                if(days[i]!=days[j]&& new_hour[0]=="12AM") {
-                    hour[1]=new_hour[1];
-                    hours[j]="null";
+            var next_day = "null";
+            if(i != hours.length-1) {
+                for( var j=i+1; j<hours.length; j++) {
+                    var new_hour=hours[j].split(" - ");
+                    if (next_day != "null" && days1[j]!=next_day) {
+                        break;
+                    }
+                    if (next_day =="null" && days1[i]!=days1[j]) {
+                        next_day=days1[j];
+                    }
+                    if(days1[i]!=days1[j]&& new_hour[0]=="12AM") {
+                        hour[1]=new_hour[1];
+                        hours[j]="null";
+                        break;
+                    }
                 }
+                hours[i]=hour[0]+" - "+ hour[1];
+            }else {
+                for( var j=0; j<hours.length; j++) {
+                    var new_hour=hours[j].split(" - ");
+                    if (next_day != "null" && days1[j]!=next_day) {
+                        break;
+                    }
+                    if (next_day =="null" && days1[i]!=days1[j]) {
+                        next_day=days1[j];
+                    }
+                    if(days1[i]!=days1[j]&& new_hour[0]=="12AM") {
+                        hour[1]=new_hour[1];
+                        hours[j]="null";
+                        break;
+                    }
+                }
+                hours[i]=hour[0]+" - "+ hour[1];
             }
-            hours[i]=hour[0]+" - "+ hour[1];
         }
     }
+    
     for(var i=0; i<hours.length; i++) {
         if (hours[i] != "null" && i != hours.length-1) {
             for(var j =i+1; j<hours.length; j++) {
