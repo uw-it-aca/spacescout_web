@@ -76,6 +76,7 @@ Handlebars.registerHelper('formatHours', function(hours) {
 function groupHours(days) {
     var days1 = [];
     var hours = [];
+    var days2 = [];
     var daycount =0;
     var hourscount = 0;
     var final_hours = [];
@@ -87,6 +88,21 @@ function groupHours(days) {
         var hours1 = split[1].split(", ");
         for(hour in hours1) {
             days1[daycount]=day;
+            if(day == "M") {
+                days2[daycount]=0; 
+            }else if(day == "T") {
+                days2[daycount]=1; 
+            }else if(day == "W") {
+                days2[daycount]=2;
+            }else if(day == "Th") {
+                days2[daycount]=3;
+            }else if(day == "F") {
+                days2[daycount]=4;
+            }else if(day == "Sa") {
+                days2[daycount]=5;
+            }else if(day == "Su") {
+                days2[daycount]=6;
+            }
             hours[hourscount]= hours1[hour];
             daycount++;
             hourscount++;
@@ -102,29 +118,23 @@ function groupHours(days) {
             if(i != hours.length-1) {
                 for( var j=i+1; j<hours.length; j++) {
                     var new_hour=hours[j].split(" - ");
-                    if (next_day != "null" && days1[j]!=next_day) {
+                    if((days2[j]-days2[i])> 1) {
                         break;
                     }
-                    if (next_day =="null" && days1[i]!=days1[j]) {
-                        next_day=days1[j];
-                    }
-                    if(days1[i]!=days1[j]&& new_hour[0]=="12AM") {
+                    if((days2[j]-days2[i])== 1 && new_hour[0]=="12AM") {
                         hour[1]=new_hour[1];
                         hours[j]="null";
                         break;
                     }
                 }
                 hours[i]=hour[0]+" - "+ hour[1];
-            }else {
+            }else if( days1[i] == "Su") {
                 for( var j=0; j<hours.length; j++) {
                     var new_hour=hours[j].split(" - ");
-                    if (next_day != "null" && days1[j]!=next_day) {
+                    if((days2[j]-days2[i])!= -6) {
                         break;
                     }
-                    if (next_day =="null" && days1[i]!=days1[j]) {
-                        next_day=days1[j];
-                    }
-                    if(days1[i]!=days1[j]&& new_hour[0]=="12AM") {
+                    if((days2[j]-days2[i])==-6 && new_hour[0]=="12AM") {   
                         hour[1]=new_hour[1];
                         hours[j]="null";
                         break;
