@@ -91,7 +91,9 @@ button {
         }
 
 
-        #filter_button { background:#514d83 url('/static/img/down.png') no-repeat 8px 50%; display:inline-block; color: #8987ab; width: 30px; text-indent: -999px;  }
+        #filter_button { background:#514d83; .at2x('/static/img/down.png', 16px, 9px);  background-repeat:no-repeat; background-position: 8px 50%; display:inline-block; color: #8987ab; width: 30px; text-indent: -999px;
+        
+          }
         #done-clear-group { display:none;}
         #view_results_button { background:#514d83 url('/static/img/check.png') no-repeat 10px 50%; display: none; color: #8987ab; width: 30px; text-indent: -999px;  margin-bottom: 5px;}
         #cancel_results_button { background: #e4e4e4 url('/static/img/cross.png') no-repeat 10px 50%; display: none; color: #646464; width: 30px; text-indent: -999px; }
