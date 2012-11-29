@@ -390,6 +390,7 @@ function run_custom_search() {
 
     // show the correct buttons
     $('#filter_button').show();
+    $('#space_count_container').show();
     $('#view_results_button').hide();
     $('#cancel_results_button').hide();
 

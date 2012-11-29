@@ -78,13 +78,18 @@ button {
                 li { display: inline-block; background-color: #eee; padding: 2px 5px; margin-bottom: 4px; font-size: 11px; }
             }
         }
-        .bubble-info { width: 50px; height:32px; background: #e5e5e5 url('/static/img/spinner.gif') no-repeat 50% 50%; background-size: 15px;
+        .bubble-info { width: 50px; height:32px; background: #e5e5e5 url('/static/img/spinner.gif') no-repeat 50% 50%; background-size: 15px; 
             .count { display: block; padding: 4px; text-align: center; font-weight: bold; color: @purple_text; font-size: 20px; margin-top: 1px; background-color: #e5e5e5; }
             .spaces { display: block; text-align: center; font-size: 11px; text-transform: uppercase; color: @grey_light; background-color: #e5e5e5; }
         }
     }
 
     .actions { width: auto; float: right; text-align: right; height: 50px;  margin: 5px 10px 5px 0;
+    .bubble-info { width: 84px; height:32px; background: #e5e5e5 url('/static/img/spinner.gif') no-repeat 50% 50%; background-size: 15px; 
+            .count { display: block; padding: 0px; text-align: center; font-weight: bold; color: @purple_text; font-size: 20px; margin-top: 1px; background-color: #e5e5e5; line-height: 20px; }
+            .spaces { display: block; text-align: center; font-size: 10px; text-transform: uppercase; color: @grey_light; background-color: #e5e5e5; line-height: 10px; }
+        }
+
 
         #filter_button { background:#514d83 url('/static/img/down.png') no-repeat 8px 50%; display:inline-block; color: #8987ab; width: 30px; text-indent: -999px;  }
         #done-clear-group { display:none;}

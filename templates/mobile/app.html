@@ -32,6 +32,12 @@
             <div aria-labelledby="filter_group_header">
                 <div class="actions">
                     <button id="filter_button" class="btn btn-inverse" type="button" aria-label="Filter settings..." aria-owns="filter_container" >Filters</button>
+                    <div id="space_count_container" class="bubble-info" style="">
+						{% tplhandlebars "space_count" %}
+                			<span class="count">{{count}}</span><span class="spaces">spaces</span>
+                		{% endtplhandlebars %}
+                	</div>
+            
                     <div id="done-clear-group">
                     <button id="view_results_button" class="btn btn-inverse" type="button" aria-label="Apply Filters">Done</button><br>
                     <button id="cancel_results_button" class="btn" type="button" aria-label="Clear Filters">Clear</button>
@@ -39,12 +45,7 @@
                    
                 </div>
             </div>
-		<!--	<div id="space_count_container" class="pull-right bubble-info" style=""></div>
-
-                {% tplhandlebars "space_count" %}
-                <span class="count">{{count}}</span>
-                {% endtplhandlebars %}
-            </div>-->
+		<!--	-->
 
             <h2 id="filter_group_header" class="visuallyhidden">Space Filters</h2>
             
