@@ -75,7 +75,7 @@
 
             // show the correct buttons
             $('#filter_button').hide();
-            $('#space_count_container').hide();
+            //$('#space_count_container').hide();
             $('#done-clear-group').show();
             $('#view_results_button').show();
             $('#cancel_results_button').show();

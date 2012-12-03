@@ -15,8 +15,6 @@ function openInfoWindow(marker, info) {
     scrollToTop('info_list');
     $('.loading').slideUp('fast');
 
-    //lazyLoadSpaceImages();
-
 }
 
 function addMarkerListener(marker, data) {
@@ -50,8 +48,6 @@ function openClusterInfoWindow(cluster, data) {
     scrollToTop('info_list');
     $('.loading').slideUp('fast');
 
-    //lazyLoadSpaceImages();
-
 }
 
 function addClusterListener(markerCluster, data) {
@@ -76,7 +72,7 @@ function openAllMarkerInfoWindow(data) {
                 scroll_spot_id = $("#" + $.cookie('spot_id')).parent().prev().prev().children()[1].id;
                 document.getElementById(scroll_spot_id).scrollIntoView();
             } else if ($("#" + $.cookie('spot_id')).parent().parent().prev().prev()[0] != null) { // if there is an ol before the current one
-                if ($("#" + $.cookie('spot_id')).parent().prev()[0] == null || $("#" + $.cookie('spot_id')).parent().prev().prev()[0] == null) { // if there are two or less spots before the one clicked in the current ol 
+                if ($("#" + $.cookie('spot_id')).parent().prev()[0] == null || $("#" + $.cookie('spot_id')).parent().prev().prev()[0] == null) { // if there are two or less spots before the one clicked in the current ol
                     scroll_spot_id = $("#" + $.cookie('spot_id')).parent().parent().prev().prev().children().children().last()[0].id;
                     document.getElementById(scroll_spot_id).scrollIntoView();
                 }
@@ -379,7 +375,7 @@ function run_custom_search() {
         window.spacescout_search_options["extended_info:food_nearby"] = checked;
         set_cookie = true;
     }
-    
+
     // close space detail if visible (desktop)
     if ($('#space_detail_container').is(":visible")) {
         $('#info_items li').removeClass('selected');

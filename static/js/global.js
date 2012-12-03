@@ -64,7 +64,7 @@ Handlebars.registerHelper('formatHours', function(hours) {
             if (dayMarker == 'T' && day.charAt(1) == 'h' || dayMarker == 'S' && day.charAt(1) == 'a' || dayMarker == 'S' && day.charAt(1) == 'u') {
                 dayMarker += day.charAt(1);
             }
-            
+
             formatted[dayMarker] = to12Hour(hours[day]).join(", ");
         }
     });
@@ -81,7 +81,7 @@ function groupHours(days) {
     var hourscount = 0;
     var final_hours = [];
     var final_hours_count=0;
-    
+
     for(var i=0;i < days.length; i++) {
         var split = days[i].split(": ");
         var day = split[0];
@@ -89,9 +89,9 @@ function groupHours(days) {
         for(hour in hours1) {
             days1[daycount]=day;
             if(day == "M") {
-                days2[daycount]=0; 
+                days2[daycount]=0;
             }else if(day == "T") {
-                days2[daycount]=1; 
+                days2[daycount]=1;
             }else if(day == "W") {
                 days2[daycount]=2;
             }else if(day == "Th") {
@@ -109,10 +109,10 @@ function groupHours(days) {
         }
 
     }
-    
+
     for(var i=0; i<hours.length; i++) {
         var hour = hours[i].split(" - ");
-        
+
         if(hours[i] != "Open 24 Hours"&& hour[1]=="Midnight") {
             var next_day = "null";
             if(i != hours.length-1) {
@@ -134,7 +134,7 @@ function groupHours(days) {
                     if((days2[j]-days2[i])!= -6) {
                         break;
                     }
-                    if((days2[j]-days2[i])==-6 && new_hour[0]=="12AM") {   
+                    if((days2[j]-days2[i])==-6 && new_hour[0]=="12AM") {
                         hour[1]=new_hour[1];
                         hours[j]="null";
                         break;
@@ -144,11 +144,11 @@ function groupHours(days) {
             }
         }
     }
-    
+
     for(var i=0; i<hours.length; i++) {
         if (hours[i] != "null" && i != hours.length-1) {
             for(var j =i+1; j<hours.length; j++) {
-                
+
                 if(hours[i]==hours[j]) {
                     days1[i]+= ", "+days1[j];
                     hours[j]="null";
