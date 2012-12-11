@@ -68,6 +68,7 @@ def HomeView(request, template=None):
     }, context_instance=RequestContext(request))
 
 
+#TODO: use the new buildings view instead
 def get_building_json(client):
     url = "{0}/api/v1/buildings".format(settings.SS_WEB_SERVER_HOST)
     resp, content = client.request(url, 'GET')
