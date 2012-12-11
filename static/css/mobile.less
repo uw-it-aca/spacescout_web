@@ -38,29 +38,34 @@ button {
     border-color: #3e3e3e !important;
 }
 
-#container { max-width: 768px; margin: 0 auto; position: relative; }
+#container { margin: 0 auto; position: relative; }
 
 #nav { z-index: 1;
 
     .logo-container { background-color: #ccc;
 
-        #location_select {
-            background: none;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            color: @purple_text;
-            border: none;
-            line-height: 18px;
-            position: absolute;
-            bottom: 5px;
-            right: 0;
-            margin: 0;
-            padding: 0;
+        .logo { height: 75px; line-height: 70px; width: 200px; float:left; position: relative;
+
+            .at2x('/static/img/spacescout_mobile_new.png', 189px, 42px);
+            background-repeat: no-repeat;
+            background-position: 10px 50%;
+
+            #location_select {
+                background: #c2c2c2 url('/static/img/drop-arrow.png') no-repeat 98% 50%;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                color: @purple_text;
+                border: none;
+                height: 20px;
+                line-height: 20px;
+                position: absolute;
+                bottom: 5px;
+                margin: 0;
+                padding: 0 7px;
+                right: 3px;
+                width: 135px;
+            }
         }
-    }
-    .logo { height: 50px; line-height: 50px; width: 130px; float:left; position: relative;
-        .at2x('/static/img/spacescout_logo_mobile.png', 130px, 50px);
-        background-repeat: no-repeat;
     }
 
     #bubble_desktop { display: none; }
@@ -79,11 +84,19 @@ button {
         }
     }
 
-    .actions { width: auto; float: right; text-align: right; height: 50px; line-height: 50px; margin-right: 10px;
+    .actions { width: auto; float: right; text-align: right; height: 50px;  margin: 5px 10px 5px 0;
+    .bubble-info { width: 84px; height:32px; background: #e5e5e5 url('/static/img/spinner.gif') no-repeat 50% 50%; background-size: 15px;
+            .count { display: block; padding: 0px; text-align: center; font-weight: bold; color: @purple_text; font-size: 20px; margin-top: 1px; background-color: #e5e5e5; line-height: 20px; }
+            .spaces { display: block; text-align: center; font-size: 10px; text-transform: uppercase; color: @grey_light; background-color: #e5e5e5; line-height: 10px; }
+        }
 
-        #filter_button { background:#514d83 url('/static/img/down.png') no-repeat 8px 50%; display:inline-block; color: #8987ab; width: 30px; text-indent: -999px; }
-        #view_results_button { background:#514d83 url('/static/img/check.png') no-repeat 10px 50%; display: none; color: #8987ab; width: 30px; text-indent: -999px; }
-        #cancel_results_button { background: #e4e4e4 url('/static/img/cross.png') no-repeat 10px 50%; display: none; color: #646464; width: 30px; text-indent: -999px; }
+
+        #filter_button { background:#514d83; .at2x('/static/img/down.png', 16px, 9px);  background-repeat:no-repeat; background-position: 8px 50%; display:inline-block; color: #8987ab; width: 30px; text-indent: -999px;
+
+          }
+        #done-clear-group { display:none;}
+        #view_results_button { background:#514d83; .at2x('/static/img/check.png', 13px, 9px); background-repeat: no-repeat; background-position: 10px 50%; display: none; color: #8987ab; width: 30px; text-indent: -999px;  margin-bottom: 5px;}
+        #cancel_results_button { background: #e4e4e4;  .at2x('/static/img/cross.png', 8px, 9px); background-repeat:no-repeat; background-position: 10px 50%; display: none; color: #646464; width: 30px; text-indent: -999px; }
 
         #back_home_button { background:#514d83 url('/static/img/left.png') no-repeat 8px 50%; display:inline-block; color: #8987ab; width: 30px; text-indent: -999px; }
     }
@@ -92,7 +105,32 @@ button {
 
 #filter_container { position: relative; margin: 0 10px 11px 10px;
 
+
     #filter_block { display:none; background-color:#222; color: @grey_medium; overflow-y: auto; -webkit-overflow-scrolling: touch;
+    .bubble-inner { background-color:#fff; border: solid 1px @grey_border;
+
+      //  .bubble-tab { width:15px; background: transparent url('/static/img/tri-up.png') no-repeat; position:absolute; top: -7px; right: 15px; text-indent: -9999px; }
+        .bubble-filters { width: 90%; background: #fff url('/static/img/spinner.gif') no-repeat 50% 50%; background-size: 15px;
+            ul { list-style: none; margin: 0; margin-left: 4px; margin-top: 4px; height: 28px; overflow: hidden; background-color: #fff;
+                li { display: inline-block; background-color: #eee; padding: 2px 5px; margin-bottom: 4px; font-size: 11px; }
+            }
+        }
+        .bubble-info { width: 50px; height:32px; background: #e5e5e5 url('/static/img/spinner.gif') no-repeat 50% 50%; background-size: 15px;
+            .count { display: block; padding: 4px; text-align: center; font-weight: bold; color: @purple_text; font-size: 20px; margin-top: 1px; background-color: #e5e5e5; }
+            .spaces { display: block; text-align: center; font-size: 11px; text-transform: uppercase; color: @grey_light; background-color: #e5e5e5; }
+        }
+    }
+
+    .actions { width: auto; float: right; text-align: right; height: 50px; line-height: 50px; margin-right: 10px;
+
+        #filter_button { background:#514d83 url('/static/img/down.png') no-repeat 8px 50%; display:inline-block; color: #8987ab; width: 30px; text-indent: -999px; }
+        #view_results_button { background:#514d83 url('/static/img/check.png') no-repeat 10px 50%; display: none; color: #8987ab; width: 30px; text-indent: -999px; }
+        #cancel_results_button { background: #e4e4e4 url('/static/img/cross.png') no-repeat 10px 50%; display: none; color: #646464; width: 30px; text-indent: -999px; }
+
+        #back_home_button { background:#514d83 url('/static/img/left.png') no-repeat 8px 50%; display:inline-block; color: #8987ab; width: 30px; text-indent: -999px; }
+    }
+    #bubble_mobile {  margin: -5px 0px 5px 0px; }
+
 
         .inner { padding: 15px; }
 

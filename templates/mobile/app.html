@@ -29,45 +29,29 @@
                 </select>
                 {% endifnotequal %}
             </div>
-
-            <h2 id="filter_group_header" class="visuallyhidden">Space Filters</h2>
             <div aria-labelledby="filter_group_header">
                 <div class="actions">
                     <button id="filter_button" class="btn btn-inverse" type="button" aria-label="Filter settings..." aria-owns="filter_container" >Filters</button>
+
+                    <h3 id="spaces_match_header" class="visuallyhidden">Your current filters return:</h3>
+
+                    <div id="space_count_container" aria-labelledby="spaces_match_header"></div>
+
+					{% tplhandlebars "space_count" %}
+            			<span class="count">{{count}}</span><span class="spaces">spaces</span>
+            		{% endtplhandlebars %}
+
+                    <div id="done-clear-group">
+                    <button id="view_results_button" class="btn btn-inverse" type="button" aria-label="Apply Filters">Done</button><br>
                     <button id="cancel_results_button" class="btn" type="button" aria-label="Clear Filters">Clear</button>
-                    <button id="view_results_button" class="btn btn-inverse" type="button" aria-label="Apply Filters">Done</button>
+                    </div>
+
                 </div>
             </div>
+
+            <h2 id="filter_group_header" class="visuallyhidden">Space Filters</h2>
+
         </div>
-
-        <div id="bubble_mobile">
-            <div class="bubble-inner clearfix" style="position:relative;">
-                <div class="bubble-tab" style="">tab</div>
-                <div id="bubble_filters_container" class="bubble-filters pull-left" ></div>
-
-                {% tplhandlebars "filter_list" %}
-                <ul id='filter_display_list'>
-                    {{#if open_at}}<li>specific time</li>{{else}}<li>open now</li>{{/if}}
-                    {{#if building_name}}<li>specific building</li>{{else}}<li>entire campus</li>{{/if}}
-                    {{#if space_type}}<li>type of space</li>{{/if}}
-                    {{#if true_capacity}}<li>seats {{capacity}}</li>{{/if}}
-                    {{#if reservable}}<li>reservable</li>{{/if}}
-                    {{#if noise}}<li>noise level</li>{{/if}}
-                    {{#if lighting}}<li>natural light</li>{{/if}}
-                    {{#if resources}}<li>resources</li>{{/if}}
-                    {{#if food}}<li>food/coffee</li>{{/if}}
-                </ul>
-                {% endtplhandlebars %}
-
-
-                <div id="space_count_container" class="pull-right bubble-info" style=""></div>
-
-                {% tplhandlebars "space_count" %}
-                <span class="count">{{count}}</span>
-                {% endtplhandlebars %}
-            </div>
-        </div>
-
 
     </div>
     <h3 id="filters_header" class="visuallyhidden">Filter By:</h3>
@@ -78,6 +62,27 @@
 
                     <div class="inner-column">
                         <div class="inner-block-left">
+                        	<div id="bubble_mobile">
+            					<div class="bubble-inner clearfix" style="position:relative;">
+
+                					<div id="bubble_filters_container" class="bubble-filters pull-left" ></div>
+
+               							 {% tplhandlebars "filter_list" %}
+              							  <ul id='filter_display_list'>
+           						         {{#if open_at}}<li>specific time</li>{{else}}<li>open now</li>{{/if}}
+                 					   	 {{#if building_name}}<li>specific building</li>{{else}}<li>entire campus</li>{{/if}}
+					                     {{#if space_type}}<li>type of space</li>{{/if}}
+                    					 {{#if true_capacity}}<li>seats {{capacity}}</li>{{/if}}
+                    					 {{#if reservable}}<li>reservable</li>{{/if}}
+                    					 {{#if noise}}<li>noise level</li>{{/if}}
+                    					 {{#if lighting}}<li>natural light</li>{{/if}}
+                    					 {{#if resources}}<li>resources</li>{{/if}}
+                    					 {{#if food}}<li>food/coffee</li>{{/if}}
+                						 </ul>
+                						{% endtplhandlebars %}
+                        			</div>
+								 </div>
+
                             <h4>Type &amp; Capacity</h4>
                             <p><small><em>Select preferred types of space, if any:</em></small></p>
 
