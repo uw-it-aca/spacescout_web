@@ -1,4 +1,4 @@
-var detailsLat, detailsLon;
+var detailsLat, detailsLon, default_location;
 var requests = new Array();
 
 // Handlebars helpers

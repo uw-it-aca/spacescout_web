@@ -15,6 +15,8 @@ def HomeView(request, template=None):
         center_latitude = loc['CENTER_LATITUDE']
         center_longitude = loc['CENTER_LONGITUDE']
         zoom_level = loc['ZOOM_LEVEL']
+        default_location = settings.SS_DEFAULT_LOCATION
+        locations = settings.SS_LOCATIONS
     else:
         center_latitude = '47.655003'
         center_longitude = '-122.306864'
@@ -33,10 +35,10 @@ def HomeView(request, template=None):
     consumer = oauth2.Consumer(key=settings.SS_WEB_OAUTH_KEY, secret=settings.SS_WEB_OAUTH_SECRET)
     client = oauth2.Client(consumer)
 
-    locations = settings.SS_LOCATIONS
     buildings = json.loads(get_building_json(client))
 
     # This could probably be a template tag, but didn't seem worth it for one-time use
+    #TODO: hey, actually it's probably going to be a Handlebars helper and template
     buildingdict = SortedDict()
     for building in buildings:
         if not building[0] in buildingdict.keys():  # building[0] is the first letter of the string
@@ -56,16 +58,19 @@ def HomeView(request, template=None):
     except:
         ga_tracking_id = None
 
-    return render_to_response(template, {
+    params = {
         'center_latitude': center_latitude,
         'center_longitude': center_longitude,
         'zoom_level': zoom_level,
         'locations': locations,
+        'default_location': default_location,
         'buildingdict': buildingdict,
         'is_mobile': request.MOBILE,
         'less_not_compiled': less_not_compiled,
         'ga_tracking_id': ga_tracking_id,
-    }, context_instance=RequestContext(request))
+    }
+
+    return render_to_response(template, params, context_instance=RequestContext(request))
 
 
 #TODO: use the new buildings view instead

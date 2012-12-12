@@ -8,6 +8,9 @@
     window.default_latitude = {{ center_latitude }};
     window.default_longitude = {{ center_longitude }};
     window.default_zoom = {{ zoom_level }};
+    {% if default_location %}
+    window.default_location = '{{ default_location }}';
+    {% endif %}
 </script>
 {% endblock %}
 
@@ -272,6 +275,7 @@
                         <div id="building_list_container" style="margin-top:8px;display:none;">
                         <label class="visuallyhidden" for="e9">Choose a buiding:</label>
                             <select class="building-location" name="e9" id="e9">
+                                <!-- replace w/ Handlebars helper -->
                                 {% for letter, buildings in buildingdict.items %}
                                 <optgroup label="{{ letter }}">
                                     {% for building in buildings%}
