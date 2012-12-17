@@ -10,6 +10,8 @@
     window.default_zoom = {{ zoom_level }};
     {% if default_location %}
     window.default_location = '{{ default_location }}';
+    {% else %}
+    window.default_location = null;
     {% endif %}
 </script>
 {% endblock %}
@@ -273,9 +275,9 @@
                             </label>
                         </div>
                         <div id="building_list_container" style="margin-top:8px;display:none;">
+                        <!-- replace w/ Handlebars helper
                         <label class="visuallyhidden" for="e9">Choose a buiding:</label>
                             <select class="building-location" name="e9" id="e9">
-                                <!-- replace w/ Handlebars helper -->
                                 {% for letter, buildings in buildingdict.items %}
                                 <optgroup label="{{ letter }}">
                                     {% for building in buildings%}
@@ -284,8 +286,17 @@
                                 </optgroup>
                                 {% endfor %}
                             </select>
+                            -->
 
                         </div>
+                        {% tplhandlebars "building_list" %}
+                        <label class="visuallyhidden" for="e9">Choose a buiding:</label>
+                            <select class="building-location" name="e9" id="e9">
+                            {{#each data}}
+                                <option value="{{this}}">{{this}}</option>
+                            {{/each}}
+                            </select>
+                        {% endtplhandlebars %}
 
                     </div>
 

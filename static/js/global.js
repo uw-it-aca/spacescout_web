@@ -1,4 +1,4 @@
-var detailsLat, detailsLon, default_location;
+var detailsLat, detailsLon;
 var requests = new Array();
 
 // Handlebars helpers
@@ -249,6 +249,13 @@ function default_open_at_filter() {
     $("#hour-from").val(hour);
 }
 
+function format_location_filter(data) {
+    var source = $('#building_list').html();
+    var template = Handlebars.compile(source);
+    //data = new String(data);
+    $('#building_list_container').html(template({data: data}));
+}
+
 // Found at http://stackoverflow.com/questions/476679/preloading-images-with-jquery
 function preload(arrayOfImages) {
     $(arrayOfImages).each(function(){
@@ -283,6 +290,16 @@ function preload(arrayOfImages) {
                 window.spacescout_map.setZoom(window.default_zoom);
             }
             window.spacescout_map.setCenter(new google.maps.LatLng(window.default_latitude, window.default_longitude));
+        });
+
+        // populate the location filter list
+        url = '/buildings';
+        if (window.default_location != null) {
+            url = url + '?campus=' + window.default_location;
+        }
+        $.ajax({
+            url: url,
+            success: format_location_filter
         });
 
         // handle clicking on the "done" button for filters
