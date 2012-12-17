@@ -256,6 +256,19 @@ function format_location_filter(data) {
     $('#building_list_container').html(template({data: data}));
 }
 
+function get_location_buildings() {
+    // populate the location filter list
+    url = '/buildings';
+    if (window.default_location != null) {
+        url = url + '?campus=' + window.default_location;
+    }
+    $.ajax({
+        url: url,
+        success: format_location_filter
+    });
+
+}
+
 // Found at http://stackoverflow.com/questions/476679/preloading-images-with-jquery
 function preload(arrayOfImages) {
     $(arrayOfImages).each(function(){
@@ -276,10 +289,12 @@ function preload(arrayOfImages) {
         $('#location_select').change(function() {
             window.default_latitude = $(this).val().split(',')[0];
             window.default_longitude = $(this).val().split(',')[1];
+            window.default_location = $(this).val().split(',')[2];
             // in case a new location gets selected before the map loads
             if (window.spacescout_map != null) {
                 window.spacescout_map.setCenter(new google.maps.LatLng(window.default_latitude, window.default_longitude));
             }
+            get_location_buildings();
         });
 
     	// handle clicking on map centering buttons
@@ -292,15 +307,7 @@ function preload(arrayOfImages) {
             window.spacescout_map.setCenter(new google.maps.LatLng(window.default_latitude, window.default_longitude));
         });
 
-        // populate the location filter list
-        url = '/buildings';
-        if (window.default_location != null) {
-            url = url + '?campus=' + window.default_location;
-        }
-        $.ajax({
-            url: url,
-            success: format_location_filter
-        });
+        get_location_buildings();
 
         // handle clicking on the "done" button for filters
         $("#view_results_button").click(function() {
