@@ -8,11 +8,12 @@
     window.default_latitude = {{ center_latitude }};
     window.default_longitude = {{ center_longitude }};
     window.default_zoom = {{ zoom_level }};
-    {% if default_location %}
-    window.default_location = '{{ default_location }}';
-    {% else %}
     window.default_location = null;
-    {% endif %}
+    if ($.cookie('default_location')) {
+        window.default_latitude = $.cookie('default_location').split(',')[0];
+        window.default_longitude = $.cookie('default_location').split(',')[1];
+        window.default_location = $.cookie('default_location').split(',')[2];
+    }
 </script>
 {% endblock %}
 

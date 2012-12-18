@@ -291,6 +291,10 @@ function preload(arrayOfImages) {
         var pinimgs = ['/static/img/pins/pin00.png', '/static/img/pins/pin01.png'];
         preload(pinimgs);
 
+        if ($.cookie('default_location')) {
+            $('#location_select').val($.cookie('default_location'));
+        }
+
         // handle changing of the location select
         $('#location_select').change(function() {
             window.default_latitude = $(this).val().split(',')[0];
@@ -301,6 +305,7 @@ function preload(arrayOfImages) {
                 window.spacescout_map.setCenter(new google.maps.LatLng(window.default_latitude, window.default_longitude));
             }
             get_location_buildings();
+            $.cookie('default_location', $(this).val());
         });
 
     	// handle clicking on map centering buttons
