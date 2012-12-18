@@ -562,7 +562,11 @@
                             {{#each this.spots}}
                             <li class="clearfix view-details">
                                 <div class="space-detail-list-image pull-left">
+                                  {{#if images.0.id }}
                                     <div class="space-detail-list-image-inner" style="background: transparent url('space/{{id}}/image/{{images.0.id}}/thumb/constrain/width:150') no-repeat 50% 50%;">&nbsp;</div>
+                                  {{else}}
+                                    <div class="space-detail-list-image-inner" style="background: transparent url('/static/img/placeholder_noImage_bw.png') no-repeat 50% 50%; background-size: 150px;">&nbsp;</div>
+                                  {{/if}}
                                 </div>
                                 <button  id="{{id}}" class="space-detail-list-item pull-left" type="button" aria-label="Get space details for {{name}}" aria-owns="detail_container_{{id}}">
                                     <div class="space-detail-type"><span class="space-detail-type-label pull-left">{{type}}</span>{{#if capacity }}<span class="space-detail-capacity pull-right">Seats&nbsp;{{capacity}}</span>{{/if}}</div>
@@ -583,7 +587,11 @@
                         <li class="building_header">{{location.building_name}}</li>
                         <ol><li class="clearfix view-details">
                             <div class="space-detail-list-image pull-left">
+                              {{#if images.0.id}}
                                 <div class="space-detail-list-image-inner" style="background: transparent url('space/{{id}}/image/{{images.0.id}}/thumb/constrain/width:150') no-repeat 50% 50%;">&nbsp;</div>
+                              {{else}}
+                                <div class="space-detail-list-image-inner" style="background: transparent url('/static/img/placeholder_noImage_bw.png') no-repeat 50% 50%; background-size: 150px;">&nbsp;</div>
+                              {{/if}}
                             </div>
                             <button id="{{id}}" class="space-detail-list-item pull-left" type="button" aria-label="Get space details for {{name}}" aria-owns="detail_container_{{id}}">
                                 <div class="space-detail-type"><span class="space-detail-type-label pull-left">{{type}}</span>{{#if capacity }}<span class="space-detail-capacity pull-right">Seats&nbsp;{{capacity}}</span>{{/if}}</div>
