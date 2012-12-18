@@ -568,8 +568,8 @@ function display_search_results(data) {
         //window.spacescout_markers.push(my_marker);
     }
 
-    // set the # of spaces in the bubble if epdate_count is true
-    if (update_count) {
+    // set the # of spaces in the bubble if update_count is true
+    if (window.update_count) {
         var source = $('#space_count').html();
         var template = Handlebars.compile(source);
         $('#space_count_container').html(template({count: data.length}));

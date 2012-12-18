@@ -258,7 +258,6 @@ function default_open_at_filter() {
 function format_location_filter(data) {
     var source = $('#building_list').html();
     var template = Handlebars.compile(source);
-    //data = new String(data);
     $('#building_list_container').html(template({data: data}));
 }
 
@@ -304,6 +303,7 @@ function preload(arrayOfImages) {
             if (window.spacescout_map != null) {
                 window.spacescout_map.setCenter(new google.maps.LatLng(window.default_latitude, window.default_longitude));
             }
+            window.update_count = true;
             get_location_buildings();
             $.cookie('default_location', $(this).val());
         });
