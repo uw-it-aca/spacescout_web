@@ -35,11 +35,17 @@
                                     <div id="spaceCarousel" class="carousel slide">
                                       <!-- Carousel items -->
                                       <div class="carousel-inner">
+                                      {% if images %}
                                         {% for image in images %}
                                         <div class="carousel-inner-image item">
                                             <div class="carousel-inner-image-inner" style="background:url('/space/{{ id }}/image/{{ image.id }}/thumb/constrain/width:500,height:333') no-repeat 50% 50%; background-size:100%;">&nbsp;</div>
                                         </div>
                                         {% endfor %}
+                                      {% else %}
+                                        <div class="carousel-inner-image item">
+                                            <div class="carousel-inner-image-inner" style="background:url('{{ STATIC_URL }}img/placeholder_noImage_bw.png') no-repeat 50% 50%; background-size:100%;">&nbsp;</div>
+                                        </div>
+                                      {% endif %}
 
                                       </div>
                                       <!-- Carousel nav -->

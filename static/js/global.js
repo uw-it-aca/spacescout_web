@@ -5,10 +5,16 @@ var requests = new Array();
 Handlebars.registerHelper('carouselimages', function(spacedata) {
     var space_id = spacedata.id;
     var elements = new Array;
-    for (i=0; i < spacedata.images.length; i++) {
-        image_id = spacedata.images[i].id;
-        image_url = "background:url(/space/" + space_id + "/image/" + image_id + "/thumb/constrain/width:500)";
-        div_string = "<div class='carousel-inner-image item'><div class='carousel-inner-image-inner' style='" + image_url + "'>&nbsp;</div></div>"
+    if (spacedata.images.length > 0) {
+        for (i=0; i < spacedata.images.length; i++) {
+            image_id = spacedata.images[i].id;
+            image_url = "background:url(/space/" + space_id + "/image/" + image_id + "/thumb/constrain/width:500)";
+            div_string = "<div class='carousel-inner-image item'><div class='carousel-inner-image-inner' style='" + image_url + "'>&nbsp;</div></div>"
+            elements.push(div_string);
+        }
+    } else {
+        image_url = "background:url(/static/img/placeholder_noImage_bw.png)";
+        div_string = "<div class='carousel-inner-image item'><div class='carousel-inner-image-inner' style='" + image_url + "; background-size: 500px'>&nbsp;</div></div>"
         elements.push(div_string);
     }
     return new Handlebars.SafeString(elements.join('\n'));
