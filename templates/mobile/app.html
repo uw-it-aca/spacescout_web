@@ -391,7 +391,11 @@
                             <ol>{{#each this.spots}}
                             <li class="clearfix view-details">
                                 <div class="space-detail-list-image pull-left">
+                                    {{#if images.0.id}}
                                     <div class="space-detail-list-image-inner" style="background: transparent url('space/{{id}}/image/{{images.0.id}}/thumb/constrain/width:150') no-repeat 50% 50%;">&nbsp;</div>
+                                    {{else}}
+                                    <div class="space-detail-list-image-inner" style="background: transparent url('/static/img/placeholder_noImage_bw.png') no-repeat 50% 50%; background-size: 150px;">&nbsp;</div>
+                                    {{/if}}
 
                                 </div>
 
