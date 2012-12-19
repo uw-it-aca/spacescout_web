@@ -79,6 +79,26 @@ Handlebars.registerHelper('formatHours', function(hours) {
     return new Handlebars.SafeString(formatted.join("<br/>"));
 });
 
+Handlebars.registerHelper('alphaOptGroupsHTML', function(list) {
+    list.sort();
+    firstletter = null;
+    out = new Array;
+    for (var i=0; i < list.length; i++) {
+        if (list[i][0] == firstletter) {
+            out.push('<option value="'+list[i]+'">'+list[i]+'</option>');
+        } else {
+            if (firstletter != null) {
+                out.push('</optgroup>');
+            }
+            firstletter = list[i][0];
+            out.push('<optgroup label="'+firstletter+'">');
+            out.push('<option value="'+list[i]+'">'+list[i]+'</option>');
+        }
+    }
+    out.push('</optgroup>');
+    return new Handlebars.SafeString(out.join(''));
+});
+
 function groupHours(days) {
     var days1 = [];
     var hours = [];

@@ -275,27 +275,11 @@
                               <input type="radio" name="optionsLocations" id="building_list_input" value="option2"> Specific building
                             </label>
                         </div>
-                        <div id="building_list_container" style="margin-top:8px;display:none;">
-                        <!-- replace w/ Handlebars helper
-                        <label class="visuallyhidden" for="e9">Choose a buiding:</label>
-                            <select class="building-location" name="e9" id="e9">
-                                {% for letter, buildings in buildingdict.items %}
-                                <optgroup label="{{ letter }}">
-                                    {% for building in buildings%}
-                                    <option value="{{ building }}">{{ building }}</option>
-                                    {% endfor %}
-                                </optgroup>
-                                {% endfor %}
-                            </select>
-                            -->
-
-                        </div>
+                        <div id="building_list_container" style="margin-top:8px;display:none;"></div>
                         {% tplhandlebars "building_list" %}
-                        <label class="visuallyhidden" for="e9">Choose a buiding:</label>
+                        <label class="visuallyhidden" for="e9">Choose a building:</label>
                             <select class="building-location" name="e9" id="e9">
-                            {{#each data}}
-                                <option value="{{this}}">{{this}}</option>
-                            {{/each}}
+                            {{#alphaOptGroupsHTML data}}{{/alphaOptGroupsHTML}}
                             </select>
                         {% endtplhandlebars %}
 
