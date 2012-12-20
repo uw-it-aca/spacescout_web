@@ -13,6 +13,8 @@
         window.default_latitude = $.cookie('default_location').split(',')[0];
         window.default_longitude = $.cookie('default_location').split(',')[1];
         window.default_location = $.cookie('default_location').split(',')[2];
+    } else {
+        window.default_location = '{{ center_latitude }},{{ center_longitude }},{{ default_location }}'
     }
 </script>
 {% endblock %}
@@ -30,7 +32,7 @@
                 {% ifnotequal locations|length 1 %}
                 <select id='location_select'>
                     {% for key, value in locations.items %}
-                        <option value="{{ value.CENTER_LATITUDE }},{{ value.CENTER_LONGITUDE }}">{{ value.NAME }}</option>
+                        <option value="{{ value.CENTER_LATITUDE }},{{ value.CENTER_LONGITUDE }},{{ key }}">{{ value.NAME }}</option>
                     {% endfor %}
                 </select>
                 {% endifnotequal %}

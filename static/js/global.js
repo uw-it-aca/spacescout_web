@@ -319,6 +319,7 @@ function preload(arrayOfImages) {
             window.default_latitude = $(this).val().split(',')[0];
             window.default_longitude = $(this).val().split(',')[1];
             window.default_location = $(this).val().split(',')[2];
+
             // in case a new location gets selected before the map loads
             if (window.spacescout_map != null) {
                 window.spacescout_map.setCenter(new google.maps.LatLng(window.default_latitude, window.default_longitude));
