@@ -37,6 +37,9 @@
         {% block extra_css %}{% endblock %}
 
         <link rel="shortcut icon" href="{{ STATIC_URL }}img/ico/favicon.ico">
+        <link rel="apple-touch-icon-precomposed" href="apple-touch-icon-precomposed.png" />
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="touch-icon-ipad.png" />
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="touch-icon-iphone-retina.png" />
         {% if less_not_compiled %}
         <script type="text/javascript" src="{{ STATIC_URL }}libs/less.js"></script>
         {% endif %}
