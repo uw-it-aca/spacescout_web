@@ -303,6 +303,19 @@ function preload(arrayOfImages) {
     });
 }
 
+
+function reset_location_filter() {
+    $('#entire_campus').prop('checked', true);
+    $('#entire_campus').parent().removeClass("selected");
+    $('#e9.building-location').children().children().first()[0].selected = true;
+    $('#building_list_container').hide();
+    $('#building_list_input').parent().removeClass("selected");
+    $('#building_list_container').children().children().children(".select2-search-choice").remove();
+    $('#building_list_container').children().children().children().children().val('Select building(s)');
+    $('#building_list_container').children().children().children().children().attr('style', "");
+    run_custom_search();
+}
+
 (function(g){
 
 	$(document).ready(function() {
@@ -327,6 +340,7 @@ function preload(arrayOfImages) {
             window.update_count = true;
             get_location_buildings();
             $.cookie('default_location', $(this).val());
+            reset_location_filter();
         });
 
     	// handle clicking on map centering buttons
