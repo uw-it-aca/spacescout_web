@@ -480,6 +480,10 @@ function initialize() {
         load_map(window.default_latitude, window.default_longitude, window.default_zoom);
     }
 
+    window.setTimeout(function() {
+        document.getElementById('center_all').style.display = "inline";
+    }, 5000);
+
 }
 
 function load_map(latitude, longitude, zoom) {
