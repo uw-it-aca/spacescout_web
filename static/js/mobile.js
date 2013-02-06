@@ -5,9 +5,13 @@
     // detect ladscape orientation
     var landscape = (window.orientation) == 90 || (window.orientation == -90);
 
+    // detect chrome ios
+    var chrome = deviceAgent.match(/(crios)/);
+
     // detect ios versions
 	var iphone = deviceAgent.match(/(iphone)/);
 	var ipad = deviceAgent.match(/(ipad)/);
+	var ios5 = navigator.userAgent.match(/OS [5](_\d)+ like Mac OS X/i);
 	var ios56 = navigator.userAgent.match(/OS [56](_\d)+ like Mac OS X/i);
 
     // detect android versions
@@ -52,9 +56,9 @@
             location.href = '/';
         });
 
-        // for iphones (ios5-6) - check if they have the ios detector cookie, if they don't give them one and show the popup
-        // otherwise, don't do anything since they've already seen the popup
-        if (iphone && ios56) {
+        // for iphones (ios5) - check if they have the ios detector cookie, if they don't give them one and show the popup
+        // otherwise, don't do anything since they've already seen the popup --- updated ios6 supports smart banners
+        if (iphone && ios5 || iphone && chrome ) {
             if (!$.cookie('showSpaceScoutiOS')){
                 $.cookie('showSpaceScoutiOS', 'true');
                 showIosCallout();
