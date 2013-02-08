@@ -54,7 +54,12 @@ function addClusterListener(markerCluster, data) {
     google.maps.event.addListener(markerCluster, 'click', function(c) {
         openClusterInfoWindow(c, data);
     });
-
+    google.maps.event.addListener(marker, 'mousedown', function(c) {
+        spacescout_map.setOptions({draggable: false});
+    });
+    google.maps.event.addListener(spacescout_map, 'mouseup', function(c) {
+        spacescout_map.setOptions({draggable: true});
+    });
 }
 
 function openAllMarkerInfoWindow(data) {
@@ -525,7 +530,6 @@ function load_map(latitude, longitude, zoom) {
         setInterval(function(){$('[src="http://maps.gstatic.com/mapfiles/mv/imgs8.png"]').trigger('click'); },1);
     });
     google.maps.event.trigger(spacescout_map, 'mouseup'); // prime the cover.
-
     google.maps.event.addListenerOnce(spacescout_map, 'tilesloaded', function() {
         document.getElementById('center_all').style.display = "inline";
     });
