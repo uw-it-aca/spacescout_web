@@ -447,6 +447,10 @@ function load_map(latitude, longitude, zoom) {
     }
 
     google.maps.event.addListener(window.spacescout_map, 'idle', reload_on_idle);
+    //next three lines courtesy of samolds
+    google.maps.event.addListener(spacescout_map, 'mouseup', function(c) {
+        spacescout_map.setOptions({draggable: true});
+    });
 
     // add listeners to disable click events for points of interest
     // http://stackoverflow.com/questions/7950030/can-i-remove-just-the-popup-bubbles-of-pois-in-google-maps-api-v3

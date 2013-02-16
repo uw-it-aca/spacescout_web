@@ -125,6 +125,10 @@ function createMarker(spots, group_center) {
     google.maps.event.addListener(marker, 'click', function() {
         loadMarkerSpots(marker, marker.spots); 
     });
+    //next three lines by samolds
+    google.maps.event.addListener(marker, 'mousedown', function(c) {
+        window.spacescout_map.setOptions({draggable: false});
+    });
 
     visible_markers.push(marker);
 }
@@ -148,9 +152,6 @@ function loadMarkerSpots(marker, data) {
     // reset scroll position
     $("#info_list").scrollTop(0);
  
-    // show the loading spinner for a few seconds
-    $('.loading').show().delay(3000).focus();
-
     var source = $('#cluster_list').html();
     var template = Handlebars.compile(source);
     data = buildingNameHeaders(data);
