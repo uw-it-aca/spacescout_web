@@ -1,7 +1,7 @@
 //var pins;  is this necessary?
 var grouping_distance_ratio = .15;          //spot grouping distance as a ratio (spot distance / map width)
 var visible_markers = [];
-var ss_markers;
+var active_marker;
 
 function updatePins(spots) {     //this could be a listener on the map/done button.  investigating how it's done now
     if (window.update_count) {
@@ -10,6 +10,7 @@ function updatePins(spots) {     //this could be a listener on the map/done butt
         $('#space_count_container').html(template({count: spots.length}));
         window.update_count = false;
     }
+    clearActiveMarker();
     openAllMarkerInfoWindow(spots);
     var zoom = window.spacescout_map.getZoom();
     var pins;
@@ -148,9 +149,19 @@ function getGroupCenter(group){
     return group[0].getPosition();
 }
 
+function clearActiveMarker() {
+    if (active_marker != null) {
+        active_marker.setIcon('static/img/pins/pin00.png');
+    }
+}
+
 function loadMarkerSpots(marker, data) {
     // reset scroll position
     $("#info_list").scrollTop(0);
+    
+    clearActiveMarker();
+    marker.setIcon('/static/img/pins/pin-selected.png');
+    active_marker = marker;
  
     var source = $('#cluster_list').html();
     var template = Handlebars.compile(source);
