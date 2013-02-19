@@ -355,6 +355,26 @@ function reset_location_filter() {
 
         get_location_buildings();
 
+        var escape_key_code = 27;
+
+        $(document).keyup(function(e) {
+            if (e.keyCode == escape_key_code) {
+                $('#filter_block').slideUp(400, function() {
+                    //mobile style stuff
+                    if ($('#container').attr("style")) {
+                        $('#container').height('auto');
+                        $('#container').css('overflow','visible');
+                    }   
+                });
+                $('#filter_button').show();
+                $('#space_count_container').show();
+                $('#view_results_button').hide();
+                $('#cancel_results_button').hide();
+                $('#filter_button').focus();
+            }
+        });
+                
+
         // handle clicking on the "done" button for filters
         $("#view_results_button").click(function() {
             $('.count').hide();
