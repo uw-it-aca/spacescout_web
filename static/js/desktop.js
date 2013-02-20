@@ -213,12 +213,18 @@ Handlebars.registerHelper('ifany', function(a, b) {
            $('.space-detail-inner').show();
            $('#space_detail_container').show();
 
+           //set focus on the closing x
+
            $('#space_detail_container').height($('#map_canvas').height());
            $('.space-detail-body').height($('.space-detail').height() - 98);
            if (!open) {
-               $('.space-detail').show("slide", { direction: "right" }, 400);
+               $('.space-detail').show("slide", { direction: "right" }, 400, function () {
+                   $('.close').focus();
+               });
            }else {
-               $('.space-detail').show();
+               $('.space-detail').show(0, function() {
+                   $('.close').focus();
+               });
            }
     	   initializeCarousel();
 

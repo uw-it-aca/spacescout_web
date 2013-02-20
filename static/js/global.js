@@ -359,18 +359,28 @@ function reset_location_filter() {
 
         $(document).keyup(function(e) {
             if (e.keyCode == escape_key_code) {
-                $('#filter_block').slideUp(400, function() {
-                    //mobile style stuff
-                    if ($('#container').attr("style")) {
-                        $('#container').height('auto');
-                        $('#container').css('overflow','visible');
-                    }   
-                });
-                $('#filter_button').show();
-                $('#space_count_container').show();
-                $('#view_results_button').hide();
-                $('#cancel_results_button').hide();
-                $('#filter_button').focus();
+                if ($('#filter_block').is(':visible')) {
+                    $('#filter_block').slideUp(400, function() {
+                        //mobile style stuff
+                        if ($('#container').attr("style")) {
+                            $('#container').height('auto');
+                            $('#container').css('overflow','visible');
+                        }   
+                    });
+                    $('#filter_button').show();
+                    $('#space_count_container').show();
+                    $('#view_results_button').hide();
+                    $('#cancel_results_button').hide();
+                    $('#filter_button').focus();
+                }
+                if ($('.space-detail').is(':visible')) {
+                    $('.space-detail').hide("slide", { direction: "right" }, 400, function() {
+                        $('#space_detail_container').remove();
+                    });
+
+                        // deselect selected space in list
+                    $('#info_items li').removeClass('selected');
+                } 
             }
         });
                 
