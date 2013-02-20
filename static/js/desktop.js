@@ -112,7 +112,7 @@ Handlebars.registerHelper('ifany', function(a, b) {
 
         $('#space_detail_container .close').live('click', function(e){
             e.preventDefault();
-            hideSpaceDetails();
+            closeSpaceDetails();
         });
 
         // handle checkbox and radio button clicks
@@ -233,15 +233,6 @@ Handlebars.registerHelper('ifany', function(a, b) {
 
            replaceUrls();
 
-	}
-
-	function hideSpaceDetails() {
-        $('.space-detail').hide("slide", { direction: "right" }, 400, function() {
-            $('#space_detail_container').remove();
-        });
-
-        // deselect selected space in list
-        $('#info_items li').removeClass('selected');
 	}
 
 	// Desktop display defaults

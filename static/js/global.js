@@ -374,23 +374,10 @@ function reset_location_filter() {
                     $('#filter_button').focus();
                 }
                 if ($('.space-detail').is(':visible')) {
-                    closeSpotDetail();
+                    closeSpaceDetails();
                 } 
             }
         });
-                
-        function closeSpotDetail() {
-            var the_spot_id = $('.space-detail-inner').attr("id");
-            the_spot_id = "#" + the_spot_id.replace(/[^0-9]/g, '');
-            $('.space-detail').hide("slide", { direction: "right" }, 400, function() {
-                $('#space_detail_container').remove();
-            });
-
-                // deselect selected space in list
-            $('#info_items li').removeClass('selected');
-            $(the_spot_id).focus();
-        }
-    
 
         // handle clicking on the "done" button for filters
         $("#view_results_button").click(function() {
@@ -446,4 +433,16 @@ function replaceUrls(){
         text = text.replace(url, "<a href='" + url + "'>" + url + "</a>");
         $("#ei_reservation_notes").html(text);
     }
+}
+
+function closeSpaceDetails() {
+    var the_spot_id = $('.space-detail-inner').attr("id");
+    the_spot_id = "#" + the_spot_id.replace(/[^0-9]/g, '');
+    $('.space-detail').hide("slide", { direction: "right" }, 400, function() {
+        $('#space_detail_container').remove();
+    });
+
+        // deselect selected space in list
+    $('#info_items li').removeClass('selected');
+    $(the_spot_id).focus();
 }
