@@ -41,10 +41,13 @@ def HomeView(request, template=None):
     #TODO: hey, actually it's probably going to be a Handlebars helper and template
     buildingdict = SortedDict()
     for building in buildings:
-        if not building[0] in buildingdict.keys():  # building[0] is the first letter of the string
-            buildingdict[building[0]] = []
+        try:
+            if not building[0] in buildingdict.keys():  # building[0] is the first letter of the string
+                buildingdict[building[0]] = []
 
-        buildingdict[building[0]].append(building)
+            buildingdict[building[0]].append(building)
+        except:
+            pass
 
     # See if django-compressor is being used to precompile less
     if settings.COMPRESS_ENABLED:

@@ -28,12 +28,18 @@ Handlebars.registerHelper('ifany', function(a, b) {
 		// show filter panel
 		$('#filter_button').click(function() {
 
-            $("#filter_block").slideDown(400);
+            $("#filter_block").slideDown(400, function() {
+                $('#study_room').focus();
+            });
 
             $('#filter_button').hide();
             $('#view_results_button').show();
             $('#cancel_results_button').show();
 
+        });
+
+        $('#neighboring').blur(function() {
+            $('#cancel_results_button').focus();
         });
 
         // clear filters
