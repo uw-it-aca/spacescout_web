@@ -242,7 +242,6 @@ Handlebars.registerHelper('ifany', function(a, b) {
                    $('.space-detail-body').attr("tabindex", -1);
                    $('.carousel-nav ul li a').each(function () {
                        $(this).attr("tabindex", -1);
-                       console.log(this);
                    });
                    $('.space-detail-report a').blur(function () {
                        $('.close').focus();
