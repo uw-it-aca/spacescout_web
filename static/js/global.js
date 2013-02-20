@@ -374,16 +374,23 @@ function reset_location_filter() {
                     $('#filter_button').focus();
                 }
                 if ($('.space-detail').is(':visible')) {
-                    $('.space-detail').hide("slide", { direction: "right" }, 400, function() {
-                        $('#space_detail_container').remove();
-                    });
-
-                        // deselect selected space in list
-                    $('#info_items li').removeClass('selected');
+                    closeSpotDetail();
                 } 
             }
         });
                 
+        function closeSpotDetail() {
+            var the_spot_id = $('.space-detail-inner').attr("id");
+            the_spot_id = "#" + the_spot_id.replace(/[^0-9]/g, '');
+            $('.space-detail').hide("slide", { direction: "right" }, 400, function() {
+                $('#space_detail_container').remove();
+            });
+
+                // deselect selected space in list
+            $('#info_items li').removeClass('selected');
+            $(the_spot_id).focus();
+        }
+    
 
         // handle clicking on the "done" button for filters
         $("#view_results_button").click(function() {
