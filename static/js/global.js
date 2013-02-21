@@ -320,7 +320,7 @@ function reset_location_filter() {
 
 	$(document).ready(function() {
 
-        var pinimgs = ['/static/img/pins/pin00.png', '/static/img/pins/pin01.png', 'static/img/pins/pin-selected.png'];
+        var pinimgs = ['/static/img/pins/pin00.png', '/static/img/pins/pin01.png', 'static/img/pins/pin-alt.png'];
         preload(pinimgs);
 
         if ($.cookie('default_location')) {

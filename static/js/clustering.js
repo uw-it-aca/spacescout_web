@@ -95,7 +95,6 @@ function groupByBuilding(markers) {
     return building_spots;
 }
 
-
 function showMarkers(marker_groups){
     var group_center, spots;
     clear_map();
@@ -149,20 +148,40 @@ function getGroupCenter(group){
     return group[0].getPosition();
 }
 
+//is this ever called?
 function clearActiveMarker() {
-    if (active_marker != null) {
-        active_marker.setIcon('static/img/pins/pin00.png');
+    for (var i = 0; i < visible_markers.length; i++) {
+        visible_markers[i].setIcon('static/img/pins/pin00.png');
     }
+    active_marker = null;
 }
 
+function updateActiveMarker(marker) {
+    active_marker.setIcon('static/img/pins/pin-alt.png');
+    marker.setIcon('static/img/pins/pin00.png');
+    active_marker = marker;
+}
+
+function setActiveMarker(marker) {
+    active_marker = marker;
+    for (var i = 0; i < visible_markers.length; i++) {
+        if (visible_markers[i] != marker) {
+            visible_markers[i].setIcon('static/img/pins/pin-alt.png');
+        }
+    }
+}
+       
 function loadMarkerSpots(marker, data) {
     // reset scroll position
     $("#info_list").scrollTop(0);
     
-    clearActiveMarker();
-    marker.setIcon('/static/img/pins/pin-selected.png');
-    active_marker = marker;
- 
+    if (active_marker != null) {
+        updateActiveMarker(marker);
+    }
+    else {
+        setActiveMarker(marker);
+    }
+
     var source = $('#cluster_list').html();
     var template = Handlebars.compile(source);
     data = buildingNameHeaders(data);
