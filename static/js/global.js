@@ -396,7 +396,6 @@ function getSpaceMap(lat, lon) {
       map: map,
       icon: image
   });
-  console.log("am I doing this?");
 
 }
 
