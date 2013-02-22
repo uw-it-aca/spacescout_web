@@ -14,9 +14,7 @@ function updatePins(spots) {     //this could be a listener on the map/done butt
     openAllMarkerInfoWindow(spots);
     var zoom = window.spacescout_map.getZoom();
     var pins;
-    if (spots != "only update visible pins") {
-        update_spacescout_markers(spots);
-    }
+    update_spacescout_markers(spots);
     ss_markers = window.spacescout_markers;
     if ((zoom > 17) || (zoom < 16)){
         pins = groupByDistance(ss_markers);
@@ -196,9 +194,3 @@ function clear_map() {
     }
     visible_markers = [];
 }
-
-//window.onload = function() {
-//    google.maps.event.addListener(window.spacescout_map, "zoom_changed", function(){
-//        updatePins("only update visible pins");
-//    });
-//}
