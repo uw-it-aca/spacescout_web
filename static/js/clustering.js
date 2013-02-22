@@ -1,7 +1,7 @@
-//var pins;  is this necessary?
-var grouping_distance_ratio = .15;          //spot grouping distance as a ratio (spot distance / map width)
+var grouping_distance_ratio = .1;          //spot grouping distance as a ratio (spot distance / map diagonal)
 var visible_markers = [];
 var active_marker;
+var spherical = google.maps.geometry.spherical;
 
 function updatePins(spots) {     //this could be a listener on the map/done button.  investigating how it's done now
     if (window.update_count) {
@@ -42,11 +42,10 @@ function update_spacescout_markers(spots) {
 
 
 function groupByDistance(markers) {
-    var spherical = google.maps.geometry.spherical;
     var bounds = window.spacescout_map.getBounds();
     var ne_corner = bounds.getNorthEast();
-    var nw_corner = new google.maps.LatLng(ne_corner.lat(), bounds.getSouthWest().lng());
-    var width = spherical.computeDistanceBetween(ne_corner, nw_corner);
+    var sw_corner = bounds.getSouthWest();
+    var diag = spherical.computeDistanceBetween(ne_corner, sw_corner);
     var grouped_spots = [], group, grouped, group_center, distance_ratio, position_holder;
     for (var count = markers.length-1; count >= 0; count--) {
         grouped = false;
@@ -55,7 +54,7 @@ function groupByDistance(markers) {
         for (var j = 0; j < grouped_spots.length; j++) { //should only check existing groups
             //group_center = getGroupCenter(grouped_spots[j]); too slow?
             group_center = grouped_spots[j][0].getPosition();
-            distance_ratio = spherical.computeDistanceBetween(position_holder, group_center) / width;
+            distance_ratio = spherical.computeDistanceBetween(position_holder, group_center) / diag;
             if (distance_ratio < grouping_distance_ratio) {
                 grouped_spots[j].push(markers[count]);
                 markers.splice(count, 1);
