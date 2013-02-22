@@ -355,11 +355,36 @@ function reset_location_filter() {
 
         get_location_buildings();
 
+        var escape_key_code = 27;
+
+        $(document).keyup(function(e) {
+            if (e.keyCode == escape_key_code) {
+                if ($('#filter_block').is(':visible')) {
+                    $('#filter_block').slideUp(400, function() {
+                        //mobile style stuff
+                        if ($('#container').attr("style")) {
+                            $('#container').height('auto');
+                            $('#container').css('overflow','visible');
+                        }   
+                    });
+                    $('#filter_button').show();
+                    $('#space_count_container').show();
+                    $('#view_results_button').hide();
+                    $('#cancel_results_button').hide();
+                    $('#filter_button').focus();
+                }
+                if ($('.space-detail').is(':visible')) {
+                    closeSpaceDetails();
+                } 
+            }
+        });
+
         // handle clicking on the "done" button for filters
         $("#view_results_button").click(function() {
             $('.count').hide();
             $('.spaces').hide();
             run_custom_search();
+            $('#filter_button').focus();
         });
 
         default_open_at_filter();
@@ -408,4 +433,16 @@ function replaceUrls(){
         text = text.replace(url, "<a href='" + url + "'>" + url + "</a>");
         $("#ei_reservation_notes").html(text);
     }
+}
+
+function closeSpaceDetails() {
+    var the_spot_id = $('.space-detail-inner').attr("id");
+    the_spot_id = "#" + the_spot_id.replace(/[^0-9]/g, '');
+    $('.space-detail').hide("slide", { direction: "right" }, 400, function() {
+        $('#space_detail_container').remove();
+    });
+
+        // deselect selected space in list
+    $('#info_items li').removeClass('selected');
+    $(the_spot_id).focus();
 }

@@ -28,12 +28,18 @@ Handlebars.registerHelper('ifany', function(a, b) {
 		// show filter panel
 		$('#filter_button').click(function() {
 
-            $("#filter_block").slideDown(400);
+            $("#filter_block").slideDown(400, function() {
+                $('#study_room').focus();
+            });
 
             $('#filter_button').hide();
             $('#view_results_button').show();
             $('#cancel_results_button').show();
 
+        });
+
+        $('#neighboring').blur(function() {
+            $('#cancel_results_button').focus();
         });
 
         // clear filters
@@ -106,7 +112,7 @@ Handlebars.registerHelper('ifany', function(a, b) {
 
         $('#space_detail_container .close').live('click', function(e){
             e.preventDefault();
-            hideSpaceDetails();
+            closeSpaceDetails();
         });
 
         // handle checkbox and radio button clicks
@@ -149,11 +155,15 @@ Handlebars.registerHelper('ifany', function(a, b) {
 
             if ($('#carouselControl').hasClass('active')) { // show the carousel
                 $('#spaceCarouselContainer').show();
+                $('#carouselControl.btn').attr("tabindex", -1);
+                $('#mapControl.btn').attr("tabindex", 0);
                 $('#spaceMap').hide();
             }
             else { //show the map
                 $('#spaceCarouselContainer').hide();
                 $('#spaceMap').show();
+                $('#carouselControl.btn').attr("tabindex", 0);
+                $('#mapControl.btn').attr("tabindex", -1);
                 getSpaceMap(detailsLat, detailsLon);
             }
         });
@@ -207,12 +217,36 @@ Handlebars.registerHelper('ifany', function(a, b) {
            $('.space-detail-inner').show();
            $('#space_detail_container').show();
 
+           //set focus on the closing x
+
            $('#space_detail_container').height($('#map_canvas').height());
            $('.space-detail-body').height($('.space-detail').height() - 98);
+
+           //TODO: make these identical anonymous callback functions a real named function.  Had unknown scope problems doing this before
            if (!open) {
-               $('.space-detail').show("slide", { direction: "right" }, 400);
+               $('.space-detail').show("slide", { direction: "right" }, 400, function () {
+                   $('.close').focus();
+                   $('.btn.active').attr("tabindex", -1);
+                   $('.space-detail-body').attr("tabindex", -1);
+                   $('.carousel-nav ul li a').each(function () {
+                       $(this).attr("tabindex", -1);
+                   });
+                   $('.space-detail-report a').blur(function () {
+                       $('.close').focus();
+                   });
+               });
            }else {
-               $('.space-detail').show();
+               $('.space-detail').show(0, function() {
+                   $('.close').focus();
+                   $('.btn.active').attr("tabindex", -1);
+                   $('.space-detail-body').attr("tabindex", -1);
+                   $('.carousel-nav ul li a').each(function () {
+                       $(this).attr("tabindex", -1);
+                   });
+                   $('.space-detail-report a').blur(function () {
+                       $('.close').focus();
+                   });
+               });
            }
     	   initializeCarousel();
 
@@ -221,15 +255,6 @@ Handlebars.registerHelper('ifany', function(a, b) {
 
            replaceUrls();
 
-	}
-
-	function hideSpaceDetails() {
-        $('.space-detail').hide("slide", { direction: "right" }, 400, function() {
-            $('#space_detail_container').remove();
-        });
-
-        // deselect selected space in list
-        $('#info_items li').removeClass('selected');
 	}
 
 	// Desktop display defaults
