@@ -296,11 +296,11 @@ function get_location_buildings() {
 
 // Found at http://stackoverflow.com/questions/476679/preloading-images-with-jquery
 function preload(arrayOfImages) {
-    $(arrayOfImages).each(function(){
-        $('<img/>')[0].src = this;
+    for (var i = 0; i < arrayOfImages.length; i++) {
+        $('<img/>')[0].src = arrayOfImages[i];
         // Alternatively you could use:
         // (new Image()).src = this;
-    });
+    }
 }
 
 
@@ -320,7 +320,7 @@ function reset_location_filter() {
 
 	$(document).ready(function() {
 
-        var pinimgs = ['static/img/pins/pin-alt.png'];
+        var pinimgs = [];
         for (var i = 0; i <= 30; i++) {
             if (i < 10) {
                 pinimgs.push('/static/img/pins/pin0' + i + '.png');
