@@ -111,22 +111,27 @@ function getSpotList(group){
 }
 
 function createMarker(spots, group_center) {
+    var num_spots = spots.length;
     var main_icon;
-    if (spots.length >= 30) {
+    var alt_icon;
+    if (num_spots >= 30) {
         main_icon = 'static/img/pins/pin30.png';
+        alt_icon = 'static/img/pins/pin30-alt.png';
     }
-    else if (spots.length < 10) {
-        main_icon = 'static/img/pins/pin0' + spots.length + '.png';
+    else if (num_spots < 10) {
+        main_icon = 'static/img/pins/pin0' + num_spots + '.png';
+        alt_icon = 'static/img/pins/pin0' + num_spots + '-alt.png';
     }
     else {
-        main_icon = 'static/img/pins/pin' + spots.length + '.png';
+        main_icon = 'static/img/pins/pin' + num_spots + '.png';
+        alt_icon = 'static/img/pins/pin' + num_spots + '-alt.png';
     }
 
     var marker= new google.maps.Marker({
         position: group_center,
         icon: main_icon,
         main_icon: main_icon,
-        alt_icon: 'static/img/pins/pin-alt.png',
+        alt_icon: alt_icon,
         map: window.spacescout_map,
         spots: spots
     });

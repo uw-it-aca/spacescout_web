@@ -324,9 +324,11 @@ function reset_location_filter() {
         for (var i = 0; i <= 30; i++) {
             if (i < 10) {
                 pinimgs.push('/static/img/pins/pin0' + i + '.png');
+                pinimgs.push('/static/img/pins/pin0' + i + '-alt.png');
             }
             else {
                 pinimgs.push('/static/img/pins/pin' + i + '.png');
+                pinimgs.push('/static/img/pins/pin' + i + '-alt.png');
             }
         }
         preload(pinimgs);
