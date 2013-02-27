@@ -111,10 +111,22 @@ function getSpotList(group){
 }
 
 function createMarker(spots, group_center) {
+    var main_icon;
+    if (spots.length >= 30) {
+        main_icon = 'static/img/pins/pin30.png';
+    }
+    else if (spots.length < 10) {
+        main_icon = 'static/img/pins/pin0' + spots.length + '.png';
+    }
+    else {
+        main_icon = 'static/img/pins/pin' + spots.length + '.png';
+    }
+
     var marker= new google.maps.Marker({
         position: group_center,
-        title: String(spots.length),
-        icon: '/static/img/pins/pin00.png',
+        icon: main_icon,
+        main_icon: main_icon,
+        alt_icon: 'static/img/pins/pin-alt.png',
         map: window.spacescout_map,
         spots: spots
     });
@@ -148,14 +160,14 @@ function getGroupCenter(group){
 //is this ever called?
 function clearActiveMarker() {
     for (var i = 0; i < visible_markers.length; i++) {
-        visible_markers[i].setIcon('static/img/pins/pin00.png');
+        visible_markers[i].setIcon(visible_markers[i].main_icon);
     }
     active_marker = null;
 }
 
 function updateActiveMarker(marker) {
-    active_marker.setIcon('static/img/pins/pin-alt.png');
-    marker.setIcon('static/img/pins/pin00.png');
+    active_marker.setIcon(active_marker.alt_icon);
+    marker.setIcon(marker.main_icon);
     active_marker = marker;
 }
 
@@ -163,7 +175,7 @@ function setActiveMarker(marker) {
     active_marker = marker;
     for (var i = 0; i < visible_markers.length; i++) {
         if (visible_markers[i] != marker) {
-            visible_markers[i].setIcon('static/img/pins/pin-alt.png');
+            visible_markers[i].setIcon(visible_markers[i].alt_icon);
         }
     }
 }

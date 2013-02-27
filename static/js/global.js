@@ -320,7 +320,15 @@ function reset_location_filter() {
 
 	$(document).ready(function() {
 
-        var pinimgs = ['/static/img/pins/pin00.png', '/static/img/pins/pin01.png', 'static/img/pins/pin-alt.png'];
+        var pinimgs = ['static/img/pins/pin-alt.png'];
+        for (var i = 0; i <= 30; i++) {
+            if (i < 10) {
+                pinimgs.push('/static/img/pins/pin0' + i + '.png');
+            }
+            else {
+                pinimgs.push('/static/img/pins/pin' + i + '.png');
+            }
+        }
         preload(pinimgs);
 
         if ($.cookie('default_location')) {
