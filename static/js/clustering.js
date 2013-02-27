@@ -167,17 +167,23 @@ function clearActiveMarker() {
     for (var i = 0; i < visible_markers.length; i++) {
         visible_markers[i].setIcon(visible_markers[i].main_icon);
     }
+    if(active_marker){
+        active_marker.setZIndex();
+    }
     active_marker = null;
 }
 
 function updateActiveMarker(marker) {
     active_marker.setIcon(active_marker.alt_icon);
+    active_marker.setZIndex();
     marker.setIcon(marker.main_icon);
+    marker.setZIndex(google.maps.Marker.MAX_ZINDEX + 1);
     active_marker = marker;
 }
 
 function setActiveMarker(marker) {
     active_marker = marker;
+    marker.setZIndex(google.maps.Marker.MAX_ZINDEX + 1);
     for (var i = 0; i < visible_markers.length; i++) {
         if (visible_markers[i] != marker) {
             visible_markers[i].setIcon(visible_markers[i].alt_icon);
