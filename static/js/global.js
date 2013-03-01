@@ -321,7 +321,7 @@ function reset_location_filter() {
 	$(document).ready(function() {
 
         var pinimgs = [];
-        for (var i = 0; i <= 30; i++) {
+        for (var i = 1; i <= 30; i++) {
             if (i < 10) {
                 pinimgs.push('/static/img/pins/pin0' + i + '.png');
                 pinimgs.push('/static/img/pins/pin0' + i + '-alt.png');
