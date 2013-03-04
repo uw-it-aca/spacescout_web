@@ -1,3 +1,17 @@
+""" Copyright 2012, 2013 UW Information Technology, University of Washington
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+"""
 from django.shortcuts import render_to_response, render
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
@@ -13,9 +27,10 @@ try:
 except:
     ga_tracking_id = None
 
+
 def contact(request, spot_id=None):
     contact_variables = _contact_variables(request, spot_id)
-    if spot_id == None:
+    if spot_id is None:
         spot_id = ''
         displayed_spot_id = 'Unknown'
     else:
@@ -38,15 +53,15 @@ def contact(request, spot_id=None):
 
             browser = request.META.get('HTTP_USER_AGENT', 'Unknown')
 
-            subject = "SpaceScout %s from %s" %(feedback_choice, name)
+            subject = "SpaceScout %s from %s" % (feedback_choice, name)
             email_message = "SpaceScout Web - %s \n\n %s \n\n %s %s \n %s - ID = %s \
-                \n Browser Type = %s" %(feedback_choice, message, name, sender, spot_name, displayed_spot_id, browser)
+                \n Browser Type = %s" % (feedback_choice, message, name, sender, spot_name, displayed_spot_id, browser)
 
             if bot_test == '':
                 try:
                     send_mail(subject, email_message, sender, settings.FEEDBACK_EMAIL_RECIPIENT)
                 except:
-                    return HttpResponseRedirect('/sorry/' + spot_id )
+                    return HttpResponseRedirect('/sorry/' + spot_id)
             return HttpResponseRedirect('/thankyou/' + spot_id)
     else:
         form = ContactForm()
@@ -68,6 +83,7 @@ def contact(request, spot_id=None):
         'ga_tracking_id': ga_tracking_id,
     }, context_instance=RequestContext(request))
 
+
 def thank_you(request, spot_id=None):
     contact_variables = _contact_variables(request, spot_id)
 
@@ -80,6 +96,7 @@ def thank_you(request, spot_id=None):
         'is_mobile': is_mobile,
         'ga_tracking_id': ga_tracking_id,
     }, context_instance=RequestContext(request))
+
 
 def sorry(request, spot_id=None):
     contact_variables = _contact_variables(request, spot_id)
@@ -97,11 +114,12 @@ def sorry(request, spot_id=None):
         'ga_tracking_id': ga_tracking_id,
     }, context_instance=RequestContext(request))
 
+
 def _contact_variables(request, spot_id):
     spot_name = 'Unknown'
     spot_description = ''
 
-    if spot_id != None:
+    if spot_id is not None:
         url = "{0}/space/{1}/json".format("http://" + request.get_host(), spot_id)
         try:
             content = urllib2.urlopen(url).read()
@@ -120,14 +138,14 @@ def _contact_variables(request, spot_id):
     else:
         is_mobile = False
 
-    if is_mobile and spot_id != None:
+    if is_mobile and spot_id is not None:
         back = ('/space/' + spot_id)
     else:
         back = '/'
 
     return {
-        'spot_name':spot_name,
-        'spot_description':spot_description,
-        'is_mobile':is_mobile,
-        'back':back
+        'spot_name': spot_name,
+        'spot_description': spot_description,
+        'is_mobile': is_mobile,
+        'back': back
     }

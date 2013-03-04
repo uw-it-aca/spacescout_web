@@ -1,3 +1,17 @@
+""" Copyright 2012, 2013 UW Information Technology, University of Washington
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+"""
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.conf import settings
@@ -27,7 +41,7 @@ def SpotView(request, spot_id, return_json=False):
     resp, content = client.request(url, 'GET')
     if resp.status == 404:
         url = request.get_host()
-        url =url+"/contact"
+        url = url + "/contact"
         raise Http404
     elif resp.status != 200:
         response = HttpResponse("Error loading spot")
@@ -50,7 +64,7 @@ def SpotView(request, spot_id, return_json=False):
         ga_tracking_id = settings.GA_TRACKING_ID
     except:
         ga_tracking_id = None
-    params["ga_tracking_id"] = ga_tracking_id 
+    params["ga_tracking_id"] = ga_tracking_id
 
     content = json.dumps(params)
 
