@@ -464,16 +464,17 @@ function load_map(latitude, longitude, zoom) {
     google.maps.event.addListener(spacescout_map, 'mouseup', function(c) {
         spacescout_map.setOptions({draggable: true});
     });
-
+    
+    // these commented out lines cause LOTS of CPU
     // add listeners to disable click events for points of interest
     // http://stackoverflow.com/questions/7950030/can-i-remove-just-the-popup-bubbles-of-pois-in-google-maps-api-v3
-    google.maps.event.addListener(spacescout_map, "mouseup",function(event){
-        setInterval(function(){$('[src$="/mv/imgs8.png"]').trigger('click'); },1);
-    });
-    google.maps.event.addListener(spacescout_map, "dragstart",function(event){
-        setInterval(function(){$('[src="http://maps.gstatic.com/mapfiles/mv/imgs8.png"]').trigger('click'); },1);
-    });
-    google.maps.event.trigger(spacescout_map, 'mouseup'); // prime the cover.
+    //google.maps.event.addListener(spacescout_map, "mouseup",function(event){
+    //    setInterval(function(){$('[src$="/mv/imgs8.png"]').trigger('click'); },1);
+    //});
+    //google.maps.event.addListener(spacescout_map, "dragstart",function(event){
+    //    setInterval(function(){$('[src="http://maps.gstatic.com/mapfiles/mv/imgs8.png"]').trigger('click'); },1);
+    //});
+    //google.maps.event.trigger(spacescout_map, 'mouseup'); // prime the cover.
 
     google.maps.event.addListenerOnce(spacescout_map, 'tilesloaded', function() {
         document.getElementById('center_all').style.display = "inline";
