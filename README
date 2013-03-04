@@ -1,7 +1,7 @@
-This is the web client for SpaceScout™.  It connects to services provided by https://github.com/vegitron/spotseeker-server/
+This is the web client for SpaceScout™.  It connects to services provided by https://github.com/abztrakt/spotseeker_server/
 
 
-  Copyright 2012 UW Information Technology, University of Washington
+  Copyright 2012, 2013 UW Information Technology, University of Washington
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.

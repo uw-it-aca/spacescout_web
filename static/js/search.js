@@ -1,3 +1,20 @@
+/*
+    Copyright 2012 UW Information Technology, University of Washington
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+*/
+
 var spacescout_map = null, spacescout_infowindow, spacescout_marker_ids = {}, spacescout_markers = [], speed = 800, mc = null, youarehere = null, update_count = null;
 
 function openInfoWindow(marker, info) {
@@ -463,20 +480,16 @@ function initialize() {
 
     if (navigator.geolocation) {
         // Doing a timeout here, to make sure we load something...
-        window.position_timeout = window.setTimeout(function() {
-            load_map(window.default_latitude, window.default_longitude, window.default_zoom);
-        }, 5000);
+        load_map(window.default_latitude, window.default_longitude, window.default_zoom);
 
         navigator.geolocation.getCurrentPosition(
             // Success...
             function(position) {
-                window.clearTimeout(window.position_timeout);
                 youarehere = position.coords;
                 load_map(window.default_latitude, window.default_longitude, window.default_zoom);
             }
         );
-    }
-    else {
+    } else {
         load_map(window.default_latitude, window.default_longitude, window.default_zoom);
     }
 
@@ -529,6 +542,10 @@ function load_map(latitude, longitude, zoom) {
         setInterval(function(){$('[src="http://maps.gstatic.com/mapfiles/mv/imgs8.png"]').trigger('click'); },1);
     });
     google.maps.event.trigger(spacescout_map, 'mouseup'); // prime the cover.
+
+    google.maps.event.addListenerOnce(spacescout_map, 'tilesloaded', function() {
+        document.getElementById('center_all').style.display = "inline";
+    });
 
     // append the centering buttons after map has loaded
     displayMapCenteringButtons();
@@ -705,7 +722,7 @@ function scrollToTop(id) {
     $('html,body').animate({ scrollTop: $("#"+id).offset().top},'fast');
 }
 
- function displayMapCenteringButtons() {
+function displayMapCenteringButtons() {
     // build the template
    var source = $('#map_controls').html();
    var template = Handlebars.compile(source);
