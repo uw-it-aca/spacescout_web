@@ -1,4 +1,3 @@
-var grouping_distance_ratio = .1;          //spot grouping distance as a ratio (spot distance / map diagonal)
 var visible_markers = [];
 var active_marker;
 var spherical = google.maps.geometry.spherical;
@@ -16,11 +15,11 @@ function updatePins(spots) {     //this could be a listener on the map/done butt
     var pins;
     update_spacescout_markers(spots);
     ss_markers = window.spacescout_markers;
-    if ((zoom > 17) || (zoom < 16)){
-        pins = groupByDistance(ss_markers);
+    if ($.inArray(zoom, window.by_building_zooms) != -1){
+        pins = groupByBuilding(ss_markers);
     }
     else{
-        pins = groupByBuilding(ss_markers);
+        pins = groupByDistance(ss_markers);
     }
     showMarkers(pins);
 }
@@ -50,10 +49,9 @@ function groupByDistance(markers) {
         group_center = [];
         position_holder = markers[count].getPosition();
         for (var j = 0; j < grouped_spots.length; j++) { //should only check existing groups
-            //group_center = getGroupCenter(grouped_spots[j]); too slow?
             group_center = grouped_spots[j][0].getPosition();
             distance_ratio = spherical.computeDistanceBetween(position_holder, group_center) / diag;
-            if (distance_ratio < grouping_distance_ratio) {
+            if (distance_ratio < window.by_distance_ratio) {
                 grouped_spots[j].push(markers[count]);
                 markers.splice(count, 1);
                 grouped = true;
