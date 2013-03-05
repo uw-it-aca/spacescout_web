@@ -59,7 +59,7 @@ function groupByDistance(markers) {
     var bounds = window.spacescout_map.getBounds();
     var ne_corner = bounds.getNorthEast();
     var sw_corner = bounds.getSouthWest();
-    var diag = spherical.computeDistanceBetween(ne_corner, sw_corner);
+    var diag = spherical.computeDistanceBetween(ne_corner, new google.maps.LatLng(ne_corner.lat(), sw_corner.lng()));
     var grouped_spots = [], group, grouped, group_center, distance_ratio, position_holder;
     for (var count = markers.length-1; count >= 0; count--) {
         grouped = false;
