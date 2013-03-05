@@ -164,7 +164,7 @@ function groupHours(days) {
                     if((days2[j]-days2[i])> 1) {
                         break;
                     }
-                    if((days2[j]-days2[i])== 1 && new_hour[0]=="12AM") {
+                    if((days2[j]-days2[i])== 1 && new_hour[0]=="Midnight") {
                         hour[1]=new_hour[1];
                         hours[j]="null";
                         break;
@@ -177,7 +177,7 @@ function groupHours(days) {
                     if((days2[j]-days2[i])!= -6) {
                         break;
                     }
-                    if((days2[j]-days2[i])==-6 && new_hour[0]=="12AM") {
+                    if((days2[j]-days2[i])==-6 && new_hour[0]=="Midnight") {
                         hour[1]=new_hour[1];
                         hours[j]="null";
                         break;
@@ -242,8 +242,11 @@ function to12Hour(day) {
                     data[i] = time.join(":");
                 }
             }
+            if (data[i] == "12AM") {
+                data[i] = "Midnight";
+            }
         }
-        if(data[0]=="12AM" & data[1]=="Midnight") {
+        if(data[0]=="Midnight" & data[1]=="Midnight") {
             retData[j]="Open 24 Hours";
         }else {
             retData[j]=data[0] +" - " +data[1];
@@ -313,11 +316,11 @@ function get_location_buildings() {
 
 // Found at http://stackoverflow.com/questions/476679/preloading-images-with-jquery
 function preload(arrayOfImages) {
-    $(arrayOfImages).each(function(){
-        $('<img/>')[0].src = this;
+    for (var i = 0; i < arrayOfImages.length; i++) {
+        $('<img/>')[0].src = arrayOfImages[i];
         // Alternatively you could use:
         // (new Image()).src = this;
-    });
+    }
 }
 
 
@@ -337,7 +340,17 @@ function reset_location_filter() {
 
 	$(document).ready(function() {
 
-        var pinimgs = ['/static/img/pins/pin00.png', '/static/img/pins/pin01.png'];
+        var pinimgs = [];
+        for (var i = 1; i <= 30; i++) {
+            if (i < 10) {
+                pinimgs.push('/static/img/pins/pin0' + i + '.png');
+                pinimgs.push('/static/img/pins/pin0' + i + '-alt.png');
+            }
+            else {
+                pinimgs.push('/static/img/pins/pin' + i + '.png');
+                pinimgs.push('/static/img/pins/pin' + i + '-alt.png');
+            }
+        }
         preload(pinimgs);
 
         if ($.cookie('default_location')) {
@@ -376,21 +389,25 @@ function reset_location_filter() {
 
         $(document).keyup(function(e) {
             if (e.keyCode == escape_key_code) {
-                $('#filter_block').slideUp(400, function() {
-                    //mobile style stuff
-                    if ($('#container').attr("style")) {
-                        $('#container').height('auto');
-                        $('#container').css('overflow','visible');
-                    }   
-                });
-                $('#filter_button').show();
-                $('#space_count_container').show();
-                $('#view_results_button').hide();
-                $('#cancel_results_button').hide();
-                $('#filter_button').focus();
+                if ($('#filter_block').is(':visible')) {
+                    $('#filter_block').slideUp(400, function() {
+                        //mobile style stuff
+                        if ($('#container').attr("style")) {
+                            $('#container').height('auto');
+                            $('#container').css('overflow','visible');
+                        }   
+                    });
+                    $('#filter_button').show();
+                    $('#space_count_container').show();
+                    $('#view_results_button').hide();
+                    $('#cancel_results_button').hide();
+                    $('#filter_button').focus();
+                }
+                if ($('.space-detail').is(':visible')) {
+                    closeSpaceDetails();
+                } 
             }
         });
-                
 
         // handle clicking on the "done" button for filters
         $("#view_results_button").click(function() {
@@ -446,4 +463,16 @@ function replaceUrls(){
         text = text.replace(url, "<a href='" + url + "'>" + url + "</a>");
         $("#ei_reservation_notes").html(text);
     }
+}
+
+function closeSpaceDetails() {
+    var the_spot_id = $('.space-detail-inner').attr("id");
+    the_spot_id = "#" + the_spot_id.replace(/[^0-9]/g, '');
+    $('.space-detail').hide("slide", { direction: "right" }, 400, function() {
+        $('#space_detail_container').remove();
+    });
+
+        // deselect selected space in list
+    $('#info_items li').removeClass('selected');
+    $(the_spot_id).focus();
 }

@@ -17,68 +17,6 @@
 
 var spacescout_map = null, spacescout_infowindow, spacescout_marker_ids = {}, spacescout_markers = [], speed = 800, mc = null, youarehere = null, update_count = null;
 
-function openInfoWindow(marker, info) {
-
-    // reset scroll position
-    $("#info_list").scrollTop(0);
-
-    // show the loading spinner for a few seconds
-    $('.loading').show().delay(3000);
-
-    var source = $('#spot_info').html();
-    var template = Handlebars.compile(source);
-    $("#info_items").html(template(info));
-
-    scrollToTop('info_list');
-    $('.loading').slideUp('fast');
-
-}
-
-function addMarkerListener(marker, data) {
-    google.maps.event.addListener(marker, 'click', function(m) {
-        openInfoWindow(m, data);
-    });
-}
-
-function openClusterInfoWindow(cluster, data) {
-
-    // reset scroll position
-    $("#info_list").scrollTop(0);
-
-    // show the loading spinner for a few seconds
-    $('.loading').show().delay(3000).focus();
-
-    // I'm sure there's a better way of filtering this down to spaces...
-    var spaces = new Array();
-    for (i=0; i < cluster.getMarkers().length; i++) {
-        for (j=0; j < data.length; j++) {
-            if (data[j].name == cluster.getMarkers()[i].title) {
-                spaces.push(data[j]);
-            }
-        }
-    }
-    var source = $('#cluster_list').html();
-    var template = Handlebars.compile(source);
-    data = buildingNameHeaders(spaces);
-    $('#info_items').html(template({data: data}));
-
-    scrollToTop('info_list');
-    $('.loading').slideUp('fast');
-
-}
-
-function addClusterListener(markerCluster, data) {
-    google.maps.event.addListener(markerCluster, 'click', function(c) {
-        openClusterInfoWindow(c, data);
-    });
-    google.maps.event.addListener(marker, 'mousedown', function(c) {
-        spacescout_map.setOptions({draggable: false});
-    });
-    google.maps.event.addListener(spacescout_map, 'mouseup', function(c) {
-        spacescout_map.setOptions({draggable: true});
-    });
-}
-
 function openAllMarkerInfoWindow(data) {
     var source = $('#all_markers').html();
     var template = Handlebars.compile(source);
@@ -276,7 +214,6 @@ function run_custom_search() {
     }
     window.spacescout_markers = [];
     window.spacescout_marker_ids = {};
-    window.mc.clearMarkers();
 
     // Set the search values, so they'll stick through zooms and pans
     window.spacescout_search_options = {};
@@ -518,28 +455,20 @@ function load_map(latitude, longitude, zoom) {
 
     if (window.spacescout_map == null) {
         window.spacescout_map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-        var mcOpts = {
-            averageCenter: true,
-            zoomOnClick: false,
-            styles: [{
-                textColor: 'white',
-                textSize: 12,
-                fontWeight: 'normal',
-                anchor: [5, 0], // These values can only be positive
-                height: 40,
-                width: 35, // The icon width is actually 40, but the anchorIcon offset doesn't seem to work right, this gets the cluster icon centered on the number
-                url: '/static/img/pins/pin00.png'
-            }]
-        };
-        window.mc = new MarkerClusterer(spacescout_map, [], mcOpts);
     } else {
         window.spacescout_map.setCenter(new google.maps.LatLng(latitude, longitude));
     }
 
     google.maps.event.addListener(window.spacescout_map, 'idle', reload_on_idle);
-
+    //next three lines courtesy of samolds
+    google.maps.event.addListener(spacescout_map, 'mouseup', function(c) {
+        spacescout_map.setOptions({draggable: true});
+    });
+    
+    // these commented out lines cause LOTS of CPU
     // add listeners to disable click events for points of interest
     // http://stackoverflow.com/questions/7950030/can-i-remove-just-the-popup-bubbles-of-pois-in-google-maps-api-v3
+<<<<<<< HEAD
     google.maps.event.addListener(spacescout_map, "mouseup",function(event){
         setInterval(function(){$('[src$="/mv/imgs8.png"]').trigger('click'); },1);
     });
@@ -547,6 +476,16 @@ function load_map(latitude, longitude, zoom) {
         setInterval(function(){$('[src="http://maps.gstatic.com/mapfiles/mv/imgs8.png"]').trigger('click'); },1);
     });
     google.maps.event.trigger(spacescout_map, 'mouseup'); // prime the cover.
+=======
+    //google.maps.event.addListener(spacescout_map, "mouseup",function(event){
+    //    setInterval(function(){$('[src$="/mv/imgs8.png"]').trigger('click'); },1);
+    //});
+    //google.maps.event.addListener(spacescout_map, "dragstart",function(event){
+    //    setInterval(function(){$('[src="http://maps.gstatic.com/mapfiles/mv/imgs8.png"]').trigger('click'); },1);
+    //});
+    //google.maps.event.trigger(spacescout_map, 'mouseup'); // prime the cover.
+
+>>>>>>> craig
     google.maps.event.addListenerOnce(spacescout_map, 'tilesloaded', function() {
         document.getElementById('center_all').style.display = "inline";
     });
@@ -556,7 +495,7 @@ function load_map(latitude, longitude, zoom) {
 
 }
 
-function display_search_results(data) {
+/*function display_search_results(data) {
     $('.loading').show();
 
     for (i = 0; i < data.length; i++) {
@@ -601,12 +540,13 @@ function display_search_results(data) {
         window.update_count = false;
     }
 
-}
+}*/
 
 function load_data(data) {
 
     // update the map
-    display_search_results(data);
+    // display_search_results(data);
+    updatePins(data);
 }
 
 function reload_on_idle() {
