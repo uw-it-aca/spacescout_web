@@ -164,7 +164,7 @@ function groupHours(days) {
                     if((days2[j]-days2[i])> 1) {
                         break;
                     }
-                    if((days2[j]-days2[i])== 1 && new_hour[0]=="12AM") {
+                    if((days2[j]-days2[i])== 1 && new_hour[0]=="Midnight") {
                         hour[1]=new_hour[1];
                         hours[j]="null";
                         break;
@@ -177,7 +177,7 @@ function groupHours(days) {
                     if((days2[j]-days2[i])!= -6) {
                         break;
                     }
-                    if((days2[j]-days2[i])==-6 && new_hour[0]=="12AM") {
+                    if((days2[j]-days2[i])==-6 && new_hour[0]=="Midnight") {
                         hour[1]=new_hour[1];
                         hours[j]="null";
                         break;
@@ -242,8 +242,11 @@ function to12Hour(day) {
                     data[i] = time.join(":");
                 }
             }
+            if (data[i] == "12AM") {
+                data[i] = "Midnight";
+            }
         }
-        if(data[0]=="12AM" & data[1]=="Midnight") {
+        if(data[0]=="Midnight" & data[1]=="Midnight") {
             retData[j]="Open 24 Hours";
         }else {
             retData[j]=data[0] +" - " +data[1];
