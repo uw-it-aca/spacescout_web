@@ -4,5 +4,6 @@ oauth2
 django-compressor
 django-mobility
 django-templatetag-handlebars
-cx_Oracle
+
+# cx_Oracle
 
