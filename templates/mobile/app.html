@@ -9,6 +9,8 @@
     window.default_longitude = {{ center_longitude }};
     window.default_zoom = {{ zoom_level }};
     window.default_location = null;
+    window.by_distance_ratio = {{ by_distance_ratio }};
+    window.by_building_zooms = {{ by_building_zooms }};
     if ($.cookie('default_location')) {
         window.default_latitude = $.cookie('default_location').split(',')[0];
         window.default_longitude = $.cookie('default_location').split(',')[1];

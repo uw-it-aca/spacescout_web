@@ -19,6 +19,7 @@ import oauth2
 import simplejson as json
 from django.utils.datastructures import SortedDict
 from mobility.decorators import mobile_template
+from django.core.exceptions import ImproperlyConfigured
 
 
 @mobile_template('{mobile/}app.html')
@@ -35,6 +36,12 @@ def HomeView(request, template=None):
         center_latitude = '47.655003'
         center_longitude = '-122.306864'
         zoom_level = '15'
+
+    if (hasattr(settings, 'SS_BUILDING_CLUSTERING_ZOOM_LEVELS') and hasattr(settings, 'SS_DISTANCE_CLUSTERING_RATIO')):
+        by_building_zooms = settings.SS_BUILDING_CLUSTERING_ZOOM_LEVELS
+        by_distance_ratio = settings.SS_DISTANCE_CLUSTERING_RATIO
+    else:
+        raise ImproperlyConfigured("You need to configure your clustering constants in settings.py or local_settings.py")
 
     search_args = {
         'center_latitude': center_latitude,
@@ -81,6 +88,8 @@ def HomeView(request, template=None):
         'zoom_level': zoom_level,
         'locations': locations,
         'default_location': default_location,
+        'by_building_zooms': by_building_zooms,
+        'by_distance_ratio': by_distance_ratio,
         'buildingdict': buildingdict,
         'is_mobile': request.MOBILE,
         'less_not_compiled': less_not_compiled,
