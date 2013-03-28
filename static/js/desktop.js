@@ -244,6 +244,8 @@ Handlebars.registerHelper('ifany', function(a, b) {
 
            replaceUrls();
 
+           // Set focus on details container
+           $('.space-detail-inner').focus();
 	}
 
 	function hideSpaceDetails() {
