@@ -20,6 +20,7 @@ import simplejson as json
 from django.utils.datastructures import SortedDict
 from mobility.decorators import mobile_template
 import urllib
+import re
 
 
 @mobile_template('{mobile/}app.html')
@@ -78,8 +79,10 @@ def HomeView(request, template=None):
 
     shib = None
     if hasattr(settings, 'SHIB_LOGIN_URL') and hasattr(settings, 'SHIB_LOGOUT_URL'):
+        current_url = request.build_absolute_uri()
+        current_url = re.sub(r'^http://', 'https://', current_url)
         shib = {
-                'login_url': '%s?target=%s' % (settings.SHIB_LOGIN_URL, urllib.quote(request.get_full_path())),
+                'login_url': '%s?target=%s' % (settings.SHIB_LOGIN_URL, urllib.quote(current_url)),
                 'logout_url': settings.SHIB_LOGOUT_URL,
                 'mail': None,
                 'is_logged_in': False,

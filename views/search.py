@@ -40,6 +40,13 @@ def SearchView(request):
     for key in request.GET:
         search_args[key] = request.GET.getlist(key)
 
+    shib_attr_mail = 'mail'
+    if hasattr(settings, 'SHIB_ATTRIBUTE_MAIL'):
+        shib_attr_mail = settings.SHIB_ATTRIBUTE_MAIL
+
+    if request.META.get(shib_attr_mail, ''):
+        search_args["email_address"] = request.META[shib_attr_mail]
+
     json = get_space_search_json(client, search_args)
     json = simplejson.loads(json)
     i18n_json = []
