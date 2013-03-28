@@ -246,7 +246,9 @@ function run_custom_search() {
     }
 
     // hours
-    if ($("#hours_list_input").attr("checked") == "checked") {
+    if ($("#all_spots").attr("checked") == "checked") {
+      window.spacescout_search_options["all_spots"] = 1;
+    } else if ($("#hours_list_input").attr("checked") == "checked") {
         if ($('#day-from').val() != 'nopref') {
             var from_query = new Array;
             from_query.push($('#day-from').val());
@@ -559,7 +561,7 @@ function fetch_data() {
         args = {};
     }
     // it's a hack, but it should work
-    if (!args["open_at"]) {
+    if (!args["open_at"] && !args["all_spots"]) {
         args["open_now"] = 1;
     }
 
