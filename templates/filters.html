@@ -267,4 +267,17 @@
                                 <label class="checkbox inline" for="neighboring">
                                   <input type="checkbox" id="neighboring" name="food_nearby" value="neighboring"> {% trans 'neighboring' %}
                                 </label>
-                            </div>
+						    </div>
+
+						{% if shib %}
+			    		<div id="filter_restricted" class="choice-group">
+								<h5>Restricted Spaces</h5>
+								{% if shib.is_logged_in %}
+									Restricting spaces for {{ shib.mail|escape }}. <a href="{{ shib.logout_url|escape }}">Log out</a> to see all spaces.
+								{% else %}
+									<a href="{{ shib.login_url|escape }}">Log in</a> to exclude restricted spaces.
+								{% endif %}
+						</div>
+						{% endif %}
+			</div>
+		    </div>
