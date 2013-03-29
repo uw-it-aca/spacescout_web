@@ -103,7 +103,7 @@ def HomeView(request, template=None):
 
         if shib_attr_eppn in request.META:
             shib['is_logged_in'] = True
-            shib['eppn'] = request.META[eppn]
+            shib['eppn'] = request.META[shib_attr_eppn]
         if shib_attr_mail in request.META:
             shib['mail'] = request.META[shib_attr_mail]
 
