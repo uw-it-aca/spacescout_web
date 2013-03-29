@@ -79,8 +79,8 @@
 
                							 {% tplhandlebars "filter_list" %}
               							  <ul id='filter_display_list'>
-           						         {{#if open_at}}<li>specific time</li>{{else}}<li>open now</li>{{/if}}
-                 					   	 {{#if building_name}}<li>specific building</li>{{else}}<li>entire campus</li>{{/if}}
+									  <li>{{#if open_at}}specific time{{else}}{{#if all_spots}}all spaces{{else}}open now{{/if}}{{/if}}</li>
+									  <li>{{#if building_name}}specific building{{else}}entire campus{{/if}}</li>
 					                     {{#if space_type}}<li>type of space</li>{{/if}}
                     					 {{#if true_capacity}}<li>seats {{capacity}}</li>{{/if}}
                     					 {{#if reservable}}<li>reservable</li>{{/if}}
