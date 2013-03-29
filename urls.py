@@ -28,6 +28,3 @@ urlpatterns = patterns('spacescout_web.views',
     url(r'space/(?P<spot_id>\d+)/image/(?P<image_id>\d+)/thumb/(?P<thumb_width>\d+)x(?P<thumb_height>\d+)$', 'image.ImageView'),
 )
 
-urlpatterns += patterns('',
-  url(r'^shib/', include('shibboleth.urls', namespace='shibboleth')),
-)
