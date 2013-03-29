@@ -253,18 +253,16 @@
                            </div>
                        </fieldset>
 		       
-			{% if shib %}
 			<fieldset id="filter_restricted_spots" class="choice-group">
 			       <legend><h4 id="restricted-spots-filter-header">Restricted Spaces</h4></legend>
 			       <div>
-				       <p>{% if shib.is_logged_in %}
-				       Restricting spaces for {{ shib.mail|escape }}.
-				       <a href="{{ shib.logout_url|escape }}">Log out</a> to see all spaces.
+				       <p>{% if request.user.is_authenticated %}
+				       Restricting spaces for {{ request.user.email|escape }}.
+				       <a href="{{ logout_url|escape }}">Log out</a> to see all spaces.
    					{% else %}
-   					<a href="{{ shib.login_url|escape }}">Log in</a> to exclude restricted spaces.
+   					<a href="{{ login_url|escape }}">Log in</a> to exclude restricted spaces.
 					{% endif %}</p>
 				</div>
 			</fieldset>
-			{% endif %}
                     </div>
 	</div>

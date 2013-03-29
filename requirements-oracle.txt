@@ -5,7 +5,7 @@ django-compressor
 django-mobility
 django-templatetag-handlebars
 
--e git+git://github.com/Brown-University-Library/django-shibboleth-remoteuser.git
+-e git+git://github.com/Brown-University-Library/django-shibboleth-remoteuser.git#egg=django-shibboleth-remoteuser
 
 cx_Oracle
 
