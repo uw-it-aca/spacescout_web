@@ -19,6 +19,7 @@ import urllib
 import oauth2
 import types
 import simplejson
+import sys
 
 
 def SearchView(request):
@@ -40,9 +41,8 @@ def SearchView(request):
     for key in request.GET:
         search_args[key] = request.GET.getlist(key)
 
-    shib_attr_eppn = getattr(settings, 'SHIB_ATTRIBUTE_EPPN', 'eppn')
-    if shib_attr_eppn in request.META:
-        search_args["org_filter:eppn"] = request.META[shib_attr_eppn]
+    if 'shibboleth' in sys.modules and request.user.is_authenticated():
+        search_args["org_filter:eppn"] = request.user.username
 
     json = get_space_search_json(client, search_args)
     json = simplejson.loads(json)
