@@ -6,6 +6,7 @@
 @grey_border: #d6d6d6;
 @grey_background: #e5e5e5;
 @grey_medium: #aaa;
+@uofi_blue_background: #1c3764; 
 
 // retina.less
 // A helper mixin for applying high-resolution background images (http://www.retinajs.com)
@@ -46,7 +47,7 @@ button {
 
         .logo { height: 75px; line-height: 70px; width: 200px; float:left; position: relative;
 
-            .at2x('/static/img/spacescout_mobile_new.png', 189px, 42px);
+            .at2x('/static/img/space_finder_logo_mobile.png', 179px, 60px);
             background-repeat: no-repeat;
             background-position: 10px 50%;
 
@@ -91,7 +92,7 @@ button {
         }
 
 
-        #filter_button { background:#514d83; .at2x('/static/img/down.png', 16px, 9px);  background-repeat:no-repeat; background-position: 8px 50%; display:inline-block; color: #8987ab; width: 30px; text-indent: -999px;
+        #filter_button { background:#514d83; .at2x('/static/img/down.png', 16px, 9px);  background-repeat:no-repeat; background-position: 8px 50%; display:inline-block; color: #fff; width: 30px; text-indent: -999px;
 
           }
         #done-clear-group { display:none;}
@@ -134,8 +135,11 @@ button {
 
         .inner { padding: 15px; }
 
-        .choice-group { /*border: solid 1px rgba(241,241,12,0.3);*/ margin-bottom: 20px;
+        .choice-group { border: none; /*border: solid 1px rgba(241,241,12,0.3);*/ margin-bottom: 20px;
             .checkbox.inline { margin-left: 0; margin-right: 10px; }
+            label.inline { display: inline-block; margin-left: 2px; color: #ddd;}
+            legend { margin: 0;}
+            .small-text {font-size: 80%;}
         }
 
         .selected { color: #fff; }
@@ -148,7 +152,7 @@ button {
         em { color: #fff; }
 
         #filter_space_types, #filter_equipment_types {
-            .checkbox { white-space: nowrap; line-height: 30px;  padding-top: 0; margin-bottom: 0;
+            .checkbox { display: block; white-space: nowrap; line-height: 30px;  padding-top: 0; margin-bottom: 0;
                input[type="checkbox"] { margin-top: -3px; width: 17px; height: 17px; float: none; }
             }
         }
@@ -338,7 +342,7 @@ button {
             }
 
             li:last-child { border-bottom: none; }
-            li.building_header { border-top:solid 1px @grey_border; background-color: #ddd; color:#999; font-size: 12px; padding: 5px 10px; }
+            li.building_header { border-top:solid 1px @grey_border; background-color: #ddd; color:#222; font-size: 12px; padding: 5px 10px; }
             li.no-spaces { background: none; border: none; color: #333; padding: 5px; }
         }
     }
@@ -346,10 +350,13 @@ button {
 
 
 
-#footer { margin: 15px 10px 10px 10px; font-size: 11px; line-height: 14px; background: url('/static/img/w.png') no-repeat;
+#footer { margin: 15px 10px 10px 10px; font-size: 11px; line-height: 14px; 
 
-    .copyright { margin-left: 45px; margin-bottom: 10px; }
+
+    .copyright { margin-left: 45px; margin-bottom: 10px; font-size: .5em;}
     .partners { margin-left: 45px; color: #aaa; }
+	.logo {margin: 10px;}
+	
 }
 
 .loading {

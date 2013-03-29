@@ -106,18 +106,18 @@
         <div id="map_canvas" aria-labelledby="map_header" aria-hidden="true"></div>
         {% tplhandlebars "map_controls" %}
             <div class="map-control-container">
-                <a href="#" title="Recenter map"><img id="center_all" src="/static/img/center_all.png" name="image" style="display: none;" /></a>&nbsp;
+                <a href="#" title="Recenter map"><img id="center_all" src="/static/img/center_all.png" alt="Recenter map" name="image" style="display: none;" /></a>&nbsp;
             </div>
         {% endtplhandlebars %}
 
         {% tplhandlebars "space_details" %}
             <div id="space_detail_container" class="">
                 <div class="space-detail">
-                    <div class="space-detail-inner" id="detail_container_{{id}}">
+                    <div class="space-detail-inner" id="detail_container_{{id}}" aria-labelledby="space-detail-name" tabindex="0">
                         <div class="space-detail-header">
-                            <h3 class="space-detail-name">{{name}}</h3>
+                            <h3 id="space-detail-name" class="space-detail-name">{{name}}</h3>
                             <div class="space-detail-type">{{type}} {{#if capacity }}<span class="space-detail-capacity">[Seats&nbsp;{{capacity}}]</span>{{/if}}</div>
-                            <a class="close" href="#" title="close"><img src="/static/img/x.png" /></a>
+                            <a class="close" href="#" title="close"><img alt="close details" src="/static/img/x.png" /></a>
                         </div>
                         <div class="space-detail-body">
 
@@ -238,7 +238,7 @@
                                 </div>
 
                                 <div class="space-detail-report">
-                                    <a href="/contact/{{ id }}/"><img src="/static/img/mail.png" />&nbsp;Report a problem with this space</a>
+                                    <a href="/contact/{{ id }}/"><img alt="" src="/static/img/mail.png" />&nbsp;Report a problem with this space</a>
                                 </div>
 
                                 <div class="space-detail-footer">This space was last updated on {{last_modified}} by<br/> {% if organization %}{{ organization }}{%else%}University of Washington Information Technology{% endif %}</div>
@@ -253,10 +253,10 @@
         <div id="info_list">
         <h2 id="space_list_header" class="visuallyhidden">List of Spaces</h2>
             <div class="list-inner" aria-labelledby="space_list_header">
-                <div class="list-arrow"><a id="filter_link" title="List of spaces" href="#"><img src="{{ STATIC_URL }}img/list.png" /></a></div>
+                <div class="list-arrow"><a id="filter_link" title="List of spaces" href="#"><img alt="" src="{{ STATIC_URL }}img/list.png" /></a></div>
 
                 <!-- TODO: need to implement if/else logic for spinner and info_items -->
-                <div class="loading"><div class="loading-inner"><img src="{{ STATIC_URL }}img/spinner.gif" />&nbsp;&nbsp;Loading spaces...</div></div>
+                <div class="loading"><div class="loading-inner"><img alt="" src="{{ STATIC_URL }}img/spinner.gif" />&nbsp;&nbsp;Loading spaces...</div></div>
 
                 <div id="info_items"></div>
 
@@ -264,7 +264,7 @@
 
                         {{#if data}}<ol>
                         {{#each data}}
-                            <li class="building_header">{{this.name}}</li>
+                            <li class="building_header">{{this.name}}
                             <ol>{{#each this.spots}}
                             <li class="clearfix view-details">
                                 <div class="space-detail-list-image pull-left">
@@ -278,12 +278,13 @@
                                 </div>
 
                                 <button id="{{id}}" class="space-detail-list-item pull-left" type="button" aria-label="Get space details for {{name}}" aria-owns="detail_container_{{id}}">
-                                    <div class="space-detail-type clearfix"><span class="space-detail-type-label pull-left">{{type}}</span>{{#if capacity }}<span class="space-detail-capacity pull-right">Seats&nbsp;{{capacity}}</span>{{/if}}</div>
                                     <div class="space-detail-name">{{name}}</div>
+                                    <div class="space-detail-type clearfix"><span class="space-detail-type-label pull-left">{{type}}</span>{{#if capacity }}<span class="space-detail-capacity pull-right">Seats&nbsp;{{capacity}}</span>{{/if}}</div>
                                     <div class="space-detail-desc">{{extended_info.location_description}}</div>
                                 </button>
                             </li>
                             {{/each}}</ol>
+                         </li>
                         {{/each}}</ol>
                         {{else}}
                             <li class="no-spaces">Sorry, no spaces match your filters!</li>
@@ -295,7 +296,7 @@
 
                         {{#if data }}<ol>
                         {{#each data}}
-                            <li class="building_header">{{this.name}}</li><ol>
+                            <li class="building_header">{{this.name}}<ol>
                             {{#each this.spots}}
                             <li class="clearfix view-details">
                                 <div class="space-detail-list-image pull-left">
@@ -306,12 +307,13 @@
                                   {{/if}}
                                 </div>
                                 <button  id="{{id}}" class="space-detail-list-item pull-left" type="button" aria-label="Get space details for {{name}}" aria-owns="detail_container_{{id}}">
-                                    <div class="space-detail-type"><span class="space-detail-type-label pull-left">{{type}}</span>{{#if capacity }}<span class="space-detail-capacity pull-right">Seats&nbsp;{{capacity}}</span>{{/if}}</div>
                                     <div class="space-detail-name">{{name}}</div>
+                                    <div class="space-detail-type"><span class="space-detail-type-label pull-left">{{type}}</span>{{#if capacity }}<span class="space-detail-capacity pull-right">Seats&nbsp;{{capacity}}</span>{{/if}}</div>
                                     <div class="space-detail-desc">{{extended_info.location_description}}</div>
                                 </button>
                             </li>
                             {{/each}}</ol>
+                         </li>
                         {{/each}}</ol>
                         {{else}}
                             <li class="no-spaces">Sorry, no spaces match your filters!</li>
@@ -321,7 +323,7 @@
 
                 {% tplhandlebars "spot_info" %}
                     <ol>
-                        <li class="building_header">{{location.building_name}}</li>
+                        <li class="building_header">{{location.building_name}}
                         <ol><li class="clearfix view-details">
                             <div class="space-detail-list-image pull-left">
                               {{#if images.0.id}}
@@ -336,6 +338,7 @@
                                 <div class="space-detail-desc">{{extended_info.location_description}}</div>
                             </button>
                         </li></ol>
+                        </li>
                     </ol>
                 {% endtplhandlebars %}
             </div>
