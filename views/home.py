@@ -86,21 +86,25 @@ def HomeView(request, template=None):
 
     shib = None
     if hasattr(settings, 'SHIB_LOGIN_URL') and hasattr(settings, 'SHIB_LOGOUT_URL'):
+        # Shibboleth likes HTTPS, so build a URL that goes there
         current_url = request.build_absolute_uri()
         current_url = re.sub(r'^http://', 'https://', current_url)
+
         shib = {
                 'login_url': '%s?target=%s' % (settings.SHIB_LOGIN_URL, urllib.quote(current_url)),
                 'logout_url': settings.SHIB_LOGOUT_URL,
+                'eppn': None,
                 'mail': None,
                 'is_logged_in': False,
                 }
 
-        shib_attr_mail = 'mail'
-        if hasattr(settings, 'SHIB_ATTRIBUTE_MAIL'):
-            shib_attr_mail = settings.SHIB_ATTRIBUTE_MAIL
+        shib_attr_mail = getattr(settings, 'SHIB_ATTRIBUTE_MAIL', 'mail')
+        shib_attr_eppn = getattr(settings, 'SHIB_ATTRIBUTE_EPPN', 'eppn')
 
-        if request.META.get(shib_attr_mail, ''):
+        if shib_attr_eppn in request.META:
             shib['is_logged_in'] = True
+            shib['eppn'] = request.META[eppn]
+        if shib_attr_mail in request.META:
             shib['mail'] = request.META[shib_attr_mail]
 
     params = {
