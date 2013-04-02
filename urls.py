@@ -27,4 +27,3 @@ urlpatterns = patterns('spacescout_web.views',
     url(r'space/(?P<spot_id>\d+)/image/(?P<image_id>\d+)/thumb/constrain/height:(?P<thumb_height>\d+)(?:,width:(?P<thumb_width>\d+))?$', 'image.ImageView', {'constrain': True}),
     url(r'space/(?P<spot_id>\d+)/image/(?P<image_id>\d+)/thumb/(?P<thumb_width>\d+)x(?P<thumb_height>\d+)$', 'image.ImageView'),
 )
-
