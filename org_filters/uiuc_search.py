@@ -10,7 +10,7 @@ import sys
 class Filter(SearchFilter):
     def filter_args(self, args):
         if 'shibboleth' in sys.modules and self.request.user.is_authenticated():
-            args['eppn'] = request.user.username
+            args['eppn'] = self.request.user.username
 
         return args
 
