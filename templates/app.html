@@ -57,7 +57,7 @@
                         <h3 id="current_filters" class="visuallyhidden">Current Filters:</h3>
                         <ul id='filter_display_list' aria-labelledby="current_filters">
 
-                            <li>{{#if open_at}}specific time{{else}}{{#if all_spots}}all spaces{{else}}open now{{/if}}{{/if}}</li>
+                            <li>{{#if open_at}}specific time{{else}}{{#if open_anytime}}any time{{else}}open now{{/if}}{{/if}}</li>
 			    <li>{{#if building_name}}specific building{{else}}entire campus{{/if}}</li>
                             {{#if space_type}}<li>type of space</li>{{/if}}
                             {{#if true_capacity}}<li>seats {{capacity}}</li>{{/if}}
