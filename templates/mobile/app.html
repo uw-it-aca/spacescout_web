@@ -124,7 +124,7 @@
 
                         {{#if data}}<ol>
                         {{#each data}}
-                            <li class="building_header">{{this.name}}
+			    <li><div class="building_header">{{this.name}}</div>
                             <ol>{{#each this.spots}}
                             <li class="clearfix view-details">
                                 <div class="space-detail-list-image pull-left">
@@ -155,7 +155,7 @@
 
                         {{#if data }}<ol>
                         {{#each data}}
-                            <li class="building_header">{{this.name}}<ol>
+			<li><div class="building_header">{{this.name}}</div><ol>
                             {{#each this.spots}}
                             <li class="clearfix view-details">
                                 <div class="space-detail-list-image pull-left">
@@ -182,7 +182,7 @@
 
                 {% tplhandlebars "spot_info" %}
                     <ol>
-                        <li class="building_header">{{location.building_name}}
+                        <li><div class="building_header">{{location.building_name}}</div>
                         <ol><li class="clearfix view-details">
                             <div class="space-detail-list-image pull-left">
                               {{#if images.0.id}}
