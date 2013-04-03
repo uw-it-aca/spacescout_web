@@ -264,7 +264,7 @@
 
                         {{#if data}}<ol>
                         {{#each data}}
-                            <li class="building_header">{{this.name}}
+			    <li><div class="building_header">{{this.name}}</div>
                             <ol>{{#each this.spots}}
                             <li class="clearfix view-details">
                                 <div class="space-detail-list-image pull-left">
@@ -279,8 +279,8 @@
 
                                 <button id="{{id}}" class="space-detail-list-item pull-left" type="button" aria-label="Get space details for {{name}}" aria-owns="detail_container_{{id}}">
                                     <div class="space-detail-name">{{name}}</div>
-                                    <div class="space-detail-type clearfix"><span class="space-detail-type-label pull-left">{{type}}</span>{{#if capacity }}<span class="space-detail-capacity pull-right">Seats&nbsp;{{capacity}}</span>{{/if}}</div>
                                     <div class="space-detail-desc">{{extended_info.location_description}}</div>
+                                    <div class="space-detail-type clearfix"><span class="space-detail-type-label pull-left">{{type}}</span>{{#if capacity }}<span class="space-detail-capacity pull-right">Seats&nbsp;{{capacity}}</span>{{/if}}</div>
                                 </button>
                             </li>
                             {{/each}}</ol>
@@ -296,8 +296,8 @@
 
                         {{#if data }}<ol>
                         {{#each data}}
-                            <li class="building_header">{{this.name}}<ol>
-                            {{#each this.spots}}
+			    <li><div class="building_header">{{this.name}}</div>
+			    <ol>{{#each this.spots}}
                             <li class="clearfix view-details">
                                 <div class="space-detail-list-image pull-left">
                                   {{#if images.0.id }}
@@ -308,8 +308,8 @@
                                 </div>
                                 <button  id="{{id}}" class="space-detail-list-item pull-left" type="button" aria-label="Get space details for {{name}}" aria-owns="detail_container_{{id}}">
                                     <div class="space-detail-name">{{name}}</div>
-                                    <div class="space-detail-type"><span class="space-detail-type-label pull-left">{{type}}</span>{{#if capacity }}<span class="space-detail-capacity pull-right">Seats&nbsp;{{capacity}}</span>{{/if}}</div>
                                     <div class="space-detail-desc">{{extended_info.location_description}}</div>
+                                    <div class="space-detail-type"><span class="space-detail-type-label pull-left">{{type}}</span>{{#if capacity }}<span class="space-detail-capacity pull-right">Seats&nbsp;{{capacity}}</span>{{/if}}</div>
                                 </button>
                             </li>
                             {{/each}}</ol>
@@ -323,7 +323,7 @@
 
                 {% tplhandlebars "spot_info" %}
                     <ol>
-                        <li class="building_header">{{location.building_name}}
+			<li><div class="building_header">{{location.building_name}}</div>
                         <ol><li class="clearfix view-details">
                             <div class="space-detail-list-image pull-left">
                               {{#if images.0.id}}
@@ -333,9 +333,9 @@
                               {{/if}}
                             </div>
                             <button id="{{id}}" class="space-detail-list-item pull-left" type="button" aria-label="Get space details for {{name}}" aria-owns="detail_container_{{id}}">
-                                <div class="space-detail-type"><span class="space-detail-type-label pull-left">{{type}}</span>{{#if capacity }}<span class="space-detail-capacity pull-right">Seats&nbsp;{{capacity}}</span>{{/if}}</div>
                                 <div class="space-detail-name">{{name}}</div>
                                 <div class="space-detail-desc">{{extended_info.location_description}}</div>
+                                <div class="space-detail-type"><span class="space-detail-type-label pull-left">{{type}}</span>{{#if capacity }}<span class="space-detail-capacity pull-right">Seats&nbsp;{{capacity}}</span>{{/if}}</div>
                             </button>
                         </li></ol>
                         </li>
