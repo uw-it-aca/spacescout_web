@@ -1,268 +1,275 @@
-                      {% load i18n %}
-                      {% load templatetag_handlebars %}
-                      <fieldset class="choice-group">
-                         <legend><h4>Type &amp; Capacity</h4></legend>
-                         <p><span class="small-text"><em>Select preferred types of space, if any:</em></span></p>
-                         <fieldset id="filter_space_types" class="choice-group clearfix">
-                            <legend><h5 id="type_header">Type of space:</h5></legend>
-                             <div style="width:auto;float:left; margin-right: 15px;">
-                                 <span class="checkbox">
-                                    <input type="checkbox" name="type" id="study_room" value="study_room">
-                                    <label class="inline" for="study_room">{% trans 'study_room' %}</label>
-                                 </span>
-                                 <span class="checkbox">
-                                    <input type="checkbox" name="type" id="study_area" value="study_area">
-                                    <label class="inline" for="study_area">{% trans 'study_area' %}</label>
-                                 </span>
-                                 <span class="checkbox">
-                                    <input type="checkbox" name="type" id="computer_lab" value="computer_lab">
-                                    <label class="inline" for="computer_lab">{% trans 'computer_lab' %}</label>
-                                 </span>
-                                 <span class="checkbox">
-                                    <input type="checkbox" name="type" id="studio" value="studio">
-                                    <label class="inline" for="studio">{% trans 'studio' %}</label>
-                                 </span>
-                                 <span class="checkbox">
-                                    <input type="checkbox" name="type" id="classroom" value="classroom">
-                                    <label class="inline" for="classroom">{% trans 'classroom' %}</label>
-                                 </span>
-                             </div>
+{% load i18n %}
+{% load templatetag_handlebars %}
+<fieldset class="choice-group">
+   <legend>Type &amp; Capacity</legend>
+   <p><span class="small-text"><em>Select preferred types of space, if any:</em></span></p>
+   <fieldset id="filter_space_types" class="choice-group clearfix">
+       <legend id="filter_space_types_header">Type of space:</legend>
+       <div style="width:auto;float:left; margin-right: 15px;">
+           <span class="checkbox">
+              <input type="checkbox" name="type" id="study_room" value="study_room">
+              <label class="inline" for="study_room">{% trans 'study_room' %}</label>
+           </span>
+           <span class="checkbox">
+              <input type="checkbox" name="type" id="study_area" value="study_area">
+              <label class="inline" for="study_area">{% trans 'study_area' %}</label>
+           </span>
+           <span class="checkbox">
+              <input type="checkbox" name="type" id="computer_lab" value="computer_lab">
+              <label class="inline" for="computer_lab">{% trans 'computer_lab' %}</label>
+           </span>
+           <span class="checkbox">
+              <input type="checkbox" name="type" id="studio" value="studio">
+              <label class="inline" for="studio">{% trans 'studio' %}</label>
+           </span>
+           <span class="checkbox">
+              <input type="checkbox" name="type" id="classroom" value="classroom">
+              <label class="inline" for="classroom">{% trans 'classroom' %}</label>
+           </span>
+       </div>
 
-                             <div style="width:auto;float:left">
-                                 <span class="checkbox">
-                                    <input type="checkbox" name="type" id="open" value="open">
-                                    <label class="inline" for="open">{% trans 'open' %}</label>
-                                 </span>
-                                 <span class="checkbox">
-                                    <input type="checkbox" name="type" id="lounge" value="lounge">
-                                    <label class="inline" for="lounge">{% trans 'lounge' %}</label>
-                                 </span>
-                                 <span class="checkbox">
-                                    <input type="checkbox" name="type" id="cafe" value="cafe">
-                                    <label class="inline" for="cafe">{% trans 'cafe' %}</label>
-                                 </span>
-                                 <span class="checkbox">
-                                    <input type="checkbox" name="type" id="outdoor" value="outdoor">
-                                    <label class="inline" for="outdoor">{% trans 'outdoor' %}</label>
-                                 </span>
-                             </div>
+       <div style="width:auto;float:left">
+           <span class="checkbox">
+              <input type="checkbox" name="type" id="open" value="open">
+              <label class="inline" for="open">{% trans 'open' %}</label>
+           </span>
+           <span class="checkbox">
+              <input type="checkbox" name="type" id="lounge" value="lounge">
+              <label class="inline" for="lounge">{% trans 'lounge' %}</label>
+           </span>
+           <span class="checkbox">
+              <input type="checkbox" name="type" id="cafe" value="cafe">
+              <label class="inline" for="cafe">{% trans 'cafe' %}</label>
+           </span>
+           <span class="checkbox">
+              <input type="checkbox" name="type" id="outdoor" value="outdoor">
+              <label class="inline" for="outdoor">{% trans 'outdoor' %}</label>
+           </span>
+       </div>
+   </fieldset>
+   <fieldset id="filter_reservability" class="choice-group">
+      <legend id="filter_reservability_header">Reservability:</legend>
+       <span class="checkbox inline">
+          <input type="checkbox" id="reservable" value="true">
+          <label class="inline" for="reservable">Show reservable spaces only</label>
+       </span>
+   </fieldset>
+   <fieldset id="filter_capacity" class="choice-group">
+       <legend id="filter_capacity_header">Capacity</legend>
+       <label class="inline" for="capacity">Seats at least:</label>
+       <select id="capacity" style="width:60px;">
+         <option value="1">1</option>
+         <option value="2">2</option>
+         <option value="3">3</option>
+         <option value="4">4</option>
+         <option value="5">5</option>
+         <option value="6">6</option>
+         <option value="7">7</option>
+         <option value="8">8</option>
+         <option value="9">9</option>
+         <option value="10">10</option>
+         <option value="15">15</option>
+         <option value="20">20</option>
+         <option value="25">25+</option>
+       </select>
+   </fieldset>
+</fieldset>
 
-                         </fieldset>
-                         <fieldset id="filter_reservability"  class="choice-group">
-                            <legend><h5 id="reservation-header">Reservability:</h5></legend>
-                             <span class="checkbox inline">
-                                <input type="checkbox" id="reservable" value="true">
-                                <label class="inline" for="reservable">Show reservable spaces only</label>
-                             </span>
-                         </fieldset>
-                         <fieldset class="choice-group">
-                             <legend><h5 id="capacity-header">Capacity</h5></legend>
-                             <label class="inline" for="capacity">Seats at least:</label>
-                             <select id="capacity" style="width:60px;">
-                               <option value="1">1</option>
-                               <option value="2">2</option>
-                               <option value="3">3</option>
-                               <option value="4">4</option>
-                               <option value="5">5</option>
-                               <option value="6">6</option>
-                               <option value="7">7</option>
-                               <option value="8">8</option>
-                               <option value="9">9</option>
-                               <option value="10">10</option>
-                               <option value="15">15</option>
-                               <option value="20">20</option>
-                               <option value="25">25+</option>
-                             </select>
-                         </fieldset>
-                      </fieldset>
-                   </div>
-                </div>
+</div>
+</div>
+<div class="inner-column">
 
-                    <div class="inner-column">
-                       <div class="inner-block-right">
-                       <fieldset id="filter_hours" class="choice-group">
-                       <legend><h4>Hours</h4></legend>
-                       <p id="open_hours_header"><span class="small-text"><em>Select open hours</em></span></p>
-                           <div>
-                               <span class="radio inline">
-                                 <input type="radio" name="optionsHours" id="open_now" value="option1" checked>
-                                 <label class="inline" for="open_now">Open now</label>
-                               </span>
-                               <span class="radio inline">
-                                 <input type="radio" name="optionsHours" id="hours_list_input" value="option2">
-                                 <label class="inline" for="hours_list_input">Specify day &amp; time</label>
-                               </span>
-                               <span class="radio inline">
-                                 <input type="radio" name="optionsHours" id="open_anytime" value="open_anytime">
-                                 <label class="inline" for="open_anytime">Any time</label>
-                               </span>
-                           </div>
-                           <div id="hours_list_container" style="margin-top:8px; display:none; " aria-labelledby="from-time-heading">
-                               <div><span class="hours-from" id="from-time-heading">from</span>
-                               <label class="hours-from visuallyhidden" for="day-from">from day:</label><select id="day-from">
-                                 <option value="nopref">No pref</option>
-                                 <option value="Monday">MON</option>
-                                 <option value="Tuesday">TUE</option>
-                                 <option value="Wednesday">WED</option>
-                                 <option value="Thursday">THU</option>
-                                 <option value="Friday">FRI</option>
-                                 <option value="Saturday">SAT</option>
-                                 <option value="Sunday">SUN</option>
-                               </select>
-                               <label class="hours-from visuallyhidden" for="hour-from">from time:</label><select id="hour-from">
-                                 <option value="nopref">No pref</option>
-                                 <option>12:00</option>
-                                 <option>12:30</option>
-                                 <option>1:00</option>
-                                 <option>1:30</option>
-                                 <option>2:00</option>
-                                 <option>2:30</option>
-                                 <option>3:00</option>
-                                 <option>3:30</option>
-                                 <option>4:00</option>
-                                 <option>4:30</option>
-                                 <option>5:00</option>
-                                 <option>5:30</option>
-                                 <option>6:00</option>
-                                 <option>6:30</option>
-                                 <option>7:00</option>
-                                 <option>7:30</option>
-                                 <option>8:00</option>
-                                 <option>8:30</option>
-                                 <option>9:00</option>
-                                 <option>9:30</option>
-                                 <option>10:00</option>
-                                 <option>10:30</option>
-                                 <option>11:00</option>
-                                 <option>11:30</option>
-                               </select>
-                               <label class="hours-from visuallyhidden" for="ampm-from">from time:</label>
-                               <select class="ampm" id="ampm-from">
-                                   <option value="AM">AM</option>
-                                   <option value="PM">PM</option>
-                               </select>
-                               </div>
-                               <div aria-labelledby="until-time-heading">
-                               <span class="hours-from" id="until-time-heading">until</span>
-                               <label class="hour-until visuallyhidden" for="day-until">until day:</label>
-                               <select id="day-until">
-                                 <option value="nopref">No pref</option>
-                                 <option value="Monday">MON</option>
-                                 <option value="Tuesday">TUE</option>
-                                 <option value="Wednesday">WED</option>
-                                 <option value="Thursday">THU</option>
-                                 <option value="Friday">FRI</option>
-                                 <option value="Saturday">SAT</option>
-                                 <option value="Sunday">SUN</option>
-                               </select>
-                               <label class="hour-until visuallyhidden" for="hour-until">until time:</label><select id="hour-until">
-                                 <option value="nopref">No pref</option>
-                                 <option>12:00</option>
-                                 <option>12:30</option>
-                                 <option>1:00</option>
-                                 <option>1:30</option>
-                                 <option>2:00</option>
-                                 <option>2:30</option>
-                                 <option>3:00</option>
-                                 <option>3:30</option>
-                                 <option>4:00</option>
-                                 <option>4:30</option>
-                                 <option>5:00</option>
-                                 <option>5:30</option>
-                                 <option>6:00</option>
-                                 <option>6:30</option>
-                                 <option>7:00</option>
-                                 <option>7:30</option>
-                                 <option>8:00</option>
-                                 <option>8:30</option>
-                                 <option>9:00</option>
-                                 <option>9:30</option>
-                                 <option>10:00</option>
-                                 <option>10:30</option>
-                                 <option>11:00</option>
-                                 <option>11:30</option>
-                               </select>
-                               <label class="hour-until visuallyhidden" for="ampm-until">until time:</label>
-                               <select class="ampm" id="ampm-until">
-                                   <option value="AM">AM</option>
-                                   <option value="PM">PM</option>
-                               </select>
-                               </div>
-                           </div>
-                       </fieldset>
+<fieldset id="filter_hours" class="choice-group">
+    <legend id="filter_hours_header">Hours</legend>
+    <p id="open_hours_header"><span class="small-text"><em>Select open hours</em></span></p>
+    <div>
+        <span class="radio inline">
+            <input type="radio" name="optionsHours" id="open_now" value="option1" checked>
+            <label class="inline" for="open_now">Open now</label>
+        </span>
+        <span class="radio inline">
+            <input type="radio" name="optionsHours" id="open_anytime" value="open_anytime">
+            <label class="inline" for="open_anytime">Any time</label>
+        </span>
+        <span class="radio inline">
+            <input type="radio" name="optionsHours" id="hours_list_input" value="option2">
+            <label class="inline" for="hours_list_input">Specify day &amp; time</label>
+        </span>
+    </div>
 
-                       <fieldset id="filter_location" class="choice-group">
-                          <legend><h4 id="filter-location-header">Location</h4></legend>
+    <div id="hours_list_container" style="margin-top:8px; display:none; " aria-labelledby="from-time-heading">
+        <div><span class="hours-from" id="from-time-heading">from</span>
+            <label class="hours-from visuallyhidden" for="day-from">from day:</label>
+            <select id="day-from">
+                <option value="nopref">No pref</option>
+                <option value="Monday">MON</option>
+                <option value="Tuesday">TUE</option>
+                <option value="Wednesday">WED</option>
+                <option value="Thursday">THU</option>
+                <option value="Friday">FRI</option>
+                <option value="Saturday">SAT</option>
+                <option value="Sunday">SUN</option>
+            </select>
+            <label class="hours-from visuallyhidden" for="hour-from">from time:</label>
+            <select id="hour-from">
+                <option value="nopref">No pref</option>
+                <option>12:00</option>
+                <option>12:30</option>
+                <option>1:00</option>
+                <option>1:30</option>
+                <option>2:00</option>
+                <option>2:30</option>
+                <option>3:00</option>
+                <option>3:30</option>
+                <option>4:00</option>
+                <option>4:30</option>
+                <option>5:00</option>
+                <option>5:30</option>
+                <option>6:00</option>
+                <option>6:30</option>
+                <option>7:00</option>
+                <option>7:30</option>
+                <option>8:00</option>
+                <option>8:30</option>
+                <option>9:00</option>
+                <option>9:30</option>
+                <option>10:00</option>
+                <option>10:30</option>
+                <option>11:00</option>
+                <option>11:30</option>
+            </select>
+            <label class="hours-from visuallyhidden" for="ampm-from">from time:</label>
+            <select class="ampm" id="ampm-from">
+                <option value="AM">AM</option>
+                <option value="PM">PM</option>
+            </select>
+        </div>
 
-                           <div>
-                               <span class="radio inline" for="entire_campus">
-                                  <input type="radio" name="optionsLocations" id="entire_campus" value="option1" checked>
-                                  <label class="inline" for="entire_campus">Entire campus</label>
-                               </span>
-                               <span class="radio inline" for="building_list_input">
-                                  <input type="radio" name="optionsLocations" id="building_list_input" value="option2">
-                                  <label class="inline" for="building_list_input">Specific building</label>
-                               </span>
-                           </div>
-                           <div id="building_list_container" style="margin-top:8px;display:none;"></div>
-                           {% tplhandlebars "building_list" %}
-                           <label class="visuallyhidden" for="e9">Choose a building:</label>
-                               <select class="building-location" name="e9" id="e9">
-                               {{#alphaOptGroupsHTML data}}{{/alphaOptGroupsHTML}}
-                               </select>
-                           {% endtplhandlebars %}
+        <div aria-labelledby="until-time-heading">
+            <span class="hours-from" id="until-time-heading">until</span>
+            <label class="hour-until visuallyhidden" for="day-until">until day:</label>
+            <select id="day-until">
+                <option value="nopref">No pref</option>
+                <option value="Monday">MON</option>
+                <option value="Tuesday">TUE</option>
+                <option value="Wednesday">WED</option>
+                <option value="Thursday">THU</option>
+                <option value="Friday">FRI</option>
+                <option value="Saturday">SAT</option>
+                <option value="Sunday">SUN</option>
+            </select>
+            <label class="hour-until visuallyhidden" for="hour-until">until time:</label>
+            <select id="hour-until">
+                <option value="nopref">No pref</option>
+                <option>12:00</option>
+                <option>12:30</option>
+                <option>1:00</option>
+                <option>1:30</option>
+                <option>2:00</option>
+                <option>2:30</option>
+                <option>3:00</option>
+                <option>3:30</option>
+                <option>4:00</option>
+                <option>4:30</option>
+                <option>5:00</option>
+                <option>5:30</option>
+                <option>6:00</option>
+                <option>6:30</option>
+                <option>7:00</option>
+                <option>7:30</option>
+                <option>8:00</option>
+                <option>8:30</option>
+                <option>9:00</option>
+                <option>9:30</option>
+                <option>10:00</option>
+                <option>10:30</option>
+                <option>11:00</option>
+                <option>11:30</option>
+            </select>
+            <label class="hour-until visuallyhidden" for="ampm-until">until time:</label>
+            <select class="ampm" id="ampm-until">
+                <option value="AM">AM</option>
+                <option value="PM">PM</option>
+            </select>
+        </div>
+    </div>
+</fieldset>
 
-                       </fieldset>
+<fieldset id="filter_location" class="choice-group">
+    <legend id="filter_location_header">Location</legend>
 
-                       <fieldset id="filter_equipment_types" class="choice-group clearfix" style="margin-bottom:0px;">
-                          <legend><h4 id="resources-filter-header">Resources</h4></legend>
-                       <p><span class="small-text"><em>Select resources needed</em></span></p>
+    <div>
+        <span class="radio inline">
+            <input type="radio" name="optionsLocations" id="entire_campus" value="option1" checked>
+            <label class="inline" for="entire_campus">Entire campus</label>
+        </span>
+        <span class="radio inline">
+            <input type="radio" name="optionsLocations" id="building_list_input" value="option2">
+            <label class="inline" for="building_list_input">Specific building</label>
+        </span>
+    </div>
+    <div id="building_list_container" style="margin-top:8px;display:none;"></div>
+        {% tplhandlebars "building_list" %}
+        <label class="visuallyhidden" for="e9">Choose a building:</label>
+        <select class="building-location" name="e9" id="e9">
+            {{#alphaOptGroupsHTML data}}{{/alphaOptGroupsHTML}}
+        </select>
+        {% endtplhandlebars %}
+</fieldset>
 
-                           <div style="width:auto;float:left; margin-right:15px;">
-                               <span class="checkbox" for="has_whiteboards">
-                                  <input type="checkbox" id="has_whiteboards" name="equipment" value="has_whiteboards">
-                                  <label class="inline" for="has_whiteboards">Whiteboard
-                               </span>
-                               <span class="checkbox" for="has_outlets">
-                                 <input type="checkbox" id="has_outlets" name="equipment" value="has_outlets">
-                                 <label class="inline" for="has_outlets">Outlets</label>
-                               </span>
-                               <span class="checkbox" for="has_computers">
-                                 <input type="checkbox" id="has_computers" name="equipment" value="has_computers">
-                                 <label class="inline" for="has_computers">Computer</label>
-                               </span>
-                               <span class="checkbox" for="has_scanner">
-                                 <input type="checkbox" id="has_scanner" name="equipment" value="has_scanner">
-                                 <label class="inline" for="has_scanner">Scanning</label>
-                               </span>
-                           </div>
+<fieldset id="filter_equipment_types" class="choice-group" style="margin-bottom:0px;">
+    <legend id="filter_equipment_types_header">Resources</legend>
+    <p class="small-text"><em>Select resources needed</em></p>
 
-                           <div style="width:auto;float:left;">
-                               <span class="checkbox" for="has_displays">
-                                 <input type="checkbox" id="has_displays" name="equipment" value="has_displays">
-                                 <label class="inline" for="has_displays">Large display (for laptop)</label>
-                               </span>
-                               <span class="checkbox" for="has_projector">
-                                 <input type="checkbox" id="has_projector" name="equipment" value="has_projector">
-                                 <label class="inline" for="has_projector">Projector</label>
-                               </span>
-                               <span class="checkbox" for="has_printing">
-                                 <input type="checkbox" id="has_printing" name="equipment" value="has_printing">
-                                 <label class="inline" for="has_printing">Printing</label>
-                               </span>
-                           </div>
-                       </fieldset>
-		       
-			<fieldset id="filter_restricted_spots" class="choice-group">
-			       <legend><h4 id="restricted-spots-filter-header">Restricted Spaces</h4></legend>
-			       <div>
-				       <p>{% if user.is_authenticated %}
-				       Restricting spaces for {{ user.email|escape }}.
-				       <a href="{{ logout_link|escape }}">Log out</a> to see all spaces.
-   					{% else %}
-   					<a href="{{ login_link|escape }}">Log in</a> to exclude restricted spaces.
-					{% endif %}</p>
-				</div>
-			</fieldset>
-                    </div>
-	</div>
+    <div style="width:auto;float:left; margin-right:15px;">
+        <span class="checkbox">
+            <input type="checkbox" id="has_whiteboards" name="equipment" value="has_whiteboards">
+            <label class="inline" for="has_whiteboards">Whiteboard</label>
+        </span>
+        <span class="checkbox">
+            <input type="checkbox" id="has_outlets" name="equipment" value="has_outlets">
+            <label class="inline" for="has_outlets">Outlets</label>
+        </span>
+        <span class="checkbox">
+            <input type="checkbox" id="has_computers" name="equipment" value="has_computers">
+            <label class="inline" for="has_computers">Computer</label>
+        </span>
+        <span class="checkbox">
+            <input type="checkbox" id="has_scanner" name="equipment" value="has_scanner">
+            <label class="inline" for="has_scanner">Scanning</label>
+        </span>
+    </div>
+
+    <div style="width:auto;float:left;">
+        <span class="checkbox">
+            <input type="checkbox" id="has_displays" name="equipment" value="has_displays">
+            <label class="inline" for="has_displays">Large display (for laptop)</label>
+        </span>
+        <span class="checkbox">
+            <input type="checkbox" id="has_projector" name="equipment" value="has_projector">
+            <label class="inline" for="has_projector">Projector</label>
+        </span>
+        <span class="checkbox">
+            <input type="checkbox" id="has_printing" name="equipment" value="has_printing">
+            <label class="inline" for="has_printing">Printing</label>
+        </span>
+    </div>
+</fieldset>
+
+</div>
+<div class="inner-column">
+<div class="inner-block-right">
+
+<fieldset id="filter_restricted_spots" class="choice-group">
+    <legend id="filter_restricted_spots_header">Restricted Spaces</legend>
+    <div>
+        <p>
+        {% if user.is_authenticated %}
+            Restricting spaces for {{ user.email|escape }}.
+            <a href="{{ logout_link|escape }}">Log out</a> to see all spaces.
+        {% else %}
+            <a href="{{ login_link|escape }}">Log in</a> to exclude restricted spaces.
+        {% endif %}
+        </p>
+    </div>
+</fieldset>

@@ -134,20 +134,22 @@ button {
 
         .inner { padding: 15px; }
 
-        .choice-group { border: none; /*border: solid 1px rgba(241,241,12,0.3);*/ margin-bottom: 20px;
+        .choice-group { border: none; /*border: solid 1px rgba(241,241,12,0.3);*/ margin: 0 0 20px 0; padding: 0;
             .checkbox.inline { margin-left: 0; margin-right: 10px; }
-            label.inline { display: inline-block; margin-left: 2px; color: #ddd;}
-            legend { margin: 0;}
+            label.inline { display: inline-block; color: #ddd;}
             .small-text {font-size: 80%;}
         }
 
         .selected { color: #fff; }
 
-        h4 { color: #8681b9; border-top: 1px dotted #aaa; margin: 0; font-size: 15px; line-height: 18px; padding-top: 10px; }
+        fieldset {
+            legend { color: #8681b9; font-weight: bold; border-top: 1px dotted #aaa; margin: 0; font-size: 15px; line-height: 18px; padding: 10px 0 0 0; }
 
-        h5 { color: #fff; font-size: 13px; line-height: 14px; margin: 0 0 5px 0;
-            span { font-weight: normal; font-size: 12px; }
+            fieldset legend { color: #fff; font-size: 13px; line-height: 14px; margin: 0 0 5px 0;
+                span { font-weight: normal; font-size: 12px; }
+            }
         }
+
         em { color: #fff; }
 
         #filter_space_types, #filter_equipment_types {
