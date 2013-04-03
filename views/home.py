@@ -20,8 +20,6 @@ import simplejson as json
 from django.utils.datastructures import SortedDict
 from mobility.decorators import mobile_template
 from django.core.exceptions import ImproperlyConfigured
-import urllib
-import re
 
 
 @mobile_template('{mobile/}app.html')
