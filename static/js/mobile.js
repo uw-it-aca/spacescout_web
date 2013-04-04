@@ -118,8 +118,8 @@
 
             // reset checkboxes
             $('input[type=checkbox]').each(function() {
-                if ($(this).attr('checked')) {
-                    $(this).attr('checked', false);
+                if ($(this).prop('checked')) {
+                    $(this).prop('checked', false);
                     $(this).parent().removeClass("selected");
                 }
             });

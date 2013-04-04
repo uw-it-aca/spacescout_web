@@ -19,6 +19,7 @@ import urllib
 import oauth2
 import types
 import simplejson
+from spacescout_web.org_filters import SearchFilterChain
 
 
 def SearchView(request):
@@ -32,13 +33,18 @@ def SearchView(request):
     if not hasattr(settings, 'SS_WEB_OAUTH_SECRET'):
         raise(Exception("Required setting missing: SS_WEB_OAUTH_SECRET"))
 
+    chain = SearchFilterChain(request)
+
     consumer = oauth2.Consumer(key=settings.SS_WEB_OAUTH_KEY, secret=settings.SS_WEB_OAUTH_SECRET)
     client = oauth2.Client(consumer)
 
     search_args = {}
 
     for key in request.GET:
-        search_args[key] = request.GET.getlist(key)
+        if not chain.filters_key(key):
+            search_args[key] = request.GET.getlist(key)
+
+    search_args = chain.filter_args(search_args)
 
     json = get_space_search_json(client, search_args)
     json = simplejson.loads(json)

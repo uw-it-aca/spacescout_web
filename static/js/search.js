@@ -246,7 +246,9 @@ function run_custom_search() {
     }
 
     // hours
-    if ($("#hours_list_input").attr("checked") == "checked") {
+    if ($("#open_anytime").prop("checked")) {
+      window.spacescout_search_options["open_anytime"] = 1;
+    } else if ($("#hours_list_input").prop("checked")) {
         if ($('#day-from').val() != 'nopref') {
             var from_query = new Array;
             from_query.push($('#day-from').val());
@@ -292,7 +294,7 @@ function run_custom_search() {
     }
 
     // location
-    if ($("#building_list_input").attr("checked") == "checked") {
+    if ($("#building_list_input").prop("checked")) {
         window.spacescout_search_options["building_name"] = $('select#e9').val();
         set_cookie = true;
     }
@@ -559,7 +561,7 @@ function fetch_data() {
         args = {};
     }
     // it's a hack, but it should work
-    if (!args["open_at"]) {
+    if (!args["open_at"] && !args["open_anytime"]) {
         args["open_now"] = 1;
     }
 
