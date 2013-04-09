@@ -41,7 +41,7 @@ def ImageView(request, spot_id, image_id, thumb_width=None, thumb_height=None, c
 
     response["Content-type"] = contenttype
 
-    unpatch_vary_headers(response, ['Cookies'])
+    unpatch_vary_headers(response, ['Cookie'])
 
     return response
 
