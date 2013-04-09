@@ -37,7 +37,8 @@ def ImageView(request, spot_id, image_id, thumb_width=None, thumb_height=None, c
     contenttype, img = get_image(client, spot_id, image_id, constrain, thumb_width, thumb_height)
 
     response = HttpResponse(img, content_type=contenttype)
-    unpatch_vary_headers(response, ['Cookie'])
+    # Remove some headers that don't vary for images
+    unpatch_vary_headers(response, ['Cookie', 'X-Mobile', 'Accept-Language', 'User-Agent'])
 
     return response
 
