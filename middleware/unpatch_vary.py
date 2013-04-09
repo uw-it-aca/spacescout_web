@@ -27,7 +27,8 @@ class UnpatchVaryMiddleware(object):
             # insensitively
             existing_headers = dict((h.lower(), h) for h in vary_headers)
             for header in unpatch_headers:
-                if header.lower() in existing_headers:
+                header = header.lower()
+                if header in existing_headers:
                     del existing_headers[header]
             response['Vary'] = ', '.join(existing_headers.values())
 
