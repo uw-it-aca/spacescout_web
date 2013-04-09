@@ -18,6 +18,8 @@ import urllib
 import oauth2
 import types
 
+from spacescout_web.middleware.unpatch_vary import unpatch_vary_headers
+
 
 def ImageView(request, spot_id, image_id, thumb_width=None, thumb_height=None, constrain=False):
 
@@ -38,6 +40,8 @@ def ImageView(request, spot_id, image_id, thumb_width=None, thumb_height=None, c
     response = HttpResponse(img)
 
     response["Content-type"] = contenttype
+
+    unpatch_vary_headers(response, ['Cookies'])
 
     return response
 
