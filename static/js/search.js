@@ -13,6 +13,11 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 
+    Changes
+    =================================================================
+
+    sbutler1@illinois.edu: attr(checked) to prop(checked); open_anytime
+      option.
 */
 
 var spacescout_map = null, spacescout_infowindow, spacescout_marker_ids = {}, spacescout_markers = [], speed = 800, mc = null, youarehere = null, update_count = null;
