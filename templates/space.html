@@ -14,13 +14,13 @@
 {% block content %}
 {% load i18n %}
 
-    <div id="space_details_header">
-
-        <div class="clearfix">
-            <div class="space-detail-name pull-left" style="">{{name}}</div>
-            <img id="back_home_button" class="pull-right" src="/static/img/details_arrow.png" />
+    <div id="space_details_header" class="clearfix">
+		<img id="back_home_button" class="pull-left back-button" src="/static/img/details_arrow.png" />
+        <div id="name-type-block" class="pull-left">
+            <div class="space-detail-name" style="">{{name}}</div>
+      		<div class="space-detail-type">{{ type }} {% if capacity %}<span class="space-detail-capacity">[Seats&nbsp;{{capacity}}]</span>{% endif %}</div>      
         </div>
-       <div class="space-detail-type">{{ type }} {% if capacity %}<span class="space-detail-capacity">[Seats&nbsp;{{capacity}}]</span>{% endif %}</div>
+      
     </div>
 
 
