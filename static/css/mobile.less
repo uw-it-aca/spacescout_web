@@ -350,6 +350,16 @@ button {
                     }
 
                 .space-detail-list-item { width: 37%; display: inline-block;
+                	.space-detail-labstats {
+                	                	.at2x('/static/img/comp-icon.png', 20px, 20px);
+                	                	//background-image: url('/static/img/comp-icon@2x.png'); background-size: 20px 20px;
+                	                	background-repeat: no-repeat; background-position: left top;
+                						color: @grey_dark; font-size: 11px; text-transform: uppercase; display: inline-block; margin-left: 5px;
+                						.computer-available { color:#20b420; }
+										.computer-notavailable {color: #b42020;}
+                						p {margin:0; margin-left:23px;}
+                	}
+
                     .space-detail-capacity { color: @grey_light; font-size: 12px; display: inline-block; }
                     .space-detail-type-label { color: @grey_light; display: inline-block; width: 55%; overflow: hidden; text-overflow: ellipsis; font-size:12px;}
                     .space-detail-type { color: @grey_dark;  white-space: nowrap; overflow:hidden; text-overflow: ellipsis; }

@@ -116,6 +116,7 @@
                 .space-detail-header { position: relative; height: 60px;
                     .space-detail-type { color: @grey_dark;
                         .space-detail-capacity { color: @grey_light; font-size: 11px; text-transform: uppercase; display: inline-block; margin-left: 5px; }
+                        
                     }
                     .space-detail-name { font-size: 20px; color: @purple_text; margin: 5px 0;  line-height:20px; font-weight:normal; }
                     .close { position: absolute; right: 0; top: 0; float: none; }
@@ -217,6 +218,14 @@
         ol { margin: 0px; list-style: none;
             li {
                 .space-detail-list-item { width: 49%;
+                	.space-detail-labstats {
+                	background: transparent url('/static/img/comp-icon.png') no-repeat center top;
+                	margin-top:-2px;
+                	color: @grey_dark; font-size: 11px; line-height: 11px; text-transform: uppercase; display: inline-block; margin-left: 5px;
+                	.computer-available { color:#20b420; }
+							.computer-notavailable {color: #b42020;}
+                	p {margin:0; margin-top:21px;}
+                	}
                     .space-detail-type-label { width: 55%; }
                 }
                 button:focus { outline: grey dashed thin; }
