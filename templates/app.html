@@ -34,7 +34,7 @@
                 {% ifnotequal locations|length 1 %}
                 <select id='location_select'>
                     {% for key, value in locations.items %}
-                        <option value="{{ value.CENTER_LATITUDE }},{{ value.CENTER_LONGITUDE }},{{ key }}">{{ value.NAME }}</option>
+                        <option value="{{ value.CENTER_LATITUDE }},{{ value.CENTER_LONGITUDE }},{{ key }},{{ value.ZOOM_LEVEL }}">{{ value.NAME }}</option>
                     {% endfor %}
                 </select>
                 {% endifnotequal %}
@@ -154,7 +154,7 @@
 
                             <div style="margin: 0 20px 20px 20px;">
 
-                                <h4 class="space-info-header">Space Details:</h4>
+                                
                                 <div class="space-info">
                                      <ul>
 
