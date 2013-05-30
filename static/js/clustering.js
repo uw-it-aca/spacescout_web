@@ -392,21 +392,21 @@ function getSpotList(group){
 
 function createMarker(spots, group_center) {
     var num_spots = spots.length;
-    var label = '<p>'+num_spots+'</p>';
     var main_icon = new google.maps.MarkerImage('static/img/pins/pin00@2x.png', null, null, null, new google.maps.Size(40,40));
-    var alt_icon;
+    var alt_icon = new google.maps.MarkerImage('static/img/pins/pin00-alt@2x.png', null, null, null, new google.maps.Size(40,40));;
+    /*
     if (num_spots >= 30) {
-      //  main_icon = 'static/img/pins/pin30@2x.png';
+        main_icon = 'static/img/pins/pin30@2x.png';
         alt_icon = 'static/img/pins/pin30-alt.png';
     }
     else if (num_spots < 10) {
-    //    main_icon = new google.maps.MarkerImage('static/img/pins/pin0' + num_spots + '@2x.png', null, null, null, new google.maps.Size(40,40));
+        main_icon = new google.maps.MarkerImage('static/img/pins/pin0' + num_spots + '@2x.png', null, null, null, new google.maps.Size(40,40));
         alt_icon = 'static/img/pins/pin0' + num_spots + '-alt.png';
     }
     else {
-    //    main_icon = new google.maps.MarkerImage('static/img/pins/pin' + num_spots + '@2x.png', null, null, null, new google.maps.Size(40,40));
+        main_icon = new google.maps.MarkerImage('static/img/pins/pin' + num_spots + '@2x.png', null, null, null, new google.maps.Size(40,40));
         alt_icon = 'static/img/pins/pin' + num_spots + '-alt.png';
-    }
+    }*/
 
     var marker= new MarkerWithLabel({
         position: group_center,
@@ -415,10 +415,9 @@ function createMarker(spots, group_center) {
         alt_icon: alt_icon,
         map: window.spacescout_map,
         spots: spots,
-        labelText: num_spots,
-        labelAnchor: new google.maps.Point(100, 0),
+        labelText: num_spots, // # of spots on label in text form
     	labelClass: "map-label", // the CSS class for the label
-    	labelStyle: {top: "-34px", left: "-15px"}
+    	labelStyle: {top: "-34px", left: "-15.5px"} // position label over main_icon
     });
     
     google.maps.event.addListener(marker, 'click', function() {
