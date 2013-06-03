@@ -153,9 +153,9 @@ function createMarker(spots, group_center) {
         alt_icon: alt_icon,
         map: window.spacescout_map,
         spots: spots,
-        labelText: num_spots, // # of spots on label in text form
+        labelText: num_spots, // # of spots to display on label in text
     	labelClass: "map-label", // the CSS class for the label
-    	labelStyle: {top: "-34px", left: "-15.5px"} // position label over main_icon
+    	labelStyle: {top: "-34px", left: "-15px"} // position label over main_icon (position assumes 40x40 marker)
     });
     
     google.maps.event.addListener(marker, 'click', function() {
