@@ -351,7 +351,7 @@ function run_custom_search() {
 
     // reset the map center and zoom
     window.spacescout_map.setCenter(new google.maps.LatLng(window.default_latitude, window.default_longitude));
-    window.spacescout_map.setZoom(window.default_zoom);
+    window.spacescout_map.setZoom(parseInt(window.default_zoom));
 
     // Run the search
     //console.log(window.spacescout_search_options);

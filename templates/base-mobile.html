@@ -23,7 +23,9 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
+        {% if show_ios_smart_banner %}
         <meta name="apple-itunes-app" content="app-id=551472160">
+        {% endif %}
 
         {% load compress %}
         {% compress css %}
@@ -62,6 +64,7 @@
 
       <body id="top">
 
+          {% if show_ios_smart_banner %}
           <div id="ios_callout" style="display:none;">
               <div class="ios-inner-container">
                   <p>We have an iPhone app!</p>
@@ -69,6 +72,7 @@
                   <button type="button" id="download_native" class="btn btn-inverse">Let's download it!</button>
               </div>
           </div>
+          {% endif %}
 
           <div id="container">
               {% block content %}{% endblock %}
@@ -100,6 +104,7 @@
             <script type="text/javascript" src="{{ STATIC_URL }}js/search.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}js/mobile.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}js/clustering.js"></script>
+            <script type="text/javascript" src="{{ STATIC_URL }}js/retina.js"></script>
 
             {% block extra_js %}{% endblock %}
           {% endcompress %}
