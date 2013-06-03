@@ -112,8 +112,8 @@
         // clear filters
         $('#cancel_results_button').click(function() {
 
-            $('#filter-clear').show();
-            $('#filter-clear').delay(700).fadeOut(500);
+            $('#filter-clear').slideDown(50);
+            $('#filter-clear').delay(1000).fadeOut(500);
             // clear saved search options
             if ($.cookie('spacescout_search_opts')) {
                 $.removeCookie('spacescout_search_opts');

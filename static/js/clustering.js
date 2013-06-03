@@ -132,19 +132,7 @@ function createMarker(spots, group_center) {
     var num_spots = spots.length;
     var main_icon = new google.maps.MarkerImage('static/img/pins/pin00@2x.png', null, null, null, new google.maps.Size(40,40));
     var alt_icon = new google.maps.MarkerImage('static/img/pins/pin00-alt@2x.png', null, null, null, new google.maps.Size(40,40));;
-    /*
-    if (num_spots >= 30) {
-        main_icon = 'static/img/pins/pin30@2x.png';
-        alt_icon = 'static/img/pins/pin30-alt.png';
-    }
-    else if (num_spots < 10) {
-        main_icon = new google.maps.MarkerImage('static/img/pins/pin0' + num_spots + '@2x.png', null, null, null, new google.maps.Size(40,40));
-        alt_icon = 'static/img/pins/pin0' + num_spots + '-alt.png';
-    }
-    else {
-        main_icon = new google.maps.MarkerImage('static/img/pins/pin' + num_spots + '@2x.png', null, null, null, new google.maps.Size(40,40));
-        alt_icon = 'static/img/pins/pin' + num_spots + '-alt.png';
-    }*/
+
 
     var marker= new MarkerWithLabel({
         position: group_center,

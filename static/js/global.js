@@ -339,7 +339,8 @@ function reset_location_filter() {
 (function(g){
 
 	$(document).ready(function() {
-
+/*
+//removed because we use single pin image
         var pinimgs = [];
         for (var i = 1; i <= 30; i++) {
             if (i < 10) {
@@ -352,7 +353,7 @@ function reset_location_filter() {
             }
         }
         preload(pinimgs);
-
+*/
         if ($.cookie('default_location')) {
             $('#location_select').val($.cookie('default_location'));
         }
