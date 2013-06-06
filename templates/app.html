@@ -169,12 +169,28 @@
                                         </li>
                                         {{/if}}
                                         <!-- LABSTATS -->
-                                        <li class="clearfix">
-                                            <h5 class="space-info-label pull-left">Computers</h5>
-                                            <div class="space-info-detail pull-left">
-                                                <p><span class="computer-available">47</span> of 50 available</p>
-                                            </div>
-                                        </li>
+                                        {{#if extended_info.labstats_id}}
+                                            <li class="clearfix">
+                                                <h5 class="space-info-label pull-left">Computers</h5>
+                                                <div class="space-info-detail pull-left">
+                                                {{#if extended_info.auto_labstats_total}}
+                                                    {{#compare extended_info.auto_labstats_total 0 operator="!="}}
+                                                        {{#compare extended_info.auto_labstats_available 0 operator=">"}}
+                                                            <p><span class="computer-available">{{extended_info.auto_labstats_available}}</span> of {{extended_info.auto_labstats_total}} Available</p>
+                                                        {{^}}
+                                                            {{#compare extended_info.auto_labstats_available 0 operator="=="}}
+                                                                <p><span class="computer-notavailable">{{extended_info.auto_labstats_available}}</span> of {{extended_info.auto_labstats_total}} Available</p>
+                                                            {{/compare}}
+                                                        {{/compare}}
+                                                    {{^}}
+                                                        <p><span class="computer-notavailable">--</span> of -- Available</p>
+                                                    {{/compare}}
+                                                {{else}}
+                                                    <p><span class="computer-notavailable">--</span> of -- Available</p>
+                                                {{/if}}
+                                                </div>
+                                            </li>
+                                        {{/if}}
 
                                         <li class="clearfix"><h5 class="space-info-label pull-left">Hours</h5><div class="space-info-detail pull-left">{{formatHours available_hours}}</div></li>
                                         <li class="clearfix"><h5 class="space-info-label pull-left">Location</h5><div class="space-info-detail pull-left">{{extended_info.location_description}}</div></li>
@@ -290,8 +306,25 @@
                                     	<span class="space-detail-type-label pull-left">{{type}}</span>
                                    		 <!-- LABSTATS if there is labstats, show the following span space-detail-labstats, if not show space-detail-capacity -->
                                     	 <!-- If computer available>0, apply class "computer-available" to span. if 0, apply class "computer-notavailable", if no data remove class -->
-                                    	<div class="space-detail-labstats pull-right"><p><span class="computer-available">47</span>/50</p></div>
-                                    	<!-- {{#if capacity }}<span class="space-detail-capacity pull-right">Seats&nbsp;{{capacity}}</span>{{/if}} -->
+                                        {{#if extended_info.labstats_id}}
+                                            {{#if extended_info.auto_labstats_total}}
+                                                {{#compare extended_info.auto_labstats_total 0 operator="!="}}
+                                                    {{#compare extended_info.auto_labstats_available 0 operator=">"}}
+                                                        <div class="space-detail-labstats pull-right"><p><span class="computer-available">{{extended_info.auto_labstats_available}}</span>/{{extended_info.auto_labstats_total}}</p></div>
+                                                    {{^}}
+                                                        {{#compare extended_info.auto_labstats_available 0 operator="=="}}
+                                                            <div class="space-detail-labstats pull-right"><p><span class="computer-notavailable">{{extended_info.auto_labstats_available}}</span>/{{extended_info.auto_labstats_total}}</p></div>
+                                                        {{/compare}}
+                                                    {{/compare}}
+                                                {{^}}
+                                                    <div class="space-detail-labstats pull-right"><p><span class="computer-notavailable">--/--</span></p></div>
+                                                {{/compare}}
+                                            {{else}}
+                                                <div class="space-detail-labstats pull-right"><p><span class="computer-notavailable">--/--</span></p></div>
+                                            {{/if}}
+                                        {{else}}
+                                            <span class="space-detail-capacity pull-right">Seats&nbsp;{{capacity}}</span>
+                                        {{/if}}
                                     </div>
                                     <div class="space-detail-name">{{name}}</div>
                                     <div class="space-detail-desc">{{extended_info.location_description}}</div>
@@ -324,10 +357,26 @@
                                     	<span class="space-detail-type-label pull-left">{{type}}</span>
                                     	<!-- LABSTATS if there is labstats, show the following span space-detail-labstats, if not show space-detail-capacity -->
                                     	<!-- If computer available>0, apply class "computer-available" to span. if 0, apply class "computer-notavailable", if no data remove class -->
-                                    	<div class="space-detail-labstats pull-right"><p><span class="computer-available">47</span>/50</p></div>
-                                    	<!-- {{#if capacity }}<span class="space-detail-capacity pull-right">Seats&nbsp;{{capacity}}</span>{{/if}} -->
-
-                                    	</div>
+                                        {{#if extended_info.labstats_id}}
+                                            {{#if extended_info.auto_labstats_total}}
+                                                {{#compare extended_info.auto_labstats_total 0 operator="!="}}
+                                                    {{#compare extended_info.auto_labstats_available 0 operator=">"}}
+                                                        <div class="space-detail-labstats pull-right"><p><span class="computer-available">{{extended_info.auto_labstats_available}}</span>/{{extended_info.auto_labstats_total}}</p></div>
+                                                    {{^}}
+                                                        {{#compare extended_info.auto_labstats_available 0 operator="=="}}
+                                                            <div class="space-detail-labstats pull-right"><p><span class="computer-notavailable">{{extended_info.auto_labstats_available}}</span>/{{extended_info.auto_labstats_total}}</p></div>
+                                                        {{/compare}}
+                                                    {{/compare}}
+                                                {{^}}
+                                                    <div class="space-detail-labstats pull-right"><p><span class="computer-notavailable">--/--</span></p></div>
+                                                {{/compare}}
+                                            {{else}}
+                                                <div class="space-detail-labstats pull-right"><p><span class="computer-notavailable">--/--</span></p></div>
+                                            {{/if}}
+                                        {{else}}
+                                            <span class="space-detail-capacity pull-right">Seats&nbsp;{{capacity}}</span>
+                                        {{/if}}
+                                    </div>
                                     <div class="space-detail-name">{{name}}</div>
                                     <div class="space-detail-desc">{{extended_info.location_description}}</div>
                                 </button>

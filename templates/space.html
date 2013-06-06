@@ -75,13 +75,21 @@
                                 </li>
                                 {% endif %}
 								<!-- LABSTATS if labstats, show the following <li> -->
-								<li class="clearfix">
-                                    <div class="space-info-label pull-left">Computers</div>
-                                    <div class="space-info-detail pull-left">
-                                    <!-- If computer available>0, apply class "computer-available" to span. if 0, apply class "computer-notavailable", if no data remove class -->
-                                        <p><span class="computer-available">47</span> of 50 Available</p>    
-                                    </div>
-                                </li>
+                                {% if extended_info.labstats_id %}
+                                    <li class="clearfix">
+                                        <div class="space-info-label pull-left">Computers</div>
+                                        <div class="space-info-detail pull-left">
+                                        <!-- If computer available>0, apply class "computer-available" to span. if 0, apply class "computer-notavailable", if no data remove class -->
+                                        {% if not extended_info.auto_labstats_total or extended_info.auto_labstats_total == '0' %}
+                                            <p><span class="computer-notavailable">--</span> of -- Available</p>
+                                        {% elif extended_info.auto_labstats_available > '0' %}
+                                            <p><span class="computer-available">{{ extended_info.auto_labstats_available }}</span> of {{ extended_info.auto_labstats_total }} Available</p>    
+                                        {% elif extended_info.auto_labstats_available == '0' %}
+                                            <p><span class="computer-notavailable">{{ extended_info.auto_labstats_available }}</span> of {{ extended_info.auto_labstats_total }} Available</p>    
+                                        {% endif %}
+                                        </div>
+                                    </li>
+                                {% endif %}
 								
                                 {% load templatetag_handlebars %}
                                 <li id="mobile_hours_template" class="clearfix">
