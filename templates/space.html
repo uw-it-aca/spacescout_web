@@ -75,17 +75,14 @@
                                 </li>
                                 {% endif %}
 								<!-- LABSTATS if labstats, show the following <li> -->
-                                {% if extended_info.labstats_id %}
+                                {% if extended_info.labstats_id and extended_info.auto_labstats_total and not extended_info.auto_labstats_total == '0' %}
                                     <li class="clearfix">
                                         <div class="space-info-label pull-left">Computers</div>
                                         <div class="space-info-detail pull-left">
-                                        <!-- If computer available>0, apply class "computer-available" to span. if 0, apply class "computer-notavailable", if no data remove class -->
-                                        {% if not extended_info.auto_labstats_total or extended_info.auto_labstats_total == '0' %}
-                                            <p><span class="computer-notavailable">--</span> of -- Available</p>
-                                        {% elif extended_info.auto_labstats_available > '0' %}
-                                            <p><span class="computer-available">{{ extended_info.auto_labstats_available }}</span> of {{ extended_info.auto_labstats_total }} Available</p>    
+                                        {% if extended_info.auto_labstats_available > '0' %}
+                                            <p><span class="computer-available">{{ extended_info.auto_labstats_available }}</span> of {{ extended_info.auto_labstats_total }} available</p>    
                                         {% elif extended_info.auto_labstats_available == '0' %}
-                                            <p><span class="computer-notavailable">{{ extended_info.auto_labstats_available }}</span> of {{ extended_info.auto_labstats_total }} Available</p>    
+                                            <p><span class="computer-notavailable">{{ extended_info.auto_labstats_available }}</span> of {{ extended_info.auto_labstats_total }} available</p>    
                                         {% endif %}
                                         </div>
                                     </li>
