@@ -15,6 +15,7 @@
         window.default_latitude = $.cookie('default_location').split(',')[0];
         window.default_longitude = $.cookie('default_location').split(',')[1];
         window.default_location = $.cookie('default_location').split(',')[2];
+        window.default_zoom = parseInt($.cookie('default_location').split(',')[3]);
     } else {
         window.default_location = "{{ default_location }}";
     }
@@ -34,7 +35,7 @@
                 {% ifnotequal locations|length 1 %}
                 <select id='location_select'>
                     {% for key, value in locations.items %}
-                        <option value="{{ value.CENTER_LATITUDE }},{{ value.CENTER_LONGITUDE }},{{ key }}">{{ value.NAME }}</option>
+                        <option value="{{ value.CENTER_LATITUDE }},{{ value.CENTER_LONGITUDE }},{{ key }},{{ value.ZOOM_LEVEL }}">{{ value.NAME }}</option>
                     {% endfor %}
                 </select>
                 {% endifnotequal %}
@@ -48,7 +49,9 @@
                     <div id="space_count_container" aria-labelledby="spaces_match_header"></div>
 
 					{% tplhandlebars "space_count" %}
-            			<span class="count">{{count}}</span><span class="spaces">spaces</span>
+            			<div id="spacecount">
+            				<span class="count">{{count}}</span><span class="spaces"> spaces</span>
+            			</div>
             		{% endtplhandlebars %}
 
                     <div id="done-clear-group">
