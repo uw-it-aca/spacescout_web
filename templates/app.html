@@ -93,6 +93,7 @@
                 <div class="inner clearfix">
 
                     <div class="inner-column">
+                    	<div id="filter-clear">Filters Cleared</div>
                         <div class="inner-block-left">
 							{% include "filters.html" %}
                         </div>
@@ -167,6 +168,23 @@
                                                 <p id="ei_reservation_notes">{{extended_info.reservation_notes }}</p>
                                             </div>
                                         </li>
+                                        {{/if}}
+                                        {{#if extended_info.labstats_id}}
+                                            {{#if extended_info.auto_labstats_total}}
+                                                {{#compare extended_info.auto_labstats_total 0 operator="!="}}
+                                                    <li class="clearfix">
+                                                        <h5 class="space-info-label pull-left">Computers</h5>
+                                                        <div class="space-info-detail pull-left">
+
+                                                        {{#compare extended_info.auto_labstats_available 0 operator=">"}}
+                                                            <p><span class="computer-available">{{extended_info.auto_labstats_available}}</span> of {{extended_info.auto_labstats_total}} available</p>
+                                                        {{^}}
+                                                            <p><span class="computer-notavailable">{{extended_info.auto_labstats_available}}</span> of {{extended_info.auto_labstats_total}} available</p>
+                                                        {{/compare}}
+                                                        </div>
+                                                    </li>
+                                                {{/compare}}
+                                            {{/if}}
                                         {{/if}}
 
                                         <li class="clearfix"><h5 class="space-info-label pull-left">Hours</h5><div class="space-info-detail pull-left">{{formatHours available_hours}}</div></li>
@@ -279,7 +297,26 @@
                                 </div>
 
                                 <button id="{{id}}" class="space-detail-list-item pull-left" type="button" aria-label="Get space details for {{name}}" aria-owns="detail_container_{{id}}">
-                                    <div class="space-detail-type clearfix"><span class="space-detail-type-label pull-left">{{type}}</span>{{#if capacity }}<span class="space-detail-capacity pull-right">Seats&nbsp;{{capacity}}</span>{{/if}}</div>
+                                    <div class="space-detail-type clearfix">
+                                    	<span class="space-detail-type-label pull-left">{{type}}</span>
+                                        {{#if extended_info.labstats_id}}
+                                            {{#if extended_info.auto_labstats_total}}
+                                                {{#compare extended_info.auto_labstats_total 0 operator="!="}}
+                                                    {{#compare extended_info.auto_labstats_available 0 operator=">"}}
+                                                        <div class="space-detail-labstats pull-right"><p><span class="computer-available">{{extended_info.auto_labstats_available}}</span>/{{extended_info.auto_labstats_total}}</p></div>
+                                                    {{^}}
+                                                        <div class="space-detail-labstats pull-right"><p><span class="computer-notavailable">{{extended_info.auto_labstats_available}}</span>/{{extended_info.auto_labstats_total}}</p></div>
+                                                    {{/compare}}
+                                                {{^}}
+                                                    <span class="space-detail-capacity pull-right">Seats&nbsp;{{capacity}}</span>
+                                                {{/compare}}
+                                            {{else}}
+                                                <span class="space-detail-capacity pull-right">Seats&nbsp;{{capacity}}</span>
+                                            {{/if}}
+                                        {{else}}
+                                            <span class="space-detail-capacity pull-right">Seats&nbsp;{{capacity}}</span>
+                                        {{/if}}
+                                    </div>
                                     <div class="space-detail-name">{{name}}</div>
                                     <div class="space-detail-desc">{{extended_info.location_description}}</div>
                                 </button>
@@ -307,7 +344,26 @@
                                   {{/if}}
                                 </div>
                                 <button  id="{{id}}" class="space-detail-list-item pull-left" type="button" aria-label="Get space details for {{name}}" aria-owns="detail_container_{{id}}">
-                                    <div class="space-detail-type"><span class="space-detail-type-label pull-left">{{type}}</span>{{#if capacity }}<span class="space-detail-capacity pull-right">Seats&nbsp;{{capacity}}</span>{{/if}}</div>
+                                    <div class="space-detail-type clearfix">
+                                    	<span class="space-detail-type-label pull-left">{{type}}</span>
+                                        {{#if extended_info.labstats_id}}
+                                            {{#if extended_info.auto_labstats_total}}
+                                                {{#compare extended_info.auto_labstats_total 0 operator="!="}}
+                                                    {{#compare extended_info.auto_labstats_available 0 operator=">"}}
+                                                        <div class="space-detail-labstats pull-right"><p><span class="computer-available">{{extended_info.auto_labstats_available}}</span>/{{extended_info.auto_labstats_total}}</p></div>
+                                                    {{^}}
+                                                        <div class="space-detail-labstats pull-right"><p><span class="computer-notavailable">{{extended_info.auto_labstats_available}}</span>/{{extended_info.auto_labstats_total}}</p></div>
+                                                    {{/compare}}
+                                                {{^}}
+                                                    <span class="space-detail-capacity pull-right">Seats&nbsp;{{capacity}}</span>
+                                                {{/compare}}
+                                            {{else}}
+                                                <span class="space-detail-capacity pull-right">Seats&nbsp;{{capacity}}</span>
+                                            {{/if}}
+                                        {{else}}
+                                            <span class="space-detail-capacity pull-right">Seats&nbsp;{{capacity}}</span>
+                                        {{/if}}
+                                    </div>
                                     <div class="space-detail-name">{{name}}</div>
                                     <div class="space-detail-desc">{{extended_info.location_description}}</div>
                                 </button>

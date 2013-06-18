@@ -74,7 +74,20 @@
                                     </div>
                                 </li>
                                 {% endif %}
-
+								<!-- LABSTATS if labstats, show the following <li> -->
+                                {% if extended_info.labstats_id and extended_info.auto_labstats_total and not extended_info.auto_labstats_total == '0' %}
+                                    <li class="clearfix">
+                                        <div class="space-info-label pull-left">Computers</div>
+                                        <div class="space-info-detail pull-left">
+                                        {% if extended_info.auto_labstats_available > '0' %}
+                                            <p><span class="computer-available">{{ extended_info.auto_labstats_available }}</span> of {{ extended_info.auto_labstats_total }} available</p>    
+                                        {% elif extended_info.auto_labstats_available == '0' %}
+                                            <p><span class="computer-notavailable">{{ extended_info.auto_labstats_available }}</span> of {{ extended_info.auto_labstats_total }} available</p>    
+                                        {% endif %}
+                                        </div>
+                                    </li>
+                                {% endif %}
+								
                                 {% load templatetag_handlebars %}
                                 <li id="mobile_hours_template" class="clearfix">
                                 {% tplhandlebars "mobile_hours" %}
