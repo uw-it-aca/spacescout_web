@@ -15,6 +15,9 @@
 
 */
 
+
+
+
 var visible_markers = [];
 var active_marker;
 var spherical = google.maps.geometry.spherical;
@@ -127,28 +130,32 @@ function getSpotList(group){
 
 function createMarker(spots, group_center) {
     var num_spots = spots.length;
-    var main_icon;
-    var alt_icon;
+    var main_icon = new google.maps.MarkerImage('static/img/pins/pin00@2x.png', null, null, null, new google.maps.Size(40,40));
+    var alt_icon = new google.maps.MarkerImage('static/img/pins/pin00-alt@2x.png', null, null, null, new google.maps.Size(40,40));;
+    /*
     if (num_spots >= 30) {
-        main_icon = 'static/img/pins/pin30.png';
+        main_icon = 'static/img/pins/pin30@2x.png';
         alt_icon = 'static/img/pins/pin30-alt.png';
     }
     else if (num_spots < 10) {
-        main_icon = 'static/img/pins/pin0' + num_spots + '.png';
+        main_icon = new google.maps.MarkerImage('static/img/pins/pin0' + num_spots + '@2x.png', null, null, null, new google.maps.Size(40,40));
         alt_icon = 'static/img/pins/pin0' + num_spots + '-alt.png';
     }
     else {
-        main_icon = 'static/img/pins/pin' + num_spots + '.png';
+        main_icon = new google.maps.MarkerImage('static/img/pins/pin' + num_spots + '@2x.png', null, null, null, new google.maps.Size(40,40));
         alt_icon = 'static/img/pins/pin' + num_spots + '-alt.png';
-    }
+    }*/
 
-    var marker= new google.maps.Marker({
+    var marker= new MarkerWithLabel({
         position: group_center,
         icon: main_icon,
         main_icon: main_icon,
         alt_icon: alt_icon,
         map: window.spacescout_map,
-        spots: spots
+        spots: spots,
+        labelText: num_spots, // # of spots to display on label in text
+    	labelClass: "map-label", // the CSS class for the label
+    	labelStyle: {top: "-34px", left: "-15px"} // position label over main_icon (position assumes 40x40 marker)
     });
     
     google.maps.event.addListener(marker, 'click', function() {

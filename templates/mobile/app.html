@@ -74,6 +74,7 @@
                 <div class="inner clearfix">
 
                     <div class="inner-column">
+                    	<div id="filter-clear">Filters Cleared</div>
                         <div class="inner-block-left">
                         	<div id="bubble_mobile">
             					<div class="bubble-inner clearfix" style="position:relative;">
@@ -140,6 +141,12 @@
                                 </div>
 
                                 <button id="{{id}}" class="space-detail-list-item pull-left" type="button" aria-label="Get space details for {{name}}" aria-owns="detail_container_{{id}}">
+                                    <div class="space-detail-type clearfix"><span class="space-detail-type-label pull-left">{{type}}</span>
+                                    <!-- LABSTATS if there is labstats, show the following span space-detail-labstats, if not show space-detail-capacity -->
+                                    <!-- If computer available>0, apply class "computer-available" to span. if 0, apply class "computer-notavailable", if no data remove class -->
+                                    <span class="space-detail-labstats"><p><span class="computer-available">47</span>/50</p></span>
+                                    <!-- {{#if capacity }}<span class="space-detail-capacity pull-right">Seats&nbsp;{{capacity}}</span>{{/if}} -->
+                                    </div>
                                     <div class="space-detail-name">{{name}}</div>
                                     <div class="space-detail-type clearfix"><span class="space-detail-type-label pull-left">{{type}}</span>{{#if capacity }}<span class="space-detail-capacity pull-right">Seats&nbsp;{{capacity}}</span>{{/if}}</div>
                                     <div class="space-detail-desc">{{extended_info.location_description}}</div>
@@ -169,6 +176,13 @@
                                   {{/if}}
                                 </div>
                                 <button  id="{{id}}" class="space-detail-list-item pull-left" type="button" aria-label="Get space details for {{name}}" aria-owns="detail_container_{{id}}">
+                                    <div class="space-detail-type"><span class="space-detail-type-label pull-left">{{type}}</span>
+                                    <!-- LABSTATS if there is labstats, show the following span space-detail-labstats, if not show space-detail-capacity -->
+                                    <!-- If computer available>0, apply class "computer-available" to span. if 0, apply class "computer-notavailable", if no data remove class -->
+                                    <span class="space-detail-labstats"><p><span class="computer-available">47</span>/50</p></span>
+                                    <!-- {{#if capacity }}<span class="space-detail-capacity pull-right">Seats&nbsp;{{capacity}}</span>{{/if}} -->
+                                    
+                                    </div>
                                     <div class="space-detail-name">{{name}}</div>
                                     <div class="space-detail-type"><span class="space-detail-type-label pull-left">{{type}}</span>{{#if capacity }}<span class="space-detail-capacity pull-right">Seats&nbsp;{{capacity}}</span>{{/if}}</div>
                                     <div class="space-detail-desc">{{extended_info.location_description}}</div>

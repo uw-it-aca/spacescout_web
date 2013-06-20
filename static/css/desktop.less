@@ -62,7 +62,7 @@
 
     #bubble_mobile { display: none; }
 }
-
+#filter-clear { top: 10px; }
 #filter_container {
      position:absolute; top:80px; left:0; right:0; margin: 0; z-index: 100;
 
@@ -118,6 +118,7 @@
                 .space-detail-header { position: relative; height: 60px;
                     .space-detail-type { color: @grey_dark;
                         .space-detail-capacity { color: @grey_light; font-size: 11px; text-transform: uppercase; display: inline-block; margin-left: 5px; }
+                        
                     }
                     .space-detail-name { font-size: 20px; color: @purple_text; margin: 5px 0;  line-height:20px; font-weight:normal; }
                     .close { position: absolute; right: 0; top: 0; float: none; }
@@ -152,7 +153,9 @@
                     li { list-style: none; margin-bottom: 5px;
                       .space-info-label { width: 35%; margin-right: 10px; color: @grey_medium; overflow: hidden; text-overflow: ellipsis; font-weight: normal; margin:0; }
                       .space-info-detail { width: 60%;
-
+							//lab stats styles
+							.computer-available { color:#20b420; }
+							.computer-notavailable {color: #b42020;}
                             // styles for space details, adds commas
                             ul.space-info-resources-list {
                                 display: inline;
@@ -217,6 +220,14 @@
         ol { margin: 0px; list-style: none;
             li {
                 .space-detail-list-item { width: 49%;
+                	.space-detail-labstats {
+                		background: transparent url('/static/img/comp-icon.png') no-repeat center top;
+                		margin-top:-2px;
+                		color: @grey_dark; font-size: 11px; line-height: 11px; text-transform: uppercase; display: inline-block; margin-left: 5px;
+                	.computer-available { color:#20b420; }
+					.computer-notavailable {color: #b42020;}
+                	p {margin:0; margin-top:17px;}
+                	}
                     .space-detail-type-label { width: 55%; }
                 }
                 button:focus { outline: grey dashed thin; }
@@ -224,7 +235,7 @@
             }
 
             li.selected { background: #6160a2 url('/static/img/list_item_selected.png') bottom repeat-x;
-                .space-detail-type { color: #ccc; }
+                .space-detail-type { color: #ccc; display: block; }
                 .space-detail-desc,.space-detail-name { color: #fff; }
             }
         }

@@ -67,6 +67,8 @@ Handlebars.registerHelper('ifany', function(a, b) {
         // clear filters
         $('#cancel_results_button').click(function() {
 
+            $('#filter-clear').show();
+            $('#filter-clear').delay(700).fadeOut(500);
             // clear saved search options
             if ($.cookie('spacescout_search_opts')) {
                 $.removeCookie('spacescout_search_opts');
