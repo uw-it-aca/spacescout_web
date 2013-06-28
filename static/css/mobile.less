@@ -20,6 +20,7 @@
     background-size: @w @h;
   }
 }
+#preload { background: no-repeat -9999px -9999px; background-image: url(/static/img/pins/pin00@2x.png), url(/static/img/pins/pin00-alt@2x.png);}
 
 .map-label {
   background-color: transparent;
@@ -128,7 +129,9 @@ button {
     #bubble_mobile {  margin: 10px 10px 5px 10px; }
 }
 
-#filter-clear { display: none; position: absolute; top: 30px; border: 1px solid @grey_light; padding: 5px; width: 150px; z-index: 999; left:50%; margin-left: -75px; background-color: @grey_dark; text-align: center; }
+#filter-clear { display: none; position: absolute; top: 30px; border: 1px solid @grey_light; padding: 5px; width: 150px; z-index: 999; left:50%; margin-left: -75px; background-color: @grey_dark; text-align: center; animation:filter-clear-anim 1s; -webkit-animation:filter-clear-anim 1s; animation-delay:1000ms; -webkit-animation-delay:1000ms;}
+@keyframes filter-clear-anim { 100% {left:0px;} }
+@-webkit-keyframes filter-clear-anim /* Safari and Chrome */ {100% {left:0px;}}
 
 #filter_container { position: relative; margin: 0 10px 11px 10px;
 
@@ -408,8 +411,8 @@ button {
     .partners { margin-left: 45px; color: #aaa; }
 }
 
-.loading {
-    .loading-inner { padding: 0 10px 10px 10px; }
+.loading { position: relative; width: 200px; left:50%; margin-left: -100px;
+    .loading-inner { padding: 10px 10px 10px 10px; }
     img { width: 20px;}
 }
 

@@ -28,11 +28,11 @@
 <!--[if gt IE 8]><!--><html class="no-js"> <!--<![endif]-->
 
     <head>
-        <title>SpaceScout&trade;</title>
+        <title>SpaceScout&trade; Find the Perfect Place to Study</title>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
+		<meta name="description" content="Searching for that perfect study spot? SpaceScout helps UW students quickly locate campus spaces and resources to use for study or collaboration">
         {% load compress %}
         {% compress css %}
         <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}libs/bootstrap/css/bootstrap-custom.css" charset="utf-8" />
@@ -73,7 +73,7 @@
     </head>
 
       <body id="top">
-
+		<div id="preload"></div>
           <div id="container">
               {% block content %}{% endblock %}
 
