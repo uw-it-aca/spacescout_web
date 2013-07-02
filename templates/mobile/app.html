@@ -147,9 +147,9 @@
                                             {{#if extended_info.auto_labstats_total}}
                                                 {{#compare extended_info.auto_labstats_total 0 operator="!="}}
                                                     {{#compare extended_info.auto_labstats_available 0 operator=">"}}
-                                                        <span class="space-detail-labstats"><p><span class="computer-available">{{extended_info.auto_labstats_available}}</span>/{{extended_info.auto_labstats_total}}</p></span>
+                                                        <span class="space-detail-labstats pull-right"><p><span class="computer-available">{{extended_info.auto_labstats_available}}</span>/{{extended_info.auto_labstats_total}}</p></span>
                                                     {{^}}
-                                                        <span class="space-detail-labstats"><p><span class="computer-notavailable">{{extended_info.auto_labstats_available}}</span>/{{extended_info.auto_labstats_total}}</p></span>
+                                                        <span class="space-detail-labstats pull-right"><p><span class="computer-notavailable">{{extended_info.auto_labstats_available}}</span>/{{extended_info.auto_labstats_total}}</p></span>
                                                     {{/compare}}
                                                 {{^}}
                                                     <span class="space-detail-capacity pull-right">Seats&nbsp;{{capacity}}</span>
