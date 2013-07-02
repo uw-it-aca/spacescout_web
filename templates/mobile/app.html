@@ -5,19 +5,28 @@
 
 {% block extra_js %}
 <script>
-    window.default_latitude = {{ center_latitude }};
-    window.default_longitude = {{ center_longitude }};
-    window.default_zoom = {{ zoom_level }};
-    window.default_location = null;
-    window.by_distance_ratio = {{ by_distance_ratio }};
-    window.by_building_zooms = {{ by_building_zooms }};
-    if ($.cookie('default_location')) {
-        window.default_latitude = $.cookie('default_location').split(',')[0];
-        window.default_longitude = $.cookie('default_location').split(',')[1];
-        window.default_location = $.cookie('default_location').split(',')[2];
-        window.default_zoom = parseInt($.cookie('default_location').split(',')[3]);
-    } else {
-        window.default_location = "{{ default_location }}";
+    window.by_building_zooms = {{ by_building_zooms }}; 
+    window.by_distance_ratio = {{ by_distance_ratio }}; 
+    var failed = false; 
+    if ($.cookie('default_location')) { 
+        var defaults = $.cookie('default_location').split(','); 
+        if (defaults.length >= 4) { 
+            window.default_latitude = defaults[0]; 
+            window.default_longitude = defaults[1]; 
+            window.default_location = defaults[2]; 
+            window.default_zoom = parseInt(defaults[3]); 
+        } else { 
+            $.removeCookie('default_location'); 
+            failed = true; 
+        } 
+    } else { 
+        failed = true; 
+    } 
+    if (failed) { 
+        window.default_latitude = {{ center_latitude }}; 
+        window.default_longitude = {{ center_longitude }}; 
+        window.default_location = "{{ default_location }}"; 
+        window.default_zoom = {{ zoom_level }}; 
     }
 </script>
 {% endblock %}
