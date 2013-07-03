@@ -50,6 +50,7 @@ Handlebars.registerHelper('ifany', function(a, b) {
             });
 
             $('#filter_button').hide();
+            $('#done-clear-group').show();
             $('#view_results_button').show();
             $('#cancel_results_button').show();
 
