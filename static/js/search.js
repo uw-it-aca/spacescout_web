@@ -82,11 +82,25 @@ function buildingNameHeaders(data) {
         var small_json = {};
         small_json.name = i;
         small_json.spots = byBuilding[i];
+        
+        //next twelve lines courtesy of stephyma; sort spots of buildings
+        var sortable = [];
+        for (i in small_json.spots) {
+            sortable.push(small_json.spots[i]);
+        }
+        sortable.sort(function(a,b) {
+            if (a.name < b.name) 
+                return -1
+            if (a.name > b.name)
+                return 1
+            return 0
+        });
+        small_json.spots = sortable;
         big_list.push(small_json);
-
     }
     return big_list;
 }
+
 
 // jquery function to check if scrollable
 (function($) {
