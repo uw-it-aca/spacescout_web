@@ -67,7 +67,92 @@
                     </div>
 
                     <div class="inner-column">
-                    <h4>Hours</h4>
+                    
+                    <h4 id="filter-location-header">Location</h4>
+
+                    <div id="filter_location" class="choice-group" aria-labelledby="filter-location-header">
+                        <div>
+                            <label class="radio inline" for="entire_campus">
+                              <input type="radio" name="optionsLocations" id="entire_campus" value="option1" checked> Entire campus
+                            </label>
+                            <label class="radio inline" for="building_list_input">
+                              <input type="radio" name="optionsLocations" id="building_list_input" value="option2"> Specific building
+                            </label>
+                        </div>
+                        <div id="building_list_container" style="margin-top:8px;display:none;"></div>
+                        {% tplhandlebars "building_list" %}
+                        <label class="visuallyhidden" for="e9">Choose a building:</label>
+                            <p><small><em>Hold down the Ctrl (windows) / Command (Mac) button to select multiple options</em></small></p>
+                            <select class="building-location" name="e9" id="e9" multiple size="10">
+                                <optgroup label="A">
+                                    <option value="Alder Hall">Alder Hall</option>
+                                    <option value="Allen Library (ALB)">Allen Library (ALB)</option>
+                                    <option value="Allen Library (ALB) North">Allen Library (ALB) North</option>
+                                    <option value="Allen Library (ALB) South">Allen Library (ALB) South</option>
+                                    <option value="Architecture Hall (ARC)">Architecture Hall (ARC)</option>
+                                    <option value="Art Building (ART)">Art Building (ART)</option>
+                                </optgroup>
+                                <optgroup label="B">    
+                                    <option value="Burke Memorial-Washington State Museum (BMM)">Burke Memorial-Washington State Museum (BMM)</option>
+                                </optgroup>
+                                <optgroup label="C">
+                                    <option value="Computer Science and Engineering Building (CSE)">Computer Science and Engineering Building (CSE)</option>
+                                </optgroup>
+                                <optgroup label="E">
+                                    <option value="Electrical Engineering Building (EEB)">Electrical Engineering Building (EEB)</option>
+                                    <option value="Engineering Library (ELB)">Engineering Library (ELB)</option>
+                                </optgroup>
+                                <optgroup label="F">
+                                    <option value="Fishery Sciences (FSH)">Fishery Sciences (FSH)</option>
+                                </optgroup>
+                                <optgroup label="G">
+                                    <option value="Gould Hall (GLD)">Gould Hall (GLD)</option>
+                                    <option value="Gowen Hall (GWN)">Gowen Hall (GWN)</option>
+                                </optgroup>  
+                            </select>
+                        {% endtplhandlebars %}
+
+                    </div>
+
+                    <h4 id="resources-filter-header">Resources</h4>
+                        <p><small><em>Select resources needed</em></small></p>
+
+                        <div id="filter_equipment_types" class="choice-group clearfix" style="margin-bottom:0px;" aria-labelledby="resources-filter-header">
+                            <div style="width:auto;float:left; margin-right:15px;">
+                                <label class="checkbox" for="has_whiteboards">
+                                  <input type="checkbox" id="has_whiteboards" name="equipment" value="has_whiteboards"> Whiteboard
+                                </label>
+                                <label class="checkbox" for="has_outlets">
+                                  <input type="checkbox" id="has_outlets" name="equipment" value="has_outlets"> Outlets
+                                </label>
+                                <label class="checkbox" for="has_computers">
+                                  <input type="checkbox" id="has_computers" name="equipment" value="has_computers"> Computer
+                                </label>
+                                <label class="checkbox" for="has_scanner">
+                                  <input type="checkbox" id="has_scanner" name="equipment" value="has_scanner"> Scanning
+                                </label>
+                            </div>
+
+                            <div style="width:auto;float:left;">
+                                <label class="checkbox" for="has_displays">
+                                  <input type="checkbox" id="has_displays" name="equipment" value="has_displays"> Large display (for laptop)
+                                </label>
+                                <label class="checkbox" for="has_projector">
+                                  <input type="checkbox" id="has_projector" name="equipment" value="has_projector"> Projector
+                                </label>
+                                <label class="checkbox" for="has_printing">
+                                  <input type="checkbox" id="has_printing" name="equipment" value="has_printing"> Printing
+                                </label>
+                            </div>
+                        </div>  
+
+
+
+                    </div>
+
+                    <div class="inner-column">
+                        <div class="inner-block-right">
+                        <h4>Hours</h4>
                     <p id="open_hours_header"><small><em>Select open hours</em></small></p>
 
                     <div id="filter_hours" class="choice-group" aria-labelledby="open_hours_header">
@@ -174,64 +259,9 @@
                             </div>
                         </div>
                     </div>
-
-                    <h4 id="filter-location-header">Location</h4>
-
-                    <div id="filter_location" class="choice-group" aria-labelledby="filter-location-header">
-                        <div>
-                            <label class="radio inline" for="entire_campus">
-                              <input type="radio" name="optionsLocations" id="entire_campus" value="option1" checked> Entire campus
-                            </label>
-                            <label class="radio inline" for="building_list_input">
-                              <input type="radio" name="optionsLocations" id="building_list_input" value="option2"> Specific building
-                            </label>
-                        </div>
-                        <div id="building_list_container" style="margin-top:8px;display:none;"></div>
-                        {% tplhandlebars "building_list" %}
-                        <label class="visuallyhidden" for="e9">Choose a building:</label>
-                            <select class="building-location" name="e9" id="e9">
-                            {{#alphaOptGroupsHTML data}}{{/alphaOptGroupsHTML}}
-                            </select>
-                        {% endtplhandlebars %}
-
-                    </div>
-
-                    <h4 id="resources-filter-header">Resources</h4>
-                    <p><small><em>Select resources needed</em></small></p>
-
-                    <div id="filter_equipment_types" class="choice-group clearfix" style="margin-bottom:0px;" aria-labelledby="resources-filter-header">
-                        <div style="width:auto;float:left; margin-right:15px;">
-                            <label class="checkbox" for="has_whiteboards">
-                              <input type="checkbox" id="has_whiteboards" name="equipment" value="has_whiteboards"> Whiteboard
-                            </label>
-                            <label class="checkbox" for="has_outlets">
-                              <input type="checkbox" id="has_outlets" name="equipment" value="has_outlets"> Outlets
-                            </label>
-                            <label class="checkbox" for="has_computers">
-                              <input type="checkbox" id="has_computers" name="equipment" value="has_computers"> Computer
-                            </label>
-                            <label class="checkbox" for="has_scanner">
-                              <input type="checkbox" id="has_scanner" name="equipment" value="has_scanner"> Scanning
-                            </label>
-                        </div>
-
-                        <div style="width:auto;float:left;">
-                            <label class="checkbox" for="has_displays">
-                              <input type="checkbox" id="has_displays" name="equipment" value="has_displays"> Large display (for laptop)
-                            </label>
-                            <label class="checkbox" for="has_projector">
-                              <input type="checkbox" id="has_projector" name="equipment" value="has_projector"> Projector
-                            </label>
-                            <label class="checkbox" for="has_printing">
-                              <input type="checkbox" id="has_printing" name="equipment" value="has_printing"> Printing
-                            </label>
-                        </div>
-                    </div>
-                    </div>
-
-                    <div class="inner-column">
-                        <div class="inner-block-right">
-                            <h4>Environment</h4>
+         
+        
+                        <h4>Environment</h4>
                             <p><small><em>Select preferred conditions, if any:</em></small></p>
 
                             <div id="filter_noise_level" class="choice-group" >
