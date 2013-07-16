@@ -15,6 +15,12 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 
+  Changes
+  ===================================================================
+
+  sbutler1@illinois.edu: div to fieldsets where appropriate; proper
+  	nesting of ol lists; HTTPS for external resources; use
+	<label for=>; alt attrs galore; open_anytime.
 -->
 <!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]><html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -78,11 +84,11 @@
           </div>
 
           <!-- jQuery -->
-          <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-          <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+          <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
 
           <!-- Google Maps -->
-          <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=geometry&sensor=true"></script>
+          <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=geometry&amp;sensor=true"></script>
 
           {% compress js %}
             <script type="text/javascript" src="{{ STATIC_URL }}libs/cookie.js"></script>
