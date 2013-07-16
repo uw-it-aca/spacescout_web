@@ -463,7 +463,7 @@ function replaceUrls(){
     var patt = /\b(?:https?|ftp):\/\/[a-z0-9-+&@#\/%?=~_|!:,.;]*[a-z0-9-+&@#\/%=~_|]/gim;
     var url = patt.exec(text);
     if (url != null) {
-        text = text.replace(url, "<a href='" + url + "'>" + url + "</a>");
+        text = text.replace(url, "<a href='" + url + "' target='_blank'>" + url + "</a>");
         $("#ei_reservation_notes").html(text);
     }
 }
