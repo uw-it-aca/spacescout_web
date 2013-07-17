@@ -131,41 +131,6 @@
 
         });
 
-        // handle checkbox and radio button clicks
-        $('.checkbox input:checkbox').click(function() {
-            if(this.checked) {
-                $(this).parent().addClass("selected");
-            }
-            else {
-                $(this).parent().removeClass("selected");
-            }
-        });
-
-        $('#filter_hours input:radio').change(function() {
-            $(this).parent().addClass("selected");
-            $(this).parent().siblings().removeClass("selected");
-
-            if ($('#hours_list_input').is(':checked')) {
-                $('#hours_list_container').show();
-            }
-            else {
-                $('#hours_list_container').hide();
-            }
-        });
-
-        $('#filter_location input:radio').change(function() {
-            $(this).parent().addClass("selected");
-            $(this).parent().siblings().removeClass("selected");
-
-            if ($('#building_list_input').is(':checked')) {
-                $('#building_list_container').show();
-            }
-            else {
-                $('#building_list_container').hide();
-            }
-
-        });
-
         // Toggle between carousel and map
         $('.space-image-map-buttons button').live('click', function(e){
 

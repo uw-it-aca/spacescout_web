@@ -374,7 +374,6 @@ function reset_location_filter() {
             // reset filters for campus change            
             resetFilters();
 
-
             run_custom_search();
 
             window.update_count = true;
@@ -394,7 +393,6 @@ function reset_location_filter() {
         });
 
         get_location_buildings();
-
 
         // clear filters
         $('#cancel_results_button').click(function() {
@@ -437,7 +435,42 @@ function reset_location_filter() {
             $('#building_list_container').children().children().children().children().val('Select building(s)');
             $('#building_list_container').children().children().children().children().attr('style', "");
         });
-     
+
+        // handle checkbox and radio button clicks
+        $('.checkbox input:checkbox').click(function() {
+            if(this.checked) {
+                $(this).parent().addClass("selected");
+            }   
+            else {
+                $(this).parent().removeClass("selected");
+            }   
+        }); 
+
+        $('#filter_hours input:radio').change(function() {
+            $(this).parent().addClass("selected");
+            $(this).parent().siblings().removeClass("selected");
+
+            if ($('#hours_list_input').is(':checked')) {
+                $('#hours_list_container').show();
+            }   
+            else {
+                $('#hours_list_container').hide();
+            }   
+        }); 
+
+        $('#filter_location input:radio').change(function() {
+            $(this).parent().addClass("selected");
+            $(this).parent().siblings().removeClass("selected");
+
+            if ($('#building_list_input').is(':checked')) {
+                $('#building_list_container').show();
+            }   
+            else {
+                $('#building_list_container').hide();
+            }   
+
+        }); 
+ 
         var escape_key_code = 27;
 
         $(document).keyup(function(e) {
