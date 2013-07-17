@@ -372,26 +372,8 @@ function reset_location_filter() {
             }
             
             // reset filters for campus change            
-            // reset checkboxes
-            $('input[type=checkbox]').each(function() {
-                if ($(this).attr('checked')) {
-                    $(this).attr('checked', false);
-                    $(this).parent().removeClass("selected");
-                }   
-            }); 
+            resetFilters();
 
-            // reset capacity
-            $('#capacity').val('1');
-
-            // reset hours
-            $('#open_now').prop('checked', true);
-            $('#open_now').parent().removeClass("selected");
-            $('#hours_list_container').hide();
-            $('#hours_list_input').parent().removeClass("selected");
-            default_open_at_filter();
-            $("#day-until").val("No pref")
-            $("#hour-until").val("No pref")
-            $("#ampm-until").val("AM")
 
             run_custom_search();
 
@@ -413,6 +395,49 @@ function reset_location_filter() {
 
         get_location_buildings();
 
+
+        // clear filters
+        $('#cancel_results_button').click(function() {
+
+            $('#filter-clear').slideDown(50);
+            $('#filter-clear').delay(1000).fadeOut(500);
+            // clear saved search options
+            if ($.cookie('spacescout_search_opts')) {
+                $.removeCookie('spacescout_search_opts');
+            }
+
+            // reset checkboxes
+            $('input[type=checkbox]').each(function() {
+                if ($(this).attr('checked')) {
+                    $(this).attr('checked', false);
+                    $(this).parent().removeClass("selected");
+                }
+            });
+
+            // reset capacity
+            $('#capacity').val('1');
+
+            // reset hours
+            $('#open_now').prop('checked', true);
+            $('#open_now').parent().removeClass("selected");
+            $('#hours_list_container').hide();
+            $('#hours_list_input').parent().removeClass("selected");
+            default_open_at_filter();
+            $("#day-until").val("No pref")
+            $("#hour-until").val("No pref")
+            $("#ampm-until").val("AM")
+
+            // reset location
+            $('#entire_campus').prop('checked', true);
+            $('#entire_campus').parent().removeClass("selected");
+            $('#e9.building-location').children().children().first()[0].selected = true; // grabs first location in drop down and selects it
+            $('#building_list_container').hide();
+            $('#building_list_input').parent().removeClass("selected");
+            $('#building_list_container').children().children().children(".select2-search-choice").remove();
+            $('#building_list_container').children().children().children().children().val('Select building(s)');
+            $('#building_list_container').children().children().children().children().attr('style', "");
+        });
+     
         var escape_key_code = 27;
 
         $(document).keyup(function(e) {
@@ -450,6 +475,32 @@ function reset_location_filter() {
 	});
 
 })(this);
+
+function resetFilters() {
+    // reset checkboxes
+    $('input[type=checkbox]').each(function() {
+        if ($(this).attr('checked')) {
+            $(this).attr('checked', false);
+            $(this).parent().removeClass("selected");
+        }   
+    }); 
+
+    // reset capacity
+    $('#capacity').val('1');
+
+    // reset hours
+    $('#open_now').prop('checked', true);
+    $('#open_now').parent().removeClass("selected");
+    $('#hours_list_container').hide();
+    $('#hours_list_input').parent().removeClass("selected");
+    default_open_at_filter();
+    $("#day-until").val("No pref")
+    $("#hour-until").val("No pref")
+    $("#ampm-until").val("AM")
+
+    //reset location
+    reset_location_filter();
+}
 
 function getSpaceMap(lat, lon) {
 
@@ -504,3 +555,7 @@ function closeSpaceDetails() {
     $('#info_items li').removeClass('selected');
     $(the_spot_id).focus();
 }
+
+
+
+

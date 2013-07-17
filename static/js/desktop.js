@@ -60,48 +60,6 @@ Handlebars.registerHelper('ifany', function(a, b) {
             $('#cancel_results_button').focus();
         });
 
-        // clear filters
-        $('#cancel_results_button').click(function() {
-
-            $('#filter-clear').slideDown(50);
-            $('#filter-clear').delay(1000).fadeOut(500);
-            // clear saved search options
-            if ($.cookie('spacescout_search_opts')) {
-                $.removeCookie('spacescout_search_opts');
-            }
-
-            // reset checkboxes
-            $('input[type=checkbox]').each(function() {
-                if ($(this).attr('checked')) {
-                    $(this).attr('checked', false);
-                    $(this).parent().removeClass("selected");
-                }
-            });
-
-            // reset capacity
-            $('#capacity').val('1');
-
-            // reset hours
-            $('#open_now').prop('checked', true);
-            $('#open_now').parent().removeClass("selected");
-            $('#hours_list_container').hide();
-            $('#hours_list_input').parent().removeClass("selected");
-            default_open_at_filter();
-            $("#day-until").val("No pref")
-            $("#hour-until").val("No pref")
-            $("#ampm-until").val("AM")
-
-            // reset location
-            $('#entire_campus').prop('checked', true);
-            $('#entire_campus').parent().removeClass("selected");
-            $('#e9.building-location').children().children().first()[0].selected = true; // grabs first location in drop down and selects it
-            $('#building_list_container').hide();
-            $('#building_list_input').parent().removeClass("selected");
-            $('#building_list_container').children().children().children(".select2-search-choice").remove();
-            $('#building_list_container').children().children().children().children().val('Select building(s)');
-            $('#building_list_container').children().children().children().children().attr('style', "");
-        });
-
 
         // handle view details click
         $('.view-details').live('click', function(e){
