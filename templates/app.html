@@ -53,8 +53,11 @@
             <div aria-labelledby="filter_group_header">
                 <div class="actions">
                     <button id="filter_button" class="btn btn-inverse" type="button" aria-label="Filter settings..." aria-owns="filter_container" >Filters</button>
-                    <button id="cancel_results_button" class="btn" type="button" aria-label="Clear Filters">Clear</button>
+                    <div id="done-clear-group">
                     <button id="view_results_button" class="btn btn-inverse" type="button" aria-label="Apply Filters">Done</button>
+                    <br>
+                    <button id="cancel_results_button" class="btn" type="button" aria-label="Clear Filters">Clear</button>
+                    </div>
                 </div>
 
                 <div id="bubble_desktop">
@@ -317,13 +320,13 @@
                                                         <div class="space-detail-labstats pull-right"><p><span class="computer-notavailable">{{extended_info.auto_labstats_available}}</span>/{{extended_info.auto_labstats_total}}</p></div>
                                                     {{/compare}}
                                                 {{^}}
-                                                    <span class="space-detail-capacity pull-right">Seats&nbsp;{{capacity}}</span>
+                                                    <span class="space-detail-capacity pull-right">{{#if capacity }}Seats&nbsp;{{capacity}}{{/if}}</span>
                                                 {{/compare}}
                                             {{else}}
-                                                <span class="space-detail-capacity pull-right">Seats&nbsp;{{capacity}}</span>
+                                                <span class="space-detail-capacity pull-right">{{#if capacity }}Seats&nbsp;{{capacity}}{{/if}}</span>
                                             {{/if}}
                                         {{else}}
-                                            <span class="space-detail-capacity pull-right">Seats&nbsp;{{capacity}}</span>
+                                           <span class="space-detail-capacity pull-right">{{#if capacity }}Seats&nbsp;{{capacity}}{{/if}}</span>
                                         {{/if}}
                                     </div>
                                     <div class="space-detail-name">{{name}}</div>
@@ -366,13 +369,13 @@
                                                         <div class="space-detail-labstats pull-right"><p><span class="computer-notavailable">{{extended_info.auto_labstats_available}}</span>/{{extended_info.auto_labstats_total}}</p></div>
                                                     {{/compare}}
                                                 {{^}}
-                                                    <span class="space-detail-capacity pull-right">Seats&nbsp;{{capacity}}</span>
+                                                   <span class="space-detail-capacity pull-right">{{#if capacity }}Seats&nbsp;{{capacity}}{{/if}}</span>
                                                 {{/compare}}
                                             {{else}}
-                                                <span class="space-detail-capacity pull-right">Seats&nbsp;{{capacity}}</span>
+                                                <span class="space-detail-capacity pull-right">{{#if capacity }}Seats&nbsp;{{capacity}}{{/if}}</span>
                                             {{/if}}
                                         {{else}}
-                                            <span class="space-detail-capacity pull-right">Seats&nbsp;{{capacity}}</span>
+                                            <span class="space-detail-capacity pull-right">{{#if capacity }}Seats&nbsp;{{capacity}}{{/if}}</span>
                                         {{/if}}
                                     </div>
                                     <div class="space-detail-name">{{name}}</div>

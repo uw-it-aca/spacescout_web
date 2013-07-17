@@ -370,6 +370,31 @@ function reset_location_filter() {
                 window.spacescout_map.setCenter(new google.maps.LatLng(window.default_latitude, window.default_longitude));
                 window.spacescout_map.setZoom(parseInt(window.default_zoom));
             }
+            
+            // reset filters for campus change            
+            // reset checkboxes
+            $('input[type=checkbox]').each(function() {
+                if ($(this).attr('checked')) {
+                    $(this).attr('checked', false);
+                    $(this).parent().removeClass("selected");
+                }   
+            }); 
+
+            // reset capacity
+            $('#capacity').val('1');
+
+            // reset hours
+            $('#open_now').prop('checked', true);
+            $('#open_now').parent().removeClass("selected");
+            $('#hours_list_container').hide();
+            $('#hours_list_input').parent().removeClass("selected");
+            default_open_at_filter();
+            $("#day-until").val("No pref")
+            $("#hour-until").val("No pref")
+            $("#ampm-until").val("AM")
+
+            run_custom_search();
+
             window.update_count = true;
             get_location_buildings();
             $.cookie('default_location', $(this).val());
@@ -463,7 +488,7 @@ function replaceUrls(){
     var patt = /\b(?:https?|ftp):\/\/[a-z0-9-+&@#\/%?=~_|!:,.;]*[a-z0-9-+&@#\/%=~_|]/gim;
     var url = patt.exec(text);
     if (url != null) {
-        text = text.replace(url, "<a href='" + url + "'>" + url + "</a>");
+        text = text.replace(url, "<a href='" + url + "' target='_blank'>" + url + "</a>");
         $("#ei_reservation_notes").html(text);
     }
 }
