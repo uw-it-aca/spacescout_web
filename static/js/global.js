@@ -511,6 +511,59 @@ function reset_location_filter() {
 
 })(this);
 
+function initializeCarousel() {
+
+    // initialize the carousel
+    $('.carousel').each( function() {
+
+        $(this).carousel({
+            interval: false
+        }); 
+
+        // add carousel pagination
+        var html = '<div class="carousel-nav" data-target="' + $(this).attr('id') + '"><ul>';
+
+        for(var i = 0; i < $(this).find('.item').size(); i ++) {
+            html += '<li><a';
+            if(i == 0) {
+                html += ' class="active"';
+            }   
+
+            html += ' href="#">•</a></li>';
+        }   
+
+        html += '</ul></li>';
+        $(this).before(html);
+
+        //set the first item as active
+        $(this).find(".item:first-child").addClass("active");
+
+        // hide the controls and pagination if only 1 picture exists
+        if ($(this).find('.item').length == 1) {
+            $(this).find('.carousel-control').hide();
+            $(this).prev().hide(); // hide carousel pagination container for single image carousels
+        }   
+
+    }).bind('slid', function(e) {
+        var nav = $('.carousel-nav[data-target="' + $(this).attr('id') + '"] ul');
+        var index = $(this).find('.item.active').index();
+        var item = nav.find('li').get(index);
+
+        nav.find('li a.active').removeClass('active');
+        $(item).find('a').addClass('active');
+    }); 
+
+    $('.carousel-nav a').bind('click', function(e) {
+        var index = $(this).parent().index();
+        var carousel = $('#' + $(this).closest('.carousel-nav').attr('data-target'));
+
+        carousel.carousel(index);
+        e.preventDefault();
+    }); 
+
+    resizeCarouselMapContainer();
+}
+
 function resizeCarouselMapContainer() {
     // get the width
     var containerW = $('.image-container').width();
