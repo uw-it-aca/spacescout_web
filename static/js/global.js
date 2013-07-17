@@ -471,6 +471,8 @@ function reset_location_filter() {
 
         }); 
  
+           
+
         var escape_key_code = 27;
 
         $(document).keyup(function(e) {
@@ -508,6 +510,19 @@ function reset_location_filter() {
 	});
 
 })(this);
+
+function resizeCarouselMapContainer() {
+    // get the width
+    var containerW = $('.image-container').width();
+
+    // calcuate height based on 3:2 aspect ratio
+    var containerH = containerW / 1.5;
+
+    $('.carousel').height(containerH);
+    $('.carousel-inner-image').height(containerH);
+    $('.carousel-inner-image-inner').height(containerH);
+    $('.map-container').height(containerH);
+}   
 
 function resetFilters() {
     // reset checkboxes

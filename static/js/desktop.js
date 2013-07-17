@@ -268,20 +268,4 @@ Handlebars.registerHelper('ifany', function(a, b) {
         resizeCarouselMapContainer();
 
     }
-
-    function resizeCarouselMapContainer() {
-        // get the width
-        var containerW = $('.image-container').width();
-
-        // calcuate height based on 3:2 aspect ratio
-        var containerH = containerW / 1.5;
-
-        $('.carousel').height(containerH);
-        $('.carousel-inner-image').height(containerH);
-        $('.carousel-inner-image-inner').height(containerH);
-        $('.map-container').height(containerH);
-
-    }
-
-
 })(this);

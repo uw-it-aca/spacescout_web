@@ -271,19 +271,6 @@
         $("#filter_block").height(winH - 110);
     }
 
-    function resizeCarouselMapContainer() {
-        // get the width
-        var containerW = $('.image-container').width();
-
-        // calcuate height based on 3:2 aspect ratio
-        var containerH = containerW / 1.5;
-
-        $('.carousel').height(containerH);
-        $('.carousel-inner-image').height(containerH);
-        $('.carousel-inner-image-inner').height(containerH);
-        $('.map-container').height(containerH);
-    }
-
     // callout for ios5-6 native app
     function showIosCallout() {
 
