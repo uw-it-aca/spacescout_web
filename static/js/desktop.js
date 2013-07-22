@@ -37,6 +37,9 @@ Handlebars.registerHelper('ifany', function(a, b) {
 
 		desktopContent();
 
+        $(".chzn-select").chosen({width: "98%"});
+
+
 	   // check if a map_canvas exists... populate it
     	if ($("#map_canvas").length == 1) {
           initialize();
