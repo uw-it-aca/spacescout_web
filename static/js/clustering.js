@@ -55,6 +55,8 @@ function update_spacescout_markers(spots) {
         });
         window.spacescout_markers.push(holderspot);
     }
+    $("#info_list").scrollTop(0);
+
 }
 
 
