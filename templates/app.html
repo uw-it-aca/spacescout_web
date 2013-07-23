@@ -320,13 +320,13 @@
                                                         <div class="space-detail-labstats pull-right"><p><span class="computer-notavailable">{{extended_info.auto_labstats_available}}</span>/{{extended_info.auto_labstats_total}}</p></div>
                                                     {{/compare}}
                                                 {{^}}
-                                                    <span class="space-detail-capacity pull-right">Seats&nbsp;{{capacity}}</span>
+                                                    <span class="space-detail-capacity pull-right">{{#if capacity }}Seats&nbsp;{{capacity}}{{/if}}</span>
                                                 {{/compare}}
                                             {{else}}
-                                                <span class="space-detail-capacity pull-right">Seats&nbsp;{{capacity}}</span>
+                                                <span class="space-detail-capacity pull-right">{{#if capacity }}Seats&nbsp;{{capacity}}{{/if}}</span>
                                             {{/if}}
                                         {{else}}
-                                            <span class="space-detail-capacity pull-right">Seats&nbsp;{{capacity}}</span>
+                                           <span class="space-detail-capacity pull-right">{{#if capacity }}Seats&nbsp;{{capacity}}{{/if}}</span>
                                         {{/if}}
                                     </div>
                                     <div class="space-detail-name">{{name}}</div>
@@ -369,13 +369,13 @@
                                                         <div class="space-detail-labstats pull-right"><p><span class="computer-notavailable">{{extended_info.auto_labstats_available}}</span>/{{extended_info.auto_labstats_total}}</p></div>
                                                     {{/compare}}
                                                 {{^}}
-                                                    <span class="space-detail-capacity pull-right">Seats&nbsp;{{capacity}}</span>
+                                                   <span class="space-detail-capacity pull-right">{{#if capacity }}Seats&nbsp;{{capacity}}{{/if}}</span>
                                                 {{/compare}}
                                             {{else}}
-                                                <span class="space-detail-capacity pull-right">Seats&nbsp;{{capacity}}</span>
+                                                <span class="space-detail-capacity pull-right">{{#if capacity }}Seats&nbsp;{{capacity}}{{/if}}</span>
                                             {{/if}}
                                         {{else}}
-                                            <span class="space-detail-capacity pull-right">Seats&nbsp;{{capacity}}</span>
+                                            <span class="space-detail-capacity pull-right">{{#if capacity }}Seats&nbsp;{{capacity}}{{/if}}</span>
                                         {{/if}}
                                     </div>
                                     <div class="space-detail-name">{{name}}</div>
