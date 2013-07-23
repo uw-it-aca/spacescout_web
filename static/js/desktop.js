@@ -16,7 +16,7 @@
 */
 
 Handlebars.registerHelper('ifany', function(a, b) {
-
+    console.log("handlebars ifany method");
     // if anything passed is true, return true
     if (a || b) {
         return fn(this);
@@ -32,13 +32,9 @@ Handlebars.registerHelper('ifany', function(a, b) {
 
     var deviceAgent = navigator.userAgent.toLowerCase();
 	var iphone = deviceAgent.match(/(iphone|ipod)/);
-
 	$(document).ready(function() {
 
 		desktopContent();
-
-        $(".chzn-select").chosen({width: "98%"});
-
 
 	   // check if a map_canvas exists... populate it
     	if ($("#map_canvas").length == 1) {
@@ -130,7 +126,6 @@ Handlebars.registerHelper('ifany', function(a, b) {
 
             //highlight the selected space
             $(this).addClass('selected');
-
         });
 
         $('#space_detail_container .close').live('click', function(e){
@@ -168,9 +163,13 @@ Handlebars.registerHelper('ifany', function(a, b) {
                 $('#building_list_container').show();
             }
             else {
-                $('#building_list_container').hide();
+               $('#building_list_container').hide();
             }
-
+            if (!$('#building_list_container select').hasClass('chzn-done')) {
+                $(".chzn-select").chosen({width: "98%"});
+            } else {
+                //do nothing;
+            }
         });
 
         // Toggle between carousel and map
