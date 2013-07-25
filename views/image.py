@@ -18,11 +18,12 @@ import urllib
 import oauth2
 import types
 
+from spacescout_web.middleware.unpatch_vary import unpatch_vary_headers
+
 
 def ImageView(request, spot_id, image_id, thumb_width=None, thumb_height=None, constrain=False):
 
     # Required settings for the client
-
     if not hasattr(settings, 'SS_WEB_SERVER_HOST'):
         raise(Exception("Required setting missing: SS_WEB_SERVER_HOST"))
     if not hasattr(settings, 'SS_WEB_OAUTH_KEY'):
@@ -35,9 +36,9 @@ def ImageView(request, spot_id, image_id, thumb_width=None, thumb_height=None, c
 
     contenttype, img = get_image(client, spot_id, image_id, constrain, thumb_width, thumb_height)
 
-    response = HttpResponse(img)
-
-    response["Content-type"] = contenttype
+    response = HttpResponse(img, content_type=contenttype)
+    # Remove some headers that don't vary for images
+    unpatch_vary_headers(response, ['Cookie', 'X-Mobile', 'Accept-Language', 'User-Agent'])
 
     return response
 

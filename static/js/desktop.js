@@ -13,6 +13,11 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 
+    Changes
+    =================================================================
+
+    sbutler1@illinois.edu: attr(checked) to prop(checked); focus on
+      spot details.
 */
 
 Handlebars.registerHelper('ifany', function(a, b) {
@@ -72,8 +77,8 @@ Handlebars.registerHelper('ifany', function(a, b) {
 
             // reset checkboxes
             $('input[type=checkbox]').each(function() {
-                if ($(this).attr('checked')) {
-                    $(this).attr('checked', false);
+                if ($(this).prop('checked')) {
+                    $(this).prop('checked', false);
                     $(this).parent().removeClass("selected");
                 }
             });
@@ -275,6 +280,8 @@ Handlebars.registerHelper('ifany', function(a, b) {
 
            replaceUrls();
 
+           // Set focus on details container
+           $('.space-detail-inner').focus();
 	}
 
 	// Desktop display defaults

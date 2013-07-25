@@ -13,6 +13,10 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 
+    Changes
+    =================================================================
+
+    sbutler1@illinois.edu: attr(checked) to prop(checked).
 */
 
 var spacescout_map = null, spacescout_infowindow, spacescout_marker_ids = {}, spacescout_markers = [], speed = 800, mc = null, youarehere = null, update_count = null;
@@ -246,7 +250,7 @@ function run_custom_search() {
     }
 
     // hours
-    if ($("#hours_list_input").attr("checked") == "checked") {
+    if ($("#hours_list_input").prop("checked")) {
         if ($('#day-from').val() != 'nopref') {
             var from_query = new Array;
             from_query.push($('#day-from').val());
@@ -292,7 +296,7 @@ function run_custom_search() {
     }
 
     // location
-    if ($("#building_list_input").attr("checked") == "checked") {
+    if ($("#building_list_input").prop("checked")) {
         window.spacescout_search_options["building_name"] = $('select#e9').val();
         set_cookie = true;
     }
