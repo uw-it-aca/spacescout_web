@@ -32,7 +32,12 @@ Handlebars.registerHelper('ifany', function(a, b) {
 
     var deviceAgent = navigator.userAgent.toLowerCase();
 	var iphone = deviceAgent.match(/(iphone|ipod)/);
-	$(document).ready(function() {
+
+    $(window).load(function() {
+        $(".chzn-select").chosen({width: "98%"});
+    });
+
+    $(document).ready(function() {
 
 		desktopContent();
 
@@ -164,11 +169,6 @@ Handlebars.registerHelper('ifany', function(a, b) {
             }
             else {
                $('#building_list_container').hide();
-            }
-            if (!$('#building_list_container select').hasClass('chzn-done')) {
-                $(".chzn-select").chosen({width: "98%"});
-            } else {
-                //do nothing;
             }
         });
 
