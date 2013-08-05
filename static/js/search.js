@@ -16,8 +16,7 @@
     Changes
     =================================================================
 
-    sbutler1@illinois.edu: attr(checked) to prop(checked); open_anytime
-      option.
+    sbutler1@illinois.edu: attr(checked) to prop(checked).
 */
 
 var spacescout_map = null, spacescout_infowindow, spacescout_marker_ids = {}, spacescout_markers = [], speed = 800, mc = null, youarehere = null, update_count = null;
@@ -251,9 +250,7 @@ function run_custom_search() {
     }
 
     // hours
-    if ($("#open_anytime").prop("checked")) {
-      window.spacescout_search_options["open_anytime"] = 1;
-    } else if ($("#hours_list_input").prop("checked")) {
+    if ($("#hours_list_input").prop("checked")) {
         if ($('#day-from').val() != 'nopref') {
             var from_query = new Array;
             from_query.push($('#day-from').val());
@@ -566,7 +563,7 @@ function fetch_data() {
         args = {};
     }
     // it's a hack, but it should work
-    if (!args["open_at"] && !args["open_anytime"]) {
+    if (!args["open_at"]) {
         args["open_now"] = 1;
     }
 
