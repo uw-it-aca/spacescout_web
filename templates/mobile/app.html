@@ -198,15 +198,15 @@
                                   {{/if}}
                                 </div>
                                 <button  id="{{id}}" class="space-detail-list-item pull-left" type="button" aria-label="Get space details for {{name}}" aria-owns="detail_container_{{id}}">
-                                    <div class="space-detail-type">
+                                    <div class="space-detail-type clearfix">
                                         <span class="space-detail-type-label pull-left">{{type}}</span>
                                         {{#if extended_info.labstats_id}}
                                             {{#if extended_info.auto_labstats_total}}
                                                 {{#compare extended_info.auto_labstats_total 0 operator="!="}}
                                                     {{#compare extended_info.auto_labstats_available 0 operator=">"}}
-                                                        <span class="space-detail-labstats"><p><span class="computer-available">{{extended_info.auto_labstats_available}}</span>/{{extended_info.auto_labstats_total}}</p></span>
+                                                        <span class="space-detail-labstats pull-right"><p><span class="computer-available">{{extended_info.auto_labstats_available}}</span>/{{extended_info.auto_labstats_total}}</p></span>
                                                     {{^}}
-                                                        <span class="space-detail-labstats"><p><span class="computer-notavailable">{{extended_info.auto_labstats_available}}</span>/{{extended_info.auto_labstats_total}}</p></span>
+                                                        <span class="space-detail-labstats pull-right"><p><span class="computer-notavailable">{{extended_info.auto_labstats_available}}</span>/{{extended_info.auto_labstats_total}}</p></span>
                                                     {{/compare}}
                                                 {{^}}
                                                     <span class="space-detail-capacity pull-right">{{#if capacity}}Seats&nbsp;{{capacity}}{{/if}}</span>
