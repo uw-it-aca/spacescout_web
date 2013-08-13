@@ -42,11 +42,14 @@
             <div class="logo">
                 <h1 class="visuallyhidden">SPACESCOUT&trade;</h1>
                 {% ifnotequal locations|length 1 %}
+                <span role="navigation" aria-labelledby="location_select_heading">
+                <label id="location_select_heading" for="location_select"  class="visuallyhidden">Select campus:</label>
                 <select id='location_select'>
                     {% for key, value in locations.items %}
                         <option value="{{ value.CENTER_LATITUDE }},{{ value.CENTER_LONGITUDE }},{{ key }},{{ value.ZOOM_LEVEL }}">{{ value.NAME }}</option>
                     {% endfor %}
                 </select>
+                </span>
                 {% endifnotequal %}
             </div>
             <div role="search" aria-labelledby="filter_group_header">
