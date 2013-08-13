@@ -71,7 +71,7 @@
                 </div>
             </div>
 
-            <h2 id="filter_group_header" class="visuallyhidden">Space Filters</h2>
+            <h2 id="filter_group_header" class="visuallyhidden">Find Study Spaces by Specific Criteria</h2>
 
         </div>
 
@@ -91,6 +91,7 @@
                 					<div id="bubble_filters_container" class="bubble-filters pull-left" ></div>
 
                							 {% tplhandlebars "filter_list" %}
+               					    <h4 id="current_filters" class="visuallyhidden">Currently filtering by:</h4>
               							  <ul id='filter_display_list'>
 									  <li>{{#if open_at}}specific time{{else}}open now{{/if}}</li>
 									  <li>{{#if building_name}}specific building{{else}}entire campus{{/if}}</li>

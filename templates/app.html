@@ -49,7 +49,7 @@
                 </select>
                 {% endifnotequal %}
             </div>
-            <h2 id="filter_group_header" class="visuallyhidden">Space Filters</h2>
+            <h2 id="filter_group_header" class="visuallyhidden">Find Study Spaces by Specific Criteria</h2>
             <div aria-labelledby="filter_group_header">
                 <div class="actions">
                     <button id="filter_button" class="btn btn-inverse" type="button" aria-label="Filter settings..." aria-owns="filter_container" >Filters</button>
@@ -67,7 +67,7 @@
                        <div id="bubble_filters_container" class="bubble-filters pull-left"></div>
 
                         {% tplhandlebars "filter_list" %}
-                        <h3 id="current_filters" class="visuallyhidden">Current Filters:</h3>
+                        <h3 id="current_filters" class="visuallyhidden">Currently filtering by:</h3>
                         <ul id='filter_display_list' aria-labelledby="current_filters">
 
                             <li>{{#if open_at}}specific time{{else}}open now{{/if}}</li>
