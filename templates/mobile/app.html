@@ -40,7 +40,7 @@
         <div class="logo-container clearfix">
 
             <div class="logo">
-                <h1 class="visuallyhidden">SPACESCOUT&trade;</h1>
+                <h1 id="app_header" class="visuallyhidden">SPACESCOUT&trade;</h1>
                 {% ifnotequal locations|length 1 %}
                 <span role="navigation" aria-labelledby="location_select_heading">
                 <label id="location_select_heading" for="location_select"  class="visuallyhidden">Select campus:</label>
@@ -118,7 +118,7 @@
 
     </div>
 
-    <div id="main_content" class="clearfix">
+    <div id="main_content" class="clearfix" role="main" aria-labelledby="app_header">
         <h2 id="map_header" class="visuallyhidden" aria-hidden="true">Map of Spaces</h2>
         <div id="map_canvas" aria-labelledby="map_header" aria-hidden="true"></div>
         {% tplhandlebars "map_controls" %}
