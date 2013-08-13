@@ -49,34 +49,10 @@
                 </select>
                 {% endifnotequal %}
             </div>
-            <div aria-labelledby="filter_group_header">
-                <div class="actions">
-                    <button id="filter_button" class="btn btn-inverse" type="button" aria-label="Filter settings..." aria-owns="filter_container" >Filters</button>
+            <div role="search" aria-labelledby="filter_group_header">
+                <h2 id="filter_group_header" class="visuallyhidden">Find Study Spaces by Specific Criteria</h2>
 
-                    <h3 id="spaces_match_header" class="visuallyhidden">Your current filters return:</h3>
-
-                    <div id="space_count_container" aria-labelledby="spaces_match_header"></div>
-
-					{% tplhandlebars "space_count" %}
-            			<div id="spacecount">
-            				<span class="count">{{count}}</span><span class="spaces"> spaces</span>
-            			</div>
-            		{% endtplhandlebars %}
-
-                    <div id="done-clear-group">
-                    <button id="view_results_button" class="btn btn-inverse" type="button" aria-label="Apply Filters">Done</button><br>
-                    <button id="cancel_results_button" class="btn" type="button" aria-label="Clear Filters">Clear</button>
-                    </div>
-
-                </div>
-            </div>
-
-            <h2 id="filter_group_header" class="visuallyhidden">Find Study Spaces by Specific Criteria</h2>
-
-        </div>
-
-    </div>
-    <div id="filter_container" aria-labelledby="filters_header">
+                <div id="filter_container" aria-labelledby="filters_header">
         <form>
             <div id="filter_block" style="display:none;">
                 <h3 id="filters_header" class="visuallyhidden">Filter By:</h3>
@@ -113,6 +89,30 @@
                 </div>
             </div>
         </form>
+    </div>
+
+                <div class="actions">
+                    <button id="filter_button" class="btn btn-inverse" type="button" aria-label="Filter settings..." aria-owns="filter_container" >Filters</button>
+
+                    <h3 id="spaces_match_header" class="visuallyhidden">Your current filters return:</h3>
+
+                    <div id="space_count_container" aria-labelledby="spaces_match_header"></div>
+
+					{% tplhandlebars "space_count" %}
+            			<div id="spacecount">
+            				<span class="count">{{count}}</span><span class="spaces"> spaces</span>
+            			</div>
+            		{% endtplhandlebars %}
+
+                    <div id="done-clear-group">
+                    <button id="view_results_button" class="btn btn-inverse" type="button" aria-label="Apply Filters">Done</button><br>
+                    <button id="cancel_results_button" class="btn" type="button" aria-label="Clear Filters">Clear</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <div id="main_content" class="clearfix">
