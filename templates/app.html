@@ -55,7 +55,7 @@
             <h2 id="filter_group_header" class="visuallyhidden">Find Study Spaces by Specific Criteria</h2>
             
             <div role= "search" aria-labelledby="filter_group_header">
-                <div id="filter_container" aria-labelledby="filters_header">
+                <div id="filter_container" aria-labelledby="filters_header" aria-controls="space_count_container">
                     <form>
                         <div id="filter_block" style="display:none;">
                             <h3 id="filters_header" class="visuallyhidden">Filter By:</h3>
@@ -105,7 +105,7 @@
 
                         <div class="pull-right bubble-info">
                             <h3 id="spaces_match_header" class="visuallyhidden">Your current filters return:</h3>
-                            <div id="space_count_container" aria-labelledby="spaces_match_header"></div>
+                            <div id="space_count_container" aria-labelledby="spaces_match_header" role="status"></div>
 
                             {% tplhandlebars "space_count" %}
                             <span class="count">{{count}}</span><span class="spaces">spaces</span>
