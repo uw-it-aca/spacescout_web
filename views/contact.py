@@ -66,15 +66,8 @@ def contact(request, spot_id=None):
     else:
         form = ContactForm()
 
-    # See if django-compressor is being used to precompile less
-    if settings.COMPRESS_ENABLED:
-        less_not_compiled = False
-    else:
-        less_not_compiled = True
-
     return render_to_response('contact-form.html', {
         'form': form,
-        'less_not_compiled': less_not_compiled,
         'back': back,
         'spot_name': spot_name,
         'spot_description': spot_description,
