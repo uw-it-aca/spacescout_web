@@ -263,7 +263,7 @@ button {
                 .space-info { margin-top: 20px;
                     ul { margin: 0; }
                     li { list-style: none; margin-bottom: 5px;
-                      .space-info-label { width: 35%; margin-right: 10px; color: @grey_light; overflow: hidden; text-overflow: ellipsis; font-weight: normal; margin:0; }
+                      .space-info-label { width: 35%; margin-right: 10px; color: @grey_light; overflow: hidden; text-overflow: ellipsis; font-weight: normal; margin:0; line-height: inherit; font-size: inherit;}
                       .space-info-detail { width: 60%;
 							//lab stats styles
 							.computer-available { color:#20b420; }
@@ -350,7 +350,7 @@ button {
     #info_items {
         ol { margin: 0; list-style: none;
 
-            .building_header { border-top:solid 1px @grey_border; background-color: #ddd; color:#222; font-size: 12px; padding: 5px 10px; }
+            .building_header { border-top:solid 1px @grey_border; background-color: #ddd; color:#222; font-size: 12px; padding: 5px 10px; line-height: inherit; margin: inherit; }
 
             li ol {
                 .view-details { cursor: pointer;
@@ -486,15 +486,6 @@ select {
             #view_results_button {  width: 84px; padding-left: 30px; text-indent: 0; }
             #cancel_results_button { width: 84px; padding-left: 30px; text-indent: 0; }
         }
-
-        #filter_container {
-            #filter_block {
-                #filter_hours {
-                    .hours-from, .hours-until { display: inline-block; width: 35px; }
-                    select { width: 31%; }
-                }
-            }
-        }
     }
 
     #map_canvas { }
@@ -513,16 +504,6 @@ select {
 
 /* Target larger devices */
 @media screen and (min-width: 480px) {
-
-    #nav {
-        #filter_container {
-            #filter_block {
-                #filter_hours {
-                    select { width: 38%; }
-                }
-            }
-        }
-    }
 
     #map_canvas { }
 
