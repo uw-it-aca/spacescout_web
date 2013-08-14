@@ -74,7 +74,6 @@ def contact(request, spot_id=None):
 
     return render_to_response('contact-form.html', {
         'form': form,
-        'is_mobile': is_mobile,
         'less_not_compiled': less_not_compiled,
         'back': back,
         'spot_name': spot_name,
@@ -93,7 +92,6 @@ def thank_you(request, spot_id=None):
     return render_to_response('contact-thankyou.html', {
         'spot_id': spot_id,
         'back': back,
-        'is_mobile': is_mobile,
         'ga_tracking_id': ga_tracking_id,
     }, context_instance=RequestContext(request))
 
@@ -110,7 +108,6 @@ def sorry(request, spot_id=None):
         'spot_id': spot_id,
         'back': back,
         'email': email,
-        'is_mobile': is_mobile,
         'ga_tracking_id': ga_tracking_id,
     }, context_instance=RequestContext(request))
 
@@ -133,11 +130,6 @@ def _contact_variables(request, spot_id):
             spot_id = None
             print >> sys.stderr, "E: ", e.code
 
-    if request.MOBILE == 1:
-        is_mobile = True
-    else:
-        is_mobile = False
-
     if is_mobile and spot_id is not None:
         back = ('/space/' + spot_id)
     else:
@@ -146,6 +138,5 @@ def _contact_variables(request, spot_id):
     return {
         'spot_name': spot_name,
         'spot_description': spot_description,
-        'is_mobile': is_mobile,
         'back': back
     }

@@ -91,7 +91,6 @@ def HomeView(request, template=None):
         'by_building_zooms': by_building_zooms,
         'by_distance_ratio': by_distance_ratio,
         'buildingdict': buildingdict,
-        'is_mobile': request.MOBILE,
         'less_not_compiled': less_not_compiled,
         'ga_tracking_id': ga_tracking_id,
     }

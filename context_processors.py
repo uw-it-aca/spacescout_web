@@ -8,3 +8,9 @@ def show_ios_smart_banner(request):
         return {'show_ios_smart_banner': settings.SHOW_IOS_SMART_BANNER}
     except:
         return {'show_ios_smart_banner': False}
+
+def is_mobile(request):
+    if request.MOBILE == 1:
+        return {'is_mobile': True}
+    else:
+        return {'is_mobile': False}
