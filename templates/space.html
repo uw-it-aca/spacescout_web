@@ -79,10 +79,10 @@
                                     <li class="clearfix">
                                         <div class="space-info-label pull-left">Computers</div>
                                         <div class="space-info-detail pull-left">
-                                        {% if extended_info.auto_labstats_available > '0' %}
-                                            <p><span class="computer-available">{{ extended_info.auto_labstats_available }}</span> of {{ extended_info.auto_labstats_total }} available</p>    
-                                        {% elif extended_info.auto_labstats_available == '0' %}
-                                            <p><span class="computer-notavailable">{{ extended_info.auto_labstats_available }}</span> of {{ extended_info.auto_labstats_total }} available</p>    
+                                        {% if extended_info.auto_labstats_available <= '0' and extended_info.auto_labstats_off <= '0' %}
+                                            <p><span class="computer-notavailable">{{ extended_info.auto_labstats_available|add:extended_info.auto_labstats_off }}</span> of {{ extended_info.auto_labstats_total }} available</p>    
+                                        {% elif extended_info.auto_labstats_available > '0' or extended_info.auto_labstats_off > '0'%}
+                                            <p><span class="computer-available">{{ extended_info.auto_labstats_available|add:extended_info.auto_labstats_off }}</span> of {{ extended_info.auto_labstats_total }} available</p>    
                                         {% endif %}
                                         </div>
                                     </li>
