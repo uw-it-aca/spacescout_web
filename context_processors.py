@@ -9,7 +9,7 @@ def show_ios_smart_banner(request):
         return {'show_ios_smart_banner': False}
 
 def is_mobile(request):
-    """
+    """ See if it's mobile mode
     """
     if request.MOBILE == 1:
         return {'is_mobile': True}
@@ -23,3 +23,11 @@ def less_not_compiled(request):
         return {'less_not_compiled': False} 
     else:
         return {'less_not_compiled': True}
+
+def ga_tracking_id(request):
+    """ See if there is a Google Analytics web property id
+    """
+    try:
+        return {'ga_tracking_id': settings.GA_TRACKING_ID}
+    except:
+        return {'ga_tracking_id': None}

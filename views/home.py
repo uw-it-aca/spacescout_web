@@ -69,12 +69,6 @@ def HomeView(request, template=None):
         except:
             pass
 
-    # See if there is a Google Analytics web property id
-    try:
-        ga_tracking_id = settings.GA_TRACKING_ID
-    except:
-        ga_tracking_id = None
-
     params = {
         'center_latitude': center_latitude,
         'center_longitude': center_longitude,
@@ -84,7 +78,6 @@ def HomeView(request, template=None):
         'by_building_zooms': by_building_zooms,
         'by_distance_ratio': by_distance_ratio,
         'buildingdict': buildingdict,
-        'ga_tracking_id': ga_tracking_id,
     }
 
     return render_to_response(template, params, context_instance=RequestContext(request))
