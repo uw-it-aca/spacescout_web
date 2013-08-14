@@ -68,14 +68,6 @@ def SpotView(request, spot_id, return_json=False):
 
     content = json.dumps(params)
 
-    # See if django-compressor is being used to precompile less
-    if settings.COMPRESS_ENABLED:
-        less_not_compiled = False
-    else:
-        less_not_compiled = True
-
-    params["less_not_compiled"] = less_not_compiled
-
     if return_json:
         return HttpResponse(content, mimetype='application/json')
     else:

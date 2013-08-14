@@ -21,7 +21,6 @@ from django.utils.datastructures import SortedDict
 from mobility.decorators import mobile_template
 from django.core.exceptions import ImproperlyConfigured
 
-
 @mobile_template('{mobile/}app.html')
 def HomeView(request, template=None):
     # Default to zooming in on the UW Seattle campus if no default location is set
@@ -70,12 +69,6 @@ def HomeView(request, template=None):
         except:
             pass
 
-    # See if django-compressor is being used to precompile less
-    if settings.COMPRESS_ENABLED:
-        less_not_compiled = False
-    else:
-        less_not_compiled = True
-
     # See if there is a Google Analytics web property id
     try:
         ga_tracking_id = settings.GA_TRACKING_ID
@@ -92,7 +85,6 @@ def HomeView(request, template=None):
         'by_distance_ratio': by_distance_ratio,
         'buildingdict': buildingdict,
         'is_mobile': request.MOBILE,
-        'less_not_compiled': less_not_compiled,
         'ga_tracking_id': ga_tracking_id,
     }
 
