@@ -13,11 +13,12 @@
 
 {% block content %}
 {% load i18n %}
-
+    
     <div id="space_details_header" class="clearfix">
+        <h1 class="visuallyhidden">SPACESCOUT&trade;</h1>
 		<img id="back_home_button" class="pull-left back-button" src="/static/img/details_arrow.png" />
         <div id="name-type-block" class="pull-left">
-            <div class="space-detail-name" style="">{{name}}</div>
+            <h2 class="space-detail-name" style=""><span class="visuallyhidden">Space Details:</span> {{name}}</h2>
       		<div class="space-detail-type">{{ type }} {% if capacity %}<span class="space-detail-capacity">[Seats&nbsp;{{capacity}}]</span>{% endif %}</div>      
         </div>
       
@@ -58,8 +59,8 @@
                         </div>
 
                         <div class="space-image-map-buttons btn-group" data-toggle="buttons-radio">
-                          <button id="carouselControl" class="btn active"><span>gallery</span></button>
-                          <button id="mapControl" class="btn"><span>map</span></button>
+                          <button id="carouselControl" class="btn active"><span>Image gallery</span></button>
+                          <button id="mapControl" class="btn"><span>Show this space on a map</span></button>
                         </div>
 
                         <div class="space-info">
@@ -67,7 +68,7 @@
 
                                 {% if extended_info.access_notes or extended_info.reservation_notes %}
                                 <li class="clearfix">
-                                    <div class="space-info-label pull-left">Notes</div>
+                                    <h3 class="space-info-label pull-left">Notes</h3>
                                     <div class="space-info-detail pull-left">
                                         {% if extended_info.access_notes %}<p>{{extended_info.access_notes }}</p>{% endif %}
                                         {% if extended_info.reservation_notes %}<p id="ei_reservation_notes">{{extended_info.reservation_notes }}</p>{% endif %}
@@ -77,12 +78,12 @@
 								<!-- LABSTATS if labstats, show the following <li> -->
                                 {% if extended_info.labstats_id and extended_info.auto_labstats_total and not extended_info.auto_labstats_total == '0' %}
                                     <li class="clearfix">
-                                        <div class="space-info-label pull-left">Computers</div>
+                                        <h3 class="space-info-label pull-left">Computers</h3>
                                         <div class="space-info-detail pull-left">
-                                        {% if extended_info.auto_labstats_available > '0' %}
-                                            <p><span class="computer-available">{{ extended_info.auto_labstats_available }}</span> of {{ extended_info.auto_labstats_total }} available</p>    
-                                        {% elif extended_info.auto_labstats_available == '0' %}
-                                            <p><span class="computer-notavailable">{{ extended_info.auto_labstats_available }}</span> of {{ extended_info.auto_labstats_total }} available</p>    
+                                        {% if extended_info.auto_labstats_available <= '0' and extended_info.auto_labstats_off <= '0' %}
+                                            <p><span class="computer-notavailable">{{ extended_info.auto_labstats_available|add:extended_info.auto_labstats_off }}</span> of {{ extended_info.auto_labstats_total }} available</p>    
+                                        {% elif extended_info.auto_labstats_available > '0' or extended_info.auto_labstats_off > '0'%}
+                                            <p><span class="computer-available">{{ extended_info.auto_labstats_available|add:extended_info.auto_labstats_off }}</span> of {{ extended_info.auto_labstats_total }} available</p>    
                                         {% endif %}
                                         </div>
                                     </li>
@@ -91,17 +92,17 @@
                                 {% load templatetag_handlebars %}
                                 <li id="mobile_hours_template" class="clearfix">
                                 {% tplhandlebars "mobile_hours" %}
-                                <div class="space-info-label pull-left">Hours</div><div class="space-info-detail pull-left">{{formatHours available_hours}}</div>
+                                <h3 class="space-info-label pull-left">Hours</h3><div class="space-info-detail pull-left">{{formatHours available_hours}}</div>
                                 {% endtplhandlebars %}
                                 </li>
 
                                 {% if extended_info.location_description %}
-                                <li class="clearfix"><div class="space-info-label pull-left">Location</div><div class="space-info-detail pull-left">{{extended_info.location_description}}</div></li>
+                                <li class="clearfix"><h3 class="space-info-label pull-left">Location</h3><div class="space-info-detail pull-left">{{extended_info.location_description}}</div></li>
                                 {% endif %}
 
                                 {% if extended_info.has_computers or extended_info.has_displays or extended_info.has_outlets or extended_info.has_printing or extended_info.has_projector or extended_info.has_scanner or extended_info.has_whiteboards %}
                                 <li class="clearfix">
-                                    <div class="space-info-label pull-left">Resources</div>
+                                    <h3 class="space-info-label pull-left">Resources</h3>
                                     <div class="space-info-detail pull-left">
                                         <ul class='space-info-resources-list'>
                                         {% if extended_info.has_computers %}<li>Computers</li>{% endif %}
@@ -118,7 +119,7 @@
 
                                 {% if extended_info.noise_level %}
                                 <li class="clearfix">
-                                    <div class="space-info-label pull-left">Noise Level</div>
+                                    <h3 class="space-info-label pull-left">Noise Level</h3>
                                     <div class="space-info-detail pull-left">
                                         {% if extended_info.noise_level == "quiet" %}
                                             {% trans 'quiet' %}
@@ -134,13 +135,13 @@
                                 {% endif %}
 
                                 {% if extended_info.has_natural_light %}
-                                <li class="clearfix"><div class="space-info-label pull-left">Lighting</div><div class="space-info-detail pull-left">Natural light</div></li>
+                                <li class="clearfix"><h3 class="space-info-label pull-left">Lighting</h3><div class="space-info-detail pull-left">Natural light</div></li>
                                 {% endif %}
 
 
                                 {% if extended_info.food_nearby %}
                                 <li class="clearfix">
-                                    <div class="space-info-label pull-left">Food/Coffee</div>
+                                    <h3 class="space-info-label pull-left">Food/Coffee</h3>
                                     <div class="space-info-detail pull-left">
                                         {% if extended_info.food_nearby == "building" %}
                                             {% trans 'building' %}

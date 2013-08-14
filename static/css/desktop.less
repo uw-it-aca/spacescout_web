@@ -47,7 +47,7 @@
     #bubble_desktop { margin: 0; display: block; float: right; height: 80px; margin-right: 15px; width: 40% }
     .bubble-inner { margin-top: 9px; height: 60px;
 
-      .bubble-tab { top: 22px; right: -15px; background: transparent url('/static/img/tri-right.png') no-repeat; }
+      .bubble-tab { height: 17px; width: 8px; top: 22px; right: -8px; background: transparent url('/static/img/tri-right.png') no-repeat; }
       .bubble-filters { width: 79%; height: 60px;
           ul { height: 56px; overflow: hidden; height: 56px; }
       }
@@ -154,7 +154,7 @@
                 .space-info {
                     ul { margin: 0; }
                     li { list-style: none; margin-bottom: 5px;
-                      .space-info-label { width: 35%; margin-right: 10px; color: @grey_medium; overflow: hidden; text-overflow: ellipsis; font-weight: normal; margin:0; }
+                      .space-info-label { width: 35%; margin-right: 10px; color: @grey_medium; overflow: hidden; text-overflow: ellipsis; font-weight: normal; margin:0; line-height:inherit; font-size: inherit; }
                       .space-info-detail { width: 60%;
 							//lab stats styles
 							.computer-available { color:#20b420; }
@@ -226,13 +226,14 @@
                 	.space-detail-labstats {
                 		background: transparent url('/static/img/comp-icon.png') no-repeat center top;
                 		margin-top:-2px;
-                		color: @grey_dark; font-size: 11px; line-height: 11px; text-transform: uppercase; display: inline-block; margin-left: 5px;
+                		color: @grey_dark; font-size: 11px; text-transform: uppercase; display: inline-block; margin-left: 5px;
                 	.computer-available { color:#20b420; }
 					.computer-notavailable {color: #b42020;}
                 	p {margin:0; margin-top:17px;}
                 	}
                     .space-detail-type-label { width: 55%; line-height: 20px; }
                 }
+                &:hover > button {outline: grey dashed thin; }
                 button:focus { outline: grey dashed thin; }
                 button div { padding: 0 2px; }
             }
@@ -241,8 +242,10 @@
                 .space-detail-type { color: #ccc; display: block; }
                 .space-detail-desc,.space-detail-name { color: #fff; }
             }
+            
         }
     }
+    li.no-spaces { background: none; border: none; color: #514D83; padding: 10px; text-align: center; list-style-type: none; font-size: 16px; }
 }
 
 #footer { margin: 15px 0 0 0;
@@ -255,17 +258,6 @@
 @media screen and (min-width: 1024px) {
 
     #container { min-width:1004px; max-width:1004px; margin: 0 auto; }
-
-    #nav {
-        #filter_container {
-            #filter_block {
-                #filter_hours {
-                    .hours-from, .hours-until { display: inline-block; }
-                    select { width: 31%; }
-                }
-            }
-        }
-    }
 
     #info_list {
         #info_items {
