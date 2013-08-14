@@ -32,7 +32,7 @@
                     <div class="space-detail-inner">
                         <div class="space-detail-body">
                             <div class="space-detail-body-inner">
-                                <div id="spaceCarouselContainer" class="image-container">
+                                <div id="spaceCarouselContainer" class="image-container" role="tabpanel">
                                     <div id="spaceCarousel" class="carousel slide">
                                       <!-- Carousel items -->
                                       <div class="carousel-inner">
@@ -54,13 +54,13 @@
                                       <a class="carousel-control right" href="#spaceCarousel" data-slide="next">&rsaquo;</a>
                                     </div>
                                 </div>
-                                <div id="spaceMap" class="map-container" style="display:none;"></div>
+                                <div id="spaceMap" class="map-container" style="display:none;" role="tabpanel"></div>
                             </div>
                         </div>
 
-                        <div class="space-image-map-buttons btn-group" data-toggle="buttons-radio">
-                          <button id="carouselControl" class="btn active"><span>Image gallery</span></button>
-                          <button id="mapControl" class="btn"><span>Show this space on a map</span></button>
+                        <div class="space-image-map-buttons btn-group" data-toggle="buttons-radio" role="tablist">
+                          <button id="carouselControl" class="btn active" role="tab" aria-controls="spaceCarouselContainer" aria-selected="true"><span>Image gallery</span></button>
+                          <button id="mapControl" class="btn" role="tab" aria-controls="spaceMap" aria-selected="false"><span>Show this space on a map</span></button>
                         </div>
 
                         <div class="space-info">

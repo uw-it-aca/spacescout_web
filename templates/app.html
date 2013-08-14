@@ -144,7 +144,7 @@
                                 <div class="space-detail-body-inner pull-left">
 
                                     <div class="space-image">
-                                        <div id="spaceCarouselContainer" class="image-container">
+                                        <div id="spaceCarouselContainer" class="image-container" role="tabpanel">
                                             <div id="myCarousel" class="carousel slide">
                                               <!-- Carousel items -->
                                               <div class="carousel-inner">
@@ -158,13 +158,13 @@
                                               <a class="carousel-control right" href="#myCarousel" title="next image" data-slide="next">&rsaquo;</a>
                                             </div>
                                         </div>
-                                        <div id="spaceMap" class="map-container" style="display:none;">map goes here</div>
+                                        <div id="spaceMap" class="map-container" style="display:none;" role="tabpanel">map goes here</div>
                                     </div>
 
                                 </div>
-                                <div class="space-image-map-buttons btn-group pull-left" data-toggle="buttons-radio">
-                                  <button id="carouselControl" class="btn active"><span>Image gallery</span></button>
-                                  <button id="mapControl" class="btn"><span>Show this space on a map</span></button>
+                                <div class="space-image-map-buttons btn-group pull-left" data-toggle="buttons-radio" role="tablist">
+                                  <button id="carouselControl" class="btn active" role="tab" aria-selected="true" aria-controls="spaceCarouselContainer"><span>Image gallery</span></button>
+                                  <button id="mapControl" class="btn" role="tab" aria-controls="spaceMap" aria-selected="false"><span>Show this space on a map</span></button>
                                 </div>
 
                             </div>
