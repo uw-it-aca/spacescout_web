@@ -21,13 +21,6 @@ from django.conf import settings
 import simplejson as json
 import urllib2
 
-# See if there is a Google Analytics web property id
-try:
-    ga_tracking_id = settings.GA_TRACKING_ID
-except:
-    ga_tracking_id = None
-
-
 def contact(request, spot_id=None):
     contact_variables = _contact_variables(request, spot_id)
     if spot_id is None:
@@ -80,7 +73,6 @@ def contact(request, spot_id=None):
         'spot_name': spot_name,
         'spot_description': spot_description,
         'spot_id': spot_id,
-        'ga_tracking_id': ga_tracking_id,
     }, context_instance=RequestContext(request))
 
 
@@ -94,7 +86,6 @@ def thank_you(request, spot_id=None):
         'spot_id': spot_id,
         'back': back,
         'is_mobile': is_mobile,
-        'ga_tracking_id': ga_tracking_id,
     }, context_instance=RequestContext(request))
 
 
@@ -111,7 +102,6 @@ def sorry(request, spot_id=None):
         'back': back,
         'email': email,
         'is_mobile': is_mobile,
-        'ga_tracking_id': ga_tracking_id,
     }, context_instance=RequestContext(request))
 
 

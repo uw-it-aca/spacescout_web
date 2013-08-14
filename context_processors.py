@@ -8,3 +8,11 @@ def show_ios_smart_banner(request):
         return {'show_ios_smart_banner': settings.SHOW_IOS_SMART_BANNER}
     except:
         return {'show_ios_smart_banner': False}
+
+def ga_tracking_id(request):
+    """ See if there is a Google Analytics web property id
+    """
+    try:
+        return {'ga_tracking_id': settings.GA_TRACKING_ID}
+    except:
+        return {'ga_tracking_id': None}

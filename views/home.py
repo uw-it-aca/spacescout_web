@@ -76,12 +76,6 @@ def HomeView(request, template=None):
     else:
         less_not_compiled = True
 
-    # See if there is a Google Analytics web property id
-    try:
-        ga_tracking_id = settings.GA_TRACKING_ID
-    except:
-        ga_tracking_id = None
-
     params = {
         'center_latitude': center_latitude,
         'center_longitude': center_longitude,
@@ -93,7 +87,6 @@ def HomeView(request, template=None):
         'buildingdict': buildingdict,
         'is_mobile': request.MOBILE,
         'less_not_compiled': less_not_compiled,
-        'ga_tracking_id': ga_tracking_id,
     }
 
     return render_to_response(template, params, context_instance=RequestContext(request))
