@@ -113,6 +113,11 @@ def _contact_variables(request, spot_id):
             spot_id = None
             print >> sys.stderr, "E: ", e.code
 
+    if request.MOBILE == 1:
+       is_mobile = True
+    else:
+       is_mobile = False
+
     if is_mobile and spot_id is not None:
         back = ('/space/' + spot_id)
     else:
@@ -121,5 +126,6 @@ def _contact_variables(request, spot_id):
     return {
         'spot_name': spot_name,
         'spot_description': spot_description,
+        'is_mobile': is_mobile,
         'back': back
     }
