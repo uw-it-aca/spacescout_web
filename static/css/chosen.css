@@ -411,6 +411,10 @@
   background-position: -12px 2px;
 }
 
+.chzn-container input {
+    width: 135px !important;
+}
+
 /* @end */
 /* @group Retina compatibility */
 @media only screen {
