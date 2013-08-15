@@ -30,7 +30,6 @@ def contact(request, spot_id=None):
         displayed_spot_id = spot_id
 
     back = contact_variables['back']
-    is_mobile = contact_variables['is_mobile']
     spot_name = contact_variables['spot_name']
     spot_description = contact_variables['spot_description']
 
@@ -72,7 +71,6 @@ def thank_you(request, spot_id=None):
     contact_variables = _contact_variables(request, spot_id)
 
     back = contact_variables['back']
-    is_mobile = contact_variables['is_mobile']
 
     return render_to_response('contact-thankyou.html', {
         'spot_id': spot_id,
@@ -85,7 +83,6 @@ def sorry(request, spot_id=None):
 
     back = contact_variables['back']
     email = settings.FEEDBACK_EMAIL_RECIPIENT[0]
-    is_mobile = contact_variables['is_mobile']
     #should maybe do something here ^. raise improperly configured exception if there are no emails in the list in settings.py
 
     return render_to_response('contact-sorry.html', {
