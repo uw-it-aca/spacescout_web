@@ -32,7 +32,7 @@
                     <div class="space-detail-inner">
                         <div class="space-detail-body">
                             <div class="space-detail-body-inner">
-                                <div id="spaceCarouselContainer" class="image-container">
+                                <div id="spaceCarouselContainer" class="image-container" role="tabpanel">
                                     <div id="spaceCarousel" class="carousel slide">
                                       <!-- Carousel items -->
                                       <div class="carousel-inner">
@@ -54,13 +54,13 @@
                                       <a class="carousel-control right" href="#spaceCarousel" data-slide="next">&rsaquo;</a>
                                     </div>
                                 </div>
-                                <div id="spaceMap" class="map-container" style="display:none;"></div>
+                                <div id="spaceMap" class="map-container" style="display:none;" role="tabpanel"></div>
                             </div>
                         </div>
 
-                        <div class="space-image-map-buttons btn-group" data-toggle="buttons-radio">
-                          <button id="carouselControl" class="btn active"><span>gallery</span></button>
-                          <button id="mapControl" class="btn"><span>map</span></button>
+                        <div class="space-image-map-buttons btn-group" data-toggle="buttons-radio" role="tablist">
+                          <button id="carouselControl" class="btn active" role="tab" aria-controls="spaceCarouselContainer" aria-selected="true"><span>Image gallery</span></button>
+                          <button id="mapControl" class="btn" role="tab" aria-controls="spaceMap" aria-selected="false"><span>Show this space on a map</span></button>
                         </div>
 
                         <div class="space-info">
@@ -80,10 +80,10 @@
                                     <li class="clearfix">
                                         <h3 class="space-info-label pull-left">Computers</h3>
                                         <div class="space-info-detail pull-left">
-                                        {% if extended_info.auto_labstats_available > '0' %}
-                                            <p><span class="computer-available">{{ extended_info.auto_labstats_available }}</span> of {{ extended_info.auto_labstats_total }} available</p>    
-                                        {% elif extended_info.auto_labstats_available == '0' %}
-                                            <p><span class="computer-notavailable">{{ extended_info.auto_labstats_available }}</span> of {{ extended_info.auto_labstats_total }} available</p>    
+                                        {% if extended_info.auto_labstats_available <= '0' and extended_info.auto_labstats_off <= '0' %}
+                                            <p><span class="computer-notavailable">{{ extended_info.auto_labstats_available|add:extended_info.auto_labstats_off }}</span> of {{ extended_info.auto_labstats_total }} available</p>    
+                                        {% elif extended_info.auto_labstats_available > '0' or extended_info.auto_labstats_off > '0'%}
+                                            <p><span class="computer-available">{{ extended_info.auto_labstats_available|add:extended_info.auto_labstats_off }}</span> of {{ extended_info.auto_labstats_total }} available</p>    
                                         {% endif %}
                                         </div>
                                     </li>

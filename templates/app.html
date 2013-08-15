@@ -144,7 +144,7 @@
                                 <div class="space-detail-body-inner pull-left">
 
                                     <div class="space-image">
-                                        <div id="spaceCarouselContainer" class="image-container">
+                                        <div id="spaceCarouselContainer" class="image-container" role="tabpanel">
                                             <div id="myCarousel" class="carousel slide">
                                               <!-- Carousel items -->
                                               <div class="carousel-inner">
@@ -158,13 +158,13 @@
                                               <a class="carousel-control right" href="#myCarousel" title="next image" data-slide="next">&rsaquo;</a>
                                             </div>
                                         </div>
-                                        <div id="spaceMap" class="map-container" style="display:none;">map goes here</div>
+                                        <div id="spaceMap" class="map-container" style="display:none;" role="tabpanel">map goes here</div>
                                     </div>
 
                                 </div>
-                                <div class="space-image-map-buttons btn-group pull-left" data-toggle="buttons-radio">
-                                  <button id="carouselControl" class="btn active"><span>image gallery</span></button>
-                                  <button id="mapControl" class="btn"><span>map</span></button>
+                                <div class="space-image-map-buttons btn-group pull-left" data-toggle="buttons-radio" role="tablist">
+                                  <button id="carouselControl" class="btn active" role="tab" aria-selected="true" aria-controls="spaceCarouselContainer"><span>Image gallery</span></button>
+                                  <button id="mapControl" class="btn" role="tab" aria-controls="spaceMap" aria-selected="false"><span>Show this space on a map</span></button>
                                 </div>
 
                             </div>
@@ -191,10 +191,14 @@
                                                         <h3 class="space-info-label pull-left">Computers</h3>
                                                         <div class="space-info-detail pull-left">
 
-                                                        {{#compare extended_info.auto_labstats_available 0 operator=">"}}
-                                                            <p><span class="computer-available">{{extended_info.auto_labstats_available}}</span> of {{extended_info.auto_labstats_total}} available</p>
+                                                        {{#compare extended_info.auto_labstats_available 0 operator="<="}}
+                                                            {{#compare extended_info.auto_labstats_off 0 operator="<="}}
+                                                            <p><span class="computer-notavailable">{{{addition extended_info.auto_labstats_available extended_info.auto_labstats_off}}}</span> of {{extended_info.auto_labstats_total}} available</p>
+                                                            {{^}}
+                                                            <p><span class="computer-available">{{{addition extended_info.auto_labstats_available extended_info.auto_labstats_off}}}</span> of {{extended_info.auto_labstats_total}} available</p>
+                                                            {{/compare}}
                                                         {{^}}
-                                                            <p><span class="computer-notavailable">{{extended_info.auto_labstats_available}}</span> of {{extended_info.auto_labstats_total}} available</p>
+                                                            <p><span class="computer-available">{{{addition extended_info.auto_labstats_available extended_info.auto_labstats_off}}}</span> of {{extended_info.auto_labstats_total}} available</p>
                                                         {{/compare}}
                                                         </div>
                                                     </li>
@@ -290,7 +294,7 @@
                 <div class="list-arrow"><a id="filter_link" title="List of spaces" href="#"><img alt="" src="{{ STATIC_URL }}img/list.png" /></a></div>
 
                 <!-- TODO: need to implement if/else logic for spinner and info_items -->
-                <div class="loading"><div class="loading-inner"><img alt="" src="{{ STATIC_URL }}img/spinner.gif" />&nbsp;&nbsp;Loading spaces...</div></div>
+                <div class="loading"><div class="loading-inner" role="alert">&nbsp;&nbsp;Loading spaces...</div></div>
 
                 <div id="info_items"></div>
 
@@ -317,10 +321,14 @@
                                         {{#if extended_info.labstats_id}}
                                             {{#if extended_info.auto_labstats_total}}
                                                 {{#compare extended_info.auto_labstats_total 0 operator="!="}}
-                                                    {{#compare extended_info.auto_labstats_available 0 operator=">"}}
-                                                        <div class="space-detail-labstats pull-right"><p><span class="computer-available">{{extended_info.auto_labstats_available}}</span>/{{extended_info.auto_labstats_total}}</p></div>
+                                                    {{#compare extended_info.auto_labstats_available 0 operator="<="}}
+                                                        {{#compare extended_info.auto_labstats_off 0 operator="<="}}
+                                                        <div class="space-detail-labstats pull-right"><p><span class="computer-notavailable">{{{addition extended_info.auto_labstats_available extended_info.auto_labstats_off}}}</span>/{{extended_info.auto_labstats_total}}</p></div>
+                                                        {{^}}
+                                                        <div class="space-detail-labstats pull-right"><p><span class="computer-available">{{{addition extended_info.auto_labstats_available extended_info.auto_labstats_off}}}</span>/{{extended_info.auto_labstats_total}}</p></div>
+                                                        {{/compare}}
                                                     {{^}}
-                                                        <div class="space-detail-labstats pull-right"><p><span class="computer-notavailable">{{extended_info.auto_labstats_available}}</span>/{{extended_info.auto_labstats_total}}</p></div>
+                                                        <div class="space-detail-labstats pull-right"><p><span class="computer-available">{{{addition extended_info.auto_labstats_available extended_info.auto_labstats_off}}}</span>/{{extended_info.auto_labstats_total}}</p></div>
                                                     {{/compare}}
                                                 {{^}}
                                                     <span class="space-detail-capacity pull-right">{{#if capacity }}Seats&nbsp;{{capacity}}{{/if}}</span>
@@ -365,10 +373,14 @@
                                         {{#if extended_info.labstats_id}}
                                             {{#if extended_info.auto_labstats_total}}
                                                 {{#compare extended_info.auto_labstats_total 0 operator="!="}}
-                                                    {{#compare extended_info.auto_labstats_available 0 operator=">"}}
-                                                        <div class="space-detail-labstats pull-right"><p><span class="computer-available">{{extended_info.auto_labstats_available}}</span>/{{extended_info.auto_labstats_total}}</p></div>
+                                                    {{#compare extended_info.auto_labstats_available 0 operator="<="}}
+                                                        {{#compare extended_info.auto_labstats_off 0 operator="<="}}
+                                                        <div class="space-detail-labstats pull-right"><p><span class="computer-notavailable">{{{addition extended_info.auto_labstats_available extended_info.auto_labstats_off}}}</span>/{{extended_info.auto_labstats_total}}</p></div>
+                                                        {{^}}
+                                                        <div class="space-detail-labstats pull-right"><p><span class="computer-available">{{{addition extended_info.auto_labstats_available extended_info.auto_labstats_off}}}</span>/{{extended_info.auto_labstats_total}}</p></div>
+                                                        {{/compare}}
                                                     {{^}}
-                                                        <div class="space-detail-labstats pull-right"><p><span class="computer-notavailable">{{extended_info.auto_labstats_available}}</span>/{{extended_info.auto_labstats_total}}</p></div>
+                                                        <div class="space-detail-labstats pull-right"><p><span class="computer-available">{{{addition extended_info.auto_labstats_available extended_info.auto_labstats_off}}}</span>/{{extended_info.auto_labstats_total}}</p></div>
                                                     {{/compare}}
                                                 {{^}}
                                                    <span class="space-detail-capacity pull-right">{{#if capacity }}Seats&nbsp;{{capacity}}{{/if}}</span>
