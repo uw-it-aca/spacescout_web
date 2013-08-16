@@ -1,0 +1,11 @@
+Django>=1.4,<1.5
+simplejson
+oauth2
+django-compressor
+django-mobility
+django-templatetag-handlebars
+
+-e git+git://github.com/sbutler/django-shibboleth-remoteuser.git#egg=django-shibboleth-remoteuser
+
+cx_Oracle
+

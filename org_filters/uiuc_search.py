@@ -1,4 +1,4 @@
-""" Copyright 2012, 2013 UW Information Technology, University of Washington
+""" Copyright 2013 Board of Trustees, University of Illinois
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -11,17 +11,19 @@
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
+
+    Description
+    =================================================================
+    Modifies the search arguments before send it to spotseeker_server.
 """
-from django.shortcuts import render_to_response
-from django.template import RequestContext
-from django.conf import settings
-from mobility.decorators import mobile_template
 
+from spacescout_web.org_filters import SearchFilter
+import sys
 
-@mobile_template('{mobile/}404.html')
-def page_not_found(request, template=None):
+class Filter(SearchFilter):
+    def filter_args(self, args):
+        if 'shibboleth' in sys.modules and self.request.user.is_authenticated():
+            args['eppn'] = self.request.user.username
 
-    params = {
-        'request_path': request.META['PATH_INFO'],
-    }
-    return render_to_response(template, params, context_instance=RequestContext(request))
+        return args
+

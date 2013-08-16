@@ -13,6 +13,10 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 
+    Changes
+    =================================================================
+
+    sbutler1@illinois.edu: attr(checked) to prop(checked).
 */
 
 var spacescout_map = null, spacescout_infowindow, spacescout_marker_ids = {}, spacescout_markers = [], speed = 800, mc = null, youarehere = null, update_count = null;
@@ -82,25 +86,11 @@ function buildingNameHeaders(data) {
         var small_json = {};
         small_json.name = i;
         small_json.spots = byBuilding[i];
-        
-        //next twelve lines courtesy of stephyma; sort spots of buildings
-        var sortable = [];
-        for (i in small_json.spots) {
-            sortable.push(small_json.spots[i]);
-        }
-        sortable.sort(function(a,b) {
-            if (a.name < b.name) 
-                return -1
-            if (a.name > b.name)
-                return 1
-            return 0
-        });
-        small_json.spots = sortable;
         big_list.push(small_json);
+
     }
     return big_list;
 }
-
 
 // jquery function to check if scrollable
 (function($) {
@@ -260,7 +250,7 @@ function run_custom_search() {
     }
 
     // hours
-    if ($("#hours_list_input").attr("checked") == "checked") {
+    if ($("#hours_list_input").prop("checked")) {
         if ($('#day-from').val() != 'nopref') {
             var from_query = new Array;
             from_query.push($('#day-from').val());
@@ -306,7 +296,7 @@ function run_custom_search() {
     }
 
     // location
-    if ($("#building_list_input").attr("checked") == "checked") {
+    if ($("#building_list_input").prop("checked")) {
         window.spacescout_search_options["building_name"] = $('select#e9').val();
         set_cookie = true;
     }

@@ -40,22 +40,26 @@
         <div class="logo-container clearfix">
 
             <div class="logo">
-                <h1 class="visuallyhidden">SPACESCOUT&trade;</h1>
+                <h1 id="app_header" class="visuallyhidden">SPACESCOUT&trade;</h1>
                 {% ifnotequal locations|length 1 %}
+                <span role="navigation" aria-labelledby="location_select_heading">
+                <label id="location_select_heading" for="location_select"  class="visuallyhidden">Select campus:</label>
                 <select id='location_select'>
                     {% for key, value in locations.items %}
                         <option value="{{ value.CENTER_LATITUDE }},{{ value.CENTER_LONGITUDE }},{{ key }},{{ value.ZOOM_LEVEL }}">{{ value.NAME }}</option>
                     {% endfor %}
                 </select>
+                </span>
                 {% endifnotequal %}
             </div>
-            <div aria-labelledby="filter_group_header">
+            <div role="search" aria-labelledby="filter_group_header">
+                <h2 id="filter_group_header" class="visuallyhidden">Find Study Spaces by Specific Criteria</h2>
                 <div class="actions">
                     <button id="filter_button" class="btn btn-inverse" type="button" aria-label="Filter settings..." aria-owns="filter_container" >Filters</button>
 
                     <h3 id="spaces_match_header" class="visuallyhidden">Your current filters return:</h3>
 
-                    <div id="space_count_container" aria-labelledby="spaces_match_header"></div>
+                    <div id="space_count_container" aria-labelledby="spaces_match_header"  role="status"></div>
 
 					{% tplhandlebars "space_count" %}
             			<div id="spacecount">
@@ -70,16 +74,14 @@
 
                 </div>
             </div>
-
-            <h2 id="filter_group_header" class="visuallyhidden">Space Filters</h2>
-
         </div>
 
     </div>
-    <h3 id="filters_header" class="visuallyhidden">Filter By:</h3>
-    <div id="filter_container" aria-labelledby="filters_header">
+    
+    <div id="filter_container" aria-labelledby="filters_header" aria-controls="space_count_container">
         <form>
             <div id="filter_block" style="display:none;">
+                <h3 id="filters_header" class="visuallyhidden">Filter By:</h3>
                 <div class="inner clearfix">
 
                     <div class="inner-column">
@@ -91,9 +93,10 @@
                 					<div id="bubble_filters_container" class="bubble-filters pull-left" ></div>
 
                							 {% tplhandlebars "filter_list" %}
+               					    <h4 id="current_filters" class="visuallyhidden">Currently filtering by:</h4>
               							  <ul id='filter_display_list'>
-           						         {{#if open_at}}<li>specific time</li>{{else}}<li>open now</li>{{/if}}
-                 					   	 {{#if building_name}}<li>specific building</li>{{else}}<li>entire campus</li>{{/if}}
+									  <li>{{#if open_at}}specific time{{else}}open now{{/if}}</li>
+									  <li>{{#if building_name}}specific building{{else}}entire campus{{/if}}</li>
 					                     {{#if space_type}}<li>type of space</li>{{/if}}
                     					 {{#if true_capacity}}<li>seats {{capacity}}</li>{{/if}}
                     					 {{#if reservable}}<li>reservable</li>{{/if}}
@@ -113,23 +116,23 @@
             </div>
         </form>
     </div>
-
-    <div id="main_content" class="clearfix">
+    
+    <div id="main_content" class="clearfix" role="main" aria-labelledby="app_header">
         <h2 id="map_header" class="visuallyhidden" aria-hidden="true">Map of Spaces</h2>
         <div id="map_canvas" aria-labelledby="map_header" aria-hidden="true"></div>
         {% tplhandlebars "map_controls" %}
             <div class="map-control-container">
-                <a href="#" title="Recenter map"><img id="center_all" src="/static/img/center_all.png" name="image" style="display: none;" /></a>&nbsp;
+                <a href="#" title="Recenter map"><img id="center_all" alt="Recenter map" src="/static/img/center_all.png" name="image" style="display: none;" /></a>&nbsp;
             </div>
         {% endtplhandlebars %}
 
         <div id="info_list">
         <h2 id="space_list_header" class="visuallyhidden">List of Spaces</h2>
             <div class="list-inner" aria-labelledby="space_list_header">
-                <div class="list-arrow"><a id="filter_link" title="List of spaces" href="#"><img src="{{ STATIC_URL }}img/list.png" /></a></div>
+                <div class="list-arrow"><a id="filter_link" title="List of spaces" href="#"><img alt="" src="{{ STATIC_URL }}img/list.png" /></a></div>
 
                 <!-- TODO: need to implement if/else logic for spinner and info_items -->
-                <div class="loading"><div class="loading-inner"><img src="{{ STATIC_URL }}img/spinner.gif" />&nbsp;&nbsp;Loading spaces...</div></div>
+                <div class="loading"><div class="loading-inner"  role="alert">&nbsp;&nbsp;Loading spaces...</div></div>
 
                 <div id="info_items"></div>
 
@@ -137,7 +140,7 @@
 
                         {{#if data}}<ol>
                         {{#each data}}
-                            <li class="building_header">{{this.name}}</li>
+			    <li><h3 class="building_header">{{this.name}}</h3>
                             <ol>{{#each this.spots}}
                             <li class="clearfix view-details">
                                 <div class="space-detail-list-image pull-left">
@@ -155,10 +158,14 @@
                                         {{#if extended_info.labstats_id}}
                                             {{#if extended_info.auto_labstats_total}}
                                                 {{#compare extended_info.auto_labstats_total 0 operator="!="}}
-                                                    {{#compare extended_info.auto_labstats_available 0 operator=">"}}
-                                                        <span class="space-detail-labstats pull-right"><p><span class="computer-available">{{extended_info.auto_labstats_available}}</span>/{{extended_info.auto_labstats_total}}</p></span>
+                                                    {{#compare extended_info.auto_labstats_available 0 operator="<="}}
+                                                        {{#compare extended_info.auto_labstats_off 0 operator="<="}}
+                                                        <span class="space-detail-labstats pull-right"><p><span class="computer-notavailable">{{{addition extended_info.auto_labstats_available extended_info.auto_labstats_off}}}</span>/{{extended_info.auto_labstats_total}}</p></span>
+                                                        {{^}}
+                                                        <span class="space-detail-labstats pull-right"><p><span class="computer-available">{{{addition extended_info.auto_labstats_available extended_info.auto_labstats_off}}}</span>/{{extended_info.auto_labstats_total}}</p></span>
+                                                        {{/compare}}
                                                     {{^}}
-                                                        <span class="space-detail-labstats pull-right"><p><span class="computer-notavailable">{{extended_info.auto_labstats_available}}</span>/{{extended_info.auto_labstats_total}}</p></span>
+                                                        <span class="space-detail-labstats pull-right"><p><span class="computer-available">{{{addition extended_info.auto_labstats_available extended_info.auto_labstats_off}}}</span>/{{extended_info.auto_labstats_total}}</p></span>
                                                     {{/compare}}
                                                 {{^}}
                                                    <span class="space-detail-capacity pull-right">{{#if capacity}}Seats&nbsp;{{capacity}}{{/if}}</span>
@@ -175,6 +182,7 @@
                                 </button>
                             </li>
                             {{/each}}</ol>
+                         </li>
                         {{/each}}</ol>
                         {{else}}
                             <li class="no-spaces">Sorry, no spaces match your filters!</li>
@@ -186,7 +194,7 @@
 
                         {{#if data }}<ol>
                         {{#each data}}
-                            <li class="building_header">{{this.name}}</li><ol>
+			<li><h3 class="building_header">{{this.name}}</h3><ol>
                             {{#each this.spots}}
                             <li class="clearfix view-details">
                                 <div class="space-detail-list-image pull-left">
@@ -197,15 +205,19 @@
                                   {{/if}}
                                 </div>
                                 <button  id="{{id}}" class="space-detail-list-item pull-left" type="button" aria-label="Get space details for {{name}}" aria-owns="detail_container_{{id}}">
-                                    <div class="space-detail-type">
+                                    <div class="space-detail-type clearfix">
                                         <span class="space-detail-type-label pull-left">{{type}}</span>
                                         {{#if extended_info.labstats_id}}
                                             {{#if extended_info.auto_labstats_total}}
                                                 {{#compare extended_info.auto_labstats_total 0 operator="!="}}
-                                                    {{#compare extended_info.auto_labstats_available 0 operator=">"}}
-                                                        <span class="space-detail-labstats"><p><span class="computer-available">{{extended_info.auto_labstats_available}}</span>/{{extended_info.auto_labstats_total}}</p></span>
+                                                    {{#compare extended_info.auto_labstats_available 0 operator="<="}}
+                                                        {{#compare extended_info.auto_labstats_off 0 operator="<="}}
+                                                        <span class="space-detail-labstats pull-right"><p><span class="computer-notavailable">{{{addition extended_info.auto_labstats_available extended_info.auto_labstats_off}}}</span>/{{extended_info.auto_labstats_total}}</p></span>
+                                                        {{^}}
+                                                        <span class="space-detail-labstats pull-right"><p><span class="computer-available">{{{addition extended_info.auto_labstats_available extended_info.auto_labstats_off}}}</span>/{{extended_info.auto_labstats_total}}</p></span>
+                                                        {{/compare}}
                                                     {{^}}
-                                                        <span class="space-detail-labstats"><p><span class="computer-notavailable">{{extended_info.auto_labstats_available}}</span>/{{extended_info.auto_labstats_total}}</p></span>
+                                                        <span class="space-detail-labstats pull-right"><p><span class="computer-available">{{{addition extended_info.auto_labstats_available extended_info.auto_labstats_off}}}</span>/{{extended_info.auto_labstats_total}}</p></span>
                                                     {{/compare}}
                                                 {{^}}
                                                     <span class="space-detail-capacity pull-right">{{#if capacity}}Seats&nbsp;{{capacity}}{{/if}}</span>
@@ -222,31 +234,12 @@
                                 </button>
                             </li>
                             {{/each}}</ol>
+                         </li>
                         {{/each}}</ol>
                         {{else}}
                             <li class="no-spaces">Sorry, no spaces match your filters!</li>
                         {{/if}}
 
-                {% endtplhandlebars %}
-
-                {% tplhandlebars "spot_info" %}
-                    <ol>
-                        <li class="building_header">{{location.building_name}}</li>
-                        <ol><li class="clearfix view-details">
-                            <div class="space-detail-list-image pull-left">
-                              {{#if images.0.id}}
-                                <div class="space-detail-list-image-inner" style="background: transparent url('space/{{id}}/image/{{images.0.id}}/thumb/constrain/width:150') no-repeat 50% 50%;">&nbsp;</div>
-                              {{else}}
-                                <div class="space-detail-list-image-inner" style="background: transparent url('/static/img/placeholder_noImage_bw.png') no-repeat 50% 50%; background-size: 150px;">&nbsp;</div>
-                              {{/if}}
-                            </div>
-                            <button id="{{id}}" class="space-detail-list-item pull-left" type="button" aria-label="Get space details for {{name}}" aria-owns="detail_container_{{id}}">
-                                <div class="space-detail-type"><span class="space-detail-type-label pull-left">{{type}}</span>{{#if capacity }}<span class="space-detail-capacity pull-right">Seats&nbsp;{{capacity}}</span>{{/if}}</div>
-                                <div class="space-detail-name">{{name}}</div>
-                                <div class="space-detail-desc">{{extended_info.location_description}}</div>
-                            </button>
-                        </li></ol>
-                    </ol>
                 {% endtplhandlebars %}
             </div>
         </div>

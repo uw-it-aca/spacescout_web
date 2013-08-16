@@ -13,6 +13,11 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 
+    Changes
+    =================================================================
+
+    sbutler1@illinois.edu: attr(checked) to prop(checked); focus on
+      spot details.
 */
 
 Handlebars.registerHelper('ifany', function(a, b) {
@@ -76,8 +81,8 @@ Handlebars.registerHelper('ifany', function(a, b) {
 
             // reset checkboxes
             $('input[type=checkbox]').each(function() {
-                if ($(this).attr('checked')) {
-                    $(this).attr('checked', false);
+                if ($(this).prop('checked')) {
+                    $(this).prop('checked', false);
                     $(this).parent().removeClass("selected");
                 }
             });
@@ -177,15 +182,15 @@ Handlebars.registerHelper('ifany', function(a, b) {
 
             if ($('#carouselControl').hasClass('active')) { // show the carousel
                 $('#spaceCarouselContainer').show();
-                $('#carouselControl.btn').attr("tabindex", -1);
-                $('#mapControl.btn').attr("tabindex", 0);
+                $('#carouselControl.btn').attr("tabindex", -1).attr("aria-selected", true);
+                $('#mapControl.btn').attr("tabindex", 0).attr("aria-selected", false);
                 $('#spaceMap').hide();
             }
             else { //show the map
                 $('#spaceCarouselContainer').hide();
                 $('#spaceMap').show();
-                $('#carouselControl.btn').attr("tabindex", 0);
-                $('#mapControl.btn').attr("tabindex", -1);
+                $('#carouselControl.btn').attr("tabindex", 0).attr("aria-selected", false);
+                $('#mapControl.btn').attr("tabindex", -1).attr("aria-selected", true);
                 getSpaceMap(detailsLat, detailsLon);
             }
         });
@@ -277,6 +282,8 @@ Handlebars.registerHelper('ifany', function(a, b) {
 
            replaceUrls();
 
+           // Set focus on details container
+           $('.space-detail-inner').focus();
 	}
 
 	// Desktop display defaults

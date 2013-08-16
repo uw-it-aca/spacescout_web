@@ -15,6 +15,13 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 
+  Changes
+  ===================================================================
+
+  sbutler1@illinois.edu: div to fieldsets where appropriate; proper
+  	nesting of ol lists; HTTPS for external resources; use
+	<label for=>; alt attrs galore.
+
 -->
 <html lang="en">
 
@@ -80,18 +87,18 @@
                 <button id="top_link" class="btn btn-inverse" type="button">Back to top</button>
               </div>
 
-              <div id="footer" class="clearfix">
-                  <div class="pull-left copyright">Copyright &copy; 2013 &nbsp;&nbsp;&nbsp;<a href="http://www.washington.edu/online/privacy/" target="_blank">Privacy</a> | <a href="http://www.washington.edu/online/terms/" target="_blank">Terms</a> | <a href="http://www.washington.edu/lst/help/spacescout-faq" title="About SpaceScout" target="_blank">About</a><br/>Academic and Collaborative Applications, UW-IT</div>
+              <div id="footer" class="clearfix" role="contentinfo">
+                  <div class="pull-left copyright">Copyright &copy; 2012 &nbsp;&nbsp;&nbsp;<a href="http://www.washington.edu/online/privacy/" target="_blank">Privacy</a> | <a href="http://www.washington.edu/online/terms/" target="_blank">Terms</a> | <a href="http://www.washington.edu/lst/help/spacescout-faq" title="About SpaceScout" target="_blank">About</a><br/>Academic and Collaborative Applications, UW-IT</div>
                   <div class="pull-left partners">Brought to you by UW-IT in partnership with Housing and Food Services, UW Libraries, UW Computing Directors, and partially funded by the Student Technology Fee</div>
               </div>
           </div>
 
           <!-- jQuery -->
-          <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-          <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+          <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+          <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
 
           <!-- Google Maps -->
-          <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=geometry&sensor=true"></script>
+          <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?libraries=geometry&amp;sensor=true"></script>
 
           {% compress js %}
             <script type="text/javascript" src="{{ STATIC_URL }}libs/cookie.js"></script>

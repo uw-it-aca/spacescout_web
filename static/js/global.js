@@ -40,7 +40,7 @@ Handlebars.registerHelper('carouselimages', function(spacedata) {
 Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
     if (arguments.length < 3)
-        throw new Error("Handlerbars Helper 'compare' needs 2 parameters");
+        throw new Error("Handlerbars Helper 'compare' needs 3 parameters");
 
     operator = options.hash.operator || "==";
 
@@ -65,6 +65,15 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
     } else {
         return options.inverse(this);
     }
+
+});
+
+Handlebars.registerHelper('addition', function(lvalue, rvalue) {
+
+    if (arguments.length < 2)
+        throw new Error("Handlerbars Helper 'compare' needs 2 parameters");
+
+    return new Handlebars.SafeString(Number(lvalue) + Number(rvalue));
 
 });
 
@@ -298,7 +307,9 @@ function default_open_at_filter() {
 function format_location_filter(data) {
     var source = $('#building_list').html();
     var template = Handlebars.compile(source);
-    $('#building_list_container').html(template({data: data}));
+    if (source != null) {
+        $('#building_list_container').html(template({data: data}));
+    }
 }
 
 function get_location_buildings() {
