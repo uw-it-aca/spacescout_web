@@ -103,7 +103,6 @@ Handlebars.registerHelper('ifany', function(a, b) {
             // reset location
             $('#entire_campus').prop('checked', true);
             $('#entire_campus').parent().removeClass("selected");
-            $('#e9.building-location').children().children().first()[0].selected = true; // grabs first location in drop down and selects it
             $('#building_list_container').hide();
             $('#building_list_input').parent().removeClass("selected");
             $('#building_list_container').children().children().children(".select2-search-choice").remove();

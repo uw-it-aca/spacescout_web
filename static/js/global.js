@@ -338,7 +338,6 @@ function preload(arrayOfImages) {
 function reset_location_filter() {
     $('#entire_campus').prop('checked', true);
     $('#entire_campus').parent().removeClass("selected");
-    $('#e9.building-location').children().children().first()[0].selected = true;
     $('#building_list_container').hide();
     $('#building_list_input').parent().removeClass("selected");
     $('#building_list_container').children().children().children(".select2-search-choice").remove();
