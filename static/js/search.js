@@ -297,7 +297,12 @@ function run_custom_search() {
 
     // location
     if ($("#building_list_input").prop("checked")) {
-        window.spacescout_search_options["building_name"] = $('select#e9').val();
+        if ($('select#e9').val() == null) {
+            reset_location_filter();
+        }
+        else {
+            window.spacescout_search_options["building_name"] = $('select#e9').val();
+        }
         set_cookie = true;
     }
 
