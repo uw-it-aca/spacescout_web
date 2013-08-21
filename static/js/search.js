@@ -161,6 +161,8 @@ function repopulate_filters() {
         // set location
         if (form_opts["building_name"]) {
             $('#e9').val(form_opts["building_name"]);
+            $('#building_list_input').prop('checked', true);
+            $('#building_list_container').show();
         }
 
         // set resources
