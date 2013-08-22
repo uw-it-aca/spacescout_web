@@ -112,6 +112,7 @@ function lazyLoadSpaceImages() {
 }
 
 function repopulate_filters() {
+    
     if ($.cookie('spacescout_search_opts')) {
         var form_opts = JSON.parse($.cookie('spacescout_search_opts'));
 
@@ -130,12 +131,16 @@ function repopulate_filters() {
 
         // set hours
         if (form_opts["open_at"]) {
+            $('#hours_list_input').prop('checked', true);
+            $('#hours_list_container').show();
             var day = form_opts["open_at"].split(',')[0];
             var time = form_opts["open_at"].split(',')[1];
             time = time.split(':');
             var ampm = 'AM';
-            if (Number(time[0]) > 12) {
-                time[0] = Number(time[0]) - 12;
+            if (Number(time[0]) >= 12) {
+                if (Number(time[0]) > 12) {
+                    time[0] = Number(time[0]) - 12;
+                }
                 ampm = 'PM';
             }
             time = time.join(':');
@@ -144,12 +149,16 @@ function repopulate_filters() {
             $('#ampm-from').val(ampm);
         }
         if (form_opts["open_until"]) {
+            $('#hours_list_input').prop('checked', true);
+            $('#hours_list_container').show();
             var day = form_opts["open_until"].split(',')[0];
             var time = form_opts["open_until"].split(',')[1];
             time = time.split(':');
             var ampm = 'AM';
-            if (Number(time[0]) > 12) {
-                time[0] = Number(time[0]) - 12;
+            if (Number(time[0]) >= 12) {
+                if (Number(time[0]) > 12) {
+                    time[0] = Number(time[0]) - 12;
+                }
                 ampm = 'PM';
             }
             time = time.join(':');
@@ -161,6 +170,8 @@ function repopulate_filters() {
         // set location
         if (form_opts["building_name"]) {
             $('#e9').val(form_opts["building_name"]);
+            $('#building_list_input').prop('checked', true);
+            $('#building_list_container').show();
         }
 
         // set resources
