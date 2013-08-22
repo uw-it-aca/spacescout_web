@@ -134,8 +134,10 @@ function repopulate_filters() {
             var time = form_opts["open_at"].split(',')[1];
             time = time.split(':');
             var ampm = 'AM';
-            if (Number(time[0]) > 12) {
-                time[0] = Number(time[0]) - 12;
+            if (Number(time[0]) >= 12) {
+                if (Number(time[0]) > 12) {
+                    time[0] = Number(time[0]) - 12;
+                }
                 ampm = 'PM';
             }
             time = time.join(':');
@@ -148,8 +150,10 @@ function repopulate_filters() {
             var time = form_opts["open_until"].split(',')[1];
             time = time.split(':');
             var ampm = 'AM';
-            if (Number(time[0]) > 12) {
-                time[0] = Number(time[0]) - 12;
+            if (Number(time[0]) >= 12) {
+                if (Number(time[0]) > 12) {
+                    time[0] = Number(time[0]) - 12;
+                }
                 ampm = 'PM';
             }
             time = time.join(':');
