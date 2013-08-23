@@ -21,7 +21,6 @@
 */
 
 Handlebars.registerHelper('ifany', function(a, b) {
-    console.log("handlebars ifany method");
     // if anything passed is true, return true
     if (a || b) {
         return fn(this);
@@ -40,9 +39,9 @@ Handlebars.registerHelper('ifany', function(a, b) {
 
     $(window).load(function() {
         $(".chzn-select").chosen({width: "98%"});
-    });
+    }); 
 
-    $(document).ready(function() {
+	$(document).ready(function() {
 
 		desktopContent();
 
@@ -108,6 +107,10 @@ Handlebars.registerHelper('ifany', function(a, b) {
             $('#building_list_container').children().children().children(".select2-search-choice").remove();
             $('#building_list_container').children().children().children().children().val('Select building(s)');
             $('#building_list_container').children().children().children().children().attr('style', "");
+            for (var i = 0; i < $('#e9.building-location').children().children().length; i++) {
+                $('#e9.building-location').children().children()[i].selected = false;
+            }   
+            $('#e9.building-location').trigger("liszt:updated") 
         });
 
 
@@ -135,6 +138,7 @@ Handlebars.registerHelper('ifany', function(a, b) {
 
             //highlight the selected space
             $(this).addClass('selected');
+
         });
 
         $('#space_detail_container .close').live('click', function(e){
@@ -172,8 +176,9 @@ Handlebars.registerHelper('ifany', function(a, b) {
                 $('#building_list_container').show();
             }
             else {
-               $('#building_list_container').hide();
+                $('#building_list_container').hide();
             }
+
         });
 
         // Toggle between carousel and map

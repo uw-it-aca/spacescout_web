@@ -343,6 +343,10 @@ function reset_location_filter() {
     $('#building_list_container').children().children().children(".select2-search-choice").remove();
     $('#building_list_container').children().children().children().children().val('Select building(s)');
     $('#building_list_container').children().children().children().children().attr('style', "");
+    for (var i = 0; i < $('#e9.building-location').children().children().length; i++) {
+        $('#e9.building-location').children().children()[i].selected = false;
+    }
+    $('#e9.building-location').trigger("liszt:updated")
     run_custom_search();
 }
 
