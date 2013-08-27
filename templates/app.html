@@ -191,14 +191,10 @@
                                                         <h3 class="space-info-label pull-left">Computers</h3>
                                                         <div class="space-info-detail pull-left">
 
-                                                        {{#compare extended_info.auto_labstats_available 0 operator="<="}}
-                                                            {{#compare extended_info.auto_labstats_off 0 operator="<="}}
-                                                            <p><span class="computer-notavailable">{{{addition extended_info.auto_labstats_available extended_info.auto_labstats_off}}}</span> of {{extended_info.auto_labstats_total}} available</p>
-                                                            {{^}}
-                                                            <p><span class="computer-available">{{{addition extended_info.auto_labstats_available extended_info.auto_labstats_off}}}</span> of {{extended_info.auto_labstats_total}} available</p>
-                                                            {{/compare}}
+                                                        {{#compare extended_info.auto_labstats_available 0 operator=">"}}
+                                                            <p><span class="computer-available">{{extended_info.auto_labstats_available}}</span> of {{extended_info.auto_labstats_total}} available</p>
                                                         {{^}}
-                                                            <p><span class="computer-available">{{{addition extended_info.auto_labstats_available extended_info.auto_labstats_off}}}</span> of {{extended_info.auto_labstats_total}} available</p>
+                                                            <p><span class="computer-notavailable">{{extended_info.auto_labstats_available}}</span> of {{extended_info.auto_labstats_total}} available</p>
                                                         {{/compare}}
                                                         </div>
                                                     </li>
@@ -321,14 +317,10 @@
                                         {{#if extended_info.labstats_id}}
                                             {{#if extended_info.auto_labstats_total}}
                                                 {{#compare extended_info.auto_labstats_total 0 operator="!="}}
-                                                    {{#compare extended_info.auto_labstats_available 0 operator="<="}}
-                                                        {{#compare extended_info.auto_labstats_off 0 operator="<="}}
-                                                        <div class="space-detail-labstats pull-right"><p><span class="computer-notavailable">{{{addition extended_info.auto_labstats_available extended_info.auto_labstats_off}}}</span>/{{extended_info.auto_labstats_total}}</p></div>
-                                                        {{^}}
-                                                        <div class="space-detail-labstats pull-right"><p><span class="computer-available">{{{addition extended_info.auto_labstats_available extended_info.auto_labstats_off}}}</span>/{{extended_info.auto_labstats_total}}</p></div>
-                                                        {{/compare}}
+                                                    {{#compare extended_info.auto_labstats_available 0 operator=">"}}
+                                                        <div class="space-detail-labstats pull-right"><p><span class="computer-available">{{extended_info.auto_labstats_available}}</span>/{{extended_info.auto_labstats_total}}</p></div>
                                                     {{^}}
-                                                        <div class="space-detail-labstats pull-right"><p><span class="computer-available">{{{addition extended_info.auto_labstats_available extended_info.auto_labstats_off}}}</span>/{{extended_info.auto_labstats_total}}</p></div>
+                                                        <div class="space-detail-labstats pull-right"><p><span class="computer-notavailable">{{extended_info.auto_labstats_available}}</span>/{{extended_info.auto_labstats_total}}</p></div>
                                                     {{/compare}}
                                                 {{^}}
                                                     <span class="space-detail-capacity pull-right">{{#if capacity }}Seats&nbsp;{{capacity}}{{/if}}</span>
@@ -373,14 +365,10 @@
                                         {{#if extended_info.labstats_id}}
                                             {{#if extended_info.auto_labstats_total}}
                                                 {{#compare extended_info.auto_labstats_total 0 operator="!="}}
-                                                    {{#compare extended_info.auto_labstats_available 0 operator="<="}}
-                                                        {{#compare extended_info.auto_labstats_off 0 operator="<="}}
-                                                        <div class="space-detail-labstats pull-right"><p><span class="computer-notavailable">{{{addition extended_info.auto_labstats_available extended_info.auto_labstats_off}}}</span>/{{extended_info.auto_labstats_total}}</p></div>
-                                                        {{^}}
-                                                        <div class="space-detail-labstats pull-right"><p><span class="computer-available">{{{addition extended_info.auto_labstats_available extended_info.auto_labstats_off}}}</span>/{{extended_info.auto_labstats_total}}</p></div>
-                                                        {{/compare}}
+                                                    {{#compare extended_info.auto_labstats_available 0 operator=">"}}
+                                                        <div class="space-detail-labstats pull-right"><p><span class="computer-available">{{extended_info.auto_labstats_available}}</span>/{{extended_info.auto_labstats_total}}</p></div>
                                                     {{^}}
-                                                        <div class="space-detail-labstats pull-right"><p><span class="computer-available">{{{addition extended_info.auto_labstats_available extended_info.auto_labstats_off}}}</span>/{{extended_info.auto_labstats_total}}</p></div>
+                                                        <div class="space-detail-labstats pull-right"><p><span class="computer-notavailable">{{extended_info.auto_labstats_available}}</span>/{{extended_info.auto_labstats_total}}</p></div>
                                                     {{/compare}}
                                                 {{^}}
                                                    <span class="space-detail-capacity pull-right">{{#if capacity }}Seats&nbsp;{{capacity}}{{/if}}</span>
