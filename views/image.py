@@ -59,4 +59,4 @@ def get_image(client, spot_id, image_id, constrain, thumb_width=None, thumb_heig
     if resp.status == 200:
         return resp['content-type'], content
 
-    return '[]'
+    return 'application/json', '[]'
