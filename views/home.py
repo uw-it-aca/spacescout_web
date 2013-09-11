@@ -47,6 +47,7 @@ def HomeView(request, template=None):
         'center_longitude': center_longitude,
         'open_now': '1',
         'distance': '500',
+        'limit': '0',
     }
 
     for key in request.GET:
@@ -55,6 +56,7 @@ def HomeView(request, template=None):
     consumer = oauth2.Consumer(key=settings.SS_WEB_OAUTH_KEY, secret=settings.SS_WEB_OAUTH_SECRET)
     client = oauth2.Client(consumer)
 
+    spaces = get_space_json(client, search_args)
     buildings = json.loads(get_building_json(client))
 
     # This could probably be a template tag, but didn't seem worth it for one-time use
@@ -78,9 +80,24 @@ def HomeView(request, template=None):
         'by_building_zooms': by_building_zooms,
         'by_distance_ratio': by_distance_ratio,
         'buildingdict': buildingdict,
+        'spaces': spaces,
     }
 
     return render_to_response(template, params, context_instance=RequestContext(request))
+
+
+def get_space_json(client, search_args):
+    query = []
+    for key, value in search_args.items():
+        query.append("%s=%s" % (key, value))
+
+    url = "{0}/api/v1/spot/?{1}".format(settings.SS_WEB_SERVER_HOST, "&".join(query))
+    resp, content = client.request(url, 'GET')
+
+    if resp.status == 200:
+        return content
+
+    return '[]'
 
 
 #TODO: use the new buildings view instead

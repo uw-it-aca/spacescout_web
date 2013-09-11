@@ -106,7 +106,7 @@
             <script type="text/javascript" src="{{ STATIC_URL }}js/clustering.js"></script>
 
             <script type="text/javascript">
-                var initial_json = [{"extended_info": {"hours_notes": "Interim:\nM-F: 8am-6pm", "noise_level": "moderate", "cafe_hours": "Caf\u00e9 hours M-Th: 7am-9pm, F: 7am-5pm during academic year. Caf\u00e9 closes during break.", "location_description": "In your head, man...", "food_nearby": "space", "has_displays": "true", "has_projector": "true", "campus": "seattle"}, "manager": "", "last_modified": "2013-07-23T00:21:43.073165+00:00", "images": [{"description": "yay", "creation_date": "2013-07-23T00:21:43.139853+00:00", "height": 400, "id": 1, "upload_user": "cstimmel", "thumbnail_root": "/api/v1/spot/1/image/1/thumb", "modification_date": "2013-07-23T00:21:43.139896+00:00", "url": "/api/v1/spot/1/image/1", "upload_application": "localhost", "width": 266, "content-type": "image/jpeg"}], "display_access_restrictions": "", "id": 1, "capacity": 23, "name": "The Acid Trip", "external_id": null, "uri": "/api/v1/spot/1", "available_hours": {"monday": [["07:00", "18:00"]], "tuesday": [["07:00", "18:00"]], "friday": [["07:00", "18:00"]], "wednesday": [["07:00", "18:00"]], "thursday": [["07:00", "18:00"]], "sunday": [], "saturday": []}, "etag": "1f112dcbe4a9c3d9f293c26da8fd339ca0c7ff7a", "location": {"floor": "42", "height_from_sea_level": null, "room_number": "23", "longitude": -122.308044, "latitude": 47.654708, "building_name": "Mary Gates Hall (MGH)"}, "organization": "", "type": []}];
+                var initial_json = {{ spaces|safe }};
             </script>
 
           {% endcompress %}
