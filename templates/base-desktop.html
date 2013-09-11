@@ -105,6 +105,9 @@
             <script type="text/javascript" src="{{ STATIC_URL }}js/desktop.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}js/clustering.js"></script>
 
+            <script type="text/javascript">
+                var initial_json = {{ spaces|safe }};
+            </script>
 
           {% endcompress %}
 
