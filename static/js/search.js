@@ -559,6 +559,9 @@ function reload_on_idle() {
 
     // load the in-page json first time through
     if (window.initial_load) {
+        var source = $('#filter_list').html();
+        var template = Handlebars.compile(source);
+        $('#bubble_filters_container').html(template({}));
         load_data(initial_json);
         window.initial_load = false;
     // only fetch data as long as space details are NOT being shown
