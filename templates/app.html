@@ -5,6 +5,8 @@
 
 {% block extra_js %}
 <script>
+
+
     window.by_building_zooms = {{ by_building_zooms }};
     window.by_distance_ratio = {{ by_distance_ratio }};
     var failed = false;
@@ -293,18 +295,17 @@
 
                 {% tplhandlebars "all_markers" %}
 
-                        {{#if data}}<ol>
+                        {{#if data}}<ol class="lazyload-view">
                         {{#each data}}
 			    <li><div class="building_header">{{this.name}}</div>
                             <ol>{{#each this.spots}}
                             <li class="clearfix view-details">
                                 <div class="space-detail-list-image pull-left">
                                     {{#if images.0.id}}
-                                    <div class="space-detail-list-image-inner" style="background: transparent url('space/{{id}}/image/{{images.0.id}}/thumb/constrain/width:150') no-repeat 50% 50%;">&nbsp;</div>
+                                    <div class="space-detail-list-image-inner lazyloader" data-src="space/{{id}}/image/{{images.0.id}}/thumb/constrain/width:150">&nbsp;</div>
                                     {{else}}
                                     <div class="space-detail-list-image-inner" style="background: transparent url('/static/img/placeholder_noImage_bw.png') no-repeat 50% 50%; background-size: 150px;">&nbsp;</div>
                                     {{/if}}
-
 
                                 </div>
 
@@ -336,7 +337,8 @@
                             </li>
                             {{/each}}</ol>
                          </li>
-                        {{/each}}</ol>
+                        {{/each}}
+                        </ol>
                         {{else}}
                             <li class="no-spaces">Sorry, no spaces match your filters!</li>
                         {{/if}}

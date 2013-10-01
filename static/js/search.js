@@ -44,6 +44,17 @@ function openAllMarkerInfoWindow(data) {
             $("#" + $.cookie('spot_id')).click();
             $.removeCookie('spot_id');
         }
+            $('#info_list').lazyScrollLoading({
+                lazyItemSelector : ".lazyloader",
+                onLazyItemFirstVisible : function(e, $lazyItems, $firstVisibleLazyItems) {
+                    $firstVisibleLazyItems.each(function() {
+                        var $img = $(this);
+                        var src = $img.attr('data-src')
+                        $img.css('background-image', 'url("'+src+'")');
+                    });
+               }
+        });
+
     });
 
 }
