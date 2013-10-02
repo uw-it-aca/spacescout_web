@@ -180,15 +180,15 @@ Handlebars.registerHelper('ifany', function(a, b) {
 
             if ($('#carouselControl').hasClass('active')) { // show the carousel
                 $('#spaceCarouselContainer').show();
-                $('#carouselControl.btn').attr("tabindex", -1);
-                $('#mapControl.btn').attr("tabindex", 0);
+                $('#carouselControl.btn').attr("tabindex", -1).attr("aria-selected", true);
+                $('#mapControl.btn').attr("tabindex", 0).attr("aria-selected", false);
                 $('#spaceMap').hide();
             }
             else { //show the map
                 $('#spaceCarouselContainer').hide();
                 $('#spaceMap').show();
-                $('#carouselControl.btn').attr("tabindex", 0);
-                $('#mapControl.btn').attr("tabindex", -1);
+                $('#carouselControl.btn').attr("tabindex", 0).attr("aria-selected", false);
+                $('#mapControl.btn').attr("tabindex", -1).attr("aria-selected", true);
                 getSpaceMap(detailsLat, detailsLon);
             }
         });

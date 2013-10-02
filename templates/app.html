@@ -42,17 +42,37 @@
         <div class="logo-container clearfix">
 
             <div class="logo">
-                <h1 class="visuallyhidden">SPACESCOUT&trade;</h1>
+                <h1 id="app_header" class="visuallyhidden">SPACESCOUT&trade;</h1>
                 {% ifnotequal locations|length 1 %}
+                <span role="navigation" aria-labelledby="location_select_heading">
+                <label id="location_select_heading" for="location_select"  class="visuallyhidden">Select campus:</label>
                 <select id='location_select'>
                     {% for key, value in locations.items %}
                         <option value="{{ value.CENTER_LATITUDE }},{{ value.CENTER_LONGITUDE }},{{ key }},{{ value.ZOOM_LEVEL }}">{{ value.NAME }}</option>
                     {% endfor %}
                 </select>
+                </span>
                 {% endifnotequal %}
             </div>
-            <h2 id="filter_group_header" class="visuallyhidden">Space Filters</h2>
-            <div aria-labelledby="filter_group_header">
+            <h2 id="filter_group_header" class="visuallyhidden">Find Study Spaces by Specific Criteria</h2>
+            
+            <div role= "search" aria-labelledby="filter_group_header">
+                <div id="filter_container" aria-labelledby="filters_header" aria-controls="space_count_container">
+                    <form>
+                        <div id="filter_block" style="display:none;">
+                            <h3 id="filters_header" class="visuallyhidden">Filter By:</h3>
+                            <div class="inner clearfix">
+                                <div class="inner-column">
+                    	           <div id="filter-clear">Filters Cleared</div>
+                                    <div class="inner-block-left">
+							         {% include "filters.html" %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+    
                 <div class="actions">
                     <button id="filter_button" class="btn btn-inverse" type="button" aria-label="Filter settings..." aria-owns="filter_container" >Filters</button>
                     <div id="done-clear-group">
@@ -64,12 +84,12 @@
 
                 <div id="bubble_desktop">
                     <div class="bubble-inner clearfix" style="position:relative;">
-                        <div class="bubble-tab">tab</div>
+                        <div class="bubble-tab"></div>
 
                        <div id="bubble_filters_container" class="bubble-filters pull-left"></div>
 
                         {% tplhandlebars "filter_list" %}
-                        <h3 id="current_filters" class="visuallyhidden">Current Filters:</h3>
+                        <h3 id="current_filters" class="visuallyhidden">Currently filtering by:</h3>
                         <ul id='filter_display_list' aria-labelledby="current_filters">
 
                             <li>{{#if open_at}}specific time{{else}}open now{{/if}}</li>
@@ -87,7 +107,7 @@
 
                         <div class="pull-right bubble-info">
                             <h3 id="spaces_match_header" class="visuallyhidden">Your current filters return:</h3>
-                            <div id="space_count_container" aria-labelledby="spaces_match_header"></div>
+                            <div id="space_count_container" aria-labelledby="spaces_match_header" role="status"></div>
 
                             {% tplhandlebars "space_count" %}
                             <span class="count">{{count}}</span><span class="spaces">spaces</span>
@@ -100,24 +120,7 @@
         </div>
 
     </div>
-    <h3 id="filters_header" class="visuallyhidden">Filter By:</h3>
-    <div id="filter_container" aria-labelledby="filters_header">
-        <form>
-            <div id="filter_block" style="display:none;">
-                <div class="inner clearfix">
-
-                    <div class="inner-column">
-                    	<div id="filter-clear">Filters Cleared</div>
-                        <div class="inner-block-left">
-							{% include "filters.html" %}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
-
-    <div id="main_content" class="clearfix">
+    <div id="main_content" class="clearfix" role="main" aria-labelledby="app_header">
 <h2 id="map_header" class="visuallyhidden" aria-hidden="true">Map of Spaces</h2>
         <div id="map_canvas" aria-labelledby="map_header" aria-hidden="true"></div>
         {% tplhandlebars "map_controls" %}
@@ -131,7 +134,7 @@
                 <div class="space-detail">
                     <div class="space-detail-inner" id="detail_container_{{id}}" aria-labelledby="space-detail-name" tabindex="0">
                         <div class="space-detail-header">
-                            <h3 id="space-detail-name" class="space-detail-name">{{name}}</h3>
+                            <h2 id="space-detail-name" class="space-detail-name"><span class="visuallyhidden">Space Details:</span> {{name}}</h2>
                             <div class="space-detail-type">{{type}} {{#if capacity }}<span class="space-detail-capacity">[Seats&nbsp;{{capacity}}]</span>{{/if}}</div>
                             <a class="close" href="#" title="close"><img alt="close details" src="/static/img/x.png" /></a>
                         </div>
@@ -143,7 +146,7 @@
                                 <div class="space-detail-body-inner pull-left">
 
                                     <div class="space-image">
-                                        <div id="spaceCarouselContainer" class="image-container">
+                                        <div id="spaceCarouselContainer" class="image-container" role="tabpanel">
                                             <div id="myCarousel" class="carousel slide">
                                               <!-- Carousel items -->
                                               <div class="carousel-inner">
@@ -157,13 +160,13 @@
                                               <a class="carousel-control right" href="#myCarousel" title="next image" data-slide="next">&rsaquo;</a>
                                             </div>
                                         </div>
-                                        <div id="spaceMap" class="map-container" style="display:none;">map goes here</div>
+                                        <div id="spaceMap" class="map-container" style="display:none;" role="tabpanel">map goes here</div>
                                     </div>
 
                                 </div>
-                                <div class="space-image-map-buttons btn-group pull-left" data-toggle="buttons-radio">
-                                  <button id="carouselControl" class="btn active"><span>image gallery</span></button>
-                                  <button id="mapControl" class="btn"><span>map</span></button>
+                                <div class="space-image-map-buttons btn-group pull-left" data-toggle="buttons-radio" role="tablist">
+                                  <button id="carouselControl" class="btn active" role="tab" aria-selected="true" aria-controls="spaceCarouselContainer"><span>Image gallery</span></button>
+                                  <button id="mapControl" class="btn" role="tab" aria-controls="spaceMap" aria-selected="false"><span>Show this space on a map</span></button>
                                 </div>
 
                             </div>
@@ -176,7 +179,7 @@
 
                                         {{#if has_notes }}
                                         <li class="clearfix">
-                                            <h5 class="space-info-label pull-left">Notes</h5>
+                                            <h3 class="space-info-label pull-left">Notes</h3>
                                             <div class="space-info-detail pull-left">
                                                 <p>{{extended_info.access_notes}}</p>
                                                 <p id="ei_reservation_notes">{{extended_info.reservation_notes }}</p>
@@ -187,7 +190,7 @@
                                             {{#if extended_info.auto_labstats_total}}
                                                 {{#compare extended_info.auto_labstats_total 0 operator="!="}}
                                                     <li class="clearfix">
-                                                        <h5 class="space-info-label pull-left">Computers</h5>
+                                                        <h3 class="space-info-label pull-left">Computers</h3>
                                                         <div class="space-info-detail pull-left">
 
                                                         {{#compare extended_info.auto_labstats_available 0 operator=">"}}
@@ -201,11 +204,11 @@
                                             {{/if}}
                                         {{/if}}
 
-                                        <li class="clearfix"><h5 class="space-info-label pull-left">Hours</h5><div class="space-info-detail pull-left">{{formatHours available_hours}}</div></li>
-                                        <li class="clearfix"><h5 class="space-info-label pull-left">Location</h5><div class="space-info-detail pull-left">{{extended_info.location_description}}</div></li>
+                                        <li class="clearfix"><h3 class="space-info-label pull-left">Hours</h3><div class="space-info-detail pull-left">{{formatHours available_hours}}</div></li>
+                                        <li class="clearfix"><h3 class="space-info-label pull-left">Location</h3><div class="space-info-detail pull-left">{{extended_info.location_description}}</div></li>
                                         {{#if has_resources }}
                                         <li class="clearfix">
-                                            <h5 class="space-info-label pull-left">Resources</h5>
+                                            <h3 class="space-info-label pull-left">Resources</h3>
                                             <div class="space-info-detail pull-left">
                                                 <ul class='space-info-resources-list'>
                                                 {{#if extended_info.has_computers }}<li>Computers</li>{{/if}}
@@ -222,7 +225,7 @@
 
                                         {{#if extended_info.noise_level }}
                                         <li class="clearfix">
-                                            <h5 class="space-info-label pull-left">Noise Level</h5>
+                                            <h3 class="space-info-label pull-left">Noise Level</h3>
                                             <div class="space-info-detail pull-left">
 
                                                 {{#compare extended_info.noise_level "quiet" operator="=="}}
@@ -244,13 +247,13 @@
                                         {{/if}}
 
                                         {{#if extended_info.has_natural_light }}
-                                        <li class="clearfix"><h5 class="space-info-label pull-left">Lighting</h5><div class="space-info-detail pull-left">Natural light</div></li>
+                                        <li class="clearfix"><h3 class="space-info-label pull-left">Lighting</h3><div class="space-info-detail pull-left">Natural light</div></li>
                                         {{/if}}
 
 
                                         {{#if extended_info.food_nearby }}
                                         <li class="clearfix">
-                                            <h5 class="space-info-label pull-left">Food/Coffee</h5>
+                                            <h3 class="space-info-label pull-left">Food/Coffee</h3>
                                             <div class="space-info-detail pull-left">
 
                                               {{#compare extended_info.food_nearby "building" operator="=="}}
@@ -289,7 +292,7 @@
                 <div class="list-arrow"><a id="filter_link" title="List of spaces" href="#"><img alt="" src="{{ STATIC_URL }}img/list.png" /></a></div>
 
                 <!-- TODO: need to implement if/else logic for spinner and info_items -->
-                <div class="loading"><div class="loading-inner"><img alt="" src="{{ STATIC_URL }}img/spinner.gif" />&nbsp;&nbsp;Loading spaces...</div></div>
+                <div class="loading"><div class="loading-inner" role="alert">&nbsp;&nbsp;Loading spaces...</div></div>
 
                 <div id="info_items"></div>
 
@@ -297,7 +300,7 @@
 
                         {{#if data}}<ol class="lazyload-view">
                         {{#each data}}
-			    <li><div class="building_header">{{this.name}}</div>
+			    <li><h3 class="building_header">{{this.name}}</h3>
                             <ol>{{#each this.spots}}
                             <li class="clearfix view-details">
                                 <div class="space-detail-list-image pull-left">
@@ -332,7 +335,6 @@
                                     </div>
                                     <div class="space-detail-name">{{name}}</div>
                                     <div class="space-detail-desc">{{extended_info.location_description}}</div>
-                                    <div class="space-detail-type clearfix"><span class="space-detail-type-label pull-left">{{type}}</span>{{#if capacity }}<span class="space-detail-capacity pull-right">Seats&nbsp;{{capacity}}</span>{{/if}}</div>
                                 </button>
                             </li>
                             {{/each}}</ol>
@@ -349,7 +351,7 @@
 
                         {{#if data }}<ol>
                         {{#each data}}
-			    <li><div class="building_header">{{this.name}}</div>
+			    <li><h3 class="building_header">{{this.name}}</h3>
 			    <ol>{{#each this.spots}}
                             <li class="clearfix view-details">
                                 <div class="space-detail-list-image pull-left">
@@ -382,7 +384,6 @@
                                     </div>
                                     <div class="space-detail-name">{{name}}</div>
                                     <div class="space-detail-desc">{{extended_info.location_description}}</div>
-                                    <div class="space-detail-type"><span class="space-detail-type-label pull-left">{{type}}</span>{{#if capacity }}<span class="space-detail-capacity pull-right">Seats&nbsp;{{capacity}}</span>{{/if}}</div>
                                 </button>
                             </li>
                             {{/each}}</ol>
@@ -392,27 +393,6 @@
                             <li class="no-spaces">Sorry, no spaces match your filters!</li>
                         {{/if}}
 
-                {% endtplhandlebars %}
-
-                {% tplhandlebars "spot_info" %}
-                    <ol>
-			<li><div class="building_header">{{location.building_name}}</div>
-                        <ol><li class="clearfix view-details">
-                            <div class="space-detail-list-image pull-left">
-                              {{#if images.0.id}}
-                                <div class="space-detail-list-image-inner" style="background: transparent url('space/{{id}}/image/{{images.0.id}}/thumb/constrain/width:150') no-repeat 50% 50%;">&nbsp;</div>
-                              {{else}}
-                                <div class="space-detail-list-image-inner" style="background: transparent url('/static/img/placeholder_noImage_bw.png') no-repeat 50% 50%; background-size: 150px;">&nbsp;</div>
-                              {{/if}}
-                            </div>
-                            <button id="{{id}}" class="space-detail-list-item pull-left" type="button" aria-label="Get space details for {{name}}" aria-owns="detail_container_{{id}}">
-                                <div class="space-detail-name">{{name}}</div>
-                                <div class="space-detail-desc">{{extended_info.location_description}}</div>
-                                <div class="space-detail-type"><span class="space-detail-type-label pull-left">{{type}}</span>{{#if capacity }}<span class="space-detail-capacity pull-right">Seats&nbsp;{{capacity}}</span>{{/if}}</div>
-                            </button>
-                        </li></ol>
-                        </li>
-                    </ol>
                 {% endtplhandlebars %}
             </div>
         </div>
