@@ -56,7 +56,6 @@ function update_spacescout_markers(spots) {
         window.spacescout_markers.push(holderspot);
     }
     $("#info_list").scrollTop(0);
-
 }
 
 
@@ -218,9 +217,20 @@ function loadMarkerSpots(marker, data) {
     var template = Handlebars.compile(source);
     data = buildingNameHeaders(data);
     $('#info_items').html(template({data: data}));
- 
+
     scrollToTop('info_list');
     $('.loading').slideUp('fast');
+    console.log('second');
+    $('#info_list').lazyScrollLoading({
+                lazyItemSelector : ".lazyloader",
+                onLazyItemFirstVisible : function(e, $lazyItems, $firstVisibleLazyItems) {
+                    $firstVisibleLazyItems.each(function() {
+                        var $img = $(this);
+                        var src = $img.attr('data-src')
+                        $img.css('background', 'transparent url("'+src+'") no-repeat 50% 50%');
+                    });
+               }
+        });
 }
 
 function clear_map() {
