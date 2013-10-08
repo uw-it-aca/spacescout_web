@@ -77,6 +77,64 @@ Handlebars.registerHelper('addition', function(lvalue, rvalue) {
 
 });
 
+Handlebars.registerHelper('alphaOptGroupsHTML', function(list) {
+    list.sort();
+    firstletter = null;
+    out = new Array;
+    exist = false;
+
+    for (var i=0; i < list.length; i++) {
+        if (list[i][0] == firstletter) {
+            if ($.cookie('spacescout_search_opts')) {
+                var form_opts = JSON.parse($.cookie('spacescout_search_opts'));
+                if (form_opts["building_name"]) {
+                    for (var j = 0; j < form_opts["building_name"].length; j++) {
+                        if (list[i] == form_opts["building_name"][j]) {
+                            exist = true;
+                        }
+                    }
+                    if (exist == true) {
+                        out.push('<option value="'+list[i]+'" selected>'+list[i]+'</option>');
+                        exist = false;
+                    } else {
+                        out.push('<option value="'+list[i]+'">'+list[i]+'</option>');
+                    }
+                }   
+            } else {   
+                out.push('<option value="'+list[i]+'">'+list[i]+'</option>');
+            }   
+        } else {
+            if (firstletter != null) {
+                out.push('</optgroup>');
+            }   
+            firstletter = list[i][0];
+            out.push('<optgroup label="'+firstletter+'">');
+                
+            if ($.cookie('spacescout_search_opts')) {
+                var form_opts = JSON.parse($.cookie('spacescout_search_opts'));
+                if (form_opts["building_name"]) {
+                    for (var k = 0; k < form_opts["building_name"].length; k++) {
+                        if (list[i] == form_opts["building_name"][k]) {
+                            exist = true;
+                        }
+                    }
+                    if (exist == true) {
+                        out.push('<option value="'+list[i]+'" selected>'+list[i]+'</option>');
+                        exist = false;
+                    } else {
+                        out.push('<option value="'+list[i]+'">'+list[i]+'</option>');
+                    }
+                }   
+            } else {   
+                out.push('<option value="'+list[i]+'">'+list[i]+'</option>');
+            }   
+        }   
+    }   
+    out.push('</optgroup>');
+    console.log("**********handlebars function loading buildings");
+    return new Handlebars.SafeString(out.join(''));
+});
+
 Handlebars.registerHelper('formatHours', function(hours) {
     //tomorrow_starts_at_midnight = true;
     //tomorrow_is_24_hours =
@@ -105,25 +163,7 @@ Handlebars.registerHelper('formatHours', function(hours) {
     return new Handlebars.SafeString(formatted.join("<br/>"));
 });
 
-Handlebars.registerHelper('alphaOptGroupsHTML', function(list) {
-    list.sort();
-    firstletter = null;
-    out = new Array;
-    for (var i=0; i < list.length; i++) {
-        if (list[i][0] == firstletter) {
-            out.push('<option value="'+list[i]+'">'+list[i]+'</option>');
-        } else {
-            if (firstletter != null) {
-                out.push('</optgroup>');
-            }
-            firstletter = list[i][0];
-            out.push('<optgroup label="'+firstletter+'">');
-            out.push('<option value="'+list[i]+'">'+list[i]+'</option>');
-        }
-    }
-    out.push('</optgroup>');
-    return new Handlebars.SafeString(out.join(''));
-});
+
 
 function groupHours(days) {
     var days1 = [];

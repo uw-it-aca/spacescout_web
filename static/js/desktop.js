@@ -39,7 +39,8 @@ Handlebars.registerHelper('ifany', function(a, b) {
 
     $(window).load(function() {
         $(".chzn-select").chosen({width: "98%"});
-    }); 
+        $('#e9.building-location').trigger("liszt:updated"); 
+    });
 
 	$(document).ready(function() {
 
