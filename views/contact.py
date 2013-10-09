@@ -21,13 +21,6 @@ from django.conf import settings
 import simplejson as json
 import urllib2
 
-# See if there is a Google Analytics web property id
-try:
-    ga_tracking_id = settings.GA_TRACKING_ID
-except:
-    ga_tracking_id = None
-
-
 def contact(request, spot_id=None):
     contact_variables = _contact_variables(request, spot_id)
     if spot_id is None:
@@ -37,7 +30,6 @@ def contact(request, spot_id=None):
         displayed_spot_id = spot_id
 
     back = contact_variables['back']
-    is_mobile = contact_variables['is_mobile']
     spot_name = contact_variables['spot_name']
     spot_description = contact_variables['spot_description']
 
@@ -66,21 +58,12 @@ def contact(request, spot_id=None):
     else:
         form = ContactForm()
 
-    # See if django-compressor is being used to precompile less
-    if settings.COMPRESS_ENABLED:
-        less_not_compiled = False
-    else:
-        less_not_compiled = True
-
     return render_to_response('contact-form.html', {
         'form': form,
-        'is_mobile': is_mobile,
-        'less_not_compiled': less_not_compiled,
         'back': back,
         'spot_name': spot_name,
         'spot_description': spot_description,
         'spot_id': spot_id,
-        'ga_tracking_id': ga_tracking_id,
     }, context_instance=RequestContext(request))
 
 
@@ -88,13 +71,10 @@ def thank_you(request, spot_id=None):
     contact_variables = _contact_variables(request, spot_id)
 
     back = contact_variables['back']
-    is_mobile = contact_variables['is_mobile']
 
     return render_to_response('contact-thankyou.html', {
         'spot_id': spot_id,
         'back': back,
-        'is_mobile': is_mobile,
-        'ga_tracking_id': ga_tracking_id,
     }, context_instance=RequestContext(request))
 
 
@@ -103,15 +83,12 @@ def sorry(request, spot_id=None):
 
     back = contact_variables['back']
     email = settings.FEEDBACK_EMAIL_RECIPIENT[0]
-    is_mobile = contact_variables['is_mobile']
     #should maybe do something here ^. raise improperly configured exception if there are no emails in the list in settings.py
 
     return render_to_response('contact-sorry.html', {
         'spot_id': spot_id,
         'back': back,
         'email': email,
-        'is_mobile': is_mobile,
-        'ga_tracking_id': ga_tracking_id,
     }, context_instance=RequestContext(request))
 
 
@@ -134,9 +111,9 @@ def _contact_variables(request, spot_id):
             print >> sys.stderr, "E: ", e.code
 
     if request.MOBILE == 1:
-        is_mobile = True
+       is_mobile = True
     else:
-        is_mobile = False
+       is_mobile = False
 
     if is_mobile and spot_id is not None:
         back = ('/space/' + spot_id)

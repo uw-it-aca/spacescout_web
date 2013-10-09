@@ -136,6 +136,7 @@ function lazyLoadSpaceImages() {
 }
 
 function repopulate_filters() {
+    
     if ($.cookie('spacescout_search_opts')) {
         var form_opts = JSON.parse($.cookie('spacescout_search_opts'));
 
@@ -154,12 +155,16 @@ function repopulate_filters() {
 
         // set hours
         if (form_opts["open_at"]) {
+            $('#hours_list_input').prop('checked', true);
+            $('#hours_list_container').show();
             var day = form_opts["open_at"].split(',')[0];
             var time = form_opts["open_at"].split(',')[1];
             time = time.split(':');
             var ampm = 'AM';
-            if (Number(time[0]) > 12) {
-                time[0] = Number(time[0]) - 12;
+            if (Number(time[0]) >= 12) {
+                if (Number(time[0]) > 12) {
+                    time[0] = Number(time[0]) - 12;
+                }
                 ampm = 'PM';
             }
             time = time.join(':');
@@ -168,12 +173,16 @@ function repopulate_filters() {
             $('#ampm-from').val(ampm);
         }
         if (form_opts["open_until"]) {
+            $('#hours_list_input').prop('checked', true);
+            $('#hours_list_container').show();
             var day = form_opts["open_until"].split(',')[0];
             var time = form_opts["open_until"].split(',')[1];
             time = time.split(':');
             var ampm = 'AM';
-            if (Number(time[0]) > 12) {
-                time[0] = Number(time[0]) - 12;
+            if (Number(time[0]) >= 12) {
+                if (Number(time[0]) > 12) {
+                    time[0] = Number(time[0]) - 12;
+                }
                 ampm = 'PM';
             }
             time = time.join(':');
@@ -185,6 +194,8 @@ function repopulate_filters() {
         // set location
         if (form_opts["building_name"]) {
             $('#e9').val(form_opts["building_name"]);
+            $('#building_list_input').prop('checked', true);
+            $('#building_list_container').show();
         }
 
         // set resources
@@ -487,6 +498,7 @@ function load_map(latitude, longitude, zoom) {
         window.spacescout_map.setCenter(new google.maps.LatLng(latitude, longitude));
     }
 
+
     google.maps.event.addListener(window.spacescout_map, 'idle', reload_on_idle);
     //next three lines courtesy of samolds
     google.maps.event.addListener(spacescout_map, 'mouseup', function(c) {
@@ -569,8 +581,15 @@ function load_data(data) {
 
 function reload_on_idle() {
 
+    // load the in-page json first time through
+    if (window.initial_load) {
+        var source = $('#filter_list').html();
+        var template = Handlebars.compile(source);
+        $('#bubble_filters_container').html(template({}));
+        load_data(initial_json);
+        window.initial_load = false;
     // only fetch data as long as space details are NOT being shown
-    if (!$('#space_detail_container').is(":visible")) {
+    } else if (!$('#space_detail_container').is(":visible")) {
         fetch_data();
     }
 
