@@ -17,41 +17,52 @@ from django.template import RequestContext
 from django.conf import settings
 import oauth2
 import simplejson as json
+import hashlib
+import urllib
 from django.utils.datastructures import SortedDict
 from mobility.decorators import mobile_template
 from django.core.exceptions import ImproperlyConfigured
+from django.core.cache import cache
 
+FIVE_MINUTE_CACHE = 300
 
 @mobile_template('{mobile/}app.html')
 def HomeView(request, template=None):
+    # The preference order is cookie, config, then some static values
+    # That fallback order will also apply if the cookie campus isn't in
+    # settings.
+    location = None
+    cookies = request.COOKIES
+    if "default_location" in cookies:
+        cookie_value = cookies["default_location"]
+        # The format of the cookie is this, urlencoded:
+        # lat,long,campus,zoom
+        location = urllib.unquote(cookie_value).split(',')[2]
+
+        if not hasattr(settings, "SS_LOCATIONS"):
+            location = None
+
+        elif not location in settings.SS_LOCATIONS:
+            location = None
+
+    if location is None:
+        if hasattr(settings, 'SS_DEFAULT_LOCATION'):
+            location = settings.SS_DEFAULT_LOCATION
+
+    spaces, template_values = get_campus_data(location)
+
+    spaces = json.dumps(spaces)
+
     # Default to zooming in on the UW Seattle campus if no default location is set
     if hasattr(settings, 'SS_DEFAULT_LOCATION'):
-        loc = settings.SS_LOCATIONS[settings.SS_DEFAULT_LOCATION]
-        center_latitude = loc['CENTER_LATITUDE']
-        center_longitude = loc['CENTER_LONGITUDE']
-        zoom_level = loc['ZOOM_LEVEL']
         default_location = settings.SS_DEFAULT_LOCATION
         locations = settings.SS_LOCATIONS
-    else:
-        center_latitude = '47.655003'
-        center_longitude = '-122.306864'
-        zoom_level = '15'
 
     if (hasattr(settings, 'SS_BUILDING_CLUSTERING_ZOOM_LEVELS') and hasattr(settings, 'SS_DISTANCE_CLUSTERING_RATIO')):
         by_building_zooms = settings.SS_BUILDING_CLUSTERING_ZOOM_LEVELS
         by_distance_ratio = settings.SS_DISTANCE_CLUSTERING_RATIO
     else:
         raise ImproperlyConfigured("You need to configure your clustering constants in settings.py or local_settings.py")
-
-    search_args = {
-        'center_latitude': center_latitude,
-        'center_longitude': center_longitude,
-        'open_now': '1',
-        'distance': '500',
-    }
-
-    for key in request.GET:
-        search_args[key] = request.GET[key]
 
     consumer = oauth2.Consumer(key=settings.SS_WEB_OAUTH_KEY, secret=settings.SS_WEB_OAUTH_SECRET)
     client = oauth2.Client(consumer)
@@ -70,33 +81,116 @@ def HomeView(request, template=None):
         except:
             pass
 
-    # See if django-compressor is being used to precompile less
-    if settings.COMPRESS_ENABLED:
-        less_not_compiled = False
-    else:
-        less_not_compiled = True
-
-    # See if there is a Google Analytics web property id
-    try:
-        ga_tracking_id = settings.GA_TRACKING_ID
-    except:
-        ga_tracking_id = None
-
     params = {
-        'center_latitude': center_latitude,
-        'center_longitude': center_longitude,
-        'zoom_level': zoom_level,
+        'center_latitude': template_values['center_latitude'],
+        'center_longitude': template_values['center_longitude'],
+        'zoom_level': template_values['zoom_level'],
         'locations': locations,
         'default_location': default_location,
         'by_building_zooms': by_building_zooms,
         'by_distance_ratio': by_distance_ratio,
         'buildingdict': buildingdict,
-        'is_mobile': request.MOBILE,
-        'less_not_compiled': less_not_compiled,
-        'ga_tracking_id': ga_tracking_id,
+        'spaces': spaces,
     }
 
     return render_to_response(template, params, context_instance=RequestContext(request))
+
+
+def get_key_for_search_args(search_args):
+    query = []
+    for key, value in search_args.items():
+        query.append("%s=%s" % (key, value))
+
+    joined = "&".join(query)
+
+    return "space_search_%s" % hashlib.sha224(joined).hexdigest()
+
+def get_campus_data(campus):
+    spaces = fetch_open_now_for_campus(campus)
+    template_values = template_values_for_campus(campus)
+
+    return spaces, template_values
+
+def template_values_for_campus(campus):
+    if campus is None:
+        return {
+            # Default to zooming in on the UW Seattle campus
+            'center_latitude': '47.655003',
+            'center_longitude': '-122.306864',
+            'zoom_level': '15',
+        }
+
+    location = settings.SS_LOCATIONS[campus]
+    return {
+        'center_latitude': location['CENTER_LATITUDE'],
+        'center_longitude': location['CENTER_LONGITUDE'],
+        'zoom_level': location['ZOOM_LEVEL'],
+    }
+
+def fetch_open_now_for_campus(campus, use_cache=True, fill_cache=False, cache_period=FIVE_MINUTE_CACHE):
+    if campus is None:
+        # Default to zooming in on the UW Seattle campus
+        center_latitude = '47.655003'
+        center_longitude = '-122.306864'
+        zoom_level = '15'
+        distance = '500'
+
+    else:
+        location = settings.SS_LOCATIONS[campus]
+        center_latitude = location['CENTER_LATITUDE']
+        center_longitude = location['CENTER_LONGITUDE']
+        zoom_level = location['ZOOM_LEVEL']
+
+        if 'DISTANCE' in location:
+            distance = location['DISTANCE']
+        else:
+            distance = '500'
+
+    consumer = oauth2.Consumer(key=settings.SS_WEB_OAUTH_KEY, secret=settings.SS_WEB_OAUTH_SECRET)
+    client = oauth2.Client(consumer)
+
+    search_args = {
+        'center_latitude': center_latitude,
+        'center_longitude': center_longitude,
+        'open_now': '1',
+        'distance': distance,
+        'limit': '0',
+    }
+
+    return get_space_json(client, search_args, use_cache, fill_cache, cache_period)
+
+def get_space_json(client, search_args, use_cache, fill_cache, cache_period):
+    # We don't want the management command that fills the cache to get
+    # a cached value
+    if use_cache:
+        cache_key = get_key_for_search_args(search_args)
+
+        # The cache is (hopefully) filled from the load_open_now_cache
+        # management command
+        cached = cache.get(cache_key)
+        if cached:
+            return json.loads(cached)
+
+    values = fetch_space_json(client, search_args)
+
+    if fill_cache:
+        cache_key = get_key_for_search_args(search_args)
+
+        cache.set(cache_key, values, cache_period)
+    return json.loads(values)
+
+def fetch_space_json(client, search_args):
+    query = []
+    for key, value in search_args.items():
+        query.append("%s=%s" % (key, value))
+
+    url = "{0}/api/v1/spot/?{1}".format(settings.SS_WEB_SERVER_HOST, "&".join(query))
+    resp, content = client.request(url, 'GET')
+
+    if resp.status == 200:
+        return content
+
+    return '[]'
 
 
 #TODO: use the new buildings view instead
