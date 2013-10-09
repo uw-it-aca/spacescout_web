@@ -201,11 +201,12 @@ function setActiveMarker(marker) {
         }
     }
 }
-       
+
 function loadMarkerSpots(marker, data) {
     // reset scroll position
+    console.log('first');
     $("#info_list").scrollTop(0);
-    
+
     if (active_marker != null) {
         updateActiveMarker(marker);
     }
@@ -218,19 +219,33 @@ function loadMarkerSpots(marker, data) {
     data = buildingNameHeaders(data);
     $('#info_items').html(template({data: data}));
 
+    // LazyLoading the spot images for clusters on Desktop
+    $('#info_list').lazyScrollLoading({
+        lazyItemSelector : ".lazyloader",
+        onLazyItemFirstVisible : function(e, $lazyItems, $firstVisibleLazyItems) {
+            $firstVisibleLazyItems.each(function() {
+                var $img = $(this);
+                var src = $img.attr('data-src')
+                $img.css('background', 'transparent url("'+src+'") no-repeat 50% 50%');
+            });
+        }
+    });
+
+    // LazyLoading the spot images for clusters on Mobile
+    $(window).lazyScrollLoading({
+        lazyItemSelector : ".lazyloader-mobile",
+        onLazyItemFirstVisible : function(e, $lazyItems, $firstVisibleLazyItems) {
+            $firstVisibleLazyItems.each(function() {
+                var $img = $(this);
+                var src = $img.attr('data-src')
+                $img.css('background', 'transparent url("'+src+'") no-repeat 50% 50%');
+                });
+            }
+    });
+
     scrollToTop('info_list');
     $('.loading').slideUp('fast');
-    console.log('second');
-    $('#info_list').lazyScrollLoading({
-                lazyItemSelector : ".lazyloader",
-                onLazyItemFirstVisible : function(e, $lazyItems, $firstVisibleLazyItems) {
-                    $firstVisibleLazyItems.each(function() {
-                        var $img = $(this);
-                        var src = $img.attr('data-src')
-                        $img.css('background', 'transparent url("'+src+'") no-repeat 50% 50%');
-                    });
-               }
-        });
+
 }
 
 function clear_map() {
