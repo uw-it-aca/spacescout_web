@@ -204,7 +204,6 @@ function setActiveMarker(marker) {
 
 function loadMarkerSpots(marker, data) {
     // reset scroll position
-    console.log('first');
     $("#info_list").scrollTop(0);
 
     if (active_marker != null) {
