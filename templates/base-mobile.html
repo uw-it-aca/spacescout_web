@@ -115,6 +115,10 @@
             <script type="text/javascript" src="{{ STATIC_URL }}js/clustering.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}js/retina.js"></script>
 
+            <script type="text/javascript">
+                var initial_json = {{ spaces|safe }};
+            </script>
+
             {% block extra_js %}{% endblock %}
           {% endcompress %}
 

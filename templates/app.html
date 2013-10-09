@@ -9,6 +9,7 @@
 
     window.by_building_zooms = {{ by_building_zooms }};
     window.by_distance_ratio = {{ by_distance_ratio }};
+    window.initial_load = true;
     var failed = false;
     if ($.cookie('default_location')) {
         var defaults = $.cookie('default_location').split(',');
@@ -93,7 +94,7 @@
                         <ul id='filter_display_list' aria-labelledby="current_filters">
 
                             <li>{{#if open_at}}specific time{{else}}open now{{/if}}</li>
-			    <li>{{#if building_name}}specific building{{else}}entire campus{{/if}}</li>
+                            <li>{{#if building_name}}specific building{{else}}entire campus{{/if}}</li>
                             {{#if space_type}}<li>type of space</li>{{/if}}
                             {{#if true_capacity}}<li>seats {{capacity}}</li>{{/if}}
                             {{#if reservable}}<li>reservable</li>{{/if}}

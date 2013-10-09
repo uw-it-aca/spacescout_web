@@ -7,6 +7,7 @@
 <script>
     window.by_building_zooms = {{ by_building_zooms }};
     window.by_distance_ratio = {{ by_distance_ratio }};
+    window.initial_load = true;
     var failed = false;
     if ($.cookie('default_location')) {
         var defaults = $.cookie('default_location').split(',');

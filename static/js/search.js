@@ -498,6 +498,7 @@ function load_map(latitude, longitude, zoom) {
         window.spacescout_map.setCenter(new google.maps.LatLng(latitude, longitude));
     }
 
+
     google.maps.event.addListener(window.spacescout_map, 'idle', reload_on_idle);
     //next three lines courtesy of samolds
     google.maps.event.addListener(spacescout_map, 'mouseup', function(c) {
@@ -580,8 +581,15 @@ function load_data(data) {
 
 function reload_on_idle() {
 
+    // load the in-page json first time through
+    if (window.initial_load) {
+        var source = $('#filter_list').html();
+        var template = Handlebars.compile(source);
+        $('#bubble_filters_container').html(template({}));
+        load_data(initial_json);
+        window.initial_load = false;
     // only fetch data as long as space details are NOT being shown
-    if (!$('#space_detail_container').is(":visible")) {
+    } else if (!$('#space_detail_container').is(":visible")) {
         fetch_data();
     }
 
