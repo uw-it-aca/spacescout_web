@@ -126,7 +126,7 @@
             </div>
         {% endtplhandlebars %}
 
-        <div id="info_list">
+        <div id="info_list" class="mobile-lazyload" >
         <h2 id="space_list_header" class="visuallyhidden">List of Spaces</h2>
             <div class="list-inner" aria-labelledby="space_list_header">
                 <div class="list-arrow"><a id="filter_link" title="List of spaces" href="#"><img alt="" src="{{ STATIC_URL }}img/list.png" /></a></div>
@@ -142,10 +142,10 @@
                         {{#each data}}
 			    <li><h3 class="building_header">{{this.name}}</h3>
                             <ol>{{#each this.spots}}
-                            <li class="clearfix view-details">
+                            <li class="clearfix view-details ">
                                 <div class="space-detail-list-image pull-left">
                                     {{#if images.0.id}}
-                                    <div class="space-detail-list-image-inner" style="background: transparent url('space/{{id}}/image/{{images.0.id}}/thumb/constrain/width:150') no-repeat 50% 50%;">&nbsp;</div>
+                                    <div class="space-detail-list-image-inner lazyloader-mobile" data-src="space/{{id}}/image/{{images.0.id}}/thumb/constrain/width:150">&nbsp;</div>
                                     {{else}}
                                     <div class="space-detail-list-image-inner" style="background: transparent url('/static/img/placeholder_noImage_bw.png') no-repeat 50% 50%; background-size: 150px;">&nbsp;</div>
                                     {{/if}}
@@ -195,7 +195,7 @@
                             <li class="clearfix view-details">
                                 <div class="space-detail-list-image pull-left">
                                   {{#if images.0.id}}
-                                    <div class="space-detail-list-image-inner" style="background: transparent url('space/{{id}}/image/{{images.0.id}}/thumb/constrain/width:150') no-repeat 50% 50%;">&nbsp;</div>
+                                    <div class="space-detail-list-image-inner lazyloader-mobile" data-src="space/{{id}}/image/{{images.0.id}}/thumb/constrain/width:150">&nbsp;</div>
                                   {{else}}
                                     <div class="space-detail-list-image-inner" style="background: transparent url('/static/img/placeholder_noImage_bw.png') no-repeat 50% 50%; background-size: 150px;">&nbsp;</div>
                                   {{/if}}

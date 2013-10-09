@@ -129,7 +129,6 @@ Handlebars.registerHelper('ifany', function(a, b) {
 
              // clear previously selected space
             $('#info_items li').removeClass('selected');
-
             //highlight the selected space
             $(this).addClass('selected');
 
@@ -192,7 +191,6 @@ Handlebars.registerHelper('ifany', function(a, b) {
                 getSpaceMap(detailsLat, detailsLon);
             }
         });
-
 	});
 
 	// Update dimensions on resize
