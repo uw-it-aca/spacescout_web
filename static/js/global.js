@@ -492,10 +492,16 @@ function reset_location_filter() {
 
         // handle clicking on the "done" button for filters
         $("#view_results_button").click(function() {
+
             $('.count').hide();
             $('.spaces').hide();
             run_custom_search();
+            
+            
+            
             $('#filter_button').focus();
+            
+            
         });
 
         default_open_at_filter();

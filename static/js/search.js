@@ -220,6 +220,7 @@ function repopulate_filters() {
 }
 
 function run_custom_search() {
+     
     // if searching, reset that spot count
     window.update_count = true;
 
@@ -240,6 +241,7 @@ function run_custom_search() {
 
     // type
     var checked = new Array();
+    
     $.each($("input[name='type']:checked"), function() {
         checked.push($(this).val());
     });
@@ -362,6 +364,9 @@ function run_custom_search() {
         	   $('#space_detail_container').remove();
         });
     }
+    
+    // run google analytics tracking for filters
+    trackCheckedFilters();
 
     // show the correct buttons
     $('#filter_button').show();
