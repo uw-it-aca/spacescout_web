@@ -131,7 +131,6 @@ Handlebars.registerHelper('alphaOptGroupsHTML', function(list) {
         }   
     }   
     out.push('</optgroup>');
-    console.log("**********handlebars function loading buildings");
     return new Handlebars.SafeString(out.join(''));
 });
 
