@@ -141,6 +141,7 @@
             </select>
         </div>
 
+                    
         <div aria-labelledby="until-time-heading">
             <span class="hours-from" id="until-time-heading">until</span>
             <label class="hour-until visuallyhidden" for="day-until">until day:</label>
@@ -193,7 +194,6 @@
 
 <fieldset id="filter_location" class="choice-group">
     <legend id="filter_location_header">Location</legend>
-
     <div>
         <span class="radio inline">
             <input type="radio" name="optionsLocations" id="entire_campus" value="option1" checked>
@@ -207,7 +207,7 @@
     <div id="building_list_container" style="margin-top:8px;display:none;"></div>
         {% tplhandlebars "building_list" %}
         <label class="visuallyhidden" for="e9">Choose a building:</label>
-        <select class="building-location" name="e9" id="e9">
+        <select data-placeholder="Select building(s)" class="building-location chzn-select" name="e9" id="e9" multiple>
             {{#alphaOptGroupsHTML data}}{{/alphaOptGroupsHTML}}
         </select>
         {% endtplhandlebars %}

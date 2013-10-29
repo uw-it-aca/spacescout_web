@@ -21,7 +21,6 @@
 */
 
 Handlebars.registerHelper('ifany', function(a, b) {
-
     // if anything passed is true, return true
     if (a || b) {
         return fn(this);
@@ -37,6 +36,11 @@ Handlebars.registerHelper('ifany', function(a, b) {
 
     var deviceAgent = navigator.userAgent.toLowerCase();
 	var iphone = deviceAgent.match(/(iphone|ipod)/);
+
+    $(window).load(function() {
+        $(".chzn-select").chosen({width: "98%"});
+        $('#e9.building-location').trigger("liszt:updated"); 
+    });
 
 	$(document).ready(function() {
 
@@ -99,12 +103,15 @@ Handlebars.registerHelper('ifany', function(a, b) {
             // reset location
             $('#entire_campus').prop('checked', true);
             $('#entire_campus').parent().removeClass("selected");
-            $('#e9.building-location').children().children().first()[0].selected = true; // grabs first location in drop down and selects it
             $('#building_list_container').hide();
             $('#building_list_input').parent().removeClass("selected");
             $('#building_list_container').children().children().children(".select2-search-choice").remove();
             $('#building_list_container').children().children().children().children().val('Select building(s)');
             $('#building_list_container').children().children().children().children().attr('style', "");
+            for (var i = 0; i < $('#e9.building-location').children().children().length; i++) {
+                $('#e9.building-location').children().children()[i].selected = false;
+            }   
+            $('#e9.building-location').trigger("liszt:updated") 
         });
 
 
