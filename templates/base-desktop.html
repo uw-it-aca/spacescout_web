@@ -102,11 +102,20 @@
             <script type="text/javascript" src="{{ STATIC_URL }}js/chosen.jquery.js"></script>
 
 			<script type="text/javascript" src="{{ STATIC_URL }}js/markerwithlabel.js"></script>
+            <script type="text/javascript" src="{{ STATIC_URL }}libs/jquery.lazyscrollloading-min.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}js/global.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}js/search.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}js/desktop.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}js/clustering.js"></script>
+<<<<<<< HEAD
             <script type="text/javascript" src="{{ STATIC_URL }}js/analytics.js"></script>
+=======
+
+            <script type="text/javascript">
+                var initial_json = {{ spaces|safe }};
+            </script>
+
+>>>>>>> djangocon_performance_work
           {% endcompress %}
 
     </body>
