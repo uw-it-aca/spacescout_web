@@ -45,7 +45,7 @@ def contact(request, spot_id=None):
 
             browser = request.META.get('HTTP_USER_AGENT', 'Unknown')
 
-            subject = "SpaceScout %s from %s" % (feedback_choice, name)
+            subject = "[Problem] SpaceScout %s from %s" % (feedback_choice, name)
             email_message = "SpaceScout Web - %s \n\n %s \n\n %s %s \n %s - ID = %s \
                 \n Browser Type = %s" % (feedback_choice, message, name, sender, spot_name, displayed_spot_id, browser)
 
