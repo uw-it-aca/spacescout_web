@@ -5,11 +5,14 @@
 
 {% block extra_js %}
 <script>
-
-
     window.by_building_zooms = {{ by_building_zooms }};
     window.by_distance_ratio = {{ by_distance_ratio }};
-    window.initial_load = true;
+    if ($.cookie('initial_load')) {
+        window.initial_load = false;
+    } else {
+        window.initial_load = true;
+        $.cookie('initial_load', false, { expires: 1 });
+    }
     var failed = false;
     if ($.cookie('default_location')) {
         var defaults = $.cookie('default_location').split(',');
