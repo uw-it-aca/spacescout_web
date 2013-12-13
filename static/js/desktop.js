@@ -112,6 +112,9 @@ Handlebars.registerHelper('ifany', function(a, b) {
                 $('#e9.building-location').children().children()[i].selected = false;
             }   
             $('#e9.building-location').trigger("liszt:updated") 
+
+            // clear the initial_load cookie so we can use the in-page json
+            $.removeCookie('initial_load');
         });
 
 

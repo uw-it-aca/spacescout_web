@@ -152,6 +152,9 @@
             $('#building_list_container').children().children().children(".select2-search-choice").remove();
             $('#building_list_container').children().children().children().children().val('Select building(s)');
             $('#building_list_container').children().children().children().children().attr('style', "");
+
+            // remove initial_load cookie so we can use the in-page json
+            $.removeCookie('initial_load');
         });
 
         // handle view details click
