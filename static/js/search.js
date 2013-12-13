@@ -461,6 +461,8 @@ function initialize() {
         window.spacescout_search_options = JSON.parse($.cookie('spacescout_search_opts'));
     }
 
+    /* why are we asking for their location if we're not doing anything with it?
+    // leaving this in but commented out until I can talk to the team about *if* the web app should do something with location
     if (navigator.geolocation) {
         // Doing a timeout here, to make sure we load something...
         load_map(window.default_latitude, window.default_longitude, window.default_zoom);
@@ -472,10 +474,9 @@ function initialize() {
                 load_map(window.default_latitude, window.default_longitude, window.default_zoom);
             }
         );
-    } else {
+    } else { */
         load_map(window.default_latitude, window.default_longitude, window.default_zoom);
-    }
-
+    //}
 }
 
 function load_map(latitude, longitude, zoom) {
