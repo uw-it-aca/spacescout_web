@@ -2,10 +2,11 @@
 
 {% block extra_js %}
 <script>
-    if ("{{spot_id}}" == "None")
-        var spot_id = null;
-    else
+    {% if spot_id %}
         var spot_id = {{ spot_id }};
+    {% else %}
+        var spot_id = null;
+    {% endif %}
     $("#cookieSet").click(function () {
         $.cookie('spot_id', spot_id, {path: '/', expires: 1});
     });
