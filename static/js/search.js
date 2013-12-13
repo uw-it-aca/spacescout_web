@@ -44,27 +44,19 @@ function openAllMarkerInfoWindow(data) {
             $("#" + $.cookie('spot_id')).click();
             $.removeCookie('spot_id');
         }
-
-        // LazyLoading the spot images on Desktop
-        $('#info_list').lazyScrollLoading({
+        // LazyLoading the spot images
+        if(isMobile){
+            var lazyload_target = window;
+        }else{
+            var lazyload_target = '#info_list';
+        }
+        $(lazyload_target).lazyScrollLoading({
             lazyItemSelector : ".lazyloader",
             onLazyItemFirstVisible : function(e, $lazyItems, $firstVisibleLazyItems) {
                 $firstVisibleLazyItems.each(function() {
                     var $img = $(this);
                     var src = $img.attr('data-src')
-                    $img.css('background', 'transparent url("'+src+'") no-repeat 50% 50%');
-                    });
-               }
-        });
-
-        // LazyLoading the spot images on Mobile
-        $(window).lazyScrollLoading({
-            lazyItemSelector : ".lazyloader-mobile",
-            onLazyItemFirstVisible : function(e, $lazyItems, $firstVisibleLazyItems) {
-                $firstVisibleLazyItems.each(function() {
-                    var $img = $(this);
-                    var src = $img.attr('data-src')
-                    $img.css('background', 'transparent url("'+src+'") no-repeat 50% 50%');
+                        $img.css('background', 'transparent url("'+src+'") no-repeat 50% 50%');
                     });
                }
         });
@@ -244,6 +236,7 @@ function repopulate_filters() {
 }
 
 function run_custom_search() {
+     
     // if searching, reset that spot count
     window.update_count = true;
 
@@ -264,6 +257,7 @@ function run_custom_search() {
 
     // type
     var checked = new Array();
+    
     $.each($("input[name='type']:checked"), function() {
         checked.push($(this).val());
     });
@@ -381,6 +375,9 @@ function run_custom_search() {
         	   $('#space_detail_container').remove();
         });
     }
+    
+    // run google analytics tracking for filters
+    trackCheckedFilters();
 
     // show the correct buttons
     $('#filter_button').show();

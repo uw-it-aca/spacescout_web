@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-12 11:01-0700\n"
+"POT-Creation-Date: 2012-10-12 00:17-0700\n"
 "PO-Revision-Date: 2012-10-12 00:24+PST\n"
 "Last-Translator: Craig M. Stimmel <cstimmel@uw.edu>\n"
 "Language-Team: en_US UW ACA\n"
@@ -21,54 +21,51 @@ msgstr ""
 msgid "alcove"
 msgstr "Alcove"
 
-#: extras/uw_server_values.py:5 templates/app.html:67
+#: extras/uw_server_values.py:5
 msgid "cafe"
 msgstr "Café"
 
-#: extras/uw_server_values.py:6 templates/app.html:55
+#: extras/uw_server_values.py:6
 msgid "classroom"
 msgstr "Conference/classroom"
 
-#: extras/uw_server_values.py:7 templates/app.html:49
+#: extras/uw_server_values.py:7
 msgid "computer_lab"
 msgstr "Computer lab"
 
-#: extras/uw_server_values.py:8 templates/app.html:64
+#: extras/uw_server_values.py:8
 msgid "lounge"
 msgstr "Lounge"
 
-#: extras/uw_server_values.py:9 templates/app.html:61
+#: extras/uw_server_values.py:9
 msgid "open"
 msgstr "Open space"
 
-#: extras/uw_server_values.py:10 templates/app.html:70
+#: extras/uw_server_values.py:10
 msgid "outdoor"
 msgstr "Outdoor area"
 
-#: extras/uw_server_values.py:11 templates/app.html:52
+#: extras/uw_server_values.py:11
 msgid "studio"
 msgstr "Production studio"
 
-#: extras/uw_server_values.py:12 templates/app.html:46
+#: extras/uw_server_values.py:12
 msgid "study_area"
 msgstr "Study area"
 
-#: extras/uw_server_values.py:13 templates/app.html:43
+#: extras/uw_server_values.py:13
 msgid "study_room"
 msgstr "Study room"
 
-#: extras/uw_server_values.py:16 templates/app.html:273
-#: templates/app.html.py:406 templates/app.html:537 templates/space.html:100
+#: extras/uw_server_values.py:16
 msgid "silent"
 msgstr "Silent"
 
-#: extras/uw_server_values.py:17 templates/app.html:276
-#: templates/app.html.py:400 templates/app.html:531 templates/space.html:96
+#: extras/uw_server_values.py:17
 msgid "quiet"
 msgstr "Low hum"
 
-#: extras/uw_server_values.py:18 templates/app.html:279
-#: templates/app.html.py:403 templates/app.html:534 templates/space.html:98
+#: extras/uw_server_values.py:18
 msgid "moderate"
 msgstr "Chatter"
 
@@ -76,22 +73,6 @@ msgstr "Chatter"
 msgid "loud"
 msgstr "Rowdy"
 
-#: extras/uw_server_values.py:20 templates/app.html:408
-#: templates/app.html.py:539 templates/space.html:102
+#: extras/uw_server_values.py:20
 msgid "variable"
 msgstr "Variable"
-
-#: extras/uw_server_values.py:23 templates/app.html:297
-#: templates/app.html.py:428 templates/app.html:559 templates/space.html:118
-msgid "building"
-msgstr "In building"
-
-#: extras/uw_server_values.py:24 templates/app.html:300
-#: templates/app.html.py:433 templates/app.html:564 templates/space.html:122
-msgid "neighboring"
-msgstr "In neighboring building"
-
-#: extras/uw_server_values.py:25 templates/app.html:294
-#: templates/app.html.py:431 templates/app.html:562 templates/space.html:120
-msgid "space"
-msgstr "In space"
