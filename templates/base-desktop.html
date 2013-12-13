@@ -111,15 +111,14 @@
             <script type="text/javascript" src="{{ STATIC_URL }}js/search.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}js/desktop.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}js/clustering.js"></script>
-<<<<<<< HEAD
             <script type="text/javascript" src="{{ STATIC_URL }}js/analytics.js"></script>
-=======
 
+            {% if spaces %}
             <script type="text/javascript">
                 var initial_json = {{ spaces|safe }};
             </script>
+            {% endif %}
 
->>>>>>> djangocon_performance_work
           {% endcompress %}
 
     </body>

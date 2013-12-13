@@ -121,9 +121,11 @@
             <script type="text/javascript" src="{{ STATIC_URL }}js/retina.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}js/analytics.js"></script>
 
+            {% if spaces %}
             <script type="text/javascript">
                 var initial_json = {{ spaces|safe }};
             </script>
+            {% endif %}
 
             {% block extra_js %}{% endblock %}
           {% endcompress %}
