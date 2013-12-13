@@ -1,15 +1,6 @@
 {% extends is_mobile|yesno:"base-mobile-subpage.html,base-desktop.html" %}
 
 {% block extra_js %}
-<script>
-    if ("{{spot_id}}" == "None")
-        var spot_id = null;
-    else
-        var spot_id = {{ spot_id }};
-    $("#cookieSet").click(function () {
-        $.cookie('spot_id', spot_id, {path: '/', expires: 1});
-    });
-</script>
 {% endblock %}
 
 {% block content %}
