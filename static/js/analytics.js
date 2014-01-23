@@ -9,6 +9,7 @@ var _gaq = _gaq || [];
 _ga.getEventTrackers_ = function(category, action, opt_label) {
              
     //console.log("cat: " + category + "; act: " + action + "; opt_l: " + opt_label);
+    //console.log(action + "; " + opt_label);
     // we can return this anonnymous function and pass it to the _gaq 
     return function() {
         var trackers = _gat._getTrackers(); //Gets an array of allt he trackers from the _gat object
@@ -42,8 +43,13 @@ function trackCheckedFilters()  {
     });
     
     // TODO: get all selected dropdowns items
-    /*$('#filter_block option:selected').each(function () {
-        _gaq.push(_ga.getEventTrackers_("Filters", window.default_location+"-"+this.name, this.value));
-    })*/
+    $('#filter_block option:selected').each(function () {
+        // TODO: This next bit is not as awesome as I would like it, basically we're assuming anything with a label attribute is a building - would be nice if that was more robust.
+        if (this.parentNode.hasOwnProperty('label')) {
+            _gaq.push(_ga.getEventTrackers_("Filters", window.default_location+"-building", this.value));
+        } else {
+            _gaq.push(_ga.getEventTrackers_("Filters", window.default_location+"-"+this.parentNode.id, this.value));
+        }
+    })
     
 }
