@@ -6,8 +6,10 @@ var _gaq = _gaq || [];
  * It is possible that there is more than one tracker, hence this function 
  */  
  
-_ga.getEventTrackers_ = function(category, action, opt_label) {  
+_ga.getEventTrackers_ = function(category, action, opt_label) {
              
+    //console.log("cat: " + category + "; act: " + action + "; opt_l: " + opt_label);
+    //console.log(action + "; " + opt_label);
     // we can return this anonnymous function and pass it to the _gaq 
     return function() {
         var trackers = _gat._getTrackers(); //Gets an array of allt he trackers from the _gat object
@@ -29,20 +31,39 @@ _ga.getEventTrackers_ = function(category, action, opt_label) {
 
 
 function trackCheckedFilters()  {
+
+    window.spacescout_open_now_filter = false;
                         
     // get all checked checkboxes
     $('#filter_block [type="checkbox"]:checked').each(function () {
-        _gaq.push(_ga.getEventTrackers_("Filter", "Checked", this.id, this.value));
+        _gaq.push(_ga.getEventTrackers_("Filters", window.default_location+"-"+this.name, this.value));
     });
     
     // get all checked radio buttons
     $('#filter_block [type="radio"]:checked').each(function () {
-        _gaq.push(_ga.getEventTrackers_("Filter", "Checked", this.id, this.value));
+        if (this.value === 'open_now') {
+            window.spacescout_open_now_filter = true;
+        }
+        _gaq.push(_ga.getEventTrackers_("Filters", window.default_location+"-"+this.name, this.value));
     });
     
     // TODO: get all selected dropdowns items
-    /*$('#filter_block option:selected').each(function () {
-        _gaq.push(_ga.getEventTrackers_("Filter", "Selected", this.id, this.value));
-    })*/
+    $('#filter_block option:selected').each(function () {
+        // TODO: This next bit is not as awesome as I would like it, basically we're assuming anything with a label attribute is a building - would be nice if that was more robust.
+        if (this.parentNode.hasOwnProperty('label')) {
+            // push building
+            _gaq.push(_ga.getEventTrackers_("Filters", window.default_location+"-building", this.value));
+        } else if (window.spacescout_open_now_filter) {
+            if (!(this.parentNode.id.indexOf('from') > -1) && !(this.parentNode.id.indexOf('until') > -1)) {
+                // push
+                _gaq.push(_ga.getEventTrackers_("Filters", window.default_location+"-"+this.parentNode.id, this.value));
+            }
+        } else {
+            // push
+            _gaq.push(_ga.getEventTrackers_("Filters", window.default_location+"-"+this.parentNode.id, this.value));
+        }
+    })
     
+    window.spacescout_open_now_filter = false;
+
 }
