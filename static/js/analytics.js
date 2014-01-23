@@ -31,6 +31,8 @@ _ga.getEventTrackers_ = function(category, action, opt_label) {
 
 
 function trackCheckedFilters()  {
+
+    window.spacescout_open_now_filter = false;
                         
     // get all checked checkboxes
     $('#filter_block [type="checkbox"]:checked').each(function () {
@@ -39,6 +41,9 @@ function trackCheckedFilters()  {
     
     // get all checked radio buttons
     $('#filter_block [type="radio"]:checked').each(function () {
+        if (this.value === 'open_now') {
+            window.spacescout_open_now_filter = true;
+        }
         _gaq.push(_ga.getEventTrackers_("Filters", window.default_location+"-"+this.name, this.value));
     });
     
@@ -46,10 +51,19 @@ function trackCheckedFilters()  {
     $('#filter_block option:selected').each(function () {
         // TODO: This next bit is not as awesome as I would like it, basically we're assuming anything with a label attribute is a building - would be nice if that was more robust.
         if (this.parentNode.hasOwnProperty('label')) {
+            // push building
             _gaq.push(_ga.getEventTrackers_("Filters", window.default_location+"-building", this.value));
+        } else if (window.spacescout_open_now_filter) {
+            if (!(this.parentNode.id.indexOf('from') > -1) && !(this.parentNode.id.indexOf('until') > -1)) {
+                // push
+                _gaq.push(_ga.getEventTrackers_("Filters", window.default_location+"-"+this.parentNode.id, this.value));
+            }
         } else {
+            // push
             _gaq.push(_ga.getEventTrackers_("Filters", window.default_location+"-"+this.parentNode.id, this.value));
         }
     })
     
+    window.spacescout_open_now_filter = false;
+
 }
