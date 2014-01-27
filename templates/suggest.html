@@ -1,22 +1,12 @@
 {% extends is_mobile|yesno:"base-mobile-subpage.html,base-desktop.html" %}
 
 {% block extra_js %}
-<script>
-    {% if spot_id %}
-        var spot_id = {{ spot_id }};
-    {% else %}
-        var spot_id = null;
-    {% endif %}
-    $("#cookieSet").click(function () {
-        $.cookie('spot_id', spot_id, {path: '/', expires: 1});
-    });
-</script>
 {% endblock %}
 
 {% block content %}
     {% if is_mobile %}
     <div style="margin:10px;" class="clearfix">
-        <h2 id="contact_header" class="contact-header pull-left" style="width:auto;">Report a Problem</h2>
+        <h2 id="suggest_header" class="suggest-header pull-left" style="width:auto;">Report a Problem</h2>
         <div class="pull-right" style="display:inline-block;margin-top:8px;">
             <a href='{{ back }}' title="back" ><img id="back_to_space_button" src="{{ STATIC_URL }}img/details_arrow.png" alt="Back" /></a>
         </div>
@@ -32,7 +22,7 @@
     </div>
     {% endif %}
 
-    <div {% if is_mobile %}style="margin:10px; background:#fff;" {% else %}id="main_content" style="padding: 80px;"{% endif %} role="main" aria-labelledby="contact_header">
-        {% block contact-content %}{% endblock %}
+    <div {% if is_mobile %}style="margin:10px; background:#fff;" {% else %}id="main_content" style="padding: 80px;"{% endif %} role="main" aria-labelledby="suggest_header">
+        {% block suggest-content %}{% endblock %}
     </div>
 {% endblock %}

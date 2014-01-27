@@ -56,7 +56,6 @@ function update_spacescout_markers(spots) {
         window.spacescout_markers.push(holderspot);
     }
     $("#info_list").scrollTop(0);
-
 }
 
 
@@ -202,11 +201,11 @@ function setActiveMarker(marker) {
         }
     }
 }
-       
+
 function loadMarkerSpots(marker, data) {
     // reset scroll position
     $("#info_list").scrollTop(0);
-    
+
     if (active_marker != null) {
         updateActiveMarker(marker);
     }
@@ -218,9 +217,27 @@ function loadMarkerSpots(marker, data) {
     var template = Handlebars.compile(source);
     data = buildingNameHeaders(data);
     $('#info_items').html(template({data: data}));
- 
+
+    // LazyLoading the spot images
+    if(isMobile){
+            var lazyload_target = window;
+        }else{
+            var lazyload_target = '#info_list';
+        }
+    $(lazyload_target).lazyScrollLoading({
+        lazyItemSelector : ".lazyloader",
+        onLazyItemFirstVisible : function(e, $lazyItems, $firstVisibleLazyItems) {
+            $firstVisibleLazyItems.each(function() {
+                var $img = $(this);
+                var src = $img.attr('data-src')
+                $img.css('background', 'transparent url("'+src+'") no-repeat 50% 50%');
+            });
+        }
+    });
+
     scrollToTop('info_list');
     $('.loading').slideUp('fast');
+
 }
 
 function clear_map() {

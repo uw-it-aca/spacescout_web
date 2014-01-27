@@ -44,6 +44,22 @@ function openAllMarkerInfoWindow(data) {
             $("#" + $.cookie('spot_id')).click();
             $.removeCookie('spot_id');
         }
+        // LazyLoading the spot images
+        if(isMobile){
+            var lazyload_target = window;
+        }else{
+            var lazyload_target = '#info_list';
+        }
+        $(lazyload_target).lazyScrollLoading({
+            lazyItemSelector : ".lazyloader",
+            onLazyItemFirstVisible : function(e, $lazyItems, $firstVisibleLazyItems) {
+                $firstVisibleLazyItems.each(function() {
+                    var $img = $(this);
+                    var src = $img.attr('data-src')
+                        $img.css('background', 'transparent url("'+src+'") no-repeat 50% 50%');
+                    });
+               }
+        });
     });
 
 }
@@ -445,6 +461,8 @@ function initialize() {
         window.spacescout_search_options = JSON.parse($.cookie('spacescout_search_opts'));
     }
 
+    /* why are we asking for their location if we're not doing anything with it?
+    // leaving this in but commented out until I can talk to the team about *if* the web app should do something with location
     if (navigator.geolocation) {
         // Doing a timeout here, to make sure we load something...
         load_map(window.default_latitude, window.default_longitude, window.default_zoom);
@@ -456,10 +474,9 @@ function initialize() {
                 load_map(window.default_latitude, window.default_longitude, window.default_zoom);
             }
         );
-    } else {
+    } else { */
         load_map(window.default_latitude, window.default_longitude, window.default_zoom);
-    }
-
+    //}
 }
 
 function load_map(latitude, longitude, zoom) {
@@ -483,6 +500,7 @@ function load_map(latitude, longitude, zoom) {
     } else {
         window.spacescout_map.setCenter(new google.maps.LatLng(latitude, longitude));
     }
+
 
     google.maps.event.addListener(window.spacescout_map, 'idle', reload_on_idle);
     //next three lines courtesy of samolds
@@ -566,8 +584,15 @@ function load_data(data) {
 
 function reload_on_idle() {
 
+    // load the in-page json first time through
+    if (window.initial_load) {
+        var source = $('#filter_list').html();
+        var template = Handlebars.compile(source);
+        $('#bubble_filters_container').html(template({}));
+        load_data(initial_json);
+        window.initial_load = false;
     // only fetch data as long as space details are NOT being shown
-    if (!$('#space_detail_container').is(":visible")) {
+    } else if (!$('#space_detail_container').is(":visible")) {
         fetch_data();
     }
 

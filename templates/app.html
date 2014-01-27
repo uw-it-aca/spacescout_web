@@ -7,6 +7,11 @@
 <script>
     window.by_building_zooms = {{ by_building_zooms }};
     window.by_distance_ratio = {{ by_distance_ratio }};
+    if ($.cookie('initial_load')) {
+        window.initial_load = false;
+    } else {
+        window.initial_load = true;
+    }
     var failed = false;
     if ($.cookie('default_location')) {
         var defaults = $.cookie('default_location').split(',');
@@ -90,7 +95,7 @@
                         <ul id='filter_display_list' aria-labelledby="current_filters">
 
                             <li>{{#if open_at}}specific time{{else}}open now{{/if}}</li>
-			    <li>{{#if building_name}}specific building{{else}}entire campus{{/if}}</li>
+                            <li>{{#if building_name}}specific building{{else}}entire campus{{/if}}</li>
                             {{#if space_type}}<li>type of space</li>{{/if}}
                             {{#if true_capacity}}<li>seats {{capacity}}</li>{{/if}}
                             {{#if reservable}}<li>reservable</li>{{/if}}
@@ -295,18 +300,17 @@
 
                 {% tplhandlebars "all_markers" %}
 
-                        {{#if data}}<ol>
+                        {{#if data}}<ol class="lazyload-view">
                         {{#each data}}
 			    <li><h3 class="building_header">{{this.name}}</h3>
                             <ol>{{#each this.spots}}
                             <li class="clearfix view-details">
                                 <div class="space-detail-list-image pull-left">
                                     {{#if images.0.id}}
-                                    <div class="space-detail-list-image-inner" style="background: transparent url('space/{{id}}/image/{{images.0.id}}/thumb/constrain/width:150') no-repeat 50% 50%;">&nbsp;</div>
+                                    <div class="space-detail-list-image-inner lazyloader" data-src="space/{{id}}/image/{{images.0.id}}/thumb/constrain/width:150">&nbsp;</div>
                                     {{else}}
                                     <div class="space-detail-list-image-inner" style="background: transparent url('/static/img/placeholder_noImage_bw.png') no-repeat 50% 50%; background-size: 150px;">&nbsp;</div>
                                     {{/if}}
-
 
                                 </div>
 
@@ -337,7 +341,8 @@
                             </li>
                             {{/each}}</ol>
                          </li>
-                        {{/each}}</ol>
+                        {{/each}}
+                        </ol>
                         {{else}}
                             <li class="no-spaces">Sorry, no spaces match your filters!</li>
                         {{/if}}
@@ -353,7 +358,7 @@
                             <li class="clearfix view-details">
                                 <div class="space-detail-list-image pull-left">
                                   {{#if images.0.id }}
-                                    <div class="space-detail-list-image-inner" style="background: transparent url('space/{{id}}/image/{{images.0.id}}/thumb/constrain/width:150') no-repeat 50% 50%;">&nbsp;</div>
+                                    <div class="space-detail-list-image-inner lazyloader " data-src="space/{{id}}/image/{{images.0.id}}/thumb/constrain/width:150">&nbsp;</div>
                                   {{else}}
                                     <div class="space-detail-list-image-inner" style="background: transparent url('/static/img/placeholder_noImage_bw.png') no-repeat 50% 50%; background-size: 150px;">&nbsp;</div>
                                   {{/if}}

@@ -16,22 +16,22 @@
 */
 
 var detailsLat, detailsLon;
-var requests = new Array();
+var requests = [];
 
 // Handlebars helpers
 Handlebars.registerHelper('carouselimages', function(spacedata) {
     var space_id = spacedata.id;
-    var elements = new Array;
+    var elements = [];
     if (spacedata.images.length > 0) {
         for (i=0; i < spacedata.images.length; i++) {
             image_id = spacedata.images[i].id;
             image_url = "background:url(/space/" + space_id + "/image/" + image_id + "/thumb/constrain/width:500)";
-            div_string = "<div class='carousel-inner-image item'><div class='carousel-inner-image-inner' style='" + image_url + "'>&nbsp;</div></div>"
+            div_string = "<div class='carousel-inner-image item'><div class='carousel-inner-image-inner' style='" + image_url + "'>&nbsp;</div></div>";
             elements.push(div_string);
         }
     } else {
         image_url = "background:url(/static/img/placeholder_noImage_bw.png)";
-        div_string = "<div class='carousel-inner-image item'><div class='carousel-inner-image-inner' style='" + image_url + "; background-size: 500px'>&nbsp;</div></div>"
+        div_string = "<div class='carousel-inner-image item'><div class='carousel-inner-image-inner' style='" + image_url + "; background-size: 500px'>&nbsp;</div></div>";
         elements.push(div_string);
     }
     return new Handlebars.SafeString(elements.join('\n'));
@@ -53,7 +53,7 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
         '<=':       function(l,r) { return l <= r; },
         '>=':       function(l,r) { return l >= r; },
         'typeof':   function(l,r) { return typeof l == r; }
-    }
+    };
 
     if (!operators[operator])
         throw new Error("Handlerbars Helper 'compare' doesn't know the operator "+operator);
@@ -246,7 +246,7 @@ function to12Hour(day) {
                     data[i] += "AM";
                 } else if (time[1] == "00PM") {
                     data[i] = time[0];
-                    data[i] += "PM"
+                    data[i] += "PM";
                 }else {
                     data[i] = time.join(":");
                 }
@@ -329,7 +329,7 @@ function format_location_filter(data) {
 function get_location_buildings() {
     // populate the location filter list
     url = '/buildings';
-    if (window.default_location != null) {
+    if (window.default_location !== null) {
         url = url + '?campus=' + window.default_location;
     }
     $.ajax({
@@ -394,32 +394,13 @@ function reset_location_filter() {
             window.default_zoom = $(this).val().split(',')[3];
 
             // in case a new location gets selected before the map loads
-            if (window.spacescout_map != null) {
+            if (window.spacescout_map !== null) {
                 window.spacescout_map.setCenter(new google.maps.LatLng(window.default_latitude, window.default_longitude));
                 window.spacescout_map.setZoom(parseInt(window.default_zoom));
             }
             
             // reset filters for campus change            
-            // reset checkboxes
-            $('input[type=checkbox]').each(function() {
-                if ($(this).attr('checked')) {
-                    $(this).attr('checked', false);
-                    $(this).parent().removeClass("selected");
-                }   
-            }); 
-
-            // reset capacity
-            $('#capacity').val('1');
-
-            // reset hours
-            $('#open_now').prop('checked', true);
-            $('#open_now').parent().removeClass("selected");
-            $('#hours_list_container').hide();
-            $('#hours_list_input').parent().removeClass("selected");
-            default_open_at_filter();
-            $("#day-until").val("No pref")
-            $("#hour-until").val("No pref")
-            $("#ampm-until").val("AM")
+            resetFilters();
 
             run_custom_search();
 
@@ -440,6 +421,43 @@ function reset_location_filter() {
         });
 
         get_location_buildings();
+
+        // handle checkbox and radio button clicks
+        $('.checkbox input:checkbox').click(function() {
+            if(this.checked) {
+                $(this).parent().addClass("selected");
+            }   
+            else {
+                $(this).parent().removeClass("selected");
+            }   
+        }); 
+
+        $('#filter_hours input:radio').change(function() {
+            $(this).parent().addClass("selected");
+            $(this).parent().siblings().removeClass("selected");
+
+            if ($('#hours_list_input').is(':checked')) {
+                $('#hours_list_container').show();
+            }   
+            else {
+                $('#hours_list_container').hide();
+            }   
+        }); 
+
+        $('#filter_location input:radio').change(function() {
+            $(this).parent().addClass("selected");
+            $(this).parent().siblings().removeClass("selected");
+
+            if ($('#building_list_input').is(':checked')) {
+                $('#building_list_container').show();
+            }   
+            else {
+                $('#building_list_container').hide();
+            }   
+
+        }); 
+ 
+           
 
         var escape_key_code = 27;
 
@@ -471,9 +489,7 @@ function reset_location_filter() {
             $('.count').hide();
             $('.spaces').hide();
             run_custom_search();
-            
-            
-            
+            $.cookie('initial_load', false, { expires: 1 });
             $('#filter_button').focus();
             
             
@@ -485,14 +501,106 @@ function reset_location_filter() {
 
 })(this);
 
+function initializeCarousel() {
+
+    // initialize the carousel
+    $('.carousel').each( function() {
+
+        $(this).carousel({
+            interval: false
+        }); 
+
+        // add carousel pagination
+        var html = '<div class="carousel-nav" data-target="' + $(this).attr('id') + '"><ul>';
+
+        for(var i = 0; i < $(this).find('.item').size(); i ++) {
+            html += '<li><a';
+            if(i == 0) {
+                html += ' class="active"';
+            }   
+
+            html += ' href="#">•</a></li>';
+        }   
+
+        html += '</ul></li>';
+        $(this).before(html);
+
+        //set the first item as active
+        $(this).find(".item:first-child").addClass("active");
+
+        // hide the controls and pagination if only 1 picture exists
+        if ($(this).find('.item').length == 1) {
+            $(this).find('.carousel-control').hide();
+            $(this).prev().hide(); // hide carousel pagination container for single image carousels
+        }   
+
+    }).bind('slid', function(e) {
+        var nav = $('.carousel-nav[data-target="' + $(this).attr('id') + '"] ul');
+        var index = $(this).find('.item.active').index();
+        var item = nav.find('li').get(index);
+
+        nav.find('li a.active').removeClass('active');
+        $(item).find('a').addClass('active');
+    }); 
+
+    $('.carousel-nav a').bind('click', function(e) {
+        var index = $(this).parent().index();
+        var carousel = $('#' + $(this).closest('.carousel-nav').attr('data-target'));
+
+        carousel.carousel(index);
+        e.preventDefault();
+    }); 
+
+    resizeCarouselMapContainer();
+}
+
+function resizeCarouselMapContainer() {
+    // get the width
+    var containerW = $('.image-container').width();
+
+    // calcuate height based on 3:2 aspect ratio
+    var containerH = containerW / 1.5;
+
+    $('.carousel').height(containerH);
+    $('.carousel-inner-image').height(containerH);
+    $('.carousel-inner-image-inner').height(containerH);
+    $('.map-container').height(containerH);
+}   
+
+function resetFilters() {
+    // reset checkboxes
+    $('input[type=checkbox]').each(function() {
+        if ($(this).attr('checked')) {
+            $(this).attr('checked', false);
+            $(this).parent().removeClass("selected");
+        }   
+    }); 
+
+    // reset capacity
+    $('#capacity').val('1');
+
+    // reset hours
+    $('#open_now').prop('checked', true);
+    $('#open_now').parent().removeClass("selected");
+    $('#hours_list_container').hide();
+    $('#hours_list_input').parent().removeClass("selected");
+    default_open_at_filter();
+    $("#day-until").val("No pref");
+    $("#hour-until").val("No pref");
+    $("#ampm-until").val("AM");
+
+    //reset location
+    reset_location_filter();
+}
+
 function getSpaceMap(lat, lon) {
 
   if (window.space_latitude) {
-    lat = window.space_latitude
+    lat = window.space_latitude;
   }
 
   if (window.space_longitude) {
-    lon = window.space_longitude
+    lon = window.space_longitude;
   }
 
   var mapOptions = {
@@ -501,7 +609,7 @@ function getSpaceMap(lat, lon) {
     mapTypeId: google.maps.MapTypeId.ROADMAP,
     mapTypeControl: false,
     streetViewControl: false
-  }
+  };
 
   var map = new google.maps.Map(document.getElementById("spaceMap"), mapOptions);
 
@@ -521,7 +629,7 @@ function replaceUrls(){
     var text = $("#ei_reservation_notes").html();
     var patt = /\b(?:https?|ftp):\/\/[a-z0-9-+&@#\/%?=~_|!:,.;]*[a-z0-9-+&@#\/%=~_|]/gim;
     var url = patt.exec(text);
-    if (url != null) {
+    if (url !== null) {
         text = text.replace(url, "<a href='" + url + "' target='_blank'>" + url + "</a>");
         $("#ei_reservation_notes").html(text);
     }
@@ -538,3 +646,5 @@ function closeSpaceDetails() {
     $('#info_items li').removeClass('selected');
     $(the_spot_id).focus();
 }
+
+
