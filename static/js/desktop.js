@@ -37,10 +37,6 @@ Handlebars.registerHelper('ifany', function(a, b) {
     var deviceAgent = navigator.userAgent.toLowerCase();
 	var iphone = deviceAgent.match(/(iphone|ipod)/);
 
-    $(window).load(function() {
-        $(".chzn-select").chosen({width: "98%"});
-    }); 
-
 	$(document).ready(function() {
 
 		desktopContent();

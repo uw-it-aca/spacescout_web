@@ -310,6 +310,20 @@ function format_location_filter(data) {
     if (source != null) {
         $('#building_list_container').html(template({data: data}));
     }
+
+    //the building multi-select plugin "Chosen" is called here. But it's disabled on mobile
+    if ($.cookie('spacescout_search_opts')) {
+        var form_opts = JSON.parse($.cookie('spacescout_search_opts'));
+        if (form_opts["building_name"]) {
+            $('#e9 option').each(function() {
+                if ( jQuery.inArray( $(this).val(), form_opts["building_name"]) != -1 ) {
+                    $(this).attr("selected", "selected");
+                }
+            });
+        }
+    }
+    $(".chzn-select").chosen({width: "98%"});
+    $('#e9.building-location').trigger("liszt:updated");
 }
 
 function get_location_buildings() {
