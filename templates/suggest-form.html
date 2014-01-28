@@ -4,7 +4,7 @@
 
     {% if not is_mobile %}<h2 class="suggest-header">Suggest a Space</h2>{% endif %}
 
-    <form action="/suggest/{% if spot_id != '' %}{{ spot_id }}/{% endif %}" method="post">{% csrf_token %}
+    <form action="/suggest/" method="post">{% csrf_token %}
         <div class="fieldWrapper">
             {{ spot_name }}<br />
             {{ spot_description }}
