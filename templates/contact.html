@@ -15,12 +15,15 @@
 
 {% block content %}
     {% if is_mobile %}
-    <div style="margin:10px;" class="clearfix">
-        <h2 id="contact_header" class="contact-header pull-left" style="width:auto;">Report a Problem</h2>
-        <div class="pull-right" style="display:inline-block;margin-top:8px;">
-            <a href='{{ back }}' title="back" ><img id="back_to_space_button" src="{{ STATIC_URL }}img/details_arrow.png" alt="Back" /></a>
+    <div id="space_details_header" class="clearfix">
+        <h1 class="visuallyhidden">SPACESCOUT&trade;</h1>
+        <img id="back_home_button" class="pull-left back-button" src="/static/img/details_arrow.png" />
+        <div id="name-type-block" class="pull-left">
+            <h2 class="space-detail-name" style="">Report a Problem</h2>
         </div>
     </div>
+
+
     {% else %}
     <div id="nav" style="position:relative;">
         <div class="logo-container clearfix">
