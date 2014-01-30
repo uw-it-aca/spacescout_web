@@ -25,8 +25,10 @@ def suggest(request, spot_id=None):
         form = SuggestForm(request.POST)
         if form.is_valid():
             name = form.cleaned_data['name']
+            netid = form.cleaned_data['netid']
             sender = form.cleaned_data['sender']
             building = form.cleaned_data['building']
+            floor = form.cleaned_data['floor']
             room_number = form.cleaned_data['room_number']
             description = form.cleaned_data['description']
             justification = form.cleaned_data['justification']
@@ -36,13 +38,15 @@ def suggest(request, spot_id=None):
 
             subject = "[Suggestion] From %s" % (name)
             email_message = "Suggested Space:\n\
-                           \nFrom: %s <%s>\
+                           \nFrom: %s <%s>\n\
+                           \nUW NetID: %s\n\
                            \nBuilding: %s\n\
+                           \nFloor: %s\n\
                            \nRoom number: %s\n\
                            \nDescription: %s\n\
                            \nJustification: %s\n\
-                           \nBrowser Type = %s" % (name, sender, building,
-                                                   room_number, description,
+                           \nBrowser Type = %s" % (name, sender, netid, building,
+                                                   floor, room_number, description,
                                                    justification, browser)
 
             if bot_test == '':
