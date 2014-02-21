@@ -78,55 +78,16 @@ button {
         }
     }
 
-    #bubble_desktop { display: none; }
-    
-    .bubble-inner { background-color:#fff; border: solid 1px @grey_border;
-
-        .bubble-tab { width:17px; background: transparent url('/static/img/tri-up.png') no-repeat; position:absolute; top: -7px; right: 15px; text-indent: -9999px; }
-        .bubble-filters { width: 82%; background: #fff url('/static/img/spinner.gif') no-repeat 50% 50%; background-size: 15px;
-            ul { list-style: none; margin: 0; margin-left: 4px; margin-top: 4px; height: 28px; overflow: hidden; background-color: #fff;
-                li { display: inline-block; background-color: #eee; padding: 2px 5px; margin-bottom: 4px; font-size: 11px; }
+    .filter_context { height: 40px; background-color: #7479A6; color: white; 
+        .actions { float: left;
+            button { border: 1px solid red;  width: 84px; height: 40px; background:#7479A6; border: none !important; margin: 0 0;
+               i { padding-left: 14px; }
             }
         }
-        .bubble-info { width: 50px; height:32px; background: #e5e5e5 url('/static/img/spinner.gif') no-repeat 50% 50%; background-size: 15px;
-            .count { display: block; padding: 4px; text-align: center; font-weight: bold; color: @purple_text; font-size: 20px; margin-top: 1px; background-color: #e5e5e5; }
-            .spaces { display: block; text-align: center; font-size: 11px; text-transform: uppercase; color: @grey_light; background-color: #e5e5e5; }
-            
-        }
-    }
 
-    .actions { width: auto; float: right; text-align: right; height: 50px;  margin: 5px 10px 5px 0;
-    		.bubble-info { width: 84px; height:32px; background: #e5e5e5 url('/static/img/spinner.gif') no-repeat 50% 50%; background-size: 15px;
-            .count { display: block; padding: 0px; text-align: center; font-weight: bold; color: @purple_text; font-size: 20px; margin-top: 1px; background-color: #e5e5e5; line-height: 20px; }
-            .spaces { display: block; text-align: center; font-size: 10px; text-transform: uppercase; color: @grey_light; background-color: #e5e5e5; line-height: 10px; }
-            
-            
-        }
-
-
-        #filter_button { background:#514d83; .at2x('/static/img/down.png', 16px, 9px);  background-repeat:no-repeat; background-position: 8px 50%; display:inline-block; color: #8987ab; width: 30px; text-indent: -999px;
-
-          }
-        #done-clear-group { display:none;}
-        #view_results_button { background:#514d83; .at2x('/static/img/check.png', 13px, 9px); background-repeat: no-repeat; background-position: 10px 50%; display: none; color: #8987ab; width: 30px; text-indent: -999px;  margin-bottom: 5px;}
-        #cancel_results_button { background: #e4e4e4;  .at2x('/static/img/cross.png', 8px, 9px); background-repeat:no-repeat; background-position: 10px 50%; display: none; color: #646464; width: 30px; text-indent: -999px; &.btn  { border: 1px solid rgba(0,0,0,.3) !important; } }
-
-        #back_home_button { background:#514d83 url('/static/img/left.png') no-repeat 8px 50%; display:inline-block; color: #8987ab; width: 30px; text-indent: -999px; }
-        #spacecount {
-    	//border: 1px rgba(0,0,0,.45) solid;
-    	margin-top: 4px;
-    	text-align: center;
-    	line-height: 30px;
-    	background-color: #c2c2c2;
-    	border-radius: 2px;
-    	//padding: 0 5px 0 4px;
-    	
-    }
-
+        #space_count_container { border-left: 1px solid @grey_dark; float: left; line-height: 40px; padding-left: 10px; }
     }
     
-    
-    #bubble_mobile {  margin: 10px 10px 5px 10px; }
 }
 
 #filter-clear { display: none; position: absolute; top: 30px; border: 1px solid @grey_light; padding: 5px; width: 150px; z-index: 999; left:50%; margin-left: -75px; background-color: @grey_dark; text-align: center; animation:filter-clear-anim 1s; -webkit-animation:filter-clear-anim 1s; animation-delay:1000ms; -webkit-animation-delay:1000ms;}
@@ -151,14 +112,6 @@ button {
         }
     }
 
-    .actions { width: auto; float: right; text-align: right; height: 50px; line-height: 50px; margin-right: 10px;
-
-        #filter_button { background:#514d83 url('/static/img/down.png') no-repeat 8px 50%; display:inline-block; color: #8987ab; width: 30px; text-indent: -999px; }
-        #view_results_button { background:#514d83 url('/static/img/check.png') no-repeat 10px 50%; display: none; color: #8987ab; width: 30px; text-indent: -999px; }
-        #cancel_results_button { background: #e4e4e4 url('/static/img/cross.png') no-repeat 10px 50%; display: none; color: #646464; width: 30px; text-indent: -999px; }
-
-        #back_home_button { background:#514d83 url('/static/img/left.png') no-repeat 8px 50%; display:inline-block; color: #8987ab; width: 30px; text-indent: -999px; }
-    }
     #bubble_mobile {  margin: -5px 0px 5px 0px; }
 
 
@@ -466,6 +419,36 @@ select {
     img { max-width: 100% !important; margin: 0 auto; }
 }
 
+.favorites-header { width: 100%; height: 12px; background-color: #7479A6; 
+    span {
+       float:right;
+       margin: -16px 130px 0 0;
+       width: 0; height: 0;
+       border-left: 16px solid transparent;
+       border-right: 16px solid transparent;
+       border-bottom: 16px solid #7479A6;
+    }
+}
+
+.favorites { background-color: white; border: 1px solid #bbbbbb; padding: 16px;
+
+  .navigation { width: 100%;
+     a { display: inline-block; float: right; padding-right: 20px; }
+  }
+
+  h4 {
+    .comment { padding-left: 4px; font-weight: normal; color: gray; font-style: italic; font-size: 12px; }
+  }
+
+  .cards { margin: 0 12px; }
+
+  .footer {
+    a { text-decoration: none;
+      span { color: black; }
+    }
+  }
+  
+}
 
 
 /* Helper for hiding elements offscreen */
@@ -485,13 +468,10 @@ select {
 @media screen and (min-width: 320px) {
 
     #nav {
-
-        .actions {
-            #back_home_button { width: 84px; padding-left: 25px; text-indent: 0; }
-            
-            #filter_button { width: 84px; padding-left: 30px; text-indent: 0; }
-            #view_results_button {  width: 84px; padding-left: 30px; text-indent: 0; }
-            #cancel_results_button { width: 84px; padding-left: 30px; text-indent: 0; }
+        .actions { float: right;
+            button { width: 84px; height: 30px; background:#7479A6; border: none !important; margin: 4px 8px 0 0; padding: 4px;
+               i { padding-left: 8px; }
+            }
         }
     }
 

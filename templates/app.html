@@ -57,70 +57,51 @@
                 </span>
                 {% endifnotequal %}
             </div>
-            <h2 id="filter_group_header" class="visuallyhidden">Find Study Spaces by Specific Criteria</h2>
-            
-            <div role= "search" aria-labelledby="filter_group_header">
-                <div id="filter_container" aria-labelledby="filters_header" aria-controls="space_count_container">
-                    <form>
-                        <div id="filter_block" style="display:none;">
-                            <h3 id="filters_header" class="visuallyhidden">Filter By:</h3>
-                            <div class="inner clearfix">
-                                <div class="inner-column">
-                    	           <div id="filter-clear">Filters Cleared</div>
-                                    <div class="inner-block-left">
-							         {% include "filters.html" %}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-    
-                <div class="actions clearfix">
-                    <button id="filter_button" class="btn btn-inverse" type="button" aria-label="Filter settings..." aria-owns="filter_container" >Filters</button>
-                    <div id="done-clear-group" class="clearfix">
-                        <button id="view_results_button" class="btn btn-inverse" type="button" aria-label="Apply Filters">Done</button>
-                        <button id="cancel_results_button" class="btn" type="button" aria-label="Clear Filters">Clear</button>
-                    </div>
-                </div>
-
-                <div id="bubble_desktop">
-                    <div class="bubble-inner clearfix" style="position:relative;">
-                        <div class="bubble-tab"></div>
-
-                       <div id="bubble_filters_container" class="bubble-filters pull-left"></div>
-
-                        {% tplhandlebars "filter_list" %}
-                        <h3 id="current_filters" class="visuallyhidden">Currently filtering by:</h3>
-                        <ul id='filter_display_list' aria-labelledby="current_filters">
-
-                            <li>{{#if open_at}}specific time{{else}}open now{{/if}}</li>
-                            <li>{{#if building_name}}specific building{{else}}entire campus{{/if}}</li>
-                            {{#if space_type}}<li>type of space</li>{{/if}}
-                            {{#if true_capacity}}<li>seats {{capacity}}</li>{{/if}}
-                            {{#if reservable}}<li>reservable</li>{{/if}}
-                            {{#if noise}}<li>noise level</li>{{/if}}
-                            {{#if lighting}}<li>natural light</li>{{/if}}
-                            {{#if resources}}<li>resources</li>{{/if}}
-                            {{#if food}}<li>food/coffee</li>{{/if}}
-
-                        </ul>
-                        {% endtplhandlebars %}
-
-                        <div class="pull-right bubble-info">
-                            <h3 id="spaces_match_header" class="visuallyhidden">Your current filters return:</h3>
-                            <div id="space_count_container" aria-labelledby="spaces_match_header" role="status"></div>
-
-                            {% tplhandlebars "space_count" %}
-                            <span class="count">{{count}}</span><span class="spaces">spaces</span>
-                            {% endtplhandlebars %}
-
-                        </div>
-                    </div>
-                </div>
+            <div class="user_context">
+                {% if user.is_authenticated %}
+                  <span>{% trans 'greeting' %}&nbsp;{{ request.user }}</span>
+                  <a href="favorites">{% trans 'favorites' %} (<span class="favorite_count">0</span>)</a>
+                  <span>|</span>
+                  <a href="logout?next={% firstof request.path '/' %}">{% trans 'logout' %}</a>
+                {% else %}
+                  {% trans 'salutation' %}&nbsp;<a href="login?next={% firstof request.path '/' %}">{% trans 'login' %}</a>
+                {% endif %}
+                <span>
             </div>
         </div>
+        <h2 id="filter_group_header" class="visuallyhidden">Find Study Spaces by Specific Criteria</h2>
+        <div class="filter_context" role= "search" aria-labelledby="filter_group_header">
+          <div id="filter_container" aria-labelledby="filters_header" aria-controls="space_count_container">
+            <form>
+              <div id="filter_block" style="display:none;">
+                <h3 id="filters_header" class="visuallyhidden">Filter By:</h3>
+                <div class="inner clearfix">
+                  <div class="inner-column">
+                    <div id="filter-clear">Filters Cleared</div>
+                    <div class="inner-block-left">
+					  {% include "filters.html" %}
+                    </div>
+                  </div>
+                  <div class="inner-row">
+                    <button id="view_results_button" class="btn btn-inverse" type="button" aria-label="Apply Filters">Apply</button>
+                    <button id="cancel_results_button" class="btn" type="button" aria-label="Clear Filters">Reset</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
 
+          <div class="actions filters">
+            <button id="filter_button" class="btn btn-inverse" type="button" aria-label="Filter settings..." aria-owns="filter_container" >{%trans 'filters' %}<i class="fa fa-angle-double-down"></i></button>
+          </div>
+
+          <h3 id="spaces_match_header" class="visuallyhidden">Your current filters return:</h3>
+          <div id="space_count_container" aria-labelledby="spaces_match_header" role="status"></div>
+
+          {% tplhandlebars "space_count" %}
+          {% trans 'showing' %} <span class="count">{{count}}</span> {% trans 'spaces' %}
+          {% endtplhandlebars %}
+        </div>
     </div>
     <div id="main_content" class="clearfix" role="main" aria-labelledby="app_header">
 <h2 id="map_header" class="visuallyhidden" aria-hidden="true">Map of Spaces</h2>

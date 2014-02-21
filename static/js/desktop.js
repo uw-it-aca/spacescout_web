@@ -48,16 +48,28 @@ Handlebars.registerHelper('ifany', function(a, b) {
 
 		// show filter panel
 		$('#filter_button').click(function() {
+            var block = $("#filter_block");
 
-            $("#filter_block").slideDown(400, function() {
-                $('#study_room').focus();
-            });
+            if (block.css('display') == 'none') {
+                block.slideDown(400, function() {
+                    var icon = $('.fa-angle-double-down');
 
-            $('#filter_button').hide();
-            $('#done-clear-group').show();
-            $('#view_results_button').show();
-            $('#cancel_results_button').show();
+                    if (icon.length) {
+                        icon.switchClass('fa-angle-double-down', 'fa-angle-double-up', 0);
+                    }
 
+                    $('#study_room').focus();
+                });
+            }
+            else {
+                block.slideUp(400, function() {
+                    var icon = $('.fa-angle-double-up');
+
+                    if (icon.length) {
+                        icon.switchClass('fa-angle-double-up', 'fa-angle-double-down', 0);
+                    }
+                });
+            }
         });
 
         $('#neighboring').blur(function() {

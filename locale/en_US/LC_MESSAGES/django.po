@@ -17,6 +17,34 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: templates/app.html:58
+msgid "login"
+msgstr "Log in"
+
+#: templates/app.html:58
+msgid "logout"
+msgstr "Log out"
+
+#: templates/app.html:58
+msgid "greeting"
+msgstr "Hi,"
+
+#: templates/app.html:58
+msgid "salutation"
+msgstr "Hello."
+
+#: templates/app.html:58
+msgid "filters"
+msgstr "Filters"
+
+#: templates/app.html:58
+msgid "favorites"
+msgstr "Favorites"
+
+#: templates/app.html:58
+msgid "showing"
+msgstr "Showing"
+
 #: extras/uw_server_values.py:4
 msgid "alcove"
 msgstr "Alcove"

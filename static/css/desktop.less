@@ -41,6 +41,11 @@
                 width: 168px;
             }
          }
+         .user_context { float: right; height: 80px; line-height: 80px;
+            span { padding-left: 12px; }
+            .favorite_count { padding-left: 0 }
+            a  { padding-left: 12px; text-decoration: none; }
+        }
     }
 
 
@@ -56,18 +61,11 @@
       }
     }
 
-    .actions { height: 80px;
-    		#filter_button { margin-top: 20px;}
-    		#done-clear-group { width: 84px;
-    			#view_results_button, #cancel_results_button { float: right; }
-    		}
-    }
-
     #bubble_mobile { display: none; }
 }
 #filter-clear { top: 10px; }
 #filter_container {
-     position:absolute; top:80px; left:0; right:0; margin: 0; z-index: 100;
+     position:absolute; top:120px; left:0; right:0; margin: 0; z-index: 100;
 
      #filter_block { background: rgba(0, 0, 0, 0.9); height: 450px;
 
@@ -78,6 +76,8 @@
             .inner-block-right { padding-left: 20px; }
         }
 
+        .inner-row { clear: left; float: right; padding-right: 40px; }
+
         #filter_hours {
             .hours-from, .hours-until { display: block; width: 35px; }
             select { width: 33%; }
@@ -86,12 +86,6 @@
         .filter-submit { text-align: right; }
 
     }
-
-    #filter_button_container { /*height: 30px; width: auto; text-align:center; line-height:30px; position:absolute; left:0; right:0; top: auto; bottom:-30px; z-index: 999;*/ width: auto; top: -60px;
-        .filter-button-text { display: inline-block; margin-left: 3px; color: #eee; }
-        #filter_button { display:inline-block;padding: 0 10px; }
-    }
-
 }
 
 #main_content { margin: 0; }
