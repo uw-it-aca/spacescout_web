@@ -113,15 +113,20 @@ Handlebars.registerHelper('alphaOptGroupsHTML', function(list) {
         if (list[i][0] == firstletter) {
             out.push('<option value="'+list[i]+'">'+list[i]+'</option>');
         } else {
-            if (firstletter != null) {
+            // select multiple with optgroups will crash mobile Safari
+            if (firstletter != null || !isMobile) {
                 out.push('</optgroup>');
             }
             firstletter = list[i][0];
-            out.push('<optgroup label="'+firstletter+'">');
+            if (!isMobile) {
+                out.push('<optgroup label="'+firstletter+'">');
+            }
             out.push('<option value="'+list[i]+'">'+list[i]+'</option>');
         }
     }
-    out.push('</optgroup>');
+    if (!isMobile) {
+        out.push('</optgroup>');
+    }
     return new Handlebars.SafeString(out.join(''));
 });
 
