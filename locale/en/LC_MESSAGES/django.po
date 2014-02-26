@@ -1,0 +1,141 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-02-25 16:12-0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: extras/uw_server_values.py:5
+msgid "alcove"
+msgstr "Alcove"
+
+#: extras/uw_server_values.py:6 templates/filters.html:42
+msgid "cafe"
+msgstr "Café"
+
+#: extras/uw_server_values.py:7 templates/filters.html:27
+msgid "classroom"
+msgstr "Conference/classroom"
+
+#: extras/uw_server_values.py:8 templates/filters.html:19
+msgid "computer_lab"
+msgstr "Computer lab"
+
+#: extras/uw_server_values.py:9 templates/filters.html:38
+msgid "lounge"
+msgstr "Lounge"
+
+#: extras/uw_server_values.py:10 templates/filters.html:34
+msgid "open"
+msgstr "Open space"
+
+#: extras/uw_server_values.py:11 templates/filters.html:46
+msgid "outdoor"
+msgstr "Outdoor area"
+
+#: extras/uw_server_values.py:12 templates/filters.html:23
+msgid "studio"
+msgstr "Production studio"
+
+#: extras/uw_server_values.py:13 templates/filters.html:15
+msgid "study_area"
+msgstr "Study area"
+
+#: extras/uw_server_values.py:14 templates/filters.html:11
+msgid "study_room"
+msgstr "Study room"
+
+#: extras/uw_server_values.py:17 templates/app.html:221
+#: templates/filters.html:268 templates/space.html:129
+msgid "silent"
+msgstr "Silent"
+
+#: extras/uw_server_values.py:18 templates/app.html:215
+#: templates/filters.html:272 templates/space.html:125
+msgid "quiet"
+msgstr "Low hum"
+
+#: extras/uw_server_values.py:19 templates/app.html:218
+#: templates/filters.html:276 templates/space.html:127
+msgid "moderate"
+msgstr "Chatter"
+
+#: extras/uw_server_values.py:20
+msgid "loud"
+msgstr "Rowdy"
+
+#: extras/uw_server_values.py:21 templates/app.html:223
+#: templates/space.html:131
+msgid "variable"
+msgstr "Variable"
+
+#: extras/uw_server_values.py:24 templates/app.html:243
+#: templates/filters.html:297 templates/space.html:147
+msgid "building"
+msgstr "In building"
+
+#: extras/uw_server_values.py:25 templates/app.html:248
+#: templates/filters.html:301 templates/space.html:151
+msgid "neighboring"
+msgstr "In neighboring building"
+
+#: extras/uw_server_values.py:26 templates/app.html:246
+#: templates/filters.html:293 templates/space.html:149
+msgid "space"
+msgstr "In space"
+
+#: templates/app.html:62 templates/favorites.html:32
+msgid "greeting"
+msgstr "Hi,"
+
+#: templates/app.html:63 templates/favorites.html:33
+msgid "favorites"
+msgstr "favorites"
+
+#: templates/app.html:65 templates/favorites.html:35
+msgid "logout"
+msgstr "Log out"
+
+#: templates/app.html:67 templates/favorites.html:37
+msgid "salutation"
+msgstr "Hello."
+
+#: templates/app.html:67 templates/favorites.html:37
+msgid "login"
+msgstr "Log in"
+
+#: templates/app.html:95 templates/mobile/app.html:63
+msgid "filters"
+msgstr "Filters"
+
+#: templates/app.html:102
+msgid "showing"
+msgstr "Showing"
+
+#: templates/app.html:102
+msgid "spaces"
+msgstr "spaces"
+
+#: templates/login.html:7
+msgid "Username"
+msgstr "Username"
+
+#: templates/login.html:11
+msgid "Password"
+msgstr "Password"
+
+#: templates/login.html:15
+msgid "Log in"
+msgstr "Log in"
