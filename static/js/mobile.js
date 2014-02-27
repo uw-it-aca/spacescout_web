@@ -88,23 +88,41 @@
 
 		// show filter panel
 		$('#filter_button').click(function() {
+            var block = $("#filter_block");
 
     		// calculate the filter block height
-    		resizeFilterBlock();
+//    		resizeFilterBlock();
 
-    		// slide down the filter block
-            $("#filter_block").slideDown(400, function() {
-                // hide the main content (map and list) by setting a height on the main container and hiding overflow
-                setFilterContainer();
-            });
+            if (block.css('display') == 'none') {
+    		    // slide down the filter block
+                $("#filter_block").slideDown(400, function() {
+                    // hide the main content (map and list) by setting a height on the main container and hiding overflow
+                    var icon = $('.fa-angle-double-down');
+
+                    if (icon.length) {
+                        icon.switchClass('fa-angle-double-down', 'fa-angle-double-up', 0);
+                    }
+
+//                    setFilterContainer();
+                });
+            }
+            else {
+                block.slideUp(400, function() {
+                    var icon = $('.fa-angle-double-up');
+
+                    if (icon.length) {
+                        icon.switchClass('fa-angle-double-up', 'fa-angle-double-down', 0);
+                    }
+                });
+            }
 
             // show the correct buttons
-            $('#filter_button').hide();
+//            $('#filter_button').hide();
             $('#spacecount').hide();
             //$('#space_count_container').hide();
-            $('#done-clear-group').show();
-            $('#view_results_button').show();
-            $('#cancel_results_button').show();
+//            $('#done-clear-group').show();
+//            $('#view_results_button').show();
+//            $('#cancel_results_button').show();
 
             // handle scrolling for android froyo or newer
     		if (android || gingerbreadOrNewer) {
@@ -207,8 +225,8 @@
         resizeCarouselMapContainer();
 
         if ($('#filter_block').is(":visible")) {
-    	   resizeFilterBlock();
-    	   setFilterContainer();
+//    	   resizeFilterBlock();
+//    	   setFilterContainer();
         }
 
     });
@@ -263,10 +281,11 @@
         $('#info_list').height('auto');
     }
 
-    function resizeFilterBlock() {
+/*    function resizeFilterBlock() {
         var winH = $(window).height();
         $("#filter_block").height(winH - 110);
     }
+*/
 
     // callout for ios5-6 native app
     function showIosCallout() {

@@ -60,7 +60,7 @@
             <div role="search" aria-labelledby="filter_group_header">
                 <h2 id="filter_group_header" class="visuallyhidden">Find Study Spaces by Specific Criteria</h2>
                 <div class="actions">
-                    <button id="filter_button" class="btn btn-inverse" type="button" aria-label="Filter settings..." aria-owns="filter_container" >Filters</button>
+                    <button id="filter_button" class="btn btn-inverse" type="button" aria-label="Filter settings..." aria-owns="filter_container" >{%trans 'filters' %}<i class="fa fa-angle-double-down"></i></button>
 
                     <h3 id="spaces_match_header" class="visuallyhidden">Your current filters return:</h3>
 
@@ -71,11 +71,12 @@
             				<span class="count">{{count}}</span><span class="spaces"> spaces</span>
             			</div>
             		{% endtplhandlebars %}
-
+<!--
                     <div id="done-clear-group">
                     <button id="view_results_button" class="btn btn-inverse" type="button" aria-label="Apply Filters">Done</button><br>
                     <button id="cancel_results_button" class="btn" type="button" aria-label="Clear Filters">Clear</button>
                     </div>
+-->
 
                 </div>
             </div>
@@ -116,6 +117,10 @@
 
 							{% include "filters.html" %}
                         </div>
+                    </div>
+                    <div class="inner-row">
+                      <button id="view_results_button" class="btn btn-inverse" type="button" aria-label="Apply Filters">Apply</button>
+                      <button id="cancel_results_button" class="btn" type="button" aria-label="Clear Filters">Reset</button>
                     </div>
                 </div>
             </div>

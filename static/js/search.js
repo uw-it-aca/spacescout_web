@@ -385,10 +385,10 @@ function run_custom_search() {
     trackCheckedFilters();
 
     // show the correct buttons
-    $('#filter_button').show();
+//    $('#filter_button').show();
     $('#space_count_container').show();
-    $('#view_results_button').hide();
-    $('#cancel_results_button').hide();
+//    $('#view_results_button').hide();
+//    $('#cancel_results_button').hide();
 
     // reset the map center and zoom
     window.spacescout_map.setCenter(new google.maps.LatLng(window.default_latitude, window.default_longitude));
@@ -400,6 +400,11 @@ function run_custom_search() {
 
     // slide the filter up
     $("#filter_block").slideUp(400, function() {
+        var icon = $('.fa-angle-double-up');
+
+        if (icon.length) {
+            icon.switchClass('fa-angle-double-up', 'fa-angle-double-down', 0);
+        }
 
         // check to see if the style attribute was added to the container (mobile only)
         if ($('#container').attr("style")) {
@@ -417,7 +422,7 @@ function run_custom_search() {
 
     // reset the scroll to top of container
     $('#info_list').scrollTop(0);
-
+/*
 function fix_filter_overflow() {
     var old;
     var outofspace = false;
@@ -442,7 +447,7 @@ function fix_filter_overflow() {
     });
 
 }
-
+*/
 // TODO: is this used anymore?
 function clear_custom_search() {
     window.spacescout_search_options = [];
@@ -586,9 +591,9 @@ function reload_on_idle() {
 
     // load the in-page json first time through
     if (window.initial_load) {
-        var source = $('#filter_list').html();
-        var template = Handlebars.compile(source);
-        $('#bubble_filters_container').html(template({}));
+//        var source = $('#filter_list').html();
+//        var template = Handlebars.compile(source);
+//        $('#bubble_filters_container').html(template({}));
         load_data(initial_json);
         window.initial_load = false;
     // only fetch data as long as space details are NOT being shown
@@ -641,7 +646,7 @@ function fetch_data() {
     if (!window.spacescout_search_options["type"]) {
         window.spacescout_search_options["type"] = [];
     }
-
+/*
     // Populate the bubble with which filters are used
     var bubble_filters = $().extend({}, window.spacescout_search_options);
 
@@ -659,6 +664,7 @@ function fetch_data() {
     $('#bubble_filters_container').html(template(bubble_filters));
 
     fix_filter_overflow();
+*/
 
     var url_args = ["/search/?"];
     for (var key in args) {
