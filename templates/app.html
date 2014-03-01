@@ -164,8 +164,8 @@
                                         <li class="clearfix">
                                             <h3 class="space-info-label pull-left">Notes</h3>
                                             <div class="space-info-detail pull-left">
-                                                <p>{{extended_info.access_notes}}</p>
-                                                <p id="ei_reservation_notes">{{extended_info.reservation_notes }}</p>
+                                                {{#if extended_info.access_notes }}<p>{{extended_info.access_notes}}</p>{{/if}}
+                                                {{#if extended_info.reservation_notes }}<p id="ei_reservation_notes">{{extended_info.reservation_notes }}</p>{{/if}}
                                             </div>
                                         </li>
                                         {{/if}}
