@@ -103,9 +103,6 @@ Handlebars.registerHelper('ifany', function(a, b) {
             $('#hours_list_container').hide();
             $('#hours_list_input').parent().removeClass("selected");
             default_open_at_filter();
-            $("#day-until").val("No pref")
-            $("#hour-until").val("No pref")
-            $("#ampm-until").val("AM")
 
             // reset location
             $('#entire_campus').prop('checked', true);

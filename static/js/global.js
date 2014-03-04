@@ -298,8 +298,10 @@ function default_open_at_filter() {
 
     if (hour > 11) {
         $("#ampm-from").val("PM");
+        $("#ampm-until").val("PM");
     }else {
         $("#ampm-from").val("AM");
+        $("#ampm-until").val("AM");
     }
     if (hour > 12) {
         hour = hour-12;
@@ -307,6 +309,10 @@ function default_open_at_filter() {
     hour = ""+hour+":"+min;
     $("#day-from").val(weekdays[date.getDay()]);
     $("#hour-from").val(hour);
+
+
+    $("#day-until").val(weekdays[date.getDay()]);
+    $("#hour-until").val(hour);
 }
 
 function format_location_filter(data) {
