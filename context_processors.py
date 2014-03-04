@@ -31,3 +31,12 @@ def ga_tracking_id(request):
         return {'ga_tracking_id': settings.GA_TRACKING_ID}
     except:
         return {'ga_tracking_id': None}
+
+
+def gmaps_api_key(request):
+    """ See if there is a Google Analytics web property id
+    """
+    try:
+        return {'gmaps_api_key': settings.GMAPS_API_KEY}
+    except:
+        return {'gmaps_api_key': None}
