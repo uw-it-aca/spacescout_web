@@ -36,6 +36,7 @@
         {% load compress %}
         {% compress css %}
         <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}libs/bootstrap/css/bootstrap-custom.css" charset="utf-8" />
+		<link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}libs/font-awesome.min.css" charset="utf-8" />
         <link rel="stylesheet" type="text/less" href="{{ STATIC_URL }}css/mobile.less" media="screen" />
         <link rel="stylesheet" type="text/less" href="{{ STATIC_URL }}css/desktop.less" media="screen" />
         <link rel="stylesheet" type="text/less" href="{{ STATIC_URL }}css/chosen.css" media="screen" />
@@ -100,9 +101,6 @@
           <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?libraries=geometry&amp;sensor=false"></script>
           {% endif %}
 
-          <!-- Font Awesome -->
-          <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-
           {% compress js %}
             <script type="text/javascript" src="{{ STATIC_URL }}libs/cookie.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap/js/bootstrap-transition.js"></script>
@@ -116,6 +114,7 @@
 			<script type="text/javascript" src="{{ STATIC_URL }}js/markerwithlabel.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/jquery.lazyscrollloading-min.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}js/global.js"></script>
+            <script type="text/javascript" src="{{ STATIC_URL }}js/favorites.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}js/search.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}js/desktop.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}js/clustering.js"></script>

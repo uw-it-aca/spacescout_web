@@ -15,8 +15,11 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.conf import settings
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from mobility.decorators import mobile_template
+from django.views.decorators.cache import never_cache
+import simplejson as json
+import oauth2
 
 
 # User's favorite spaces
@@ -31,3 +34,55 @@ def Favorites(request, template=None):
     }
 
     return render_to_response(template, params, context_instance=RequestContext(request))
+
+
+# Shim to fetch server-side user favorites
+@never_cache
+def API(request, spot_id=None):
+    if not request.user.is_authenticated():
+        return HttpResponse('Unauthorized', status=401)
+
+    consumer = oauth2.Consumer(key=settings.SS_WEB_OAUTH_KEY, secret=settings.SS_WEB_OAUTH_SECRET)
+    client = oauth2.Client(consumer)
+
+    if request.META['REQUEST_METHOD'] == 'GET':
+
+        url = "{0}/api/v1/user/me/favorites".format(settings.SS_WEB_SERVER_HOST)
+        method = 'GET'
+        body = ''
+
+    elif request.META['REQUEST_METHOD'] == 'PUT':
+
+        url = "{0}/api/v1/user/me/favorite/{1}".format(settings.SS_WEB_SERVER_HOST, spot_id)
+        method = 'PUT'
+        body = request.read()
+
+    elif request.META['REQUEST_METHOD'] == 'DELETE':
+
+        url = "{0}/api/v1/user/me/favorite/{1}".format(settings.SS_WEB_SERVER_HOST, spot_id)
+        method = 'DELETE'
+        body=''
+
+    else:
+        return HttpResponse('Method not allowed', status=405)
+
+    headers = {
+        "XOAUTH_USER": "%s" % request.user,
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+    }
+
+    response_body = {}
+
+    resp, content = client.request(url,
+                                   method=method,
+                                   body=body,
+                                   headers=headers)
+
+    if resp.status == 200 or resp.status == 201:
+        response_body = content if content else '{}'
+    else:
+        return HttpResponse('error', status=resp.status)
+
+    return HttpResponse(response_body, mimetype='application/json', status=200)
+

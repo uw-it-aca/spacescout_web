@@ -42,8 +42,7 @@
             }
          }
          .user_context { float: right; height: 80px; line-height: 80px;
-            span { padding-left: 12px; }
-            .favorite_count { padding-left: 0 }
+            > span { padding-left: 12px; }
             a  { padding-left: 12px; text-decoration: none; }
         }
     }
@@ -215,6 +214,7 @@
 
     #info_items {
         ol { margin: 0px; list-style: none;
+        
             li {
                 .space-detail-list-item { width: 49%;
                 	.space-detail-labstats {
@@ -275,6 +275,11 @@
             .space-detail {
 
                 .space-detail-inner {
+
+                    .space-detail-header {
+                        .space-detail-fav { font-size: 20px; margin-right: 5px;}
+                        .space-detail-fav-set { color: #E5B52E; }
+                    }
 
                     .space-detail-body {
 

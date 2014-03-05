@@ -18,10 +18,10 @@
         <h1 class="visuallyhidden">SPACESCOUT&trade;</h1>
 		<img id="back_home_button" class="pull-left back-button" src="/static/img/details_arrow.png" />
         <div id="name-type-block" class="pull-left">
-            <h2 class="space-detail-name" style=""><span class="visuallyhidden">Space Details:</span> {{name}}</h2>
-      		<div class="space-detail-type">{{ type }} {% if capacity %}<span class="space-detail-capacity">[Seats&nbsp;{{capacity}}]</span>{% endif %}</div>      
+          {% if user.is_authenticated %}<div class="space-detail-fav pull-left"><i class="fa fa-heart"></i></div>{% endif %}
+          <h2 class="space-detail-name" style=""><span class="visuallyhidden">Space Details:</span> {{name}}</h2>
+      	  <div class="space-detail-type">{{ type }} {% if capacity %}<span class="space-detail-capacity">[Seats&nbsp;{{capacity}}]</span>{% endif %}</div>
         </div>
-      
     </div>
 
 
