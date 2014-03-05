@@ -229,7 +229,7 @@ function loadMarkerSpots(marker, data) {
         onLazyItemFirstVisible : function(e, $lazyItems, $firstVisibleLazyItems) {
             $firstVisibleLazyItems.each(function() {
                 var $img = $(this);
-                var src = $img.attr('data-src')
+                var src = $img.attr('data-src');
                 $img.css('background', 'transparent url("'+src+'") no-repeat 50% 50%');
             });
         }

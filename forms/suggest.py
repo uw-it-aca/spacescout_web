@@ -16,12 +16,12 @@ from django import forms
 
 
 class SuggestForm(forms.Form):
-        name = forms.CharField(max_length=25, label="Your Name")
-        netid = forms.CharField(max_length=25, label="Your UW NetID")
+        name = forms.CharField(max_length=25, label="Your Name", required=True)
+        netid = forms.CharField(max_length=25, label="Your UW NetID", required=True)
         sender = forms.EmailField(max_length=40, label="Your Email", required=True)
-        building = forms.CharField(widget=forms.TextInput(), label="Building Name")
-        floor = forms.CharField(widget=forms.TextInput(), label="Floor")
+        building = forms.CharField(widget=forms.TextInput(), label="Building Name", required=True)
+        floor = forms.CharField(widget=forms.TextInput(), label="Floor Number", required=True)
         room_number = forms.CharField(widget=forms.TextInput(), label="Room Number (optional)", required=False)
-        description = forms.CharField(widget=forms.Textarea(), label="Description")
+        description = forms.CharField(widget=forms.Textarea(), label="Description of Space", required=True)
         justification = forms.CharField(widget=forms.Textarea(), label="Why do you recommend this space? (optional)", required=False)
         email_confirmation = forms.CharField(required=False)

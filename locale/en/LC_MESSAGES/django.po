@@ -102,7 +102,7 @@ msgstr "Hi,"
 
 #: templates/app.html:63 templates/favorites.html:33
 msgid "favorites"
-msgstr "favorites"
+msgstr "Favorites"
 
 #: templates/app.html:65 templates/favorites.html:35
 msgid "logout"

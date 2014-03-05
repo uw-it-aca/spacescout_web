@@ -113,15 +113,20 @@ Handlebars.registerHelper('alphaOptGroupsHTML', function(list) {
         if (list[i][0] == firstletter) {
             out.push('<option value="'+list[i]+'">'+list[i]+'</option>');
         } else {
-            if (firstletter != null) {
+            // select multiple with optgroups will crash mobile Safari
+            if (firstletter != null || !isMobile) {
                 out.push('</optgroup>');
             }
             firstletter = list[i][0];
-            out.push('<optgroup label="'+firstletter+'">');
+            if (!isMobile) {
+                out.push('<optgroup label="'+firstletter+'">');
+            }
             out.push('<option value="'+list[i]+'">'+list[i]+'</option>');
         }
     }
-    out.push('</optgroup>');
+    if (!isMobile) {
+        out.push('</optgroup>');
+    }
     return new Handlebars.SafeString(out.join(''));
 });
 
@@ -293,8 +298,10 @@ function default_open_at_filter() {
 
     if (hour > 11) {
         $("#ampm-from").val("PM");
+        $("#ampm-until").val("PM");
     }else {
         $("#ampm-from").val("AM");
+        $("#ampm-until").val("AM");
     }
     if (hour > 12) {
         hour = hour-12;
@@ -302,6 +309,10 @@ function default_open_at_filter() {
     hour = ""+hour+":"+min;
     $("#day-from").val(weekdays[date.getDay()]);
     $("#hour-from").val(hour);
+
+
+    $("#day-until").val(weekdays[date.getDay()]);
+    $("#hour-until").val(hour);
 }
 
 function format_location_filter(data) {

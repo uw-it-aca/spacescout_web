@@ -28,6 +28,22 @@ function openAllMarkerInfoWindow(data) {
     $('#info_items').html(template({'data': data}));
     $('.loading').slideUp('fast');
 
+    // load and update favorites
+    if ($(window.spacescout_favorites.k.favorites_count_container).length == 1) {
+        window.spacescout_favorites.load();
+
+        if (window.hasOwnProperty('spacescout_favorites_refresh')
+            && window.spacescout_favorites_refresh) {
+            window.clearInterval(window.spacescout_favorites_refresh);
+            window.spacescout_favorites_refresh = null;
+        }
+
+        // refresh favorites favorite cues every 10 seconds
+        window.spacescout_favorites_refresh = window.setInterval(function () {
+            window.spacescout_favorites.load();
+        }, 10000);
+    }
+
     //lazyLoadSpaceImages();
 
     $(document).ready(function() {

@@ -103,9 +103,6 @@ Handlebars.registerHelper('ifany', function(a, b) {
             $('#hours_list_container').hide();
             $('#hours_list_input').parent().removeClass("selected");
             default_open_at_filter();
-            $("#day-until").val("No pref")
-            $("#hour-until").val("No pref")
-            $("#ampm-until").val("AM")
 
             // reset location
             $('#entire_campus').prop('checked', true);
@@ -240,7 +237,7 @@ Handlebars.registerHelper('ifany', function(a, b) {
                        $('.close').focus();
                    });
                });
-           }else {
+           } else {
                $('.space-detail').show(0, function() {
                    $('.close').focus();
                    $('.btn.active').attr("tabindex", -1);
@@ -259,6 +256,30 @@ Handlebars.registerHelper('ifany', function(a, b) {
     	   detailsLon = data.location.longitude;
 
            replaceUrls();
+
+           // set up favorites
+           var fav_icon = $('.space-detail-fav');
+           if (window.spacescout_favorites.is_favorite(data.id)) {
+               fav_icon.addClass('space-detail-fav-set');
+           } else {
+               fav_icon.removeClass('space-detail-fav-set');
+           }
+
+           fav_icon.unbind();
+           fav_icon.click(function (e) {
+               var list_item = $('button#' + data.id + ' .space-detail-fav');
+
+               window.spacescout_favorites.toggle(data.id,
+                                                  function () {
+                                                      fav_icon.addClass('space-detail-fav-set');
+                                                      list_item.show();
+                                                  },
+                                                  function () {
+                                                      fav_icon.removeClass('space-detail-fav-set');
+                                                      list_item.hide();
+                                                  });
+
+           });
 
            // Set focus on details container
            $('.space-detail-inner').focus();

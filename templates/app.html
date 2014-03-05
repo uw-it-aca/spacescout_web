@@ -33,6 +33,9 @@
         window.default_location = "{{ default_location }}";
         window.default_zoom = {{ zoom_level }};
     }
+
+    window.spacescout_csrf_token = '{{ csrf_token }}';
+
 </script>
 {% endblock %}
 
@@ -57,17 +60,19 @@
                 </span>
                 {% endifnotequal %}
             </div>
+            <!-- hidden for now, until cool stuff for logged in users is finished.
             <div class="user_context">
                 {% if user.is_authenticated %}
                   <span>{% trans 'greeting' %}&nbsp;{{ request.user }}</span>
-                  <a href="favorites">{% trans 'favorites' %} (<span class="favorite_count">0</span>)</a>
+                  <a href="favorites">{% trans 'favorites' %} (<span class="favorites_count_container">0</span>)</a>
+                  {% tplhandlebars "favorites_count" %}{{count}}{% endtplhandlebars %}
                   <span>|</span>
                   <a href="logout?next={% firstof request.path '/' %}">{% trans 'logout' %}</a>
                 {% else %}
                   {% trans 'salutation' %}&nbsp;<a href="login?next={% firstof request.path '/' %}">{% trans 'login' %}</a>
                 {% endif %}
-                <span>
             </div>
+            -->
         </div>
         <h2 id="filter_group_header" class="visuallyhidden">Find Study Spaces by Specific Criteria</h2>
         <div class="filter_context" role= "search" aria-labelledby="filter_group_header">
@@ -117,6 +122,7 @@
                 <div class="space-detail">
                     <div class="space-detail-inner" id="detail_container_{{id}}" aria-labelledby="space-detail-name" tabindex="0">
                         <div class="space-detail-header">
+                          {% if user.is_authenticated %}<div class="space-detail-fav pull-left"><i class="fa fa-heart"></i></div>{% endif %}
                             <h2 id="space-detail-name" class="space-detail-name"><span class="visuallyhidden">Space Details:</span> {{name}}</h2>
                             <div class="space-detail-type">{{type}} {{#if capacity }}<span class="space-detail-capacity">[Seats&nbsp;{{capacity}}]</span>{{/if}}</div>
                             <a class="close" href="#" title="close"><img alt="close details" src="/static/img/x.png" /></a>
@@ -164,8 +170,8 @@
                                         <li class="clearfix">
                                             <h3 class="space-info-label pull-left">Notes</h3>
                                             <div class="space-info-detail pull-left">
-                                                <p>{{extended_info.access_notes}}</p>
-                                                <p id="ei_reservation_notes">{{extended_info.reservation_notes }}</p>
+                                                {{#if extended_info.access_notes }}<p>{{extended_info.access_notes}}</p>{{/if}}
+                                                {{#if extended_info.reservation_notes }}<p id="ei_reservation_notes">{{extended_info.reservation_notes }}</p>{{/if}}
                                             </div>
                                         </li>
                                         {{/if}}
@@ -283,6 +289,8 @@
 
                         {{#if data}}<ol class="lazyload-view">
                         {{#each data}}
+                 
+                <!-- space list start -->
 			    <li><h3 class="building_header">{{this.name}}</h3>
                             <ol>{{#each this.spots}}
                             <li class="clearfix view-details">
@@ -316,6 +324,7 @@
                                            <span class="space-detail-capacity pull-right">{{#if capacity }}Seats&nbsp;{{capacity}}{{/if}}</span>
                                         {{/if}}
                                     </div>
+                                    {% if user.is_authenticated %}<div class="space-detail-fav pull-right" style="display: none;"><i class="fa fa-heart"></i></div>{% endif %}
                                     <div class="space-detail-name">{{name}}</div>
                                     <div class="space-detail-desc">{{extended_info.location_description}}</div>
                                 </button>

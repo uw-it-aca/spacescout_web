@@ -174,13 +174,22 @@ button {
 /* MOBILE ONLY: Space details page */
 #space_details_header { margin: 10px;
 	#name-type-block { margin-left: 10px; width: 80%;}
-	.back-button { margin-top: 15px; }
+	.back-button { margin-top: 15px; margin-right:2px;}
     .space-detail-type { font-size: 14px; color: @grey_dark;
         .space-detail-capacity { color: @grey_light; font-size: 11px; text-transform: uppercase; display: inline-block; margin-left: 5px; height: 20px; }
     }
     .space-detail-name { font-size: 20px; margin: 5px 0;  color: @purple_text; width:85%; line-height:20px; font-weight:normal; }
+
     img { margin-top:8px; }
-    
+    .space-detail-fav { font-size: 20px; margin-top: 5px; margin-right: 5px;}
+}
+
+.space-detail-fav-set { color: #E5B52E; }
+
+.favorite-detail { border: 1px solid black; width: 300px; float: left; margin-left: 8px; margin-bottom: 8px; clear: right;
+  ul {
+    li { display: inline-block; background-color: #eee; padding: 2px 5px; margin-bottom: 4px; font-size: 11px; }
+  }
 }
 
 #space_details_page { position: relative; margin: 10px;
@@ -340,8 +349,9 @@ button {
                     .space-detail-capacity { color: @grey_light; font-size: 12px; display: inline-block; height: 20px; line-height: 13px;}
                     .space-detail-type-label { color: @grey_light; display: inline-block; width: 55%; .wrap; line-height: 13px; font-size:12px;}
                     .space-detail-type { color: @grey_dark;  }
-                    .space-detail-name { font-size: 17px; line-height: 20px; padding-top: 2px; .wrap; color: #000; }
-                    .space-detail-desc { .nowrap; color: #000; }
+                    .space-detail-name { font-size: 16px; line-height: 20px; padding-top: 2px; .wrap; color: #000; }
+                    .space-detail-desc { font-size: 13px; .nowrap; color: #000; }
+                    .space-detail-fav { color: #E5B52E; font-size: 14px; margin-top: 2px; }
                 }
 
 	            li:last-child { border-bottom: none; }
@@ -380,8 +390,13 @@ button {
     #top_link { background:#514d83; display:inline-block; color: #8987ab; }
 }
 
+.required { color: red; font-size: 14px; }
 
-.contact-header { font-size: 20px; margin: 5px 0;  color: @purple_text; width:85%; line-height: 20px; font-weight: normal; }
+.requiredtext { color: red; font-size: 10px; }
+
+.alert { font-weight: normal; margin-left: 1em; vertical-align: super; }
+
+.contact-header, .suggest-header { font-size: 20px; margin: 5px 0;  color: @purple_text; width:85%; line-height: 20px; font-weight: normal; }
 
 .fieldWrapper {margin-bottom:10px; font-size: 12px;
     label { color: gray; }

@@ -157,9 +157,6 @@
             $('#open_now').parent().removeClass("selected");
             $('#hours_list_container').hide();
             $('#hours_list_input').parent().removeClass("selected");
-            $("#day-until").val("No pref")
-            $("#hour-until").val("No pref")
-            $("#ampm-until").val("AM")
             default_open_at_filter();
             
             // reset location
