@@ -47,6 +47,15 @@
         }
     }
 
+    .filter_context { height: 40px; background-color: #7479A6; color: white; 
+        .actions { float: left;
+            button { border: 1px solid red;  width: 84px; height: 40px; background:#7479A6; border: none !important; margin: 0 0;
+               i { padding-left: 14px; }
+            }
+        }
+
+        #space_count_container { border-left: 1px solid @grey_dark; float: left; line-height: 40px; padding-left: 10px; }
+    }
 
     #bubble_desktop { margin: 0; display: block; float: right; height: 80px; margin-right: 15px; width: 40% }
     .bubble-inner { margin-top: 9px; height: 60px;
@@ -66,7 +75,7 @@
 #filter_container {
      position:absolute; top:120px; left:0; right:0; margin: 0; z-index: 100;
 
-     #filter_block { background: rgba(0, 0, 0, 0.9); height: 450px;
+     #filter_block { background: rgba(0, 0, 0, 0.9); height: 465px;
 
         fieldset legend { border: none; padding-top: 0;}
 

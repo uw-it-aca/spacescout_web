@@ -71,13 +71,6 @@
             				<span class="count">{{count}}</span><span class="spaces"> spaces</span>
             			</div>
             		{% endtplhandlebars %}
-<!--
-                    <div id="done-clear-group">
-                    <button id="view_results_button" class="btn btn-inverse" type="button" aria-label="Apply Filters">Done</button><br>
-                    <button id="cancel_results_button" class="btn" type="button" aria-label="Clear Filters">Clear</button>
-                    </div>
--->
-
                 </div>
             </div>
         </div>
@@ -183,7 +176,7 @@
                                             <span class="space-detail-capacity pull-right">{{#if capacity}}Seats&nbsp;{{capacity}}{{/if}}</span>
                                         {{/if}}
                                     </div>
-									<div class="space-detail-fav pull-right"><i class="fa fa-heart"></i></div>
+                                    {% if user.is_authenticated %}<div class="space-detail-fav pull-right" style="display: none;"><i class="fa fa-heart"></i></div>{% endif %}
                                     <div class="space-detail-name">{{name}}</div>
                                     <div class="space-detail-desc">{{extended_info.location_description}}</div>
                                 </button>

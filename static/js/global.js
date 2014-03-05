@@ -482,10 +482,10 @@ function reset_location_filter() {
                             $('#container').css('overflow','visible');
                         }   
                     });
-                    $('#filter_button').show();
-                    $('#space_count_container').show();
-                    $('#view_results_button').hide();
-                    $('#cancel_results_button').hide();
+//                    $('#filter_button').show();
+//                    $('#space_count_container').show();
+//                    $('#view_results_button').hide();
+//                    $('#cancel_results_button').hide();
                     $('#filter_button').focus();
                 }
                 if ($('.space-detail').is(':visible')) {
@@ -497,8 +497,8 @@ function reset_location_filter() {
         // handle clicking on the "done" button for filters
         $("#view_results_button").click(function() {
 
-            $('.count').hide();
-            $('.spaces').hide();
+//            $('.count').hide();
+//            $('.spaces').hide();
             run_custom_search();
             $.cookie('initial_load', false, { expires: 1 });
             $('#filter_button').focus();

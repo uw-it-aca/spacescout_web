@@ -119,6 +119,8 @@ Handlebars.registerHelper('ifany', function(a, b) {
 
             // clear the initial_load cookie so we can use the in-page json
             $.removeCookie('initial_load');
+            run_custom_search();
+            $('#filter_button').focus();
         });
 
 

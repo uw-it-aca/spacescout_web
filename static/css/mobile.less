@@ -76,18 +76,7 @@ button {
                 width: 160px;
             }
         }
-    }
-
-    .filter_context { height: 40px; background-color: #7479A6; color: white; 
-        .actions { float: left;
-            button { border: 1px solid red;  width: 84px; height: 40px; background:#7479A6; border: none !important; margin: 0 0;
-               i { padding-left: 14px; }
-            }
-        }
-
-        #space_count_container { border-left: 1px solid @grey_dark; float: left; line-height: 40px; padding-left: 10px; }
-    }
-    
+    }    
 }
 
 #filter-clear { display: none; position: absolute; top: 30px; border: 1px solid @grey_light; padding: 5px; width: 150px; z-index: 999; left:50%; margin-left: -75px; background-color: @grey_dark; text-align: center; animation:filter-clear-anim 1s; -webkit-animation:filter-clear-anim 1s; animation-delay:1000ms; -webkit-animation-delay:1000ms;}
@@ -486,6 +475,9 @@ select {
         .actions { float: right;
             button { width: 84px; height: 30px; background:#7479A6; border: none !important; margin: 4px 8px 0 0; padding: 4px;
                i { padding-left: 8px; }
+            }
+            #space_count_container { background: #bbb; width: 84px; line-height: 28px; height: 30px; margin-top: 4px; padding: 0 -8px 0 16px;
+                div { text-align: center; }
             }
         }
     }

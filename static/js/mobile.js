@@ -118,8 +118,8 @@
 
             // show the correct buttons
 //            $('#filter_button').hide();
-            $('#spacecount').hide();
-            //$('#space_count_container').hide();
+//            $('#spacecount').hide();
+//            $('#space_count_container').hide();
 //            $('#done-clear-group').show();
 //            $('#view_results_button').show();
 //            $('#cancel_results_button').show();
@@ -170,6 +170,8 @@
 
             // remove initial_load cookie so we can use the in-page json
             $.removeCookie('initial_load');
+            run_custom_search();
+            $('#filter_button').focus();
         });
 
         // handle view details click
