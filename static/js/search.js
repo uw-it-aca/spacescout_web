@@ -143,15 +143,12 @@ function lazyLoadSpaceImages() {
     }
 }
 
-function repopulate_filters() {
-    
-    if ($.cookie('spacescout_search_opts')) {
-        var form_opts = JSON.parse($.cookie('spacescout_search_opts'));
-
+function repopulate_filters(form_opts) {
+    if (form_opts) {
         // set types
-        for (i=0; i < form_opts["type"].length; i++) {
-            $('#'+form_opts["type"][i]).prop('checked', true);
-        }
+        $.each(form_opts["type"], function () {
+            $('#'+this).prop('checked', true);
+        });
 
         // set reservability
         if (form_opts["extended_info:reservable"]) {
@@ -247,7 +244,46 @@ function repopulate_filters() {
                 $('#'+form_opts["extended_info:food_nearby"][i]).prop('checked', true);
             }
         }
+    }
+}
 
+function clear_filter() {
+    var node;
+
+    // reset checkboxes
+    $('input[type=checkbox]').each(function() {
+        if ($(this).prop('checked')) {
+            $(this).prop('checked', false);
+            $(this).parent().removeClass("selected");
+        }
+    });
+
+    // reset capacity
+    $('#capacity').val('1');
+
+    // reset hours
+    $('#open_now').prop('checked', true);
+    $('#open_now').parent().removeClass("selected");
+    $('#hours_list_container').hide();
+    $('#hours_list_input').parent().removeClass("selected");
+    default_open_at_filter();
+
+    // reset location
+    $('#entire_campus').prop('checked', true);
+    $('#entire_campus').parent().removeClass("selected");
+    $('#building_list_container').hide();
+    $('#building_list_input').parent().removeClass("selected");
+    $('#building_list_container').children().children().children(".select2-search-choice").remove();
+    $('#building_list_container').children().children().children().children().val('Select building(s)');
+    $('#building_list_container').children().children().children().children().attr('style', "");
+
+    node = $('#e9.building-location');
+    if (node.length > 0) {
+        $.each(node.children().children(), function () {
+            var x = this;
+            this.selected = false;
+        });
+        node.trigger("liszt:updated") ;
     }
 }
 
@@ -477,9 +513,9 @@ function initialize() {
     window.spacescout_search_options = {};
     window.update_count = true;
 
-    repopulate_filters();
     if ($.cookie('spacescout_search_opts')) {
         window.spacescout_search_options = JSON.parse($.cookie('spacescout_search_opts'));
+        repopulate_filters(window.spacescout_search_options);
     }
 
     /* why are we asking for their location if we're not doing anything with it?

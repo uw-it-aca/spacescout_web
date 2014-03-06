@@ -94,6 +94,12 @@
 //    		resizeFilterBlock();
 
             if (block.css('display') == 'none') {
+                // reflect current filter
+                if (window.hasOwnProperty('spacescout_search_options')) {
+                    clear_filter();
+                    repopulate_filters(window.spacescout_search_options);
+                }
+
     		    // slide down the filter block
                 $("#filter_block").slideDown(400, function() {
                     // hide the main content (map and list) by setting a height on the main container and hiding overflow
@@ -137,41 +143,14 @@
             $('#filter-clear').slideDown(50);
             $('#filter-clear').delay(1000).fadeOut(500);
             // clear saved search options
-            if ($.cookie('spacescout_search_opts')) {
-                $.removeCookie('spacescout_search_opts');
-            }
+//            if ($.cookie('spacescout_search_opts')) {
+//                $.removeCookie('spacescout_search_opts');
+//            }
 
-            // reset checkboxes
-            $('input[type=checkbox]').each(function() {
-                if ($(this).prop('checked')) {
-                    $(this).prop('checked', false);
-                    $(this).parent().removeClass("selected");
-                }
-            });
-
-            // reset capacity
-            $('#capacity').val('1');
-
-            // reset hours
-            $('#open_now').prop('checked', true);
-            $('#open_now').parent().removeClass("selected");
-            $('#hours_list_container').hide();
-            $('#hours_list_input').parent().removeClass("selected");
-            default_open_at_filter();
-            
-            // reset location
-            $('#entire_campus').prop('checked', true);
-            $('#entire_campus').parent().removeClass("selected");
-            $('#building_list_container').hide();
-            $('#building_list_input').parent().removeClass("selected");
-            $('#building_list_container').children().children().children(".select2-search-choice").remove();
-            $('#building_list_container').children().children().children().children().val('Select building(s)');
-            $('#building_list_container').children().children().children().children().attr('style', "");
+            clear_filter();
 
             // remove initial_load cookie so we can use the in-page json
             $.removeCookie('initial_load');
-            run_custom_search();
-            $('#filter_button').focus();
         });
 
         // handle view details click

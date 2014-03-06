@@ -51,6 +51,12 @@ Handlebars.registerHelper('ifany', function(a, b) {
             var block = $("#filter_block");
 
             if (block.css('display') == 'none') {
+                // reflect current filter
+                if (window.hasOwnProperty('spacescout_search_options')) {
+                    clear_filter();
+                    repopulate_filters(window.spacescout_search_options);
+                }
+
                 block.slideDown(400, function() {
                     var icon = $('.fa-angle-double-down');
 
@@ -81,46 +87,15 @@ Handlebars.registerHelper('ifany', function(a, b) {
 
             $('#filter-clear').slideDown(50);
             $('#filter-clear').delay(1000).fadeOut(500);
+
             // clear saved search options
-            if ($.cookie('spacescout_search_opts')) {
-                $.removeCookie('spacescout_search_opts');
-            }
+//            if ($.cookie('spacescout_search_opts')) {
+//                $.removeCookie('spacescout_search_opts');
+//            }
 
-            // reset checkboxes
-            $('input[type=checkbox]').each(function() {
-                if ($(this).prop('checked')) {
-                    $(this).prop('checked', false);
-                    $(this).parent().removeClass("selected");
-                }
-            });
-
-            // reset capacity
-            $('#capacity').val('1');
-
-            // reset hours
-            $('#open_now').prop('checked', true);
-            $('#open_now').parent().removeClass("selected");
-            $('#hours_list_container').hide();
-            $('#hours_list_input').parent().removeClass("selected");
-            default_open_at_filter();
-
-            // reset location
-            $('#entire_campus').prop('checked', true);
-            $('#entire_campus').parent().removeClass("selected");
-            $('#building_list_container').hide();
-            $('#building_list_input').parent().removeClass("selected");
-            $('#building_list_container').children().children().children(".select2-search-choice").remove();
-            $('#building_list_container').children().children().children().children().val('Select building(s)');
-            $('#building_list_container').children().children().children().children().attr('style', "");
-            for (var i = 0; i < $('#e9.building-location').children().children().length; i++) {
-                $('#e9.building-location').children().children()[i].selected = false;
-            }   
-            $('#e9.building-location').trigger("liszt:updated") 
-
+            clear_filter();
             // clear the initial_load cookie so we can use the in-page json
             $.removeCookie('initial_load');
-            run_custom_search();
-            $('#filter_button').focus();
         });
 
 

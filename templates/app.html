@@ -88,7 +88,7 @@
                     </div>
                   </div>
                   <div class="inner-row">
-                    <button id="view_results_button" class="btn btn-inverse" type="button" aria-label="Apply Filters">Apply</button>
+                    <button id="view_results_button" class="btn" type="button" aria-label="Apply Filters">Apply</button>
                     <button id="cancel_results_button" class="btn" type="button" aria-label="Clear Filters">Reset</button>
                   </div>
                 </div>
@@ -104,7 +104,7 @@
           <div id="space_count_container" aria-labelledby="spaces_match_header" role="status"></div>
 
           {% tplhandlebars "space_count" %}
-          {% trans 'showing' %} <span class="count">{{count}}</span> {% trans 'spaces' %}
+          <span class="count">{{count}}</span> {% trans 'spaces' %}
           {% endtplhandlebars %}
         </div>
     </div>

@@ -93,7 +93,7 @@
                     self.update();
                 },
                 error: function (xhr, textStatus, errorThrown) {
-                    alert('Unable to load favorites: ' + xhr.responseText);
+                    console.log('Unable to load favorites: ' + xhr.responseText);
                 }
             });
         },
@@ -151,7 +151,7 @@
                         }
                     },
                     error: function (xhr, textStatus, errorThrown) {
-                        alert('Unable to set favorite: ' + xhr.responseText);
+                        console.log('Unable to set favorite: ' + xhr.responseText);
                     }
                 });
             }
@@ -174,7 +174,7 @@
                         }
                     },
                     error: function (xhr, textStatus, errorThrown) {
-                        alert('Unable to unset favorite: ' + xhr.responseText);
+                        console.log('Unable to unset favorite: ' + xhr.responseText);
                     }
                 });
             }
