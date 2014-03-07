@@ -146,9 +146,11 @@ function lazyLoadSpaceImages() {
 function repopulate_filters(form_opts) {
     if (form_opts) {
         // set types
-        $.each(form_opts["type"], function () {
-            $('#'+this).prop('checked', true);
-        });
+        if (form_opts.hasOwnProperty('type')) {
+            $.each(form_opts["type"], function () {
+                $('#'+this).prop('checked', true);
+            });
+        }
 
         // set reservability
         if (form_opts["extended_info:reservable"]) {
@@ -227,7 +229,7 @@ function repopulate_filters(form_opts) {
         }
 
         // set noise level
-        if (form_opts["extended_info:noise_level"]) {
+        if (form_opts.hasOwnProperty("extended_info:noise_level")) {
             for (i=0; i < form_opts["extended_info:noise_level"].length; i++) {
                 $('#'+form_opts["extended_info:noise_level"][i]).prop('checked', true);
             }
@@ -239,7 +241,7 @@ function repopulate_filters(form_opts) {
         }
 
         // set food/coffee
-        if (form_opts["extended_info:food_nearby"]) {
+        if (form_opts.hasOwnProperty("extended_info:food_nearby")) {
             for (i=0; i < form_opts["extended_info:food_nearby"].length; i++) {
                 $('#'+form_opts["extended_info:food_nearby"][i]).prop('checked', true);
             }

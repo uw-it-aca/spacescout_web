@@ -32,16 +32,19 @@
             'favorites_card_template': '#favorites_card'
         },
 
-        favorites: [],
+        favorites: undefined,
 
         update_count: function () {
-            var self = this;
-            var source = $(self.k.favorites_count_template).html().trim();
-            var template = Handlebars.compile(source);
+            var self = this,
+                source = $(self.k.favorites_count_template),
+                template;
 
-            $(this.k.favorites_count_container).each(function () {
-                $(this).html(template({count: self.favorites.length}));
-            });
+            if (source.length) {
+                template = Handlebars.compile(source.html().trim());
+                $(this.k.favorites_count_container).each(function () {
+                    $(this).html(template({count: self.favorites.length}));
+                });
+            }
         },
 
         update_search_result: function () {
@@ -86,6 +89,7 @@
 
         load: function () {
             var self = this;
+
             $.ajax({
                 url: 'api/v1/user/me/favorites',
                 success: function (data) {
@@ -105,15 +109,35 @@
         },
 
         is_favorite: function (id) {
-            return (this.index(id) >= 0);
+            var fav = false;
+
+            if (this.favorites) {
+                fav = (this.index(id) >= 0);
+            } else {
+                $.ajax({
+                    url: 'api/v1/user/me/favorite/' + id,
+                    type: "GET",
+                    async: false,
+                    success: function (data) {
+                        fav = data;
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        console.log('Unable to get favorite: ' + xhr.responseText);
+                    }
+                });
+            }
+
+            return fav;
         },
 
         index: function (id) {
             var i;
 
-            for (i = 0; i < this.favorites.length; i += 1) {
-                if (this.favorites[i].id == id) {
-                    return i;
+            if (this.favorites) {
+                for (i = 0; i < this.favorites.length; i += 1) {
+                    if (this.favorites[i].id == id) {
+                        return i;
+                    }
                 }
             }
 
@@ -141,10 +165,13 @@
                     data: JSON.stringify({}),
                     type: "PUT",
                     success: function (data) {
-                        self.favorites.push({
-                            id: id,
-                            incomplete: true
-                        });
+                        if (self.favorites) {
+                            self.favorites.push({
+                                id: id,
+                                incomplete: true
+                            });
+                        }
+
                         self.update_count();
                         if (on_set) {
                             on_set.call();
@@ -158,26 +185,30 @@
         },
 
         clear: function (id, on_clear) {
-            var self = this,
-                index = this.index(id);
+            var self = this;
 
-            if (index >= 0) {
-                $.ajax({
-                    url: 'api/v1/user/me/favorite/' + id,
-                    dataType: 'json',
-                    type: "DELETE",
-                    success: function (data) {
-                        self.favorites.splice(index, 1);
-                        self.update_count();
-                        if (on_clear) {
-                            on_clear.call();
+            $.ajax({
+                url: 'api/v1/user/me/favorite/' + id,
+                dataType: 'json',
+                type: "DELETE",
+                success: function (data) {
+                    if (self.favorites) {
+                        var index = self.index(id);
+
+                        if (index >= 0) {
+                            self.favorites.splice(index, 1);
                         }
-                    },
-                    error: function (xhr, textStatus, errorThrown) {
-                        console.log('Unable to unset favorite: ' + xhr.responseText);
                     }
-                });
-            }
+
+                    self.update_count();
+                    if (on_clear) {
+                        on_clear.call();
+                    }
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    console.log('Unable to unset favorite: ' + xhr.responseText);
+                }
+            });
         }
     };
 

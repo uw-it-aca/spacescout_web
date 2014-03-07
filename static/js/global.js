@@ -318,6 +318,8 @@ function default_open_at_filter() {
 function format_location_filter(data) {
     var source = $('#building_list').html();
     var template = Handlebars.compile(source);
+    var node;
+
     if (source != null) {
         $('#building_list_container').html(template({data: data}));
     }
@@ -333,7 +335,12 @@ function format_location_filter(data) {
             });
         }
     }
-    $(".chzn-select").chosen({width: "98%"});
+
+    node = $(".chzn-select");
+    if (node.length > 0 && node.chosen) {
+        node.chosen({width: "98%"});
+    }
+
     $('#e9.building-location').trigger("liszt:updated");
 }
 

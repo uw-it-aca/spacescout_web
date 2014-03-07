@@ -46,8 +46,11 @@ def API(request, spot_id=None):
     client = oauth2.Client(consumer)
 
     if request.META['REQUEST_METHOD'] == 'GET':
+        if spot_id:
+            url = "{0}/api/v1/user/me/favorite/{1}".format(settings.SS_WEB_SERVER_HOST, spot_id)
+        else:
+            url = "{0}/api/v1/user/me/favorites".format(settings.SS_WEB_SERVER_HOST)
 
-        url = "{0}/api/v1/user/me/favorites".format(settings.SS_WEB_SERVER_HOST)
         method = 'GET'
         body = ''
 
