@@ -83,7 +83,7 @@
                     node.append(template(this));
                 });
             } else {
-                node.html('<em>Sorry Charlie</em>');
+                console.log('No favorites node');
             }
         },
 

@@ -236,27 +236,29 @@ Handlebars.registerHelper('ifany', function(a, b) {
 
            // set up favorites
            var fav_icon = $('.space-detail-fav');
-           if (window.spacescout_favorites.is_favorite(data.id)) {
-               fav_icon.addClass('space-detail-fav-set');
-           } else {
-               fav_icon.removeClass('space-detail-fav-set');
+
+           if (fav_icon.is(':visible')) {           
+               if (window.spacescout_favorites.is_favorite(data.id)) {
+                   fav_icon.addClass('space-detail-fav-set');
+               } else {
+                   fav_icon.removeClass('space-detail-fav-set');
+               }
+
+               fav_icon.unbind();
+               fav_icon.click(function (e) {
+                   var list_item = $('button#' + data.id + ' .space-detail-fav');
+
+                   window.spacescout_favorites.toggle(data.id,
+                                                      function () {
+                                                          fav_icon.addClass('space-detail-fav-set');
+                                                          list_item.show();
+                                                      },
+                                                      function () {
+                                                          fav_icon.removeClass('space-detail-fav-set');
+                                                          list_item.hide();
+                                                      });
+               });
            }
-
-           fav_icon.unbind();
-           fav_icon.click(function (e) {
-               var list_item = $('button#' + data.id + ' .space-detail-fav');
-
-               window.spacescout_favorites.toggle(data.id,
-                                                  function () {
-                                                      fav_icon.addClass('space-detail-fav-set');
-                                                      list_item.show();
-                                                  },
-                                                  function () {
-                                                      fav_icon.removeClass('space-detail-fav-set');
-                                                      list_item.hide();
-                                                  });
-
-           });
 
            // Set focus on details container
            $('.space-detail-inner').focus();

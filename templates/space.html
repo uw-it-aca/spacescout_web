@@ -11,26 +11,28 @@
 
 
     // set up favorites
-    (function () {
+    if (isMobile) {
         var fav_icon = $('.space-detail-fav');
 
-        if (window.spacescout_favorites.is_favorite({{ id }})) {
-            fav_icon.addClass('space-detail-fav-set');
-        } else {
-            fav_icon.removeClass('space-detail-fav-set');
-        }
-
-        fav_icon.unbind();
-        fav_icon.click(function (e) {
-            window.spacescout_favorites.toggle({{ id }},
-            function () {
+        if (fav_icon.is(':visible')) {
+            if (window.spacescout_favorites.is_favorite({{ id }})) {
                 fav_icon.addClass('space-detail-fav-set');
-            },
-            function () {
+            } else {
                 fav_icon.removeClass('space-detail-fav-set');
+            }
+    
+            fav_icon.unbind();
+            fav_icon.click(function (e) {
+                window.spacescout_favorites.toggle({{ id }},
+                function () {
+                    fav_icon.addClass('space-detail-fav-set');
+                },
+                function () {
+                    fav_icon.removeClass('space-detail-fav-set');
+                });
             });
-        });
-    })();
+        }
+    }
 </script>
 {% endblock %}
 

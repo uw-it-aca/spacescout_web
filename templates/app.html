@@ -62,7 +62,7 @@
                 </span>
                 {% endifnotequal %}
             </div>
-            <!-- hidden for now, until cool stuff for logged in users is finished. -->
+            <!-- hidden for now, until cool stuff for logged in users is finished.
             <div class="user_context">
                 {% if user.is_authenticated %}
                   <span>{% trans 'greeting' %}&nbsp;{{ request.user }}</span>
@@ -74,30 +74,10 @@
                   {% trans 'salutation' %}&nbsp;<a href="login?next={% firstof request.path '/' %}">{% trans 'login' %}</a>
                 {% endif %}
             </div>
-            <!-- -->
+            -->
         </div>
-        <h2 id="filter_group_header" class="visuallyhidden">Find Study Spaces by Specific Criteria</h2>
         <div class="filter_context" role= "search" aria-labelledby="filter_group_header">
-          <div id="filter_container" aria-labelledby="filters_header" aria-controls="space_count_container">
-            <form>
-              <div id="filter_block" style="display:none;">
-                <h3 id="filters_header" class="visuallyhidden">Filter By:</h3>
-                <div class="inner clearfix">
-                  <div class="inner-column">
-                    <div id="filter-clear">Filters Cleared</div>
-                    <div class="inner-block-left">
-					  {% include "filters.html" %}
-                    </div>
-                  </div>
-                  <div class="inner-row">
-                    <button id="view_results_button" class="btn" type="button" aria-label="Apply Filters">Apply</button>
-                    <button id="cancel_results_button" class="btn" type="button" aria-label="Clear Filters">Reset</button>
-                  </div>
-                </div>
-              </div>
-            </form>
-          </div>
-
+          <h2 id="filter_group_header" class="visuallyhidden">Find Study Spaces by Specific Criteria</h2>
           <button id="filter_button" class="btn btn-inverse" type="button" aria-label="Filter settings..." aria-owns="filter_container" >{%trans 'filters' %}<i class="fa fa-angle-double-down"></i></button>
 
           <h3 id="spaces_match_header" class="visuallyhidden">Your current filters return:</h3>
@@ -107,6 +87,25 @@
           <span class="count">{{count}}</span> {% trans 'spaces' %}
           {% endtplhandlebars %}
         </div>
+      </div>
+      <div id="filter_container" aria-labelledby="filters_header" aria-controls="space_count_container">
+       <form>
+         <div id="filter_block" style="display:none;">
+           <h3 id="filters_header" class="visuallyhidden">Filter By:</h3>
+           <div class="inner clearfix">
+             <div class="inner-column">
+               <div id="filter-clear">Filters Cleared</div>
+               <div class="inner-block-left">
+   			  {% include "filters.html" %}
+               </div>
+             </div>
+             <div class="inner-row">
+               <button id="view_results_button" class="btn" type="button" aria-label="Apply Filters">Apply</button>
+               <button id="cancel_results_button" class="btn" type="button" aria-label="Clear Filters">Reset</button>
+             </div>
+           </div>
+         </div>
+       </form>
     </div>
     <div id="main_content" class="clearfix" role="main" aria-labelledby="app_header">
 <h2 id="map_header" class="visuallyhidden" aria-hidden="true">Map of Spaces</h2>
