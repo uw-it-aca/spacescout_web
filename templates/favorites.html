@@ -15,7 +15,7 @@
 
     window.spacescout_favorites.load(function (card, fav) {
         var now = new Date(),
-            hour = now.getHours() + 1,
+            hour = now.getHours(),
             minute = now.getMinutes(),
             day = weekday_from_day(now.getDay()).toLowerCase(),
             formatted = 'Closed',
@@ -110,6 +110,8 @@
 
             <div class="logo">
                 <h1 id="app_header" class="visuallyhidden">SPACESCOUT&trade;</h1>
+            </div>
+            <div class="location_container">
                 {% ifnotequal locations|length 1 %}
                 <span role="navigation" aria-labelledby="location_select_heading">
                 <label id="location_select_heading" for="location_select"  class="visuallyhidden">Select campus:</label>
