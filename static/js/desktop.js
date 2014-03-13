@@ -125,7 +125,7 @@ Handlebars.registerHelper('ifany', function(a, b) {
 
         });
 
-        $('#space_detail_container .close').live('click', function(e){
+        $('.space-detail-container .close').live('click', function(e){
             e.preventDefault();
             closeSpaceDetails();
         });
@@ -156,8 +156,8 @@ Handlebars.registerHelper('ifany', function(a, b) {
         desktopContent();
 
         // if the space details is already open
-        if ($('#space_detail_container').is(":visible")) {
-            $('#space_detail_container').height($('#map_canvas').height());
+        if ($('.space-detail-container').is(":visible")) {
+            $('.space-detail-container').height($('#map_canvas').height());
             $('.space-detail-body').height($('.space-detail').height() - 98);
 
             resizeCarouselMapContainer();
@@ -179,12 +179,12 @@ Handlebars.registerHelper('ifany', function(a, b) {
            data["has_resources"] = ( data.extended_info.has_computers != null || data.extended_info.has_displays != null || data.extended_info.has_outlets != null || data.extended_info.has_printing != null || data.extended_info.has_projector != null || data.extended_info.has_scanner != null || data.extended_info.has_whiteboards != null );
 
     	   // remove any open details
-    	   if (!$('#space_detail_container').is(':visible')) {
+    	   if (!$('.space-detail-container').is(':visible')) {
                var open = false;
            }else {
                var open = true;
            }
-           $('#space_detail_container').remove();
+           $('.space-detail-container').remove();
 
         	// build the template
     	   var source = $('#space_details').html();
@@ -194,11 +194,11 @@ Handlebars.registerHelper('ifany', function(a, b) {
     	   // set/reset initial state
 
            $('.space-detail-inner').show();
-           $('#space_detail_container').show();
+           $('.space-detail-container').show();
 
            //set focus on the closing x
 
-           $('#space_detail_container').height($('#map_canvas').height());
+           $('.space-detail-container').height($('#map_canvas').height());
            $('.space-detail-body').height($('.space-detail').height() - 98);
 
            //TODO: make these identical anonymous callback functions a real named function.  Had unknown scope problems doing this before
@@ -235,11 +235,14 @@ Handlebars.registerHelper('ifany', function(a, b) {
            replaceUrls();
 
            // set up favorites
-           var fav_icon = $('.space-detail-fav');
+           var fav_icon = $('.space-detail-container .space-detail-fav');
 
-           if (fav_icon.is(':visible')) {           
+           if (fav_icon.is(':visible')) {
+               var title = 'Favorite this space';
+
                if (window.spacescout_favorites.is_favorite(data.id)) {
                    fav_icon.addClass('space-detail-fav-set');
+                   title = 'Remove this space from favorites';
                } else {
                    fav_icon.removeClass('space-detail-fav-set');
                }
@@ -252,12 +255,24 @@ Handlebars.registerHelper('ifany', function(a, b) {
                                                       function () {
                                                           fav_icon.addClass('space-detail-fav-set');
                                                           list_item.show();
+                                                          fav_icon.tooltip('hide');
+                                                          fav_icon.data('tooltip', false);
+                                                          fav_icon.tooltip({ title: 'Remove this space from Favorites',
+                                                                             placement: 'right' });
+                                                          fav_icon.tooltip('show');
                                                       },
                                                       function () {
                                                           fav_icon.removeClass('space-detail-fav-set');
                                                           list_item.hide();
+                                                          fav_icon.tooltip('hide');
+                                                          fav_icon.data('tooltip', false);
+                                                          fav_icon.tooltip({ title: 'Favorite this space',
+                                                                             placement: 'right' });
+                                                          fav_icon.tooltip('show');
                                                       });
                });
+
+               fav_icon.tooltip({ placement: 'right', title: title});
            }
 
            // Set focus on details container

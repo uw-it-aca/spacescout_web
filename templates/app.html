@@ -34,7 +34,9 @@
         window.default_zoom = {{ zoom_level }};
     }
 
-    window.spacescout_csrf_token = '{{ csrf_token }}';
+    $.ajaxSetup({
+        headers: { "X-CSRFToken": '{{ csrf_token }}' }
+    });
 
 </script>
 {% endblock %}
@@ -117,7 +119,7 @@
         {% endtplhandlebars %}
 
         {% tplhandlebars "space_details" %}
-            <div id="space_detail_container" class="">
+            <div class="space-detail-container">
                 <div class="space-detail">
                     <div class="space-detail-inner" id="detail_container_{{id}}" aria-labelledby="space-detail-name" tabindex="0">
                         <div class="space-detail-header">

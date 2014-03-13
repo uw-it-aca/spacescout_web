@@ -428,10 +428,10 @@ function run_custom_search() {
     }
 
     // close space detail if visible (desktop)
-    if ($('#space_detail_container').is(":visible")) {
+    if ($('.space-detail-container').is(":visible")) {
         $('#info_items li').removeClass('selected');
         $('.space-detail').hide("slide", { direction: "right" }, 700, function() {
-        	   $('#space_detail_container').remove();
+        	   $('.space-detail-container').remove();
         });
     }
     
@@ -651,7 +651,7 @@ function reload_on_idle() {
         load_data(initial_json);
         window.initial_load = false;
     // only fetch data as long as space details are NOT being shown
-    } else if (!$('#space_detail_container').is(":visible")) {
+    } else if (!$('.space-detail-container').is(":visible")) {
         fetch_data();
     }
 

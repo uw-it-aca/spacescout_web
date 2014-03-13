@@ -282,7 +282,6 @@ function sortDays(days) {
 
 function default_open_at_filter() {
     // set the default open_at filter to close to now
-    var weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     var date = new Date();
     var hour = date.getHours();
     var min = date.getMinutes();
@@ -307,12 +306,18 @@ function default_open_at_filter() {
         hour = hour-12;
     }
     hour = ""+hour+":"+min;
-    $("#day-from").val(weekdays[date.getDay()]);
+    $("#day-from").val(weekday_from_day(date.getDay()));
     $("#hour-from").val(hour);
 
 
-    $("#day-until").val(weekdays[date.getDay()]);
+    $("#day-until").val(weekday_from_day(date.getDay()));
     $("#hour-until").val(hour);
+}
+
+function weekday_from_day(day) {
+    var weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+    return (day >=0 && day <= 6) ? weekdays[day] : '';
 }
 
 function format_location_filter(data) {
@@ -657,7 +662,7 @@ function closeSpaceDetails() {
     var the_spot_id = $('.space-detail-inner').attr("id");
     the_spot_id = "#" + the_spot_id.replace(/[^0-9]/g, '');
     $('.space-detail').hide("slide", { direction: "right" }, 400, function() {
-        $('#space_detail_container').remove();
+        $('.space-detail-container').remove();
     });
 
         // deselect selected space in list

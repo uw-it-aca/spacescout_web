@@ -1,9 +1,103 @@
 {% extends "base-desktop.html" %}
 
+{% block extra_compress_css %}
+<link rel="stylesheet" type="text/less" href="{{ STATIC_URL }}css/favorites.less" media="screen, handheld" />
+{% endblock %}
+
 {% block extra_css %}
 {% endblock %}
 
 {% block extra_js %}
+<script type="text/javascript">
+    $.ajaxSetup({
+        headers: { "X-CSRFToken": '{{ csrf_token }}' }
+    });
+
+    window.spacescout_favorites.load(function (card, fav) {
+        var now = new Date(),
+            hour = now.getHours() + 1,
+            minute = now.getMinutes(),
+            day = weekday_from_day(now.getDay()).toLowerCase(),
+            formatted = 'Closed',
+            o, c;
+
+        if (fav.available_hours[day].length > 0) {
+            $.each(fav.available_hours[day], function() {
+                this[0] = this[0].replace(/^0+/, '');
+                this[1] = this[1].replace(/^0+/, '');
+                o = this[0].split(':');
+                c = this[1].split(':');
+
+                if ((hour > parseInt(o[0]) && hour < parseInt(c[0]))
+                    || (hour == parseInt(o[0]) && minute > parseInt(o[1]))
+                    || (hour == parseInt(c[0]) && minute < parseInt(c[1]))) {
+                    $('.space-detail-is-open', card).show();
+                }
+            });
+
+            formatted = to12Hour(fav.available_hours[day]).join(", ");
+        }
+
+        $('.space-info-hours-today span', card).html(formatted);
+
+        $('.space-info-more-detail a', card).click(function (e) {
+            var more_div = $(e.target).parent();
+
+            more_div.slideUp('fast');
+            more_div.next().slideDown('fast');
+        });
+
+        $('.space-info-less-detail a', card).click(function (e) {
+            var ul = $(e.target).closest('ul');
+
+            ul.slideUp('fast');
+            ul.prev().slideDown('fast');
+        });
+
+        $('.space-detail-fav', card).tooltip({ placement: 'right',
+                                               title: 'Remove this space from Favorites' });
+        $('.space-detail-fav', card).click(function (e) {
+            var id = parseInt($(this).attr('data-id'));
+            var container = $(this).closest('.space-detail-container');
+            var tooltip = $(this).tooltip('hide');
+
+            window.spacescout_favorites.clear(id, function () {
+                container.hide({ effect: 'fade', duration: 800,  complete: function () { this.remove(); } });
+            });
+        });
+
+        var bld_code = fav.location.building_name.match(/.*\(([A-Z ]+)\)$/)
+        if (bld_code) {
+            $('.space-detail-building', card).html(bld_code[1]);
+        } else {
+            $('.space-detail-building', card).html(fav.location.building_name);
+        }
+
+        // Load image carousel
+        if (fav.hasOwnProperty('images') && fav.images.length > 0) {
+            var template = Handlebars.compile($('#images_template').html());
+            var data = [];
+            $.each(fav.images, function () {
+                data.push({ id: fav.id, image_id: this.id });
+            });
+
+            $('.carousel-inner', card).html(template({ data: data }));
+        } else {
+            var template = Handlebars.compile($('#no_images_template').html());
+            $('.carousel-inner', card).html(template());
+        }
+
+        if (fav.has_reservation_notes) {
+            var url = fav.extended_info.reservation_notes.match(/(http:\/\/[^\s]+)/);
+
+            if (url) {
+               var template = Handlebars.compile($('#reservation_cue').html());
+               $('.space-info-reservation-cue', card).html(template({ url: url[1] })).show();
+            }
+        }
+
+    });
+</script>
 {% endblock %}
 
 {% block content %}
@@ -30,12 +124,10 @@
             <div class="user_context">
                 {% if user.is_authenticated %}
                   <span>{% trans 'greeting' %}&nbsp;{{ request.user }}</span>
-                  <a href="/">{% trans 'favorites' %} (<span class="favorites_count_container">0</span>)</a>
-                  {% tplhandlebars "favorites_count" %}
-                  {{count}}
-                  {% endtplhandlebars %}
+                  <a href="/">{% trans 'favorites' %} (<span class="favorites_count_container">{{ total }}</span>)</a>
+                  {% tplhandlebars "favorites_count" %}{{count}}{% endtplhandlebars %}
                   <span>|</span>
-                  <a href="logout?next={% firstof request.path '/' %}">{% trans 'logout' %}</a>
+                  <a href="logout?next=/">{% trans 'logout' %}</a>
                 {% else %}
                   {% trans 'salutation' %}&nbsp;<a href="login?next={% firstof request.path '/' %}">{% trans 'login' %}</a>
                 {% endif %}
@@ -50,51 +142,53 @@
           </div>
 
           <h1>Favorites</h1>
-          <h4><span class="favorites_count_container">0</span> favorite spaces <span class="comment">(organized by the date you added)</span></h4>
-          <div id="favorites_card_container" class="cards"></div>
-          {% tplhandlebars "favorites_card" %}
-          <div class="favorite-detail">
-            <div class="favorite-detail-inner" id="detail_container_{{id}}" aria-labelledby="favorite-detail-name" tabindex="0">
-              <div class="favorite-detail-header">
-                <div class="favorite-detail-fav favorite-detail-fav-set pull-left"><i class="fa fa-heart"></i></div>
-                <h2 id="favorite-detail-name" class="favorite-detail-name"><span class="visuallyhidden">Space Details:</span> {{name}}</h2>
-                <div class="favorite-detail-type">{{type}} {{#if capacity }}<span class="favorite-detail-capacity">[Seats&nbsp;{{capacity}}]</span>{{/if}}</div>
-              </div>
-                        <div class="favorite-detail-body">
-                            <div class="clearfix">
-                                <div class="favorite-detail-body-inner pull-left">
+          <h4><span class="favorites_count_container">{{ total }}</span> favorite spaces <span class="comment">(organized by the date you added)</span></h4>
+          <div id="space_details_page" class="favorites_card_container">
+            {% tplhandlebars "favorites_card" %}
+            <div class="space-detail-container">
+                <div class="space-detail">
+                    <div class="space-detail-inner">
 
-                                    <div class="space-image">
-                                        <div id="spaceCarouselContainer" class="image-container" role="tabpanel">
-                                            <div id="myCarousel" class="carousel slide">
-                                              <!-- Carousel items -->
-                                              <div class="carousel-inner">
-
-                                                <!-- TODO: do an each loop of some sort -->
-                                                {{ carouselimages this }}
-
-                                              </div>
-                                              <!-- Carousel nav -->
-                                              <a class="carousel-control left" href="#myCarousel" title="previous image" data-slide="prev">&lsaquo;</a>
-                                              <a class="carousel-control right" href="#myCarousel" title="next image" data-slide="next">&rsaquo;</a>
-                                            </div>
-                                        </div>
-                                        <div id="spaceMap" class="map-container" style="display:none;" role="tabpanel">map goes here</div>
+                        <div id="spot_{{ id }}" class="space-detail-header clearfix">
+                          <h1 class="visuallyhidden">SPACESCOUT&trade;</h1>
+                          <div class="space-detail-building">{{ location.building_code }}</div>
+                          <div id="name-type-block" class="pull-left">
+                            <div class="space-detail-fav pull-left space-detail-fav-set" data-id="{{ id }}"><i class="fa fa-heart"></i></div>
+                            <h2 class="space-detail-name"><span class="visuallyhidden">Space Details: </span>{{ name }}</h2>
+      	                    <div class="space-detail-type">{{ type }} {{#if capacity }}<span class="space-detail-capacity">[Seats&nbsp;{{capacity}}]</span>{{/if}}</div>
+                            <div class="space-detail-is-open" style="display: none;">OPEN</div>
+                          </div>
+                        </div>
+                        <div class="space-detail-body">
+                            <div class="space-detail-body-inner">
+                                <div id="spaceCarouselContainer" class="image-container" role="tabpanel">
+                                    <div id="spaceCarousel" class="carousel slide">
+                                      <!-- Carousel items -->
+                                      <div class="carousel-inner"></div
+                                      <!-- Carousel nav -->
+                                      <a class="carousel-control left" href="#spaceCarousel" data-slide="prev">&lsaquo;</a>
+                                      <a class="carousel-control right" href="#spaceCarousel" data-slide="next">&rsaquo;</a>
                                     </div>
-
                                 </div>
-                                <div class="space-image-map-buttons btn-group pull-left" data-toggle="buttons-radio" role="tablist">
-                                  <button id="carouselControl" class="btn active" role="tab" aria-selected="true" aria-controls="spaceCarouselContainer"><span>Image gallery</span></button>
-                                  <button id="mapControl" class="btn" role="tab" aria-controls="spaceMap" aria-selected="false"><span>Show this space on a map</span></button>
-                                </div>
-
+                                <div id="spaceMap" class="map-container" style="display:none;" role="tabpanel"></div>
                             </div>
+                        </div>
 
-                            <div style="margin: 0 20px 20px 20px;">
+                        <div class="space-image-map-buttons btn-group" data-toggle="buttons-radio" role="tablist">
+                          <button id="carouselControl" class="btn active" role="tab" aria-controls="spaceCarouselContainer" aria-selected="true"><span>Image gallery</span></button>
+                          <button id="mapControl" class="btn" role="tab" aria-controls="spaceMap" aria-selected="false"><span>Show this space on a map</span></button>
+                        </div>
 
-                                
-                                <div class="space-info">
-                                     <ul>
+
+                        <div class="space-info">
+                          <div class="space-info-hours-today">
+                            Today's hours: <span></span>
+                          </div>
+                          <div class="space-info-reservation-cue" style="display: none;"></div>
+                          <div class="space-info-more-detail">
+                            <a href="javascript:void(0);"><i class="fa fa-angle-double-down"></i> Show more detail about this space</a>
+                          </div>
+                          <ul style="display: none;">
 
                                         {{#if has_notes }}
                                         <li class="clearfix">
@@ -123,8 +217,14 @@
                                             {{/if}}
                                         {{/if}}
 
-                                        <li class="clearfix"><h3 class="space-info-label pull-left">Hours</h3><div class="space-info-detail pull-left">{{formatHours available_hours}}</div></li>
-                                        <li class="clearfix"><h3 class="space-info-label pull-left">Location</h3><div class="space-info-detail pull-left">{{extended_info.location_description}}</div></li>
+                                        <li class="clearfix"><h3 class="space-info-label pull-left">Hours</h3>
+                                          <div class="space-info-detail pull-left">{{formatHours available_hours}}</div>
+                                        </li>
+
+                                        <li class="clearfix"><h3 class="space-info-label pull-left">Location</h3>
+                                          <div class="space-info-detail pull-left">{{extended_info.location_description}}</div>
+                                        </li>
+
                                         {{#if has_resources }}
                                         <li class="clearfix">
                                             <h3 class="space-info-label pull-left">Resources</h3>
@@ -145,23 +245,7 @@
                                         {{#if extended_info.noise_level }}
                                         <li class="clearfix">
                                             <h3 class="space-info-label pull-left">Noise Level</h3>
-                                            <div class="space-info-detail pull-left">
-
-                                                {{#compare extended_info.noise_level "quiet" operator="=="}}
-                                                {% verbatim %}{% trans 'quiet' %}{% endverbatim %}
-                                                  {{^}}
-                                                        {{#compare extended_info.noise_level "moderate" operator="=="}}
-                                                        {% verbatim %}{% trans 'moderate' %}{% endverbatim %}
-                                                        {{^}}
-                                                            {{#compare extended_info.noise_level "silent" operator="=="}}
-                                                            {% verbatim %}{% trans 'silent' %}{% endverbatim %}
-                                                            {{^}}
-                                                            {% verbatim %}{% trans 'variable' %}{% endverbatim %}
-                                                            {{/compare}}
-                                                        {{/compare}}
-                                                  {{/compare}}
-
-                                            </div>
+                                            <div class="space-info-detail pull-left">{{ extended_info.noise_level }}</div>
                                         </li>
                                         {{/if}}
 
@@ -173,38 +257,59 @@
                                         {{#if extended_info.food_nearby }}
                                         <li class="clearfix">
                                             <h3 class="space-info-label pull-left">Food/Coffee</h3>
-                                            <div class="space-info-detail pull-left">
-
-                                              {{#compare extended_info.food_nearby "building" operator="=="}}
-                                                 {% verbatim %}{% trans 'building' %}{% endverbatim %}
-                                              {{^}}
-                                                    {{#compare extended_info.food_nearby "space" operator="=="}}
-                                                    {% verbatim %}{% trans 'space' %}{% endverbatim %}
-                                                    {{^}}
-                                                    {% verbatim %}{% trans 'neighboring' %}{% endverbatim %}
-                                                    {{/compare}}
-                                              {{/compare}}
-
-                                            </div>
+                                            <div class="space-info-detail pull-left">{{ extended_info.food_nearby }}</div>
                                         </li>
                                         {{/if}}
-
-                                    </ul>
-                                </div>
-
-                                <div class="favorite-detail-footer">This space was last updated on {{last_modified}} by<br/> {% if organization %}{{ organization }}{%else%}University of Washington Information Technology{% endif %}</div>
-
-                            </div>
+                            <li>
+                              <div class="space-info-less-detail">
+                                <a href="javascript:void(0);"><i class="fa fa-angle-double-up"></i> Show less detail about this space</a>
+                              </div>
+                            </li>
+                          </ul>
                         </div>
+
                     </div>
                 </div>
-        {% endtplhandlebars %}
+            </div>
+            {% endtplhandlebars %}
+            <div id="space-detail-blank" class="space-detail-container">
+                <div class="space-detail">
+                    <div class="space-detail-inner">
+                      <i class="fa fa-heart fa-4x"></i>Your next favorite space will be here.
+                      <br /><a href="/">Go to space list</a>
+                    </div>
+                </div>
+            </div>
+          </div>
 
           <div class="footer">
             <a href="#"><span>Any favorite space is missing? </span>Go to FAQ</a>
           </div>
         </div>
     </div>
+
+    {% tplhandlebars "mobile_hours" %}
+    <h3 class="space-info-label pull-left">Hours</h3><div class="space-info-detail pull-left">{{formatHours available_hours}}</div>
+    {% endtplhandlebars %}
+
+    {% tplhandlebars "images_template" %}
+    {{# each data }}
+    <div class="carousel-inner-image item">
+      <div class="carousel-inner-image-inner" style="background:url('/space/{{ id }}/image/{{ image_id }}/thumb/constrain/width:268,height:180') no-repeat 50% 50%; background-size:100%;">&nbsp;</div>
+    </div>
+    {{/each}}
+    {% endtplhandlebars %}
+
+    {% tplhandlebars "no_images_template" %}
+    <div class="carousel-inner-image item">
+      <div class="carousel-inner-image-inner" style="background:url('{{ STATIC_URL }}img/placeholder_noImage_bw.png') no-repeat 50% 50%; background-size:100%;">&nbsp;</div>
+    </div>
+    {% endtplhandlebars %}
+    {% tplhandlebars "reservation_cue" %}
+    <a href="{{ url }}" target="_blank">Reserve this space online... <i class="fa fa-external-link"></i></a>
+    {% endtplhandlebars %}
+
+
 
 {% if user.is_authenticated %}
 <script type="text/javascript">

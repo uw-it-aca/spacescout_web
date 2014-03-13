@@ -4,7 +4,7 @@
 @grey_light: #b2b2b2;
 @grey_dark: #4d4d4d;
 @grey_border: #d6d6d6;
-@grey_background: #e5e5e5;
+@grey_background: #f9f9f9;
 @grey_medium: #aaa;
 
 // retina.less
@@ -52,7 +52,7 @@ button {
 
 #nav { z-index: 1;
 
-    .logo-container { background-color: #ccc;
+    .logo-container {
 
         .logo { height: 50px; width: 200px; float:left; position: relative;
 
@@ -64,7 +64,7 @@ button {
 
        .location_container { float: right;
             #location_select {
-                background: #c2c2c2 url('/static/img/drop-arrow.png') no-repeat 98% 50%;
+                background: #e8eaf7 url('/static/img/drop-arrow.png') no-repeat 98% 50%;
                 -webkit-appearance: none;
                 -moz-appearance: none;
                 color: @purple_text;
@@ -81,7 +81,7 @@ button {
         }
     }
 
-    .user_context { line-height: 26px; background: #bbb; text-align: right; padding: 0 6px;
+    .user_context { line-height: 26px; background: #eee; text-align: right; padding: 0 6px;
         .salutation { display: inline-block; float: left; }
     }
 
@@ -206,7 +206,7 @@ button {
 
 #space_details_page { position: relative; margin: 10px;
 
-    #space_detail_container {
+    .space-detail-container {
 
         .space-detail { color: #333;
 
@@ -446,18 +446,7 @@ select {
     img { max-width: 100% !important; margin: 0 auto; }
 }
 
-.favorites-header { width: 100%; height: 12px; background-color: #7479A6; 
-    span {
-       float:right;
-       margin: -16px 130px 0 0;
-       width: 0; height: 0;
-       border-left: 16px solid transparent;
-       border-right: 16px solid transparent;
-       border-bottom: 16px solid #7479A6;
-    }
-}
-
-.favorites { background-color: white; border: 1px solid #bbbbbb; padding: 16px;
+.favorites { background-color: white; border: 1px solid #bbbbbb; padding: 8px;
 
   .navigation { width: 100%;
      a { display: inline-block; float: right; padding-right: 20px; }

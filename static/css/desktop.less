@@ -39,7 +39,8 @@
 
          .location_container { float: left; margin-left: 10px; margin-top: 16px; 
              #location_select {
-                 background: #c2c2c2 url('/static/img/drop-arrow.png') no-repeat 98% 50%;
+                 color: #555;
+                 background: #e8eaf7 url('/static/img/drop-arrow.png') no-repeat 98% 50%;
                  width: 168px;
              }
          }
@@ -95,7 +96,7 @@
     float: left;
 
     // copy the following block and make sure that mobile.less contains the "mobile" version
-    #space_detail_container {
+    .space-detail-container {
         position: absolute;
         top: 0;
         left: 0;
@@ -112,7 +113,7 @@
 
             .space-detail-inner { display:none; padding: 15px; background-color: #fff;
 
-                .space-detail-header { position: relative; height: 60px;
+                .space-detail-header { position: relative; height: 60px; clear: right;
                     .space-detail-type { color: @grey_dark;
                         .space-detail-capacity { color: @grey_light; font-size: 11px; text-transform: uppercase; display: inline-block; margin-left: 5px; height: 20px; }
                         
@@ -271,7 +272,7 @@
     }
     #map_canvas {
 
-        #space_detail_container {
+        .space-detail-container {
 
             .space-detail {
 

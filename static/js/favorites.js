@@ -20,15 +20,11 @@
 */
 (function(){
 
-    $.ajaxSetup({
-        headers: { "X-CSRFToken": window.spacescout_csrf_token }
-    });
-
     window.spacescout_favorites = window.spacescout_favorites || {
         k: {
             'favorites_count_container': '.favorites_count_container',
             'favorites_count_template': '#favorites_count',
-            'favorites_card_container': '#favorites_card_container',
+            'favorites_card_container': '.favorites_card_container',
             'favorites_card_template': '#favorites_card'
         },
 
@@ -70,31 +66,54 @@
             });
         },
 
-        update_cards: function () {
-            var node = $(this.k.favorites_card_container);
+        update_cards: function (on_card_load) {
+            var container = $(this.k.favorites_card_container);
             var source, template, html = '';
 
-            if (node.length == 1) {
+            if (container.length == 1) {
                 source = $(this.k.favorites_card_template).html();
-                template = Handlebars.compile(source);
-                node.html('');
+                template = Handlebars.compile(source),
+                self = this;
 
                 $.each(this.favorites, function () {
-                    node.append(template(this));
+                    var spot = $('spot_' + this.id),
+                        type = [],
+                        i, card;
+
+                    $.each(this.type, function () {
+                        type.push(gettext(this));
+                    });
+
+                    this.type = type.join(', ');
+                    this.extended_info.noise_level = gettext(this.extended_info.noise_level);
+                    this.extended_info.food_nearby = gettext(this.extended_info.food_nearby);
+                    this.has_reservation_notes = ( this.extended_info.reservation_notes != null);
+                    this.has_notes = ( ( this.extended_info.access_notes != null) || this.has_reservation_notes );
+                    this.has_resources = ( this.extended_info.has_computers != null || this.extended_info.has_displays != null || this.extended_info.has_outlets != null || this.extended_info.has_printing != null || this.extended_info.has_projector != null || this.extended_info.has_scanner != null || this.extended_info.has_whiteboards != null );
+
+                    card = $(template(this));
+
+                    if (spot.length == 0) {
+                        card.insertBefore('#space-detail-blank', container);
+                    }
+
+                    if (on_card_load) {
+                        on_card_load.apply(self, [card, this]);
+                    }
                 });
-            } else {
-                console.log('No favorites node');
+
+                initializeCarousel();
             }
         },
 
-        load: function () {
+        load: function (on_card_load) {
             var self = this;
 
             $.ajax({
                 url: 'api/v1/user/me/favorites',
                 success: function (data) {
                     self.favorites = data ? data : [];
-                    self.update();
+                    self.update(on_card_load);
                 },
                 error: function (xhr, textStatus, errorThrown) {
                     console.log('Unable to load favorites: ' + xhr.responseText);
@@ -102,10 +121,10 @@
             });
         },
 
-        update: function () {
+        update: function (on_card_load) {
             this.update_count();
             this.update_search_result();
-            this.update_cards();
+            this.update_cards(on_card_load);
         },
 
         is_favorite: function (id) {
@@ -211,10 +230,6 @@
             });
         }
     };
-
-    if ($(window.spacescout_favorites.k.favorites_card_container).length == 1) {
-        window.spacescout_favorites.load();
-    }
 
 })(this);
 

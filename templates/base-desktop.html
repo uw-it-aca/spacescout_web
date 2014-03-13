@@ -35,11 +35,13 @@
 		<meta name="description" content="Searching for that perfect study spot? SpaceScout helps UW students quickly locate campus spaces and resources to use for study or collaboration">
         {% load compress %}
         {% compress css %}
+        <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}libs/bootstrap/css/bootstrap.min.css" charset="utf-8" />
         <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}libs/bootstrap/css/bootstrap-custom.css" charset="utf-8" />
 		<link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}libs/font-awesome.min.css" charset="utf-8" />
         <link rel="stylesheet" type="text/less" href="{{ STATIC_URL }}css/mobile.less" media="screen" />
         <link rel="stylesheet" type="text/less" href="{{ STATIC_URL }}css/desktop.less" media="screen" />
         <link rel="stylesheet" type="text/less" href="{{ STATIC_URL }}css/chosen.css" media="screen" />
+        {% block extra_compress_css %}{% endblock %}
         {% endcompress %}
 
         {% block extra_css %}{% endblock %}
@@ -106,9 +108,9 @@
             <script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap/js/bootstrap-transition.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap/js/bootstrap-button.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap/js/bootstrap-carousel.js"></script>
+            <script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap/js/bootstrap-tooltip.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/handlebars.js"></script>
 
-            {% block extra_js %}{% endblock %}
             <script type="text/javascript" src="{{ STATIC_URL }}js/chosen.jquery.js"></script>
 
 			<script type="text/javascript" src="{{ STATIC_URL }}js/markerwithlabel.js"></script>
@@ -119,6 +121,10 @@
             <script type="text/javascript" src="{{ STATIC_URL }}js/desktop.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}js/clustering.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}js/analytics.js"></script>
+
+            <script type="text/javascript" src="jsi18n/"></script>
+
+            {% block extra_js %}{% endblock %}
 
             {% if spaces %}
             <script type="text/javascript">

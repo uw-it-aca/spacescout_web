@@ -33,6 +33,10 @@
             });
         }
     }
+
+    $.ajaxSetup({
+        headers: { "X-CSRFToken": '{{ csrf_token }}' }
+    });
 </script>
 {% endblock %}
 
@@ -52,7 +56,7 @@
 
         <div id="space_details_page">
 
-            <div id="space_detail_container">
+            <div class="space-detail-container">
                 <div class="space-detail">
                     <div class="space-detail-inner">
                         <div class="space-detail-body">
