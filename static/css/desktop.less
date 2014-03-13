@@ -32,15 +32,16 @@
 
         .logo { height: 60px; line-height: 60px; width: 226px; position: relative;
             .at2x('/static/img/spacescout_logo.png', 226px, 56px);
+            background-size: 226px, 56px;
             background-repeat: no-repeat;
             background-position: 0 50%;
 
          }
 
-         .location_container { float: left; margin: 4px 0 0 10px; 
+         .location_container { float: left; margin: 6px 0 0 10px; 
              #location_select {
                  height: 30px;
-                 padding: 6px 0 6px 12px;
+                 padding: 4px 0 6px 12px;
                  width: 100px;
              }
          }
@@ -67,9 +68,9 @@
 }
 #filter-clear { top: 10px; }
 #filter_container {
-     position:absolute; top:120px; left:0; right:0; margin: 0; z-index: 100;
+     position:absolute; top:100px; left:0; right:0; margin: 0; z-index: 100;
 
-     #filter_block { background: rgba(0, 0, 0, 0.9); height: 450px;
+     #filter_block { background: rgba(0, 0, 0, 0.9); min-height: 450px;
 
         fieldset legend { border: none; padding-top: 0;}
 
@@ -78,7 +79,9 @@
             .inner-block-right { padding-left: 20px; }
         }
 
-        .inner-row { clear: left; float: right; padding-right: 40px; margin-top: -20px }
+        .inner-row { clear: both; margin-top: -20px;
+           .btn { margin-right: 16px; }
+        }
 
         #filter_hours {
             .hours-from, .hours-until { display: block; width: 35px; }
