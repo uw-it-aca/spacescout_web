@@ -60,7 +60,7 @@
                 {% endifnotequal %}
             </div>
         </div>
-        <!-- hidden for now, until cool stuff for logged in users is finished.-->
+        <!-- hidden for now, until cool stuff for logged in users is finished.
         <div class="user_context">
             {% if user.is_authenticated %}
               <span class="salutation">{% trans 'greeting' %}&nbsp;{{ request.user }}</span>
@@ -72,7 +72,7 @@
               {% trans 'salutation' %}&nbsp;<a href="login?next={% firstof request.path '/' %}">{% trans 'login' %}</a>
             {% endif %}
         </div>
-        <!-- -->
+        -->
         <div class="filter_context" role="search" aria-labelledby="filter_group_header">
           <h2 id="filter_group_header" class="visuallyhidden">Find Study Spaces by Specific Criteria</h2>
           <button id="filter_button" class="btn" type="button" aria-label="Filter settings..." aria-owns="filter_container" >{%trans 'filters' %}<i class="fa fa-angle-double-down"></i></button>
