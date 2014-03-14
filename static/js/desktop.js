@@ -129,24 +129,6 @@ Handlebars.registerHelper('ifany', function(a, b) {
             e.preventDefault();
             closeSpaceDetails();
         });
-
-        // Toggle between carousel and map
-        $('.space-image-map-buttons button').live('click', function(e){
-
-            if ($('#carouselControl').hasClass('active')) { // show the carousel
-                $('#spaceCarouselContainer').show();
-                $('#carouselControl.btn').attr("tabindex", -1).attr("aria-selected", true);
-                $('#mapControl.btn').attr("tabindex", 0).attr("aria-selected", false);
-                $('#spaceMap').hide();
-            }
-            else { //show the map
-                $('#spaceCarouselContainer').hide();
-                $('#spaceMap').show();
-                $('#carouselControl.btn').attr("tabindex", 0).attr("aria-selected", false);
-                $('#mapControl.btn').attr("tabindex", -1).attr("aria-selected", true);
-                getSpaceMap(detailsLat, detailsLon);
-            }
-        });
 	});
 
 	// Update dimensions on resize
@@ -191,6 +173,8 @@ Handlebars.registerHelper('ifany', function(a, b) {
     	   var template = Handlebars.compile(source);
     	   $('#map_canvas').append(template(data));
 
+           initMapCarouselButtons();
+
     	   // set/reset initial state
 
            $('.space-detail-inner').show();
@@ -227,10 +211,8 @@ Handlebars.registerHelper('ifany', function(a, b) {
                    });
                });
            }
-    	   initializeCarousel();
 
-    	   detailsLat = data.location.latitude;
-    	   detailsLon = data.location.longitude;
+    	   initializeCarousel();
 
            replaceUrls();
 

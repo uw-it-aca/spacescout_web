@@ -37,7 +37,6 @@
     $.ajaxSetup({
         headers: { "X-CSRFToken": '{{ csrf_token }}' }
     });
-
 </script>
 {% endblock %}
 
@@ -45,7 +44,7 @@
 {% load i18n %}
 {% load templatetag_handlebars %}
 
-    <div id="nav" style="position:relative;">
+    <div id="nav">
 
         <div class="logo-container clearfix">
 
@@ -64,7 +63,7 @@
                 </span>
                 {% endifnotequal %}
             </div>
-            <!-- hidden for now, until cool stuff for logged in users is finished.
+            <!-- hidden for now, until cool stuff for logged in users is finished.-->
             <div class="user_context">
                 {% if user.is_authenticated %}
                   <span>{% trans 'greeting' %}&nbsp;{{ request.user }}</span>
@@ -76,7 +75,7 @@
                   {% trans 'salutation' %}&nbsp;<a href="login?next={% firstof request.path '/' %}">{% trans 'login' %}</a>
                 {% endif %}
             </div>
-            -->
+            <!-- -->
         </div>
         <div class="filter_context" role= "search" aria-labelledby="filter_group_header">
           <h2 id="filter_group_header" class="visuallyhidden">Find Study Spaces by Specific Criteria</h2>
@@ -156,7 +155,7 @@
                                 </div>
                                 <div class="space-image-map-buttons btn-group pull-left" data-toggle="buttons-radio" role="tablist">
                                   <button id="carouselControl" class="btn active" role="tab" aria-selected="true" aria-controls="spaceCarouselContainer"><span>Image gallery</span></button>
-                                  <button id="mapControl" class="btn" role="tab" aria-controls="spaceMap" aria-selected="false"><span>Show this space on a map</span></button>
+                                  <button id="mapControl" class="btn" role="tab" aria-controls="spaceMap" aria-selected="false" data-location="[{{location.latitude}}, {{location.longitude}}]"><span>Show this space on a map</span></button>
                                 </div>
 
                             </div>

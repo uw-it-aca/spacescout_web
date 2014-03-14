@@ -7,6 +7,9 @@
 @grey_background: #e5e5e5;
 @grey_medium: #6d6d6d;
 
+@nav_background: #7479a6;
+
+
 // retina.less
 // A helper mixin for applying high-resolution background images (http://www.retinajs.com)
 
@@ -38,7 +41,7 @@
 
          }
 
-         .location_container { float: left; margin: 6px 0 0 10px; 
+         .location_container { float: left; margin: 6px 0 0 10px;
              #location_select {
                  height: 30px;
                  padding: 4px 0 6px 12px;
@@ -46,7 +49,7 @@
              }
          }
 
-         .user_context { width: 98%; line-height: 60px; background: transparent; 
+         .user_context { line-height: 60px; background: transparent; color: #666; clear: none;
              a  { padding-left: 12px; text-decoration: none; }
          }
     }
@@ -298,4 +301,23 @@
             }
         }
     }
+}
+
+
+/* Favorites */
+
+#nav.favorites_nav {
+
+    .favorites-header { width: 100%; height: 12px; background-color: @nav_background;
+        span {
+           float:right;
+           margin: -16px 110px 0 0;
+           width: 0; height: 0;
+           border-left: 16px solid transparent;
+           border-right: 16px solid transparent;
+           border-bottom: 16px solid @nav_background;
+        }
+    }
+
+     .footer { clear: both; padding: 20px 20px; }
 }

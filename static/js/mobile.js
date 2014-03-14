@@ -48,13 +48,17 @@
 
 	   // check if a map_canvas exists... populate it
     	if ($("#map_canvas").length == 1) {
-          initialize();
+            initialize();
         }
 
 		// initialize the carousel for mobile standalone space page
         initializeCarousel();
         resizeCarouselMapContainer();
         replaceUrls();
+
+    	if ($(".space-detail-body").length == 1) {
+            initMapCarouselButtons();
+        }
 
         // scroll to the top of page
         $('#top_link').click(function(e){
@@ -173,25 +177,6 @@
             );
 
         });
-
-        // Toggle between carousel and map
-        $('.space-image-map-buttons button').live('click', function(e){
-
-            if ($('#carouselControl').hasClass('active')) { // show the carousel
-                $('#spaceCarouselContainer').show();
-                $('#spaceMap').hide();
-                $('#carouselControl.btn').attr("tabindex", -1).attr("aria-selected", true);
-                $('#mapControl.btn').attr("tabindex", 0).attr("aria-selected", false);
-            }
-            else { //show the map
-                $('#spaceCarouselContainer').hide();
-                $('#spaceMap').show();
-                getSpaceMap(detailsLat, detailsLon);
-                $('#carouselControl.btn').attr("tabindex", 0).attr("aria-selected", false);
-                $('#mapControl.btn').attr("tabindex", -1).attr("aria-selected", true);
-            }
-        });
-
 	});
 
 	// Update dimensions on orientation change

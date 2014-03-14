@@ -15,7 +15,6 @@
 
 */
 
-var detailsLat, detailsLon;
 var requests = [];
 
 // Handlebars helpers
@@ -577,6 +576,32 @@ function initializeCarousel() {
     resizeCarouselMapContainer();
 }
 
+function initMapCarouselButtons() {
+    $('.space-image-map-buttons button').on('click', function(e){
+        var target = $(this),
+            active = target.hasClass('active'),
+            container = target.closest('.space-detail'),
+            coords;
+
+        if (!active) {
+            if (target.attr('id') == 'carouselControl') {
+                $('#spaceCarouselContainer', container).show();
+                $('#spaceMap', container).hide();
+                $('#carouselControl.btn', container).attr("tabindex", -1).attr("aria-selected", true);
+                $('#mapControl.btn', container).attr("tabindex", 0).attr("aria-selected", false);
+            }
+            else if (target.attr('id') == 'mapControl') {
+                $('#spaceCarouselContainer', container).hide();
+                $('#spaceMap', container).show();
+                $('#carouselControl.btn', container).attr("tabindex", 0).attr("aria-selected", false);
+                $('#mapControl.btn', container).attr("tabindex", -1).attr("aria-selected", true);
+                coords = JSON.parse(target.attr('data-location'));
+                getSpaceMap(container, coords[0], coords[1]);
+            }
+        }
+    });
+}
+
 function resizeCarouselMapContainer() {
     // get the width
     var containerW = $('.image-container').width();
@@ -616,7 +641,7 @@ function resetFilters() {
     reset_location_filter();
 }
 
-function getSpaceMap(lat, lon) {
+function getSpaceMap(container, lat, lon) {
 
   if (window.space_latitude) {
     lat = window.space_latitude;
@@ -634,7 +659,7 @@ function getSpaceMap(lat, lon) {
     streetViewControl: false
   };
 
-  var map = new google.maps.Map(document.getElementById("spaceMap"), mapOptions);
+  var map = new google.maps.Map($('#spaceMap', container).get(0), mapOptions);
 
   var image = '/static/img/pins/pin00.png';
 

@@ -66,23 +66,24 @@
             });
         },
 
-        update_cards: function (on_card_load) {
-            var container = $(this.k.favorites_card_container);
-            var source, template, html = '';
+        update_cards: function (on_card_load, on_finish) {
+            var container = $(this.k.favorites_card_container),
+                source, template;
 
-            if (container.length == 1) {
+            if (container.length == 1 && $.isArray(this.favorites)) {
                 source = $(this.k.favorites_card_template).html();
                 template = Handlebars.compile(source),
                 self = this;
 
                 $.each(this.favorites, function () {
                     var spot = $('spot_' + this.id),
-                        type = [],
-                        i, card;
+                        type = [], card;
 
-                    $.each(this.type, function () {
-                        type.push(gettext(this));
-                    });
+                    if ($.isArray(this.type)) {
+                        $.each(this.type, function () {
+                            type.push(gettext(this));
+                        });
+                    }
 
                     this.type = type.join(', ');
                     this.extended_info.noise_level = gettext(this.extended_info.noise_level);
@@ -102,18 +103,22 @@
                     }
                 });
 
-                initializeCarousel();
+
+                if (on_finish) {
+                    on_finish.apply(self, []);
+                }
+
             }
         },
 
-        load: function (on_card_load) {
+        load: function (on_card_load, on_finish) {
             var self = this;
 
             $.ajax({
                 url: 'api/v1/user/me/favorites',
                 success: function (data) {
                     self.favorites = data ? data : [];
-                    self.update(on_card_load);
+                    self.update(on_card_load, on_finish);
                 },
                 error: function (xhr, textStatus, errorThrown) {
                     console.log('Unable to load favorites: ' + xhr.responseText);
@@ -121,10 +126,10 @@
             });
         },
 
-        update: function (on_card_load) {
+        update: function (on_card_load, on_finished) {
             this.update_count();
             this.update_search_result();
-            this.update_cards(on_card_load);
+            this.update_cards(on_card_load, on_finished);
         },
 
         is_favorite: function (id) {
@@ -230,6 +235,96 @@
             });
         }
     };
+
+    if ($('.favorites_nav').length > 0) {
+        window.spacescout_favorites.load(function (card, fav) {
+            var now = new Date(),
+                hour = now.getHours(),
+                minute = now.getMinutes(),
+                day = weekday_from_day(now.getDay()).toLowerCase(),
+                formatted = 'Closed',
+                o, c;
+    
+            if (fav.available_hours[day].length > 0) {
+                $.each(fav.available_hours[day], function() {
+                    this[0] = this[0].replace(/^0+/, '');
+                    this[1] = this[1].replace(/^0+/, '');
+                    o = this[0].split(':');
+                    c = this[1].split(':');
+    
+                    if ((hour > parseInt(o[0]) && hour < parseInt(c[0]))
+                        || (hour == parseInt(o[0]) && minute > parseInt(o[1]))
+                        || (hour == parseInt(c[0]) && minute < parseInt(c[1]))) {
+                        $('.space-detail-is-open', card).show();
+                    }
+                });
+    
+                formatted = to12Hour(fav.available_hours[day]).join(", ");
+            }
+    
+            $('.space-info-hours-today span', card).html(formatted);
+    
+            $('.space-info-more-detail a', card).click(function (e) {
+                var more_div = $(e.target).parent();
+    
+                more_div.slideUp('fast');
+                more_div.next().slideDown('fast');
+            });
+    
+            $('.space-info-less-detail a', card).click(function (e) {
+                var ul = $(e.target).closest('ul');
+    
+                ul.slideUp('fast');
+                ul.prev().slideDown('fast');
+            });
+    
+            $('.space-detail-fav', card).tooltip({ placement: 'right',
+                                                   title: 'Remove this space from Favorites' });
+            $('.space-detail-fav', card).click(function (e) {
+                var id = parseInt($(this).attr('data-id'));
+                var container = $(this).closest('.space-detail-container');
+                var tooltip = $(this).tooltip('hide');
+    
+                window.spacescout_favorites.clear(id, function () {
+                    container.hide({ effect: 'fade', duration: 800,  complete: function () { this.remove(); } });
+                });
+            });
+    
+            var bld_code = fav.location.building_name.match(/.*\(([A-Z ]+)\)( [a-zA-Z]+)?$/)
+            if (bld_code) {
+                $('.space-detail-building', card).html(bld_code[1] + (bld_code[2] ? bld_code[2] : ''));
+            } else {
+                $('.space-detail-building', card).html(fav.location.building_name);
+            }
+    
+            // Load image carousel
+            if (fav.hasOwnProperty('images') && fav.images.length > 0) {
+                var template = Handlebars.compile($('#images_template').html());
+                var data = [];
+                $.each(fav.images, function () {
+                    data.push({ id: fav.id, image_id: this.id });
+                });
+    
+                $('.carousel-inner', card).html(template({ data: data }));
+            } else {
+                var template = Handlebars.compile($('#no_images_template').html());
+                $('.carousel-inner', card).html(template({ static_url: window.spacescout_static_url }));
+            }
+    
+            if (fav.has_reservation_notes) {
+                var url = fav.extended_info.reservation_notes.match(/(http:\/\/[^\s]+)/);
+    
+                if (url) {
+                   var template = Handlebars.compile($('#reservation_cue').html());
+                   $('.space-info-reservation-cue', card).html(template({ url: url[1] })).show();
+                }
+            }
+        },
+        function () {
+            initializeCarousel();
+            initMapCarouselButtons();
+        });
+    }
 
 })(this);
 

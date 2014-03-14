@@ -40,6 +40,7 @@
         <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}libs/font-awesome.min.css" charset="utf-8" />
         <link rel="stylesheet" type="text/less" href="{{ STATIC_URL }}css/mobile.less" media="screen, handheld" />
         <link rel="stylesheet" type="text/less" href="{{ STATIC_URL }}css/tablet.less" media="screen, handheld" />
+        {% block extra_compress_css %}{% endblock %}
         {% endcompress %}
 
         {% block extra_css %}{% endblock %}
@@ -116,6 +117,7 @@
             <script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap/js/bootstrap-transition.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap/js/bootstrap-button.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap/js/bootstrap-carousel.js"></script>
+            <script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap/js/bootstrap-tooltip.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/handlebars.js"></script>
             
 			<script type="text/javascript" src="{{ STATIC_URL }}js/markerwithlabel.js"></script>
@@ -127,6 +129,8 @@
             <script type="text/javascript" src="{{ STATIC_URL }}js/clustering.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}js/retina.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}js/analytics.js"></script>
+
+            <script type="text/javascript" src="jsi18n/"></script>
 
             {% if spaces %}
             <script type="text/javascript">
