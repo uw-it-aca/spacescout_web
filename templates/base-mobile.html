@@ -130,7 +130,6 @@
             <script type="text/javascript" src="{{ STATIC_URL }}js/retina.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}js/analytics.js"></script>
 
-            <script type="text/javascript" src="jsi18n/"></script>
 
             {% if spaces %}
             <script type="text/javascript">
@@ -140,6 +139,7 @@
 
             {% block extra_js %}{% endblock %}
           {% endcompress %}
+            <script type="text/javascript" src="jsi18n/"></script>
 
     </body>
 </html>
