@@ -200,8 +200,8 @@ function repopulate_filters(form_opts) {
 
         // set location
         if (form_opts["building_name"]) {
-            $('#e9').val(form_opts["building_name"]);
-            $('#building_list_input').prop('checked', true);
+            $('#e9').val(form_opts["building_name"]).trigger("liszt:updated");
+            $('#building_list_input').prop('selected', true);
             $('#building_list_container').show();
         }
 
