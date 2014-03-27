@@ -61,8 +61,7 @@
 
           <h2>Favorites</h2>
           <h4><span class="favorites_count_container">{{ total }}</span> favorite spaces <span class="comment">(organized by the date you added)</span></h4>
-          <div id="space_details_page" class="favorites_card_container">
-            {% include "favorites-card.html" %}
+          <div id="space_details_page" class="favorites_card_container favorites_blank_container">
             <div id="space-detail-blank" class="space-detail-container">
                 <div class="space-detail">
                     <div class="space-detail-inner">
@@ -79,6 +78,7 @@
         </div>
     </div>
 
+{% include "favorites-card.html" %}
 
 {% if user.is_authenticated %}
 <script type="text/javascript">

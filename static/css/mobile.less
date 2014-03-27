@@ -65,20 +65,23 @@ button {
 
         }
 
-       .location_container { float: right;
+       .location_container {
             #location_select {
                 background: #e8eaf7 url('/static/img/drop-arrow.png') no-repeat 98% 50%;
+                background-size: 9px 7px;
+                background-position: 83px 8px;
                 -webkit-appearance: none;
                 -moz-appearance: none;
                 text-indent: 0.01px;
                 text-overflow: '';
                 color: #555;
                 border: none;
-                height: 20px;
+                height: 25px;
                 line-height: 20px;
                 bottom: 5px;
                 margin-top: 10px;
                 margin-right: 8px;
+                margin-left: 10px;
                 padding: 0 7px;
                 right: 3px;
                 width: 105px;
@@ -86,7 +89,7 @@ button {
         }
     }
 
-    .user_context { line-height: 26px; background: #eee; text-align: right; padding: 0 6px;
+    .user_context { line-height: 26px; text-align: right; padding: 0 6px;
         .salutation { display: inline-block; font-size: 12px; color: #666; padding-right: 15px; }
     }
 
@@ -198,10 +201,38 @@ button {
     .space-detail-name { font-size: 20px; margin: 5px 0;  color: @purple_text; width:85%; line-height:20px; font-weight:normal; }
 
     img { margin-top:8px; }
-    .space-detail-fav { font-size: 20px; margin-top: 5px; margin-right: 5px;}
+
 }
 
-.space-detail-fav-set { color: #E5B52E; }
+/* favorites icons */
+.space-detail-fav { color: #E5B52E;
+}
+
+.space-detail-fav-unset {
+    i {
+		font-size: 13pt;
+		color: #4B4884;
+		padding: 7px 5px 5px 6px;
+		border: 1px solid #DDD;
+		border-radius: 4px;
+		font-weight: bold;
+		cursor: pointer;
+    }
+
+/*    font-size: 20px; margin-top: 5px; margin-right: 5px;*/
+    }
+
+.space-detail-fav-set {
+    i {
+		font-size: 13pt;
+		color: #E8B21C;
+		padding: 7px 5px 5px 6px;
+		border: 1px solid #e7d095;
+		border-radius: 4px;
+		font-weight: bold;
+		cursor: pointer;
+    }
+}
 
 .favorite-detail { border: 1px solid black; width: 300px; float: left; margin-left: 8px; margin-bottom: 8px; clear: right;
   ul {
@@ -368,7 +399,6 @@ button {
                     .space-detail-type { color: @grey_dark;  }
                     .space-detail-name { font-size: 16px; line-height: 20px; padding-top: 2px; .wrap; color: #000; }
                     .space-detail-desc { font-size: 13px; .nowrap; color: #000; }
-                    .space-detail-fav { color: #E5B52E; font-size: 14px; margin-top: 2px; }
                 }
 
 	            li:last-child { border-bottom: none; }
@@ -468,7 +498,13 @@ select {
 /* Target small devices */
 @media screen and (min-width: 320px) {
 
-    #nav {}
+    #nav {
+        .favorites {
+            #Xspace-detail-blank { height: 170px; 
+              .Xspace-detail { border: 3px solid red; height: 170px; }
+            }
+        }
+    }
 
     #map_canvas { }
 
@@ -506,19 +542,19 @@ select {
 #nav.favorites_nav {
     .user_context { display: block; clear: both; height: 30px; }
 
-    .favorites-header { width: 100%; height: 10px; background-color: @nav_background;
+    .favorites-header { width: 100%; height: 5px; background-color: @nav_background;
         span {
            float:right;
            margin: -8px 90px 0 0;
            width: 0; height: 0;
-           border-left: 16px solid transparent;
-           border-right: 16px solid transparent;
-           border-bottom: 16px solid @nav_background;
+           border-left: 10px solid transparent;
+           border-right: 10px solid transparent;
+           border-bottom: 10px solid @nav_background;
         }
     }
 
     .favorites { background-color: white; border: 1px solid #bbbbbb; padding: 8px;
-        .navigation { width: 100%;
+        .navigation { width: 100%; font-size: 12px;
 
         a { display: block; float: right; padding-right: 20px; }
         }
@@ -527,6 +563,6 @@ select {
           .comment { padding-left: 4px; font-weight: normal; color: gray; font-style: italic; font-size: 12px; }
         }
 
-        .footer { clear: both; padding: 20px 20px; }
+        .footer { clear: both; padding: 20px 20px; font-size: 12px; }
     }
 }

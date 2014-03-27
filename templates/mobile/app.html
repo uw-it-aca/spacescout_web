@@ -60,7 +60,7 @@
                 {% endifnotequal %}
             </div>
         </div>
-        <!-- hidden for now, until cool stuff for logged in users is finished.
+        <!-- hidden for now, until cool stuff for logged in users is finished.-->
         <div class="user_context">
             {% if user.is_authenticated %}
               <span class="salutation">{% trans 'greeting' %}&nbsp;{{ request.user }}</span>
@@ -72,7 +72,7 @@
               {% trans 'salutation' %}&nbsp;<a href="login?next={% firstof request.path '/' %}">{% trans 'login' %}</a>
             {% endif %}
         </div>
-        -->
+        <!-- -->
         <div class="filter_context" role="search" aria-labelledby="filter_group_header">
           <h2 id="filter_group_header" class="visuallyhidden">Find Study Spaces by Specific Criteria</h2>
           <button id="filter_button" class="btn" type="button" aria-label="Filter settings..." aria-owns="filter_container" >{%trans 'filters' %}<i class="fa fa-angle-double-down"></i></button>
@@ -97,16 +97,16 @@
                     <div class="inner-column">
                         <div id="filter-clear">Filters Cleared</div>
                         <div class="inner-block-left">
-                        	<div id="bubble_mobile">
-            					<div class="bubble-inner clearfix" style="position:relative;">
+<!--                          <div id="bubble_mobile">
+            				<div class="bubble-inner clearfix" style="position:relative;">
 
-                					<div id="bubble_filters_container" class="bubble-filters pull-left" ></div>
+                			  <div id="bubble_filters_container" class="bubble-filters pull-left" ></div>
 
-               							 {% tplhandlebars "filter_list" %}
-               					    <h4 id="current_filters" class="visuallyhidden">Currently filtering by:</h4>
-              							  <ul id='filter_display_list'>
-									  <li>{{#if open_at}}specific time{{else}}open now{{/if}}</li>
-									  <li>{{#if building_name}}specific building{{else}}entire campus{{/if}}</li>
+              							 {% tplhandlebars "filter_list" %}
+               				  <h4 id="current_filters" class="visuallyhidden">Currently filtering by:</h4>
+              				  <ul id='filter_display_list'>
+								<li>{{#if open_at}}specific time{{else}}open now{{/if}}</li>
+								<li>{{#if building_name}}specific building{{else}}entire campus{{/if}}</li>
 					                     {{#if space_type}}<li>type of space</li>{{/if}}
                     					 {{#if true_capacity}}<li>seats {{capacity}}</li>{{/if}}
                     					 {{#if reservable}}<li>reservable</li>{{/if}}
@@ -114,11 +114,11 @@
                     					 {{#if lighting}}<li>natural light</li>{{/if}}
                     					 {{#if resources}}<li>resources</li>{{/if}}
                     					 {{#if food}}<li>food/coffee</li>{{/if}}
-                						 </ul>
+                			  </ul>
                 						{% endtplhandlebars %}
-                        			</div>
-								 </div>
-
+                        	</div>
+						  </div>
+-->
 							{% include "filters.html" %}
                         </div>
                     </div>

@@ -449,7 +449,6 @@ function run_custom_search() {
     window.spacescout_map.setZoom(parseInt(window.default_zoom));
 
     // Run the search
-    //console.log(window.spacescout_search_options);
     fetch_data();
 
     // slide the filter up
@@ -515,10 +514,19 @@ function initialize() {
     window.spacescout_search_options = {};
     window.update_count = true;
 
-    if ($.cookie('spacescout_search_opts')) {
-        window.spacescout_search_options = JSON.parse($.cookie('spacescout_search_opts'));
+    var state = window.spacescout_url.parse_path(window.location.pathname);
+    if (state.hasOwnProperty('search')) {
+        window.spacescout_search_options = window.spacescout_url.decode_search_terms(state.search);
         repopulate_filters(window.spacescout_search_options);
+    } else {
+        if ($.cookie('spacescout_search_opts')) {
+            window.spacescout_search_options = JSON.parse($.cookie('spacescout_search_opts'));
+            repopulate_filters(window.spacescout_search_options);
+        }
+
+        window.spacescout_url.replace();
     }
+
 
     /* why are we asking for their location if we're not doing anything with it?
     // leaving this in but commented out until I can talk to the team about *if* the web app should do something with location
@@ -639,6 +647,14 @@ function load_data(data) {
     // update the map
     // display_search_results(data);
     updatePins(data);
+    data_loaded();
+}
+
+function data_loaded() {
+    $.event.trigger({
+        type: 'searchResultsLoaded',
+        message: 'search results are loaded'
+    });
 }
 
 function reload_on_idle() {
@@ -654,7 +670,6 @@ function reload_on_idle() {
     } else if (!$('.space-detail-container').is(":visible")) {
         fetch_data();
     }
-
 }
 
 function fetch_data() {

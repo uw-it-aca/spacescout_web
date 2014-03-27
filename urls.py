@@ -19,7 +19,6 @@ js_info_dict = {
 }
 
 urlpatterns = patterns('spacescout_web.views',
-    url(r'^$', 'home.HomeView'),
     url(r'login$', 'auth.Prompt'),
     url(r'authenticate$', 'auth.Login'),
     url(r'logout$', 'auth.Logout'),
@@ -40,5 +39,11 @@ urlpatterns = patterns('spacescout_web.views',
     url(r'images/(?P<image_ids>[\d,]+)/thumb/constrain/width:(?P<thumb_width>\d+)(?:,height:(?P<thumb_height>\d+))?$', 'image.MultiImageView', {'constrain': True}),
 )
 
-urlpatterns += patterns('', url(r'^jsi18n/$', 'django.views.i18n.javascript_catalog', js_info_dict),)
+urlpatterns += patterns('',
+                        url(r'^jsi18n/$', 'django.views.i18n.javascript_catalog', js_info_dict),
+                        )
+
+urlpatterns += patterns('spacescout_web.views',
+                        url(r'^.*$', 'home.HomeView'),
+                        )
 

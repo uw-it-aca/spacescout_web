@@ -430,6 +430,7 @@ function reset_location_filter() {
             get_location_buildings();
             $.cookie('default_location', $(this).val());
             reset_location_filter();
+            window.spacescout_url.replace();
         });
 
     	// handle clicking on map centering buttons
@@ -512,6 +513,7 @@ function reset_location_filter() {
 //            $('.spaces').hide();
             run_custom_search();
             $.cookie('initial_load', false, { expires: 1 });
+            window.spacescout_url.push();
             $('#filter_button').focus();
             
             

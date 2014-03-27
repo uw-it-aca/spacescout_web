@@ -13,22 +13,27 @@
     // set up favorites
     if (isMobile) {
         var fav_icon = $('.space-detail-fav');
+        var fav_icon_i = $('.space-detail-fav i');
 
         if (fav_icon.is(':visible')) {
             if (window.spacescout_favorites.is_favorite({{ id }})) {
-                fav_icon.addClass('space-detail-fav-set');
+                fav_icon.removeClass('space-detail-fav-unset').addClass('space-detail-fav-set');
+                fav_icon_i.removeClass('fa-heart-o').addClass('fa-heart');
             } else {
-                fav_icon.removeClass('space-detail-fav-set');
+                fav_icon.removeClass('space-detail-fav-set').addClass('space-detail-fav-unset');
+                fav_icon_i.removeClass('fa-heart').addClass('fa-heart-o');
             }
     
             fav_icon.unbind();
             fav_icon.click(function (e) {
                 window.spacescout_favorites.toggle({{ id }},
                 function () {
-                    fav_icon.addClass('space-detail-fav-set');
+                    fav_icon.removeClass('space-detail-fav-unset').addClass('space-detail-fav-set');
+                    fav_icon_i.removeClass('fa-heart-o').addClass('fa-heart');
                 },
                 function () {
-                    fav_icon.removeClass('space-detail-fav-set');
+                    fav_icon.removeClass('space-detail-fav-set').addClass('space-detail-fav-unset');
+                    fav_icon_i.removeClass('fa-heart').addClass('fa-heart-o');
                 });
             });
         }
@@ -47,7 +52,7 @@
         <h1 class="visuallyhidden">SPACESCOUT&trade;</h1>
 		<img id="back_home_button" class="pull-left back-button" src="/static/img/details_arrow.png" />
         <div id="name-type-block" class="pull-left">
-          {% if user.is_authenticated %}<div class="space-detail-fav pull-left"><i class="fa fa-heart"></i></div>{% endif %}
+          {% if user.is_authenticated %}<div class="space-detail-fav space-detail-fav-unset pull-left"><i class="fa fa-heart-o"></i></div>{% endif %}
           <h2 class="space-detail-name" style=""><span class="visuallyhidden">Space Details:</span> {{name}}</h2>
       	  <div class="space-detail-type">{{ type }} {% if capacity %}<span class="space-detail-capacity">[Seats&nbsp;{{capacity}}]</span>{% endif %}</div>
         </div>

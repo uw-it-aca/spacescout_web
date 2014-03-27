@@ -55,12 +55,14 @@
                 if (self.is_favorite(id)) {
                     node.show();
                     if (id == detail_id) {
-                        $('.space-detail-fav', detail_node).addClass('space-detail-fav-set');
+                        $('.space-detail-fav', detail_node).removeClass('space-detail-fav-unset').addClass('space-detail-fav-set');
+                        $('.space-detail-fav i', detail_node).removeClass('fa-heart-o').addClass('fa-heart');
                     }
                 } else {
                     node.hide();
                     if (id == detail_id) {
-                        $('.space-detail-fav', detail_node).removeClass('space-detail-fav-set');
+                        $('.space-detail-fav', detail_node).removeClass('space-detail-fav-set').addClass('space-detail-fav-unset');
+                        $('.space-detail-fav i', detail_node).removeClass('fa-heart').addClass('fa-heart-o');
                     }
                 }
             });
@@ -143,7 +145,7 @@
                     type: "GET",
                     async: false,
                     success: function (data) {
-                        fav = data;
+                        fav = (typeof data === 'boolean') ? data : false;
                     },
                     error: function (xhr, textStatus, errorThrown) {
                         console.log('Unable to get favorite: ' + xhr.responseText);
@@ -244,6 +246,8 @@
                 day = weekday_from_day(now.getDay()).toLowerCase(),
                 formatted = 'Closed',
                 o, c;
+
+            $('.space-detail-is-closed', card).show();
     
             if (fav.available_hours[day].length > 0) {
                 $.each(fav.available_hours[day], function() {
@@ -256,6 +260,7 @@
                         || (hour == parseInt(o[0]) && minute > parseInt(o[1]))
                         || (hour == parseInt(c[0]) && minute < parseInt(c[1]))) {
                         $('.space-detail-is-open', card).show();
+                        $('.space-detail-is-closed', card).hide();
                     }
                 });
     
@@ -301,10 +306,8 @@
             if (fav.hasOwnProperty('images') && fav.images.length > 0) {
                 var template = Handlebars.compile($('#images_template').html());
                 var data = [];
-                $.each(fav.images, function () {
-                    data.push({ id: fav.id, image_id: this.id });
-                });
-    
+                // only load initial image
+                data.push({ id: fav.id, image_id: fav.images[0].id });
                 $('.carousel-inner', card).html(template({ data: data }));
             } else {
                 var template = Handlebars.compile($('#no_images_template').html());

@@ -101,32 +101,20 @@ Handlebars.registerHelper('ifany', function(a, b) {
 
         // handle view details click
         $('.view-details').live('click', function(e){
-
-            // get the space id
-            id =  $(this).find('.space-detail-list-item').attr('id');
+            var id = $(this).find('.space-detail-list-item').attr('id');
 
             e.preventDefault();
-
-            // clear any uneeded ajax window.requests
-            for (i = 0; i < window.requests.length; i++) {
-                window.requests[i].abort();
-            }
-            window.requests.push(
-                $.ajax({
-                    url: '/space/'+id+'/json/',
-                    success: showSpaceDetails
-                })
-            );
-
-             // clear previously selected space
+            // clear previously selected space
             $('#info_items li').removeClass('selected');
-            //highlight the selected space
-            $(this).addClass('selected');
 
+            fetchSpaceDetails(id);
+            // Update location hash
+            window.spacescout_url.push(id);
         });
 
         $('.space-detail-container .close').live('click', function(e){
             e.preventDefault();
+            window.spacescout_url.push();
             closeSpaceDetails();
         });
 	});
@@ -147,118 +135,142 @@ Handlebars.registerHelper('ifany', function(a, b) {
 
 	});
 
+    function fetchSpaceDetails(id){
+        // clear any uneeded ajax window.requests
+        $.each(window.requests, function () {
+            this.abort();
+        });
+
+        // fetch and paint details
+        window.requests.push(
+            $.ajax({
+                url: '/space/'+id+'/json/',
+                success: showSpaceDetails
+            })
+        );
+    }
+
 	// Show space details (sliding transition)
 	function showSpaceDetails(data) {
-           // format last modified date
-           var last_mod= new Date(data["last_modified"]);
-           var month = last_mod.getMonth();
-           var day = last_mod.getDate();
-           var year = last_mod.getFullYear();
-           data["last_modified"] = month + "/" + day + "/" + year;
+        // format last modified date
+        var last_mod= new Date(data["last_modified"]);
+        var month = last_mod.getMonth();
+        var day = last_mod.getDate();
+        var year = last_mod.getFullYear();
+        data["last_modified"] = month + "/" + day + "/" + year;
 
-           // check to see if the space has the following
-           data["has_notes"] = ( ( data.extended_info.access_notes != null) || ( data.extended_info.reservation_notes != null) );
-           data["has_resources"] = ( data.extended_info.has_computers != null || data.extended_info.has_displays != null || data.extended_info.has_outlets != null || data.extended_info.has_printing != null || data.extended_info.has_projector != null || data.extended_info.has_scanner != null || data.extended_info.has_whiteboards != null );
+        // check to see if the space has the following
+        data["has_notes"] = ( ( data.extended_info.access_notes != null) || ( data.extended_info.reservation_notes != null) );
+        data["has_resources"] = ( data.extended_info.has_computers != null || data.extended_info.has_displays != null || data.extended_info.has_outlets != null || data.extended_info.has_printing != null || data.extended_info.has_projector != null || data.extended_info.has_scanner != null || data.extended_info.has_whiteboards != null );
 
-    	   // remove any open details
-    	   if (!$('.space-detail-container').is(':visible')) {
-               var open = false;
-           }else {
-               var open = true;
-           }
-           $('.space-detail-container').remove();
+    	// remove any open details
+        var open = (!$('.space-detail-container').is(':visible'));
 
-        	// build the template
-    	   var source = $('#space_details').html();
-    	   var template = Handlebars.compile(source);
-    	   $('#map_canvas').append(template(data));
+        $('.space-detail-container').remove();
 
-           initMapCarouselButtons();
+        // build the template
+    	var source = $('#space_details').html();
+    	var template = Handlebars.compile(source);
+    	$('#map_canvas').append(template(data));
 
-    	   // set/reset initial state
+        initMapCarouselButtons();
 
-           $('.space-detail-inner').show();
-           $('.space-detail-container').show();
+    	// set/reset initial state
 
-           //set focus on the closing x
+        $('.space-detail-inner').show();
+        $('.space-detail-container').show();
 
-           $('.space-detail-container').height($('#map_canvas').height());
-           $('.space-detail-body').height($('.space-detail').height() - 98);
+        //set focus on the closing x
 
-           //TODO: make these identical anonymous callback functions a real named function.  Had unknown scope problems doing this before
-           if (!open) {
-               $('.space-detail').show("slide", { direction: "right" }, 400, function () {
-                   $('.close').focus();
-                   $('.btn.active').attr("tabindex", -1);
-                   $('.space-detail-body').attr("tabindex", -1);
-                   $('.carousel-nav ul li a').each(function () {
-                       $(this).attr("tabindex", -1);
-                   });
-                   $('.space-detail-report a').blur(function () {
-                       $('.close').focus();
-                   });
-               });
-           } else {
-               $('.space-detail').show(0, function() {
-                   $('.close').focus();
-                   $('.btn.active').attr("tabindex", -1);
-                   $('.space-detail-body').attr("tabindex", -1);
-                   $('.carousel-nav ul li a').each(function () {
-                       $(this).attr("tabindex", -1);
-                   });
-                   $('.space-detail-report a').blur(function () {
-                       $('.close').focus();
-                   });
-               });
-           }
+        $('.space-detail-container').height($('#map_canvas').height());
+        $('.space-detail-body').height($('.space-detail').height() - 98);
 
-    	   initializeCarousel();
+        //TODO: make these identical anonymous callback functions a real named function.  Had unknown scope problems doing this before
+        if (!open) {
+            $('.space-detail').show("slide", { direction: "right" }, 400, function () {
+                $('.close').focus();
+                $('.btn.active').attr("tabindex", -1);
+                $('.space-detail-body').attr("tabindex", -1);
+                $('.carousel-nav ul li a').each(function () {
+                    $(this).attr("tabindex", -1);
+                });
+                $('.space-detail-report a').blur(function () {
+                    $('.close').focus();
+                });
+            });
+        } else {
+            $('.space-detail').show(0, function() {
+                $('.close').focus();
+                $('.btn.active').attr("tabindex", -1);
+                $('.space-detail-body').attr("tabindex", -1);
+                $('.carousel-nav ul li a').each(function () {
+                    $(this).attr("tabindex", -1);
+                });
+                $('.space-detail-report a').blur(function () {
+                    $('.close').focus();
+                });
+            });
+        }
 
-           replaceUrls();
+    	initializeCarousel();
 
-           // set up favorites
-           var fav_icon = $('.space-detail-container .space-detail-fav');
+        replaceUrls();
 
-           if (fav_icon.is(':visible')) {
-               var title = 'Favorite this space';
+        // set up favorites
+        var fav_icon = $('.space-detail-container .space-detail-fav');
+        var fav_icon_i = $('.space-detail-container .space-detail-fav i');
 
-               if (window.spacescout_favorites.is_favorite(data.id)) {
-                   fav_icon.addClass('space-detail-fav-set');
-                   title = 'Remove this space from favorites';
-               } else {
-                   fav_icon.removeClass('space-detail-fav-set');
-               }
+        if (fav_icon.is(':visible')) {
+            var title = 'Favorite this space';
 
-               fav_icon.unbind();
-               fav_icon.click(function (e) {
-                   var list_item = $('button#' + data.id + ' .space-detail-fav');
+            if (window.spacescout_favorites.is_favorite(data.id)) {
+                fav_icon.removeClass('space-detail-fav-unset').addClass('space-detail-fav-set');
+                fav_icon_i.removeClass('fa-heart-o').addClass('fa-heart');
+                title = 'Remove this space from favorites';
+            } else {
+                fav_icon.removeClass('space-detail-fav-set').addClass('space-detail-fav-unset');
+                fav_icon_i.removeClass('fa-heart').addClass('fa-heart-o');
+            }
 
-                   window.spacescout_favorites.toggle(data.id,
-                                                      function () {
-                                                          fav_icon.addClass('space-detail-fav-set');
-                                                          list_item.show();
-                                                          fav_icon.tooltip('hide');
-                                                          fav_icon.data('tooltip', false);
-                                                          fav_icon.tooltip({ title: 'Remove this space from Favorites',
-                                                                             placement: 'right' });
-                                                          fav_icon.tooltip('show');
-                                                      },
-                                                      function () {
-                                                          fav_icon.removeClass('space-detail-fav-set');
-                                                          list_item.hide();
-                                                          fav_icon.tooltip('hide');
-                                                          fav_icon.data('tooltip', false);
-                                                          fav_icon.tooltip({ title: 'Favorite this space',
-                                                                             placement: 'right' });
-                                                          fav_icon.tooltip('show');
-                                                      });
-               });
+            fav_icon.unbind();
+            fav_icon.click(function (e) {
+                var list_item = $('button#' + data.id + ' .space-detail-fav');
 
-               fav_icon.tooltip({ placement: 'right', title: title});
-           }
+                if ($('#logout_button').length == 0) {
+                    window.location.href = '/login?next=' + window.location.pathname;
+                }
 
-           // Set focus on details container
-           $('.space-detail-inner').focus();
+                window.spacescout_favorites.toggle(data.id,
+                                                   function () {
+                                                       fav_icon.removeClass('space-detail-fav-unset').addClass('space-detail-fav-set');
+                                                       fav_icon_i.removeClass('fa-heart-o').addClass('fa-heart');
+                                                       list_item.show();
+                                                       fav_icon.tooltip('hide');
+                                                       fav_icon.data('tooltip', false);
+                                                       fav_icon.tooltip({ title: 'Remove this space from Favorites',
+                                                                          placement: 'right' });
+                                                       fav_icon.tooltip('show');
+                                                   },
+                                                   function () {
+                                                       fav_icon.removeClass('space-detail-fav-set').addClass('space-detail-fav-unset');
+                                                       fav_icon_i.removeClass('fa-heart').addClass('fa-heart-o');
+                                                       list_item.hide();
+                                                       fav_icon.tooltip('hide');
+                                                       fav_icon.data('tooltip', false);
+                                                       fav_icon.tooltip({ title: 'Favorite this space',
+                                                                          placement: 'right' });
+                                                       fav_icon.tooltip('show');
+                                                   });
+            });
+
+            fav_icon.tooltip({ placement: 'right', title: title});
+        }
+
+        //highlight the selected space
+        $('button#' + data.id).closest('.view-details').addClass('selected');
+
+        // Set focus on details container
+        $('.space-detail-inner').focus();
 	}
 
 	// Desktop display defaults
@@ -275,5 +287,14 @@ Handlebars.registerHelper('ifany', function(a, b) {
         $('#info_list .list-inner').css('min-height', contentH - 100);
         //$('.loading').height(contentH);
     }
+
+    $(document).on('searchResultsLoaded', function () {
+        var space_id = window.spacescout_url.space_id(window.location.pathname);
+
+        if (space_id) {
+            $('.view-details').removeClass('selected');
+            fetchSpaceDetails(space_id);
+        }
+    });
 
 })(this);

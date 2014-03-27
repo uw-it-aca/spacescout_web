@@ -33,7 +33,21 @@
         window.default_location = "{{ default_location }}";
         window.default_zoom = {{ zoom_level }};
     }
-
+    var state = window.spacescout_url.parse_path(window.location.pathname);
+    if (state.hasOwnProperty('search') && window.default_location != state.campus) {
+        $('#location_select option').each(function (i) {
+            var location = $(this).val().split(',');
+            if (location[2] == state.campus) {
+                $(document).ready(function () {
+                    $('#location_select option:eq(' + i + ')').attr('selected', 'selected');
+                });
+                window.default_latitude = location[0];
+                window.default_longitude = location[1];
+                window.default_location = location[2];
+                window.default_zoom = parseInt(location[3]);
+            }
+        });
+    }
     $.ajaxSetup({
         headers: { "X-CSRFToken": '{{ csrf_token }}' }
     });
@@ -63,19 +77,19 @@
                 </span>
                 {% endifnotequal %}
             </div>
-            <!-- hidden for now, until cool stuff for logged in users is finished.
+            <!-- hidden for now, until cool stuff for logged in users is finished.-->
             <div class="user_context">
                 {% if user.is_authenticated %}
                   <span>{% trans 'greeting' %}&nbsp;{{ request.user }}</span>
                   <a href="favorites">{% trans 'favorites' %} (<span class="favorites_count_container">0</span>)</a>
                   {% tplhandlebars "favorites_count" %}{{count}}{% endtplhandlebars %}
                   <span>|</span>
-                  <a href="logout?next={% firstof request.path '/' %}">{% trans 'logout' %}</a>
+                  <a id="logout_button" href="logout?next={% firstof request.path '/' %}">{% trans 'logout' %}</a>
                 {% else %}
-                  {% trans 'salutation' %}&nbsp;<a href="login?next={% firstof request.path '/' %}">{% trans 'login' %}</a>
+                  {% trans 'salutation' %}&nbsp;<a href="/login?next={% firstof request.path '/' %}">{% trans 'login' %}</a>
                 {% endif %}
             </div>
-             -->
+            <!-- -->
         </div>
         <div class="filter_context" role= "search" aria-labelledby="filter_group_header">
           <h2 id="filter_group_header" class="visuallyhidden">Find Study Spaces by Specific Criteria</h2>
@@ -122,10 +136,10 @@
                 <div class="space-detail">
                     <div class="space-detail-inner" id="detail_container_{{id}}" aria-labelledby="space-detail-name" tabindex="0">
                         <div class="space-detail-header">
-                          {% if user.is_authenticated %}<div class="space-detail-fav pull-left"><i class="fa fa-heart"></i></div>{% endif %}
-                            <h2 id="space-detail-name" class="space-detail-name"><span class="visuallyhidden">Space Details:</span> {{name}}</h2>
-                            <div class="space-detail-type">{{type}} {{#if capacity }}<span class="space-detail-capacity">[Seats&nbsp;{{capacity}}]</span>{{/if}}</div>
-                            <a class="close" href="#" title="close"><img alt="close details" src="/static/img/x.png" /></a>
+                          <div class="space-detail-fav space-detail-fav-unset pull-left"><i class="fa fa-heart-o"></i></div>
+                          <h2 id="space-detail-name" class="space-detail-name"><span class="visuallyhidden">Space Details:</span> {{name}}</h2>
+                          <div class="space-detail-type">{{type}} {{#if capacity }}<span class="space-detail-capacity">[Seats&nbsp;{{capacity}}]</span>{{/if}}</div>
+                          <a class="close" href="#" title="close"><img alt="close details" src="/static/img/x.png" /></a>
                         </div>
                         <div class="space-detail-body">
 
