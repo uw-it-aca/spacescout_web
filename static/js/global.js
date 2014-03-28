@@ -604,7 +604,11 @@ function initMapCarouselButtons() {
 
 function resizeCarouselMapContainer() {
     // get the width
-    var containerW = $('.image-container').width();
+    if ($('.image-container').width() > $('.map-container').width()) {
+        var containerW = $('.image-container').width();
+    } else if ($('.map-container').width() > $('.image-container').width()) {
+        var containerW = $('.map-container').width();
+    }
 
     // calcuate height based on 3:2 aspect ratio
     var containerH = containerW / 1.5;
