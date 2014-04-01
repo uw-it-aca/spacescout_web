@@ -20,28 +20,27 @@
 */
 (function(){
 
-    $.ajaxSetup({
-        headers: { "X-CSRFToken": window.spacescout_csrf_token }
-    });
-
     window.spacescout_favorites = window.spacescout_favorites || {
         k: {
             'favorites_count_container': '.favorites_count_container',
             'favorites_count_template': '#favorites_count',
-            'favorites_card_container': '#favorites_card_container',
+            'favorites_card_container': '.favorites_card_container',
             'favorites_card_template': '#favorites_card'
         },
 
-        favorites: [],
+        favorites: undefined,
 
         update_count: function () {
-            var self = this;
-            var source = $(self.k.favorites_count_template).html().trim();
-            var template = Handlebars.compile(source);
+            var self = this,
+                source = $(self.k.favorites_count_template),
+                template;
 
-            $(this.k.favorites_count_container).each(function () {
-                $(this).html(template({count: self.favorites.length}));
-            });
+            if (source.length) {
+                template = Handlebars.compile(source.html().trim());
+                $(this.k.favorites_count_container).each(function () {
+                    $(this).html(template({count: self.favorites.length}));
+                });
+            }
         },
 
         update_search_result: function () {
@@ -56,64 +55,115 @@
                 if (self.is_favorite(id)) {
                     node.show();
                     if (id == detail_id) {
-                        $('.space-detail-fav', detail_node).addClass('space-detail-fav-set');
+                        $('.space-detail-fav', detail_node).removeClass('space-detail-fav-unset').addClass('space-detail-fav-set');
+                        $('.space-detail-fav i', detail_node).removeClass('fa-heart-o').addClass('fa-heart');
                     }
                 } else {
                     node.hide();
                     if (id == detail_id) {
-                        $('.space-detail-fav', detail_node).removeClass('space-detail-fav-set');
+                        $('.space-detail-fav', detail_node).removeClass('space-detail-fav-set').addClass('space-detail-fav-unset');
+                        $('.space-detail-fav i', detail_node).removeClass('fa-heart').addClass('fa-heart-o');
                     }
                 }
             });
         },
 
-        update_cards: function () {
-            var node = $(this.k.favorites_card_container);
-            var source, template, html = '';
+        update_cards: function (on_card_load, on_finish) {
+            var container = $(this.k.favorites_card_container),
+                source, template;
 
-            if (node.length == 1) {
+            if (container.length == 1 && $.isArray(this.favorites)) {
                 source = $(this.k.favorites_card_template).html();
-                template = Handlebars.compile(source);
-                node.html('');
+                template = Handlebars.compile(source),
+                self = this;
 
                 $.each(this.favorites, function () {
-                    node.append(template(this));
+                    var spot = $('spot_' + this.id),
+                        type = [], card;
+
+                    if ($.isArray(this.type)) {
+                        $.each(this.type, function () {
+                            type.push(gettext(this));
+                        });
+                    }
+
+                    this.type = type.join(', ');
+                    this.extended_info.noise_level = gettext(this.extended_info.noise_level);
+                    this.extended_info.food_nearby = gettext(this.extended_info.food_nearby);
+                    this.has_reservation_notes = ( this.extended_info.reservation_notes != null);
+                    this.has_notes = ( ( this.extended_info.access_notes != null) || this.has_reservation_notes );
+                    this.has_resources = ( this.extended_info.has_computers != null || this.extended_info.has_displays != null || this.extended_info.has_outlets != null || this.extended_info.has_printing != null || this.extended_info.has_projector != null || this.extended_info.has_scanner != null || this.extended_info.has_whiteboards != null );
+
+                    card = $(template(this));
+
+                    if (spot.length == 0) {
+                        card.insertBefore('#space-detail-blank', container);
+                    }
+
+                    if (on_card_load) {
+                        on_card_load.apply(self, [card, this]);
+                    }
                 });
-            } else {
-                node.html('<em>Sorry Charlie</em>');
+
+
+                if (on_finish) {
+                    on_finish.apply(self, []);
+                }
+
             }
         },
 
-        load: function () {
+        load: function (on_card_load, on_finish) {
             var self = this;
+
             $.ajax({
                 url: 'api/v1/user/me/favorites',
                 success: function (data) {
                     self.favorites = data ? data : [];
-                    self.update();
+                    self.update(on_card_load, on_finish);
                 },
                 error: function (xhr, textStatus, errorThrown) {
-                    alert('Unable to load favorites: ' + xhr.responseText);
+                    console.log('Unable to load favorites: ' + xhr.responseText);
                 }
             });
         },
 
-        update: function () {
+        update: function (on_card_load, on_finished) {
             this.update_count();
             this.update_search_result();
-            this.update_cards();
+            this.update_cards(on_card_load, on_finished);
         },
 
         is_favorite: function (id) {
-            return (this.index(id) >= 0);
+            var fav = false;
+
+            if (this.favorites) {
+                fav = (this.index(id) >= 0);
+            } else {
+                $.ajax({
+                    url: 'api/v1/user/me/favorite/' + id,
+                    type: "GET",
+                    async: false,
+                    success: function (data) {
+                        fav = (typeof data === 'boolean') ? data : false;
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        console.log('Unable to get favorite: ' + xhr.responseText);
+                    }
+                });
+            }
+
+            return fav;
         },
 
         index: function (id) {
             var i;
 
-            for (i = 0; i < this.favorites.length; i += 1) {
-                if (this.favorites[i].id == id) {
-                    return i;
+            if (this.favorites) {
+                for (i = 0; i < this.favorites.length; i += 1) {
+                    if (this.favorites[i].id == id) {
+                        return i;
+                    }
                 }
             }
 
@@ -141,48 +191,142 @@
                     data: JSON.stringify({}),
                     type: "PUT",
                     success: function (data) {
-                        self.favorites.push({
-                            id: id,
-                            incomplete: true
-                        });
+                        if (self.favorites) {
+                            self.favorites.push({
+                                id: id,
+                                incomplete: true
+                            });
+                        }
+
                         self.update_count();
                         if (on_set) {
                             on_set.call();
                         }
                     },
                     error: function (xhr, textStatus, errorThrown) {
-                        alert('Unable to set favorite: ' + xhr.responseText);
+                        console.log('Unable to set favorite: ' + xhr.responseText);
                     }
                 });
             }
         },
 
         clear: function (id, on_clear) {
-            var self = this,
-                index = this.index(id);
+            var self = this;
 
-            if (index >= 0) {
-                $.ajax({
-                    url: 'api/v1/user/me/favorite/' + id,
-                    dataType: 'json',
-                    type: "DELETE",
-                    success: function (data) {
-                        self.favorites.splice(index, 1);
-                        self.update_count();
-                        if (on_clear) {
-                            on_clear.call();
+            $.ajax({
+                url: 'api/v1/user/me/favorite/' + id,
+                dataType: 'json',
+                type: "DELETE",
+                success: function (data) {
+                    if (self.favorites) {
+                        var index = self.index(id);
+
+                        if (index >= 0) {
+                            self.favorites.splice(index, 1);
                         }
-                    },
-                    error: function (xhr, textStatus, errorThrown) {
-                        alert('Unable to unset favorite: ' + xhr.responseText);
                     }
-                });
-            }
+
+                    self.update_count();
+                    if (on_clear) {
+                        on_clear.call();
+                    }
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    console.log('Unable to unset favorite: ' + xhr.responseText);
+                }
+            });
         }
     };
 
-    if ($(window.spacescout_favorites.k.favorites_card_container).length == 1) {
-        window.spacescout_favorites.load();
+    if ($('.favorites_nav').length > 0) {
+        window.spacescout_favorites.load(function (card, fav) {
+            var now = new Date(),
+                hour = now.getHours(),
+                minute = now.getMinutes(),
+                day = weekday_from_day(now.getDay()).toLowerCase(),
+                formatted = 'Closed',
+                o, c;
+
+            $('.space-detail-is-closed', card).show();
+    
+            if (fav.available_hours[day].length > 0) {
+                $.each(fav.available_hours[day], function() {
+                    this[0] = this[0].replace(/^0+/, '');
+                    this[1] = this[1].replace(/^0+/, '');
+                    o = this[0].split(':');
+                    c = this[1].split(':');
+    
+                    if ((hour > parseInt(o[0]) && hour < parseInt(c[0]))
+                        || (hour == parseInt(o[0]) && minute > parseInt(o[1]))
+                        || (hour == parseInt(c[0]) && minute < parseInt(c[1]))) {
+                        $('.space-detail-is-open', card).show();
+                        $('.space-detail-is-closed', card).hide();
+                    }
+                });
+    
+                formatted = to12Hour(fav.available_hours[day]).join(", ");
+            }
+    
+            $('.space-info-hours-today span', card).html(formatted);
+    
+            $('.space-info-more-detail a', card).click(function (e) {
+                var more_div = $(e.target).parent();
+    
+                more_div.slideUp('fast');
+                more_div.next().slideDown('fast');
+            });
+    
+            $('.space-info-less-detail a', card).click(function (e) {
+                var ul = $(e.target).closest('ul');
+    
+                ul.slideUp('fast');
+                ul.prev().slideDown('fast');
+            });
+    
+            $('.space-detail-fav', card).tooltip({ placement: 'right',
+                                                   title: 'Remove this space from Favorites' });
+            $('.space-detail-fav', card).click(function (e) {
+                var id = parseInt($(this).attr('data-id'));
+                var container = $(this).closest('.space-detail-container');
+                var tooltip = $(this).tooltip('hide');
+    
+                window.spacescout_favorites.clear(id, function () {
+                    container.hide({ effect: 'fade', duration: 800,  complete: function () { this.remove(); } });
+                });
+            });
+    
+            var bld_code = fav.location.building_name.match(/.*\(([A-Z ]+)\)( [a-zA-Z]+)?$/)
+            if (bld_code) {
+                $('.space-detail-building', card).html(bld_code[1] + (bld_code[2] ? bld_code[2] : ''));
+            } else {
+                $('.space-detail-building', card).html(fav.location.building_name);
+            }
+    
+            // Load image carousel
+            if (fav.hasOwnProperty('images') && fav.images.length > 0) {
+                var template = Handlebars.compile($('#images_template').html());
+                var data = [];
+                // only load initial image
+                data.push({ id: fav.id, image_id: fav.images[0].id });
+                $('.carousel-inner', card).html(template({ data: data }));
+            } else {
+                var template = Handlebars.compile($('#no_images_template').html());
+                $('.carousel-inner', card).html(template({ static_url: window.spacescout_static_url }));
+            }
+    
+            if (fav.has_reservation_notes) {
+                var url = fav.extended_info.reservation_notes.match(/(http:\/\/[^\s]+)/);
+    
+                if (url) {
+                   var template = Handlebars.compile($('#reservation_cue').html());
+                   $('.space-info-reservation-cue', card).html(template({ url: url[1] })).show();
+                }
+            }
+        },
+        function () {
+            initializeCarousel();
+            initMapCarouselButtons();
+        });
     }
 
 })(this);

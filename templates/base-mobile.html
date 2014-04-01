@@ -40,6 +40,7 @@
         <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}libs/font-awesome.min.css" charset="utf-8" />
         <link rel="stylesheet" type="text/less" href="{{ STATIC_URL }}css/mobile.less" media="screen, handheld" />
         <link rel="stylesheet" type="text/less" href="{{ STATIC_URL }}css/tablet.less" media="screen, handheld" />
+        {% block extra_compress_css %}{% endblock %}
         {% endcompress %}
 
         {% block extra_css %}{% endblock %}
@@ -116,17 +117,20 @@
             <script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap/js/bootstrap-transition.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap/js/bootstrap-button.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap/js/bootstrap-carousel.js"></script>
+            <script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap/js/bootstrap-tooltip.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/handlebars.js"></script>
             
 			<script type="text/javascript" src="{{ STATIC_URL }}js/markerwithlabel.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/jquery.lazyscrollloading-min.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}js/global.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}js/search.js"></script>
+            <script type="text/javascript" src="{{ STATIC_URL }}js/url.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}js/favorites.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}js/mobile.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}js/clustering.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}js/retina.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}js/analytics.js"></script>
+
 
             {% if spaces %}
             <script type="text/javascript">
@@ -136,6 +140,7 @@
 
             {% block extra_js %}{% endblock %}
           {% endcompress %}
+            <script type="text/javascript" src="{% url django.views.i18n.javascript_catalog %}"></script>
 
     </body>
 </html>

@@ -48,13 +48,17 @@
 
 	   // check if a map_canvas exists... populate it
     	if ($("#map_canvas").length == 1) {
-          initialize();
+            initialize();
         }
 
 		// initialize the carousel for mobile standalone space page
         initializeCarousel();
         resizeCarouselMapContainer();
         replaceUrls();
+
+    	if ($(".space-detail-body").length == 1) {
+            initMapCarouselButtons();
+        }
 
         // scroll to the top of page
         $('#top_link').click(function(e){
@@ -94,6 +98,12 @@
 //    		resizeFilterBlock();
 
             if (block.css('display') == 'none') {
+                // reflect current filter
+                if (window.hasOwnProperty('spacescout_search_options')) {
+                    clear_filter();
+                    repopulate_filters(window.spacescout_search_options);
+                }
+
     		    // slide down the filter block
                 $("#filter_block").slideDown(400, function() {
                     // hide the main content (map and list) by setting a height on the main container and hiding overflow
@@ -118,8 +128,8 @@
 
             // show the correct buttons
 //            $('#filter_button').hide();
-            $('#spacecount').hide();
-            //$('#space_count_container').hide();
+//            $('#spacecount').hide();
+//            $('#space_count_container').hide();
 //            $('#done-clear-group').show();
 //            $('#view_results_button').show();
 //            $('#cancel_results_button').show();
@@ -137,36 +147,11 @@
             $('#filter-clear').slideDown(50);
             $('#filter-clear').delay(1000).fadeOut(500);
             // clear saved search options
-            if ($.cookie('spacescout_search_opts')) {
-                $.removeCookie('spacescout_search_opts');
-            }
+//            if ($.cookie('spacescout_search_opts')) {
+//                $.removeCookie('spacescout_search_opts');
+//            }
 
-            // reset checkboxes
-            $('input[type=checkbox]').each(function() {
-                if ($(this).prop('checked')) {
-                    $(this).prop('checked', false);
-                    $(this).parent().removeClass("selected");
-                }
-            });
-
-            // reset capacity
-            $('#capacity').val('1');
-
-            // reset hours
-            $('#open_now').prop('checked', true);
-            $('#open_now').parent().removeClass("selected");
-            $('#hours_list_container').hide();
-            $('#hours_list_input').parent().removeClass("selected");
-            default_open_at_filter();
-            
-            // reset location
-            $('#entire_campus').prop('checked', true);
-            $('#entire_campus').parent().removeClass("selected");
-            $('#building_list_container').hide();
-            $('#building_list_input').parent().removeClass("selected");
-            $('#building_list_container').children().children().children(".select2-search-choice").remove();
-            $('#building_list_container').children().children().children().children().val('Select building(s)');
-            $('#building_list_container').children().children().children().children().attr('style', "");
+            clear_filter();
 
             // remove initial_load cookie so we can use the in-page json
             $.removeCookie('initial_load');
@@ -192,25 +177,6 @@
             );
 
         });
-
-        // Toggle between carousel and map
-        $('.space-image-map-buttons button').live('click', function(e){
-
-            if ($('#carouselControl').hasClass('active')) { // show the carousel
-                $('#spaceCarouselContainer').show();
-                $('#spaceMap').hide();
-                $('#carouselControl.btn').attr("tabindex", -1).attr("aria-selected", true);
-                $('#mapControl.btn').attr("tabindex", 0).attr("aria-selected", false);
-            }
-            else { //show the map
-                $('#spaceCarouselContainer').hide();
-                $('#spaceMap').show();
-                getSpaceMap(detailsLat, detailsLon);
-                $('#carouselControl.btn').attr("tabindex", 0).attr("aria-selected", false);
-                $('#mapControl.btn').attr("tabindex", -1).attr("aria-selected", true);
-            }
-        });
-
 	});
 
 	// Update dimensions on orientation change

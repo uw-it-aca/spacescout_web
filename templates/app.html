@@ -33,9 +33,24 @@
         window.default_location = "{{ default_location }}";
         window.default_zoom = {{ zoom_level }};
     }
-
-    window.spacescout_csrf_token = '{{ csrf_token }}';
-
+    var state = window.spacescout_url.parse_path(window.location.pathname);
+    if (state.hasOwnProperty('search') && window.default_location != state.campus) {
+        $('#location_select option').each(function (i) {
+            var location = $(this).val().split(',');
+            if (location[2] == state.campus) {
+                $(document).ready(function () {
+                    $('#location_select option:eq(' + i + ')').attr('selected', 'selected');
+                });
+                window.default_latitude = location[0];
+                window.default_longitude = location[1];
+                window.default_location = location[2];
+                window.default_zoom = parseInt(location[3]);
+            }
+        });
+    }
+    $.ajaxSetup({
+        headers: { "X-CSRFToken": '{{ csrf_token }}' }
+    });
 </script>
 {% endblock %}
 
@@ -43,12 +58,14 @@
 {% load i18n %}
 {% load templatetag_handlebars %}
 
-    <div id="nav" style="position:relative;">
+    <div id="nav">
 
         <div class="logo-container clearfix">
 
             <div class="logo">
                 <h1 id="app_header" class="visuallyhidden">SPACESCOUT&trade;</h1>
+            </div>
+            <div class="location_container">
                 {% ifnotequal locations|length 1 %}
                 <span role="navigation" aria-labelledby="location_select_heading">
                 <label id="location_select_heading" for="location_select"  class="visuallyhidden">Select campus:</label>
@@ -60,53 +77,50 @@
                 </span>
                 {% endifnotequal %}
             </div>
-            <!-- hidden for now, until cool stuff for logged in users is finished.
+            <!-- hidden for now, until cool stuff for logged in users is finished.-->
             <div class="user_context">
                 {% if user.is_authenticated %}
                   <span>{% trans 'greeting' %}&nbsp;{{ request.user }}</span>
                   <a href="favorites">{% trans 'favorites' %} (<span class="favorites_count_container">0</span>)</a>
                   {% tplhandlebars "favorites_count" %}{{count}}{% endtplhandlebars %}
                   <span>|</span>
-                  <a href="logout?next={% firstof request.path '/' %}">{% trans 'logout' %}</a>
+                  <a id="logout_button" href="logout?next={% firstof request.path '/' %}">{% trans 'logout' %}</a>
                 {% else %}
-                  {% trans 'salutation' %}&nbsp;<a href="login?next={% firstof request.path '/' %}">{% trans 'login' %}</a>
+                  {% trans 'salutation' %}&nbsp;<a href="/login?next={% firstof request.path '/' %}">{% trans 'login' %}</a>
                 {% endif %}
             </div>
-            -->
+            <!-- -->
         </div>
-        <h2 id="filter_group_header" class="visuallyhidden">Find Study Spaces by Specific Criteria</h2>
         <div class="filter_context" role= "search" aria-labelledby="filter_group_header">
-          <div id="filter_container" aria-labelledby="filters_header" aria-controls="space_count_container">
-            <form>
-              <div id="filter_block" style="display:none;">
-                <h3 id="filters_header" class="visuallyhidden">Filter By:</h3>
-                <div class="inner clearfix">
-                  <div class="inner-column">
-                    <div id="filter-clear">Filters Cleared</div>
-                    <div class="inner-block-left">
-					  {% include "filters.html" %}
-                    </div>
-                  </div>
-                  <div class="inner-row">
-                    <button id="view_results_button" class="btn btn-inverse" type="button" aria-label="Apply Filters">Apply</button>
-                    <button id="cancel_results_button" class="btn" type="button" aria-label="Clear Filters">Reset</button>
-                  </div>
-                </div>
-              </div>
-            </form>
-          </div>
-
-          <div class="actions filters">
-            <button id="filter_button" class="btn btn-inverse" type="button" aria-label="Filter settings..." aria-owns="filter_container" >{%trans 'filters' %}<i class="fa fa-angle-double-down"></i></button>
-          </div>
+          <h2 id="filter_group_header" class="visuallyhidden">Find Study Spaces by Specific Criteria</h2>
+          <button id="filter_button" class="btn btn-inverse" type="button" aria-label="Filter settings..." aria-owns="filter_container" >{%trans 'filters' %}<i class="fa fa-angle-double-down"></i></button>
 
           <h3 id="spaces_match_header" class="visuallyhidden">Your current filters return:</h3>
-          <div id="space_count_container" aria-labelledby="spaces_match_header" role="status"></div>
 
+          <div id="space_count_container" aria-labelledby="spaces_match_header" role="status"></div>
           {% tplhandlebars "space_count" %}
-          {% trans 'showing' %} <span class="count">{{count}}</span> {% trans 'spaces' %}
+          <span class="count">{{count}}</span> {% trans 'spaces' %}
           {% endtplhandlebars %}
         </div>
+      </div>
+      <div id="filter_container" aria-labelledby="filters_header" aria-controls="space_count_container">
+       <form>
+         <div id="filter_block" style="display:none;">
+           <h3 id="filters_header" class="visuallyhidden">Filter By:</h3>
+           <div class="inner clearfix">
+             <div class="inner-column">
+               <div id="filter-clear">Filters Cleared</div>
+               <div class="inner-block-left">
+   			  {% include "filters.html" %}
+               </div>
+             </div>
+             <div class="inner-row">
+               <button id="view_results_button" class="btn" type="button" aria-label="Apply Filters">Apply</button>
+               <button id="cancel_results_button" class="btn" type="button" aria-label="Clear Filters">Reset</button>
+             </div>
+           </div>
+         </div>
+       </form>
     </div>
     <div id="main_content" class="clearfix" role="main" aria-labelledby="app_header">
 <h2 id="map_header" class="visuallyhidden" aria-hidden="true">Map of Spaces</h2>
@@ -118,14 +132,14 @@
         {% endtplhandlebars %}
 
         {% tplhandlebars "space_details" %}
-            <div id="space_detail_container" class="">
+            <div class="space-detail-container">
                 <div class="space-detail">
                     <div class="space-detail-inner" id="detail_container_{{id}}" aria-labelledby="space-detail-name" tabindex="0">
                         <div class="space-detail-header">
-                          {% if user.is_authenticated %}<div class="space-detail-fav pull-left"><i class="fa fa-heart"></i></div>{% endif %}
-                            <h2 id="space-detail-name" class="space-detail-name"><span class="visuallyhidden">Space Details:</span> {{name}}</h2>
-                            <div class="space-detail-type">{{type}} {{#if capacity }}<span class="space-detail-capacity">[Seats&nbsp;{{capacity}}]</span>{{/if}}</div>
-                            <a class="close" href="#" title="close"><img alt="close details" src="/static/img/x.png" /></a>
+                          <div class="space-detail-fav space-detail-fav-unset pull-left"><i class="fa fa-heart-o"></i></div>
+                          <h2 id="space-detail-name" class="space-detail-name"><span class="visuallyhidden">Space Details:</span> {{name}}</h2>
+                          <div class="space-detail-type">{{type}} {{#if capacity }}<span class="space-detail-capacity">[Seats&nbsp;{{capacity}}]</span>{{/if}}</div>
+                          <a class="close" href="#" title="close"><img alt="close details" src="/static/img/x.png" /></a>
                         </div>
                         <div class="space-detail-body">
 
@@ -155,7 +169,7 @@
                                 </div>
                                 <div class="space-image-map-buttons btn-group pull-left" data-toggle="buttons-radio" role="tablist">
                                   <button id="carouselControl" class="btn active" role="tab" aria-selected="true" aria-controls="spaceCarouselContainer"><span>Image gallery</span></button>
-                                  <button id="mapControl" class="btn" role="tab" aria-controls="spaceMap" aria-selected="false"><span>Show this space on a map</span></button>
+                                  <button id="mapControl" class="btn" role="tab" aria-controls="spaceMap" aria-selected="false" data-location="[{{location.latitude}}, {{location.longitude}}]"><span>Show this space on a map</span></button>
                                 </div>
 
                             </div>

@@ -15,39 +15,36 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.conf import settings
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse
 from mobility.decorators import mobile_template
 from django.views.decorators.cache import never_cache
-import simplejson as json
+from django.contrib.auth.decorators import login_required
 import oauth2
 
 
 # User's favorite spaces
+@login_required
 @mobile_template('{mobile/}favorites.html')
-def Favorites(request, template=None):
-
-    if not request.user.is_authenticated():
-        return HttpResponseRedirect('login?next=favorites')
-
-    params = {
-        'locations': settings.SS_LOCATIONS
-    }
-
-    return render_to_response(template, params, context_instance=RequestContext(request))
+def FavoritesView(request, template=None):
+    return render_to_response(template,
+                              { 'locations': settings.SS_LOCATIONS },
+                              context_instance=RequestContext(request))
 
 
 # Shim to fetch server-side user favorites
+@login_required
 @never_cache
 def API(request, spot_id=None):
-    if not request.user.is_authenticated():
-        return HttpResponse('Unauthorized', status=401)
-
+    
     consumer = oauth2.Consumer(key=settings.SS_WEB_OAUTH_KEY, secret=settings.SS_WEB_OAUTH_SECRET)
     client = oauth2.Client(consumer)
 
     if request.META['REQUEST_METHOD'] == 'GET':
+        if spot_id:
+            url = "{0}/api/v1/user/me/favorite/{1}".format(settings.SS_WEB_SERVER_HOST, spot_id)
+        else:
+            url = "{0}/api/v1/user/me/favorites".format(settings.SS_WEB_SERVER_HOST)
 
-        url = "{0}/api/v1/user/me/favorites".format(settings.SS_WEB_SERVER_HOST)
         method = 'GET'
         body = ''
 
@@ -67,7 +64,7 @@ def API(request, spot_id=None):
         return HttpResponse('Method not allowed', status=405)
 
     headers = {
-        "XOAUTH_USER": "%s" % request.user,
+        "XOAUTH_USER": "%s" % request.user.username,
         'Content-Type': 'application/json',
         'Accept': 'application/json'
     }

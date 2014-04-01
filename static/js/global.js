@@ -15,7 +15,6 @@
 
 */
 
-var detailsLat, detailsLon;
 var requests = [];
 
 // Handlebars helpers
@@ -282,7 +281,6 @@ function sortDays(days) {
 
 function default_open_at_filter() {
     // set the default open_at filter to close to now
-    var weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     var date = new Date();
     var hour = date.getHours();
     var min = date.getMinutes();
@@ -307,17 +305,25 @@ function default_open_at_filter() {
         hour = hour-12;
     }
     hour = ""+hour+":"+min;
-    $("#day-from").val(weekdays[date.getDay()]);
+    $("#day-from").val(weekday_from_day(date.getDay()));
     $("#hour-from").val(hour);
 
 
-    $("#day-until").val(weekdays[date.getDay()]);
+    $("#day-until").val(weekday_from_day(date.getDay()));
     $("#hour-until").val(hour);
+}
+
+function weekday_from_day(day) {
+    var weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+    return (day >=0 && day <= 6) ? weekdays[day] : '';
 }
 
 function format_location_filter(data) {
     var source = $('#building_list').html();
     var template = Handlebars.compile(source);
+    var node;
+
     if (source != null) {
         $('#building_list_container').html(template({data: data}));
     }
@@ -333,7 +339,12 @@ function format_location_filter(data) {
             });
         }
     }
-    $(".chzn-select").chosen({width: "98%"});
+
+    node = $(".chzn-select");
+    if (node.length > 0 && node.chosen) {
+        node.chosen({width: "98%"});
+    }
+
     $('#e9.building-location').trigger("liszt:updated");
 }
 
@@ -419,6 +430,7 @@ function reset_location_filter() {
             get_location_buildings();
             $.cookie('default_location', $(this).val());
             reset_location_filter();
+            window.spacescout_url.replace();
         });
 
     	// handle clicking on map centering buttons
@@ -482,10 +494,10 @@ function reset_location_filter() {
                             $('#container').css('overflow','visible');
                         }   
                     });
-                    $('#filter_button').show();
-                    $('#space_count_container').show();
-                    $('#view_results_button').hide();
-                    $('#cancel_results_button').hide();
+//                    $('#filter_button').show();
+//                    $('#space_count_container').show();
+//                    $('#view_results_button').hide();
+//                    $('#cancel_results_button').hide();
                     $('#filter_button').focus();
                 }
                 if ($('.space-detail').is(':visible')) {
@@ -497,10 +509,11 @@ function reset_location_filter() {
         // handle clicking on the "done" button for filters
         $("#view_results_button").click(function() {
 
-            $('.count').hide();
-            $('.spaces').hide();
+//            $('.count').hide();
+//            $('.spaces').hide();
             run_custom_search();
             $.cookie('initial_load', false, { expires: 1 });
+            window.spacescout_url.push();
             $('#filter_button').focus();
             
             
@@ -565,9 +578,39 @@ function initializeCarousel() {
     resizeCarouselMapContainer();
 }
 
+function initMapCarouselButtons() {
+    $('.space-image-map-buttons button').on('click', function(e){
+        var target = $(this),
+            active = target.hasClass('active'),
+            container = target.closest('.space-detail'),
+            coords;
+
+        if (!active) {
+            if (target.attr('id') == 'carouselControl') {
+                $('#spaceCarouselContainer', container).show();
+                $('#spaceMap', container).hide();
+                $('#carouselControl.btn', container).attr("tabindex", -1).attr("aria-selected", true);
+                $('#mapControl.btn', container).attr("tabindex", 0).attr("aria-selected", false);
+            }
+            else if (target.attr('id') == 'mapControl') {
+                $('#spaceCarouselContainer', container).hide();
+                $('#spaceMap', container).show();
+                $('#carouselControl.btn', container).attr("tabindex", 0).attr("aria-selected", false);
+                $('#mapControl.btn', container).attr("tabindex", -1).attr("aria-selected", true);
+                coords = JSON.parse(target.attr('data-location'));
+                getSpaceMap(container, coords[0], coords[1]);
+            }
+        }
+    });
+}
+
 function resizeCarouselMapContainer() {
     // get the width
-    var containerW = $('.image-container').width();
+    if ($('.image-container').width() > $('.map-container').width()) {
+        var containerW = $('.image-container').width();
+    } else if ($('.map-container').width() > $('.image-container').width()) {
+        var containerW = $('.map-container').width();
+    }
 
     // calcuate height based on 3:2 aspect ratio
     var containerH = containerW / 1.5;
@@ -604,7 +647,7 @@ function resetFilters() {
     reset_location_filter();
 }
 
-function getSpaceMap(lat, lon) {
+function getSpaceMap(container, lat, lon) {
 
   if (window.space_latitude) {
     lat = window.space_latitude;
@@ -622,7 +665,7 @@ function getSpaceMap(lat, lon) {
     streetViewControl: false
   };
 
-  var map = new google.maps.Map(document.getElementById("spaceMap"), mapOptions);
+  var map = new google.maps.Map($('#spaceMap', container).get(0), mapOptions);
 
   var image = '/static/img/pins/pin00.png';
 
@@ -650,7 +693,7 @@ function closeSpaceDetails() {
     var the_spot_id = $('.space-detail-inner').attr("id");
     the_spot_id = "#" + the_spot_id.replace(/[^0-9]/g, '');
     $('.space-detail').hide("slide", { direction: "right" }, 400, function() {
-        $('#space_detail_container').remove();
+        $('.space-detail-container').remove();
     });
 
         // deselect selected space in list

@@ -46,6 +46,8 @@
 
             <div class="logo">
                 <h1 id="app_header" class="visuallyhidden">SPACESCOUT&trade;</h1>
+            </div>
+            <div class="location_container">
                 {% ifnotequal locations|length 1 %}
                 <span role="navigation" aria-labelledby="location_select_heading">
                 <label id="location_select_heading" for="location_select"  class="visuallyhidden">Select campus:</label>
@@ -57,33 +59,35 @@
                 </span>
                 {% endifnotequal %}
             </div>
-            <div role="search" aria-labelledby="filter_group_header">
-                <h2 id="filter_group_header" class="visuallyhidden">Find Study Spaces by Specific Criteria</h2>
-                <div class="actions">
-                    <button id="filter_button" class="btn btn-inverse" type="button" aria-label="Filter settings..." aria-owns="filter_container" >{%trans 'filters' %}<i class="fa fa-angle-double-down"></i></button>
-
-                    <h3 id="spaces_match_header" class="visuallyhidden">Your current filters return:</h3>
-
-                    <div id="space_count_container" aria-labelledby="spaces_match_header"  role="status"></div>
-
-					{% tplhandlebars "space_count" %}
-            			<div id="spacecount">
-            				<span class="count">{{count}}</span><span class="spaces"> spaces</span>
-            			</div>
-            		{% endtplhandlebars %}
-<!--
-                    <div id="done-clear-group">
-                    <button id="view_results_button" class="btn btn-inverse" type="button" aria-label="Apply Filters">Done</button><br>
-                    <button id="cancel_results_button" class="btn" type="button" aria-label="Clear Filters">Clear</button>
-                    </div>
--->
-
-                </div>
-            </div>
         </div>
+        <!-- hidden for now, until cool stuff for logged in users is finished.-->
+        <div class="user_context">
+            {% if user.is_authenticated %}
+              <span class="salutation">{% trans 'greeting' %}&nbsp;{{ request.user }}</span>
+              <a href="favorites">{% trans 'favorites' %} (<span class="favorites_count_container">0</span>)</a>
+              <span>|</span>
+              {% tplhandlebars "favorites_count" %}{{count}}{% endtplhandlebars %}
+              <a href="logout?next={% firstof request.path '/' %}">{% trans 'logout' %}</a>
+            {% else %}
+              {% trans 'salutation' %}&nbsp;<a href="login?next={% firstof request.path '/' %}">{% trans 'login' %}</a>
+            {% endif %}
+        </div>
+        <!-- -->
+        <div class="filter_context" role="search" aria-labelledby="filter_group_header">
+          <h2 id="filter_group_header" class="visuallyhidden">Find Study Spaces by Specific Criteria</h2>
+          <button id="filter_button" class="btn" type="button" aria-label="Filter settings..." aria-owns="filter_container" >{%trans 'filters' %}<i class="fa fa-angle-double-down"></i></button>
 
+          <h3 id="spaces_match_header" class="visuallyhidden">Your current filters return:</h3>
+
+          <div id="space_count_container" aria-labelledby="spaces_match_header"  role="status"></div>
+		  {% tplhandlebars "space_count" %}
+          <div id="spacecount">
+            <span class="count">{{count}}</span><span class="spaces"> {% trans 'spaces' %}</span>
+          </div>
+          {% endtplhandlebars %}
+        </div>
     </div>
-    
+
     <div id="filter_container" aria-labelledby="filters_header" aria-controls="space_count_container">
         <form>
             <div id="filter_block" style="display:none;">
@@ -91,18 +95,18 @@
                 <div class="inner clearfix">
 
                     <div class="inner-column">
-                    	<div id="filter-clear">Filters Cleared</div>
+                        <div id="filter-clear">Filters Cleared</div>
                         <div class="inner-block-left">
-                        	<div id="bubble_mobile">
-            					<div class="bubble-inner clearfix" style="position:relative;">
+<!--                          <div id="bubble_mobile">
+            				<div class="bubble-inner clearfix" style="position:relative;">
 
-                					<div id="bubble_filters_container" class="bubble-filters pull-left" ></div>
+                			  <div id="bubble_filters_container" class="bubble-filters pull-left" ></div>
 
-               							 {% tplhandlebars "filter_list" %}
-               					    <h4 id="current_filters" class="visuallyhidden">Currently filtering by:</h4>
-              							  <ul id='filter_display_list'>
-									  <li>{{#if open_at}}specific time{{else}}open now{{/if}}</li>
-									  <li>{{#if building_name}}specific building{{else}}entire campus{{/if}}</li>
+              							 {% tplhandlebars "filter_list" %}
+               				  <h4 id="current_filters" class="visuallyhidden">Currently filtering by:</h4>
+              				  <ul id='filter_display_list'>
+								<li>{{#if open_at}}specific time{{else}}open now{{/if}}</li>
+								<li>{{#if building_name}}specific building{{else}}entire campus{{/if}}</li>
 					                     {{#if space_type}}<li>type of space</li>{{/if}}
                     					 {{#if true_capacity}}<li>seats {{capacity}}</li>{{/if}}
                     					 {{#if reservable}}<li>reservable</li>{{/if}}
@@ -110,16 +114,16 @@
                     					 {{#if lighting}}<li>natural light</li>{{/if}}
                     					 {{#if resources}}<li>resources</li>{{/if}}
                     					 {{#if food}}<li>food/coffee</li>{{/if}}
-                						 </ul>
+                			  </ul>
                 						{% endtplhandlebars %}
-                        			</div>
-								 </div>
-
+                        	</div>
+						  </div>
+-->
 							{% include "filters.html" %}
                         </div>
                     </div>
                     <div class="inner-row">
-                      <button id="view_results_button" class="btn btn-inverse" type="button" aria-label="Apply Filters">Apply</button>
+                      <button id="view_results_button" class="btn" type="button" aria-label="Apply Filters">Apply</button>
                       <button id="cancel_results_button" class="btn" type="button" aria-label="Clear Filters">Reset</button>
                     </div>
                 </div>
@@ -183,7 +187,7 @@
                                             <span class="space-detail-capacity pull-right">{{#if capacity}}Seats&nbsp;{{capacity}}{{/if}}</span>
                                         {{/if}}
                                     </div>
-									<div class="space-detail-fav pull-right"><i class="fa fa-heart"></i></div>
+                                    {% if user.is_authenticated %}<div class="space-detail-fav pull-right" style="display: none;"><i class="fa fa-heart"></i></div>{% endif %}
                                     <div class="space-detail-name">{{name}}</div>
                                     <div class="space-detail-desc">{{extended_info.location_description}}</div>
                                 </button>
@@ -232,7 +236,7 @@
                                             <span class="space-detail-capacity pull-right">{{#if capacity}}Seats&nbsp;{{capacity}}{{/if}}</span>
                                         {{/if}}
                                     </div>
-									<div class="space-detail-fav pull-right"><i class="fa fa-heart"></i></div>
+                                    {% if user.is_authenticated %}<div class="space-detail-fav pull-right" style="display: none;"><i class="fa fa-heart"></i></div>{% endif %}
                                     <div class="space-detail-name">{{name}}</div>
                                     <div class="space-detail-desc">{{extended_info.location_description}}</div>
                                 </button>

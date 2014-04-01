@@ -7,6 +7,9 @@
 @grey_background: #e5e5e5;
 @grey_medium: #6d6d6d;
 
+@nav_background: #7479a6;
+
+
 // retina.less
 // A helper mixin for applying high-resolution background images (http://www.retinajs.com)
 
@@ -30,21 +33,26 @@
 
     .logo-container { background-color: transparent;
 
-        .logo { height: 80px; line-height: 80px; width: 284px; position: relative;
-            .at2x('/static/img/spacescout_new.png', 284px, 62px);
+        .logo { height: 60px; line-height: 60px; width: 226px; position: relative;
+            .at2x('/static/img/spacescout_logo.png', 226px, 56px);
+            background-size: 226px, 56px;
             background-repeat: no-repeat;
             background-position: 0 50%;
 
-            #location_select {
-                background: transparent url('/static/img/drop-arrow.png') no-repeat 98% 50%;
-                padding-right: 5px;
-                width: 168px;
-            }
          }
-         .user_context { float: right; height: 80px; line-height: 80px;
-            > span { padding-left: 12px; }
-            a  { padding-left: 12px; text-decoration: none; }
-        }
+
+         .location_container { float: left; margin: 6px 0 0 10px;
+             #location_select {
+                 background-position: 83px 10px;
+                 height: 30px;
+                 padding: 4px 0 6px 12px;
+                 width: 120px;
+             }
+         }
+
+         .user_context { line-height: 60px; background: transparent; color: #666; clear: none;
+             a  { padding-left: 12px; text-decoration: none; }
+         }
     }
 
 
@@ -64,9 +72,9 @@
 }
 #filter-clear { top: 10px; }
 #filter_container {
-     position:absolute; top:120px; left:0; right:0; margin: 0; z-index: 100;
+     position:absolute; top:100px; left:0; right:0; margin: 0; z-index: 100;
 
-     #filter_block { background: rgba(0, 0, 0, 0.9); height: 450px;
+     #filter_block { background: rgba(0, 0, 0, 0.9); min-height: 450px;
 
         fieldset legend { border: none; padding-top: 0;}
 
@@ -75,7 +83,9 @@
             .inner-block-right { padding-left: 20px; }
         }
 
-        .inner-row { clear: left; float: right; padding-right: 40px; }
+        .inner-row { clear: both; float: right; margin-top: -20px;
+           .btn { margin-right: 16px; }
+        }
 
         #filter_hours {
             .hours-from, .hours-until { display: block; width: 35px; }
@@ -83,7 +93,6 @@
         }
 
         .filter-submit { text-align: right; }
-
     }
 }
 
@@ -94,7 +103,7 @@
     float: left;
 
     // copy the following block and make sure that mobile.less contains the "mobile" version
-    #space_detail_container {
+    .space-detail-container {
         position: absolute;
         top: 0;
         left: 0;
@@ -111,7 +120,7 @@
 
             .space-detail-inner { display:none; padding: 15px; background-color: #fff;
 
-                .space-detail-header { position: relative; height: 60px;
+                .space-detail-header { position: relative; height: 60px; clear: right;
                     .space-detail-type { color: @grey_dark;
                         .space-detail-capacity { color: @grey_light; font-size: 11px; text-transform: uppercase; display: inline-block; margin-left: 5px; height: 20px; }
                         
@@ -270,7 +279,7 @@
     }
     #map_canvas {
 
-        #space_detail_container {
+        .space-detail-container {
 
             .space-detail {
 
@@ -278,7 +287,6 @@
 
                     .space-detail-header {
                         .space-detail-fav { font-size: 20px; margin-right: 5px;}
-                        .space-detail-fav-set { color: #E5B52E; }
                     }
 
                     .space-detail-body {
@@ -293,4 +301,23 @@
             }
         }
     }
+}
+
+
+/* Favorites */
+
+#nav.favorites_nav {
+
+    .favorites-header { width: 100%; height:5px; background-color: @nav_background;
+        span {
+           float:right;
+           margin: -16px 110px 0 0;
+           width: 0; height: 0;
+           border-left: 16px solid transparent;
+           border-right: 16px solid transparent;
+           border-bottom: 16px solid @nav_background;
+        }
+    }
+
+    .footer { clear: both; padding: 20px 20px; }
 }

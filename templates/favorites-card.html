@@ -1,0 +1,158 @@
+{% load templatetag_handlebars %}
+
+{% tplhandlebars "favorites_card" %}
+<div class="space-detail-container">
+    <div class="space-detail">
+        <div class="space-detail-inner">
+
+            <div id="spot_{{ id }}" class="space-detail-header clearfix">
+              <h1 class="visuallyhidden">SPACESCOUT&trade;</h1>
+              <div class="space-detail-building">{{ location.building_code }}</div>
+              <div id="name-type-block" class="pull-left">
+                <div class="space-detail-fav pull-left space-detail-fav-set" data-id="{{ id }}"><i class="fa fa-heart"></i></div>
+                <h2 class="space-detail-name"><span class="visuallyhidden">Space Details: </span>{{ name }}</h2>
+                <div class="space-detail-type">{{ type }} {{#if capacity }}<span class="space-detail-capacity">[Seats&nbsp;{{capacity}}]</span>{{/if}}</div>
+                <div class="space-detail-tick space-detail-is-open" style="display: none;">OPEN</div>
+                <div class="space-detail-tick space-detail-is-closed" style="display: none;">CLOSED</div>
+              </div>
+            </div>
+            <div class="space-detail-body">
+                <div class="space-detail-body-inner">
+                    <div id="spaceCarouselContainer" class="image-container" role="tabpanel">
+                        <div id="spaceCarousel" class="carousel slide">
+                          <!-- Carousel items -->
+                          <div class="carousel-inner"></div
+                          <!-- Carousel nav -->
+                          <a class="carousel-control left" href="#spaceCarousel" data-slide="prev">&lsaquo;</a>
+                          <a class="carousel-control right" href="#spaceCarousel" data-slide="next">&rsaquo;</a>
+                        </div>
+                    </div>
+                    <div id="spaceMap" class="map-container" style="display:none;" role="tabpanel"></div>
+                </div>
+            </div>
+
+            <div class="space-image-map-buttons btn-group" data-toggle="buttons-radio" role="tablist">
+              <button id="carouselControl" class="btn active" role="tab" aria-controls="spaceCarouselContainer" aria-selected="true"><span>Image gallery</span></button>
+              <button id="mapControl" class="btn" role="tab" aria-controls="spaceMap" aria-selected="false" data-location="[{{location.latitude}}, {{location.longitude}}]"><span>Show this space on a map</span></button>
+            </div>
+
+
+            <div class="space-info">
+              <div class="space-info-hours-today">
+                Today's hours: <span></span>
+              </div>
+              <div class="space-info-reservation-cue" style="display: none;"></div>
+              <div class="space-info-more-detail">
+                <a href="javascript:void(0);"><i class="fa fa-angle-double-down"></i> Show more detail about this space</a>
+              </div>
+              <ul style="display: none;">
+
+                            {{#if has_notes }}
+                            <li class="clearfix">
+                                <h3 class="space-info-label pull-left">Notes</h3>
+                                <div class="space-info-detail pull-left">
+                                    {{#if extended_info.access_notes }}<p>{{extended_info.access_notes}}</p>{{/if}}
+                                    {{#if extended_info.reservation_notes }}<p id="ei_reservation_notes">{{extended_info.reservation_notes }}</p>{{/if}}
+                                </div>
+                            </li>
+                            {{/if}}
+                            {{#if extended_info.labstats_id}}
+                                {{#if extended_info.auto_labstats_total}}
+                                    {{#compare extended_info.auto_labstats_total 0 operator="!="}}
+                                        <li class="clearfix">
+                                            <h3 class="space-info-label pull-left">Computers</h3>
+                                            <div class="space-info-detail pull-left">
+
+                                            {{#compare extended_info.auto_labstats_available 0 operator=">"}}
+                                                <p><span class="computer-available">{{extended_info.auto_labstats_available}}</span> of {{extended_info.auto_labstats_total}} available</p>
+                                            {{^}}
+                                                <p><span class="computer-notavailable">{{extended_info.auto_labstats_available}}</span> of {{extended_info.auto_labstats_total}} available</p>
+                                            {{/compare}}
+                                            </div>
+                                        </li>
+                                    {{/compare}}
+                                {{/if}}
+                            {{/if}}
+
+                            <li class="clearfix"><h3 class="space-info-label pull-left">Hours</h3>
+                              <div class="space-info-detail pull-left">{{formatHours available_hours}}</div>
+                            </li>
+
+                            <li class="clearfix"><h3 class="space-info-label pull-left">Location</h3>
+                              <div class="space-info-detail pull-left">{{extended_info.location_description}}</div>
+                            </li>
+
+                            {{#if has_resources }}
+                            <li class="clearfix">
+                                <h3 class="space-info-label pull-left">Resources</h3>
+                                <div class="space-info-detail pull-left">
+                                    <ul class='space-info-resources-list'>
+                                    {{#if extended_info.has_computers }}<li>Computers</li>{{/if}}
+                                    {{#if extended_info.has_displays }}<li>Display</li>{{/if}}
+                                    {{#if extended_info.has_outlets }}<li>Outlets</li>{{/if}}
+                                    {{#if extended_info.has_printing }}<li>Printing</li>{{/if}}
+                                    {{#if extended_info.has_projector }}<li>Projector</li>{{/if}}
+                                    {{#if extended_info.has_scanner }}<li>Scanning</li>{{/if}}
+                                    {{#if extended_info.has_whiteboards }}<li>Whiteboards</li>{{/if}}
+                                    </ul>
+                                </div>
+                            </li>
+                            {{/if}}
+
+                            {{#if extended_info.noise_level }}
+                            <li class="clearfix">
+                                <h3 class="space-info-label pull-left">Noise Level</h3>
+                                <div class="space-info-detail pull-left">{{ extended_info.noise_level }}</div>
+                            </li>
+                            {{/if}}
+
+                            {{#if extended_info.has_natural_light }}
+                            <li class="clearfix"><h3 class="space-info-label pull-left">Lighting</h3><div class="space-info-detail pull-left">Natural light</div></li>
+                            {{/if}}
+
+
+                            {{#if extended_info.food_nearby }}
+                            <li class="clearfix">
+                                <h3 class="space-info-label pull-left">Food/Coffee</h3>
+                                <div class="space-info-detail pull-left">{{ extended_info.food_nearby }}</div>
+                            </li>
+                            {{/if}}
+                <li>
+                  <div class="space-detail-share">
+                    <a href="/share/{{ id }}"><i class="fa fa-envelope fa-lg"></i>Share this space</a>
+                  </div>
+                  <div class="space-info-less-detail">
+                    <a href="javascript:void(0);"><i class="fa fa-angle-double-up"></i> Show less detail about this space</a>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endtplhandlebars %}
+
+{% tplhandlebars "mobile_hours" %}
+<h3 class="space-info-label pull-left">Hours</h3><div class="space-info-detail pull-left">{{formatHours available_hours}}</div>
+{% endtplhandlebars %}
+
+{% tplhandlebars "images_template" %}
+{{# each data }}
+<div class="carousel-inner-image item">
+  <div class="carousel-inner-image-inner" style="background:url('/space/{{ id }}/image/{{ image_id }}/thumb/constrain/width:268,height:180') no-repeat 50% 50%; background-size:100%;">&nbsp;</div>
+</div>
+{{/each}}
+{% endtplhandlebars %}
+
+{% tplhandlebars "no_images_template" %}
+<div class="carousel-inner-image item">
+  <div class="carousel-inner-image-inner" style="background:url('{{ static_url }}img/placeholder_noImage_bw.png') no-repeat 50% 50%; background-size:100%;">&nbsp;</div>
+</div>
+
+{% endtplhandlebars %}
+{% tplhandlebars "reservation_cue" %}
+<a href="{{ url }}" target="_blank">Reserve this space online... <i class="fa fa-external-link"></i></a>
+{% endtplhandlebars %}
+
+

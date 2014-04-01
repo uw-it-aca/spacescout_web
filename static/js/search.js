@@ -143,14 +143,13 @@ function lazyLoadSpaceImages() {
     }
 }
 
-function repopulate_filters() {
-    
-    if ($.cookie('spacescout_search_opts')) {
-        var form_opts = JSON.parse($.cookie('spacescout_search_opts'));
-
+function repopulate_filters(form_opts) {
+    if (form_opts) {
         // set types
-        for (i=0; i < form_opts["type"].length; i++) {
-            $('#'+form_opts["type"][i]).prop('checked', true);
+        if (form_opts.hasOwnProperty('type')) {
+            $.each(form_opts["type"], function () {
+                $('#'+this).prop('checked', true);
+            });
         }
 
         // set reservability
@@ -201,7 +200,7 @@ function repopulate_filters() {
 
         // set location
         if (form_opts["building_name"]) {
-            $('#e9').val(form_opts["building_name"]);
+            $('#e9').val(form_opts["building_name"]).trigger("liszt:updated");
             $('#building_list_input').prop('checked', true);
             $('#building_list_container').show();
         }
@@ -230,7 +229,7 @@ function repopulate_filters() {
         }
 
         // set noise level
-        if (form_opts["extended_info:noise_level"]) {
+        if (form_opts.hasOwnProperty("extended_info:noise_level")) {
             for (i=0; i < form_opts["extended_info:noise_level"].length; i++) {
                 $('#'+form_opts["extended_info:noise_level"][i]).prop('checked', true);
             }
@@ -242,12 +241,51 @@ function repopulate_filters() {
         }
 
         // set food/coffee
-        if (form_opts["extended_info:food_nearby"]) {
+        if (form_opts.hasOwnProperty("extended_info:food_nearby")) {
             for (i=0; i < form_opts["extended_info:food_nearby"].length; i++) {
                 $('#'+form_opts["extended_info:food_nearby"][i]).prop('checked', true);
             }
         }
+    }
+}
 
+function clear_filter() {
+    var node;
+
+    // reset checkboxes
+    $('input[type=checkbox]').each(function() {
+        if ($(this).prop('checked')) {
+            $(this).prop('checked', false);
+            $(this).parent().removeClass("selected");
+        }
+    });
+
+    // reset capacity
+    $('#capacity').val('1');
+
+    // reset hours
+    $('#open_now').prop('checked', true);
+    $('#open_now').parent().removeClass("selected");
+    $('#hours_list_container').hide();
+    $('#hours_list_input').parent().removeClass("selected");
+    default_open_at_filter();
+
+    // reset location
+    $('#entire_campus').prop('checked', true);
+    $('#entire_campus').parent().removeClass("selected");
+    $('#building_list_container').hide();
+    $('#building_list_input').parent().removeClass("selected");
+    $('#building_list_container').children().children().children(".select2-search-choice").remove();
+    $('#building_list_container').children().children().children().children().val('Select building(s)');
+    $('#building_list_container').children().children().children().children().attr('style', "");
+
+    node = $('#e9.building-location');
+    if (node.length > 0) {
+        $.each(node.children().children(), function () {
+            var x = this;
+            this.selected = false;
+        });
+        node.trigger("liszt:updated") ;
     }
 }
 
@@ -390,10 +428,10 @@ function run_custom_search() {
     }
 
     // close space detail if visible (desktop)
-    if ($('#space_detail_container').is(":visible")) {
+    if ($('.space-detail-container').is(":visible")) {
         $('#info_items li').removeClass('selected');
         $('.space-detail').hide("slide", { direction: "right" }, 700, function() {
-        	   $('#space_detail_container').remove();
+        	   $('.space-detail-container').remove();
         });
     }
     
@@ -411,7 +449,6 @@ function run_custom_search() {
     window.spacescout_map.setZoom(parseInt(window.default_zoom));
 
     // Run the search
-    //console.log(window.spacescout_search_options);
     fetch_data();
 
     // slide the filter up
@@ -477,10 +514,19 @@ function initialize() {
     window.spacescout_search_options = {};
     window.update_count = true;
 
-    repopulate_filters();
-    if ($.cookie('spacescout_search_opts')) {
-        window.spacescout_search_options = JSON.parse($.cookie('spacescout_search_opts'));
+    var state = window.spacescout_url.parse_path(window.location.pathname);
+    if (state.hasOwnProperty('search')) {
+        window.spacescout_search_options = window.spacescout_url.decode_search_terms(state.search);
+        repopulate_filters(window.spacescout_search_options);
+    } else {
+        if ($.cookie('spacescout_search_opts')) {
+            window.spacescout_search_options = JSON.parse($.cookie('spacescout_search_opts'));
+            repopulate_filters(window.spacescout_search_options);
+        }
+
+        window.spacescout_url.replace();
     }
+
 
     /* why are we asking for their location if we're not doing anything with it?
     // leaving this in but commented out until I can talk to the team about *if* the web app should do something with location
@@ -601,6 +647,14 @@ function load_data(data) {
     // update the map
     // display_search_results(data);
     updatePins(data);
+    data_loaded();
+}
+
+function data_loaded() {
+    $.event.trigger({
+        type: 'searchResultsLoaded',
+        message: 'search results are loaded'
+    });
 }
 
 function reload_on_idle() {
@@ -613,10 +667,9 @@ function reload_on_idle() {
         load_data(initial_json);
         window.initial_load = false;
     // only fetch data as long as space details are NOT being shown
-    } else if (!$('#space_detail_container').is(":visible")) {
+    } else if (!$('.space-detail-container').is(":visible")) {
         fetch_data();
     }
-
 }
 
 function fetch_data() {

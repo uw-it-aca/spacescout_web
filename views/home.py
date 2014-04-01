@@ -23,6 +23,7 @@ from django.utils.datastructures import SortedDict
 from mobility.decorators import mobile_template
 from django.core.exceptions import ImproperlyConfigured
 from django.core.cache import cache
+import re
 
 FIVE_MINUTE_CACHE = 300
 
@@ -32,18 +33,25 @@ def HomeView(request, template=None):
     # That fallback order will also apply if the cookie campus isn't in
     # settings.
     location = None
-    cookies = request.COOKIES
-    if "default_location" in cookies:
-        cookie_value = cookies["default_location"]
-        # The format of the cookie is this, urlencoded:
-        # lat,long,campus,zoom
-        location = urllib.unquote(cookie_value).split(',')[2]
 
-        if not hasattr(settings, "SS_LOCATIONS"):
-            location = None
+    if hasattr(settings, "SS_LOCATIONS"):
+        m = re.match(r'^/([a-z]+)/', request.path)
+        if m and m.group(1) in settings.SS_LOCATIONS:
+            location = m.group(1)
 
-        elif not location in settings.SS_LOCATIONS:
-            location = None
+    if location is None:
+        cookies = request.COOKIES
+        if "default_location" in cookies:
+            cookie_value = cookies["default_location"]
+            # The format of the cookie is this, urlencoded:
+            # lat,long,campus,zoom
+            location = urllib.unquote(cookie_value).split(',')[2]
+    
+            if not hasattr(settings, "SS_LOCATIONS"):
+                location = None
+
+            elif not location in settings.SS_LOCATIONS:
+                location = None
 
     if location is None:
         if hasattr(settings, 'SS_DEFAULT_LOCATION'):
