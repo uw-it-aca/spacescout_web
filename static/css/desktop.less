@@ -198,12 +198,16 @@
                     #mapControl.active span { background: transparent url('/static/img/locate_purple.png') no-repeat 50% 50%; width: 31px; }
                 }
 
-                .space-detail-report { text-align:center;margin-top:20px;
+                .space-detail-share { padding-top: 18px;
+                   i { padding-right: 10px; }
+                   a { color: @purple_text; }
+                }
+
+                .space-detail-report { text-align:center;margin-top:20px; font-size: 13px; border-top: 1px dotted @grey_light; padding-top: 15px;
                     a, a:visited { vertical-align:bottom; color: @purple_text; }
                 }
-                .space-detail-footer { text-align: center; font-size: 12px; color: @grey_light; height: 50px; padding-top: 10px; }
 
-
+                .space-detail-footer { text-align: center; font-size: 11px; color: @grey_light; height: 50px; }
             }
         }
     }
@@ -306,18 +310,17 @@
 
 /* Favorites */
 
-#nav.favorites_nav {
-
-    .favorites-header { width: 100%; height:5px; background-color: @nav_background;
-        span {
-           float:right;
-           margin: -16px 110px 0 0;
-           width: 0; height: 0;
-           border-left: 16px solid transparent;
-           border-right: 16px solid transparent;
-           border-bottom: 16px solid @nav_background;
-        }
+.favorites-header { width: 100%; height:5px; background-color: @nav_background;
+    span {
+       float:right;
+       margin: -16px 110px 0 0;
+       width: 0; height: 0;
+       border-left: 16px solid transparent;
+       border-right: 16px solid transparent;
+       border-bottom: 16px solid @nav_background;
     }
+}
 
+.favorites {
     .footer { clear: both; padding: 20px 20px; }
 }

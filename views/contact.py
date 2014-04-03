@@ -70,7 +70,7 @@ def contact(request, spot_id=None):
 def thank_you(request, spot_id=None):
     contact_variables = _contact_variables(request, spot_id)
 
-    back = contact_variables['back']
+    back = request.GET['back'] if request.GET and 'back' in request.GET else contact_variables['back']
 
     return render_to_response('contact-thankyou.html', {
         'spot_id': spot_id,
