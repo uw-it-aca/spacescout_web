@@ -108,8 +108,17 @@ Handlebars.registerHelper('ifany', function(a, b) {
             $('#info_items li').removeClass('selected');
 
             fetchSpaceDetails(id);
+
             // Update location hash
             window.spacescout_url.push(id);
+
+        });
+
+        $(document).on('loadSpaceDetail', function (e, id) {
+            if (id) {
+                $('#info_items li').removeClass('selected');
+                fetchSpaceDetails(id);
+            }
         });
 
         $('.space-detail-container .close').live('click', function(e){
@@ -266,6 +275,12 @@ Handlebars.registerHelper('ifany', function(a, b) {
             fav_icon.tooltip({ placement: 'right', title: title});
         }
 
+        $('a#share_space').unbind('click');
+        $('a#share_space').click(function (e) {
+            window.location.href = '/share/' + data.id
+                + '?back=' + encodeURIComponent(window.location.pathname);
+        });
+
         //highlight the selected space
         $('button#' + data.id).closest('.view-details').addClass('selected');
 
@@ -287,14 +302,5 @@ Handlebars.registerHelper('ifany', function(a, b) {
         $('#info_list .list-inner').css('min-height', contentH - 100);
         //$('.loading').height(contentH);
     }
-
-    $(document).on('searchResultsLoaded', function () {
-        var space_id = window.spacescout_url.space_id(window.location.pathname);
-
-        if (space_id) {
-            $('.view-details').removeClass('selected');
-            fetchSpaceDetails(space_id);
-        }
-    });
 
 })(this);

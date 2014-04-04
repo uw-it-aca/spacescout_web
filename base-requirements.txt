@@ -1,9 +1,7 @@
 Django>=1.4,<1.5
 simplejson
 oauth2
+oauth_provider
 django-compressor
 django-mobility
 django-templatetag-handlebars
-
-# cx_Oracle
-

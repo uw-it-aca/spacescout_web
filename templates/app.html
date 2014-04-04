@@ -81,10 +81,10 @@
             <div class="user_context">
                 {% if user.is_authenticated %}
                   <span>{% trans 'greeting' %}&nbsp;{{ request.user }}</span>
-                  <a href="favorites">{% trans 'favorites' %} (<span class="favorites_count_container">0</span>)</a>
+                  <a href="/favorites">{% trans 'favorites' %} (<span class="favorites_count_container">0</span>)</a>
                   {% tplhandlebars "favorites_count" %}{{count}}{% endtplhandlebars %}
                   <span>|</span>
-                  <a id="logout_button" href="logout?next={% firstof request.path '/' %}">{% trans 'logout' %}</a>
+                  <a id="logout_button" href="/logout?next={% firstof request.path '/' %}">{% trans 'logout' %}</a>
                 {% else %}
                   {% trans 'salutation' %}&nbsp;<a href="/login?next={% firstof request.path '/' %}">{% trans 'login' %}</a>
                 {% endif %}
@@ -276,11 +276,15 @@
                                     </ul>
                                 </div>
 
-                                <div class="space-detail-report">
-                                    <a href="/contact/{{ id }}/"><img alt="" src="/static/img/mail.png" />&nbsp;Report a problem with this space</a>
+                                <div class="space-detail-share">
+                                  <a id="share_space" href="javascript:void(0);"><i class="fa fa-envelope fa-lg"></i>Share this space</a>
                                 </div>
 
-                                <div class="space-detail-footer">This space was last updated on {{last_modified}} by<br/> {% if organization %}{{ organization }}{%else%}University of Washington Information Technology{% endif %}</div>
+                                <div class="space-detail-report">
+                                    <a href="/contact/{{ id }}/">Report a problem with this space</a>
+                                </div>
+
+                                <div class="space-detail-footer">This space was last updated on {{last_modified}} by {% if organization %}{{ organization }}{%else%}UW-IT{% endif %}</div>
 
                             </div>
                         </div>

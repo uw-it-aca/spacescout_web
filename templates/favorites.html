@@ -30,7 +30,7 @@
                 {% ifnotequal locations|length 1 %}
                 <span role="navigation" aria-labelledby="location_select_heading">
                 <label id="location_select_heading" for="location_select"  class="visuallyhidden">Select campus:</label>
-                <select id='location_select'>
+                <select id="location_select" disabled>
                     {% for key, value in locations.items %}
                         <option value="{{ value.CENTER_LATITUDE }},{{ value.CENTER_LONGITUDE }},{{ key }},{{ value.ZOOM_LEVEL }}">{{ value.NAME }}</option>
                     {% endfor %}

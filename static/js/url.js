@@ -31,25 +31,33 @@
                 state = this.parse_path(window.location.pathname);
             }
 
-            if (window.default_location != state.campus
-                || this.encode_current_search() != state.search) {
-                $('#location_select option').each(function (i) {
-                    var location = $(this).val().split(',');
-                    if (location[2] == state.campus) {
-                        window.default_latitude = location[0];
-                        window.default_longitude = location[1];
-                        window.default_location = location[2];
-                        window.default_zoom = parseInt(location[3]);
-                        $(this).attr('selected', 'selected');
-                    }
-                });
-                
-                repopulate_filters(this.decode_search_terms(state.search));
-                run_custom_search();
-            } else if (state.id) {
-                data_loaded();
-            } else if ($('.space-detail-container').length) {
-                closeSpaceDetails();
+            switch (state.local_path) {
+            case 'favorites':
+                break;
+            case '':
+                if (window.default_location != state.campus
+                    || this.encode_current_search() != state.search) {
+                    $('#location_select option').each(function (i) {
+                        var location = $(this).val().split(',');
+                        if (location[2] == state.campus) {
+                            window.default_latitude = location[0];
+                            window.default_longitude = location[1];
+                            window.default_location = location[2];
+                            window.default_zoom = parseInt(location[3]);
+                            $(this).attr('selected', 'selected');
+                        }
+                    });
+                    
+                    repopulate_filters(this.decode_search_terms(state.search));
+                    run_custom_search();
+                } else if (state.id) {
+                    data_loaded();
+                } else if ($('.space-detail-container').length) {
+                    closeSpaceDetails();
+                }
+                break;
+            default:
+                break;
             }
         },
 
@@ -68,7 +76,7 @@
                 url.push(id);
             }
 
-            history.pushState({ campus: campus, search: search, id: id },
+            history.pushState({ campus: campus, search: search, id: id, local_path: '' },
                               null,
                               url.join('/'));
         },
@@ -101,12 +109,26 @@
 
         parse_path: function (path) {
             var state = {},
-                m = path.match(/^\/([a-zA-Z]+)(\/([a-z][^/]*))?((\/(\d*))?(\/.+)?)?$/);
+                m = path.match(/^\/([a-zA-Z]+)?(\/([a-z][^/]*))?((\/(\d*))?(\/.+)?)?$/);
 
             if (m) {
-                state['campus'] = m[1];
-                state['search'] = m[3];
-                state['id'] = (m[6] && m[6].length) ? parseInt(m[6]) : undefined;
+                // 
+                $('#location_select option').each(function (i) {
+                    var location = $(this).val().split(',');
+                    if (location[2] == m[1]) {
+                        state.campus = m[1];
+                    }
+                });
+
+                if (state.campus) {
+                    state.local_path = '';
+                } else {
+                    state.local_path = m[1];
+                    state.campus = null;
+                }
+
+                state.search = (m[3] && m[3].length) ? m[3] : 'cap:1';
+                state.id = (m[6] && m[6].length) ? parseInt(m[6]) : undefined;
             }
 
             return state;
@@ -228,7 +250,7 @@
                     opts["extended_info:reservable"] = true;
                     break;
                 case 'cap':
-                    opts["capacity"] = v;
+                    opts["capacity"] = v ? v : 1;
                     break;
                 case 'open':
                     opts["open_at"] = JSON.parse(v);
@@ -288,13 +310,20 @@
     };
 
     $(window).bind('popstate', function (e) {
-        window.spacescout_url.dispatch(e.originalEvent.state);
+        if (e.originalEvent.state) {
+            window.spacescout_url.dispatch(e.originalEvent.state);
+        }
     });
 
     $(document).on('searchResultsLoaded', function () {
         var state = window.spacescout_url.parse_path(window.location.pathname);
-        if (!state.hasOwnProperty('search')) {
+
+        if (window.location.pathname == '' || window.location.pathname == '/') {
             window.spacescout_url.replace();
+        }
+
+        if (state.id) {
+            $.event.trigger('loadSpaceDetail', [ state.id ]);
         }
     });
 

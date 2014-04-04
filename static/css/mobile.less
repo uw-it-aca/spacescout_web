@@ -314,6 +314,11 @@ button {
                     #mapControl.active span { background: transparent url('/static/img/locate_purple.png') no-repeat 50% 50%; }
                 }
 
+                .space-detail-share { padding-top: 18px;
+                   i { padding-right: 10px; }
+                   a { color: @purple_text; }
+                }
+
                 .space-detail-report { text-align:center;margin-top:20px;
                     a, a:visited { vertical-align:bottom; color: @purple_text; }
                 }
@@ -443,12 +448,21 @@ button {
 
 .alert { font-weight: normal; margin-left: 1em; vertical-align: super; }
 
-.contact-header, .suggest-header { font-size: 20px; margin: 5px 0;  color: @purple_text; width:85%; line-height: 20px; font-weight: normal; }
+.contact-header, .suggest-header, .share-header { font-size: 20px; margin: 5px 0;  color: @purple_text; width:85%; line-height: 20px; font-weight: normal;
+    span { font-size: 13px; }
+}
 
 .fieldWrapper {margin-bottom:10px; font-size: 12px;
     label { color: gray; }
     .alert {color: red;}
  }
+
+.infoWrapper {margin-bottom:10px; font-size: 12px;
+    p { font-style: italic; }
+    span { color: #08C; }
+ }
+
+.fieldDelimiter { border-top: 1px dotted @grey_light; width: 220px; }
 
  /* Callout for iOS 5/6 mobile devices */
 #ios_callout { position:absolute; top: 0; bottom: 0; left:0; right:0; background: black; z-index: 2000; display:none; background: rgba(0, 0, 0, 0.6);
@@ -539,8 +553,6 @@ select {
 
 
 /* Favorites */
-#nav.favorites_nav {
-    .user_context { display: block; clear: both; height: 30px; }
 
     .favorites-header { width: 100%; height: 5px; background-color: @nav_background;
         span {
@@ -565,4 +577,4 @@ select {
 
         .footer { clear: both; padding: 20px 20px; font-size: 12px; }
     }
-}
+

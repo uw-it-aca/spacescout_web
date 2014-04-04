@@ -290,7 +290,7 @@ function clear_filter() {
 }
 
 function run_custom_search() {
-     
+
     // if searching, reset that spot count
     window.update_count = true;
 
@@ -518,15 +518,10 @@ function initialize() {
     if (state.hasOwnProperty('search')) {
         window.spacescout_search_options = window.spacescout_url.decode_search_terms(state.search);
         repopulate_filters(window.spacescout_search_options);
-    } else {
-        if ($.cookie('spacescout_search_opts')) {
-            window.spacescout_search_options = JSON.parse($.cookie('spacescout_search_opts'));
-            repopulate_filters(window.spacescout_search_options);
-        }
-
-        window.spacescout_url.replace();
+    } else if ($.cookie('spacescout_search_opts')) {
+        window.spacescout_search_options = JSON.parse($.cookie('spacescout_search_opts'));
+        repopulate_filters(window.spacescout_search_options);
     }
-
 
     /* why are we asking for their location if we're not doing anything with it?
     // leaving this in but commented out until I can talk to the team about *if* the web app should do something with location
@@ -651,8 +646,7 @@ function load_data(data) {
 }
 
 function data_loaded() {
-    $.event.trigger({
-        type: 'searchResultsLoaded',
+    $.event.trigger('searchResultsLoaded', {
         message: 'search results are loaded'
     });
 }
