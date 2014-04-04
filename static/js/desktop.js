@@ -242,12 +242,20 @@ Handlebars.registerHelper('ifany', function(a, b) {
             }
 
             fav_icon.unbind();
+            is_over_favs = false;
+            fav_icon.on('mouseover', function() {
+                is_over_favs = true;
+            });
+            fav_icon.on('mouseout', function() {
+                is_over_favs = false;
+            });
             fav_icon.click(function (e) {
                 var list_item = $('button#' + data.id + ' .space-detail-fav');
 
                 if ($('#logout_button').length == 0) {
                     window.location.href = '/login?next=' + window.location.pathname;
                 }
+
 
                 window.spacescout_favorites.toggle(data.id,
                                                    function () {
@@ -258,7 +266,10 @@ Handlebars.registerHelper('ifany', function(a, b) {
                                                        fav_icon.data('tooltip', false);
                                                        fav_icon.tooltip({ title: 'Remove this space from Favorites',
                                                                           placement: 'right' });
-                                                       fav_icon.tooltip('show');
+
+                                                        if (is_over_favs) {
+                                                            fav_icon.tooltip('show');
+                                                        }
                                                    },
                                                    function () {
                                                        fav_icon.removeClass('space-detail-fav-set').addClass('space-detail-fav-unset');
@@ -268,7 +279,10 @@ Handlebars.registerHelper('ifany', function(a, b) {
                                                        fav_icon.data('tooltip', false);
                                                        fav_icon.tooltip({ title: 'Favorite this space',
                                                                           placement: 'right' });
-                                                       fav_icon.tooltip('show');
+                                                        if (is_over_favs) {
+                                                            fav_icon.tooltip('show');
+                                                        }
+
                                                    });
             });
 
