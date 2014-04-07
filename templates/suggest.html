@@ -25,7 +25,7 @@
     </div>
     {% endif %}
 
-    <div {% if is_mobile %}style="margin:10px; background:#fff;" {% else %}id="main_content" style="padding: 80px;"{% endif %} role="main" aria-labelledby="suggest_header">
+    <div {% if is_mobile %}style="padding:10px; background:#fff; overflow: hidden;" {% else %}id="main_content" style="padding: 80px; overflow: hidden;"{% endif %} role="main" aria-labelledby="suggest_header">
         {% block suggest-content %}{% endblock %}
     </div>
 {% endblock %}
