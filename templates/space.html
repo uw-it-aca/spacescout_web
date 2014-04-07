@@ -1,5 +1,6 @@
 {% extends 'base-mobile-subpage.html' %}
 
+{% load static %}
 {% block extra_js %}
 <script>
     window.space_latitude = {{ location.latitude }};
@@ -50,7 +51,7 @@
     
     <div id="space_details_header" class="clearfix">
         <h1 class="visuallyhidden">SPACESCOUT&trade;</h1>
-		<img id="back_home_button" class="pull-left back-button" src="/static/img/details_arrow.png" />
+		<img id="back_home_button" class="pull-left back-button" src="{% static 'img/details_arrow.png' %}" />
         <div id="name-type-block" class="pull-left">
           {% if user.is_authenticated %}<div class="space-detail-fav space-detail-fav-unset pull-left"><i class="fa fa-heart-o"></i></div>{% endif %}
           <h2 class="space-detail-name" style=""><span class="visuallyhidden">Space Details:</span> {{name}}</h2>
