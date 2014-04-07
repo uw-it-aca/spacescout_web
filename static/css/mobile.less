@@ -9,19 +9,6 @@
 
 @nav_background: #7479a6;
 
-// retina.less
-// A helper mixin for applying high-resolution background images (http://www.retinajs.com)
-
-.at2x(@path, @w: auto, @h: auto) {
-  background-image: e(%("url(%s)", @path));
-  @at2x_path: ~`"@{path}".split('.').slice(0, "@{path}".split('.').length - 1).join(".") + "@2x" + "." + "@{path}".split('.')["@{path}".split('.').length - 1]`;
-
-  @media only screen and (-webkit-min-device-pixel-ratio : 2), only screen and (min--moz-device-pixel-ratio: 2) {
-
-    background-image: e(%("url(%s)", @at2x_path));
-    background-size: @w @h;
-  }
-}
 #preload { background: no-repeat -9999px -9999px; background-image: url(/static/img/pins/pin00@2x.png), url(/static/img/pins/pin00-alt@2x.png);}
 
 .map-label {
@@ -57,8 +44,7 @@ button {
     .logo-container {
 
         .logo { height: 44px; width: 200px; float:left; position: relative;
-
-            .at2x('/static/img/spacescout_mobile_logo.png', 189px, 30px);
+            background-image: url('../img/spacescout_logo.png');
             background-size: 189px 30px;
             background-repeat: no-repeat;
             background-position: 10px 50%;
@@ -390,8 +376,7 @@ button {
 
                 .space-detail-list-item { display: inline-block;
                 	.space-detail-labstats {
-                	                	.at2x('/static/img/comp-icon.png', 16px, 16px);
-                	                	//background-image: url('/static/img/comp-icon@2x.png'); background-size: 20px 20px;
+                	                	background-image: url('../img/comp-icon.png'); background-size: 20px 20px;
                 	                	background-repeat: no-repeat; background-position: left top;
                 						color: @grey_dark; font-size: 11px; text-transform: uppercase; display: inline-block; margin-left: 5px;
                 						.computer-available { color:#20b420; }
@@ -577,4 +562,30 @@ select {
 
         .footer { clear: both; padding: 20px 20px; font-size: 12px; }
     }
+
+/*
+This is patrick's attempt @ @2x:
+*/
+
+@media only screen and (-webkit-min-device-pixel-ratio : 2), only screen and (min--moz-device-pixel-ratio: 2) {
+    #nav {
+        .logo-container {
+            .logo {
+                background-image: url('../img/spacescout_logo@2x.png')
+            }
+        }
+    }
+
+    #info_items {
+        ol {
+            li {
+                .space-detail-list-item {
+                    .space-detail-labstats {
+                        background-image: url('../img/comp-icon@2x.png');
+                    }
+                }
+            }
+        }
+    }
+}
 
