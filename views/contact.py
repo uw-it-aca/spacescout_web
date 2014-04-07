@@ -98,7 +98,7 @@ def _contact_variables(request, spot_id):
     spot_description = ''
 
     if spot_id is not None:
-        url = "{0}/space/{1}/json/".format("http://" + request.get_host(), spot_id)
+        url = "{0}/space/{1}/json".format("http://" + request.get_host(), spot_id)
         try:
             spot = Spot(spot_id).get()
         except SpotException as ex:
