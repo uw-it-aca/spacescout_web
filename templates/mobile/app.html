@@ -161,7 +161,7 @@
                                     {{#if images.0.id}}
                                     <div class="space-detail-list-image-inner lazyloader" data-src="space/{{id}}/image/{{images.0.id}}/thumb/constrain/width:150">&nbsp;</div>
                                     {{else}}
-                                    <div class="space-detail-list-image-inner" style="background: transparent url('/static/img/placeholder_noImage_bw.png') no-repeat 50% 50%; background-size: 150px;">&nbsp;</div>
+                                    <div class="space-detail-list-image-inner space-detail-no-image">&nbsp;</div>
                                     {{/if}}
 
                                 </div>
@@ -212,7 +212,7 @@
                                   {{#if images.0.id}}
                                     <div class="space-detail-list-image-inner lazyloader" data-src="space/{{id}}/image/{{images.0.id}}/thumb/constrain/width:150">&nbsp;</div>
                                   {{else}}
-                                    <div class="space-detail-list-image-inner" style="background: transparent url('/static/img/placeholder_noImage_bw.png') no-repeat 50% 50%; background-size: 150px;">&nbsp;</div>
+                                    <div class="space-detail-list-image-inner space-detail-no-image">&nbsp;</div>
                                   {{/if}}
                                 </div>
                                 <button  id="{{id}}" class="space-detail-list-item pull-left" type="button" aria-label="Get space details for {{name}}" aria-owns="detail_container_{{id}}">
