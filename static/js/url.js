@@ -127,7 +127,7 @@
                     state.campus = null;
                 }
 
-                state.search = (m[3] && m[3].length) ? m[3] : 'cap:1';
+                state.search = (m[3] && m[3].length) ? decodeURIComponent(m[3]) : 'cap:1';
                 state.id = (m[6] && m[6].length) ? parseInt(m[6]) : undefined;
             }
 
@@ -158,14 +158,16 @@
                     terms.push('reservable');
                 }
 
-                terms.push('cap:' + opts["capacity"]);
+                if (opts["capacity"]) {
+                    terms.push('cap:' + opts["capacity"]);
+                }
 
                 if (opts["open_at"]) {
-                    terms.push('open:' + JSON.stringify(opts["open_at"]));
+                    terms.push('open:' + opts["open_at"]);
                 }
 
                 if (opts["open_until"]) {
-                    terms.push('close:' + JSON.stringify(opts["open_until"]));
+                    terms.push('close:' + opts["open_until"]);
                 }
 
                 if (opts["building_name"]) {
@@ -232,13 +234,16 @@
 
         decode_search_terms: function (raw) {
             var opts = {},
-                terms = raw ? raw.split('|') : [],
-                term, v, a;
+                terms = raw ? raw.split('|') : [];
 
             $.each(terms, function () {
-                a = this.split(':');
-                v = a[1];
-                switch (a[0]) {
+                var m = this.match(/^([^:]+):(.*)$/),
+                    v;
+
+                if (!m) return;
+
+                v = m[2];
+                switch (m[1]) {
                 case 'type':
                     opts['type'] = [];
                     $.each(v.split(','), function () {
@@ -253,10 +258,10 @@
                     opts["capacity"] = v ? v : 1;
                     break;
                 case 'open':
-                    opts["open_at"] = JSON.parse(v);
+                    opts["open_at"] = v;
                     break;
                 case 'close' :
-                    opts["open_until"] = JSON.parse(v);
+                    opts["open_until"] = v;
                     break;
                 case 'bld' :
                     opts["building_name"] = v;

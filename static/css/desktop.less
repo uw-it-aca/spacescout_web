@@ -1,3 +1,17 @@
+/*
+
+These styles are in palce for SPOT-494.  Feel free to move things around.
+
+*/
+
+.space-detail-no-image {
+    background: transparent url('../img/placeholder_noImage_bw.png') no-repeat 50% 50%; background-size: 150px;
+}
+
+.space-detail-no-image-full {
+    background: transparent url('../img/placeholder_noImage_bw.png') no-repeat 50% 50%; background-size: 100%;
+}
+
 /* Less Variables */
 
 @purple_text: #4c497e;
@@ -140,14 +154,14 @@
                                 }
                                 li a.active { color: @purple_text; }
                             }
-                            .carousel { margin: 0; background: #f8f8f8 url('/static/img/spinner.gif') no-repeat 50% 50%; background-size: 20px; min-height: 201px;
+                            .carousel { margin: 0; background: #f8f8f8 url('../img/spinner.gif') no-repeat 50% 50%; background-size: 20px; min-height: 201px;
 
                                 .carousel-inner-image { overflow: hidden; width: 100%; }
                                 .carousel-inner-image-inner { background-repeat: no-repeat !important; background-position: 50% 50% !important; width: 100%; }
                             }
                         }
 
-                        .map-container { background: #f8f8f8 url('/static/img/spinner.gif') no-repeat 50% 50%; background-size: 20px; }
+                        .map-container { background: #f8f8f8 url('../img/spinner.gif') no-repeat 50% 50%; background-size: 20px; }
 
                     }
                 }
@@ -191,11 +205,11 @@
                     button { border: solid 1px @grey_border !important; padding: 4px 7px; display: block; margin: 0; }
                     button.active { background-color: #fff; border-left: none !important; }
 
-                    #carouselControl span { background: transparent url('/static/img/gallery_grey.png') no-repeat 50% 50%; display: inline-block; text-indent: -9999px; width: 30px; height: 25px; }
-                    #carouselControl.active span { background: transparent url('/static/img/gallery_purple.png') no-repeat 50% 50%; width: 31px; }
+                    #carouselControl span { background: transparent url('../img/gallery_grey.png') no-repeat 50% 50%; display: inline-block; text-indent: -9999px; width: 30px; height: 25px; }
+                    #carouselControl.active span { background: transparent url('../img/gallery_purple.png') no-repeat 50% 50%; width: 31px; }
 
-                    #mapControl span { background: transparent url('/static/img/locate_grey.png') no-repeat 50% 50%; display: inline-block; text-indent: -9999px; width: 30px; height: 25px; }
-                    #mapControl.active span { background: transparent url('/static/img/locate_purple.png') no-repeat 50% 50%; width: 31px; }
+                    #mapControl span { background: transparent url('../img/locate_grey.png') no-repeat 50% 50%; display: inline-block; text-indent: -9999px; width: 30px; height: 25px; }
+                    #mapControl.active span { background: transparent url('../img/locate_purple.png') no-repeat 50% 50%; width: 31px; }
                 }
 
                 .space-detail-share { padding-top: 18px;
@@ -245,7 +259,7 @@
                 button div { padding: 0 2px; }
             }
 
-            li.selected { background: #6160a2 url('/static/img/list_item_selected.png') bottom repeat-x;
+            li.selected { background: #6160a2 url('../img/list_item_selected.png') bottom repeat-x;
                 .space-detail-type { color: #ccc; display: block; }
                 .space-detail-desc,.space-detail-name { color: #fff; }
             }

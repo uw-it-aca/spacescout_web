@@ -77,7 +77,6 @@ function openAllMarkerInfoWindow(data) {
                }
         });
     });
-
 }
 
 function sortByBuildingName(data) {
@@ -311,7 +310,7 @@ function run_custom_search() {
 
     // type
     var checked = new Array();
-    
+
     $.each($("input[name='type']:checked"), function() {
         checked.push($(this).val());
     });
@@ -563,7 +562,6 @@ function load_map(latitude, longitude, zoom) {
         window.spacescout_map.setCenter(new google.maps.LatLng(latitude, longitude));
     }
 
-
     google.maps.event.addListener(window.spacescout_map, 'idle', reload_on_idle);
     //next three lines courtesy of samolds
     google.maps.event.addListener(spacescout_map, 'mouseup', function(c) {
@@ -583,6 +581,10 @@ function load_map(latitude, longitude, zoom) {
 
     google.maps.event.addListenerOnce(spacescout_map, 'tilesloaded', function() {
         document.getElementById('center_all').style.display = "inline";
+    });
+
+    google.maps.event.addListener(spacescout_map, 'click', function() {
+        fetch_data();
     });
 
     // append the centering buttons after map has loaded

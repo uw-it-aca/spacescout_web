@@ -29,8 +29,7 @@ Handlebars.registerHelper('carouselimages', function(spacedata) {
             elements.push(div_string);
         }
     } else {
-        image_url = "background:url(/static/img/placeholder_noImage_bw.png)";
-        div_string = "<div class='carousel-inner-image item'><div class='carousel-inner-image-inner' style='" + image_url + "; background-size: 500px'>&nbsp;</div></div>";
+        div_string = "<div class='carousel-inner-image item'><div class='carousel-inner-image-inner space-detail-no-image' style='background-size: 500px'>&nbsp;</div></div>";
         elements.push(div_string);
     }
     return new Handlebars.SafeString(elements.join('\n'));
