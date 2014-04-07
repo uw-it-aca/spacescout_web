@@ -388,21 +388,6 @@ function reset_location_filter() {
 (function(g){
 
 	$(document).ready(function() {
-/*
-//removed because we use single pin image
-        var pinimgs = [];
-        for (var i = 1; i <= 30; i++) {
-            if (i < 10) {
-                pinimgs.push('/static/img/pins/pin0' + i + '.png');
-                pinimgs.push('/static/img/pins/pin0' + i + '-alt.png');
-            }
-            else {
-                pinimgs.push('/static/img/pins/pin' + i + '.png');
-                pinimgs.push('/static/img/pins/pin' + i + '-alt.png');
-            }
-        }
-        preload(pinimgs);
-*/
         if ($.cookie('default_location')) {
             $('#location_select').val($.cookie('default_location'));
         }
