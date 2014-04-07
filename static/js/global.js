@@ -651,7 +651,7 @@ function getSpaceMap(container, lat, lon) {
 
   var map = new google.maps.Map($('#spaceMap', container).get(0), mapOptions);
 
-  var image = '/static/img/pins/pin00.png';
+  var image = static_url('img/pins/pin00.png');
 
   var spaceLatLng = new google.maps.LatLng(lat , lon);
   var spaceMarker = new google.maps.Marker({
@@ -685,4 +685,7 @@ function closeSpaceDetails() {
     $(the_spot_id).focus();
 }
 
+function static_url(base) {
+    return window.spacescout_static_url+base;
+}
 

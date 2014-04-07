@@ -592,57 +592,9 @@ function load_map(latitude, longitude, zoom) {
 
 }
 
-/*function display_search_results(data) {
-    $('.loading').show();
-
-    for (i = 0; i < data.length; i++) {
-        if (!window.spacescout_marker_ids[data[i].id]) {
-            marker = new google.maps.Marker({
-                position: new google.maps.LatLng(data[i].location.latitude, data[i].location.longitude),
-                title: data[i].name,
-                icon: '/static/img/pins/pin01.png'
-            });
-
-            //marker.setMap(window.spacescout_map);
-            window.mc.addMarker(marker);
-            addMarkerListener(marker, data[i]);
-
-            window.spacescout_marker_ids[data[i].id] = true;
-            window.spacescout_markers.push(marker);
-        }
-    }
-    addClusterListener(window.mc, data);
-    openAllMarkerInfoWindow(data);
-
-    // you are here marker
-    if (youarehere != null) {
-        my_marker = new google.maps.Marker({
-            position: new google.maps.LatLng(youarehere.latitude, youarehere.longitude),
-            title: "You are here",
-            map: spacescout_map,
-            icon: '/static/img/pins/me_pin.png'
-        });
-        //window.spacescout_markers.push(my_marker);
-    }
-
-    // set the # of spaces in the bubble if update_count is true
-    if (window.update_count) {
-        var source = $('#space_count').html();
-        var template = Handlebars.compile(source);
-        $('#space_count_container').html(template({count: data.length}));
-    }
-
-    // if this was true, now that we've updated the count don't do it again unless a custom search was run
-    if (window.update_count == true) {
-        window.update_count = false;
-    }
-
-}*/
-
 function load_data(data) {
 
     // update the map
-    // display_search_results(data);
     updatePins(data);
     data_loaded();
 }
