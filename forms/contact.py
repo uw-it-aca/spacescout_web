@@ -16,12 +16,12 @@ from django import forms
 
 
 class ContactForm(forms.Form):
-        name = forms.CharField(max_length=25, label="Your Name")
+        name = forms.CharField(max_length=25, label="Your Name", error_messages={'required':'Required field'})
         sender = forms.EmailField(max_length=40, label="Your Email (Optional)", required=False)
         #feedback_choice = forms.ChoiceField((
             #('', 'Please Select One'),
             #('feedback', 'Leave Feedback'),
             #('problem', 'Report a Problem'),
             #('feature request', 'Request a Feature')), label="Feedback Choice")
-        message = forms.CharField(widget=forms.Textarea(attrs={'rows': 5}), label="Your Message")
+        message = forms.CharField(widget=forms.Textarea(), label="Your Message", error_messages={'required':'Required field'})
         email_confirmation = forms.CharField(required=False)
