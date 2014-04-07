@@ -66,7 +66,7 @@ def share(request, spot_id=None):
     else:
         back = request.GET['back'] if request.GET and 'back' in request.GET else '/'
         if request.user and request.user.is_authenticated():
-            sender = request.user.username + getattr(settings, 'SS_MAIL_DOMAIN', '@uw.edu')
+            sender = "%s@%s" % (request.user.username, getattr(settings, 'SS_MAIL_DOMAIN', 'uw.edu'))
         else:
             sender = ''
 
