@@ -24,15 +24,15 @@ def suggest(request, spot_id=None):
     if request.method == 'POST':
         form = SuggestForm(request.POST)
         if form.is_valid():
-            name = form.cleaned_data['name']
-            netid = form.cleaned_data['netid']
-            sender = form.cleaned_data['sender']
-            building = form.cleaned_data['building']
-            floor = form.cleaned_data['floor']
-            room_number = form.cleaned_data['room_number']
-            description = form.cleaned_data['description']
-            justification = form.cleaned_data['justification']
-            bot_test = form.cleaned_data['email_confirmation']
+            name = form.cleaned_data['name'].strip()
+            netid = form.cleaned_data['netid'].strip()
+            sender = form.cleaned_data['sender'].strip()
+            building = form.cleaned_data['building'].strip()
+            floor = form.cleaned_data['floor'].strip()
+            room_number = form.cleaned_data['room_number'].strip()
+            description = form.cleaned_data['description'].strip()
+            justification = form.cleaned_data['justification'].strip()
+            bot_test = form.cleaned_data['email_confirmation'].strip()
 
             browser = request.META.get('HTTP_USER_AGENT', 'Unknown')
 

@@ -13,15 +13,19 @@
     limitations under the License.
 """
 from django import forms
+from django.core.exceptions import ValidationError
 
+def validate_spaces(value):
+    if value.strip() == '':
+        raise ValidationError(u'Required field')
 
 class SuggestForm(forms.Form):
-        name = forms.CharField(max_length=25, label="Your Name", required=True)
-        netid = forms.CharField(max_length=25, label="Your UW NetID", required=True)
+        name = forms.CharField(max_length=25, label="Your Name", required=True, validators=[validate_spaces])
+        netid = forms.CharField(max_length=25, label="Your UW NetID", required=True, validators=[validate_spaces])
         sender = forms.EmailField(max_length=40, label="Your Email", required=True)
-        building = forms.CharField(widget=forms.TextInput(), label="Building Name", required=True)
-        floor = forms.CharField(widget=forms.TextInput(), label="Floor Number", required=True)
+        building = forms.CharField(widget=forms.TextInput(), label="Building Name", required=True, validators=[validate_spaces])
+        floor = forms.CharField(widget=forms.TextInput(), label="Floor Number", required=True, validators=[validate_spaces])
         room_number = forms.CharField(widget=forms.TextInput(), label="Room Number (optional)", required=False)
-        description = forms.CharField(widget=forms.Textarea(), label="Description of Space", required=True)
+        description = forms.CharField(widget=forms.Textarea(), label="Description of Space", required=True, validators=[validate_spaces])
         justification = forms.CharField(widget=forms.Textarea(), label="Why do you recommend this space? (optional)", required=False)
         email_confirmation = forms.CharField(required=False)
