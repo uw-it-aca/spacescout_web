@@ -77,7 +77,6 @@ function openAllMarkerInfoWindow(data) {
                }
         });
     });
-
 }
 
 function sortByBuildingName(data) {
@@ -290,7 +289,7 @@ function clear_filter() {
 }
 
 function run_custom_search() {
-     
+
     // if searching, reset that spot count
     window.update_count = true;
 
@@ -311,7 +310,7 @@ function run_custom_search() {
 
     // type
     var checked = new Array();
-    
+
     $.each($("input[name='type']:checked"), function() {
         checked.push($(this).val());
     });
@@ -518,15 +517,10 @@ function initialize() {
     if (state.hasOwnProperty('search')) {
         window.spacescout_search_options = window.spacescout_url.decode_search_terms(state.search);
         repopulate_filters(window.spacescout_search_options);
-    } else {
-        if ($.cookie('spacescout_search_opts')) {
-            window.spacescout_search_options = JSON.parse($.cookie('spacescout_search_opts'));
-            repopulate_filters(window.spacescout_search_options);
-        }
-
-        window.spacescout_url.replace();
+    } else if ($.cookie('spacescout_search_opts')) {
+        window.spacescout_search_options = JSON.parse($.cookie('spacescout_search_opts'));
+        repopulate_filters(window.spacescout_search_options);
     }
-
 
     /* why are we asking for their location if we're not doing anything with it?
     // leaving this in but commented out until I can talk to the team about *if* the web app should do something with location
@@ -568,7 +562,6 @@ function load_map(latitude, longitude, zoom) {
         window.spacescout_map.setCenter(new google.maps.LatLng(latitude, longitude));
     }
 
-
     google.maps.event.addListener(window.spacescout_map, 'idle', reload_on_idle);
     //next three lines courtesy of samolds
     google.maps.event.addListener(spacescout_map, 'mouseup', function(c) {
@@ -590,69 +583,24 @@ function load_map(latitude, longitude, zoom) {
         document.getElementById('center_all').style.display = "inline";
     });
 
+    google.maps.event.addListener(spacescout_map, 'click', function() {
+        fetch_data();
+    });
+
     // append the centering buttons after map has loaded
     displayMapCenteringButtons();
 
 }
 
-/*function display_search_results(data) {
-    $('.loading').show();
-
-    for (i = 0; i < data.length; i++) {
-        if (!window.spacescout_marker_ids[data[i].id]) {
-            marker = new google.maps.Marker({
-                position: new google.maps.LatLng(data[i].location.latitude, data[i].location.longitude),
-                title: data[i].name,
-                icon: '/static/img/pins/pin01.png'
-            });
-
-            //marker.setMap(window.spacescout_map);
-            window.mc.addMarker(marker);
-            addMarkerListener(marker, data[i]);
-
-            window.spacescout_marker_ids[data[i].id] = true;
-            window.spacescout_markers.push(marker);
-        }
-    }
-    addClusterListener(window.mc, data);
-    openAllMarkerInfoWindow(data);
-
-    // you are here marker
-    if (youarehere != null) {
-        my_marker = new google.maps.Marker({
-            position: new google.maps.LatLng(youarehere.latitude, youarehere.longitude),
-            title: "You are here",
-            map: spacescout_map,
-            icon: '/static/img/pins/me_pin.png'
-        });
-        //window.spacescout_markers.push(my_marker);
-    }
-
-    // set the # of spaces in the bubble if update_count is true
-    if (window.update_count) {
-        var source = $('#space_count').html();
-        var template = Handlebars.compile(source);
-        $('#space_count_container').html(template({count: data.length}));
-    }
-
-    // if this was true, now that we've updated the count don't do it again unless a custom search was run
-    if (window.update_count == true) {
-        window.update_count = false;
-    }
-
-}*/
-
 function load_data(data) {
 
     // update the map
-    // display_search_results(data);
     updatePins(data);
     data_loaded();
 }
 
 function data_loaded() {
-    $.event.trigger({
-        type: 'searchResultsLoaded',
+    $.event.trigger('searchResultsLoaded', {
         message: 'search results are loaded'
     });
 }

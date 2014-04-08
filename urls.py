@@ -13,12 +13,14 @@
     limitations under the License.
 """
 from django.conf.urls.defaults import patterns, include, url
+from django.conf import settings
 
 js_info_dict = {
     'packages': ('spacescout_web',),
 }
 
 urlpatterns = patterns('spacescout_web.views',
+    url(r'^$', 'home.HomeView'),
     url(r'login$', 'auth.Prompt'),
     url(r'authenticate$', 'auth.Login'),
     url(r'logout$', 'auth.Logout'),
@@ -28,6 +30,7 @@ urlpatterns = patterns('spacescout_web.views',
     url(r'search/$', 'search.SearchView'),
     url(r'suggest/$', 'suggest.suggest', name="suggest-form"),
     url(r'contact(?:/(?P<spot_id>\d+))?/$', 'contact.contact'),
+    url(r'share/(?P<spot_id>\d+)$', 'share.share', name="share-form"),
     url(r'sorry(?:/(?P<spot_id>\d+))?/$', 'contact.sorry'),
     url(r'thankyou(?:/(?P<spot_id>\d+))?/$', 'contact.thank_you'),
     url(r'favorites?$', 'favorites.FavoritesView'),
@@ -43,7 +46,7 @@ urlpatterns += patterns('',
                         url(r'^jsi18n/$', 'django.views.i18n.javascript_catalog', js_info_dict),
                         )
 
-urlpatterns += patterns('spacescout_web.views',
-                        url(r'^.*$', 'home.HomeView'),
-                        )
+for key in settings.SS_LOCATIONS:
+    urlpatterns += patterns('spacescout_web.views',
+                            url(r'^'+key+'.*$', 'home.HomeView'))
 

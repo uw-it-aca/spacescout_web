@@ -37,6 +37,7 @@
 {% endblock %}
 
 {% block content %}
+{% load static %}
 {% load i18n %}
 {% load templatetag_handlebars %}
 
@@ -64,7 +65,7 @@
         <div class="user_context">
             {% if user.is_authenticated %}
               <span class="salutation">{% trans 'greeting' %}&nbsp;{{ request.user }}</span>
-              <a href="favorites">{% trans 'favorites' %} (<span class="favorites_count_container">0</span>)</a>
+              <a href="/favorites">{% trans 'favorites' %} (<span class="favorites_count_container">0</span>)</a>
               <span>|</span>
               {% tplhandlebars "favorites_count" %}{{count}}{% endtplhandlebars %}
               <a href="logout?next={% firstof request.path '/' %}">{% trans 'logout' %}</a>
@@ -136,7 +137,7 @@
         <div id="map_canvas" aria-labelledby="map_header" aria-hidden="true"></div>
         {% tplhandlebars "map_controls" %}
             <div class="map-control-container">
-                <a href="#" title="Recenter map"><img id="center_all" alt="Recenter map" src="/static/img/center_all.png" name="image" style="display: none;" /></a>&nbsp;
+                <a href="#" title="Recenter map"><img id="center_all" alt="Recenter map" src="{% static 'img/center_all.png' %}" name="image" style="display: none;" /></a>&nbsp;
             </div>
         {% endtplhandlebars %}
 
@@ -161,7 +162,7 @@
                                     {{#if images.0.id}}
                                     <div class="space-detail-list-image-inner lazyloader" data-src="space/{{id}}/image/{{images.0.id}}/thumb/constrain/width:150">&nbsp;</div>
                                     {{else}}
-                                    <div class="space-detail-list-image-inner" style="background: transparent url('/static/img/placeholder_noImage_bw.png') no-repeat 50% 50%; background-size: 150px;">&nbsp;</div>
+                                    <div class="space-detail-list-image-inner space-detail-no-image">&nbsp;</div>
                                     {{/if}}
 
                                 </div>
@@ -212,7 +213,7 @@
                                   {{#if images.0.id}}
                                     <div class="space-detail-list-image-inner lazyloader" data-src="space/{{id}}/image/{{images.0.id}}/thumb/constrain/width:150">&nbsp;</div>
                                   {{else}}
-                                    <div class="space-detail-list-image-inner" style="background: transparent url('/static/img/placeholder_noImage_bw.png') no-repeat 50% 50%; background-size: 150px;">&nbsp;</div>
+                                    <div class="space-detail-list-image-inner space-detail-no-image">&nbsp;</div>
                                   {{/if}}
                                 </div>
                                 <button  id="{{id}}" class="space-detail-list-item pull-left" type="button" aria-label="Get space details for {{name}}" aria-owns="detail_container_{{id}}">

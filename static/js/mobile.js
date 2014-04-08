@@ -161,7 +161,7 @@
         $('.view-details').live('click', function(e){
 
             // get the space id
-            id =  $(this).find('.space-detail-list-item').attr('id');
+            var id =  $(this).find('.space-detail-list-item').attr('id');
 
             e.preventDefault();
 
@@ -177,6 +177,15 @@
             );
 
         });
+
+        $('a#share_space').unbind('click');
+        $('a#share_space').click(function (e) {
+            var id =  window.location.pathname.match(/(\d+)\/?$/)[1];
+
+            window.location.href = '/share/' + id
+                + '?back=' + encodeURIComponent(window.location.pathname);
+        });
+
 	});
 
 	// Update dimensions on orientation change
@@ -209,7 +218,7 @@
 	// Show space details
 	function showSpaceDetails(data) {
     	// change url
-    	location.href = '/space/' + data.id;
+    	location.href = '/space/' + data.id + '/';
 	}
 
 

@@ -1,24 +1,25 @@
 {% extends "base-desktop.html" %}
+{% load static %}
 
 {% block content %}
     <div id="nav" style="position:relative;">
         <div class="clearfix">
             <div class="logo"><h1 class="visuallyhidden">SPACESCOUT&trade;</h1></div>
             <div class="actions">
-                <a href='/' title="back"><img id="back_to_space_button" src="/static/img/details_arrow.png" alt="Back"/></button></a>
+                <a href='/' title="back"><img id="back_to_space_button" src="{% static 'img/details_arrow.png' %}" alt="Back"/></button></a>
             </div>
         </div>
     </div>
     <div id="main_content" style="padding: 80px;" role="main" aria-labelledby="404_header">
         <h2 id="404_header" class="contact-header">Page Not Found (404)</h2>
         <div>
-            <img src="{{ STATIC_URL }}/img/scout.png" />
+            <img src="{% static 'img/scout.png' %}" />
             Sorry! Scout couldn't fetch the page at {{ request_path }}.
             <br />
             Return to the <a href="/">app</a>, or go to our <a href="http://www.washington.edu/itconnect/learn/tools/spacescout/">FAQ</a>.
         </div>
         <div class="space-detail-report">
-            <a href="/contact/"><img src="/static/img/mail.png" />&nbsp;Report a problem with a space</a>
+            <a href="/contact/"><img src="{% static 'img/mail.png' %}" />&nbsp;Report a problem with a space</a>
         </div>
 
     </div>

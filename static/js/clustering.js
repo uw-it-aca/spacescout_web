@@ -131,8 +131,8 @@ function getSpotList(group){
 
 function createMarker(spots, group_center) {
     var num_spots = spots.length;
-    var main_icon = new google.maps.MarkerImage('static/img/pins/pin00@2x.png', null, null, null, new google.maps.Size(40,40));
-    var alt_icon = new google.maps.MarkerImage('static/img/pins/pin00-alt@2x.png', null, null, null, new google.maps.Size(40,40));;
+    var main_icon = new google.maps.MarkerImage(static_url('img/pins/pin00@2x.png'), null, null, null, new google.maps.Size(40,40));
+    var alt_icon = new google.maps.MarkerImage(static_url('img/pins/pin00-alt@2x.png'), null, null, null, new google.maps.Size(40,40));;
 
     var marker= new MarkerWithLabel({
         position: group_center,
