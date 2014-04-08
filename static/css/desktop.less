@@ -95,7 +95,11 @@ These styles are in palce for SPOT-494.  Feel free to move things around.
     }
 }
 
-#main_content { margin: 0; }
+#main_content { margin: 0;
+    .actions {
+        a img { display: block; position: absolute; margin-left: -36px; }
+    }
+}
 
 #map_canvas {
     width: 62%;

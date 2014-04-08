@@ -23,5 +23,5 @@ class ContactForm(forms.Form):
             #('feedback', 'Leave Feedback'),
             #('problem', 'Report a Problem'),
             #('feature request', 'Request a Feature')), label="Feedback Choice")
-        message = forms.CharField(widget=forms.Textarea(), label="Your Message")
+        message = forms.CharField(widget=forms.Textarea(attrs={'rows': 5}), label="Your Message")
         email_confirmation = forms.CharField(required=False)
