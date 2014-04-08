@@ -26,7 +26,9 @@
 
     <div {% if is_mobile %}style="margin:10px; background:#fff;" {% else %}id="main_content" style="padding: 80px;"{% endif %} role="main" aria-labelledby="share-header">
         <div class="actions pull-left back-button" style="margin:5px 10px 0px 0px;">
+        {% if not is_mobile %} 
             <a href='{{ back }}' title="back" id="cookieSet"><img id="back_to_space_button" src="{% static 'img/details_arrow.png' %}" alt="Back"/></button></a>
+        {% endif %}
         </div>
         {% block share-content %}{% endblock %}
     </div>
