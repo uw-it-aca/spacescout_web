@@ -55,6 +55,7 @@
 {% endblock %}
 
 {% block content %}
+{% load static %}
 {% load i18n %}
 {% load templatetag_handlebars %}
 
@@ -127,7 +128,7 @@
         <div id="map_canvas" aria-labelledby="map_header" aria-hidden="true"></div>
         {% tplhandlebars "map_controls" %}
             <div class="map-control-container">
-                <a href="#" title="Recenter map"><img id="center_all" src="/static/img/center_all.png" alt="Recenter map" name="image" style="display: none;" /></a>&nbsp;
+                <a href="#" title="Recenter map"><img id="center_all" src="{% static 'img/center_all.png' %}" alt="Recenter map" name="image" style="display: none;" /></a>&nbsp;
             </div>
         {% endtplhandlebars %}
 
@@ -139,7 +140,7 @@
                           <div class="space-detail-fav space-detail-fav-unset pull-left"><i class="fa fa-heart-o"></i></div>
                           <h2 id="space-detail-name" class="space-detail-name"><span class="visuallyhidden">Space Details:</span> {{name}}</h2>
                           <div class="space-detail-type">{{type}} {{#if capacity }}<span class="space-detail-capacity">[Seats&nbsp;{{capacity}}]</span>{{/if}}</div>
-                          <a class="close" href="#" title="close"><img alt="close details" src="/static/img/x.png" /></a>
+                          <a class="close" href="#" title="close"><img alt="close details" src="{% static 'img/x.png' %}" /></a>
                         </div>
                         <div class="space-detail-body">
 

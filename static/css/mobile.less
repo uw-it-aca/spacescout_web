@@ -9,20 +9,7 @@
 
 @nav_background: #7479a6;
 
-// retina.less
-// A helper mixin for applying high-resolution background images (http://www.retinajs.com)
-
-.at2x(@path, @w: auto, @h: auto) {
-  background-image: e(%("url(%s)", @path));
-  @at2x_path: ~`"@{path}".split('.').slice(0, "@{path}".split('.').length - 1).join(".") + "@2x" + "." + "@{path}".split('.')["@{path}".split('.').length - 1]`;
-
-  @media only screen and (-webkit-min-device-pixel-ratio : 2), only screen and (min--moz-device-pixel-ratio: 2) {
-
-    background-image: e(%("url(%s)", @at2x_path));
-    background-size: @w @h;
-  }
-}
-#preload { background: no-repeat -9999px -9999px; background-image: url(/static/img/pins/pin00@2x.png), url(/static/img/pins/pin00-alt@2x.png);}
+#preload { background: no-repeat -9999px -9999px; background-image: url(../img/pins/pin00@2x.png), url(../img/pins/pin00-alt@2x.png);}
 
 .map-label {
   background-color: transparent;
@@ -57,8 +44,7 @@ button {
     .logo-container {
 
         .logo { height: 44px; width: 200px; float:left; position: relative;
-
-            .at2x('/static/img/spacescout_mobile_logo.png', 189px, 30px);
+            background-image: url('../img/spacescout_logo.png');
             background-size: 189px 30px;
             background-repeat: no-repeat;
             background-position: 10px 50%;
@@ -112,13 +98,13 @@ button {
     #filter_block { display:none; background-color:#222; color: @grey_medium; overflow-y: auto; -webkit-overflow-scrolling: touch;
     .bubble-inner { background-color:#fff; border: solid 1px @grey_border;
 
-      //  .bubble-tab { width:17px; background: transparent url('/static/img/tri-up.png') no-repeat; position:absolute; top: -7px; right: 15px; text-indent: -9999px; }
-        .bubble-filters { width: 90%; background: #fff url('/static/img/spinner.gif') no-repeat 50% 50%; background-size: 15px;
+      //  .bubble-tab { width:17px; background: transparent url('../img/tri-up.png') no-repeat; position:absolute; top: -7px; right: 15px; text-indent: -9999px; }
+        .bubble-filters { width: 90%; background: #fff url('../img/spinner.gif') no-repeat 50% 50%; background-size: 15px;
             ul { list-style: none; margin: 0; margin-left: 4px; margin-top: 4px; height: 28px; overflow: hidden; background-color: #fff;
                 li { display: inline-block; background-color: #eee; padding: 2px 5px; margin-bottom: 4px; font-size: 11px; }
             }
         }
-        .bubble-info { width: 50px; height:32px; background: #e5e5e5 url('/static/img/spinner.gif') no-repeat 50% 50%; background-size: 15px;
+        .bubble-info { width: 50px; height:32px; background: #e5e5e5 url('../img/spinner.gif') no-repeat 50% 50%; background-size: 15px;
             .count { display: block; padding: 4px; text-align: center; font-weight: bold; color: @purple_text; font-size: 20px; margin-top: 1px; background-color: #e5e5e5; }
             .spaces { display: block; text-align: center; font-size: 11px; text-transform: uppercase; color: @grey_light; background-color: #e5e5e5; }
         }
@@ -262,10 +248,10 @@ button {
                                 }
                                 li a.active { color: @purple_text; }
                             }
-                            .carousel { background: #f8f8f8 url('/static/img/spinner.gif') no-repeat 50% 50%; background-size: 20px;  margin: 0; min-height: 190px; overflow: hidden; }
+                            .carousel { background: #f8f8f8 url('../img/spinner.gif') no-repeat 50% 50%; background-size: 20px;  margin: 0; min-height: 190px; overflow: hidden; }
                         }
 
-                        .map-container { background: #f8f8f8 url('/static/img/spinner.gif') no-repeat 50% 50%; background-size: 20px; }
+                        .map-container { background: #f8f8f8 url('../img/spinner.gif') no-repeat 50% 50%; background-size: 20px; }
                      }
                 }
 
@@ -308,10 +294,10 @@ button {
                     button { border: solid 1px @grey_border !important; padding: 4px 7px; }
                     button.active { background-color: #fff; border-top: solid 1px #fff !important; }
 
-                    #carouselControl span { background: transparent url('/static/img/gallery_grey.png') no-repeat 50% 50%; display: inline-block; text-indent: -9999px; width: 30px; height: 25px; }
-                    #carouselControl.active span { background: transparent url('/static/img/gallery_purple.png') no-repeat 50% 50%; }
-                    #mapControl span { background: transparent url('/static/img/locate_grey.png') no-repeat 50% 50%; display: inline-block; text-indent: -9999px; width: 30px; height: 25px; }
-                    #mapControl.active span { background: transparent url('/static/img/locate_purple.png') no-repeat 50% 50%; }
+                    #carouselControl span { background: transparent url('../img/gallery_grey.png') no-repeat 50% 50%; display: inline-block; text-indent: -9999px; width: 30px; height: 25px; }
+                    #carouselControl.active span { background: transparent url('../img/gallery_purple.png') no-repeat 50% 50%; }
+                    #mapControl span { background: transparent url('../img/locate_grey.png') no-repeat 50% 50%; display: inline-block; text-indent: -9999px; width: 30px; height: 25px; }
+                    #mapControl.active span { background: transparent url('../img/locate_purple.png') no-repeat 50% 50%; }
                 }
 
                 .space-detail-share { padding-top: 18px;
@@ -333,7 +319,7 @@ button {
 #main_content { margin: 0 10px 10px 10px; padding: 10px; border: solid 1px @grey_border; background-color: #f7f7f7; }
 
 #map_canvas {
-    background: #f7f7f7 url('/static/img/spinner.gif') no-repeat 50% 50%;
+    background: #f7f7f7 url('../img/spinner.gif') no-repeat 50% 50%;
     background-size: 20px;
 
     .map-control-container { position: absolute; top:0; right: 0; width: auto; z-index: 1; text-align: right; padding: 7px;
@@ -381,7 +367,7 @@ button {
 
             li { background-color: #fff; color: #000; list-style: none; margin-bottom: 0px; padding: 10px; border-left:solid 1px @grey_border; border-right:solid 1px @grey_border; border-bottom:solid 1px @grey_border;
             
-                .space-detail-list-image { margin-right: 10px; display: inline-block; width: 100px; height: 67px; border: solid 1px #fff; background: #eee url('/static/img/spinner.gif') no-repeat 50% 50%; background-size: 15px;
+                .space-detail-list-image { margin-right: 10px; display: inline-block; width: 100px; height: 67px; border: solid 1px #fff; background: #eee url('../img/spinner.gif') no-repeat 50% 50%; background-size: 15px;
 
                         .img { width: 100px; }
 
@@ -390,8 +376,7 @@ button {
 
                 .space-detail-list-item { display: inline-block;
                 	.space-detail-labstats {
-                	                	.at2x('/static/img/comp-icon.png', 16px, 16px);
-                	                	//background-image: url('/static/img/comp-icon@2x.png'); background-size: 20px 20px;
+                	                	background-image: url('../img/comp-icon.png'); background-size: 20px 20px;
                 	                	background-repeat: no-repeat; background-position: left top;
                 						color: @grey_dark; font-size: 11px; text-transform: uppercase; display: inline-block; margin-left: 5px;
                 						.computer-available { color:#20b420; }
@@ -424,14 +409,14 @@ button {
 }
 
 
-#footer { margin: 15px 10px 10px 10px; font-size: 11px; line-height: 14px; background: url('/static/img/w.png') no-repeat;
+#footer { margin: 15px 10px 10px 10px; font-size: 11px; line-height: 14px; background: url('../img/w.png') no-repeat;
 
     .copyright { margin-left: 45px; margin-bottom: 10px; }
     .partners { margin-left: 45px; color: #aaa; }
 }
 
 .loading { position: relative; width: 200px; left:50%; margin-left: -100px;
-    .loading-inner { padding: 0px 10px 10px 20px; background: url('/static/img/spinner.gif') no-repeat; background-size: 20px; margin-top: 10px;}
+    .loading-inner { padding: 0px 10px 10px 20px; background: url('../img/spinner.gif') no-repeat; background-size: 20px; margin-top: 10px;}
     img { width: 20px;}
 }
 
@@ -577,4 +562,30 @@ select {
 
         .footer { clear: both; padding: 20px 20px; font-size: 12px; }
     }
+
+/*
+This is patrick's attempt @ @2x:
+*/
+
+@media only screen and (-webkit-min-device-pixel-ratio : 2), only screen and (min--moz-device-pixel-ratio: 2) {
+    #nav {
+        .logo-container {
+            .logo {
+                background-image: url('../img/spacescout_logo@2x.png')
+            }
+        }
+    }
+
+    #info_items {
+        ol {
+            li {
+                .space-detail-list-item {
+                    .space-detail-labstats {
+                        background-image: url('../img/comp-icon@2x.png');
+                    }
+                }
+            }
+        }
+    }
+}
 
