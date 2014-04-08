@@ -22,6 +22,6 @@ class SuggestForm(forms.Form):
         building = forms.CharField(widget=forms.TextInput(), label="Building Name", required=True)
         floor = forms.CharField(widget=forms.TextInput(), label="Floor Number", required=True)
         room_number = forms.CharField(widget=forms.TextInput(), label="Room Number (optional)", required=False)
-        description = forms.CharField(widget=forms.Textarea(), label="Description of Space", required=True)
-        justification = forms.CharField(widget=forms.Textarea(), label="Why do you recommend this space? (optional)", required=False)
+        description = forms.CharField(widget=forms.Textarea(attrs={'rows': 5}), label="Description of Space", required=True)
+        justification = forms.CharField(widget=forms.Textarea(attrs={'rows': 5}), label="Why do you recommend this space? (optional)", required=False)
         email_confirmation = forms.CharField(required=False)

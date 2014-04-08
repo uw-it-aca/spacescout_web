@@ -38,7 +38,7 @@
             if (source.length) {
                 template = Handlebars.compile(source.html().trim());
                 $(this.k.favorites_count_container).each(function () {
-                    $(this).html(template({count: self.favorites.length}));
+                    $(this).html(template({count: self.favorites ? self.favorites.length : 0}));
                 });
             }
         },
@@ -326,7 +326,7 @@
             initializeCarousel();
             initMapCarouselButtons();
 
-            $('.share_space').live('click', function (e) {
+            $('.share_space').on('click', function (e) {
                 e.preventDefault();
                 h = $(e.target).prop('href'),
 
