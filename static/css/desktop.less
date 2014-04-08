@@ -23,21 +23,6 @@ These styles are in palce for SPOT-494.  Feel free to move things around.
 
 @nav_background: #7479a6;
 
-
-// retina.less
-// A helper mixin for applying high-resolution background images (http://www.retinajs.com)
-
-.at2x(@path, @w: auto, @h: auto) {
-  background-image: e(%("url(%s)", @path));
-  @at2x_path: ~`"@{path}".split('.').slice(0, "@{path}".split('.').length - 1).join(".") + "@2x" + "." + "@{path}".split('.')["@{path}".split('.').length - 1]`;
-
-  @media only screen and (-webkit-min-device-pixel-ratio : 2), only screen and (min--moz-device-pixel-ratio: 2) {
-    background-image: e(%("url(%s)", @at2x_path));
-    background-size: @w @h;
-  }
-}
-
-
 /* start overriding the mobile styles */
 
 #container { min-width:748px; max-width:1024px; margin: 10px; }
@@ -48,7 +33,7 @@ These styles are in palce for SPOT-494.  Feel free to move things around.
     .logo-container { background-color: transparent;
 
         .logo { height: 60px; line-height: 60px; width: 226px; position: relative;
-            .at2x('/static/img/spacescout_logo.png', 226px, 56px);
+            background-image: url('../img/spacescout_logo.png');
             background-size: 226px, 56px;
             background-repeat: no-repeat;
             background-position: 0 50%;
@@ -73,7 +58,7 @@ These styles are in palce for SPOT-494.  Feel free to move things around.
     #bubble_desktop { margin: 0; display: block; float: right; height: 80px; margin-right: 15px; width: 40% }
     .bubble-inner { margin-top: 9px; height: 60px;
 
-      .bubble-tab { height: 17px; width: 8px; top: 22px; right: -8px; background: transparent url('/static/img/tri-right.png') no-repeat; }
+      .bubble-tab { height: 17px; width: 8px; top: 22px; right: -8px; background: transparent url('../img/tri-right.png') no-repeat; }
       .bubble-filters { width: 79%; height: 60px;
           ul { height: 56px; overflow: hidden; height: 56px; }
       }
@@ -245,7 +230,7 @@ These styles are in palce for SPOT-494.  Feel free to move things around.
             li {
                 .space-detail-list-item { width: 49%;
                 	.space-detail-labstats {
-                		background: transparent url('/static/img/comp-icon.png') no-repeat center top;
+                		background: transparent url('../img/comp-icon.png') no-repeat center top;
                 		margin-top:-2px;
                 		color: @grey_dark; font-size: 11px; text-transform: uppercase; display: inline-block; margin-left: 5px;
                 	   .computer-available { color:#20b420; }
@@ -338,3 +323,18 @@ These styles are in palce for SPOT-494.  Feel free to move things around.
 .favorites {
     .footer { clear: both; padding: 20px 20px; }
 }
+
+/*
+This is patrick's attempt @ @2x:
+*/
+
+@media only screen and (-webkit-min-device-pixel-ratio : 2), only screen and (min--moz-device-pixel-ratio: 2) {
+    #nav {
+        .logo-container {
+            .logo {
+                background-image: url('../img/spacescout_logo@2x.png')
+            }
+        }
+    }
+}
+

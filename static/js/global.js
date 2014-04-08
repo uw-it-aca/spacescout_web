@@ -388,21 +388,6 @@ function reset_location_filter() {
 (function(g){
 
 	$(document).ready(function() {
-/*
-//removed because we use single pin image
-        var pinimgs = [];
-        for (var i = 1; i <= 30; i++) {
-            if (i < 10) {
-                pinimgs.push('/static/img/pins/pin0' + i + '.png');
-                pinimgs.push('/static/img/pins/pin0' + i + '-alt.png');
-            }
-            else {
-                pinimgs.push('/static/img/pins/pin' + i + '.png');
-                pinimgs.push('/static/img/pins/pin' + i + '-alt.png');
-            }
-        }
-        preload(pinimgs);
-*/
         if ($.cookie('default_location')) {
             $('#location_select').val($.cookie('default_location'));
         }
@@ -666,7 +651,7 @@ function getSpaceMap(container, lat, lon) {
 
   var map = new google.maps.Map($('#spaceMap', container).get(0), mapOptions);
 
-  var image = '/static/img/pins/pin00.png';
+  var image = static_url('img/pins/pin00.png');
 
   var spaceLatLng = new google.maps.LatLng(lat , lon);
   var spaceMarker = new google.maps.Marker({
@@ -700,4 +685,7 @@ function closeSpaceDetails() {
     $(the_spot_id).focus();
 }
 
+function static_url(base) {
+    return window.spacescout_static_url+base;
+}
 
