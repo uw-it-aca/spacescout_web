@@ -1,0 +1,3 @@
+# Fill in
+SPACESCOUT_TEST = ""
+SPACESCOUT_LIVE = ""
