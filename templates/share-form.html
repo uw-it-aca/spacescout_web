@@ -37,6 +37,8 @@
                   {% endfor %}
                   <a href="{{ share_url }}" target="_blank">{{ share_url }}</a>
                 </div>
+                {% elif field.name == "message" %}
+                <hr class="fieldDelimiter" />
                 {% endif %}
             {% endif %}
         {% endfor %}

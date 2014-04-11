@@ -62,14 +62,6 @@
           <h2>Favorites</h2>
           <h4><span class="favorites_count_container">{{ total }}</span> favorite spaces <span class="comment">(organized by the date you added)</span></h4>
           <div id="space_details_page" class="favorites_card_container favorites_blank_container">
-            <div id="space-detail-blank" class="space-detail-container">
-                <div class="space-detail">
-                    <div class="space-detail-inner">
-                      <i class="fa fa-heart fa-4x"></i>Your next favorite space will be here.
-                      <br /><a href="/">Go to space list</a>
-                    </div>
-                </div>
-            </div>
           </div>
 
           <div class="footer">
@@ -77,6 +69,21 @@
           </div>
         </div>
     </div>
+
+{% tplhandlebars "campus_label" %}
+<h3>{{ campus }}</h3>
+{% endtplhandlebars %}
+
+{% tplhandlebars "blank_card" %}
+<div id="space-detail-blank" class="space-detail-container">
+    <div class="space-detail">
+        <div class="space-detail-inner">
+          <i class="fa fa-heart fa-4x"></i>Your next favorite space will be here.
+          <br /><a href="/">Go to space list</a>
+        </div>
+    </div>
+</div>
+{% endtplhandlebars %}
 
 {% include "favorites-card.html" %}
 

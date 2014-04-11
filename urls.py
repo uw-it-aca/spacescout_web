@@ -34,7 +34,6 @@ urlpatterns = patterns('spacescout_web.views',
     url(r'sorry(?:/(?P<spot_id>\d+))?/$', 'contact.sorry'),
     url(r'thankyou(?:/(?P<spot_id>\d+))?/$', 'contact.thank_you'),
     url(r'favorites?$', 'favorites.FavoritesView'),
-    url(r'space/(?P<spot_id>\d+)/$', 'spot.SpotView'),
     url(r'space/(?P<spot_id>\d+)/json/$', 'spot.SpotView', {'return_json': True}),
     url(r'space/(?P<spot_id>\d+)/image/(?P<image_id>\d+)/thumb/constrain/width:(?P<thumb_width>\d+)(?:,height:(?P<thumb_height>\d+))?$', 'image.ImageView', {'constrain': True}),
     url(r'space/(?P<spot_id>\d+)/image/(?P<image_id>\d+)/thumb/constrain/height:(?P<thumb_height>\d+)(?:,width:(?P<thumb_width>\d+))?$', 'image.ImageView', {'constrain': True}),
@@ -45,6 +44,9 @@ urlpatterns = patterns('spacescout_web.views',
 urlpatterns += patterns('',
                         url(r'^jsi18n/$', 'django.views.i18n.javascript_catalog', js_info_dict),
                         )
+
+urlpatterns += patterns('spacescout_web.views',
+                        url(r'^space/\d+/.*$', 'home.HomeView'))
 
 for key in settings.SS_LOCATIONS:
     urlpatterns += patterns('spacescout_web.views',
