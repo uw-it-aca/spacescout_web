@@ -16,7 +16,9 @@
                 {{ field }}
             {% else %}
                 {% if field.name == "subject" %}
-                <hr class="fieldDelimiter fieldWrapper" style="margin: 10px 0 20px 0;" />
+                <div class="fieldWrapper">
+                    <hr class="fieldDelimiter fieldWrapper" style="margin: 10px 0 20px 0;" />
+                </div>
                 {% endif %}
                 <div class="fieldWrapper">
                     {% if field.field.required %}
@@ -39,7 +41,9 @@
                   <a href="{{ share_url }}" target="_blank">{{ share_url }}</a>
                 </div>
                 {% elif field.name == "message" %}
-                <hr class="fieldDelimiter" />
+                <div class="fieldWrapper">
+                    <hr class="fieldDelimiter" />
+                </div>
                 {% endif %}
             {% endif %}
         {% endfor %}
