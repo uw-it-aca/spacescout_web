@@ -184,14 +184,18 @@ button {
     .space-detail-type { font-size: 14px; color: @grey_dark;
         .space-detail-capacity { color: @grey_light; font-size: 11px; text-transform: uppercase; display: inline-block; margin-left: 5px; height: 20px; }
     }
-    .space-detail-name { font-size: 20px; margin: 5px 0;  color: @purple_text; width:85%; line-height:20px; font-weight:normal; }
+    .space-detail-name { font-size: 20px; margin: 5px 0;  color: @purple_text; width:85%; line-height:20px; font-weight:normal;
+        span { font-size: 13px; }
+    }
 
     img { margin-top:8px; }
 
 }
 
+div.actions { display: none; }
+
 /* favorites icons */
-.space-detail-fav { color: #E5B52E;
+.space-detail-fav { color: #E5B52E; padding-top: 10px; padding-right: 8px;
 }
 
 .space-detail-fav-unset {
@@ -439,6 +443,8 @@ button {
 
 .fieldWrapper {margin-bottom:10px; font-size: 12px;
     label { color: gray; }
+    input { width: 286px; }
+    textarea { width: 286px; }
     .alert {color: red;}
  }
 
@@ -447,7 +453,7 @@ button {
     span { color: #08C; }
  }
 
-.fieldDelimiter { border-top: 1px dotted @grey_light; width: 220px; }
+.fieldDelimiter { border-top: 1px dotted @grey_light; width: 300px; }
 
  /* Callout for iOS 5/6 mobile devices */
 #ios_callout { position:absolute; top: 0; bottom: 0; left:0; right:0; background: black; z-index: 2000; display:none; background: rgba(0, 0, 0, 0.6);

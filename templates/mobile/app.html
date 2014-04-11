@@ -33,6 +33,21 @@
         window.default_location = "{{ default_location }}";
         window.default_zoom = {{ zoom_level }};
     }
+    var state = window.spacescout_url.parse_path(window.location.pathname);
+    if (state.hasOwnProperty('search') && window.default_location != state.campus) {
+        $('#location_select option').each(function (i) {
+            var location = $(this).val().split(',');
+            if (location[2] == state.campus) {
+                $(document).ready(function () {
+                    $('#location_select option:eq(' + i + ')').attr('selected', 'selected');
+                });
+                window.default_latitude = location[0];
+                window.default_longitude = location[1];
+                window.default_location = location[2];
+                window.default_zoom = parseInt(location[3]);
+            }
+        });
+    }
 </script>
 {% endblock %}
 

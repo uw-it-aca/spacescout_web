@@ -2,7 +2,7 @@
 
 {% block contact-content %}
 
-    {% if not is_mobile %}<h2 class="contact-header">Report a problem</h2>{% endif %}
+    {% if not is_mobile %}<h2 class="contact-header"><span>Back to space details</span><br />Report a problem</h2>{% endif %}
 
     <form action="/contact/{% if spot_id != '' %}{{ spot_id }}/{% endif %}" method="post">{% csrf_token %}
         <div class="fieldWrapper">

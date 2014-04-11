@@ -38,7 +38,7 @@
             if (source.length) {
                 template = Handlebars.compile(source.html().trim());
                 $(this.k.favorites_count_container).each(function () {
-                    $(this).html(template({count: self.favorites.length}));
+                    $(this).html(template({count: self.favorites ? self.favorites.length : 0}));
                 });
             }
         },
@@ -70,38 +70,88 @@
 
         update_cards: function () {
             var container = $(this.k.favorites_card_container),
-                source, template;
-
-            if (container.length == 1 && $.isArray(this.favorites)) {
-                source = $(this.k.favorites_card_template).html();
-                template = Handlebars.compile(source),
-                self = this;
-
-                $.each(this.favorites, function () {
-                    var spot = $('spot_' + this.id),
+                campuses = {}, campus,
+                source, template, i, j, node, opts, n, blank,
+                self = this,
+                insert_card = function (i, space) {
+                    var spot = $('spot_' + space.id),
+                        source = $(self.k.favorites_card_template).html(),
+                        template = Handlebars.compile(source),
                         type = [], card;
 
-                    if ($.isArray(this.type)) {
-                        $.each(this.type, function () {
-                            type.push(gettext(this));
+                    if ($.isArray(space.type)) {
+                        $.each(space.type, function () {
+                            type.push(gettext(space.type));
                         });
                     }
 
-                    this.type = type.join(', ');
-                    this.extended_info.noise_level = gettext(this.extended_info.noise_level);
-                    this.extended_info.food_nearby = gettext(this.extended_info.food_nearby);
-                    this.has_reservation_notes = ( this.extended_info.reservation_notes != null);
-                    this.has_notes = ( ( this.extended_info.access_notes != null) || this.has_reservation_notes );
-                    this.has_resources = ( this.extended_info.has_computers != null || this.extended_info.has_displays != null || this.extended_info.has_outlets != null || this.extended_info.has_printing != null || this.extended_info.has_projector != null || this.extended_info.has_scanner != null || this.extended_info.has_whiteboards != null );
+                    space.type = type.join(', ');
+                    space.extended_info.noise_level = gettext(space.extended_info.noise_level);
+                    space.extended_info.food_nearby = gettext(space.extended_info.food_nearby);
+                    space.has_reservation_notes = ( space.extended_info.reservation_notes != null);
+                    space.has_notes = ( ( space.extended_info.access_notes != null) || space.has_reservation_notes );
+                    space.has_resources = ( space.extended_info.has_computers != null ||
+                                            space.extended_info.has_displays != null ||
+                                            space.extended_info.has_outlets != null ||
+                                            space.extended_info.has_printing != null ||
+                                            space.extended_info.has_projector != null ||
+                                            space.extended_info.has_scanner != null ||
+                                            space.extended_info.has_whiteboards != null );
 
-                    card = $(template(this));
+                    card = $(template(space));
 
                     if (spot.length == 0) {
-                        card.insertBefore('#space-detail-blank', container);
+                        container.append(card);
                     }
 
-                    $.event.trigger('favoriteCardLoaded', [ card, this ]);
+                    $.event.trigger('favoriteCardLoaded', [ card, space ]);
+                };
+
+            if (container.length == 1 && $.isArray(this.favorites)) {
+                // sort by campus
+
+                $.each(this.favorites, function () {
+                    if (campuses != null) {
+                        if (this.extended_info.hasOwnProperty('campus')
+                            && this.extended_info.campus.length) {
+                            if (campuses.hasOwnProperty(this.extended_info.campus)) {
+                                campuses[this.extended_info.campus].push(this);
+                            } else {
+                                campuses[this.extended_info.campus] = [this];
+                            }
+                               
+                        } else {
+                            campuses = null;
+                        }
+                    }
                 });
+
+                blank = Handlebars.compile($('#blank_card').html())();
+
+                if (campuses && Object.keys(campuses).length > 1) {
+                    template = Handlebars.compile($('#campus_label').html());
+                    node = $('#location_select');
+                    opts = node.find('option');
+                    i = node.prop('selectedIndex');
+
+                    for (j = 0; j < opts.size(); j += 1) {
+                        campus = $(opts[i]).val().split(',')[2];
+                        i = ((i + 1) % opts.size());
+
+                        if (campuses.hasOwnProperty(campus)) {
+                            container.append(template({ campus: campus.charAt(0).toUpperCase() + campus.slice(1) + ' Campus' }));
+                            $.each(campuses[campus], insert_card);
+                            if (blank) {
+                                container.append(blank);
+                                blank = null;
+                            }
+                        }
+
+                    }
+                } else {
+                    $.each(this.favorites, insert_card);
+                    container.append(blank);
+                }
 
                 $.event.trigger('favoritesLoaded', [ this.favorites ]);
             }
@@ -326,7 +376,7 @@
             initializeCarousel();
             initMapCarouselButtons();
 
-            $('.share_space').live('click', function (e) {
+            $('.share_space').on('click', function (e) {
                 e.preventDefault();
                 h = $(e.target).prop('href'),
 

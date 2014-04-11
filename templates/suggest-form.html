@@ -2,7 +2,7 @@
 
 {% block suggest-content %}
 
-    {% if not is_mobile %}<h2 class="suggest-header">Suggest a Space</h2>{% endif %}
+    {% if not is_mobile %}<h2 class="suggest-header"><span>Back to space list</span><br />Suggest a Space</h2>{% endif %}
 
     <form action="/suggest/" method="post">{% csrf_token %}
         <div class="fieldWrapper">
@@ -18,7 +18,7 @@
             {% else %}
                 <div class="fieldWrapper">
                     {% if field.field.required %}
-                       <label for="id_{{field.name}}">{{field.label}} <span class="required">*</span></label>
+                       <label for="id_{{field.name}}">{{field.label}}</label>
                     {% else %}
                         {{ field.label_tag }}
                     {% endif %}
@@ -31,5 +31,4 @@
         {% endfor %}
         <input type="submit" value="Send" />
     </form>
-    <span class="requiredtext">*Required</span>
 {% endblock %}
