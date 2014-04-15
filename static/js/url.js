@@ -109,7 +109,7 @@
 
         parse_path: function (path) {
             var state = {},
-                m = path.match(/^\/([a-zA-Z]+)?(\/([a-z][^/]*))?((\/(\d*))?(\/.+)?)?$/);
+                m = path.match(/^\/([a-zA-Z]+)?(\/([a-z][^/]*))?((\/(\d*))?(\/.*)?)?$/);
 
             if (m) {
                 // 

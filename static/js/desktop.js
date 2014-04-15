@@ -168,6 +168,20 @@ Handlebars.registerHelper('ifany', function(a, b) {
         var year = last_mod.getFullYear();
         data["last_modified"] = month + "/" + day + "/" + year;
 
+        // campuses match?
+        if (data['extended_info'].hasOwnProperty('campus')) {
+            $('#location_select option').each(function (i) {
+                var location = $(this).val().split(',');
+
+                if (location[2] == data['extended_info']['campus']) {
+                    if (!$(this).is(':selected')) {
+                        $(this).attr('selected', 'selected');
+                        $(this).trigger('change');
+                    }
+                }
+            });
+        }
+
         // check to see if the space has the following
         data["has_notes"] = ( ( data.extended_info.access_notes != null) || ( data.extended_info.reservation_notes != null) );
         data["has_resources"] = ( data.extended_info.has_computers != null || data.extended_info.has_displays != null || data.extended_info.has_outlets != null || data.extended_info.has_printing != null || data.extended_info.has_projector != null || data.extended_info.has_scanner != null || data.extended_info.has_whiteboards != null );
