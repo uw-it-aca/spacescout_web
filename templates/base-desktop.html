@@ -104,7 +104,6 @@
           <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?v=3.16&libraries=geometry&amp;sensor=false"></script>
           {% endif %}
 
-          {% compress js %}
             <script type="text/javascript" src="{{ STATIC_URL }}libs/cookie.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap/js/bootstrap-transition.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap/js/bootstrap-button.js"></script>
@@ -133,7 +132,6 @@
             </script>
             {% endif %}
 
-          {% endcompress %}
             <script type="text/javascript" src="{% url django.views.i18n.javascript_catalog %}"></script>
 
     </body>
