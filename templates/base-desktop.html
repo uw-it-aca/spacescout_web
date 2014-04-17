@@ -41,8 +41,9 @@
         <link rel="stylesheet" type="text/less" href="{{ STATIC_URL }}css/mobile.less" media="screen" />
         <link rel="stylesheet" type="text/less" href="{{ STATIC_URL }}css/desktop.less" media="screen" />
         <link rel="stylesheet" type="text/less" href="{{ STATIC_URL }}css/chosen.css" media="screen" />
-        {% block extra_compress_css %}{% endblock %}
         {% endcompress %}
+
+        {% block extra_compress_css %}{% endblock %}
 
         {% block extra_css %}{% endblock %}
 
