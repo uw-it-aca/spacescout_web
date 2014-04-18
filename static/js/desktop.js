@@ -100,7 +100,7 @@ Handlebars.registerHelper('ifany', function(a, b) {
 
 
         // handle view details click
-        $('.view-details').live('click', function(e){
+        $(document).on('click', '.view-details', function(e){
             var id = $(this).find('.space-detail-list-item').attr('id');
 
             e.preventDefault();

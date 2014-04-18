@@ -109,7 +109,6 @@
 
             if (container.length == 1 && $.isArray(this.favorites)) {
                 // sort by campus
-
                 $.each(this.favorites, function () {
                     if (campuses != null) {
                         if (this.extended_info.hasOwnProperty('campus')

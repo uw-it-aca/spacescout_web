@@ -92,6 +92,7 @@ def HomeView(request, template=None):
             pass
 
     params = {
+        'username' : request.user.username if request.user and request.user.is_authenticated() else '',
         'center_latitude': template_values['center_latitude'],
         'center_longitude': template_values['center_longitude'],
         'zoom_level': template_values['zoom_level'],

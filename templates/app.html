@@ -48,6 +48,7 @@
             }
         });
     }
+    window.spacescout_authenticated_user = '{{ username }}';
     $.ajaxSetup({
         headers: { "X-CSRFToken": '{{ csrf_token }}' }
     });
