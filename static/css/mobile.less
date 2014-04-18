@@ -199,8 +199,8 @@ div.actions { display: none; }
 
 .space-detail-fav-unset {
     i {
-/*		font-size: 13pt;*/
-		color: #4B4884;
+		font-size: 11pt;
+		color: @purple_text;
 /*		padding: 7px 5px 5px 6px;*/
 /*		border: 1px solid #DDD;*/
 /*		border-radius: 4px;*/
@@ -233,8 +233,10 @@ div.actions { display: none; }
 }
 
 .space-detail-header { 
-    .space-actions { clear: both; display: relative; 
-        button { background-color: #ededed; color: @purple_text; }
+    .space-actions { clear: both; display: relative; margin-bottom: 15px;
+        button { background-color: #f2f2f2; color: @purple_text; border-radius: 4px !important; font-size: 13px; border: 1px solid #ececec !important; padding: 3px 10px;
+	        .space-detail-fav {margin-right: 2px !important;}
+        }
     }
 }
 
