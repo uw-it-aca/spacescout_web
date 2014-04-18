@@ -288,12 +288,13 @@
         <h1 class="visuallyhidden">SPACESCOUT&trade;</h1>
 		<img id="back_home_button" class="pull-left back-button" src="{% static 'img/details_arrow.png' %}" />
         <div id="name-type-block" class="pull-left">
-          <div class="space-detail-fav space-detail-fav-unset pull-left"><i class="fa fa-heart-o"></i></div>
           <h2 class="space-detail-name" style=""><span class="visuallyhidden">Space Details:</span> {{name}}</h2>
       	  <div class="space-detail-type">{{ type }} {{ #if capacity }}<span class="space-detail-capacity">[Seats&nbsp;{{capacity}}]</span>{{ /if }}</div>
         </div>
+        <div class="space-actions">
+          <div class="space-detail-fav space-detail-fav-unset pull-left"><i class="fa fa-heart-o"></i></div>
+        </div>
     </div>
-
     <div id="space_details_page">
         <div class="space-detail-container">
             <div class="space-detail">

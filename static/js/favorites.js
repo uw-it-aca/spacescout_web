@@ -48,7 +48,7 @@
                 detail_node = $('div[id^=detail_container_]'),
                 detail_id = detail_node.length ? parseInt(detail_node.prop('id').match(/^detail_container_(\d+)$/)[1]) : null;
 
-            $('button .space-detail-fav').each(function () {
+            $('button li .space-detail-fav').each(function () {
                 var node = $(this),
                     id = parseInt(node.parent().prop('id'));
 

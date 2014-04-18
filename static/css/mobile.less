@@ -195,32 +195,29 @@ button {
 div.actions { display: none; }
 
 /* favorites icons */
-.space-detail-fav { color: #E5B52E; padding-top: 10px; padding-right: 8px;
-}
+.space-detail-fav { color: #E5B52E; }
 
 .space-detail-fav-unset {
     i {
-		font-size: 13pt;
+/*		font-size: 13pt;*/
 		color: #4B4884;
-		padding: 7px 5px 5px 6px;
-		border: 1px solid #DDD;
-		border-radius: 4px;
-		font-weight: bold;
-		cursor: pointer;
+/*		padding: 7px 5px 5px 6px;*/
+/*		border: 1px solid #DDD;*/
+/*		border-radius: 4px;*/
+/*		font-weight: bold;*/
+/*		cursor: pointer;*/
     }
-
-/*    font-size: 20px; margin-top: 5px; margin-right: 5px;*/
-    }
+}
 
 .space-detail-fav-set {
     i {
-		font-size: 13pt;
+/*		font-size: 13pt;*/
 		color: #E8B21C;
-		padding: 7px 5px 5px 6px;
-		border: 1px solid #e7d095;
-		border-radius: 4px;
-		font-weight: bold;
-		cursor: pointer;
+/*		padding: 7px 5px 5px 6px;*/
+/*		border: 1px solid #e7d095;*/
+/*		border-radius: 4px;*/
+/*		font-weight: bold;*/
+/*		cursor: pointer;*/
     }
 }
 
@@ -233,6 +230,12 @@ div.actions { display: none; }
 #main_space_detail { background: #f8f8f8 url('../img/spinner.gif') no-repeat 50% 50%; min-height: 300px;
     .space_error_text { text-align: center; height: 300px; line-height: 300px; background-color: #f8f8f8; }
     .space-detail-container { background-color: #f8f8f8; }
+}
+
+.space-detail-header { 
+    .space-actions { clear: both; display: relative; 
+        button { background-color: #ededed; color: @purple_text; }
+    }
 }
 
 #space_details_page { position: relative; margin: 10px;
@@ -297,6 +300,9 @@ div.actions { display: none; }
 
                       }
                     }
+                }
+
+                .space-reviews { margin: 10px 0;
                 }
 
                 .space-image-map-buttons { text-align:right; margin: -1px 0 0 0;

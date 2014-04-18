@@ -240,8 +240,8 @@ Handlebars.registerHelper('ifany', function(a, b) {
         replaceUrls();
 
         // set up favorites
-        var fav_icon = $('.space-detail-container .space-detail-fav');
-        var fav_icon_i = $('.space-detail-container .space-detail-fav i');
+        var fav_icon = $('.space-detail-container button .space-detail-fav');
+        var fav_icon_i = $('i', fav_icon);
 
         if (fav_icon.is(':visible')) {
             var title = 'Favorite this space';
@@ -263,7 +263,7 @@ Handlebars.registerHelper('ifany', function(a, b) {
             fav_icon.on('mouseout', function() {
                 is_over_favs = false;
             });
-            fav_icon.click(function (e) {
+            fav_icon.parent().click(function (e) {
                 var list_item = $('button#' + data.id + ' .space-detail-fav');
 
                 if ($('#logout_button').length == 0) {
@@ -303,8 +303,8 @@ Handlebars.registerHelper('ifany', function(a, b) {
             fav_icon.tooltip({ placement: 'right', title: title});
         }
 
-        $('a#share_space').unbind('click');
-        $('a#share_space').click(function (e) {
+        $('button#share_space').unbind('click');
+        $('button#share_space').click(function (e) {
             window.location.href = '/share/' + data.id
                 + '?back=' + encodeURIComponent(window.location.pathname);
         });
