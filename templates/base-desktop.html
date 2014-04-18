@@ -41,8 +41,9 @@
         <link rel="stylesheet" type="text/less" href="{{ STATIC_URL }}css/mobile.less" media="screen" />
         <link rel="stylesheet" type="text/less" href="{{ STATIC_URL }}css/desktop.less" media="screen" />
         <link rel="stylesheet" type="text/less" href="{{ STATIC_URL }}css/chosen.css" media="screen" />
-        {% block extra_compress_css %}{% endblock %}
         {% endcompress %}
+
+        {% block extra_compress_css %}{% endblock %}
 
         {% block extra_css %}{% endblock %}
 
@@ -101,10 +102,9 @@
           {% if gmaps_api_key %}
           <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?v=3&key={{ gmaps_api_key }}&libraries=geometry&amp;sensor=false"></script>
           {% else %}
-          <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?libraries=geometry&amp;sensor=false"></script>
+          <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?v=3.16&libraries=geometry&amp;sensor=false"></script>
           {% endif %}
 
-          {% compress js %}
             <script type="text/javascript" src="{{ STATIC_URL }}libs/cookie.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap/js/bootstrap-transition.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap/js/bootstrap-button.js"></script>
@@ -133,7 +133,6 @@
             </script>
             {% endif %}
 
-          {% endcompress %}
             <script type="text/javascript" src="{% url django.views.i18n.javascript_catalog %}"></script>
 
     </body>

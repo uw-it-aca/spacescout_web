@@ -42,22 +42,38 @@
     var honeycombOrNewer = deviceAgent.match(/android [3-9]/i);
     var froyoOrOlder = android && !gingerbread && !honeycombOrNewer;
 
-	$(document).ready(function() {
+    function show_main_app() {
+        $('#main_space_detail').hide();
+        $('#main_app').show();
 
 		setMobileContentHeights();
 
-	   // check if a map_canvas exists... populate it
-    	if ($("#map_canvas").length == 1) {
-            initialize();
+        if (window.spacescout_map) {
+            google.maps.event.trigger(window.spacescout_map, "resize");
+        }
+    }
+
+    function show_space_detail(id) {
+        $('#main_space_detail').html('');
+        $('#main_space_detail').show();
+        $('#main_app').hide();
+        loadSpaceDetails(id);
+    }
+
+	$(document).ready(function() {
+
+        if (window.spacescout_url) {
+            var state = window.spacescout_url.parse_path(window.location.pathname);
+            if (state.id) {
+                show_space_detail(state.id);
+            } else {
+                show_main_app();
+            }
         }
 
-		// initialize the carousel for mobile standalone space page
-        initializeCarousel();
-        resizeCarouselMapContainer();
-        replaceUrls();
-
-    	if ($(".space-detail-body").length == 1) {
-            initMapCarouselButtons();
+	    // check if a map_canvas exists... populate it
+    	if ($("#map_canvas").length == 1) {
+            initialize();
         }
 
         // scroll to the top of page
@@ -78,7 +94,13 @@
 
         // back to spaces button on mobile space details page
         $('#back_home_button').click(function() {
-            location.href = '/';
+            var href = '/';
+
+            if ($('#id_back').length > 0) {
+                href = $('#id_back').val();
+            }
+
+            window.location.href = href;
         });
 
         // for iphones (ios5) - check if they have the ios detector cookie, if they don't give them one and show the popup
@@ -93,9 +115,6 @@
 		// show filter panel
 		$('#filter_button').click(function() {
             var block = $("#filter_block");
-
-    		// calculate the filter block height
-//    		resizeFilterBlock();
 
             if (block.css('display') == 'none') {
                 // reflect current filter
@@ -112,8 +131,6 @@
                     if (icon.length) {
                         icon.switchClass('fa-angle-double-down', 'fa-angle-double-up', 0);
                     }
-
-//                    setFilterContainer();
                 });
             }
             else {
@@ -157,33 +174,17 @@
             $.removeCookie('initial_load');
         });
 
-        // handle view details click
-        $('.view-details').live('click', function(e){
+        $(document).on('searchResultsLoaded', function () {
+            // handle view details click
+            $('.view-details').on('click', function(e){
 
-            // get the space id
-            var id =  $(this).find('.space-detail-list-item').attr('id');
+                // get the space id
+                var id =  $(this).find('.space-detail-list-item').attr('id');
 
-            e.preventDefault();
+                e.preventDefault();
 
-            //clear any unneded pending ajax window.requests
-            for (i = 0; i < window.requests.length; i++) {
-                window.requests[i].abort();
-            }
-            window.requests.push(
-                $.ajax({
-                    url: '/space/'+id+'/json/',
-                    success: showSpaceDetails
-                })
-            );
-
-        });
-
-        $('a#share_space').unbind('click');
-        $('a#share_space').click(function (e) {
-            var id =  window.location.pathname.match(/(\d+)\/?$/)[1];
-
-            window.location.href = '/share/' + id
-                + '?back=' + encodeURIComponent(window.location.pathname);
+                show_space_detail(id);
+            });
         });
 
 	});
@@ -195,14 +196,24 @@
 
         setMobileContentHeights();
         resizeCarouselMapContainer();
-
-        if ($('#filter_block').is(":visible")) {
-//    	   resizeFilterBlock();
-//    	   setFilterContainer();
-        }
-
     });
 
+    // fetch and show space 
+    function loadSpaceDetails(id) {
+        //clear any uneeded pending ajax window.requests
+        $.each(window.requests, function () {
+            this.abort();
+        });
+
+        window.requests.push(
+            $.ajax({
+                url: '/space/'+id+'/json/',
+                success: showSpaceDetails,
+                error: showSpaceDetailError
+                
+            })
+        );
+    }
 
 	// set a height for main container and hide any overflowing
 	function setFilterContainer() {
@@ -211,16 +222,121 @@
 
         $('#container').height(filterH);
         $('#container').css({
-            overflow: 'hidden',
+            overflow: 'hidden'
         });
 	}
 
 	// Show space details
 	function showSpaceDetails(data) {
-    	// change url
-    	location.href = '/space/' + data.id + '/';
+    	var source = $('#space_details').html();
+    	var template = Handlebars.compile(source);
+
+        data.has_access_reservation_notes = (data.extended_info.access_notes
+                                             || data.extended_info.reservation_notes);
+        data.has_labstats = (data.extended_info.labstats_id
+                             && data.extended_info.auto_labstats_total
+                             && data.extended_info.auto_labstats_total != '0');
+        data.has_labstats_available = (data.extended_info.auto_labstats_available > '0');
+        data.has_resources = (data.extended_info.has_computers
+                              || data.extended_info.has_displays
+                              || data.extended_info.has_outlets
+                              || data.extended_info.has_printing
+                              || data.extended_info.has_projector
+                              || data.extended_info.has_scanner
+                              || data.extended_info.has_whiteboards);
+
+    	$('#main_space_detail').html(template(data));
+
+        $('html, body').animate({ scrollTop: 0 }, 'fast');
+
+        window.spacescout_url.push(data.id);
+
+        initializeCarousel();
+        resizeCarouselMapContainer();
+        replaceUrls();
+        initMapCarouselButtons();
+
+        $('#back_home_button').click(function(e) {
+            var m =  window.location.pathname.match(/\/(\d+)\/?$/);
+
+            show_main_app();
+            window.spacescout_url.push(null);
+
+            if (m) {
+                window.location.hash = '#space_detail_' + m[1];
+            }
+        });
+
+        // set up favorites
+        var fav_icon = $('#space_details_header .space-detail-fav');
+        var fav_icon_i = $('#space_details_header .space-detail-fav i');
+
+        if (fav_icon.is(':visible')) {
+
+            if (window.spacescout_favorites.is_favorite(data.id)) {
+                fav_icon.removeClass('space-detail-fav-unset').addClass('space-detail-fav-set');
+                fav_icon_i.removeClass('fa-heart-o').addClass('fa-heart');
+            } else {
+                fav_icon.removeClass('space-detail-fav-set').addClass('space-detail-fav-unset');
+                fav_icon_i.removeClass('fa-heart').addClass('fa-heart-o');
+            }
+
+            fav_icon.click(function (e) {
+                e.preventDefault();
+
+                if (window.spacescout_authenticated_user.length == 0) {
+                    window.location.href = '/login?next=' + window.location.pathname;
+                }
+
+
+                window.spacescout_favorites.toggle(data.id,
+                                                   function () {
+                                                       fav_icon.removeClass('space-detail-fav-unset').addClass('space-detail-fav-set');
+                                                       fav_icon_i.removeClass('fa-heart-o').addClass('fa-heart');
+                                                       $('button#' + data.id + ' .space-detail-fav').show();
+                                                   },
+                                                   function () {
+                                                       fav_icon.removeClass('space-detail-fav-set').addClass('space-detail-fav-unset');
+                                                       fav_icon_i.removeClass('fa-heart').addClass('fa-heart-o');
+                                                       $('button#' + data.id + ' .space-detail-fav').hide();
+                                                   });
+            });
+        }
+
+        $('a#share_space').unbind('click');
+        $('a#share_space').click(function (e) {
+            var id =  window.location.pathname.match(/(\d+)\/?$/)[1];
+
+            window.location.href = '/share/' + id
+                + '?back=' + encodeURIComponent(window.location.pathname);
+        });
 	}
 
+	function showSpaceDetailError(data) {
+        var error;
+
+    	var source = $('#space_detail_error').html();
+    	var template = Handlebars.compile(source);
+
+        switch (data.status) {
+        case 404:
+            error = 'The requested space could not be found.';
+            break;
+        default:
+            error = 'Unable to load details for this space';
+            break;
+        };
+
+    	$('#main_space_detail').html(template({ error_message: error }));
+
+        window.spacescout_url.push(null);
+
+        $('#back_home_button').click(function(e) {
+            var m =  window.location.pathname.match(/\/(\d+)\/?$/);
+
+            show_main_app();
+        });
+    }
 
 	// ScrollTo a spot on the UI
 	function scrollTo(id) {
@@ -249,7 +365,7 @@
         }
 
         $('#map_canvas').height(mapH);
-        $('#map_canvas').css({ minHeight: mapH })
+        $('#map_canvas').css({ minHeight: mapH });
         $('#info_list').height('auto');
     }
 

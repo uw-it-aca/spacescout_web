@@ -90,7 +90,7 @@ button {
 
 #filter-clear { display: none; position: absolute; top: 30px; border: 1px solid @grey_light; padding: 5px; width: 150px; z-index: 999; left:50%; margin-left: -75px; background-color: @grey_dark; text-align: center; animation:filter-clear-anim 1s; -webkit-animation:filter-clear-anim 1s; animation-delay:1000ms; -webkit-animation-delay:1000ms;}
 @keyframes filter-clear-anim { 100% {left:0px;} }
-@-webkit-keyframes filter-clear-anim /* Safari and Chrome */ {100% {left:0px;}}
+@-webkit-keyframes filter-clear-anim {100% {left:0px;}}
 
 #filter_container { position: relative; margin: 0 10px 11px 10px;
 
@@ -228,6 +228,11 @@ div.actions { display: none; }
   ul {
     li { display: inline-block; background-color: #eee; padding: 2px 5px; margin-bottom: 4px; font-size: 11px; }
   }
+}
+
+#main_space_detail { background: #f8f8f8 url('../img/spinner.gif') no-repeat 50% 50%; min-height: 300px;
+    .space_error_text { text-align: center; height: 300px; line-height: 300px; background-color: #f8f8f8; }
+    .space-detail-container { background-color: #f8f8f8; }
 }
 
 #space_details_page { position: relative; margin: 10px;

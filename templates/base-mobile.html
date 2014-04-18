@@ -40,8 +40,8 @@
         <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}libs/font-awesome.min.css" charset="utf-8" />
         <link rel="stylesheet" type="text/less" href="{{ STATIC_URL }}css/mobile.less" media="screen, handheld" />
         <link rel="stylesheet" type="text/less" href="{{ STATIC_URL }}css/tablet.less" media="screen, handheld" />
-        {% block extra_compress_css %}{% endblock %}
         {% endcompress %}
+        {% block extra_compress_css %}{% endblock %}
 
         {% block extra_css %}{% endblock %}
 
@@ -91,10 +91,6 @@
 
           <div id="container">
               {% block content %}{% endblock %}
-              <div class="back-top">
-                <div class="suggest">Didn't find one? <a href="{% url suggest-form %}">Suggest a space</a></div>
-                <button id="top_link" class="btn btn-inverse" type="button">Back to top</button>
-              </div>
 
               <div id="footer" class="clearfix" role="contentinfo">
                   <div class="pull-left copyright">Copyright &copy; 2012 &nbsp;&nbsp;&nbsp;<a href="http://www.washington.edu/online/privacy/" target="_blank">Privacy</a> | <a href="http://www.washington.edu/online/terms/" target="_blank">Terms</a> | <a href="http://www.washington.edu/itconnect/learn/tools/spacescout/" title="About SpaceScout" target="_blank">About</a><br/>Academic and Collaborative Applications, UW-IT</div>
@@ -113,7 +109,6 @@
           <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?libraries=geometry&amp;sensor=false"></script>
           {% endif %}
 
-          {% compress js %}
             <script type="text/javascript" src="{{ STATIC_URL }}libs/cookie.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap/js/bootstrap-transition.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap/js/bootstrap-button.js"></script>
@@ -132,6 +127,7 @@
             <script type="text/javascript" src="{{ STATIC_URL }}js/retina.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}js/analytics.js"></script>
 
+            {% block extra_js %}{% endblock %}
 
             {% if spaces %}
             <script type="text/javascript">
@@ -139,8 +135,6 @@
             </script>
             {% endif %}
 
-            {% block extra_js %}{% endblock %}
-          {% endcompress %}
             <script type="text/javascript" src="{% url django.views.i18n.javascript_catalog %}"></script>
 
     </body>

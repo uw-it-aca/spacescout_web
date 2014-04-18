@@ -109,7 +109,6 @@
 
             if (container.length == 1 && $.isArray(this.favorites)) {
                 // sort by campus
-
                 $.each(this.favorites, function () {
                     if (campuses != null) {
                         if (this.extended_info.hasOwnProperty('campus')
@@ -161,7 +160,7 @@
             var self = this;
 
             $.ajax({
-                url: 'api/v1/user/me/favorites',
+                url: 'web_api/v1/user/me/favorites',
                 success: function (data) {
                     self.favorites = data ? data : [];
                     self.update();
@@ -185,7 +184,7 @@
                 fav = (this.index(id) >= 0);
             } else {
                 $.ajax({
-                    url: 'api/v1/user/me/favorite/' + id,
+                    url: 'web_api/v1/user/me/favorite/' + id,
                     type: "GET",
                     async: false,
                     success: function (data) {
@@ -229,7 +228,7 @@
 
             if (!this.is_favorite(id)) {
                 $.ajax({
-                    url: 'api/v1/user/me/favorite/' + id,
+                    url: 'web_api/v1/user/me/favorite/' + id,
                     dataType: 'json',
                     contentType: "application/json",
                     data: JSON.stringify({}),
@@ -258,7 +257,7 @@
             var self = this;
 
             $.ajax({
-                url: 'api/v1/user/me/favorite/' + id,
+                url: 'web_api/v1/user/me/favorite/' + id,
                 dataType: 'json',
                 type: "DELETE",
                 success: function (data) {

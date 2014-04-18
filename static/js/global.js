@@ -418,7 +418,7 @@ function reset_location_filter() {
         });
 
     	// handle clicking on map centering buttons
-        $('#center_all').live('click', function(e){
+        $('#center_all').on('click', function(e){
 
             e.preventDefault();
             if (window.spacescout_map.getZoom() != window.default_zoom) {

@@ -100,7 +100,7 @@ Handlebars.registerHelper('ifany', function(a, b) {
 
 
         // handle view details click
-        $('.view-details').live('click', function(e){
+        $(document).on('click', '.view-details', function(e){
             var id = $(this).find('.space-detail-list-item').attr('id');
 
             e.preventDefault();
@@ -167,6 +167,20 @@ Handlebars.registerHelper('ifany', function(a, b) {
         var day = last_mod.getDate();
         var year = last_mod.getFullYear();
         data["last_modified"] = month + "/" + day + "/" + year;
+
+        // campuses match?
+        if (data['extended_info'].hasOwnProperty('campus')) {
+            $('#location_select option').each(function (i) {
+                var location = $(this).val().split(',');
+
+                if (location[2] == data['extended_info']['campus']) {
+                    if (!$(this).is(':selected')) {
+                        $(this).attr('selected', 'selected');
+                        $(this).trigger('change');
+                    }
+                }
+            });
+        }
 
         // check to see if the space has the following
         data["has_notes"] = ( ( data.extended_info.access_notes != null) || ( data.extended_info.reservation_notes != null) );

@@ -96,6 +96,7 @@ function buildingNameHeaders(data) {
     var byBuilding = {};
     var big_list = [];
     var nobuilding = 'no building';
+    var i;
     for (i=0; i<data.length; i++) {
         var bname = data[i].location.building_name;
         if (bname === null) {
