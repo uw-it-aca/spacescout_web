@@ -190,9 +190,6 @@ These styles are in palce for SPOT-494.  Feel free to move things around.
                     }
                 }
 
-                .space-reviews { padding: 20px 0;
-                }
-
                 .space-image-map-buttons { text-align:right; margin: 20px 0 0 -1px; display: block;
                     button { border: solid 1px @grey_border !important; padding: 4px 7px; display: block; margin: 0; }
                     button.active { background-color: #fff; border-left: none !important; }
@@ -207,6 +204,29 @@ These styles are in palce for SPOT-494.  Feel free to move things around.
                 .space-detail-share { padding-top: 18px;
                    i { padding-right: 10px; }
                    a { color: @purple_text; }
+                }
+
+                .space-reviews { padding: 20px 0;
+                    h2 { font-size: 28px;
+                        button { display: block; float: right; }
+                    }
+                    .space-reviews-none, .space-review-submitted { height: 80px; padding: 16px;
+                        background-color: white;
+                        border: 1px solid black;
+                        a { text-decoration: normal; padding-top: 16px; }
+                    }
+                    .space-review-rating { clear: both;
+                        .space-review-stars {
+                            float: left;
+                            i:hover { cursor: pointer; }
+                        }
+
+                        div + div { float: right; }
+                    }
+
+                    textarea { display: block; width: 100%; height: 80px; }
+                    a { color: @purple_text; display: block; }
+                    ul { padding: 8px 0; }
                 }
 
                 .space-detail-report { text-align:center;margin-top:20px; font-size: 13px; border-top: 1px dotted @grey_light; padding-top: 15px;

@@ -21,6 +21,13 @@
   color: #fff;
 }
 
+.border-rounded {
+    border: 1px solid black;
+    -webkit-border-radius: 4px !important;
+    -moz-border-radius: 4px !important;
+    border-radius: 4px !important;
+}
+
 body {
     background-color: @grey_background;
 }
@@ -304,9 +311,6 @@ div.actions { display: none; }
                     }
                 }
 
-                .space-reviews { margin: 10px 0;
-                }
-
                 .space-image-map-buttons { text-align:right; margin: -1px 0 0 0;
                     button { border: solid 1px @grey_border !important; padding: 4px 7px; }
                     button.active { background-color: #fff; border-top: solid 1px #fff !important; }
@@ -318,8 +322,10 @@ div.actions { display: none; }
                 }
 
                 .space-detail-share { padding-top: 18px;
-                   i { padding-right: 10px; }
-                   a { color: @purple_text; }
+                }
+
+                .space-reviews { margin: 10px 0; border: 1px solid red;
+                    a { color: @purple_text; }
                 }
 
                 .space-detail-report { text-align:center;margin-top:20px;
