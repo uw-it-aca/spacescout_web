@@ -291,53 +291,8 @@
 
                                     </ul>
                                 </div>
-				
-                                <div class="space-reviews">
-				                  <h2>Reviews for this space
-                                    <button class="write-a-review"><i class="fa fa-pencil"></i> {% trans 'write_review' %}</button>
-                                  </h2>
-                                  <div class="space-review-compose" style="display: none;">
-                                    <h3>Write a review</h3>
-                                    <h4>Rate this space</h4>
-                                    <div class="space-review-rating">
-                                      <div class="space-review-stars">
-                                        <i class="fa fa-star-o fa-lg"></i>
-                                        <i class="fa fa-star-o fa-lg"></i>
-                                        <i class="fa fa-star-o fa-lg"></i>
-                                        <i class="fa fa-star-o fa-lg"></i>
-                                        <i class="fa fa-star-o fa-lg"></i>
-                                        <span></span>
-                                      </div>
-                                      <div>
-                                        <b><span></span></b> characters left
-                                      </div>
-                                    </div>
-                                    <textarea placeholder="{% trans 'review_placeholder' %}" maxlength="300"></textarea>
-                                    <a href="javascript:void(0);"><i class="fa fa-angle-double-down"></i> Review guideines</a>
-                                    <ul style="display: none;">
-                                      <li>Explain your star rating.</li>
-                                      <li>Be polite, no profanity.</li>
-                                      <li>Remember, your UW NetID will be displayed as reviewer's name.</li>
-                                      <li>Your submission will be published after our review in a few days.</li>
-                                    </ul>
-                                    <b>Note:</b> Your UW NetID will be displayed with this review.
 
-                                    <button id="space-review-submit">{% trans 'submit' %}</button>
-                                    <button id="space-review-cancel">{% trans 'cancel' %}</button>
-                                  </div>
-                                  <div class="space-review-submitted border-rounded" style="display: none;">
-                                    <b>Thank you for your review.</b><br />
-                                    We will notify you in a few days once it's published.
-                                    <a href="javascript:void(0);">{% trans 'close' %}</a>
-                                  </div>
-                                  <div class="space-reviews-content">
-                                    <div class="space-reviews-none border-rounded">
-                                      No reviews found for this space. Be the first to leave a review for this space.
-                                      <br />
-                                      <a class="write-a-review">{% trans 'write_review' %}</a>
-                                    </div>
-                                  </div>
-                                </div>
+                                {% include "reviews.html" %}
 
                                 <div class="space-detail-report">
                                     <a href="/contact/{{ id }}/">Report a problem with this space</a>

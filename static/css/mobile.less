@@ -239,7 +239,7 @@ div.actions { display: none; }
     .space-detail-container { background-color: #f8f8f8; }
 }
 
-.space-detail-header { 
+#space_details_header, .space-detail-header {
     .space-actions { clear: both; display: relative; margin-bottom: 15px;
         button { background-color: #f2f2f2; color: @purple_text; border-radius: 4px !important; font-size: 13px; border: 1px solid #ececec !important; padding: 3px 10px;
 	        .space-detail-fav {margin-right: 2px !important;}
@@ -324,7 +324,10 @@ div.actions { display: none; }
                 .space-detail-share { padding-top: 18px;
                 }
 
-                .space-reviews { margin: 10px 0; border: 1px solid red;
+                .space-reviews { margin: 10px 0;
+                    h2 { font-size: 18px; }
+                    button { float: right; padding-top: 6px; }
+                    .space-reviews-none { background-color: white; }
                     a { color: @purple_text; }
                 }
 
@@ -340,6 +343,31 @@ div.actions { display: none; }
 /* END MOBILE ONLY */
 
 #main_content { margin: 0 10px 10px 10px; padding: 10px; border: solid 1px @grey_border; background-color: #f7f7f7; }
+
+.space-detail {
+    .space-reviews { padding: 20px 0;
+        h2 { font-size: 28px;
+            button { display: block; float: right; }
+        }
+        .space-reviews-none, .space-review-submitted { height: 60px; padding: 8px; line-height: 14px; 
+            background-color: white;
+            border: 1px solid black;
+            a { text-decoration: normal; padding-top: 16px; }
+        }
+        .space-review-rating { clear: both;
+            .space-review-stars {
+                float: left;
+                i:hover { cursor: pointer; }
+            }
+
+            div + div { float: right; }
+        }
+
+        textarea { display: block; width: 100%; height: 80px; }
+        a { color: @purple_text; display: block; }
+        ul { padding: 8px 0; }
+    }
+}
 
 #map_canvas {
     background: #f7f7f7 url('../img/spinner.gif') no-repeat 50% 50%;

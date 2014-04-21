@@ -267,12 +267,11 @@
             }
         });
 
-        // set up favorites
-        var fav_icon = $('#space_details_header .space-detail-fav');
-        var fav_icon_i = $('#space_details_header .space-detail-fav i');
+        // set us up teh favorites
+        var fav_icon = $('button#favorite_space .space-detail-fav');
+        var fav_icon_i = $('i', fav_icon);
 
         if (fav_icon.is(':visible')) {
-
             if (window.spacescout_favorites.is_favorite(data.id)) {
                 fav_icon.removeClass('space-detail-fav-unset').addClass('space-detail-fav-set');
                 fav_icon_i.removeClass('fa-heart-o').addClass('fa-heart');
@@ -281,30 +280,33 @@
                 fav_icon_i.removeClass('fa-heart').addClass('fa-heart-o');
             }
 
-            fav_icon.click(function (e) {
-                e.preventDefault();
+            fav_icon.parent().click(function (e) {
+                var list_item = $('button#' + data.id + ' .space-detail-fav');
 
                 if (window.spacescout_authenticated_user.length == 0) {
                     window.location.href = '/login?next=' + window.location.pathname;
                 }
 
-
                 window.spacescout_favorites.toggle(data.id,
                                                    function () {
                                                        fav_icon.removeClass('space-detail-fav-unset').addClass('space-detail-fav-set');
                                                        fav_icon_i.removeClass('fa-heart-o').addClass('fa-heart');
-                                                       $('button#' + data.id + ' .space-detail-fav').show();
+                                                       list_item.show();
                                                    },
                                                    function () {
                                                        fav_icon.removeClass('space-detail-fav-set').addClass('space-detail-fav-unset');
                                                        fav_icon_i.removeClass('fa-heart').addClass('fa-heart-o');
-                                                       $('button#' + data.id + ' .space-detail-fav').hide();
+                                                       list_item.hide();
+                                                       fav_icon.tooltip('hide');
                                                    });
             });
         }
 
-        $('a#share_space').unbind('click');
-        $('a#share_space').click(function (e) {
+        setupRatingsAndReviews();
+
+        // set up share space
+        $('button#share_space').unbind('click');
+        $('button#share_space').click(function (e) {
             var id =  window.location.pathname.match(/(\d+)\/?$/)[1];
 
             window.location.href = '/share/' + id
