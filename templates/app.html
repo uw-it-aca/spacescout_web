@@ -148,7 +148,7 @@
                             <i class="fa fa-star-o"></i>
                             <i class="fa fa-star-o"></i>
                             (<span>0</span>)
-                            <span>|</span>
+                            <span class="divider">|</span>
                             <button id="favorite_space">
                             	<span class="space-detail-fav space-detail-fav-unset">
                             		<i class="fa fa-heart"></i>
@@ -291,8 +291,18 @@
 
                                     </ul>
                                 </div>
-
-                                {% include "reviews.html" %}
+				
+                                <div class="space-reviews">
+								  <h4>Reviews for this space</h4>
+                                  <div class="space-reviews-content">
+                                  <div class="space-reviews-none">
+                                    No reviews found for this space. Be the first to leave a review for this space.
+                                    <br />
+                                                            
+                                    <button><i class="fa fa-pencil"></i> {% trans 'write_review' %}</button>
+                                  </div>
+                                  </div>
+                                </div>
 
                                 <div class="space-detail-report">
                                     <a href="/contact/{{ id }}/">Report a problem with this space</a>

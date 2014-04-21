@@ -56,13 +56,13 @@
                     node.show();
                     if (id == detail_id) {
                         $('.space-detail-fav', detail_node).removeClass('space-detail-fav-unset').addClass('space-detail-fav-set');
-                        $('.space-detail-fav i', detail_node).removeClass('fa-heart-o').addClass('fa-heart');
+ //                       $('.space-detail-fav i', detail_node).removeClass('fa-heart-o').addClass('fa-heart');
                     }
                 } else {
                     node.hide();
                     if (id == detail_id) {
                         $('.space-detail-fav', detail_node).removeClass('space-detail-fav-set').addClass('space-detail-fav-unset');
-                        $('.space-detail-fav i', detail_node).removeClass('fa-heart').addClass('fa-heart-o');
+  //                      $('.space-detail-fav i', detail_node).removeClass('fa-heart').addClass('fa-heart-o');
                     }
                 }
             });
