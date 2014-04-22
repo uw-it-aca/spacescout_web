@@ -71,6 +71,7 @@ function setupRatingsAndReviews() {
         $('textarea', node).val('');
         $('.space-review-stars span', node).html('');
         $('.space-review-rating div b span', node).html(REVIEW_CHAR_LIMIT);
+        $('.space-review-rating div b span', node).removeClass('required');
         $('.space-review-rating i', node).switchClass('fa-star', 'fa-star-o');
     });
 
