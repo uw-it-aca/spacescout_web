@@ -42,12 +42,15 @@ function setupRatingsAndReviews() {
 
     $('.space-review-compose textarea').keyup(function (e) {
         var l = $(this).val().length,
-            remaining = REVIEW_CHAR_LIMIT - l;
+            remaining = REVIEW_CHAR_LIMIT - l,
+            span = $('.space-review-rating div b span');
 
         if (remaining > 0) {
-            $('.space-review-rating div b span').html(remaining);
+            span.html(remaining);
+            span.removeClass('required');
         } else {
-            $('.space-review-rating div b span').html(0);
+            span.html(0);
+            span.addClass('required');
         }
 
         if (l > 0 && $('.space-review-compose .space-review-stars i.fa-star').length) {
@@ -147,10 +150,10 @@ function loadRatingsAndReviews(id) {
                 });
 
                 if (rating_sum) {
-                    var avg = Math.floor((rating_sum) / data.length);
+                    var avg = Math.ceil((rating_sum) / data.length);
 
                     $('.space-actions i').each(function(i) {
-                        if (i == 0 || i <= avg) {
+                        if (i < avg) {
                             $(this).switchClass('fa-star-o', 'fa-star');
                         }
                     });
