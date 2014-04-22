@@ -119,7 +119,8 @@ function loadRatingsAndReviews(id) {
         url: 'web_api/v1/space/' + id + '/reviews',
         success: function (data) {
             var template = Handlebars.compile($('#space_reviews').html()),
-                content = $('.space-reviews-content');
+                content = $('.space-reviews-content'),
+                rating_sum = 0;
 
             content.html('');
 
@@ -134,6 +135,8 @@ function loadRatingsAndReviews(id) {
                             date: date ? monthname_from_month(date.getMonth()) + ' ' + date.getDate() + ', ' + date.getFullYear() : ''
                         }));
 
+                    rating_sum += parseInt(this.rating);
+
                     $('.space-review-header i', node).each(function(i) {
                         if (i < rating) {
                             $(this).switchClass('fa-star-o', 'fa-star');
@@ -142,6 +145,18 @@ function loadRatingsAndReviews(id) {
 
                     content.append(node);
                 });
+
+                if (rating_sum) {
+                    var avg = Math.floor((rating_sum) / data.length);
+
+                    $('.space-actions i').each(function(i) {
+                        if (i == 0 || i <= avg) {
+                            $(this).switchClass('fa-star-o', 'fa-star');
+                        }
+                    });
+
+                    $('.space-actions span#review_count').html(data.length);
+                }
 
             } else {
                 template = Handlebars.compile($('#no_space_reviews').html());
