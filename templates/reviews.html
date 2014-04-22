@@ -2,19 +2,19 @@
 {% load templatetag_handlebars %}
 
 <div class="space-reviews">
-  <h2>Reviews for this space
+  <h4>Reviews for this space
     <button class="write-a-review"><i class="fa fa-pencil"></i> {% trans 'write_review' %}</button>
-  </h2>
+  </h4>
   <div class="space-review-compose" style="display: none;">
     <h3>Write a review</h3>
     <h4>Rate this space</h4>
     <div class="space-review-rating">
       <div class="space-review-stars">
+        <span><i class="fa fa-star-o fa-lg"></i>
         <i class="fa fa-star-o fa-lg"></i>
         <i class="fa fa-star-o fa-lg"></i>
         <i class="fa fa-star-o fa-lg"></i>
-        <i class="fa fa-star-o fa-lg"></i>
-        <i class="fa fa-star-o fa-lg"></i>
+        <i class="fa fa-star-o fa-lg"></i></span>
         <span></span>
       </div>
       <div>
@@ -31,19 +31,16 @@
     </ul>
     <b>Note:</b> Your UW NetID will be displayed with this review.
 
-    <button id="space-review-submit">{% trans 'submit' %}</button>
-    <button id="space-review-cancel">{% trans 'cancel' %}</button>
+    <div>
+      <button id="space-review-submit">{% trans 'submit' %}</button>
+      <button id="space-review-cancel">{% trans 'cancel' %}</button>
+    </div>
   </div>
   <div class="space-review-submitted border-rounded" style="display: none;">
     <b>Thank you for your review.</b><br />
     We will notify you in a few days once it's published.
     <a href="javascript:void(0);">{% trans 'close' %}</a>
   </div>
-  <div class="space-reviews-content">
-    <div class="space-reviews-none border-rounded">
-      No reviews found for this space. Be the first to leave a review for this space.
-      <br />
-      <a class="write-a-review">{% trans 'write_review' %}</a>
-    </div>
-  </div>
+  <div class="space-reviews-content"></div>
 </div>
+

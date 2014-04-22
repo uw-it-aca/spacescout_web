@@ -1,0 +1,26 @@
+{% load i18n %}
+{% load templatetag_handlebars %}
+
+{% tplhandlebars "no_space_reviews" %}
+    <div class="space-reviews-none border-rounded">
+      No reviews found for this space. Be the first to leave a review for this space.
+      <br />
+      <a class="write-a-review">{% trans 'write_review' %}</a>
+    </div>
+{% endtplhandlebars %}
+
+{% tplhandlebars "space_reviews" %}
+    <div class="space-reviews-review">
+      <div class="space-review-header">
+        <span><i class="fa fa-star-o fa-lg"></i>
+        <i class="fa fa-star-o fa-lg"></i>
+        <i class="fa fa-star-o fa-lg"></i>
+        <i class="fa fa-star-o fa-lg"></i>
+        <i class="fa fa-star-o fa-lg"></i></span>
+        <span>By {{ reviewer }}. {{ date }}</span>
+      </div>
+      <div class="space-review-body">
+        {{ review }}
+      </div>
+    </div>
+{% endtplhandlebars %}
