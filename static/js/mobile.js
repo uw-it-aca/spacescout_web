@@ -303,6 +303,7 @@
         }
 
         setupRatingsAndReviews();
+        loadRatingsAndReviews(data.id);
 
         // set up share space
         $('button#share_space').unbind('click');

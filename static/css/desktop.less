@@ -190,15 +190,6 @@ These styles are in palce for SPOT-494.  Feel free to move things around.
                     }
                 }
 
-                .space-reviews { padding: 15px 0; border-top: 1px dotted #6d6d6d; margin-top: 30px;
-	                h4{font-weight: normal; color: @purple_text;}
-	                .space-reviews-content{
-	                	.space-reviews-none{background-color: #fcfcfc; padding: 20px; border-radius: 5px; border: 1px solid #e7e7e7; font-size: 13px; 
-		                	button{background-color: #f2f2f2; color: @purple_text; border-radius: 4px !important; font-size: 13px; border: 1px solid #ececec !important; padding: 3px 10px; margin: 0px 3px;}
-	                	}
-                	}
-                }
-
                 .space-image-map-buttons { text-align:right; margin: 20px 0 0 -1px; display: block;
                     button { border: solid 1px @grey_border !important; padding: 4px 7px; display: block; margin: 0; }
                     button.active { background-color: #fff; border-left: none !important; }
@@ -210,12 +201,20 @@ These styles are in palce for SPOT-494.  Feel free to move things around.
                     #mapControl.active span { background: transparent url('../img/locate_purple.png') no-repeat 50% 50%; width: 31px; }
                 }
 
-                .space-detail-share { padding-top: 18px;
-                   i { padding-right: 10px; }
-                   a { color: @purple_text; }
+                .space-detail-share { padding-top: 18px; }
+
+                .space-reviews { border-top: 1px dotted #6d6d6d; margin-top: 30px; 
+                    .space-review-header { width: 30%; font-size: 12px; float: left; clear: left;
+                        span:last-child { display: block; }
+                    }
+                    .space-review-body { width: 68%; float: right; }
+	                .space-reviews-none { background-color: #fcfcfc; padding: 20px; border-radius: 5px; border: 1px solid #e7e7e7; font-size: 13px; 
+	                }
+
+                    button {background-color: #f2f2f2; color: @purple_text; border-radius: 4px !important; font-size: 13px; border: 1px solid #ececec !important; padding: 3px 10px; margin: 0px 3px;}
                 }
 
-                .space-detail-report { text-align:center;margin-top:20px; font-size: 13px; border-top: 1px dotted @grey_light; padding-top: 15px;
+                .space-detail-report { text-align:center;margin-top:20px; font-size: 13px; border-top: 1px dotted @grey_light; padding-top: 15px; clear: both;
                     a, a:visited { vertical-align:bottom; color: @purple_text; }
                 }
 

@@ -292,17 +292,7 @@
                                     </ul>
                                 </div>
 				
-                                <div class="space-reviews">
-								  <h4>Reviews for this space</h4>
-                                  <div class="space-reviews-content">
-                                  <div class="space-reviews-none">
-                                    No reviews found for this space. Be the first to leave a review for this space.
-                                    <br />
-                                                            
-                                    <button><i class="fa fa-pencil"></i> {% trans 'write_review' %}</button>
-                                  </div>
-                                  </div>
-                                </div>
+                                {% include "reviews.html"%}
 
                                 <div class="space-detail-report">
                                     <a href="/contact/{{ id }}/">Report a problem with this space</a>
@@ -431,5 +421,8 @@
             </div>
         </div>
     </div>
+
+    {% include "reviews-templates.html" %}
+
 
 {% endblock %}

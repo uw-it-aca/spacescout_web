@@ -307,13 +307,6 @@ div.actions { display: none; }
                     }
                 }
 
-                .space-reviews { margin: 10px 0; border-top: 1px dotted #6d6d6d;
-                	h4{font-weight: normal; color: @purple_text;}
-                	.space-reviews-content{
-	                	.space-reviews-none{background-color: #fcfcfc; padding: 20px; border-radius: 5px; border: 1px solid #e7e7e7; font-size: 13px; }
-                	}
-                }
-
                 .space-image-map-buttons { text-align:right; margin: -1px 0 0 0;
                     button { border: solid 1px @grey_border !important; padding: 4px 7px; }
                     button.active { background-color: #fff; border-top: solid 1px #fff !important; }
@@ -329,6 +322,19 @@ div.actions { display: none; }
                    a { color: @purple_text; }
                 }
 
+                .space-reviews { margin: 10px 0; border-top: 1px dotted #6d6d6d;
+                	h4 { font-weight: normal; color: @purple_text;
+                        button { float: right; padding-top: 6px; }
+                    }
+                    .space-review-header { 
+                        i { font-size: 12px; }
+                        span:last-child { padding-left: 18px; }
+                    }
+                    .space-reviews-none{background-color: #fcfcfc; padding: 20px; border-radius: 5px; border: 1px solid #e7e7e7; font-size: 13px; }
+
+                    a { color: @purple_text; }
+                }
+
                 .space-detail-report { text-align:center;margin-top:20px;
                     a, a:visited { vertical-align:bottom; color: @purple_text; }
                 }
@@ -341,6 +347,34 @@ div.actions { display: none; }
 /* END MOBILE ONLY */
 
 #main_content { margin: 0 10px 10px 10px; padding: 10px; border: solid 1px @grey_border; background-color: #f7f7f7; }
+
+.space-detail {
+    .space-reviews { padding: 20px 0;
+        h4 {font-weight: normal; color: @purple_text;
+            button { float: right; }
+        }
+        h3 {font-weight: normal; color: @purple_text; }
+        .space-review-rating { clear: both;
+            .space-review-stars {
+                float: left;
+                i:hover { cursor: pointer; }
+            }
+
+            div + div { float: right; }
+        }
+        .space-reviews-none, .space-review-submitted { height: 60px; padding: 8px; line-height: 14px; 
+            background-color: white;
+            border: 1px solid black;
+            a { text-decoration: normal; padding-top: 16px; }
+        }
+
+        .space-reviews-review { }
+
+        textarea { display: block; width: 100%; height: 80px; }
+        a { color: @purple_text; display: block; }
+        ul { padding: 8px 0; }
+    }
+}
 
 #map_canvas {
     background: #f7f7f7 url('../img/spinner.gif') no-repeat 50% 50%;
