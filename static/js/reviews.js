@@ -59,7 +59,7 @@ function setupRatingsAndReviews() {
     $('.space-review-compose textarea').keyup(function (e) {
         var l = $(this).val().length,
             remaining = window.spacescout_reviews.review_char_limit - l,
-            span = $('.space-review-rating div + div span');
+            span = $('#space-review-remaining');
 
         if (remaining > 0) {
             span.html(remaining);
