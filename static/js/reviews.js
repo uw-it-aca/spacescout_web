@@ -19,11 +19,11 @@
 
 */
 
+window.spacescout_reviews = { review_char_limit: 300 };
 
 function setupRatingsAndReviews() {
 
-    var REVIEW_CHAR_LIMIT = 300,
-        enable_submit = function () {
+    var enable_submit = function () {
             $('button#space-review-submit').removeAttr('disabled');
         },
         disable_submit = function () {
@@ -35,15 +35,15 @@ function setupRatingsAndReviews() {
         $('.space-reviews button.write-a-review').hide();
         $('.space-review-compose').show(400);
         $('.space-reviews-none').hide(400);
-        $('.space-review-rating div b span').html(REVIEW_CHAR_LIMIT);
+        $('#space-review-remaining').html(window.spacescout_reviews.review_char_limit);
     });
 
     disable_submit();
 
     $('.space-review-compose textarea').keyup(function (e) {
         var l = $(this).val().length,
-            remaining = REVIEW_CHAR_LIMIT - l,
-            span = $('.space-review-rating div b span');
+            remaining = window.spacescout_reviews.review_char_limit - l,
+            span = $('.space-review-rating div + div span');
 
         if (remaining > 0) {
             span.html(remaining);
@@ -69,9 +69,9 @@ function setupRatingsAndReviews() {
 
         disable_submit();
         $('textarea', node).val('');
-        $('.space-review-stars span', node).html('');
-        $('.space-review-rating div b span', node).html(REVIEW_CHAR_LIMIT);
-        $('.space-review-rating div b span', node).removeClass('required');
+        $('.space-review-stars span + span', node).html('');
+        $('#space-review-remaining').html(window.spacescout_reviews.review_char_limit);
+        $('.space-review-rating div + div span', node).removeClass('required');
         $('.space-review-rating i', node).switchClass('fa-star', 'fa-star-o');
     });
 
@@ -165,6 +165,12 @@ function loadRatingsAndReviews(id) {
             } else {
                 template = Handlebars.compile($('#no_space_reviews').html());
                 content.html(template());
+                $('.write-a-review', content).on('click', function (e) {
+                    $('.space-reviews button.write-a-review').hide();
+                    $('.space-review-compose').show(400);
+                    $('.space-reviews-none').hide(400);
+                    $('#space-review-remaining').html(window.spacescout_reviews.review_char_limit);
+                });
             }
 
         },
