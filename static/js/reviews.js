@@ -127,6 +127,17 @@ function setupRatingsAndReviews() {
             show_guidelines();
         }
     });
+
+    if (window.spacescout_authenticated_user.length > 0) {
+        var review = $.cookie('space_review'),
+            json_review;
+
+        if (review != null) {
+            json_review = JSON.parse(review);
+            postRatingAndReview(json_review.id, json_review.review);
+            $.removeCookie('space_review');
+        }
+    }
 }
 
 
@@ -224,11 +235,22 @@ function submitRatingAndReview(id) {
             review: $('textarea', node).val().trim()
         };
 
-    //validate
+    // validate
     if (review.rating < 1 || review.rating > 5 || review.review.length <= 0) {
         return;
     }
 
+    // defer until authenticated
+    if (window.spacescout_authenticated_user.length == 0) {
+        $.cookie('space_review', JSON.stringify({ id: id, review: review }));
+        window.location.href = '/login?next=' + window.location.pathname;
+    }
+
+    postRatingAndReview(id, review);
+}
+
+
+function postRatingAndReview(id, review) {
     $.ajax({
         url: 'web_api/v1/space/' + id + '/reviews',
         dataType: 'json',
@@ -241,7 +263,6 @@ function submitRatingAndReview(id) {
             $('.space-review-submitted').show();
         },
         error: function (xhr, textStatus, errorThrown) {
-            debugger
             console.log('Unable to post reviews: ' + xhr.responseText);
         }
     });
