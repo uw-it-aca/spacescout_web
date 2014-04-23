@@ -7,23 +7,26 @@
     <button class="write-a-review"><i class="fa fa-pencil"></i> {% trans 'write_review' %}</button>
   </h4>
   <div class="space-review-compose" style="display: none;">
-    <h3>Write a review</h3>
-    <h4>Rate this space</h4>
+    <h4>Write a review</h4>
+    <h6>Rate this space</h6>
     <div class="space-review-rating">
       <div class="space-review-stars">
-        <span><i class="fa fa-star-o fa-lg"></i>
-        <i class="fa fa-star-o fa-lg"></i>
-        <i class="fa fa-star-o fa-lg"></i>
-        <i class="fa fa-star-o fa-lg"></i>
-        <i class="fa fa-star-o fa-lg"></i></span>
+        <span>
+	        <i class="fa fa-star-o fa-lg"></i>
+	        <i class="fa fa-star-o fa-lg"></i>
+	        <i class="fa fa-star-o fa-lg"></i>
+	        <i class="fa fa-star-o fa-lg"></i>
+	        <i class="fa fa-star-o fa-lg"></i>
+        </span>
         <span></span>
       </div>
-      <div>
+      <br>
+      <div class="space-review-chars">
         <b><span id="space-review-remaining"></span></b> characters left
       </div>
     </div>
-    <textarea placeholder="{% trans 'review_placeholder' %}" maxlength="300"></textarea>
-    <a href="javascript:void(0);"><i class="fa fa-angle-double-down"></i> Review guideines</a>
+	<textarea placeholder="{% trans 'review_placeholder' %}" maxlength="300"></textarea>
+    <a href="javascript:void(0);"><i class="fa fa-angle-double-down"></i> Review guidelines</a>
     <ul style="display: none;">
       <li>Explain your star rating.</li>
       <li>Be polite, no profanity.</li>
@@ -31,7 +34,7 @@
       <li>Your submission will be published after our review in a few days.</li>
     </ul>
     <b>Note:</b> Your UW NetID will be displayed with this review.
-
+	<br><br>
     <div>
       <button id="space-review-submit">{% trans 'submit' %}</button>
       <button id="space-review-cancel">{% trans 'cancel' %}</button>
@@ -49,7 +52,7 @@
     <div class="space-reviews-none border-rounded">
       No reviews found for this space. Be the first to leave a review for this space.
       <br />
-      <button class="write-a-review">{% trans 'write_review' %}</button>
+      <button class="write-a-review"><i class="fa fa-pencil"></i>{% trans 'write_review' %}</button>
     </div>
 {% endtplhandlebars %}
 
