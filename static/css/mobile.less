@@ -37,6 +37,37 @@ button {
     border-color: #3e3e3e !important;
 }
 
+.primary-button {color:white;text-shadow: none ;
+background: rgba(101,100,171,1);
+background: -moz-linear-gradient(top, rgba(101,100,171,1) 0%, rgba(72,72,138,1) 100%);
+background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(101,100,171,1)), color-stop(100%, rgba(72,72,138,1)));
+
+background: -webkit-linear-gradient(top, rgba(101,100,171,1) 0%, rgba(72,72,138,1) 100%);
+background: -o-linear-gradient(top, rgba(101,100,171,1) 0%, rgba(72,72,138,1) 100%);
+background: -ms-linear-gradient(top, rgba(101,100,171,1) 0%, rgba(72,72,138,1) 100%);
+
+background: linear-gradient(to bottom, rgba(101,100,171,1) 0%, rgba(72,72,138,1) 100%);
+filter:progid:DXImageTransform.Microsoft.gradient( startColorstr='#6564ab', endColorstr='#48488a', GradientType=0 );
+
+border-color: #48488a;
+height: 40px;
+width: 100px;
+
+	text-shadow: none !important;
+	
+	&:hover {color: white; text-shadow: none;
+	background: rgba(124,124,207,1);
+	background: -moz-linear-gradient(top, rgba(124,124,207,1) 0%, rgba(84,84,153,1) 100%);
+	background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(124,124,207,1)), color-stop(100%, rgba(84,84,153,1)));
+	background: -webkit-linear-gradient(top, rgba(124,124,207,1) 0%, rgba(84,84,153,1) 100%);
+	background: -o-linear-gradient(top, rgba(124,124,207,1) 0%, rgba(84,84,153,1) 100%);
+	background: -ms-linear-gradient(top, rgba(124,124,207,1) 0%, rgba(84,84,153,1) 100%);
+	background: linear-gradient(to bottom, rgba(124,124,207,1) 0%, rgba(84,84,153,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7c7ccf', endColorstr='#545499', GradientType=0 );
+	}
+}
+
+
 #container { margin: 0 auto; position: relative; }
 
 #nav { z-index: 1;
@@ -165,14 +196,18 @@ button {
         }
 
         button { height: 35px; 
-                 -webkit-border-radius: 3px !important;
-                 -moz-border-radius: 3px !important;
-                 border-radius: 3px !important;
-        }
-        #view_results_button { width: 130px; color: white; background: #6564A8; }
-        #cancel_results_button { width: 80px; }
+                 -webkit-border-radius: 4px !important;
+                 -moz-border-radius: 4px !important;
+                 border-radius: 4px !important;
+        } 
+        #view_results_button { width: 130px; color: white; background: #6564A8; text-shadow: none; }
+        #cancel_results_button { width: 80px; text-shadow: none; }
     }
 
+		
+		 
+        
+		
     form { margin: 0px; }
 
 }
@@ -314,6 +349,13 @@ div.actions { display: none; }
                     }
                 }
 
+                .space-reviews { margin: 10px 0; border-top: 1px dotted #6d6d6d;
+                	h4{font-weight: normal; color: @purple_text;}
+                	.space-reviews-content{
+	                	.space-reviews-none{background-color: #fcfcfc; padding: 20px; border-radius: 5px; border: 1px solid #e7e7e7; font-size: 13px; }
+                	}
+                }
+
                 .space-image-map-buttons { text-align:right; margin: -1px 0 0 0;
                     button { border: solid 1px @grey_border !important; padding: 4px 7px; }
                     button.active { background-color: #fff; border-top: solid 1px #fff !important; }
@@ -329,19 +371,6 @@ div.actions { display: none; }
                    a { color: @purple_text; }
                 }
 
-                .space-reviews { margin: 10px 0; border-top: 1px dotted #6d6d6d;
-                	h4 { font-weight: normal; color: @purple_text;
-                        button { float: right; padding-top: 6px; }
-                    }
-                    .space-review-header { 
-                        i { font-size: 12px; }
-                        span:last-child { padding-left: 18px; }
-                    }
-                    .space-reviews-none{background-color: #fcfcfc; padding: 20px; border-radius: 5px; border: 1px solid #e7e7e7; font-size: 13px; }
-
-                    a { color: @purple_text; }
-                }
-
                 .space-detail-report { text-align:center;margin-top:20px;
                     a, a:visited { vertical-align:bottom; color: @purple_text; }
                 }
@@ -353,7 +382,9 @@ div.actions { display: none; }
 }
 /* END MOBILE ONLY */
 
-#main_content { margin: 0 10px 10px 10px; padding: 10px; border: solid 1px @grey_border; background-color: #f7f7f7; }
+#main_content { margin: 0 10px 10px 10px; padding: 10px; border: solid 1px @grey_border; background-color: #f7f7f7; 
+	.singleSubmit-button{width: 200px;
+		}
 
 .space-detail {
     .space-reviews { padding: 20px 0;
