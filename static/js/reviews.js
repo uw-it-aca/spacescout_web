@@ -19,7 +19,10 @@
 
 */
 
-window.spacescout_reviews = { review_char_limit: 300 };
+window.spacescout_reviews = {
+    review_char_limit: 300,
+    pagination: 5
+};
 
 function setupRatingsAndReviews() {
 
@@ -124,20 +127,22 @@ function loadRatingsAndReviews(id) {
         success: function (data) {
             var template = Handlebars.compile($('#space_reviews').html()),
                 content = $('.space-reviews-content'),
-                rating_sum = 0;
+                rating_sum = 0,
+                node;
 
             content.html('');
 
             if (data && data.length > 0) {
-                $.each(data, function() {
+                $.each(data, function(i) {
                     var review = this,
                         rating = this.rating,
-                        date = new Date(this.date_submitted),
-                        node = $(template({
-                            reviewer: this.reviewer,
-                            review: (this.review && this.review.length) ? this.review : 'No review provided',
-                            date: date ? monthname_from_month(date.getMonth()) + ' ' + date.getDate() + ', ' + date.getFullYear() : ''
-                        }));
+                        date = new Date(this.date_submitted);
+
+                    node = $(template({
+                        reviewer: this.reviewer,
+                        review: (this.review && this.review.length) ? this.review : 'No review provided',
+                        date: date ? monthname_from_month(date.getMonth()) + ' ' + date.getDate() + ', ' + date.getFullYear() : ''
+                    }));
 
                     rating_sum += parseInt(this.rating);
 
@@ -147,8 +152,29 @@ function loadRatingsAndReviews(id) {
                         }
                     });
 
+                    if (i >= window.spacescout_reviews.pagination) {
+                        node.hide();
+                    }
+
                     content.append(node);
                 });
+
+                if (data.length > window.spacescout_reviews.pagination) {
+                    node = Handlebars.compile($('#more_space_reviews').html())();
+                    content.append(node);
+
+                    $('.more-space-reviews a').on('click', function (e) {
+                        $('.space-reviews-review:hidden').each(function (i) {
+                            if (i < window.spacescout_reviews.pagination) {
+                                $(this).show();
+                            }
+                        });
+
+                        if ($('.space-reviews-review:hidden').length <= 0) {
+                            $(this).parent().hide();
+                        }
+                    });
+                }
 
                 if (rating_sum) {
                     var avg = Math.ceil((rating_sum) / data.length);
