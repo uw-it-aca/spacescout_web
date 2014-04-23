@@ -1,7 +1,8 @@
 {% load i18n %}
 {% load templatetag_handlebars %}
 
-<div class="space-reviews">
+
+{% tplhandlebars "space_reviews" %}
   <h4>Reviews for this space
     <button class="write-a-review"><i class="fa fa-pencil"></i> {% trans 'write_review' %}</button>
   </h4>
@@ -42,5 +43,34 @@
     <a href="javascript:void(0);">{% trans 'close' %}</a>
   </div>
   <div class="space-reviews-content"></div>
-</div>
+{% endtplhandlebars %}
 
+{% tplhandlebars "no_space_reviews" %}
+    <div class="space-reviews-none border-rounded">
+      No reviews found for this space. Be the first to leave a review for this space.
+      <br />
+      <button class="write-a-review">{% trans 'write_review' %}</button>
+    </div>
+{% endtplhandlebars %}
+
+{% tplhandlebars "space_reviews_review" %}
+    <div class="space-reviews-review">
+      <div class="space-review-header">
+        <span><i class="fa fa-star-o fa-lg"></i>
+        <i class="fa fa-star-o fa-lg"></i>
+        <i class="fa fa-star-o fa-lg"></i>
+        <i class="fa fa-star-o fa-lg"></i>
+        <i class="fa fa-star-o fa-lg"></i></span>
+        <span>By {{ reviewer }}. {{ date }}</span>
+      </div>
+      <div class="space-review-body">
+        {{ review }}
+      </div>
+    </div>
+{% endtplhandlebars %}
+
+{% tplhandlebars "more_space_reviews" %}
+    <div class="more-space-reviews">
+      <a href="javascript:void(0);"><i class="fa fa-angle-double-down"></i> See more reviews...</a>
+    </div>
+{% endtplhandlebars %}

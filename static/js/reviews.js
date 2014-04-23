@@ -25,16 +25,29 @@ window.spacescout_reviews = {
 };
 
 function setupRatingsAndReviews() {
-
     var enable_submit = function () {
             $('button#space-review-submit').removeAttr('disabled');
         },
         disable_submit = function () {
             $('button#space-review-submit').attr('disabled', 'disabled');
+        },
+        show_guidelines = function () {
+            var ul = $('.space-review-compose ul');
+
+            ul.show();
+            ul.prev().find('i').switchClass('fs-angle-double-down', 'fs-angle-double-up');
+        },
+        hide_guidelines = function () {
+            var ul = $('.space-review-compose ul');
+
+            ul.hide();
+            ul.prev().find('i').switchClass('fs-angle-double-up', 'fs-angle-double-down');
         };
+
+    $('.space-ratings-and-reviews').html(Handlebars.compile($('#space_reviews').html())());
         
     // wire up events for markup in reviews.html
-    $('.space-reviews .write-a-review').on('click', function (e) {
+    $('.space-ratings-and-reviews h4 .write-a-review').on('click', function (e) {
         $('.space-reviews button.write-a-review').hide();
         $('.space-review-compose').show(400);
         $('.space-reviews-none').hide(400);
@@ -71,6 +84,7 @@ function setupRatingsAndReviews() {
         $('.space-reviews button.write-a-review').show();
 
         disable_submit();
+        hide_guidelines();
         $('textarea', node).val('');
         $('.space-review-stars span + span', node).html('');
         $('#space-review-remaining').html(window.spacescout_reviews.review_char_limit);
@@ -106,17 +120,12 @@ function setupRatingsAndReviews() {
         }
     });
 
-    $('.space-review-compose a').on('click', function (e) {
-        var target = $(e.target),
-            ul = target.next('ul');
-
-        if (ul.is(':visible')) {
-            target.find('i').switchClass('fa-angle-double-up', 'fa-angle-double-down');
+    $('.space-review-compose a').on('click', function () {
+        if ($(this).next().is(':visible')) {
+            hide_guidelines();
         } else {
-            target.find('i').switchClass('fa-angle-double-down', 'fa-angle-double-up');
+            show_guidelines();
         }
-
-        ul.toggle(400);
     });
 }
 
@@ -125,7 +134,7 @@ function loadRatingsAndReviews(id) {
     $.ajax({
         url: 'web_api/v1/space/' + id + '/reviews',
         success: function (data) {
-            var template = Handlebars.compile($('#space_reviews').html()),
+            var template = Handlebars.compile($('#space_reviews_review').html()),
                 content = $('.space-reviews-content'),
                 rating_sum = 0,
                 node;
@@ -188,7 +197,9 @@ function loadRatingsAndReviews(id) {
                     $('.space-actions span#review_count').html(data.length);
                 }
 
+                $('.space-ratings-and-reviews h4 .write-a-review').show();
             } else {
+                $('.space-ratings-and-reviews h4 .write-a-review').hide();
                 template = Handlebars.compile($('#no_space_reviews').html());
                 content.html(template());
                 $('.write-a-review', content).on('click', function (e) {
