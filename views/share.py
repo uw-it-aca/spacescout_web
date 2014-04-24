@@ -84,7 +84,7 @@ def share(request, spot_id=None):
             if resp.status == 200:
                 me = content = json.loads(content)
                 if 'email' in me and len(me['email']):
-                    sender = me.email
+                    sender = me['email']
         else:
             sender = ''
 
