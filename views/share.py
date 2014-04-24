@@ -83,7 +83,6 @@ def share(request, spot_id=None):
             sender = "%s@%s" % (request.user.username, getattr(settings, 'SS_MAIL_DOMAIN', 'uw.edu'))
             if resp.status == 200:
                 me = content = json.loads(content)
-                import pdb; pdb.set_trace()
                 if 'email' in me and len(me['email']):
                     sender = me.email
         else:
