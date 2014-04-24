@@ -306,8 +306,14 @@ Handlebars.registerHelper('ifany', function(a, b) {
 
         $('a#share_space').unbind('click');
         $('a#share_space').click(function (e) {
-            window.location.href = '/share/' + data.id
-                + '?back=' + encodeURIComponent(window.location.pathname);
+            var url = '/share/' + data.id
+                    + '?back=' + encodeURIComponent(window.location.pathname);
+
+            if (window.spacescout_authenticated_user.length < 1) {
+                window.location.href = '/login?next=' + encodeURIComponent(url);
+            } else {
+                window.location.href = url;
+            }
         });
 
         //highlight the selected space
