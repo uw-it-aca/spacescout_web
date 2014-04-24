@@ -23,7 +23,7 @@ import oauth2
 
 
 # User's favorite spaces
-@login_required
+@login_required(login_url='/login')
 @mobile_template('{mobile/}favorites.html')
 def FavoritesView(request, template=None):
     return render_to_response(template,
@@ -32,7 +32,7 @@ def FavoritesView(request, template=None):
 
 
 # Shim to fetch server-side user favorites
-@login_required
+@login_required(login_url='/login')
 @never_cache
 def API(request, spot_id=None):
     
