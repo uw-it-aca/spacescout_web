@@ -66,7 +66,26 @@ def share(request, spot_id=None):
     else:
         back = request.GET['back'] if request.GET and 'back' in request.GET else '/'
         if request.user and request.user.is_authenticated():
+            consumer = oauth2.Consumer(key=settings.SS_WEB_OAUTH_KEY, secret=settings.SS_WEB_OAUTH_SECRET)
+            client = oauth2.Client(consumer)
+            url = "{0}/api/v1/user/me".format(settings.SS_WEB_SERVER_HOST)
+
+            headers = {
+                "XOAUTH_USER": "%s" % request.user.username,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+                }
+
+            resp, content = client.request(url,
+                                           method='GET',
+                                           headers=headers)
+
             sender = "%s@%s" % (request.user.username, getattr(settings, 'SS_MAIL_DOMAIN', 'uw.edu'))
+            if resp.status == 200:
+                me = content = json.loads(content)
+                import pdb; pdb.set_trace()
+                if 'email' in me and len(me['email']):
+                    sender = me.email
         else:
             sender = ''
 
