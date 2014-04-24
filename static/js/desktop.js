@@ -240,13 +240,14 @@ Handlebars.registerHelper('ifany', function(a, b) {
         replaceUrls();
 
         // set up favorites
-        var fav_icon = $('.space-detail-container .space-detail-fav');
-        var fav_icon_i = $('.space-detail-container .space-detail-fav i');
+        var fav_icon = $('.space-detail-header .space-detail-fav');
+        var fav_icon_i = $('i', fav_icon);
 
         if (fav_icon.is(':visible')) {
-            var title = 'Favorite this space';
+            var title = 'Favorite this space',
+                auth_user = window.spacescout_authenticated_user;
 
-            if (window.spacescout_favorites.is_favorite(data.id)) {
+            if (auth_user.length && window.spacescout_favorites.is_favorite(data.id)) {
                 fav_icon.removeClass('space-detail-fav-unset').addClass('space-detail-fav-set');
                 fav_icon_i.removeClass('fa-heart-o').addClass('fa-heart');
                 title = 'Remove this space from favorites';
@@ -266,7 +267,7 @@ Handlebars.registerHelper('ifany', function(a, b) {
             fav_icon.click(function (e) {
                 var list_item = $('button#' + data.id + ' .space-detail-fav');
 
-                if ($('#logout_button').length == 0) {
+                if (auth_user.length < 1) {
                     window.location.href = '/login?next=' + window.location.pathname;
                 }
 
