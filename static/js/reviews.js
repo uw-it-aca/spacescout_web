@@ -186,7 +186,7 @@ function loadRatingsAndReviews(id) {
                     $('.more-space-reviews a').on('click', function (e) {
                         $('.space-reviews-review:hidden').each(function (i) {
                             if (i < window.spacescout_reviews.pagination) {
-                                $(this).show();
+                                $(this).slideDown(400);
                             }
                         });
 
