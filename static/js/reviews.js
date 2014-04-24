@@ -48,10 +48,7 @@ function setupRatingsAndReviews() {
         
     // wire up events for markup in reviews.html
     $('.space-ratings-and-reviews h4 .write-a-review').on('click', function (e) {
-        $('.space-reviews button.write-a-review').hide();
-        $('.space-review-compose').show(400);
-        $('.space-reviews-none').hide(400);
-        $('#space-review-remaining').html(window.spacescout_reviews.review_char_limit);
+        showRatingEditor();
     });
 
     disable_submit();
@@ -214,10 +211,7 @@ function loadRatingsAndReviews(id) {
                 template = Handlebars.compile($('#no_space_reviews').html());
                 content.html(template());
                 $('.write-a-review', content).on('click', function (e) {
-                    $('.space-reviews button.write-a-review').hide();
-                    $('.space-review-compose').show(400);
-                    $('.space-reviews-none').hide(400);
-                    $('#space-review-remaining').html(window.spacescout_reviews.review_char_limit);
+                    showRatingEditor();
                 });
             }
 
@@ -268,3 +262,23 @@ function postRatingAndReview(id, review) {
     });
 }
 
+
+function showRatingEditor () {
+    $('.space-reviews button.write-a-review').hide();
+    $('#space-review-remaining').html(window.spacescout_reviews.review_char_limit);
+    $('.space-reviews-none').hide(400);
+    $('.space-review-compose').show(400, function(){
+        var w_node = $('.space-detail-body'),
+            w_top = w_node.scrollTop(),
+            w_height = w_node.height(),
+            t_node = $(this),
+            t_top = t_node.offset().top - w_node.offset().top,
+            t_height = t_node.height(),
+            diff = Math.ceil((t_top + t_height) - (w_top + w_height)),
+            padding = 20;
+
+        if (diff > 0) {
+            w_node.animate( {scrollTop: (diff + w_top + padding)}, '500');
+        }
+    });
+}
