@@ -109,6 +109,7 @@
           <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?libraries=geometry&amp;sensor=false"></script>
           {% endif %}
 
+            {% compress js %}
             <script type="text/javascript" src="{{ STATIC_URL }}libs/cookie.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap/js/bootstrap-transition.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap/js/bootstrap-button.js"></script>
@@ -126,6 +127,7 @@
             <script type="text/javascript" src="{{ STATIC_URL }}js/clustering.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}js/retina.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}js/analytics.js"></script>
+            {% endcompress %}
 
             {% block extra_js %}{% endblock %}
 
