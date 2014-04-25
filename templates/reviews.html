@@ -33,17 +33,18 @@
       <li>Remember, your UW NetID will be displayed as reviewer's name.</li>
       <li>Your submission will be published after our review in a few days.</li>
     </ul>
+    <br>
     <b>Note:</b> Your UW NetID will be displayed with this review.
 	<br><br>
     <div>
-      <button id="space-review-submit">{% trans 'submit' %}</button>
-      <button id="space-review-cancel">{% trans 'cancel' %}</button>
+      <button id="space-review-submit">{% trans 'Submit' %}</button>
+      <button id="space-review-cancel">{% trans 'Cancel' %}</button>
     </div>
   </div>
   <div class="space-review-submitted border-rounded" style="display: none;">
     <b>Thank you for your review.</b><br />
     We will notify you in a few days once it's published.
-    <a href="javascript:void(0);">{% trans 'close' %}</a>
+    <a href="javascript:void(0);">{% trans 'Close' %}</a>
   </div>
   <div class="space-reviews-content"></div>
 {% endtplhandlebars %}
@@ -64,7 +65,7 @@
         <i class="fa fa-star-o fa-lg"></i>
         <i class="fa fa-star-o fa-lg"></i>
         <i class="fa fa-star-o fa-lg"></i></span>
-        <span>By {{ reviewer }}. {{ date }}</span>
+        <span><b>By {{ reviewer }}.</b> {{ date }}</span>
       </div>
       <div class="space-review-body">
         {{ review }}

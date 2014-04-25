@@ -20,6 +20,7 @@ These styles are in palce for SPOT-494.  Feel free to move things around.
 @grey_border: #d6d6d6;
 @grey_background: #e5e5e5;
 @grey_medium: #6d6d6d;
+@star-color: #625F9B;
 
 @nav_background: #7479a6;
 
@@ -203,18 +204,94 @@ These styles are in palce for SPOT-494.  Feel free to move things around.
 
                 .space-detail-share { padding-top: 18px; }
 
-                .space-ratings-and-reviews { border-top: 1px dotted #6d6d6d; margin-top: 30px; 
-	                h4 { font-weight: normal; color: @purple_text; }
-                    .space-review-header { width: 30%; font-size: 12px; float: left; clear: left;
-                        span:last-child { display: block; }
-                    }
-                    .space-review-body { width: 68%; float: right; }
-                	.space-reviews-none { background-color: #fbfbfb; padding: 20px; border-radius: 5px; border: 1px solid #e7e7e7; font-size: 13px; 
-	                	button{background-color: #f2f2f2; color: @purple_text; border-radius: 4px !important; margin-top: 10px; margin-left: 0px; 
-	                			font-size: 13px; border: 1px solid #e6e6e6 !important; padding: 5px 10px; background-image: linear-gradient(to bottom, #fdfdfd, #e6e6e6);
-							i{ margin: 0px 9px 0px 3px;}
+                .space-ratings-and-reviews { margin: 10px 0; border-top: 1px dotted #6d6d6d;
+                	.write-a-review{
+							background: #6564ab;
+							background: -moz-linear-gradient(top, #6564ab 0%, #48488a 100%);
+							background: -webkit-gradient(left top, left bottom, color-stop(0%, #6564ab), color-stop(100%, #48488a));
+							background: -webkit-linear-gradient(top, #6564ab 0%, #48488a 100%);
+							background: -o-linear-gradient(top, #6564ab 0%, #48488a 100%);
+							background: -ms-linear-gradient(top, #6564ab 0%, #48488a 100%);
+							background: linear-gradient(to bottom, #6564ab 0%, #48488a 100%);
+							filter: progid:dximagetransform.microsoft.gradient(startColorstr='#6564ab', endColorstr='#48488a', GradientType=0);
+							border-color: #48488a;
+							height: 32px;
+							width: 150px;
+							color: white;
+							margin-top: -7px;
+							
+							i{margin-right: 5px;}
+                	}
+                	.space-reviews-content{
+	                	.space-reviews-none{background-color: #fcfcfc; padding: 20px; border-radius: 5px; border: 1px solid #e7e7e7; font-size: 13px; 
+		                	button{ margin: 10px 0px;
+		                		i{margin: 5px 9px 5px 3px;}
+							}
 	                	}
-	                }
+	                	.space-reviews-review{ font-size: 11px;
+		                	.space-review-header{
+			                	span { margin-right: 10px;
+			                		i {color: @star-color; font-size: 16px;}
+			                	}
+		                	}
+	                	}
+	                	.space-review-body{
+		                	font-size: 14px;
+	                	}
+                	}
+                	
+                	/*CSS for reviews compose section*/
+                	.space-review-compose{ padding: 15px; font-size: 12px; background-color: #fdfdfd; border: 1px solid #e7e7e7; padding: 15px; border-radius: 5px;
+	                	h4{font-size: 17px; margin-bottom: 0px; margin-top: 5px;}
+	                	.space-review-rating{
+		                	.space-review-stars{ margin-bottom: 10px;
+		                		span{ font-size: 12px;
+			                		i{
+				                		font-size: 30px; margin-left: 5px; color: @star-color;
+			                		}	
+		                		} 
+		                	}
+	                	}
+	                	.space-review-chars{ float: right; font-size: 12px; }
+	                	textarea{width: 97%;}
+	                	a{font-size: 12px; margin-bottom: 0px;}
+	                	#space-review-submit {
+		                	background: rgba(101,100,171,1);
+							background: -moz-linear-gradient(top, rgba(101,100,171,1) 0%, rgba(72,72,138,1) 100%);
+							background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(101,100,171,1)), color-stop(100%, rgba(72,72,138,1)));
+							background: -webkit-linear-gradient(top, rgba(101,100,171,1) 0%, rgba(72,72,138,1) 100%);
+							background: -o-linear-gradient(top, rgba(101,100,171,1) 0%, rgba(72,72,138,1) 100%);
+							background: -ms-linear-gradient(top, rgba(101,100,171,1) 0%, rgba(72,72,138,1) 100%);
+							background: linear-gradient(to bottom, rgba(101,100,171,1) 0%, rgba(72,72,138,1) 100%);
+							filter:progid:DXImageTransform.Microsoft.gradient( startColorstr='#6564ab', endColorstr='#48488a', GradientType=0 );
+							
+							border-color: #48488a;
+							height: 32px;
+							width: 100px;
+							color: white;
+	                	}
+	                	#space-review-cancel {
+		                	background-color: #f2f2f2;
+							color: #4c497e;
+							border-radius: 4px !important;
+							font-size: 13px;
+							border: 1px solid #e6e6e6 !important;
+							background-image: linear-gradient(to bottom, #fdfdfd, #e6e6e6);
+							height: 32px;
+							width: 80px;
+	                	}
+                	}
+                	
+                	.space-review-submitted {
+	                	border-radius: 5px;
+						border-color: #e7e7e7;
+						padding: 15px;
+						font-size: 13px;
+						line-height: 1.4em;
+						
+						a{padding-top: 5px; text-decoration: underline;}
+                	}
+
                 }
 
                 .space-detail-report { text-align:center;margin-top:20px; font-size: 13px; border-top: 1px dotted @grey_light; padding-top: 15px; clear: both;
@@ -305,6 +382,11 @@ These styles are in palce for SPOT-494.  Feel free to move things around.
 
                     .space-detail-header {
                         .space-detail-fav { font-size: 20px; margin-right: 5px;}
+                        .space-actions{
+	                        .space-stars{
+		                        i{color: @star-color;}
+	                        }
+                        }
                     }
 
                     .space-detail-body {
