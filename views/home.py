@@ -29,7 +29,7 @@ import re
 
 FIVE_MINUTE_CACHE = 300
 
-@mobile_template('{mobile/}app.html')
+@mobile_template('spacescout_web/{mobile/}app.html')
 def HomeView(request, template=None):
     # The preference order is cookie, config, then some static values
     # That fallback order will also apply if the cookie campus isn't in

@@ -18,7 +18,7 @@ from django.conf import settings
 from mobility.decorators import mobile_template
 
 
-@mobile_template('{mobile/}404.html')
+@mobile_template('spacescout_web/{mobile/}404.html')
 def page_not_found(request, template=None):
 
     params = {

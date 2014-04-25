@@ -105,7 +105,7 @@ def share(request, spot_id=None):
     share_url = 'http://%s/space/%s/%s' % (getattr(settings, 'SS_APP_SERVER', socket.gethostname()),
                                            spot_id, urlquote(spot["name"]))
 
-    return render_to_response('share-form.html', {
+    return render_to_response('spacescout_web/share-form.html', {
         'form': form,
         'back': back,
         'spot_id': spot_id,

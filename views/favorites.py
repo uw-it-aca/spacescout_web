@@ -24,7 +24,7 @@ import oauth2
 
 # User's favorite spaces
 @login_required(login_url='/login')
-@mobile_template('{mobile/}favorites.html')
+@mobile_template('spacescout_web/{mobile/}favorites.html')
 def FavoritesView(request, template=None):
     return render_to_response(template,
                               { 'locations': settings.SS_LOCATIONS },

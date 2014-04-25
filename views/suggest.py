@@ -58,7 +58,7 @@ def suggest(request, spot_id=None):
     else:
         form = SuggestForm()
 
-    return render_to_response('suggest-form.html', {
+    return render_to_response('spacescout_web/suggest-form.html', {
         'form': form,
         'back': '/',
         'is_mobile': (request.MOBILE == 1),
