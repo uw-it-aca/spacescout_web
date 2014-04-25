@@ -3,15 +3,15 @@
 
 @container_background: #fefefe;
 @grey_darker: #aaa;
-@big_heart: #f0e68c;
+@big_heart: #FFCC00;
 @detail_border: #eaeaea;
-@detail_shadow: #ddd;
+@detail_shadow: rgba(222, 222, 222, 0.75);
 @fav_heart: #e5b52e;
 @bld_color: #222;
-@bld_background: #ddd;
+@bld_background: #bbb;
 @more_border: #ccc;
-@is_open: rgba(62, 135, 0, .5);
-@is_closed: rgba(192, 55, 55, .5);
+@is_open: rgba(62, 135, 0, .8);
+@is_closed: rgba(192, 55, 55, .8);
 @more_link: #4B4884;
 
 
@@ -21,15 +21,38 @@
 
     .space-detail-container { background-color: @container_background; float: left;
 
-        .space-detail { border: 2px solid @detail_border; width: 300px; min-height: 440px; xfloat: left; padding: 5px; margin: 5px 10px 5px 0; box-shadow: 2px 2px 2px @detail_shadow;
+        .space-detail { 
+        	border: 1px solid @detail_border; 
+			width: 300px; 
+	        min-height: 440px; 
+			xfloat: left; 
+			padding: 5px; 
+			margin: 5px 10px 5px 0; 
+			box-shadow: 0px 2px 3px @detail_shadow;
+			-webkit-box-shadow: 0px 2px 4px 0px rgba(222, 222, 222, 0.75);
+			-moz-box-shadow: 0px 2px 4px 0px rgba(222, 222, 222, 0.75);
             .space-detail-fav-set { color: @fav_heart; }
             .space-detail-header { 
                 #name-type-block { width: 100%; padding-bottom: 4px;
                     .space-detail-fav { margin-top: 6px; margin-right: 8px; cursor: pointer; }
                     .space-detail-name { width: 100%; font-size: 20px; color: @purple_text; margin: 5px 0;  line-height:20px; font-weight:normal; }
-                    .space-detail-type { font-size: 12px; }
+                    .space-detail-type { font-size: 12px;color:#4d4d4d;}
                 }
-                .space-detail-building { float: right; background: @bld_background; color: @bld_color; font-size: 10px; padding: 2px 5px; margin-top: -5px; margin-right: -5px; }
+                .space-detail-building { 
+                float: right; 
+                background: @bld_background; 
+                color: @bld_color; 
+                font-size: 11px; 
+                padding: 4px 10px; 
+                margin-top: -5px; 
+                margin-right: -5px; 
+                text-shadow: rgb(200, 200, 200) 1px 1px 0px;
+                border-radius: 0px 0px 0px 10px; 
+				-moz-border-radius: 0px 0px 0px 10px; 
+				-webkit-border-radius: 0px 0px 0px 10px; 
+				border: 1px solid #BBBBBB;
+	        
+                }
                 .space-detail-tick { font-size: 12px; padding: 2px 6px; position: absolute; margin-top: 15px; margin-left: -8px; z-index: 100; }
                 .space-detail-is-open { background-color: @is_open; color: white; }
                 .space-detail-is-closed { background-color: @is_closed; color: white; }
@@ -39,7 +62,7 @@
                 > div { padding-bottom: 10px; }
             }
 
-            .space-info-more-detail, .space-info-less-detail { border-top: 1px dotted @more_border; padding-top: 10px;
+            .space-info-more-detail, .space-info-less-detail { border-top: 1px dotted @more_border; padding-top: 10px; font-size: 12px; 
                 a { color: @more_link; }
             }
 
