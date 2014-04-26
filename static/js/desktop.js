@@ -39,6 +39,31 @@ Handlebars.registerHelper('ifany', function(a, b) {
 
 	$(document).ready(function() {
 
+        // share destination typeahead
+        if ($('#id_recipient').length) {
+            var node = $('#id_recipient');
+
+            var engine = new Bloodhound({
+                datumTokenizer: function (d) {
+                    return Blookdhound.tokenizers.whitespace(d.email);
+                },
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                limit: 15,
+                remote: 'web_api/v1/directory/?q=%QUERY'
+            });
+
+            engine.initialize();
+
+            node.addClass('typeahead');
+            node.typeahead(null, {
+                displayKey: 'email',
+                minLength: 3,
+                source: engine.ttAdapter()
+            });
+
+            return;
+        }
+
 		desktopContent();
 
 	   // check if a map_canvas exists... populate it
@@ -121,11 +146,6 @@ Handlebars.registerHelper('ifany', function(a, b) {
             }
         });
 
-        $('.space-detail-container .close').live('click', function(e){
-            e.preventDefault();
-            window.spacescout_url.push();
-            closeSpaceDetails();
-        });
 	});
 
 	// Update dimensions on resize
@@ -238,6 +258,12 @@ Handlebars.registerHelper('ifany', function(a, b) {
     	initializeCarousel();
 
         replaceUrls();
+
+        $('.space-detail-header .close').on('click', function(e){
+            e.preventDefault();
+            window.spacescout_url.push();
+            closeSpaceDetails();
+        });
 
         // set up favorites
         var fav_icon = $('.space-detail-header .space-detail-fav');
