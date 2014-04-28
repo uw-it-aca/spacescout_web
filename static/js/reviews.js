@@ -24,34 +24,17 @@ window.spacescout_reviews = {
     pagination: 5
 };
 
-function setupRatingsAndReviews() {
-    var enable_submit = function () {
-            $('button#space-review-submit').removeAttr('disabled');
-        },
-        disable_submit = function () {
-            $('button#space-review-submit').attr('disabled', 'disabled');
-        },
-        show_guidelines = function () {
-            var ul = $('.space-review-compose ul');
-
-            ul.show();
-            ul.prev().find('i').switchClass('fs-angle-double-down', 'fs-angle-double-up');
-        },
-        hide_guidelines = function () {
-            var ul = $('.space-review-compose ul');
-
-            ul.hide();
-            ul.prev().find('i').switchClass('fs-angle-double-up', 'fs-angle-double-down');
-        };
+function setupRatingsAndReviews(data) {
 
     $('.space-ratings-and-reviews').html(Handlebars.compile($('#space_reviews').html())());
-        
-    // wire up events for markup in reviews.html
+
+    if (data && data.length) {
+        showRatingEditorButton();
+    }
+
     $('.space-ratings-and-reviews h4 .write-a-review').on('click', function (e) {
         showRatingEditor();
     });
-
-    disable_submit();
 
     $('.space-review-compose textarea').keyup(function (e) {
         var l = $(this).val().length,
@@ -67,38 +50,53 @@ function setupRatingsAndReviews() {
         }
 
         if (l > 0 && $('.space-review-compose .space-review-stars i.fa-star').length) {
-            enable_submit();
+            enableSubmitButton();
         } else {
-            disable_submit();
+            disableSubmitButton();
         }
     });
 
     $('button#space-review-cancel').click(function (e) {
-        var node = $('.space-review-compose');
+        $('.space-review-compose').hide(400);
+        if ($('.space-reviews-none').length) {
+            $('.space-reviews-none').show();
+        } else {
+            showRatingEditorButton();
+        }
 
-        node.hide(400);
-        $('.space-reviews-none').show();
-        $('.space-reviews button.write-a-review').show();
-
-        disable_submit();
-        hide_guidelines();
-        $('textarea', node).val('');
-        $('.space-review-stars span + span', node).html('');
-        $('#space-review-remaining').html(window.spacescout_reviews.review_char_limit);
-        $('.space-review-rating div + div span', node).removeClass('required');
-        $('.space-review-rating i', node).switchClass('fa-star', 'fa-star-o');
+        tidyUpRatesComposer();
     });
 
     $('button#space-review-submit').click(function (e) {
-        var id = $(e.target).closest('div[id^=detail_container_]').attr('id').match(/_(\d+)$/)[1];
+        var id = $(e.target).closest('div[id^=detail_container_]').attr('id').match(/_(\d+)$/)[1],
+            node = $('.space-review-compose'),
+            review = {
+                rating: $('.space-review-rating i.fa-star', node).length,
+                review: $('textarea', node).val().trim()
+            };
 
-        submitRatingAndReview(id);
+        // validate
+        if (review.rating < 1 || review.rating > 5 || review.review.length <= 0) {
+            return;
+        }
+
+        // defer until authenticated
+        if (window.spacescout_authenticated_user.length == 0) {
+            $.cookie('space_review', JSON.stringify({ id: id, review: review }));
+            window.location.href = '/login?next=' + window.location.pathname;
+        }
+
+        postRatingAndReview(id, review);
     });
 
     $('.space-review-submitted a').click(function (e) {
         $('.space-review-submitted').hide(400);
-        $('.space-reviews-none').show();
-        $('.space-reviews button.write-a-review').show();
+
+        if ($('.space-reviews-none').length) {
+            $('.space-reviews-none').show();
+        } else {
+            showRatingEditorButton();
+        }
     });
 
     $(document).on('click', '.space-review-stars i', function (e) {
@@ -113,15 +111,15 @@ function setupRatingsAndReviews() {
         target.nextAll('i').switchClass('fa-star', 'fa-star-o');
         $('.space-review-stars span:last-child').html(ratings[rating]);
         if ($('.space-review-compose textarea').val().length) {
-            enable_submit();
+            enableSubmitButton();
         }
     });
 
     $('.space-review-compose a').on('click', function () {
         if ($(this).next().is(':visible')) {
-            hide_guidelines();
+            hideReviewGuidelines();
         } else {
-            show_guidelines();
+            showReviewGuidelines();
         }
     });
 
@@ -143,10 +141,13 @@ function loadRatingsAndReviews(id) {
         url: 'web_api/v1/space/' + id + '/reviews',
         success: function (data) {
             var template = Handlebars.compile($('#space_reviews_review').html()),
-                content = $('.space-reviews-content'),
+                content,
                 rating_sum = 0,
                 node;
 
+            setupRatingsAndReviews(data);
+
+            content = $('.space-reviews-content'),
             content.html('');
 
             if (data && data.length > 0) {
@@ -205,9 +206,9 @@ function loadRatingsAndReviews(id) {
                     $('.space-actions span#review_count').html(data.length);
                 }
 
-                $('.space-ratings-and-reviews h4 .write-a-review').show();
+                showRatingEditorButton();
             } else {
-                $('.space-ratings-and-reviews h4 .write-a-review').hide();
+                hideRatingEditorButton();
                 template = Handlebars.compile($('#no_space_reviews').html());
                 content.html(template());
                 $('.write-a-review', content).on('click', function (e) {
@@ -222,27 +223,6 @@ function loadRatingsAndReviews(id) {
     });
 }
 
-function submitRatingAndReview(id) {
-    var node = $('.space-review-compose'),
-        review = {
-            rating: $('.space-review-rating i.fa-star', node).length,
-            review: $('textarea', node).val().trim()
-        };
-
-    // validate
-    if (review.rating < 1 || review.rating > 5 || review.review.length <= 0) {
-        return;
-    }
-
-    // defer until authenticated
-    if (window.spacescout_authenticated_user.length == 0) {
-        $.cookie('space_review', JSON.stringify({ id: id, review: review }));
-        window.location.href = '/login?next=' + window.location.pathname;
-    }
-
-    postRatingAndReview(id, review);
-}
-
 
 function postRatingAndReview(id, review) {
     $.ajax({
@@ -252,9 +232,9 @@ function postRatingAndReview(id, review) {
         data: JSON.stringify(review),
         type: "POST",
         success: function (data) {
-            $('.space-reviews button.write-a-review').hide();
+            tidyUpRatesComposer();
             $('.space-review-compose').hide(400);
-            $('.space-review-submitted').show();
+            $('.space-review-submitted').show(400);
         },
         error: function (xhr, textStatus, errorThrown) {
             console.log('Unable to post reviews: ' + xhr.responseText);
@@ -264,7 +244,8 @@ function postRatingAndReview(id, review) {
 
 
 function showRatingEditor () {
-    $('.space-reviews button.write-a-review').hide();
+    disableSubmitButton();
+    hideRatingEditorButton();
     $('#space-review-remaining').html(window.spacescout_reviews.review_char_limit);
     $('.space-reviews-none').hide(400);
     $('.space-review-compose').show(400, function(){
@@ -282,3 +263,50 @@ function showRatingEditor () {
         }
     });
 }
+
+
+function tidyUpRatesComposer () {
+    var node = $('.space-review-compose');
+
+    disableSubmitButton();
+    hideReviewGuidelines();
+    $('textarea', node).val('');
+    $('.space-review-stars span + span', node).html('');
+    $('#space-review-remaining').html(window.spacescout_reviews.review_char_limit);
+    $('.space-review-rating div + div span', node).removeClass('required');
+    $('.space-review-rating i', node).switchClass('fa-star', 'fa-star-o');
+}
+
+function showRatingEditorButton () {
+    $('.space-ratings-and-reviews h4 button.write-a-review').show();
+}
+
+function hideRatingEditorButton () {
+    $('.space-ratings-and-reviews h4 button.write-a-review').hide();
+}
+
+
+function enableSubmitButton () {
+    $('button#space-review-submit').removeAttr('disabled');
+}
+
+
+function disableSubmitButton () {
+    $('button#space-review-submit').attr('disabled', 'disabled');
+}
+
+
+function showReviewGuidelines () {
+    var ul = $('.space-review-compose ul');
+
+    ul.show();
+    ul.prev().find('i').switchClass('fs-angle-double-down', 'fs-angle-double-up');
+}
+
+
+function hideReviewGuidelines () {
+    var ul = $('.space-review-compose ul');
+
+    ul.hide();
+    ul.prev().find('i').switchClass('fs-angle-double-up', 'fs-angle-double-down');
+};

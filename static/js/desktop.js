@@ -303,7 +303,6 @@ Handlebars.registerHelper('ifany', function(a, b) {
             fav_icon.tooltip({ placement: 'right', title: title});
         }
 
-        setupRatingsAndReviews();
         loadRatingsAndReviews(data.id);
 
         // set up share space
