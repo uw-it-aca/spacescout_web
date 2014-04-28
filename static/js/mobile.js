@@ -302,7 +302,6 @@
             });
         }
 
-        setupRatingsAndReviews();
         loadRatingsAndReviews(data.id);
 
         // set up share space
