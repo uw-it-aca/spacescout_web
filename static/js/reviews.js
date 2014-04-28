@@ -145,6 +145,7 @@ function loadRatingsAndReviews(id) {
                 rating_sum = 0,
                 node;
 
+            debugger
             setupRatingsAndReviews(data);
 
             content = $('.space-reviews-content'),
