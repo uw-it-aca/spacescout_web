@@ -234,7 +234,17 @@
                     data: JSON.stringify({}),
                     type: "PUT",
                     success: function (data) {
+                        var i = 0;
                         if (self.favorites) {
+                            for (i = 0; i < self.favorites.length; i++) {
+                                // Bail out early - SPOT-1651
+                                if (self.favorites[i].id == id) {
+                                    if (on_set) {
+                                        on_set.call();
+                                        return;
+                                    }
+                                }
+                            }
                             self.favorites.push({
                                 id: id,
                                 incomplete: true
