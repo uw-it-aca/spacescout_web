@@ -66,7 +66,25 @@ def share(request, spot_id=None):
     else:
         back = request.GET['back'] if request.GET and 'back' in request.GET else '/'
         if request.user and request.user.is_authenticated():
+            consumer = oauth2.Consumer(key=settings.SS_WEB_OAUTH_KEY, secret=settings.SS_WEB_OAUTH_SECRET)
+            client = oauth2.Client(consumer)
+            url = "{0}/api/v1/user/me".format(settings.SS_WEB_SERVER_HOST)
+
+            headers = {
+                "XOAUTH_USER": "%s" % request.user.username,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+                }
+
+            resp, content = client.request(url,
+                                           method='GET',
+                                           headers=headers)
+
             sender = "%s@%s" % (request.user.username, getattr(settings, 'SS_MAIL_DOMAIN', 'uw.edu'))
+            if resp.status == 200:
+                me = content = json.loads(content)
+                if 'email' in me and len(me['email']):
+                    sender = me['email']
         else:
             sender = ''
 
@@ -87,7 +105,7 @@ def share(request, spot_id=None):
     share_url = 'http://%s/space/%s/%s' % (getattr(settings, 'SS_APP_SERVER', socket.gethostname()),
                                            spot_id, urlquote(spot["name"]))
 
-    return render_to_response('share-form.html', {
+    return render_to_response('spacescout_web/share-form.html', {
         'form': form,
         'back': back,
         'spot_id': spot_id,

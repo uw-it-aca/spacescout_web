@@ -33,6 +33,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
 		<meta name="description" content="Searching for that perfect study spot? SpaceScout helps UW students quickly locate campus spaces and resources to use for study or collaboration">
+        {% load url from future %}
         {% load compress %}
         {% compress css %}
         <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}libs/bootstrap/css/bootstrap.min.css" charset="utf-8" />
@@ -89,27 +90,29 @@
 
               <div id="footer" class="clearfix" role="contentinfo">
                   <div class="pull-left copyright"><a href="http://www.washington.edu/online/privacy/" target="_blank">Privacy</a> | <a href="http://www.washington.edu/online/terms/" target="_blank">Terms</a> | <a href="http://www.washington.edu/itconnect/learn/tools/spacescout/" title="About SpaceScout" target="_blank">About</a><br />Copyright &copy; 2012 &nbsp;Academic and Collaborative Applications, UW-IT</div>
-                  <div class="pull-right suggest">Can't find one? <a href="{% url suggest-form %}">Suggest a space</a></div>
+                  <div class="pull-right suggest">Can't find one? <a href="{% url 'suggest-form' %}">Suggest a space</a></div>
                   <div class="pull-left partners">Brought to you by UW-IT in partnership with Housing and Food Services, UW Libraries, UW Computing Directors, and partially funded by the Student Technology Fee</div>
               </div>
           </div>
 
           <!-- jQuery -->
-          <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-          <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+          <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.js"></script>
+          <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
 
           <!-- Google Maps -->
           {% if gmaps_api_key %}
           <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?v=3&key={{ gmaps_api_key }}&libraries=geometry&amp;sensor=false"></script>
           {% else %}
-          <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?v=3.16&libraries=geometry&amp;sensor=false"></script>
+          <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?v=3&libraries=geometry&amp;sensor=false"></script>
           {% endif %}
 
+            {% compress js %}
             <script type="text/javascript" src="{{ STATIC_URL }}libs/cookie.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap/js/bootstrap-transition.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap/js/bootstrap-button.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap/js/bootstrap-carousel.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap/js/bootstrap-tooltip.js"></script>
+            <script type="text/javascript" src="{{ STATIC_URL }}libs/typeahead.bundle.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/handlebars.js"></script>
 
             <script type="text/javascript" src="{{ STATIC_URL }}js/chosen.jquery.js"></script>
@@ -123,6 +126,7 @@
             <script type="text/javascript" src="{{ STATIC_URL }}js/desktop.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}js/clustering.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}js/analytics.js"></script>
+            {% endcompress %}
 
 
             {% block extra_js %}{% endblock %}
@@ -133,7 +137,7 @@
             </script>
             {% endif %}
 
-            <script type="text/javascript" src="{% url django.views.i18n.javascript_catalog %}"></script>
+            <script type="text/javascript" src="{% url 'django.views.i18n.javascript_catalog' %}"></script>
 
     </body>
 </html>

@@ -1,6 +1,7 @@
 Django>=1.4,<1.5
 simplejson
 oauth2
+python-ldap
 oauth_provider
 django-compressor
 django-mobility

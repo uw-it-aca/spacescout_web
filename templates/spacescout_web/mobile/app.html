@@ -1,4 +1,5 @@
-{% extends "base-mobile.html" %}
+{% extends "spacescout_web/base-mobile.html" %}
+{% load url from future %}
 
 {% block extra_css %}
 {% endblock %}
@@ -141,7 +142,7 @@
                         	</div>
 						  </div>
 -->
-							{% include "filters.html" %}
+							{% include "spacescout_web/filters.html" %}
                         </div>
                     </div>
                     <div class="inner-row">
@@ -277,7 +278,7 @@
     </div>
 
     <div class="back-top">
-      <div class="suggest">Didn't find one? <a href="{% url suggest-form %}">Suggest a space</a></div>
+      <div class="suggest">Didn't find one? <a href="{% url 'suggest-form' %}">Suggest a space</a></div>
       <button id="top_link" class="btn btn-inverse" type="button">Back to top</button>
     </div>
   </div>

@@ -20,6 +20,6 @@ class ShareForm(forms.Form):
         spot_id = forms.IntegerField(widget=forms.HiddenInput())
         sender = forms.EmailField(max_length=128, label="From", required=True)
         recipient = forms.EmailField(max_length=128, label="To", required=True)
-        subject = forms.CharField(max_length=128, label="Subject", required=False)
+        subject = forms.CharField(max_length=128, label="Subject", required=True)
         message = forms.CharField(widget=forms.Textarea(attrs={'rows': 5}), label="Your Message (optional)", required=False)
         email_confirmation = forms.CharField(required=False)

@@ -39,6 +39,31 @@ Handlebars.registerHelper('ifany', function(a, b) {
 
 	$(document).ready(function() {
 
+        // share destination typeahead
+        if ($('#id_recipient').length) {
+            var node = $('#id_recipient');
+
+            var engine = new Bloodhound({
+                datumTokenizer: function (d) {
+                    return Blookdhound.tokenizers.whitespace(d.email);
+                },
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                limit: 15,
+                remote: 'web_api/v1/directory/?q=%QUERY'
+            });
+
+            engine.initialize();
+
+            node.addClass('typeahead');
+            node.typeahead(null, {
+                displayKey: 'email',
+                minLength: 3,
+                source: engine.ttAdapter()
+            });
+
+            return;
+        }
+
 		desktopContent();
 
 	   // check if a map_canvas exists... populate it
@@ -121,11 +146,6 @@ Handlebars.registerHelper('ifany', function(a, b) {
             }
         });
 
-        $('.space-detail-container .close').live('click', function(e){
-            e.preventDefault();
-            window.spacescout_url.push();
-            closeSpaceDetails();
-        });
 	});
 
 	// Update dimensions on resize
@@ -239,14 +259,21 @@ Handlebars.registerHelper('ifany', function(a, b) {
 
         replaceUrls();
 
+        $('.space-detail-header .close').on('click', function(e){
+            e.preventDefault();
+            window.spacescout_url.push();
+            closeSpaceDetails();
+        });
+
         // set up favorites
-        var fav_icon = $('.space-detail-container .space-detail-fav');
-        var fav_icon_i = $('.space-detail-container .space-detail-fav i');
+        var fav_icon = $('.space-detail-header .space-detail-fav');
+        var fav_icon_i = $('i', fav_icon);
 
         if (fav_icon.is(':visible')) {
-            var title = 'Favorite this space';
+            var title = 'Favorite this space',
+                auth_user = window.spacescout_authenticated_user;
 
-            if (window.spacescout_favorites.is_favorite(data.id)) {
+            if (auth_user.length && window.spacescout_favorites.is_favorite(data.id)) {
                 fav_icon.removeClass('space-detail-fav-unset').addClass('space-detail-fav-set');
                 fav_icon_i.removeClass('fa-heart-o').addClass('fa-heart');
                 title = 'Remove this space from favorites';
@@ -266,7 +293,7 @@ Handlebars.registerHelper('ifany', function(a, b) {
             fav_icon.click(function (e) {
                 var list_item = $('button#' + data.id + ' .space-detail-fav');
 
-                if ($('#logout_button').length == 0) {
+                if (auth_user.length < 1) {
                     window.location.href = '/login?next=' + window.location.pathname;
                 }
 
@@ -305,8 +332,14 @@ Handlebars.registerHelper('ifany', function(a, b) {
 
         $('a#share_space').unbind('click');
         $('a#share_space').click(function (e) {
-            window.location.href = '/share/' + data.id
-                + '?back=' + encodeURIComponent(window.location.pathname);
+            var url = '/share/' + data.id
+                    + '?back=' + encodeURIComponent(window.location.pathname);
+
+            if (window.spacescout_authenticated_user.length < 1) {
+                window.location.href = '/login?next=' + encodeURIComponent(url);
+            } else {
+                window.location.href = url;
+            }
         });
 
         //highlight the selected space

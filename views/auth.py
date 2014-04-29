@@ -6,7 +6,7 @@ from mobility.decorators import mobile_template
 
 
 # Login prompt
-@mobile_template('{mobile/}login.html')
+@mobile_template('spacescout_web/{mobile/}login.html')
 def Prompt(request, template=None):
     next = request.REQUEST.get('next', '/')
 

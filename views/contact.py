@@ -59,7 +59,7 @@ def contact(request, spot_id=None):
     else:
         form = ContactForm()
 
-    return render_to_response('contact-form.html', {
+    return render_to_response('spacescout_web/contact-form.html', {
         'form': form,
         'back': back,
         'spot_name': spot_name,
@@ -73,7 +73,7 @@ def thank_you(request, spot_id=None):
 
     back = request.GET['back'] if request.GET and 'back' in request.GET else contact_variables['back']
 
-    return render_to_response('contact-thankyou.html', {
+    return render_to_response('spacescout_web/contact-thankyou.html', {
         'spot_id': spot_id,
         'back': back,
     }, context_instance=RequestContext(request))
@@ -86,7 +86,7 @@ def sorry(request, spot_id=None):
     email = settings.FEEDBACK_EMAIL_RECIPIENT[0]
     #should maybe do something here ^. raise improperly configured exception if there are no emails in the list in settings.py
 
-    return render_to_response('contact-sorry.html', {
+    return render_to_response('spacescout_web/contact-sorry.html', {
         'spot_id': spot_id,
         'back': back,
         'email': email,

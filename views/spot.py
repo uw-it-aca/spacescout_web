@@ -38,4 +38,4 @@ def SpotView(request, spot_id, return_json=False):
     if return_json:
         return HttpResponse(content, mimetype='application/json')
     else:
-        return render_to_response('space.html', spot, context_instance=RequestContext(request))
+        return render_to_response('spacescout_web/space.html', spot, context_instance=RequestContext(request))
