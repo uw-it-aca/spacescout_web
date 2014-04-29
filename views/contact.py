@@ -37,9 +37,9 @@ def contact(request, spot_id=None):
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
-            name = form.cleaned_data['name']
-            sender = form.cleaned_data['sender']
-            message = form.cleaned_data['message']
+            name = form.cleaned_data['name'].strip()
+            sender = form.cleaned_data['sender'].strip()
+            message = form.cleaned_data['message'].strip()
             #feedback_choice = form.cleaned_data['feedback_choice']
             feedback_choice = 'problem'
             bot_test = form.cleaned_data['email_confirmation']

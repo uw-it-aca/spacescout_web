@@ -13,15 +13,19 @@
     limitations under the License.
 """
 from django import forms
+from django.core.exceptions import ValidationError
 
+def validate_spaces(value):
+    if value.strip() == '' or value.isspace():
+        raise ValidationError(u'Required field')
 
 class ContactForm(forms.Form):
-        name = forms.CharField(max_length=25, label="Your Name")
+        name = forms.CharField(max_length=25, label="Your Name", validators=[validate_spaces])
         sender = forms.EmailField(max_length=40, label="Your Email (Optional)", required=False)
         #feedback_choice = forms.ChoiceField((
             #('', 'Please Select One'),
             #('feedback', 'Leave Feedback'),
             #('problem', 'Report a Problem'),
             #('feature request', 'Request a Feature')), label="Feedback Choice")
-        message = forms.CharField(widget=forms.Textarea(), label="Your Message")
+        message = forms.CharField(widget=forms.Textarea(), label="Your Message", validators=[validate_spaces])
         email_confirmation = forms.CharField(required=False)

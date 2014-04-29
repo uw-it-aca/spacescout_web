@@ -16,7 +16,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 
 def validate_spaces(value):
-    if value.strip() == '':
+    if value.strip() == '' or value.isspace():
         raise ValidationError(u'Required field')
 
 class SuggestForm(forms.Form):

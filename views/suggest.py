@@ -32,7 +32,7 @@ def suggest(request, spot_id=None):
             room_number = form.cleaned_data['room_number'].strip()
             description = form.cleaned_data['description'].strip()
             justification = form.cleaned_data['justification'].strip()
-            bot_test = form.cleaned_data['email_confirmation'].strip()
+            bot_test = form.cleaned_data['email_confirmation']
 
             browser = request.META.get('HTTP_USER_AGENT', 'Unknown')
 

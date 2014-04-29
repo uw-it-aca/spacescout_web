@@ -30,10 +30,10 @@ def share(request, spot_id=None):
         if form.is_valid():
             spot_id = form.cleaned_data['spot_id']
             back = form.cleaned_data['back']
-            sender = form.cleaned_data['sender']
-            recipient = form.cleaned_data['recipient']
+            sender = form.cleaned_data['sender'].strip()
+            recipient = form.cleaned_data['recipient'].strip()
             subject = form.cleaned_data['subject']
-            message = form.cleaned_data['message']
+            message = form.cleaned_data['message'].strip()
             bot_test = form.cleaned_data['email_confirmation']
 
             url = "{0}/api/v1/spot/{1}/share".format(settings.SS_WEB_SERVER_HOST, spot_id)

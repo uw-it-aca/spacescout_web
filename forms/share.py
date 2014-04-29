@@ -13,13 +13,17 @@
     limitations under the License.
 """
 from django import forms
+from django.core.exceptions import ValidationError
 
+def validate_spaces(value):
+    if value.strip() == '' or value.isspace():
+        raise ValidationError(u'Required field')
 
 class ShareForm(forms.Form):
         back = forms.CharField(widget=forms.HiddenInput())
         spot_id = forms.IntegerField(widget=forms.HiddenInput())
-        sender = forms.EmailField(max_length=128, label="From", required=True)
-        recipient = forms.EmailField(max_length=128, label="To", required=True)
+        sender = forms.EmailField(max_length=128, label="From", required=True, validators=[validate_spaces])
+        recipient = forms.EmailField(max_length=128, label="To", required=True, validators=[validate_spaces])
         subject = forms.CharField(max_length=128, label="Subject", required=False)
         message = forms.CharField(widget=forms.Textarea(), label="Your Message (optional)", required=False)
         email_confirmation = forms.CharField(required=False)
