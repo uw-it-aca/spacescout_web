@@ -61,7 +61,11 @@
     }
 
 	$(document).ready(function() {
-        debugger
+
+        $('.logo').click(function () {
+            window.location.href = '/';
+        });
+
         // share destination typeahead
         if ($('#id_recipient').length) {
             var node = $('#id_recipient');

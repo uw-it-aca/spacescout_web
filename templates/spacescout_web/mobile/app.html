@@ -87,9 +87,9 @@
         <div class="user_context">
             {% if user.is_authenticated %}
               <span class="salutation">{% trans 'greeting' %}&nbsp;{{ request.user }}</span>
-              <a href="/favorites">{% trans 'favorites' %} (<span class="favorites_count_container">0</span>)</a>
+              <a href="/favorites">{% trans 'favorites' %} <span class="favorites_count_container"></span></a>
               <span>|</span>
-              {% tplhandlebars "favorites_count" %}{{count}}{% endtplhandlebars %}
+              {% tplhandlebars "favorites_count" %}({{count}}){% endtplhandlebars %}
               <a href="logout?next={% firstof request.path '/' %}">{% trans 'logout' %}</a>
             {% else %}
               {% trans 'salutation' %}&nbsp;<a href="login?next={% firstof request.path '/' %}">{% trans 'login' %}</a>
