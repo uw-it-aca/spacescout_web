@@ -535,17 +535,17 @@ div.actions { display: none; }
 
 .requiredtext { color: red; font-size: 10px; }
 
-.alert { font-weight: normal; margin-left: 1em; vertical-align: super; }
+.alert { padding: 0 8px; margin: 0; font-weight: normal; }
 
 .contact-header, .suggest-header, .share-header { font-size: 20px; margin: 5px 0;  color: @purple_text; width:85%; line-height: 20px; font-weight: normal;
     span { font-size: 13px; }
 }
 
 .fieldWrapper {margin-bottom:10px; font-size: 12px;
-    label { color: gray; }
+    label { color: gray; width: 298px; }
     input { width: 286px; }
     textarea { width: 286px; }
-    .alert {color: red;}
+    .alert { color: red; }
  }
 
 .infoWrapper {margin-bottom:10px; font-size: 12px;
@@ -677,6 +677,25 @@ select {
 
         .footer { clear: both; padding: 20px 20px; font-size: 12px; }
     }
+
+.tokenfield.form-control {
+    width: 298px;
+    min-height: 29px;
+    line-height: 20px;
+    font-size: 14px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.075);
+    -moz-box-shadow: 1px 1px 6px rgba(0,0,0, 0.075);
+    -webkit-box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.075);
+    -webkit-border-radius: 3px !important;
+    -moz-border-radius: 3px !important;
+    border-radius: 3px !important;
+    .twitter-typeahead { width: 286px; }
+    .token-input.tt-input, { width: 286px; padding: 4px 6px; height: 20px; line-height: 20px; }
+    .token-input.tt-hint { margin-top: 3px; margin-left: 5px; }
+}
+
 
 /*
 This is patrick's attempt @ @2x:

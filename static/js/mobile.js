@@ -61,6 +61,35 @@
     }
 
 	$(document).ready(function() {
+        debugger
+        // share destination typeahead
+        if ($('#id_recipient').length) {
+            var node = $('#id_recipient');
+
+            var engine = new Bloodhound({
+                datumTokenizer: function (d) {
+                    return Blookdhound.tokenizers.whitespace(d.email);
+                },
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                limit: 15,
+                remote: 'web_api/v1/directory/?q=%QUERY'
+            });
+
+            engine.initialize();
+
+            node.addClass('tokenfield');
+            node.tokenfield({
+                delimiter: [',', '\t'],
+                createTokensOnBlur: true,
+                typeahead: [null, {
+                    displayKey: 'email',
+                    minLength: 3,
+                    source: engine.ttAdapter()
+                }]
+            });
+
+            return;
+        }
 
         if (window.spacescout_url) {
             var state = window.spacescout_url.parse_path(window.location.pathname);

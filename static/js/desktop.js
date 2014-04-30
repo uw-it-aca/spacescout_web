@@ -54,11 +54,15 @@ Handlebars.registerHelper('ifany', function(a, b) {
 
             engine.initialize();
 
-            node.addClass('typeahead');
-            node.typeahead(null, {
-                displayKey: 'email',
-                minLength: 3,
-                source: engine.ttAdapter()
+            node.addClass('tokenfield');
+            node.tokenfield({
+                delimiter: [',', '\t'],
+                createTokensOnBlur: true,
+                typeahead: [null, {
+                    displayKey: 'email',
+                    minLength: 3,
+                    source: engine.ttAdapter()
+                }]
             });
 
             return;
