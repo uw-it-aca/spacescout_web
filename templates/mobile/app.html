@@ -167,6 +167,9 @@
                                 </div>
 
                                 <button id="{{id}}" class="space-detail-list-item pull-left" type="button" aria-label="Get space details for {{name}}" aria-owns="detail_container_{{id}}">
+                                    {% if user.is_authenticated %}<div class="space-detail-fav pull-right" style="display: none;"><i class="fa fa-heart"></i></div>{% endif %}
+                                    <div class="space-detail-name">{{name}}</div>
+                                    <div class="space-detail-desc">{{extended_info.location_description}}</div>
                                     <div class="space-detail-type clearfix">
                                         <span class="space-detail-type-label pull-left">{{type}}</span>
                                         {{#if extended_info.labstats_id}}
@@ -187,10 +190,6 @@
                                             <span class="space-detail-capacity pull-right">{{#if capacity}}Seats&nbsp;{{capacity}}{{/if}}</span>
                                         {{/if}}
                                     </div>
-                                    {% if user.is_authenticated %}<div class="space-detail-fav pull-right" style="display: none;"><i class="fa fa-heart"></i></div>{% endif %}
-                                    <div class="space-detail-name">{{name}}</div>
-                                    <div class="space-detail-type clearfix"><span class="space-detail-type-label pull-left">{{type}}</span>{{#if capacity }}<span class="space-detail-capacity pull-right">Seats&nbsp;{{capacity}}</span>{{/if}}</div>
-                                    <div class="space-detail-desc">{{extended_info.location_description}}</div>
                                 </button>
                             </li>
                             {{/each}}</ol>
@@ -217,6 +216,9 @@
                                   {{/if}}
                                 </div>
                                 <button  id="{{id}}" class="space-detail-list-item pull-left" type="button" aria-label="Get space details for {{name}}" aria-owns="detail_container_{{id}}">
+                                    {% if user.is_authenticated %}<div class="space-detail-fav pull-right" style="display: none;"><i class="fa fa-heart"></i></div>{% endif %}
+                                    <div class="space-detail-name">{{name}}</div>
+                                    <div class="space-detail-desc">{{extended_info.location_description}}</div>
                                     <div class="space-detail-type clearfix">
                                         <span class="space-detail-type-label pull-left">{{type}}</span>
                                         {{#if extended_info.labstats_id}}
@@ -237,10 +239,6 @@
                                             <span class="space-detail-capacity pull-right">{{#if capacity}}Seats&nbsp;{{capacity}}{{/if}}</span>
                                         {{/if}}
                                     </div>
-                                    {% if user.is_authenticated %}<div class="space-detail-fav pull-right" style="display: none;"><i class="fa fa-heart"></i></div>{% endif %}
-                                    <div class="space-detail-name">{{name}}</div>
-                                    <div class="space-detail-type"><span class="space-detail-type-label pull-left">{{type}}</span>{{#if capacity }}<span class="space-detail-capacity pull-right">Seats&nbsp;{{capacity}}</span>{{/if}}</div>
-                                    <div class="space-detail-desc">{{extended_info.location_description}}</div>
                                 </button>
                             </li>
                             {{/each}}</ol>
