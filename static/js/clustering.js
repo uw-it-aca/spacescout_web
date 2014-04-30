@@ -15,6 +15,9 @@
 
 */
 
+
+
+
 var visible_markers = [];
 var active_marker;
 var spherical = google.maps.geometry.spherical;
@@ -52,6 +55,7 @@ function update_spacescout_markers(spots) {
         });
         window.spacescout_markers.push(holderspot);
     }
+    $("#info_list").scrollTop(0);
 }
 
 
@@ -127,28 +131,19 @@ function getSpotList(group){
 
 function createMarker(spots, group_center) {
     var num_spots = spots.length;
-    var main_icon;
-    var alt_icon;
-    if (num_spots >= 30) {
-        main_icon = 'static/img/pins/pin30.png';
-        alt_icon = 'static/img/pins/pin30-alt.png';
-    }
-    else if (num_spots < 10) {
-        main_icon = 'static/img/pins/pin0' + num_spots + '.png';
-        alt_icon = 'static/img/pins/pin0' + num_spots + '-alt.png';
-    }
-    else {
-        main_icon = 'static/img/pins/pin' + num_spots + '.png';
-        alt_icon = 'static/img/pins/pin' + num_spots + '-alt.png';
-    }
+    var main_icon = new google.maps.MarkerImage('static/img/pins/pin00@2x.png', null, null, null, new google.maps.Size(40,40));
+    var alt_icon = new google.maps.MarkerImage('static/img/pins/pin00-alt@2x.png', null, null, null, new google.maps.Size(40,40));;
 
-    var marker= new google.maps.Marker({
+    var marker= new MarkerWithLabel({
         position: group_center,
         icon: main_icon,
         main_icon: main_icon,
         alt_icon: alt_icon,
         map: window.spacescout_map,
-        spots: spots
+        spots: spots,
+        labelText: num_spots, // # of spots to display on label in text
+    	labelClass: "map-label", // the CSS class for the label
+    	labelStyle: {top: "-34px", left: "-15px"} // position label over main_icon (position assumes 40x40 marker)
     });
     
     google.maps.event.addListener(marker, 'click', function() {
@@ -205,11 +200,11 @@ function setActiveMarker(marker) {
         }
     }
 }
-       
+
 function loadMarkerSpots(marker, data) {
     // reset scroll position
     $("#info_list").scrollTop(0);
-    
+
     if (active_marker != null) {
         updateActiveMarker(marker);
     }
@@ -221,9 +216,27 @@ function loadMarkerSpots(marker, data) {
     var template = Handlebars.compile(source);
     data = buildingNameHeaders(data);
     $('#info_items').html(template({data: data}));
- 
+
+    // LazyLoading the spot images
+    if(isMobile){
+            var lazyload_target = window;
+        }else{
+            var lazyload_target = '#info_list';
+        }
+    $(lazyload_target).lazyScrollLoading({
+        lazyItemSelector : ".lazyloader",
+        onLazyItemFirstVisible : function(e, $lazyItems, $firstVisibleLazyItems) {
+            $firstVisibleLazyItems.each(function() {
+                var $img = $(this);
+                var src = $img.attr('data-src');
+                $img.css('background', 'transparent url("'+src+'") no-repeat 50% 50%');
+            });
+        }
+    });
+
     scrollToTop('info_list');
     $('.loading').slideUp('fast');
+
 }
 
 function clear_map() {

@@ -29,6 +29,22 @@ function openAllMarkerInfoWindow(data) {
     $('#info_items').html(template({'data': data}));
     $('.loading').slideUp('fast');
 
+    // load and update favorites
+    if ($(window.spacescout_favorites.k.favorites_count_container).length == 1) {
+        window.spacescout_favorites.load();
+
+        if (window.hasOwnProperty('spacescout_favorites_refresh')
+            && window.spacescout_favorites_refresh) {
+            window.clearInterval(window.spacescout_favorites_refresh);
+            window.spacescout_favorites_refresh = null;
+        }
+
+        // refresh favorites favorite cues every 10 seconds
+        window.spacescout_favorites_refresh = window.setInterval(function () {
+            window.spacescout_favorites.load();
+        }, 10000);
+    }
+
     //lazyLoadSpaceImages();
 
     $(document).ready(function() {
@@ -45,6 +61,22 @@ function openAllMarkerInfoWindow(data) {
             $("#" + $.cookie('spot_id')).click();
             $.removeCookie('spot_id');
         }
+        // LazyLoading the spot images
+        if(isMobile){
+            var lazyload_target = window;
+        }else{
+            var lazyload_target = '#info_list';
+        }
+        $(lazyload_target).lazyScrollLoading({
+            lazyItemSelector : ".lazyloader",
+            onLazyItemFirstVisible : function(e, $lazyItems, $firstVisibleLazyItems) {
+                $firstVisibleLazyItems.each(function() {
+                    var $img = $(this);
+                    var src = $img.attr('data-src')
+                        $img.css('background', 'transparent url("'+src+'") no-repeat 50% 50%');
+                    });
+               }
+        });
     });
 
 }
@@ -112,13 +144,13 @@ function lazyLoadSpaceImages() {
     }
 }
 
-function repopulate_filters() {
-    if ($.cookie('spacescout_search_opts')) {
-        var form_opts = JSON.parse($.cookie('spacescout_search_opts'));
-
+function repopulate_filters(form_opts) {
+    if (form_opts) {
         // set types
-        for (i=0; i < form_opts["type"].length; i++) {
-            $('#'+form_opts["type"][i]).prop('checked', true);
+        if (form_opts.hasOwnProperty('type')) {
+            $.each(form_opts["type"], function () {
+                $('#'+this).prop('checked', true);
+            });
         }
 
         // set reservability
@@ -131,12 +163,16 @@ function repopulate_filters() {
 
         // set hours
         if (form_opts["open_at"]) {
+            $('#hours_list_input').prop('checked', true);
+            $('#hours_list_container').show();
             var day = form_opts["open_at"].split(',')[0];
             var time = form_opts["open_at"].split(',')[1];
             time = time.split(':');
             var ampm = 'AM';
-            if (Number(time[0]) > 12) {
-                time[0] = Number(time[0]) - 12;
+            if (Number(time[0]) >= 12) {
+                if (Number(time[0]) > 12) {
+                    time[0] = Number(time[0]) - 12;
+                }
                 ampm = 'PM';
             }
             time = time.join(':');
@@ -145,12 +181,16 @@ function repopulate_filters() {
             $('#ampm-from').val(ampm);
         }
         if (form_opts["open_until"]) {
+            $('#hours_list_input').prop('checked', true);
+            $('#hours_list_container').show();
             var day = form_opts["open_until"].split(',')[0];
             var time = form_opts["open_until"].split(',')[1];
             time = time.split(':');
             var ampm = 'AM';
-            if (Number(time[0]) > 12) {
-                time[0] = Number(time[0]) - 12;
+            if (Number(time[0]) >= 12) {
+                if (Number(time[0]) > 12) {
+                    time[0] = Number(time[0]) - 12;
+                }
                 ampm = 'PM';
             }
             time = time.join(':');
@@ -161,7 +201,9 @@ function repopulate_filters() {
 
         // set location
         if (form_opts["building_name"]) {
-            $('#e9').val(form_opts["building_name"]);
+            $('#e9').val(form_opts["building_name"]).trigger("liszt:updated");
+            $('#building_list_input').prop('checked', true);
+            $('#building_list_container').show();
         }
 
         // set resources
@@ -188,7 +230,7 @@ function repopulate_filters() {
         }
 
         // set noise level
-        if (form_opts["extended_info:noise_level"]) {
+        if (form_opts.hasOwnProperty("extended_info:noise_level")) {
             for (i=0; i < form_opts["extended_info:noise_level"].length; i++) {
                 $('#'+form_opts["extended_info:noise_level"][i]).prop('checked', true);
             }
@@ -200,16 +242,56 @@ function repopulate_filters() {
         }
 
         // set food/coffee
-        if (form_opts["extended_info:food_nearby"]) {
+        if (form_opts.hasOwnProperty("extended_info:food_nearby")) {
             for (i=0; i < form_opts["extended_info:food_nearby"].length; i++) {
                 $('#'+form_opts["extended_info:food_nearby"][i]).prop('checked', true);
             }
         }
+    }
+}
 
+function clear_filter() {
+    var node;
+
+    // reset checkboxes
+    $('input[type=checkbox]').each(function() {
+        if ($(this).prop('checked')) {
+            $(this).prop('checked', false);
+            $(this).parent().removeClass("selected");
+        }
+    });
+
+    // reset capacity
+    $('#capacity').val('1');
+
+    // reset hours
+    $('#open_now').prop('checked', true);
+    $('#open_now').parent().removeClass("selected");
+    $('#hours_list_container').hide();
+    $('#hours_list_input').parent().removeClass("selected");
+    default_open_at_filter();
+
+    // reset location
+    $('#entire_campus').prop('checked', true);
+    $('#entire_campus').parent().removeClass("selected");
+    $('#building_list_container').hide();
+    $('#building_list_input').parent().removeClass("selected");
+    $('#building_list_container').children().children().children(".select2-search-choice").remove();
+    $('#building_list_container').children().children().children().children().val('Select building(s)');
+    $('#building_list_container').children().children().children().children().attr('style', "");
+
+    node = $('#e9.building-location');
+    if (node.length > 0) {
+        $.each(node.children().children(), function () {
+            var x = this;
+            this.selected = false;
+        });
+        node.trigger("liszt:updated") ;
     }
 }
 
 function run_custom_search() {
+     
     // if searching, reset that spot count
     window.update_count = true;
 
@@ -230,6 +312,7 @@ function run_custom_search() {
 
     // type
     var checked = new Array();
+    
     $.each($("input[name='type']:checked"), function() {
         checked.push($(this).val());
     });
@@ -300,7 +383,12 @@ function run_custom_search() {
 
     // location
     if ($("#building_list_input").prop("checked")) {
-        window.spacescout_search_options["building_name"] = $('select#e9').val();
+        if ($('select#e9').val() == null) {
+            reset_location_filter();
+        }
+        else {
+            window.spacescout_search_options["building_name"] = $('select#e9').val();
+        }
         set_cookie = true;
     }
 
@@ -343,22 +431,25 @@ function run_custom_search() {
     }
 
     // close space detail if visible (desktop)
-    if ($('#space_detail_container').is(":visible")) {
+    if ($('.space-detail-container').is(":visible")) {
         $('#info_items li').removeClass('selected');
         $('.space-detail').hide("slide", { direction: "right" }, 700, function() {
-        	   $('#space_detail_container').remove();
+        	   $('.space-detail-container').remove();
         });
     }
+    
+    // run google analytics tracking for filters
+    trackCheckedFilters();
 
     // show the correct buttons
-    $('#filter_button').show();
+//    $('#filter_button').show();
     $('#space_count_container').show();
-    $('#view_results_button').hide();
-    $('#cancel_results_button').hide();
+//    $('#view_results_button').hide();
+//    $('#cancel_results_button').hide();
 
     // reset the map center and zoom
     window.spacescout_map.setCenter(new google.maps.LatLng(window.default_latitude, window.default_longitude));
-    window.spacescout_map.setZoom(window.default_zoom);
+    window.spacescout_map.setZoom(parseInt(window.default_zoom));
 
     // Run the search
     //console.log(window.spacescout_search_options);
@@ -366,6 +457,11 @@ function run_custom_search() {
 
     // slide the filter up
     $("#filter_block").slideUp(400, function() {
+        var icon = $('.fa-angle-double-up');
+
+        if (icon.length) {
+            icon.switchClass('fa-angle-double-up', 'fa-angle-double-down', 0);
+        }
 
         // check to see if the style attribute was added to the container (mobile only)
         if ($('#container').attr("style")) {
@@ -383,7 +479,7 @@ function run_custom_search() {
 
     // reset the scroll to top of container
     $('#info_list').scrollTop(0);
-
+/*
 function fix_filter_overflow() {
     var old;
     var outofspace = false;
@@ -408,7 +504,7 @@ function fix_filter_overflow() {
     });
 
 }
-
+*/
 // TODO: is this used anymore?
 function clear_custom_search() {
     window.spacescout_search_options = [];
@@ -422,11 +518,13 @@ function initialize() {
     window.spacescout_search_options = {};
     window.update_count = true;
 
-    repopulate_filters();
     if ($.cookie('spacescout_search_opts')) {
         window.spacescout_search_options = JSON.parse($.cookie('spacescout_search_opts'));
+        repopulate_filters(window.spacescout_search_options);
     }
 
+    /* why are we asking for their location if we're not doing anything with it?
+    // leaving this in but commented out until I can talk to the team about *if* the web app should do something with location
     if (navigator.geolocation) {
         // Doing a timeout here, to make sure we load something...
         load_map(window.default_latitude, window.default_longitude, window.default_zoom);
@@ -438,10 +536,9 @@ function initialize() {
                 load_map(window.default_latitude, window.default_longitude, window.default_zoom);
             }
         );
-    } else {
+    } else { */
         load_map(window.default_latitude, window.default_longitude, window.default_zoom);
-    }
-
+    //}
 }
 
 function load_map(latitude, longitude, zoom) {
@@ -465,6 +562,7 @@ function load_map(latitude, longitude, zoom) {
     } else {
         window.spacescout_map.setCenter(new google.maps.LatLng(latitude, longitude));
     }
+
 
     google.maps.event.addListener(window.spacescout_map, 'idle', reload_on_idle);
     //next three lines courtesy of samolds
@@ -548,8 +646,15 @@ function load_data(data) {
 
 function reload_on_idle() {
 
+    // load the in-page json first time through
+    if (window.initial_load) {
+//        var source = $('#filter_list').html();
+//        var template = Handlebars.compile(source);
+//        $('#bubble_filters_container').html(template({}));
+        load_data(initial_json);
+        window.initial_load = false;
     // only fetch data as long as space details are NOT being shown
-    if (!$('#space_detail_container').is(":visible")) {
+    } else if (!$('.space-detail-container').is(":visible")) {
         fetch_data();
     }
 
@@ -598,7 +703,7 @@ function fetch_data() {
     if (!window.spacescout_search_options["type"]) {
         window.spacescout_search_options["type"] = [];
     }
-
+/*
     // Populate the bubble with which filters are used
     var bubble_filters = $().extend({}, window.spacescout_search_options);
 
@@ -616,6 +721,7 @@ function fetch_data() {
     $('#bubble_filters_container').html(template(bubble_filters));
 
     fix_filter_overflow();
+*/
 
     var url_args = ["/search/?"];
     for (var key in args) {

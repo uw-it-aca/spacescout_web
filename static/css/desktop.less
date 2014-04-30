@@ -1,10 +1,14 @@
 /* Less Variables */
 
 @purple_text: #4c497e;
-@grey_light: #b2b2b2;
+@grey_light: #6d6d6d;
 @grey_dark: #4d4d4d;
 @grey_border: #d6d6d6;
 @grey_background: #e5e5e5;
+@grey_medium: #6d6d6d;
+
+@nav_background: #7479a6;
+
 
 // retina.less
 // A helper mixin for applying high-resolution background images (http://www.retinajs.com)
@@ -31,13 +35,22 @@
 
         .logo { height: 80px; line-height: 80px; width: 284px; position: relative;
             .at2x('/static/img/space_finder_logo.png', 239px, 80px);
+            background-size: 239px, 80px;
             background-repeat: no-repeat;
             background-position: 0 50%;
 
-            #location_select {
-                background: transparent url('/static/img/drop-arrow.png') no-repeat 98% 50%;
-                width: 138px;
-            }
+         }
+
+         .location_container { float: left; margin: 6px 0 0 10px;
+             #location_select {
+                 height: 30px;
+                 padding: 4px 0 6px 12px;
+                 width: 120px;
+             }
+         }
+
+         .user_context { line-height: 60px; background: transparent; color: #666; clear: none;
+             a  { padding-left: 12px; text-decoration: none; }
          }
     }
 
@@ -45,7 +58,7 @@
     #bubble_desktop { margin: 0; display: block; float: right; height: 80px; margin-right: 15px; width: 40% }
     .bubble-inner { margin-top: 9px; height: 60px;
 
-      .bubble-tab { top: 22px; right: -15px; background: transparent url('/static/img/tri-right.png') no-repeat; }
+      .bubble-tab { height: 17px; width: 8px; top: 22px; right: -8px; background: transparent url('/static/img/tri-right.png') no-repeat; }
       .bubble-filters { width: 79%; height: 60px;
           ul { height: 56px; overflow: hidden; height: 56px; }
       }
@@ -54,17 +67,13 @@
       }
     }
 
-    .actions { line-height: 80px; height: 80px;
-    		#view_results_button { margin:0;}
-    		 }
-
     #bubble_mobile { display: none; }
 }
-
+#filter-clear { top: 10px; }
 #filter_container {
-     position:absolute; top:80px; left:0; right:0; margin: 0; z-index: 100;
+     position:absolute; top:120px; left:0; right:0; margin: 0; z-index: 100;
 
-     #filter_block { background: rgba(0, 0, 0, 0.9); height: 450px;
+     #filter_block { background: rgba(0, 0, 0, 0.9); min-height: 450px;
 
         fieldset legend { border: none; padding-top: 0;}
 
@@ -73,20 +82,17 @@
             .inner-block-right { padding-left: 20px; }
         }
 
+        .inner-row { clear: both; margin-top: -20px;
+           .btn { margin-right: 16px; }
+        }
+
         #filter_hours {
             .hours-from, .hours-until { display: block; width: 35px; }
             select { width: 33%; }
         }
 
         .filter-submit { text-align: right; }
-
     }
-
-    #filter_button_container { /*height: 30px; width: auto; text-align:center; line-height:30px; position:absolute; left:0; right:0; top: auto; bottom:-30px; z-index: 999;*/ width: auto; top: -60px;
-        .filter-button-text { display: inline-block; margin-left: 3px; color: #eee; }
-        #filter_button { display:inline-block;padding: 0 10px; }
-    }
-
 }
 
 #main_content { margin: 0; }
@@ -96,7 +102,7 @@
     float: left;
 
     // copy the following block and make sure that mobile.less contains the "mobile" version
-    #space_detail_container {
+    .space-detail-container {
         position: absolute;
         top: 0;
         left: 0;
@@ -113,9 +119,10 @@
 
             .space-detail-inner { display:none; padding: 15px; background-color: #fff;
 
-                .space-detail-header { position: relative; height: 60px;
+                .space-detail-header { position: relative; height: 60px; clear: right;
                     .space-detail-type { color: @grey_dark;
-                        .space-detail-capacity { color: @grey_light; font-size: 11px; text-transform: uppercase; display: inline-block; margin-left: 5px; }
+                        .space-detail-capacity { color: @grey_light; font-size: 11px; text-transform: uppercase; display: inline-block; margin-left: 5px; height: 20px; }
+                        
                     }
                     .space-detail-name { font-size: 20px; color: @purple_text; margin: 5px 0;  line-height:20px; font-weight:normal; }
                     .close { position: absolute; right: 0; top: 0; float: none; }
@@ -148,9 +155,11 @@
                 .space-info {
                     ul { margin: 0; }
                     li { list-style: none; margin-bottom: 5px;
-                      .space-info-label { width: 35%; margin-right: 10px; color: @grey_light; overflow: hidden; text-overflow: ellipsis; font-weight: normal; margin:0; }
+                      .space-info-label { width: 35%; margin-right: 10px; color: @grey_medium; overflow: hidden; text-overflow: ellipsis; font-weight: normal; margin:0; line-height:inherit; font-size: inherit; }
                       .space-info-detail { width: 60%;
-
+							//lab stats styles
+							.computer-available { color:#20b420; }
+							.computer-notavailable {color: #b42020;}
                             // styles for space details, adds commas
                             ul.space-info-resources-list {
                                 display: inline;
@@ -213,20 +222,32 @@
 
     #info_items {
         ol { margin: 0px; list-style: none;
+        
             li {
                 .space-detail-list-item { width: 49%;
-                    .space-detail-type-label { width: 55%; }
+                	.space-detail-labstats {
+                		background: transparent url('/static/img/comp-icon.png') no-repeat center top;
+                		margin-top:-2px;
+                		color: @grey_dark; font-size: 11px; text-transform: uppercase; display: inline-block; margin-left: 5px;
+                	   .computer-available { color:#20b420; }
+					   .computer-notavailable {color: #b42020;}
+                	   p {margin:0; margin-left:18px;}
+                	}
+                    .space-detail-type-label { width: 55%; line-height: 13px; }
                 }
+                &:hover > button {outline: grey dashed thin; }
                 button:focus { outline: grey dashed thin; }
                 button div { padding: 0 2px; }
             }
 
             li.selected { background: #6160a2 url('/static/img/list_item_selected.png') bottom repeat-x;
-                .space-detail-type { color: #ccc; }
+                .space-detail-type { color: #ccc; display: block; }
                 .space-detail-desc,.space-detail-name { color: #fff; }
             }
+            
         }
     }
+    li.no-spaces { background: none; border: none; color: #514D83; padding: 10px; text-align: center; list-style-type: none; font-size: 16px; }
 }
 
 #footer { 
@@ -238,27 +259,22 @@
 
 .back-top { display: none; }
 
+.required { color: red; font-size: 14px; }
+
+.requiredtext { color: red; font-size: 10px; }
+
+.alert { font-weight: normal; margin-left: 1em; vertical-align: super; }
+
 @media screen and (min-width: 1024px) {
 
     #container { min-width:1004px; max-width:1004px; margin: 0 auto; }
-
-    #nav {
-        #filter_container {
-            #filter_block {
-                #filter_hours {
-                    .hours-from, .hours-until { display: inline-block; }
-                    select { width: 31%; }
-                }
-            }
-        }
-    }
 
     #info_list {
         #info_items {
             ol li ol {
                 li {
                     .space-detail-list-item { width: 64%;
-                        .space-detail-type-label { width: 68%; }
+                        .space-detail-type-label { width: 62%; }
                     }
                 }
             }
@@ -266,11 +282,16 @@
     }
     #map_canvas {
 
-        #space_detail_container {
+        .space-detail-container {
 
             .space-detail {
 
                 .space-detail-inner {
+
+                    .space-detail-header {
+                        .space-detail-fav { font-size: 20px; margin-right: 5px;}
+                        .space-detail-fav-set { color: #E5B52E; }
+                    }
 
                     .space-detail-body {
 
@@ -284,4 +305,23 @@
             }
         }
     }
+}
+
+
+/* Favorites */
+
+#nav.favorites_nav {
+
+    .favorites-header { width: 100%; height: 12px; background-color: @nav_background;
+        span {
+           float:right;
+           margin: -16px 110px 0 0;
+           width: 0; height: 0;
+           border-left: 16px solid transparent;
+           border-right: 16px solid transparent;
+           border-bottom: 16px solid @nav_background;
+        }
+    }
+
+     .footer { clear: both; padding: 20px 20px; }
 }

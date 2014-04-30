@@ -5,18 +5,33 @@
 
 {% block extra_js %}
 <script>
-    window.default_latitude = {{ center_latitude }};
-    window.default_longitude = {{ center_longitude }};
-    window.default_zoom = {{ zoom_level }};
-    window.default_location = null;
-    window.by_distance_ratio = {{ by_distance_ratio }};
     window.by_building_zooms = {{ by_building_zooms }};
-    if ($.cookie('default_location')) {
-        window.default_latitude = $.cookie('default_location').split(',')[0];
-        window.default_longitude = $.cookie('default_location').split(',')[1];
-        window.default_location = $.cookie('default_location').split(',')[2];
+    window.by_distance_ratio = {{ by_distance_ratio }};
+    if ($.cookie('initial_load')) {
+        window.initial_load = false;
     } else {
+        window.initial_load = true;
+    }
+    var failed = false;
+    if ($.cookie('default_location')) {
+        var defaults = $.cookie('default_location').split(',');
+        if (defaults.length >= 4) {
+            window.default_latitude = defaults[0];
+            window.default_longitude = defaults[1];
+            window.default_location = defaults[2];
+            window.default_zoom = parseInt(defaults[3]);
+        } else {
+            $.removeCookie('default_location');
+            failed = true;
+        }
+    } else {
+        failed = true;
+    }
+    if (failed) {
+        window.default_latitude = {{ center_latitude }};
+        window.default_longitude = {{ center_longitude }};
         window.default_location = "{{ default_location }}";
+        window.default_zoom = {{ zoom_level }};
     }
 </script>
 {% endblock %}
@@ -30,47 +45,57 @@
         <div class="logo-container clearfix">
 
             <div class="logo">
-                <h1 class="visuallyhidden">SPACESCOUT&trade;</h1>
+                <h1 id="app_header" class="visuallyhidden">SPACESCOUT&trade;</h1>
+            </div>
+            <div class="location_container">
                 {% ifnotequal locations|length 1 %}
+                <span role="navigation" aria-labelledby="location_select_heading">
+                <label id="location_select_heading" for="location_select"  class="visuallyhidden">Select campus:</label>
                 <select id='location_select'>
                     {% for key, value in locations.items %}
-                        <option value="{{ value.CENTER_LATITUDE }},{{ value.CENTER_LONGITUDE }},{{ key }}">{{ value.NAME }}</option>
+                        <option value="{{ value.CENTER_LATITUDE }},{{ value.CENTER_LONGITUDE }},{{ key }},{{ value.ZOOM_LEVEL }}">{{ value.NAME }}</option>
                     {% endfor %}
                 </select>
+                </span>
                 {% endifnotequal %}
             </div>
-            <div aria-labelledby="filter_group_header">
-                <div class="actions">
-                    <button id="filter_button" class="btn btn-inverse" type="button" aria-label="Filter settings..." aria-owns="filter_container" >Filters</button>
-
-                    <h3 id="spaces_match_header" class="visuallyhidden">Your current filters return:</h3>
-
-                    <div id="space_count_container" aria-labelledby="spaces_match_header"></div>
-
-					{% tplhandlebars "space_count" %}
-            			<span class="count">{{count}}</span><span class="spaces">spaces</span>
-            		{% endtplhandlebars %}
-
-                    <div id="done-clear-group">
-                    <button id="view_results_button" class="btn btn-inverse" type="button" aria-label="Apply Filters">Done</button><br>
-                    <button id="cancel_results_button" class="btn" type="button" aria-label="Clear Filters">Clear</button>
-                    </div>
-
-                </div>
-            </div>
-
-            <h2 id="filter_group_header" class="visuallyhidden">Space Filters</h2>
-
         </div>
+        <!-- hidden for now, until cool stuff for logged in users is finished.
+        <div class="user_context">
+            {% if user.is_authenticated %}
+              <span class="salutation">{% trans 'greeting' %}&nbsp;{{ request.user }}</span>
+              <a href="favorites">{% trans 'favorites' %} (<span class="favorites_count_container">0</span>)</a>
+              <span>|</span>
+              {% tplhandlebars "favorites_count" %}{{count}}{% endtplhandlebars %}
+              <a href="logout?next={% firstof request.path '/' %}">{% trans 'logout' %}</a>
+            {% else %}
+              {% trans 'salutation' %}&nbsp;<a href="login?next={% firstof request.path '/' %}">{% trans 'login' %}</a>
+            {% endif %}
+        </div>
+        -->
+        <div class="filter_context" role="search" aria-labelledby="filter_group_header">
+          <h2 id="filter_group_header" class="visuallyhidden">Find Study Spaces by Specific Criteria</h2>
+          <button id="filter_button" class="btn" type="button" aria-label="Filter settings..." aria-owns="filter_container" >{%trans 'filters' %}<i class="fa fa-angle-double-down"></i></button>
 
+          <h3 id="spaces_match_header" class="visuallyhidden">Your current filters return:</h3>
+
+          <div id="space_count_container" aria-labelledby="spaces_match_header"  role="status"></div>
+		  {% tplhandlebars "space_count" %}
+          <div id="spacecount">
+            <span class="count">{{count}}</span><span class="spaces"> {% trans 'spaces' %}</span>
+          </div>
+          {% endtplhandlebars %}
+        </div>
     </div>
-    <h3 id="filters_header" class="visuallyhidden">Filter By:</h3>
-    <div id="filter_container" aria-labelledby="filters_header">
+
+    <div id="filter_container" aria-labelledby="filters_header" aria-controls="space_count_container">
         <form>
             <div id="filter_block" style="display:none;">
+                <h3 id="filters_header" class="visuallyhidden">Filter By:</h3>
                 <div class="inner clearfix">
 
                     <div class="inner-column">
+                        <div id="filter-clear">Filters Cleared</div>
                         <div class="inner-block-left">
                         	<div id="bubble_mobile">
             					<div class="bubble-inner clearfix" style="position:relative;">
@@ -78,6 +103,7 @@
                 					<div id="bubble_filters_container" class="bubble-filters pull-left" ></div>
 
                							 {% tplhandlebars "filter_list" %}
+               					    <h4 id="current_filters" class="visuallyhidden">Currently filtering by:</h4>
               							  <ul id='filter_display_list'>
 									  <li>{{#if open_at}}specific time{{else}}{{#if open_anytime}}any time{{else}}open now{{/if}}{{/if}}</li>
 									  <li>{{#if building_name}}specific building{{else}}entire campus{{/if}}</li>
@@ -96,12 +122,16 @@
 							{% include "filters.html" %}
                         </div>
                     </div>
+                    <div class="inner-row">
+                      <button id="view_results_button" class="btn" type="button" aria-label="Apply Filters">Apply</button>
+                      <button id="cancel_results_button" class="btn" type="button" aria-label="Clear Filters">Reset</button>
+                    </div>
                 </div>
             </div>
         </form>
     </div>
-
-    <div id="main_content" class="clearfix">
+    
+    <div id="main_content" class="clearfix" role="main" aria-labelledby="app_header">
         <h2 id="map_header" class="visuallyhidden" aria-hidden="true">Map of Spaces</h2>
         <div id="map_canvas" aria-labelledby="map_header" aria-hidden="true"></div>
         {% tplhandlebars "map_controls" %}
@@ -110,13 +140,13 @@
             </div>
         {% endtplhandlebars %}
 
-        <div id="info_list">
+        <div id="info_list" class="mobile-lazyload" >
         <h2 id="space_list_header" class="visuallyhidden">List of Spaces</h2>
             <div class="list-inner" aria-labelledby="space_list_header">
                 <div class="list-arrow"><a id="filter_link" title="List of spaces" href="#"><img alt="" src="{{ STATIC_URL }}img/list.png" /></a></div>
 
                 <!-- TODO: need to implement if/else logic for spinner and info_items -->
-                <div class="loading"><div class="loading-inner"><img alt="" src="{{ STATIC_URL }}img/spinner.gif" />&nbsp;&nbsp;Loading spaces...</div></div>
+                <div class="loading"><div class="loading-inner"  role="alert">&nbsp;&nbsp;Loading spaces...</div></div>
 
                 <div id="info_items"></div>
 
@@ -124,12 +154,12 @@
 
                         {{#if data}}<ol>
                         {{#each data}}
-			    <li><div class="building_header">{{this.name}}</div>
+			    <li><h3 class="building_header">{{this.name}}</h3>
                             <ol>{{#each this.spots}}
-                            <li class="clearfix view-details">
+                            <li class="clearfix view-details ">
                                 <div class="space-detail-list-image pull-left">
                                     {{#if images.0.id}}
-                                    <div class="space-detail-list-image-inner" style="background: transparent url('space/{{id}}/image/{{images.0.id}}/thumb/constrain/width:150') no-repeat 50% 50%;">&nbsp;</div>
+                                    <div class="space-detail-list-image-inner lazyloader" data-src="space/{{id}}/image/{{images.0.id}}/thumb/constrain/width:150">&nbsp;</div>
                                     {{else}}
                                     <div class="space-detail-list-image-inner" style="background: transparent url('/static/img/placeholder_noImage_bw.png') no-repeat 50% 50%; background-size: 150px;">&nbsp;</div>
                                     {{/if}}
@@ -137,6 +167,27 @@
                                 </div>
 
                                 <button id="{{id}}" class="space-detail-list-item pull-left" type="button" aria-label="Get space details for {{name}}" aria-owns="detail_container_{{id}}">
+                                    <div class="space-detail-type clearfix">
+                                        <span class="space-detail-type-label pull-left">{{type}}</span>
+                                        {{#if extended_info.labstats_id}}
+                                            {{#if extended_info.auto_labstats_total}}
+                                                {{#compare extended_info.auto_labstats_total 0 operator="!="}}
+                                                    {{#compare extended_info.auto_labstats_available 0 operator=">"}}
+                                                        <span class="space-detail-labstats pull-right"><p><span class="computer-available">{{extended_info.auto_labstats_available}}</span>/{{extended_info.auto_labstats_total}}</p></span>
+                                                    {{^}}
+                                                        <span class="space-detail-labstats pull-right"><p><span class="computer-notavailable">{{extended_info.auto_labstats_available}}</span>/{{extended_info.auto_labstats_total}}</p></span>
+                                                    {{/compare}}
+                                                {{^}}
+                                                   <span class="space-detail-capacity pull-right">{{#if capacity}}Seats&nbsp;{{capacity}}{{/if}}</span>
+                                                {{/compare}}
+                                            {{else}}
+                                                <span class="space-detail-capacity pull-right">{{#if capacity}}Seats&nbsp;{{capacity}}{{/if}}</span>
+                                            {{/if}}
+                                        {{else}}
+                                            <span class="space-detail-capacity pull-right">{{#if capacity}}Seats&nbsp;{{capacity}}{{/if}}</span>
+                                        {{/if}}
+                                    </div>
+                                    {% if user.is_authenticated %}<div class="space-detail-fav pull-right" style="display: none;"><i class="fa fa-heart"></i></div>{% endif %}
                                     <div class="space-detail-name">{{name}}</div>
                                     <div class="space-detail-type clearfix"><span class="space-detail-type-label pull-left">{{type}}</span>{{#if capacity }}<span class="space-detail-capacity pull-right">Seats&nbsp;{{capacity}}</span>{{/if}}</div>
                                     <div class="space-detail-desc">{{extended_info.location_description}}</div>
@@ -155,17 +206,38 @@
 
                         {{#if data }}<ol>
                         {{#each data}}
-			<li><div class="building_header">{{this.name}}</div><ol>
+			<li><h3 class="building_header">{{this.name}}</h3><ol>
                             {{#each this.spots}}
                             <li class="clearfix view-details">
                                 <div class="space-detail-list-image pull-left">
                                   {{#if images.0.id}}
-                                    <div class="space-detail-list-image-inner" style="background: transparent url('space/{{id}}/image/{{images.0.id}}/thumb/constrain/width:150') no-repeat 50% 50%;">&nbsp;</div>
+                                    <div class="space-detail-list-image-inner lazyloader" data-src="space/{{id}}/image/{{images.0.id}}/thumb/constrain/width:150">&nbsp;</div>
                                   {{else}}
                                     <div class="space-detail-list-image-inner" style="background: transparent url('/static/img/placeholder_noImage_bw.png') no-repeat 50% 50%; background-size: 150px;">&nbsp;</div>
                                   {{/if}}
                                 </div>
                                 <button  id="{{id}}" class="space-detail-list-item pull-left" type="button" aria-label="Get space details for {{name}}" aria-owns="detail_container_{{id}}">
+                                    <div class="space-detail-type clearfix">
+                                        <span class="space-detail-type-label pull-left">{{type}}</span>
+                                        {{#if extended_info.labstats_id}}
+                                            {{#if extended_info.auto_labstats_total}}
+                                                {{#compare extended_info.auto_labstats_total 0 operator="!="}}
+                                                    {{#compare extended_info.auto_labstats_available 0 operator=">"}}
+                                                        <span class="space-detail-labstats pull-right"><p><span class="computer-available">{{extended_info.auto_labstats_available}}</span>/{{extended_info.auto_labstats_total}}</p></span>
+                                                    {{^}}
+                                                        <span class="space-detail-labstats pull-right"><p><span class="computer-notavailable">{{extended_info.auto_labstats_available}}</span>/{{extended_info.auto_labstats_total}}</p></span>
+                                                    {{/compare}}
+                                                {{^}}
+                                                    <span class="space-detail-capacity pull-right">{{#if capacity}}Seats&nbsp;{{capacity}}{{/if}}</span>
+                                                {{/compare}}
+                                            {{else}}
+                                                <span class="space-detail-capacity pull-right">{{#if capacity}}Seats&nbsp;{{capacity}}{{/if}}</span>
+                                            {{/if}}
+                                        {{else}}
+                                            <span class="space-detail-capacity pull-right">{{#if capacity}}Seats&nbsp;{{capacity}}{{/if}}</span>
+                                        {{/if}}
+                                    </div>
+                                    {% if user.is_authenticated %}<div class="space-detail-fav pull-right" style="display: none;"><i class="fa fa-heart"></i></div>{% endif %}
                                     <div class="space-detail-name">{{name}}</div>
                                     <div class="space-detail-type"><span class="space-detail-type-label pull-left">{{type}}</span>{{#if capacity }}<span class="space-detail-capacity pull-right">Seats&nbsp;{{capacity}}</span>{{/if}}</div>
                                     <div class="space-detail-desc">{{extended_info.location_description}}</div>
@@ -178,27 +250,6 @@
                             <li class="no-spaces">Sorry, no spaces match your filters!</li>
                         {{/if}}
 
-                {% endtplhandlebars %}
-
-                {% tplhandlebars "spot_info" %}
-                    <ol>
-                        <li><div class="building_header">{{location.building_name}}</div>
-                        <ol><li class="clearfix view-details">
-                            <div class="space-detail-list-image pull-left">
-                              {{#if images.0.id}}
-                                <div class="space-detail-list-image-inner" style="background: transparent url('space/{{id}}/image/{{images.0.id}}/thumb/constrain/width:150') no-repeat 50% 50%;">&nbsp;</div>
-                              {{else}}
-                                <div class="space-detail-list-image-inner" style="background: transparent url('/static/img/placeholder_noImage_bw.png') no-repeat 50% 50%; background-size: 150px;">&nbsp;</div>
-                              {{/if}}
-                            </div>
-                            <button id="{{id}}" class="space-detail-list-item pull-left" type="button" aria-label="Get space details for {{name}}" aria-owns="detail_container_{{id}}">
-                                <div class="space-detail-name">{{name}}</div>
-                                <div class="space-detail-type"><span class="space-detail-type-label pull-left">{{type}}</span>{{#if capacity }}<span class="space-detail-capacity pull-right">Seats&nbsp;{{capacity}}</span>{{/if}}</div>
-                                <div class="space-detail-desc">{{extended_info.location_description}}</div>
-                            </button>
-                        </li></ol>
-                        </li>
-                    </ol>
                 {% endtplhandlebars %}
             </div>
         </div>

@@ -25,6 +25,7 @@ import re
 
 HEADER_UNPATCH_VARY = 'X-Unpatch-Vary'
 
+
 def unpatch_vary_headers(response, headers):
     """Add the headers to the list of unpatch vary headers.
     """
@@ -32,6 +33,7 @@ def unpatch_vary_headers(response, headers):
     unpatch_headers.extend(headers)
     response[HEADER_UNPATCH_VARY] = ','.join(unpatch_headers)
     return response
+
 
 class UnpatchVaryMiddleware(object):
     def process_response(self, request, response):

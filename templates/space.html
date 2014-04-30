@@ -8,30 +8,60 @@
        var source = $('#mobile_hours').html();
        var template = Handlebars.compile(source);
        $('#mobile_hours_template').append(template(available_hours));
+
+
+    // set up favorites
+    if (isMobile) {
+        var fav_icon = $('.space-detail-fav');
+
+        if (fav_icon.is(':visible')) {
+            if (window.spacescout_favorites.is_favorite({{ id }})) {
+                fav_icon.addClass('space-detail-fav-set');
+            } else {
+                fav_icon.removeClass('space-detail-fav-set');
+            }
+    
+            fav_icon.unbind();
+            fav_icon.click(function (e) {
+                window.spacescout_favorites.toggle({{ id }},
+                function () {
+                    fav_icon.addClass('space-detail-fav-set');
+                },
+                function () {
+                    fav_icon.removeClass('space-detail-fav-set');
+                });
+            });
+        }
+    }
+
+    $.ajaxSetup({
+        headers: { "X-CSRFToken": '{{ csrf_token }}' }
+    });
 </script>
 {% endblock %}
 
 {% block content %}
 {% load i18n %}
-
-    <div id="space_details_header">
-
-        <div class="clearfix">
-            <div class="space-detail-name pull-left" style="">{{name}}</div>
-            <img id="back_home_button" class="pull-right" src="/static/img/details_arrow.png" />
+    
+    <div id="space_details_header" class="clearfix">
+        <h1 class="visuallyhidden">SPACESCOUT&trade;</h1>
+		<img id="back_home_button" class="pull-left back-button" src="/static/img/details_arrow.png" />
+        <div id="name-type-block" class="pull-left">
+          {% if user.is_authenticated %}<div class="space-detail-fav pull-left"><i class="fa fa-heart"></i></div>{% endif %}
+          <h2 class="space-detail-name" style=""><span class="visuallyhidden">Space Details:</span> {{name}}</h2>
+      	  <div class="space-detail-type">{{ type }} {% if capacity %}<span class="space-detail-capacity">[Seats&nbsp;{{capacity}}]</span>{% endif %}</div>
         </div>
-       <div class="space-detail-type">{{ type }} {% if capacity %}<span class="space-detail-capacity">[Seats&nbsp;{{capacity}}]</span>{% endif %}</div>
     </div>
 
 
         <div id="space_details_page">
 
-            <div id="space_detail_container">
+            <div class="space-detail-container">
                 <div class="space-detail">
                     <div class="space-detail-inner">
                         <div class="space-detail-body">
                             <div class="space-detail-body-inner">
-                                <div id="spaceCarouselContainer" class="image-container">
+                                <div id="spaceCarouselContainer" class="image-container" role="tabpanel">
                                     <div id="spaceCarousel" class="carousel slide">
                                       <!-- Carousel items -->
                                       <div class="carousel-inner">
@@ -53,43 +83,55 @@
                                       <a class="carousel-control right" href="#spaceCarousel" data-slide="next">&rsaquo;</a>
                                     </div>
                                 </div>
-                                <div id="spaceMap" class="map-container" style="display:none;"></div>
+                                <div id="spaceMap" class="map-container" style="display:none;" role="tabpanel"></div>
                             </div>
                         </div>
 
-                        <div class="space-image-map-buttons btn-group" data-toggle="buttons-radio">
-                          <button id="carouselControl" class="btn active"><span>gallery</span></button>
-                          <button id="mapControl" class="btn"><span>map</span></button>
+                        <div class="space-image-map-buttons btn-group" data-toggle="buttons-radio" role="tablist">
+                          <button id="carouselControl" class="btn active" role="tab" aria-controls="spaceCarouselContainer" aria-selected="true"><span>Image gallery</span></button>
+                          <button id="mapControl" class="btn" role="tab" aria-controls="spaceMap" aria-selected="false" data-location="[{{location.latitude}}, {{location.longitude}}]"><span>Show this space on a map</span></button>
                         </div>
-                        <div class="space-info-header">Space Details:</div>
 
                         <div class="space-info">
                             <ul>
 
                                 {% if extended_info.access_notes or extended_info.reservation_notes %}
                                 <li class="clearfix">
-                                    <div class="space-info-label pull-left">Notes</div>
+                                    <h3 class="space-info-label pull-left">Notes</h3>
                                     <div class="space-info-detail pull-left">
                                         {% if extended_info.access_notes %}<p>{{extended_info.access_notes }}</p>{% endif %}
                                         {% if extended_info.reservation_notes %}<p id="ei_reservation_notes">{{extended_info.reservation_notes }}</p>{% endif %}
                                     </div>
                                 </li>
                                 {% endif %}
-
+								<!-- LABSTATS if labstats, show the following <li> -->
+                                {% if extended_info.labstats_id and extended_info.auto_labstats_total and not extended_info.auto_labstats_total == '0' %}
+                                    <li class="clearfix">
+                                        <h3 class="space-info-label pull-left">Computers</h3>
+                                        <div class="space-info-detail pull-left">
+                                        {% if extended_info.auto_labstats_available > '0' %}
+                                            <p><span class="computer-available">{{ extended_info.auto_labstats_available }}</span> of {{ extended_info.auto_labstats_total }} available</p>    
+                                        {% elif extended_info.auto_labstats_available == '0' %}
+                                            <p><span class="computer-notavailable">{{ extended_info.auto_labstats_available }}</span> of {{ extended_info.auto_labstats_total }} available</p>    
+                                        {% endif %}
+                                        </div>
+                                    </li>
+                                {% endif %}
+								
                                 {% load templatetag_handlebars %}
                                 <li id="mobile_hours_template" class="clearfix">
                                 {% tplhandlebars "mobile_hours" %}
-                                <div class="space-info-label pull-left">Hours</div><div class="space-info-detail pull-left">{{formatHours available_hours}}</div>
+                                <h3 class="space-info-label pull-left">Hours</h3><div class="space-info-detail pull-left">{{formatHours available_hours}}</div>
                                 {% endtplhandlebars %}
                                 </li>
 
                                 {% if extended_info.location_description %}
-                                <li class="clearfix"><div class="space-info-label pull-left">Location</div><div class="space-info-detail pull-left">{{extended_info.location_description}}</div></li>
+                                <li class="clearfix"><h3 class="space-info-label pull-left">Location</h3><div class="space-info-detail pull-left">{{extended_info.location_description}}</div></li>
                                 {% endif %}
 
                                 {% if extended_info.has_computers or extended_info.has_displays or extended_info.has_outlets or extended_info.has_printing or extended_info.has_projector or extended_info.has_scanner or extended_info.has_whiteboards %}
                                 <li class="clearfix">
-                                    <div class="space-info-label pull-left">Resources</div>
+                                    <h3 class="space-info-label pull-left">Resources</h3>
                                     <div class="space-info-detail pull-left">
                                         <ul class='space-info-resources-list'>
                                         {% if extended_info.has_computers %}<li>Computers</li>{% endif %}
@@ -106,7 +148,7 @@
 
                                 {% if extended_info.noise_level %}
                                 <li class="clearfix">
-                                    <div class="space-info-label pull-left">Noise Level</div>
+                                    <h3 class="space-info-label pull-left">Noise Level</h3>
                                     <div class="space-info-detail pull-left">
                                         {% if extended_info.noise_level == "quiet" %}
                                             {% trans 'quiet' %}
@@ -122,13 +164,13 @@
                                 {% endif %}
 
                                 {% if extended_info.has_natural_light %}
-                                <li class="clearfix"><div class="space-info-label pull-left">Lighting</div><div class="space-info-detail pull-left">Natural light</div></li>
+                                <li class="clearfix"><h3 class="space-info-label pull-left">Lighting</h3><div class="space-info-detail pull-left">Natural light</div></li>
                                 {% endif %}
 
 
                                 {% if extended_info.food_nearby %}
                                 <li class="clearfix">
-                                    <div class="space-info-label pull-left">Food/Coffee</div>
+                                    <h3 class="space-info-label pull-left">Food/Coffee</h3>
                                     <div class="space-info-detail pull-left">
                                         {% if extended_info.food_nearby == "building" %}
                                             {% trans 'building' %}
@@ -153,4 +195,8 @@
 
         </div>
 
+
+<script type="text/javascript">
+    window.spacescout_csrf_token = '{{ csrf_token }}';
+</script>
 {% endblock %}

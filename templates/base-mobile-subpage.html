@@ -26,14 +26,18 @@
 <html lang="en">
 
     <head>
-        <title>SpaceScout&trade;</title>
+        <title>SpaceScout&trade; Find the Perfect Place to Study</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta name="description" content="Searching for that perfect study spot? SpaceScout helps UW students quickly locate campus spaces and resources to use for study or collaboration">
+
 
         {% load compress %}
         {% compress css %}
         <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}libs/bootstrap/css/bootstrap-custom.css" charset="utf-8" />
+        <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}libs/font-awesome.min.css" charset="utf-8">
         <link rel="stylesheet" type="text/less" href="{{ STATIC_URL }}css/mobile.less" media="screen, handheld" />
+        {% block extra_compress_css %}{% endblock %}
         {% endcompress %}
 
         {% block extra_css %}{% endblock %}
@@ -45,6 +49,10 @@
         <link rel="apple-touch-icon-precomposed" href="apple-touch-icon-precomposed.png" />
         <link rel="apple-touch-icon-precomposed" sizes="72x72" href="touch-icon-ipad.png" />
         <link rel="apple-touch-icon-precomposed" sizes="114x114" href="touch-icon-iphone-retina.png" />
+
+        <script type="text/javascript">
+             var isMobile = true;
+        </script>
 
         {% if ga_tracking_id %}
         <!-- Google Analytics tracking -->
@@ -71,11 +79,15 @@
           </div>
 
           <!-- jQuery -->
-          <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-          <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+          <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+          <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
 
           <!-- Google Maps -->
-          <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=geometry&sensor=true"></script>
+          {% if gmaps_api_key %}
+          <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?v=3&key={{ gmaps_api_key }}&libraries=geometry&amp;sensor=false"></script>
+          {% else %}
+          <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?libraries=geometry&amp;sensor=false"></script>
+          {% endif %}
 
           {% compress js %}
             <script type="text/javascript" src="{{ STATIC_URL }}libs/cookie.js"></script>
@@ -86,8 +98,8 @@
 
             <script type="text/javascript" src="{{ STATIC_URL }}js/global.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}js/search.js"></script>
+            <script type="text/javascript" src="{{ STATIC_URL }}js/favorites.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}js/mobile.js"></script>
-            <script type="text/javascript" src="{{ STATIC_URL }}js/clustering.js"></script>
 
             {% block extra_js %}{% endblock %}
           {% endcompress %}

@@ -1,0 +1,87 @@
+{% extends "base-mobile.html" %}
+
+{% block extra_compress_css %}
+<link rel="stylesheet" type="text/less" href="{{ STATIC_URL }}css/favorites.less" media="screen, handheld" />
+{% endblock %}
+
+{% block extra_css %}
+{% endblock %}
+
+{% block extra_js %}
+<script type="text/javascript">
+    $.ajaxSetup({
+        headers: { "X-CSRFToken": '{{ csrf_token }}' }
+    });
+</script>
+{% endblock %}
+
+{% block content %}
+{% load i18n %}
+{% load templatetag_handlebars %}
+
+    <div id="nav" class="favorites_nav" style="position:relative;">
+
+        <div class="logo-container clearfix">
+            <div class="logo">
+                <h1 id="app_header" class="visuallyhidden">SPACESCOUT&trade;</h1>
+            </div>
+            <div class="location_container">
+                {% ifnotequal locations|length 1 %}
+                <span role="navigation" aria-labelledby="location_select_heading">
+                <label id="location_select_heading" for="location_select"  class="visuallyhidden">Select campus:</label>
+                <select id='location_select' disabled>
+                    {% for key, value in locations.items %}
+                        <option value="{{ value.CENTER_LATITUDE }},{{ value.CENTER_LONGITUDE }},{{ key }},{{ value.ZOOM_LEVEL }}">{{ value.NAME }}</option>
+                    {% endfor %}
+                </select>
+                </span>
+                {% endifnotequal %}
+           </div>
+           <div class="user_context">
+              {% if user.is_authenticated %}
+                <span class="salutation">{% trans 'greeting' %}&nbsp;{{ request.user }}</span>
+                <a href="/">{% trans 'favorites' %} (<span class="favorites_count_container">{{ total }}</span>)</a>
+                {% tplhandlebars "favorites_count" %}{{count}}{% endtplhandlebars %}
+                <span>|</span>
+                <a href="logout?next=/">{% trans 'logout' %}</a>
+              {% else %}
+                {% trans 'salutation' %}&nbsp;<a href="login?next={% firstof request.path '/' %}">{% trans 'login' %}</a>
+              {% endif %}
+           </div>
+           <div class="favorites-header"><span></span></div>
+        </div>
+
+        <div class="favorites">
+          <div class="navigation">
+            <a href="/">Back to Map</a>
+          </div>
+
+          <h2>Favorites</h2>
+          <h4><span class="favorites_count_container">{{ total }}</span> favorite spaces <span class="comment">(listed by the date you added)</span></h4>
+          <div id="space_details_page" class="favorites_card_container">
+            {% include "favorites-card.html" %}
+            <div id="space-detail-blank" class="space-detail-container">
+                <div class="space-detail">
+                    <div class="space-detail-inner">
+                      <i class="fa fa-heart fa-4x"></i>Your next favorite space will be here.
+                      <br /><a href="/">Go to space list</a>
+                    </div>
+                </div>
+            </div>
+          </div>
+
+          <div class="footer">
+            <span>Any favorite space is missing? </span><a href="#">Go to FAQ</a>
+          </div>
+        </div>
+    </div>
+
+
+{% if user.is_authenticated %}
+<script type="text/javascript">
+  window.spacescout_csrf_token = '{{ csrf_token }}';
+  window.spacescout_static_url = '{{ STATIC_URL }}';
+</script>
+{% endif %}
+
+{% endblock %}
