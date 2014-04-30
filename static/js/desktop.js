@@ -39,6 +39,10 @@ Handlebars.registerHelper('ifany', function(a, b) {
 
 	$(document).ready(function() {
 
+        $('.logo').click(function () {
+            window.location.href = '/';
+        });
+
         // share destination typeahead
         if ($('#id_recipient').length) {
             var node = $('#id_recipient');
