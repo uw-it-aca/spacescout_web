@@ -131,8 +131,14 @@ function getSpotList(group){
 
 function createMarker(spots, group_center) {
     var num_spots = spots.length;
-    var main_icon = new google.maps.MarkerImage('static/img/pins/pin00@2x.png', null, null, null, new google.maps.Size(40,40));
-    var alt_icon = new google.maps.MarkerImage('static/img/pins/pin00-alt@2x.png', null, null, null, new google.maps.Size(40,40));;
+    var main_icon = {
+        url: 'static/img/pins/pin00@2x.png',
+        scaledSize: new google.maps.Size(40,40)
+    };
+    var alt_icon = {
+        url: 'static/img/pins/pin00-alt@2x.png',
+        scaledSize: new google.maps.Size(40,40)
+    };
 
     var marker= new MarkerWithLabel({
         position: group_center,
@@ -141,9 +147,9 @@ function createMarker(spots, group_center) {
         alt_icon: alt_icon,
         map: window.spacescout_map,
         spots: spots,
-        labelText: num_spots, // # of spots to display on label in text
-    	labelClass: "map-label", // the CSS class for the label
-    	labelStyle: {top: "-34px", left: "-15px"} // position label over main_icon (position assumes 40x40 marker)
+        labelContent: num_spots, // # of spots to display on label in text
+        labelClass: "map-label", // the CSS class for the label
+        labelAnchor: new google.maps.Point(15, 34) // position label over main_icon (position assumes 40x40 marker)
     });
     
     google.maps.event.addListener(marker, 'click', function() {
