@@ -257,8 +257,6 @@ function repopulate_filters(form_opts) {
 }
 
 function clear_filter() {
-    var node;
-
     // reset checkboxes
     $('input[type=checkbox]').each(function() {
         if ($(this).prop('checked')) {
@@ -281,6 +279,8 @@ function clear_filter() {
 }
 
 function reset_location_filter() {
+    var node;
+
     // reset location
     $('#entire_campus').prop('checked', true);
     $('#entire_campus').parent().removeClass("selected");
