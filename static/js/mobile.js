@@ -17,6 +17,7 @@
     =================================================================
 
     sbutler1@illinois.edu: attr(checked) to prop(checked).
+    sbutler1@illinois.edu: fix obvious JSHint bugs.
 */
 
 (function(m) {
@@ -30,10 +31,10 @@
     var chrome = deviceAgent.match(/(crios)/);
 
     // detect ios versions
-	var iphone = deviceAgent.match(/(iphone)/);
-	var ipad = deviceAgent.match(/(ipad)/);
-	var ios5 = navigator.userAgent.match(/OS [5](_\d)+ like Mac OS X/i);
-	var ios56 = navigator.userAgent.match(/OS [56](_\d)+ like Mac OS X/i);
+  var iphone = deviceAgent.match(/(iphone)/);
+  var ipad = deviceAgent.match(/(ipad)/);
+  var ios5 = navigator.userAgent.match(/OS [5](_\d)+ like Mac OS X/i);
+  var ios56 = navigator.userAgent.match(/OS [56](_\d)+ like Mac OS X/i);
 
     // detect android versions
     var android = deviceAgent.match(/(android)/);
@@ -42,21 +43,21 @@
     var honeycombOrNewer = deviceAgent.match(/android [3-9]/i);
     var froyoOrOlder = android && !gingerbread && !honeycombOrNewer;
 
-	$(document).ready(function() {
+  $(document).ready(function() {
 
-		setMobileContentHeights();
+    setMobileContentHeights();
 
-	   // check if a map_canvas exists... populate it
-    	if ($("#map_canvas").length == 1) {
+     // check if a map_canvas exists... populate it
+      if ($("#map_canvas").length == 1) {
             initialize();
         }
 
-		// initialize the carousel for mobile standalone space page
+    // initialize the carousel for mobile standalone space page
         initializeCarousel();
         resizeCarouselMapContainer();
         replaceUrls();
 
-    	if ($(".space-detail-body").length == 1) {
+      if ($(".space-detail-body").length == 1) {
             initMapCarouselButtons();
         }
 
@@ -90,12 +91,12 @@
             }
         }
 
-		// show filter panel
-		$('#filter_button').click(function() {
+    // show filter panel
+    $('#filter_button').click(function() {
             var block = $("#filter_block");
 
-    		// calculate the filter block height
-//    		resizeFilterBlock();
+        // calculate the filter block height
+//        resizeFilterBlock();
 
             if (block.css('display') == 'none') {
                 // reflect current filter
@@ -104,7 +105,7 @@
                     repopulate_filters(window.spacescout_search_options);
                 }
 
-    		    // slide down the filter block
+            // slide down the filter block
                 $("#filter_block").slideDown(400, function() {
                     // hide the main content (map and list) by setting a height on the main container and hiding overflow
                     var icon = $('.fa-angle-double-down');
@@ -135,9 +136,9 @@
 //            $('#cancel_results_button').show();
 
             // handle scrolling for android froyo or newer
-    		if (android || gingerbreadOrNewer) {
-        		touchScroll("filter_block");
-    		}
+        if (android || gingerbreadOrNewer) {
+            touchScroll("filter_block");
+        }
 
         });
 
@@ -161,12 +162,12 @@
         $('.view-details').live('click', function(e){
 
             // get the space id
-            id =  $(this).find('.space-detail-list-item').attr('id');
+            var id =  $(this).find('.space-detail-list-item').attr('id');
 
             e.preventDefault();
 
             //clear any unneded pending ajax window.requests
-            for (i = 0; i < window.requests.length; i++) {
+            for (var i = 0; i < window.requests.length; i++) {
                 window.requests[i].abort();
             }
             window.requests.push(
@@ -177,10 +178,10 @@
             );
 
         });
-	});
+  });
 
-	// Update dimensions on orientation change
-	$(m).bind('orientationchange', function() {
+  // Update dimensions on orientation change
+  $(m).bind('orientationchange', function() {
 
         landscape = (window.orientation) == 90 || (window.orientation == -90);
 
@@ -188,15 +189,15 @@
         resizeCarouselMapContainer();
 
         if ($('#filter_block').is(":visible")) {
-//    	   resizeFilterBlock();
-//    	   setFilterContainer();
+//         resizeFilterBlock();
+//         setFilterContainer();
         }
 
     });
 
 
-	// set a height for main container and hide any overflowing
-	function setFilterContainer() {
+  // set a height for main container and hide any overflowing
+  function setFilterContainer() {
 
         var filterH = $(window).height();
 
@@ -204,17 +205,17 @@
         $('#container').css({
             overflow: 'hidden',
         });
-	}
+  }
 
-	// Show space details
-	function showSpaceDetails(data) {
-    	// change url
-    	location.href = '/space/' + data.id;
-	}
+  // Show space details
+  function showSpaceDetails(data) {
+      // change url
+      location.href = '/space/' + data.id;
+  }
 
 
-	// ScrollTo a spot on the UI
-	function scrollTo(id) {
+  // ScrollTo a spot on the UI
+  function scrollTo(id) {
         // Scroll
         $('html,body').animate({ scrollTop: $("#"+id).offset().top},'fast');
     }
@@ -240,7 +241,7 @@
         }
 
         $('#map_canvas').height(mapH);
-        $('#map_canvas').css({ minHeight: mapH })
+        $('#map_canvas').css({ minHeight: mapH });
         $('#info_list').height('auto');
     }
 
@@ -258,37 +259,37 @@
             // Animation complete.
             $('.ios-inner-container').show("slide", { direction: "down" }, 700);
             // disable the iphone scroll
-            document.ontouchmove = function(event){ event.preventDefault(); }
+            document.ontouchmove = function(event){ event.preventDefault(); };
         });
 
         $('#continue_webapp').click(function() {
             // close the modal
             $('#ios_callout').hide();
             // enable scrolling
-            document.ontouchmove = function(event){ return true; }
+            document.ontouchmove = function(event){ return true; };
         });
 
         $('#download_native').click(function() {
             // redirect to app store
             window.location = "http://itunes.apple.com/us/app/spacescout/id551472160";
             // enable scrolling
-            document.ontouchmove = function(event){ return true; }
+            document.ontouchmove = function(event){ return true; };
         });
     }
 
     // enable div overflow scrolling for android
     function touchScroll(id) {
 
-		var el=document.getElementById(id);
-		var scrollStartPos=0;
+    var el=document.getElementById(id);
+    var scrollStartPos=0;
 
-		document.getElementById(id).addEventListener("touchstart", function(event) {
-			scrollStartPos=this.scrollTop+event.touches[0].pageY;
-		},false);
+    document.getElementById(id).addEventListener("touchstart", function(event) {
+      scrollStartPos=this.scrollTop+event.touches[0].pageY;
+    },false);
 
-		document.getElementById(id).addEventListener("touchmove", function(event) {
-			this.scrollTop=scrollStartPos-event.touches[0].pageY;
-		},false);
+    document.getElementById(id).addEventListener("touchmove", function(event) {
+      this.scrollTop=scrollStartPos-event.touches[0].pageY;
+    },false);
 
     }
 
