@@ -13,6 +13,10 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 
+    Changes
+    =================================================================
+
+    sbutler1@illinois.edu: fix obvious JSHint bugs.
 */
 
 
@@ -34,7 +38,7 @@ function updatePins(spots) {     //this could be a listener on the map/done butt
     var zoom = window.spacescout_map.getZoom();
     var pins;
     update_spacescout_markers(spots);
-    ss_markers = window.spacescout_markers;
+    var ss_markers = window.spacescout_markers;
     if ($.inArray(zoom, window.by_building_zooms) != -1){
         pins = groupByBuilding(ss_markers);
     }
@@ -211,7 +215,7 @@ function loadMarkerSpots(marker, data) {
     // reset scroll position
     $("#info_list").scrollTop(0);
 
-    if (active_marker != null) {
+    if (active_marker) {
         updateActiveMarker(marker);
     }
     else {
@@ -224,11 +228,7 @@ function loadMarkerSpots(marker, data) {
     $('#info_items').html(template({data: data}));
 
     // LazyLoading the spot images
-    if(isMobile){
-            var lazyload_target = window;
-        }else{
-            var lazyload_target = '#info_list';
-        }
+    var lazyload_target = isMobile ? window : '#info_list';
     $(lazyload_target).lazyScrollLoading({
         lazyItemSelector : ".lazyloader",
         onLazyItemFirstVisible : function(e, $lazyItems, $firstVisibleLazyItems) {

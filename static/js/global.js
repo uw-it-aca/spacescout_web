@@ -18,6 +18,7 @@
 
     sbutler1@illinois.edu: removed resetFilters() since it's the same
       as clear_filter() in search.js.
+    sbutler1@illinois.edu: fix obvious JSHint bugs.
 */
 
 var requests = [];
