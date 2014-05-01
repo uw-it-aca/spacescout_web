@@ -277,6 +277,10 @@ function clear_filter() {
     $('#hours_list_input').parent().removeClass("selected");
     default_open_at_filter();
 
+    reset_location_filter();
+}
+
+function reset_location_filter() {
     // reset location
     $('#entire_campus').prop('checked', true);
     $('#entire_campus').parent().removeClass("selected");
