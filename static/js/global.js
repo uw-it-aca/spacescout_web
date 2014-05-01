@@ -371,20 +371,6 @@ function preload(arrayOfImages) {
 }
 
 
-function reset_location_filter() {
-    $('#entire_campus').prop('checked', true);
-    $('#entire_campus').parent().removeClass("selected");
-    $('#building_list_container').hide();
-    $('#building_list_input').parent().removeClass("selected");
-    $('#building_list_container').children().children().children(".select2-search-choice").remove();
-    $('#building_list_container').children().children().children().children().val('Select building(s)');
-    $('#building_list_container').children().children().children().children().attr('style', "");
-    for (var i = 0; i < $('#e9.building-location').children().children().length; i++) {
-        $('#e9.building-location').children().children()[i].selected = false;
-    }
-    $('#e9.building-location').trigger("liszt:updated")
-    run_custom_search();
-}
 
 (function(g){
 
@@ -422,7 +408,7 @@ function reset_location_filter() {
             }
             
             // reset filters for campus change            
-            resetFilters();
+            clear_filter();
 
             run_custom_search();
 
@@ -618,32 +604,6 @@ function resizeCarouselMapContainer() {
     $('.carousel-inner-image-inner').height(containerH);
     $('.map-container').height(containerH);
 }   
-
-function resetFilters() {
-    // reset checkboxes
-    $('input[type=checkbox]').each(function() {
-        if ($(this).attr('checked')) {
-            $(this).attr('checked', false);
-            $(this).parent().removeClass("selected");
-        }   
-    }); 
-
-    // reset capacity
-    $('#capacity').val('1');
-
-    // reset hours
-    $('#open_now').prop('checked', true);
-    $('#open_now').parent().removeClass("selected");
-    $('#hours_list_container').hide();
-    $('#hours_list_input').parent().removeClass("selected");
-    default_open_at_filter();
-    $("#day-until").val("No pref");
-    $("#hour-until").val("No pref");
-    $("#ampm-until").val("AM");
-
-    //reset location
-    reset_location_filter();
-}
 
 function getSpaceMap(container, lat, lon) {
 
