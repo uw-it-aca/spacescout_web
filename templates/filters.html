@@ -262,10 +262,10 @@
     <div>
         <p>
         {% if user.is_authenticated %}
-            Restricting spaces for {{ user.email|escape }}.
-            <a href="{{ logout_link|escape }}">Log out</a> to see all spaces.
+            Restricting spaces for {{ user }}.
+            <a href="{{ logout_link }}">Log out</a> to see all spaces.
         {% else %}
-            <a href="{{ login_link|escape }}">Log in</a> to exclude restricted spaces.
+            <a href="{{ login_link }}">Log in</a> to exclude restricted spaces.
         {% endif %}
         </p>
     </div>
