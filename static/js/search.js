@@ -18,6 +18,7 @@
 
     sbutler1@illinois.edu: attr(checked) to prop(checked); open_anytime
       option.
+    sbutler1@illinois.edu: cleanup of obvious bugs highighted by JSHint.
 */
 
 var spacescout_map = null, spacescout_infowindow, spacescout_marker_ids = {}, spacescout_markers = [], speed = 800, mc = null, youarehere = null, update_count = null;

@@ -13,6 +13,11 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 
+    Changes
+    =================================================================
+
+    sbutler1@illinois.edu: removed resetFilters() since it's the same
+      as clear_filter() in search.js.
 */
 
 var requests = [];
