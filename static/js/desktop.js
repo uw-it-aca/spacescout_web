@@ -38,9 +38,11 @@ Handlebars.registerHelper('ifany', function(a, b) {
 	var iphone = deviceAgent.match(/(iphone|ipod)/);
 
 	$(document).ready(function() {
+        var nodes = $('.logo, .actions + h2');
 
-        $('.logo').click(function () {
-            window.location.href = '/';
+        nodes.css('cursor', 'pointer');
+        nodes.click(function () {
+            window.location.href = window.spacescout_referrer.length ? window.spacescout_referrer : '/';
         });
 
         // share destination typeahead

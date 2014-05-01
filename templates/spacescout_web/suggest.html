@@ -1,6 +1,9 @@
 {% extends is_mobile|yesno:"spacescout_web/base-mobile-subpage.html,spacescout_web/base-desktop.html" %}
 
 {% block extra_js %}
+<script>
+    window.spacescout_referrer = '{{ back }}';
+</script>
 {% endblock %}
 
 {% load static %}

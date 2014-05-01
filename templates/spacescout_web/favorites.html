@@ -12,6 +12,7 @@
 
 {% block extra_js %}
 <script type="text/javascript">
+    window.spacescout_referrer = '{{ back }}';
     $.ajaxSetup({
         headers: { "X-CSRFToken": '{{ csrf_token }}' }
     });

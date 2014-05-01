@@ -91,8 +91,6 @@
                     source: engine.ttAdapter()
                 }]
             });
-
-            return;
         }
 
         if (window.spacescout_url) {
@@ -125,15 +123,12 @@
               scrollTo('info_list');
         });
 
-        // back to spaces button on mobile space details page
-        $('#back_home_button').click(function() {
-            var href = '/';
+        // back to spaces button on contact, share and suggest pages
+        var nodes = $('#back_home_button, #back_home_button + div > h2');
 
-            if ($('#id_back').length > 0) {
-                href = $('#id_back').val();
-            }
-
-            window.location.href = href;
+        nodes.css('cursor', 'pointer');
+        nodes.click(function () {
+            window.location.href = window.spacescout_referrer.length ? window.spacescout_referrer : '/';
         });
 
         // for iphones (ios5) - check if they have the ios detector cookie, if they don't give them one and show the popup
@@ -289,6 +284,7 @@
         replaceUrls();
         initMapCarouselButtons();
 
+        $('#back_home_button').css('cursor', 'pointer');
         $('#back_home_button').click(function(e) {
             var m =  window.location.pathname.match(/\/(\d+)\/?$/);
 
@@ -364,9 +360,8 @@
 
         window.spacescout_url.push(null);
 
+        $('#back_home_button').css('cursor', 'pointer');
         $('#back_home_button').click(function(e) {
-            var m =  window.location.pathname.match(/\/(\d+)\/?$/);
-
             show_main_app();
         });
     }

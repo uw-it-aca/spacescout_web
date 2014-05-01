@@ -51,6 +51,7 @@
     }
     window.spacescout_csrf_token = '{{ csrf_token }}';
     window.spacescout_authenticated_user = '{{ username }}';
+    window.spacescout_referrer = '{{ back }}';
     $.ajaxSetup({
         headers: { "X-CSRFToken": '{{ csrf_token }}' }
     });

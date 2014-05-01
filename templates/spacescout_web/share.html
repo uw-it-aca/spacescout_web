@@ -3,6 +3,9 @@
 {% load static %}
 
 {% block extra_js %}
+<script>
+    window.spacescout_referrer = '{{ back }}';
+</script>
 {% endblock %}
 
 {% block content %}

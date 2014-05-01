@@ -11,6 +11,7 @@
     $("#cookieSet").click(function () {
         $.cookie('spot_id', spot_id, {path: '/', expires: 1});
     });
+    window.spacescout_referrer = '{{ back }}';
 </script>
 {% endblock %}
 
