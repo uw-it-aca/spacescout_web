@@ -48,34 +48,34 @@ function openAllMarkerInfoWindow(data) {
     //lazyLoadSpaceImages();
 
     $(document).ready(function() {
-        if ($.cookie('spot_id') != null) {
-            if ($("#" + $.cookie('spot_id')).parent().prev().prev().children()[1] != null) { // for normal case when there are two before clicked in ol
-                scroll_spot_id = $("#" + $.cookie('spot_id')).parent().prev().prev().children()[1].id;
-                document.getElementById(scroll_spot_id).scrollIntoView();
-            } else if ($("#" + $.cookie('spot_id')).parent().parent().prev().prev()[0] != null) { // if there is an ol before the current one
-                if ($("#" + $.cookie('spot_id')).parent().prev()[0] == null || $("#" + $.cookie('spot_id')).parent().prev().prev()[0] == null) { // if there are two or less spots before the one clicked in the current ol
-                    scroll_spot_id = $("#" + $.cookie('spot_id')).parent().parent().prev().prev().children().children().last()[0].id;
-                    document.getElementById(scroll_spot_id).scrollIntoView();
+        if ($.cookie('spot_id')) {
+            var $spot = $('#' + $.cookie('spot_id'));
+            var scroll_spot_id = null;
+
+            if ($spot.parent().prev().prev().children()[1]) { // for normal case when there are two before clicked in ol
+                scroll_spot_id = $spot.parent().prev().prev().children()[1].id;
+            } else if ($spot.parent().parent().prev().prev()[0]) { // if there is an ol before the current one
+                if (!$spot.parent().prev()[0] || !$spot.parent().prev().prev()[0]) { // if there are two or less spots before the one clicked in the current ol
+                    scroll_spot_id = $spot.parent().parent().prev().prev().children().children().last()[0].id;
                 }
             }
-            $("#" + $.cookie('spot_id')).click();
+            if (scroll_spot_id) {
+                document.getElementById(scroll_spot_id).scrollIntoView();
+            }
+            $spot.click();
             $.removeCookie('spot_id');
         }
         // LazyLoading the spot images
-        if(isMobile){
-            var lazyload_target = window;
-        }else{
-            var lazyload_target = '#info_list';
-        }
+        var lazyload_target = isMobile ? window : '#info_list';
         $(lazyload_target).lazyScrollLoading({
             lazyItemSelector : ".lazyloader",
             onLazyItemFirstVisible : function(e, $lazyItems, $firstVisibleLazyItems) {
                 $firstVisibleLazyItems.each(function() {
                     var $img = $(this);
-                    var src = $img.attr('data-src')
-                        $img.css('background', 'transparent url("'+src+'") no-repeat 50% 50%');
-                    });
-               }
+                    var src = $img.attr('data-src');
+                    $img.css('background', 'transparent url("'+src+'") no-repeat 50% 50%');
+                });
+           }
         });
     });
 
@@ -83,13 +83,13 @@ function openAllMarkerInfoWindow(data) {
 
 function sortByBuildingName(data) {
     data.sort(function(one, two){
-        var abuilding=one.location.building_name.toLowerCase(), bbuilding=two.location.building_name.toLowerCase()
+        var abuilding=one.location.building_name.toLowerCase(), bbuilding=two.location.building_name.toLowerCase();
         if (abuilding < bbuilding)
-            return -1
+            return -1;
         if (abuilding > bbuilding)
-            return 1
-        return 0
-    })
+            return 1;
+        return 0;
+    });
     return data;
 }
 
@@ -115,12 +115,13 @@ function buildingNameHeaders(data) {
             }
         }
     }
-    for (i in byBuilding) {
-        var small_json = {};
-        small_json.name = i;
-        small_json.spots = byBuilding[i];
-        big_list.push(small_json);
-
+    for (var i in byBuilding) {
+        if (byBuilding.hasOwnProperty(i)) {
+            var small_json = {};
+            small_json.name = i;
+            small_json.spots = byBuilding[i];
+            big_list.push(small_json);
+        }
     }
     return big_list;
 }
@@ -129,7 +130,7 @@ function buildingNameHeaders(data) {
 (function($) {
     $.fn.hasScrollBar = function() {
         return this.get(0).scrollHeight > this.height();
-    }
+    };
 })(jQuery);
 
 function lazyLoadSpaceImages() {
@@ -231,7 +232,7 @@ function repopulate_filters(form_opts) {
 
         // set noise level
         if (form_opts.hasOwnProperty("extended_info:noise_level")) {
-            for (i=0; i < form_opts["extended_info:noise_level"].length; i++) {
+            for (var i=0; i < form_opts["extended_info:noise_level"].length; i++) {
                 $('#'+form_opts["extended_info:noise_level"][i]).prop('checked', true);
             }
         }
@@ -243,7 +244,7 @@ function repopulate_filters(form_opts) {
 
         // set food/coffee
         if (form_opts.hasOwnProperty("extended_info:food_nearby")) {
-            for (i=0; i < form_opts["extended_info:food_nearby"].length; i++) {
+            for (var i=0; i < form_opts["extended_info:food_nearby"].length; i++) {
                 $('#'+form_opts["extended_info:food_nearby"][i]).prop('checked', true);
             }
         }
@@ -283,7 +284,6 @@ function clear_filter() {
     node = $('#e9.building-location');
     if (node.length > 0) {
         $.each(node.children().children(), function () {
-            var x = this;
             this.selected = false;
         });
         node.trigger("liszt:updated") ;
@@ -304,14 +304,13 @@ function run_custom_search() {
 
     // Set the search values, so they'll stick through zooms and pans
     window.spacescout_search_options = {};
+    var set_cookie = false;
     if ($.cookie('spacescout_search_opts')) {
-        var set_cookie = true; // if there is a cookie, we'd better reset it, or else we get filters that are too sticky
-    } else {
-        var set_cookie = false;
+        set_cookie = true; // if there is a cookie, we'd better reset it, or else we get filters that are too sticky
     }
 
     // type
-    var checked = new Array();
+    var checked = [];
     
     $.each($("input[name='type']:checked"), function() {
         checked.push($(this).val());
@@ -338,7 +337,7 @@ function run_custom_search() {
       window.spacescout_search_options["open_anytime"] = 1;
     } else if ($("#hours_list_input").prop("checked")) {
         if ($('#day-from').val() != 'nopref') {
-            var from_query = new Array;
+            var from_query = [];
             from_query.push($('#day-from').val());
             if ($('#hour-from').val() != 'nopref') {
                 var time = $('#hour-from').val();
@@ -359,7 +358,7 @@ function run_custom_search() {
         }
 
         if ($('#day-from').val() != 'nopref' && $('#day-until').val() != 'nopref') {
-            var until_query = new Array;
+            var until_query = [];
             until_query.push($('#day-until').val());
             if ($('#hour-until').val() != 'nopref') {
                 var time = $('#hour-until').val();
@@ -383,7 +382,7 @@ function run_custom_search() {
 
     // location
     if ($("#building_list_input").prop("checked")) {
-        if ($('select#e9').val() == null) {
+        if (!$('select#e9').val()) {
             reset_location_filter();
         }
         else {
@@ -434,7 +433,7 @@ function run_custom_search() {
     if ($('.space-detail-container').is(":visible")) {
         $('#info_items li').removeClass('selected');
         $('.space-detail').hide("slide", { direction: "right" }, 700, function() {
-        	   $('.space-detail-container').remove();
+            $('.space-detail-container').remove();
         });
     }
     
@@ -557,10 +556,10 @@ function load_map(latitude, longitude, zoom) {
         }]
     };
 
-    if (window.spacescout_map == null) {
-        window.spacescout_map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-    } else {
+    if (window.spacescout_map) {
         window.spacescout_map.setCenter(new google.maps.LatLng(latitude, longitude));
+    } else {
+        window.spacescout_map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
     }
 
 
@@ -684,10 +683,11 @@ function fetch_data() {
     var north = distance_between_points(center.lat(), center.lng(), ne.lat(), center.lng());
     var east = distance_between_points(center.lat(), center.lng(), center.lat(), ne.lng());
 
+    var distance;
     if (north > east) {
-        var distance = north;
+        distance = north;
     } else {
-        var distance = east;
+        distance = east;
     }
 
     // Calculated in KM
@@ -752,8 +752,8 @@ function distance_between_points(lat1, lon1, lat2, lon2) {
     var R = 6371; // km
     var dLat = (lat2-lat1) * Math.PI / 180;
     var dLon = (lon2-lon1) * Math.PI / 180;
-    var lat1 = lat1 * Math.PI / 180;
-    var lat2 = lat2 * Math.PI / 180;
+    lat1 = lat1 * Math.PI / 180;
+    lat2 = lat2 * Math.PI / 180;
 
     var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
             Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2);
