@@ -18,6 +18,7 @@
 
     sbutler1@illinois.edu: attr(checked) to prop(checked); focus on
       spot details.
+    sbutler1@illinois.edu: fix obvious JSHint bugs
 */
 
 Handlebars.registerHelper('ifany', function(a, b) {
@@ -41,8 +42,8 @@ Handlebars.registerHelper('ifany', function(a, b) {
 
 		desktopContent();
 
-	   // check if a map_canvas exists... populate it
-    	if ($("#map_canvas").length == 1) {
+      // check if a map_canvas exists... populate it
+      if ($("#map_canvas").length == 1) {
           initialize();
         }
 
@@ -103,12 +104,12 @@ Handlebars.registerHelper('ifany', function(a, b) {
         $('.view-details').live('click', function(e){
 
             // get the space id
-            id =  $(this).find('.space-detail-list-item').attr('id');
+            var id =  $(this).find('.space-detail-list-item').attr('id');
 
             e.preventDefault();
 
             // clear any uneeded ajax window.requests
-            for (i = 0; i < window.requests.length; i++) {
+            for (var i = 0; i < window.requests.length; i++) {
                 window.requests[i].abort();
             }
             window.requests.push(
@@ -157,25 +158,21 @@ Handlebars.registerHelper('ifany', function(a, b) {
            data["last_modified"] = month + "/" + day + "/" + year;
 
            // check to see if the space has the following
-           data["has_notes"] = ( ( data.extended_info.access_notes != null) || ( data.extended_info.reservation_notes != null) );
-           data["has_resources"] = ( data.extended_info.has_computers != null || data.extended_info.has_displays != null || data.extended_info.has_outlets != null || data.extended_info.has_printing != null || data.extended_info.has_projector != null || data.extended_info.has_scanner != null || data.extended_info.has_whiteboards != null );
+           data["has_notes"] = ( data.extended_info.access_notes || data.extended_info.reservation_notes );
+           data["has_resources"] = ( data.extended_info.has_computers || data.extended_info.has_displays || data.extended_info.has_outlets || data.extended_info.has_printing || data.extended_info.has_projector || data.extended_info.has_scanner || data.extended_info.has_whiteboards );
 
-    	   // remove any open details
-    	   if (!$('.space-detail-container').is(':visible')) {
-               var open = false;
-           }else {
-               var open = true;
-           }
-           $('.space-detail-container').remove();
+         // remove any open details
+         var open = $('.space-detail-container').is(':visible');
+         $('.space-detail-container').remove();
 
-        	// build the template
-    	   var source = $('#space_details').html();
-    	   var template = Handlebars.compile(source);
-    	   $('#map_canvas').append(template(data));
+         // build the template
+         var source = $('#space_details').html();
+         var template = Handlebars.compile(source);
+         $('#map_canvas').append(template(data));
 
-           initMapCarouselButtons();
+         initMapCarouselButtons();
 
-    	   // set/reset initial state
+         // set/reset initial state
 
            $('.space-detail-inner').show();
            $('.space-detail-container').show();
@@ -212,7 +209,7 @@ Handlebars.registerHelper('ifany', function(a, b) {
                });
            }
 
-    	   initializeCarousel();
+           initializeCarousel();
 
            replaceUrls();
 
@@ -264,7 +261,7 @@ Handlebars.registerHelper('ifany', function(a, b) {
 	// Desktop display defaults
 	function desktopContent() {
 
-    	var windowH = $(window).height();
+        var windowH = $(window).height();
         var headerH = $('#nav').height();
         var contentH = windowH - headerH;
 
