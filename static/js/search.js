@@ -164,41 +164,45 @@ function repopulate_filters(form_opts) {
         $('#capacity').val(form_opts["capacity"]);
 
         // set hours
-        if (form_opts["open_at"]) {
+        if (form_opts["open_at"] || form_opts["open_until"]) {
             $('#hours_list_input').prop('checked', true);
             $('#hours_list_container').show();
-            var day = form_opts["open_at"].split(',')[0];
-            var time = form_opts["open_at"].split(',')[1];
-            time = time.split(':');
-            var ampm = 'AM';
-            if (Number(time[0]) >= 12) {
-                if (Number(time[0]) > 12) {
-                    time[0] = Number(time[0]) - 12;
+            var day, time, ampm;
+
+            if (form_opts["open_at"]) {
+                day = form_opts["open_at"].split(',')[0];
+                time = form_opts["open_at"].split(',')[1];
+                time = time.split(':');
+                ampm = 'AM';
+                if (Number(time[0]) >= 12) {
+                    if (Number(time[0]) > 12) {
+                        time[0] = Number(time[0]) - 12;
+                    }
+                    ampm = 'PM';
                 }
-                ampm = 'PM';
+                time = time.join(':');
+                $('#day-from').val(day);
+                $('#hour-from').val(time);
+                $('#ampm-from').val(ampm);
             }
-            time = time.join(':');
-            $('#day-from').val(day);
-            $('#hour-from').val(time);
-            $('#ampm-from').val(ampm);
-        }
-        if (form_opts["open_until"]) {
-            $('#hours_list_input').prop('checked', true);
-            $('#hours_list_container').show();
-            var day = form_opts["open_until"].split(',')[0];
-            var time = form_opts["open_until"].split(',')[1];
-            time = time.split(':');
-            var ampm = 'AM';
-            if (Number(time[0]) >= 12) {
-                if (Number(time[0]) > 12) {
-                    time[0] = Number(time[0]) - 12;
+            if (form_opts["open_until"]) {
+                day = form_opts["open_until"].split(',')[0];
+                time = form_opts["open_until"].split(',')[1];
+                time = time.split(':');
+                ampm = 'AM';
+                if (Number(time[0]) >= 12) {
+                    if (Number(time[0]) > 12) {
+                        time[0] = Number(time[0]) - 12;
+                    }
+                    ampm = 'PM';
                 }
-                ampm = 'PM';
+                time = time.join(':');
+                $('#day-until').val(day);
+                $('#hour-until').val(time);
+                $('#ampm-until').val(ampm);
             }
-            time = time.join(':');
-            $('#day-until').val(day);
-            $('#hour-until').val(time);
-            $('#ampm-until').val(ampm);
+        } else if (!form_opts["open_now"]) {
+            $('#open_anytime').prop('checked', true);
         }
 
         // set location
