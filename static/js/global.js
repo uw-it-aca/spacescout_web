@@ -26,9 +26,11 @@ var requests = [];
 Handlebars.registerHelper('carouselimages', function(spacedata) {
     var space_id = spacedata.id;
     var elements = [];
+
+    var image_url, div_string;
     if (spacedata.images.length > 0) {
-        for (i=0; i < spacedata.images.length; i++) {
-            image_id = spacedata.images[i].id;
+        for (var i=0; i < spacedata.images.length; i++) {
+            var image_id = spacedata.images[i].id;
             image_url = "background:url(/space/" + space_id + "/image/" + image_id + "/thumb/constrain/width:500)";
             div_string = "<div class='carousel-inner-image item'><div class='carousel-inner-image-inner' style='" + image_url + "'>&nbsp;</div></div>";
             elements.push(div_string);
@@ -46,7 +48,7 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
     if (arguments.length < 3)
         throw new Error("Handlerbars Helper 'compare' needs 2 parameters");
 
-    operator = options.hash.operator || "==";
+    var operator = options.hash.operator || "==";
 
     var operators = {
         '==':       function(l,r) { return l == r; },
@@ -94,8 +96,7 @@ Handlebars.registerHelper('formatHours', function(hours) {
                 this[0] = this[0].replace(/^0+/, '');
                 this[1] = this[1].replace(/^0+/, '');
             });
-            dayMarker = day.charAt(0);
-            dayMarker = dayMarker.toUpperCase();
+            var dayMarker = day.charAt(0).toUpperCase();
             // Show two characters for Th, Sa, Su
             if (dayMarker == 'T' && day.charAt(1) == 'h' || dayMarker == 'S' && day.charAt(1) == 'a' || dayMarker == 'S' && day.charAt(1) == 'u') {
                 dayMarker += day.charAt(1);
@@ -111,14 +112,14 @@ Handlebars.registerHelper('formatHours', function(hours) {
 
 Handlebars.registerHelper('alphaOptGroupsHTML', function(list) {
     list.sort();
-    firstletter = null;
-    out = new Array;
+    var firstletter = null;
+    var out = [];
     for (var i=0; i < list.length; i++) {
         if (list[i][0] == firstletter) {
             out.push('<option value="'+list[i]+'">'+list[i]+'</option>');
         } else {
             // select multiple with optgroups will crash mobile Safari
-            if (firstletter != null || !isMobile) {
+            if (firstletter !== null || !isMobile) {
                 out.push('</optgroup>');
             }
             firstletter = list[i][0];
@@ -147,26 +148,28 @@ function groupHours(days) {
         var split = days[i].split(": ");
         var day = split[0];
         var hours1 = split[1].split(", ");
-        for(hour in hours1) {
-            days1[daycount]=day;
-            if(day == "M") {
-                days2[daycount]=0;
-            }else if(day == "T") {
-                days2[daycount]=1;
-            }else if(day == "W") {
-                days2[daycount]=2;
-            }else if(day == "Th") {
-                days2[daycount]=3;
-            }else if(day == "F") {
-                days2[daycount]=4;
-            }else if(day == "Sa") {
-                days2[daycount]=5;
-            }else if(day == "Su") {
-                days2[daycount]=6;
+        for (var hour in hours1) {
+            if (hours1.hasOwnProperty(hour)) {
+                days1[daycount]=day;
+                if(day == "M") {
+                    days2[daycount]=0;
+                }else if(day == "T") {
+                    days2[daycount]=1;
+                }else if(day == "W") {
+                    days2[daycount]=2;
+                }else if(day == "Th") {
+                    days2[daycount]=3;
+                }else if(day == "F") {
+                    days2[daycount]=4;
+                }else if(day == "Sa") {
+                    days2[daycount]=5;
+                }else if(day == "Su") {
+                    days2[daycount]=6;
+                }
+                hours[hourscount]= hours1[hour];
+                daycount++;
+                hourscount++;
             }
-            hours[hourscount]= hours1[hour];
-            daycount++;
-            hourscount++;
         }
 
     }
@@ -231,11 +234,11 @@ function to12Hour(day) {
     for (var j=0; j<day.length; j++) {
         var data = [ day[j][0], day[j][1] ];
         for (var i=0; i<data.length; i++) {
-            time = data[i].split(":");
-            if(time[0]=="23" & time[1] == "59") {
+            var time = data[i].split(":");
+            if(time[0]=="23" && time[1] == "59") {
                 data[i] = "Midnight";
             }
-            else if (time[0] =="12" & time[1] =="00") {
+            else if (time[0] =="12" && time[1] =="00") {
                 data[i] = "Noon";
             }else {
                 if (time[0] > 12) {
@@ -264,7 +267,7 @@ function to12Hour(day) {
                 data[i] = "Midnight";
             }
         }
-        if(data[0]=="Midnight" & data[1]=="Midnight") {
+        if(data[0]=="Midnight" && data[1]=="Midnight") {
             retData[j]="Open 24 Hours";
         }else {
             retData[j]=data[0] +" - " +data[1];
@@ -275,7 +278,7 @@ function to12Hour(day) {
 
 function sortDays(days) {
     var ordered = [];
-    order = ["M", "T", "W", "Th", "F", "Sa", "Su"];
+    var order = ["M", "T", "W", "Th", "F", "Sa", "Su"];
     $.each(order, function(day) {
         if (days[order[day]]) {
             ordered.push(order[day] +": " +days[order[day]] );
@@ -329,7 +332,7 @@ function format_location_filter(data) {
     var template = Handlebars.compile(source);
     var node;
 
-    if (source != null) {
+    if (source) {
         $('#building_list_container').html(template({data: data}));
     }
 
@@ -355,7 +358,7 @@ function format_location_filter(data) {
 
 function get_location_buildings() {
     // populate the location filter list
-    url = '/buildings';
+    var url = '/buildings';
     if (window.default_location !== null) {
         url = url + '?campus=' + window.default_location;
     }
@@ -423,7 +426,7 @@ function preload(arrayOfImages) {
             reset_location_filter();
         });
 
-    	// handle clicking on map centering buttons
+        // handle clicking on map centering buttons
         $('#center_all').live('click', function(e){
 
             e.preventDefault();
@@ -528,7 +531,7 @@ function initializeCarousel() {
 
         for(var i = 0; i < $(this).find('.item').size(); i ++) {
             html += '<li><a';
-            if(i == 0) {
+            if(i === 0) {
                 html += ' class="active"';
             }   
 
@@ -595,10 +598,11 @@ function initMapCarouselButtons() {
 
 function resizeCarouselMapContainer() {
     // get the width
+    var containerW;
     if ($('.image-container').width() > $('.map-container').width()) {
-        var containerW = $('.image-container').width();
+        containerW = $('.image-container').width();
     } else if ($('.map-container').width() > $('.image-container').width()) {
-        var containerW = $('.map-container').width();
+        containerW = $('.map-container').width();
     }
 
     // calcuate height based on 3:2 aspect ratio
