@@ -22,8 +22,8 @@ import sys
 
 class Filter(SearchFilter):
     def filter_args(self, args):
-        if 'shibboleth' in sys.modules and self.request.user.is_authenticated():
-            args['eppn'] = self.request.user.username
+        if 'shibboleth' in sys.modules and 'HTTP_EPPN' in self.request.META:
+            args['eppn'] = self.request.META['HTTP_EPPN']
 
         return args
 
