@@ -123,22 +123,26 @@ function setupRatingsAndReviews(data) {
         }
     });
 
-    if (window.spacescout_authenticated_user.length > 0) {
-        var review = $.cookie('space_review'),
-            json_review;
+    $(document).on('loadSpaceReviews', function (e, id) {
+        var review = $.cookie('space_review');
 
-        if (review != null) {
-            json_review = JSON.parse(review);
-            postRatingAndReview(json_review.id, json_review.review);
+        if (review && window.spacescout_authenticated_user.length > 0) {
+            var json_review = review ? JSON.parse(review) : null;
+
+            if (json_review) {
+                postRatingAndReview(json_review.id, json_review.review);
+                $('.space-reviews-none').hide();
+            }
+
             $.removeCookie('space_review');
         }
-    }
+    });
 }
 
 
 function loadRatingsAndReviews(id, review_container, rating_container) {
     $.ajax({
-        url: 'web_api/v1/space/' + id + '/reviews',
+        url: '/web_api/v1/space/' + id + '/reviews',
         success: function (data) {
             var template = Handlebars.compile($('#space_reviews_review').html()),
                 rating_sum = 0,
@@ -213,6 +217,7 @@ function loadRatingsAndReviews(id, review_container, rating_container) {
                 review_container.remove();
             }
 
+            $.event.trigger('loadSpaceReviews', [ state.id ]);
         },
         error: function (xhr, textStatus, errorThrown) {
             console.log('Unable to load reviews: ' + xhr.responseText);
@@ -223,7 +228,7 @@ function loadRatingsAndReviews(id, review_container, rating_container) {
 
 function postRatingAndReview(id, review) {
     $.ajax({
-        url: 'web_api/v1/space/' + id + '/reviews',
+        url: '/web_api/v1/space/' + id + '/reviews',
         dataType: 'json',
         contentType: "application/json",
         data: JSON.stringify(review),
