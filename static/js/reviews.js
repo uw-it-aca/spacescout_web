@@ -136,19 +136,15 @@ function setupRatingsAndReviews(data) {
 }
 
 
-function loadRatingsAndReviews(id) {
+function loadRatingsAndReviews(id, review_container, rating_container) {
     $.ajax({
         url: 'web_api/v1/space/' + id + '/reviews',
         success: function (data) {
             var template = Handlebars.compile($('#space_reviews_review').html()),
-                content,
                 rating_sum = 0,
                 node;
 
-            setupRatingsAndReviews(data);
-
-            content = $('.space-reviews-content'),
-            content.html('');
+            review_container.html('');
 
             if (data && data.length > 0) {
                 $.each(data, function(i) {
@@ -174,12 +170,12 @@ function loadRatingsAndReviews(id) {
                         node.hide();
                     }
 
-                    content.append(node);
+                    review_container.append(node);
                 });
 
                 if (data.length > window.spacescout_reviews.pagination) {
                     node = Handlebars.compile($('#more_space_reviews').html())();
-                    content.append(node);
+                    review_container.append(node);
 
                     $('.more-space-reviews a').on('click', function (e) {
                         $('.space-reviews-review:hidden').each(function (i) {
@@ -197,21 +193,29 @@ function loadRatingsAndReviews(id) {
                 if (rating_sum) {
                     var avg = Math.ceil((rating_sum) / data.length);
 
-                    $('.space-actions i').each(function(i) {
+                    $('i', rating_container).each(function(i) {
                         if (i < avg) {
                             $(this).switchClass('fa-star-o', 'fa-star');
                         }
                     });
 
-                    $('.space-actions span#review_count').html(data.length);
+                    $('span#review_count', rating_container).html(data.length);
                 }
 
                 showRatingEditorButton();
             } else {
+                var html;
+
+                if ($('.space-review-compose').length) {
+                    html = $('#no_space_reviews').html();
+                } else {
+                    html = $('#no_space_reviews_no_edit').html();
+                }
+
                 hideRatingEditorButton();
-                template = Handlebars.compile($('#no_space_reviews').html());
-                content.html(template());
-                $('.write-a-review', content).on('click', function (e) {
+                template = Handlebars.compile(html);
+                review_container.html(template());
+                $('.write-a-review', review_container).on('click', function (e) {
                     showRatingEditor();
                 });
             }

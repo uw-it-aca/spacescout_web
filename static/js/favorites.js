@@ -293,7 +293,9 @@
                 o, c;
 
             $('.space-detail-is-closed', card).show();
-            
+
+            loadRatingsAndReviews(fav.id, $('.space-ratings-and-reviews', card), card);
+
             if (fav.available_hours[day].length > 0) {
                 $.each(fav.available_hours[day], function() {
                     this[0] = this[0].replace(/^0+/, '');

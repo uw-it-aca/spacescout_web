@@ -302,7 +302,8 @@
             });
         }
 
-        loadRatingsAndReviews(data.id);
+        setupRatingsAndReviews(data);
+        loadRatingsAndReviews(data.id, $('.space-reviews-content'), $('.space-actions'));
 
         // set up share space
         $('button#share_space').unbind('click');
