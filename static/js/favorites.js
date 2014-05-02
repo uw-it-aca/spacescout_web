@@ -16,7 +16,8 @@
     Changes:
 
     =================================================================
-
+    sbutler1@illinois.edu: fixed suggested by JSHint, also use some
+      common jQuery conventions.
 */
 
 // H = Handlebars, $ = jQuery
