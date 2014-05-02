@@ -21,7 +21,6 @@
 */
 
 Handlebars.registerHelper('ifany', function(a, b) {
-
     // if anything passed is true, return true
     if (a || b) {
         return fn(this);
@@ -49,15 +48,34 @@ Handlebars.registerHelper('ifany', function(a, b) {
 
 		// show filter panel
 		$('#filter_button').click(function() {
+            var block = $("#filter_block");
 
-            $("#filter_block").slideDown(400, function() {
-                $('#study_room').focus();
-            });
+            if (block.css('display') == 'none') {
+                // reflect current filter
+                if (window.hasOwnProperty('spacescout_search_options')) {
+                    clear_filter();
+                    repopulate_filters(window.spacescout_search_options);
+                }
 
-            $('#filter_button').hide();
-            $('#view_results_button').show();
-            $('#cancel_results_button').show();
+                block.slideDown(400, function() {
+                    var icon = $('.fa-angle-double-down');
 
+                    if (icon.length) {
+                        icon.switchClass('fa-angle-double-down', 'fa-angle-double-up', 0);
+                    }
+
+                    $('#study_room').focus();
+                });
+            }
+            else {
+                block.slideUp(400, function() {
+                    var icon = $('.fa-angle-double-up');
+
+                    if (icon.length) {
+                        icon.switchClass('fa-angle-double-up', 'fa-angle-double-down', 0);
+                    }
+                });
+            }
         });
 
         $('#neighboring').blur(function() {
@@ -67,41 +85,17 @@ Handlebars.registerHelper('ifany', function(a, b) {
         // clear filters
         $('#cancel_results_button').click(function() {
 
+            $('#filter-clear').slideDown(50);
+            $('#filter-clear').delay(1000).fadeOut(500);
+
             // clear saved search options
-            if ($.cookie('spacescout_search_opts')) {
-                $.removeCookie('spacescout_search_opts');
-            }
+//            if ($.cookie('spacescout_search_opts')) {
+//                $.removeCookie('spacescout_search_opts');
+//            }
 
-            // reset checkboxes
-            $('input[type=checkbox]').each(function() {
-                if ($(this).prop('checked')) {
-                    $(this).prop('checked', false);
-                    $(this).parent().removeClass("selected");
-                }
-            });
-
-            // reset capacity
-            $('#capacity').val('1');
-
-            // reset hours
-            $('#open_now').prop('checked', true);
-            $('#open_now').parent().removeClass("selected");
-            $('#hours_list_container').hide();
-            $('#hours_list_input').parent().removeClass("selected");
-            default_open_at_filter();
-            $("#day-until").val("No pref")
-            $("#hour-until").val("No pref")
-            $("#ampm-until").val("AM")
-
-            // reset location
-            $('#entire_campus').prop('checked', true);
-            $('#entire_campus').parent().removeClass("selected");
-            $('#e9.building-location').children().children().first()[0].selected = true; // grabs first location in drop down and selects it
-            $('#building_list_container').hide();
-            $('#building_list_input').parent().removeClass("selected");
-            $('#building_list_container').children().children().children(".select2-search-choice").remove();
-            $('#building_list_container').children().children().children().children().val('Select building(s)');
-            $('#building_list_container').children().children().children().children().attr('style', "");
+            clear_filter();
+            // clear the initial_load cookie so we can use the in-page json
+            $.removeCookie('initial_load');
         });
 
 
@@ -126,70 +120,15 @@ Handlebars.registerHelper('ifany', function(a, b) {
 
              // clear previously selected space
             $('#info_items li').removeClass('selected');
-
             //highlight the selected space
             $(this).addClass('selected');
 
         });
 
-        $('#space_detail_container .close').live('click', function(e){
+        $('.space-detail-container .close').live('click', function(e){
             e.preventDefault();
             closeSpaceDetails();
         });
-
-        // handle checkbox and radio button clicks
-        $('.checkbox input:checkbox').click(function() {
-            if(this.checked) {
-                $(this).parent().addClass("selected");
-            }
-            else {
-                $(this).parent().removeClass("selected");
-            }
-        });
-
-        $('#filter_hours input:radio').change(function() {
-            $(this).parent().addClass("selected");
-            $(this).parent().siblings().removeClass("selected");
-
-            if ($('#hours_list_input').is(':checked')) {
-                $('#hours_list_container').show();
-            }
-            else {
-                $('#hours_list_container').hide();
-            }
-        });
-
-        $('#filter_location input:radio').change(function() {
-            $(this).parent().addClass("selected");
-            $(this).parent().siblings().removeClass("selected");
-
-            if ($('#building_list_input').is(':checked')) {
-                $('#building_list_container').show();
-            }
-            else {
-                $('#building_list_container').hide();
-            }
-
-        });
-
-        // Toggle between carousel and map
-        $('.space-image-map-buttons button').live('click', function(e){
-
-            if ($('#carouselControl').hasClass('active')) { // show the carousel
-                $('#spaceCarouselContainer').show();
-                $('#carouselControl.btn').attr("tabindex", -1);
-                $('#mapControl.btn').attr("tabindex", 0);
-                $('#spaceMap').hide();
-            }
-            else { //show the map
-                $('#spaceCarouselContainer').hide();
-                $('#spaceMap').show();
-                $('#carouselControl.btn').attr("tabindex", 0);
-                $('#mapControl.btn').attr("tabindex", -1);
-                getSpaceMap(detailsLat, detailsLon);
-            }
-        });
-
 	});
 
 	// Update dimensions on resize
@@ -199,8 +138,8 @@ Handlebars.registerHelper('ifany', function(a, b) {
         desktopContent();
 
         // if the space details is already open
-        if ($('#space_detail_container').is(":visible")) {
-            $('#space_detail_container').height($('#map_canvas').height());
+        if ($('.space-detail-container').is(":visible")) {
+            $('.space-detail-container').height($('#map_canvas').height());
             $('.space-detail-body').height($('.space-detail').height() - 98);
 
             resizeCarouselMapContainer();
@@ -222,26 +161,28 @@ Handlebars.registerHelper('ifany', function(a, b) {
            data["has_resources"] = ( data.extended_info.has_computers != null || data.extended_info.has_displays != null || data.extended_info.has_outlets != null || data.extended_info.has_printing != null || data.extended_info.has_projector != null || data.extended_info.has_scanner != null || data.extended_info.has_whiteboards != null );
 
     	   // remove any open details
-    	   if (!$('#space_detail_container').is(':visible')) {
+    	   if (!$('.space-detail-container').is(':visible')) {
                var open = false;
            }else {
                var open = true;
            }
-           $('#space_detail_container').remove();
+           $('.space-detail-container').remove();
 
         	// build the template
     	   var source = $('#space_details').html();
     	   var template = Handlebars.compile(source);
     	   $('#map_canvas').append(template(data));
 
+           initMapCarouselButtons();
+
     	   // set/reset initial state
 
            $('.space-detail-inner').show();
-           $('#space_detail_container').show();
+           $('.space-detail-container').show();
 
            //set focus on the closing x
 
-           $('#space_detail_container').height($('#map_canvas').height());
+           $('.space-detail-container').height($('#map_canvas').height());
            $('.space-detail-body').height($('.space-detail').height() - 98);
 
            //TODO: make these identical anonymous callback functions a real named function.  Had unknown scope problems doing this before
@@ -257,7 +198,7 @@ Handlebars.registerHelper('ifany', function(a, b) {
                        $('.close').focus();
                    });
                });
-           }else {
+           } else {
                $('.space-detail').show(0, function() {
                    $('.close').focus();
                    $('.btn.active').attr("tabindex", -1);
@@ -270,12 +211,51 @@ Handlebars.registerHelper('ifany', function(a, b) {
                    });
                });
            }
+
     	   initializeCarousel();
 
-    	   detailsLat = data.location.latitude;
-    	   detailsLon = data.location.longitude;
-
            replaceUrls();
+
+           // set up favorites
+           var fav_icon = $('.space-detail-container .space-detail-fav');
+
+           if (fav_icon.is(':visible')) {
+               var title = 'Favorite this space';
+
+               if (window.spacescout_favorites.is_favorite(data.id)) {
+                   fav_icon.addClass('space-detail-fav-set');
+                   title = 'Remove this space from favorites';
+               } else {
+                   fav_icon.removeClass('space-detail-fav-set');
+               }
+
+               fav_icon.unbind();
+               fav_icon.click(function (e) {
+                   var list_item = $('button#' + data.id + ' .space-detail-fav');
+
+                   window.spacescout_favorites.toggle(data.id,
+                                                      function () {
+                                                          fav_icon.addClass('space-detail-fav-set');
+                                                          list_item.show();
+                                                          fav_icon.tooltip('hide');
+                                                          fav_icon.data('tooltip', false);
+                                                          fav_icon.tooltip({ title: 'Remove this space from Favorites',
+                                                                             placement: 'right' });
+                                                          fav_icon.tooltip('show');
+                                                      },
+                                                      function () {
+                                                          fav_icon.removeClass('space-detail-fav-set');
+                                                          list_item.hide();
+                                                          fav_icon.tooltip('hide');
+                                                          fav_icon.data('tooltip', false);
+                                                          fav_icon.tooltip({ title: 'Favorite this space',
+                                                                             placement: 'right' });
+                                                          fav_icon.tooltip('show');
+                                                      });
+               });
+
+               fav_icon.tooltip({ placement: 'right', title: title});
+           }
 
            // Set focus on details container
            $('.space-detail-inner').focus();
@@ -295,74 +275,5 @@ Handlebars.registerHelper('ifany', function(a, b) {
         $('#info_list .list-inner').css('min-height', contentH - 100);
         //$('.loading').height(contentH);
     }
-
-    function initializeCarousel() {
-
-        // initialize the carousel
-        $('.carousel').each( function() {
-
-            $(this).carousel({
-                interval: false
-            });
-
-            // add carousel pagination
-            var html = '<div class="carousel-nav" data-target="' + $(this).attr('id') + '"><ul>';
-
-            for(var i = 0; i < $(this).find('.item').size(); i ++) {
-                html += '<li><a';
-                if(i == 0) {
-                    html += ' class="active"';
-                }
-
-                html += ' href="#">•</a></li>';
-            }
-
-            html += '</ul></li>';
-            $(this).before(html);
-
-            //set the first item as active
-            $(this).find(".item:first-child").addClass("active");
-
-            // hide the controls and pagination if only 1 picture exists
-            if ($(this).find('.item').length == 1) {
-                $(this).find('.carousel-control').hide();
-                $(this).prev().hide(); // hide carousel pagination container for single image carousels
-            }
-
-        }).bind('slid', function(e) {
-            var nav = $('.carousel-nav[data-target="' + $(this).attr('id') + '"] ul');
-            var index = $(this).find('.item.active').index();
-            var item = nav.find('li').get(index);
-
-            nav.find('li a.active').removeClass('active');
-            $(item).find('a').addClass('active');
-        });
-
-        $('.carousel-nav a').bind('click', function(e) {
-            var index = $(this).parent().index();
-            var carousel = $('#' + $(this).closest('.carousel-nav').attr('data-target'));
-
-            carousel.carousel(index);
-            e.preventDefault();
-        });
-
-        resizeCarouselMapContainer();
-
-    }
-
-    function resizeCarouselMapContainer() {
-        // get the width
-        var containerW = $('.image-container').width();
-
-        // calcuate height based on 3:2 aspect ratio
-        var containerH = containerW / 1.5;
-
-        $('.carousel').height(containerH);
-        $('.carousel-inner-image').height(containerH);
-        $('.carousel-inner-image-inner').height(containerH);
-        $('.map-container').height(containerH);
-
-    }
-
 
 })(this);

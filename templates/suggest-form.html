@@ -1,0 +1,35 @@
+{% extends "suggest.html" %}
+
+{% block suggest-content %}
+
+    {% if not is_mobile %}<h2 class="suggest-header">Suggest a Space</h2>{% endif %}
+
+    <form action="/suggest/" method="post">{% csrf_token %}
+        <div class="fieldWrapper">
+            {{ spot_name }}<br />
+            {{ spot_description }}
+        </div>
+        {{ form.non_field_errors }}
+        {% for field in form %}
+            {% if field.name == "email_confirmation" %}
+                <div style="display: None;">
+                    LEAVE BLANK {{ field }}
+                </div>
+            {% else %}
+                <div class="fieldWrapper">
+                    {% if field.field.required %}
+                       <label for="id_{{field.name}}">{{field.label}} <span class="required">*</span></label>
+                    {% else %}
+                        {{ field.label_tag }}
+                    {% endif %}
+                    {{ field }}
+                    {% for error in field.errors %}
+                        <strong class="alert">{{ error|escape }}</strong>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endfor %}
+        <input type="submit" value="Send" />
+    </form>
+    <span class="requiredtext">*Required</span>
+{% endblock %}

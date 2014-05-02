@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--
 
-  Copyright 2012 UW Information Technology, University of Washington
+  Copyright 2012, 2013 UW Information Technology, University of Washington
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -20,23 +20,27 @@
 
   sbutler1@illinois.edu: div to fieldsets where appropriate; proper
   	nesting of ol lists; HTTPS for external resources; use
-	<label for=>; alt attrs galore; open_anytime.
+	<label for=>; alt attrs galore.
 
 -->
 <html lang="en">
 
     <head>
-        <title>SpaceScout&trade;</title>
+        <title>SpaceScout&trade; Find the Perfect Place to Study</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
+		<meta name="description" content="Searching for that perfect study spot? SpaceScout helps UW students quickly locate campus spaces and resources to use for study or collaboration">
+        {% if show_ios_smart_banner %}
         <meta name="apple-itunes-app" content="app-id=551472160">
+        {% endif %}
 
         {% load compress %}
         {% compress css %}
         <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}libs/bootstrap/css/bootstrap-custom.css" charset="utf-8" />
+        <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}libs/font-awesome.min.css" charset="utf-8" />
         <link rel="stylesheet" type="text/less" href="{{ STATIC_URL }}css/mobile.less" media="screen, handheld" />
         <link rel="stylesheet" type="text/less" href="{{ STATIC_URL }}css/tablet.less" media="screen, handheld" />
+        {% block extra_compress_css %}{% endblock %}
         {% endcompress %}
 
         {% block extra_css %}{% endblock %}
@@ -48,6 +52,11 @@
         <link rel="apple-touch-icon-precomposed" href="apple-touch-icon-precomposed.png" />
         <link rel="apple-touch-icon-precomposed" sizes="72x72" href="touch-icon-ipad.png" />
         <link rel="apple-touch-icon-precomposed" sizes="114x114" href="touch-icon-iphone-retina.png" />
+
+
+        <script type="text/javascript">
+             var isMobile = true;
+        </script>
 
         {% if ga_tracking_id %}
         <!-- Google Analytics tracking -->
@@ -68,7 +77,8 @@
     </head>
 
       <body id="top">
-
+			<div id="preload"></div>
+          {% if show_ios_smart_banner %}
           <div id="ios_callout" style="display:none;">
               <div class="ios-inner-container">
                   <p>We have an iPhone app!</p>
@@ -76,40 +86,60 @@
                   <button type="button" id="download_native" class="btn btn-inverse">Let's download it!</button>
               </div>
           </div>
+          {% endif %}
 
           <div id="container">
               {% block content %}{% endblock %}
               <div class="back-top">
+                <div class="suggest">Didn't find one? <a href="{% url suggest-form %}">Suggest a space</a></div>
                 <button id="top_link" class="btn btn-inverse" type="button">Back to top</button>
               </div>
 
-              <div id="footer" class="clearfix">
-                  <div class="pull-left copyright">Copyright &copy; 2012 &nbsp;&nbsp;&nbsp;<a href="http://www.washington.edu/online/privacy/" target="_blank">Privacy</a> | <a href="http://www.washington.edu/online/terms/" target="_blank">Terms</a> | <a href="http://www.washington.edu/lst/web_tools" title="About SpaceScout" target="_blank">About</a><br/>Academic and Collaborative Applications, UW-IT</div>
+              <div id="footer" class="clearfix" role="contentinfo">
+                  <div class="pull-left copyright">Copyright &copy; 2012 &nbsp;&nbsp;&nbsp;<a href="http://www.washington.edu/online/privacy/" target="_blank">Privacy</a> | <a href="http://www.washington.edu/online/terms/" target="_blank">Terms</a> | <a href="http://www.washington.edu/itconnect/learn/tools/spacescout/" title="About SpaceScout" target="_blank">About</a><br/>Academic and Collaborative Applications, UW-IT</div>
                   <div class="pull-left partners">Brought to you by UW-IT in partnership with Housing and Food Services, UW Libraries, UW Computing Directors, and partially funded by the Student Technology Fee</div>
               </div>
           </div>
 
           <!-- jQuery -->
-          <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-          <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+          <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+          <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
 
           <!-- Google Maps -->
-          <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=geometry&amp;sensor=true"></script>
+          {% if gmaps_api_key %}
+          <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?v=3&key={{ gmaps_api_key }}&libraries=geometry&amp;sensor=false"></script>
+          {% else %}
+          <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?libraries=geometry&amp;sensor=false"></script>
+          {% endif %}
 
           {% compress js %}
             <script type="text/javascript" src="{{ STATIC_URL }}libs/cookie.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap/js/bootstrap-transition.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap/js/bootstrap-button.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap/js/bootstrap-carousel.js"></script>
+            <script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap/js/bootstrap-tooltip.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/handlebars.js"></script>
-
+            
+			<script type="text/javascript" src="{{ STATIC_URL }}js/markerwithlabel.js"></script>
+            <script type="text/javascript" src="{{ STATIC_URL }}libs/jquery.lazyscrollloading-min.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}js/global.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}js/search.js"></script>
+            <script type="text/javascript" src="{{ STATIC_URL }}js/favorites.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}js/mobile.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}js/clustering.js"></script>
+            <script type="text/javascript" src="{{ STATIC_URL }}js/retina.js"></script>
+            <script type="text/javascript" src="{{ STATIC_URL }}js/analytics.js"></script>
+
+
+            {% if spaces %}
+            <script type="text/javascript">
+                var initial_json = {{ spaces|safe }};
+            </script>
+            {% endif %}
 
             {% block extra_js %}{% endblock %}
           {% endcompress %}
+            <script type="text/javascript" src="{% url django.views.i18n.javascript_catalog %}"></script>
 
     </body>
 </html>

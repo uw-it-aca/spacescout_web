@@ -9,13 +9,13 @@
             </div>
         </div>
     </div>
-    <div id="main_content" style="padding: 80px;">
-        <h2 class="contact-header">Page Not Found (404)</h2>
+    <div id="main_content" style="padding: 80px;" role="main" aria-labelledby="404_header">
+        <h2 id="404_header" class="contact-header">Page Not Found (404)</h2>
         <div>
             <img src="{{ STATIC_URL }}/img/scout.png" />
             Sorry! Scout couldn't fetch the page at {{ request_path }}.
             <br />
-            Return to the <a href="/">app</a>, or go to our <a href="http://www.washington.edu/lst/help/spacescout-faq">FAQ</a>.
+            Return to the <a href="/">app</a>, or go to our <a href="http://www.washington.edu/itconnect/learn/tools/spacescout/">FAQ</a>.
         </div>
         <div class="space-detail-report">
             <a href="/contact/"><img src="/static/img/mail.png" />&nbsp;Report a problem with a space</a>

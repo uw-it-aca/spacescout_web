@@ -84,15 +84,11 @@
     <p id="open_hours_header"><span class="small-text"><em>Select open hours</em></span></p>
     <div>
         <span class="radio inline">
-            <input type="radio" name="optionsHours" id="open_now" value="option1" checked>
+            <input type="radio" name="optionsHours" id="open_now" value="open_now" checked>
             <label class="inline" for="open_now">Open now</label>
         </span>
         <span class="radio inline">
-            <input type="radio" name="optionsHours" id="open_anytime" value="open_anytime">
-            <label class="inline" for="open_anytime">Any time</label>
-        </span>
-        <span class="radio inline">
-            <input type="radio" name="optionsHours" id="hours_list_input" value="option2">
+            <input type="radio" name="optionsHours" id="hours_list_input" value="hours_list">
             <label class="inline" for="hours_list_input">Specify day &amp; time</label>
         </span>
     </div>
@@ -101,7 +97,6 @@
         <div><span class="hours-from" id="from-time-heading">from</span>
             <label class="hours-from visuallyhidden" for="day-from">from day:</label>
             <select id="day-from">
-                <option value="nopref">No pref</option>
                 <option value="Monday">MON</option>
                 <option value="Tuesday">TUE</option>
                 <option value="Wednesday">WED</option>
@@ -112,7 +107,6 @@
             </select>
             <label class="hours-from visuallyhidden" for="hour-from">from time:</label>
             <select id="hour-from">
-                <option value="nopref">No pref</option>
                 <option>12:00</option>
                 <option>12:30</option>
                 <option>1:00</option>
@@ -138,18 +132,18 @@
                 <option>11:00</option>
                 <option>11:30</option>
             </select>
-            <label class="hours-from visuallyhidden" for="ampm-from">from time:</label>
+            <label class="hours-from visuallyhidden" for="ampm-from">from: AM or PM?</label>
             <select class="ampm" id="ampm-from">
                 <option value="AM">AM</option>
                 <option value="PM">PM</option>
             </select>
         </div>
 
+                    
         <div aria-labelledby="until-time-heading">
             <span class="hours-from" id="until-time-heading">until</span>
             <label class="hour-until visuallyhidden" for="day-until">until day:</label>
             <select id="day-until">
-                <option value="nopref">No pref</option>
                 <option value="Monday">MON</option>
                 <option value="Tuesday">TUE</option>
                 <option value="Wednesday">WED</option>
@@ -160,7 +154,6 @@
             </select>
             <label class="hour-until visuallyhidden" for="hour-until">until time:</label>
             <select id="hour-until">
-                <option value="nopref">No pref</option>
                 <option>12:00</option>
                 <option>12:30</option>
                 <option>1:00</option>
@@ -186,7 +179,7 @@
                 <option>11:00</option>
                 <option>11:30</option>
             </select>
-            <label class="hour-until visuallyhidden" for="ampm-until">until time:</label>
+            <label class="hour-until visuallyhidden" for="ampm-until">until: AM or PM?</label>
             <select class="ampm" id="ampm-until">
                 <option value="AM">AM</option>
                 <option value="PM">PM</option>
@@ -197,21 +190,20 @@
 
 <fieldset id="filter_location" class="choice-group">
     <legend id="filter_location_header">Location</legend>
-
     <div>
         <span class="radio inline">
-            <input type="radio" name="optionsLocations" id="entire_campus" value="option1" checked>
+            <input type="radio" name="optionsLocations" id="entire_campus" value="entire_campus" checked>
             <label class="inline" for="entire_campus">Entire campus</label>
         </span>
         <span class="radio inline">
-            <input type="radio" name="optionsLocations" id="building_list_input" value="option2">
-            <label class="inline" for="building_list_input">Specific building</label>
+            <input type="radio" name="optionsLocations" id="building_list_input" value="building_list">
+            <label class="inline" for="building_list_input">Specific buildings</label>
         </span>
     </div>
     <div id="building_list_container" style="margin-top:8px;display:none;"></div>
         {% tplhandlebars "building_list" %}
         <label class="visuallyhidden" for="e9">Choose a building:</label>
-        <select class="building-location" name="e9" id="e9">
+        <select data-placeholder="Select building(s)" class="building-location chzn-select" name="e9" id="e9" multiple>
             {{#alphaOptGroupsHTML data}}{{/alphaOptGroupsHTML}}
         </select>
         {% endtplhandlebars %}
@@ -263,7 +255,6 @@
 <fieldset id="filter_environment" class="choice-group">
     <legend id="filter_environment_header">Environment</legend>
     <p class="small-text"><em>Select preferred conditions, if any:</em></p>
-
     <div>
         <fieldset id="filter_noise_level" class="choice-group">
             <legend id="filter_noise_level_header">Noise level</legend>
