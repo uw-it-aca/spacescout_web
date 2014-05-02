@@ -562,7 +562,7 @@ var requests = [];
 
         $('.carousel-nav a').bind('click', function (e) {
             var index = $(this).parent().index();
-            var $carousel = $('#' + $(this).closest('.carousel-nav').attr('data-target'));
+            var $carousel = $('#' + $(this).closest('.carousel-nav').data('target'));
 
             $carousel.carousel(index);
             e.preventDefault();
@@ -590,7 +590,7 @@ var requests = [];
                     $('#spaceMap', $container).show();
                     $('#carouselControl.btn', $container).attr("tabindex", 0).attr("aria-selected", false);
                     $('#mapControl.btn', $container).attr("tabindex", -1).attr("aria-selected", true);
-                    coords = JSON.parse($target.attr('data-location'));
+                    coords = JSON.parse($target.data('location'));
                     _getSpaceMap($container, coords[0], coords[1]);
                 }
             }
