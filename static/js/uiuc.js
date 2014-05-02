@@ -40,7 +40,7 @@
         if (!args.open_at && !args.open_anytime)
             args.open_now = 1;
         else
-            args.open_now = 0;
+            delete args.open_now;
     } );
 
 })(jQuery);
