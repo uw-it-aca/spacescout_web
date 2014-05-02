@@ -90,9 +90,9 @@
                     this.type = type.join(', ');
                     this.extended_info.noise_level = gettext(this.extended_info.noise_level);
                     this.extended_info.food_nearby = gettext(this.extended_info.food_nearby);
-                    this.has_reservation_notes = ( this.extended_info.reservation_notes != null);
-                    this.has_notes = ( ( this.extended_info.access_notes != null) || this.has_reservation_notes );
-                    this.has_resources = ( this.extended_info.has_computers != null || this.extended_info.has_displays != null || this.extended_info.has_outlets != null || this.extended_info.has_printing != null || this.extended_info.has_projector != null || this.extended_info.has_scanner != null || this.extended_info.has_whiteboards != null );
+                    this.has_reservation_notes = !!this.extended_info.reservation_notes;
+                    this.has_notes = ( this.extended_info.access_notes || this.has_reservation_notes );
+                    this.has_resources = ( this.extended_info.has_computers || this.extended_info.has_displays || this.extended_info.has_outlets || this.extended_info.has_printing || this.extended_info.has_projector || this.extended_info.has_scanner || this.extended_info.has_whiteboards );
 
                     card = $(template(this));
 
