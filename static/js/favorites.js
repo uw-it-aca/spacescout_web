@@ -74,7 +74,7 @@
 
             if (container.length == 1 && $.isArray(this.favorites)) {
                 source = $(this.k.favorites_card_template).html();
-                template = H.compile(source),
+                template = H.compile(source);
                 self = this;
 
                 $.each(this.favorites, function () {
@@ -292,7 +292,7 @@
                 });
             });
     
-            var bld_code = fav.location.building_name.match(/.*\(([A-Z ]+)\)( [a-zA-Z]+)?$/)
+            var bld_code = fav.location.building_name.match(/.*\(([A-Z ]+)\)( [a-zA-Z]+)?$/);
             if (bld_code) {
                 $('.space-detail-building', card).html(bld_code[1] + (bld_code[2] ? bld_code[2] : ''));
             } else {
