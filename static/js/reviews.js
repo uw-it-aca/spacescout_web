@@ -213,8 +213,7 @@ function loadRatingsAndReviews(id, review_container, rating_container) {
                 }
 
                 hideRatingEditorButton();
-                template = Handlebars.compile(html);
-                review_container.html(template());
+                review_container.html(Handlebars.compile(html)());
                 $('.write-a-review', review_container).on('click', function (e) {
                     showRatingEditor();
                 });
