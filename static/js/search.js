@@ -19,6 +19,8 @@
     sbutler1@illinois.edu: attr(checked) to prop(checked); open_anytime
       option.
     sbutler1@illinois.edu: cleanup of obvious bugs highighted by JSHint.
+    sbutler1@illinois.edu: added events to handle custom filter options;
+      removed open_anytime and used the events instead.
 */
 
 var spacescout_map = null, spacescout_markers = [], speed = 800, update_count = null;
@@ -156,6 +158,8 @@ var spacescout_map = null, spacescout_markers = [], speed = 800, update_count = 
             return;
         }
 
+        $.event.trigger('search_beforeRepopulateFilters', form_opts);
+
         // set types
         if (form_opts.hasOwnProperty('type')) {
             $.each(form_opts.type, function () {
@@ -212,8 +216,6 @@ var spacescout_map = null, spacescout_markers = [], speed = 800, update_count = 
                 $('#hour-until').val(time.join(':'));
                 $('#ampm-until').val(ampm);
             }
-        } else if (!form_opts.open_now) {
-            $('#open_anytime').prop('checked', true);
         }
 
         // set location
@@ -253,6 +255,8 @@ var spacescout_map = null, spacescout_markers = [], speed = 800, update_count = 
                 $('#'+form_opts["extended_info:food_nearby"][i]).prop('checked', true);
             }
         }
+
+        $.event.trigger('search_afterRepopulateFilters', form_opts);
     }
     window.repopulate_filters = repopulate_filters;
 
@@ -303,6 +307,7 @@ var spacescout_map = null, spacescout_markers = [], speed = 800, update_count = 
     window.reset_location_filter = reset_location_filter;
 
     function run_custom_search() {
+        var event_results;
          
         // if searching, reset that spot count
         window.update_count = true;
@@ -320,6 +325,10 @@ var spacescout_map = null, spacescout_markers = [], speed = 800, update_count = 
         if ($.cookie('spacescout_search_opts')) {
             set_cookie = true; // if there is a cookie, we'd better reset it, or else we get filters that are too sticky
         }
+
+        event_results = { set_cookie: set_cookie };
+        $.event.trigger('search_beforeRunCustomOptions', [window.spacescout_search_options, event_results]);
+        set_cookie = event_results.set_cookie;
 
         // type
         var checked = [];
@@ -344,9 +353,7 @@ var spacescout_map = null, spacescout_markers = [], speed = 800, update_count = 
         }
 
         // hours
-        if ($("#open_anytime").prop("checked")) {
-          window.spacescout_search_options.open_anytime = 1;
-        } else if ($("#hours_list_input").prop("checked")) {
+        if ($("#hours_list_input").prop("checked")) {
             if ($('#day-from').val() != 'nopref') {
                 var from_query = [];
                 from_query.push($('#day-from').val());
@@ -435,6 +442,10 @@ var spacescout_map = null, spacescout_markers = [], speed = 800, update_count = 
             window.spacescout_search_options["extended_info:food_nearby"] = checked;
             set_cookie = true;
         }
+
+        event_results = { set_cookie: set_cookie };
+        $.event.trigger('search_afterRunCustomOptions', [window.spacescout_search_options, event_results]);
+        set_cookie = event_results.set_cookie;
 
         // close space detail if visible (desktop)
         if ($('.space-detail-container').is(":visible")) {
@@ -674,8 +685,11 @@ var spacescout_map = null, spacescout_markers = [], speed = 800, update_count = 
         if (!args) {
             args = {};
         }
+
+        $.event.trigger('search_beforeFetchDataArgs', args);
+
         // it's a hack, but it should work
-        if (!args.open_at && !args.open_anytime) {
+        if (!args.open_at) {
             args.open_now = 1;
         }
 
@@ -702,6 +716,8 @@ var spacescout_map = null, spacescout_markers = [], speed = 800, update_count = 
         args.center_longitude = center.lng();
         args.distance = distance;
         args.limit = 0;
+
+        $.event.trigger('search_afterFetchDataArgs', args);
 
         // "type" needs to exist as something
         if (!window.spacescout_search_options.hasOwnProperty('type')) {
