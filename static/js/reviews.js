@@ -203,20 +203,14 @@ function loadRatingsAndReviews(id, review_container, rating_container) {
                 }
 
                 showRatingEditorButton();
-            } else {
-                var html;
-
-                if ($('.space-review-compose').length) {
-                    html = $('#no_space_reviews').html();
-                } else {
-                    html = $('#no_space_reviews_no_edit').html();
-                }
-
+            } else if ($('.space-review-compose').length) {
                 hideRatingEditorButton();
-                review_container.html(Handlebars.compile(html)());
+                review_container.html(Handlebars.compile($('#no_space_reviews').html())());
                 $('.write-a-review', review_container).on('click', function (e) {
                     showRatingEditor();
                 });
+            } else {
+                review_container.remove();
             }
 
         },
