@@ -22,10 +22,9 @@ import hashlib
 
 from spacescout_web.middleware.unpatch_vary import unpatch_vary_headers
 
-from spacescout_web.middleware.unpatch_vary import unpatch_vary_headers
-
 
 def ImageView(request, spot_id, image_id, thumb_width=None, thumb_height=None, constrain=False):
+
     client = get_client()
     contenttype, img = get_image(client, spot_id, image_id, constrain, thumb_width, thumb_height)
 
