@@ -18,7 +18,9 @@
     =================================================================
 
 */
-(function(){
+
+// H = Handlebars, $ = jQuery
+(function (H, $) {
 
     window.spacescout_favorites = window.spacescout_favorites || {
         k: {
@@ -36,7 +38,7 @@
                 template;
 
             if (source.length) {
-                template = Handlebars.compile(source.html().trim());
+                template = H.compile(source.html().trim());
                 $(this.k.favorites_count_container).each(function () {
                     $(this).html(template({count: self.favorites.length}));
                 });
@@ -72,7 +74,7 @@
 
             if (container.length == 1 && $.isArray(this.favorites)) {
                 source = $(this.k.favorites_card_template).html();
-                template = Handlebars.compile(source),
+                template = H.compile(source),
                 self = this;
 
                 $.each(this.favorites, function () {
@@ -299,7 +301,7 @@
     
             // Load image carousel
             if (fav.hasOwnProperty('images') && fav.images.length > 0) {
-                var template = Handlebars.compile($('#images_template').html());
+                var template = H.compile($('#images_template').html());
                 var data = [];
                 $.each(fav.images, function () {
                     data.push({ id: fav.id, image_id: this.id });
@@ -307,7 +309,7 @@
     
                 $('.carousel-inner', card).html(template({ data: data }));
             } else {
-                var template = Handlebars.compile($('#no_images_template').html());
+                var template = H.compile($('#no_images_template').html());
                 $('.carousel-inner', card).html(template({ static_url: window.spacescout_static_url }));
             }
     
@@ -315,7 +317,7 @@
                 var url = fav.extended_info.reservation_notes.match(/(http:\/\/[^\s]+)/);
     
                 if (url) {
-                   var template = Handlebars.compile($('#reservation_cue').html());
+                   var template = H.compile($('#reservation_cue').html());
                    $('.space-info-reservation-cue', card).html(template({ url: url[1] })).show();
                 }
             }
@@ -326,5 +328,5 @@
         });
     }
 
-})(this);
+})(Handlebars, jQuery);
 
