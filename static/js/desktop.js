@@ -23,15 +23,16 @@
       variables/functions.
 */
 
-Handlebars.registerHelper('ifany', function(a, b) {
-    // if anything passed is true, return true
-    if (a || b) {
-        return fn(this);
-    }
-});
-
-(function ($) {
+// H = Handlebars, $ = jQuery
+(function (H, $) {
     window.speed = 600;
+
+    H.registerHelper('ifany', function(a, b) {
+        // if anything passed is true, return true
+        if (a || b) {
+            return fn(this);
+        }
+    });
 
     $(document).ready(function() {
 
@@ -161,7 +162,7 @@ Handlebars.registerHelper('ifany', function(a, b) {
 
         // build the template
         var source = $('#space_details').html();
-        var template = Handlebars.compile(source);
+        var template = H.compile(source);
         $('#map_canvas').append(template(data));
 
         initMapCarouselButtons();
@@ -273,4 +274,4 @@ Handlebars.registerHelper('ifany', function(a, b) {
         //$('.loading').height(contentH);
     }
 
-})(jQuery);
+})(Handlebars, jQuery);

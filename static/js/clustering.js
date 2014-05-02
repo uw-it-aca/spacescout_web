@@ -21,15 +21,16 @@
 */
 
 
-(function ($) {
+// H = Handlebars, $ = jQuery, GM = google.maps
+(function (H, $, GM) {
     var visible_markers = [];
     var active_marker;
-    var spherical = google.maps.geometry.spherical;
+    var spherical = GM.geometry.spherical;
 
     function updatePins(spots) {    //this could be a listener on the map/done button.  investigating how it's done now
         if (window.update_count) {
             var source = $('#space_count').html();
-            var template = Handlebars.compile(source);
+            var template = H.compile(source);
             $('#space_count_container').html(template({count: spots.length}));
             window.update_count = false;
         }
@@ -54,8 +55,8 @@
     function _updateMarkers(spots) {
         window.spacescout_markers = [];
         for (var i = 0; i < spots.length; i++) {
-            var holderspot = new google.maps.Marker({
-                position: new google.maps.LatLng(spots[i].location.latitude, spots[i].location.longitude),
+            var holderspot = new GM.Marker({
+                position: new GM.LatLng(spots[i].location.latitude, spots[i].location.longitude),
                 data: spots[i]
             });
             window.spacescout_markers.push(holderspot);
@@ -68,7 +69,7 @@
         var bounds = window.spacescout_map.getBounds();
         var ne_corner = bounds.getNorthEast();
         var sw_corner = bounds.getSouthWest();
-        var diag = spherical.computeDistanceBetween(ne_corner, new google.maps.LatLng(ne_corner.lat(), sw_corner.lng()));
+        var diag = spherical.computeDistanceBetween(ne_corner, new GM.LatLng(ne_corner.lat(), sw_corner.lng()));
         var grouped_spots = [];
 
         for (var count = markers.length-1; count >= 0; count--) {
@@ -135,11 +136,11 @@
         var num_spots = spots.length;
         var main_icon = {
             url: 'static/img/pins/pin00@2x.png',
-            scaledSize: new google.maps.Size(40,40)
+            scaledSize: new GM.Size(40,40)
         };
         var alt_icon = {
             url: 'static/img/pins/pin00-alt@2x.png',
-            scaledSize: new google.maps.Size(40,40)
+            scaledSize: new GM.Size(40,40)
         };
 
         var marker = new MarkerWithLabel({
@@ -151,14 +152,14 @@
             spots: spots,
             labelContent: num_spots, // # of spots to display on label in text
             labelClass: "map-label", // the CSS class for the label
-            labelAnchor: new google.maps.Point(15, 34) // position label over main_icon (position assumes 40x40 marker)
+            labelAnchor: new GM.Point(15, 34) // position label over main_icon (position assumes 40x40 marker)
         });
         
-        google.maps.event.addListener(marker, 'click', function() {
+        GM.event.addListener(marker, 'click', function() {
             _loadMarkerSpots(marker, marker.spots); 
         });
         //next three lines by samolds
-        google.maps.event.addListener(marker, 'mousedown', function(c) {
+        GM.event.addListener(marker, 'mousedown', function(c) {
             window.spacescout_map.setOptions({draggable: false});
         });
 
@@ -175,7 +176,7 @@
             }
             lat = lat / i;
             lon = lon / i;
-            return new google.maps.LatLng(lat, lon);
+            return new GM.LatLng(lat, lon);
         }
         return group[0].getPosition();
     }
@@ -194,13 +195,13 @@
         active_marker.setIcon(active_marker.alt_icon);
         active_marker.setZIndex();
         marker.setIcon(marker.main_icon);
-        marker.setZIndex(google.maps.Marker.MAX_ZINDEX + 1);
+        marker.setZIndex(GM.Marker.MAX_ZINDEX + 1);
         active_marker = marker;
     }
 
     function _setActiveMarker(marker) {
         active_marker = marker;
-        marker.setZIndex(google.maps.Marker.MAX_ZINDEX + 1);
+        marker.setZIndex(GM.Marker.MAX_ZINDEX + 1);
         for (var i = 0; i < visible_markers.length; i++) {
             if (visible_markers[i] != marker) {
                 visible_markers[i].setIcon(visible_markers[i].alt_icon);
@@ -219,7 +220,7 @@
         }
 
         var source = $('#cluster_list').html();
-        var template = Handlebars.compile(source);
+        var template = H.compile(source);
         data = buildingNameHeaders(data);
         $('#info_items').html(template({data: data}));
 
@@ -246,5 +247,5 @@
         }
         visible_markers = [];
     }
-})(jQuery);
+})(Handlebars, jQuery, google.maps);
 
