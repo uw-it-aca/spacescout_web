@@ -128,7 +128,7 @@
     });
 
     // Update dimensions on resize
-    $(document).resize(function(){
+    $(window).resize(function(){
 
         // desktop
         _desktopContent();
