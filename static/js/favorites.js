@@ -75,7 +75,7 @@
             if (container.length == 1 && $.isArray(this.favorites)) {
                 source = $(this.k.favorites_card_template).html();
                 template = H.compile(source);
-                self = this;
+                var self = this;
 
                 $.each(this.favorites, function () {
                     var spot = $('spot_' + this.id),
