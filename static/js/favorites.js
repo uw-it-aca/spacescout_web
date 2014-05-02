@@ -34,11 +34,11 @@
 
         update_count: function () {
             var self = this,
-                source = $(self.k.favorites_count_template),
+                $source = $(self.k.favorites_count_template),
                 template;
 
-            if (source.length) {
-                template = H.compile(source.html().trim());
+            if ($source.length) {
+                template = H.compile($source.html().trim());
                 $(this.k.favorites_count_container).each(function () {
                     $(this).html(template({count: self.favorites.length}));
                 });
@@ -47,39 +47,39 @@
 
         update_search_result: function () {
             var self = this,
-                detail_node = $('div[id^=detail_container_]'),
-                detail_id = detail_node.length ? parseInt(detail_node.prop('id').match(/^detail_container_(\d+)$/)[1]) : null;
+                $detail_node = $('div[id^=detail_container_]'),
+                detail_id = $detail_node.length ? parseInt($detail_node.prop('id').match(/^detail_container_(\d+)$/)[1]) : null;
 
             $('button .space-detail-fav').each(function () {
-                var node = $(this),
-                    id = parseInt(node.parent().prop('id'));
+                var $node = $(this),
+                    id = parseInt($node.parent().prop('id'));
 
                 if (self.is_favorite(id)) {
-                    node.show();
+                    $node.show();
                     if (id == detail_id) {
-                        $('.space-detail-fav', detail_node).addClass('space-detail-fav-set');
+                        $('.space-detail-fav', $detail_node).addClass('space-detail-fav-set');
                     }
                 } else {
-                    node.hide();
+                    $node.hide();
                     if (id == detail_id) {
-                        $('.space-detail-fav', detail_node).removeClass('space-detail-fav-set');
+                        $('.space-detail-fav', $detail_node).removeClass('space-detail-fav-set');
                     }
                 }
             });
         },
 
         update_cards: function (on_card_load, on_finish) {
-            var container = $(this.k.favorites_card_container),
+            var $container = $(this.k.favorites_card_container),
                 source, template;
 
-            if (container.length == 1 && $.isArray(this.favorites)) {
+            if ($container.length == 1 && $.isArray(this.favorites)) {
                 source = $(this.k.favorites_card_template).html();
                 template = H.compile(source);
                 var self = this;
 
                 $.each(this.favorites, function () {
-                    var spot = $('spot_' + this.id),
-                        type = [], card;
+                    var $spot = $('spot_' + this.id),
+                        type = [], $card;
 
                     if ($.isArray(this.type)) {
                         $.each(this.type, function () {
@@ -94,14 +94,14 @@
                     this.has_notes = ( this.extended_info.access_notes || this.has_reservation_notes );
                     this.has_resources = ( this.extended_info.has_computers || this.extended_info.has_displays || this.extended_info.has_outlets || this.extended_info.has_printing || this.extended_info.has_projector || this.extended_info.has_scanner || this.extended_info.has_whiteboards );
 
-                    card = $(template(this));
+                    $card = $(template(this));
 
-                    if (spot.length == 0) {
-                        card.insertBefore('#space-detail-blank', container);
+                    if ($spot.length == 0) {
+                        $card.insertBefore('#space-detail-blank', $container);
                     }
 
                     if (on_card_load) {
-                        on_card_load.apply(self, [card, this]);
+                        on_card_load.apply(self, [$card, this]);
                     }
                 });
 
@@ -267,28 +267,28 @@
             $('.space-info-hours-today span', card).html(formatted);
     
             $('.space-info-more-detail a', card).click(function (e) {
-                var more_div = $(e.target).parent();
+                var $more_div = $(e.target).parent();
     
-                more_div.slideUp('fast');
-                more_div.next().slideDown('fast');
+                $more_div.slideUp('fast');
+                $more_div.next().slideDown('fast');
             });
     
             $('.space-info-less-detail a', card).click(function (e) {
-                var ul = $(e.target).closest('ul');
+                var $ul = $(e.target).closest('ul');
     
-                ul.slideUp('fast');
-                ul.prev().slideDown('fast');
+                $ul.slideUp('fast');
+                $ul.prev().slideDown('fast');
             });
     
             $('.space-detail-fav', card).tooltip({ placement: 'right',
                                                    title: 'Remove this space from Favorites' });
             $('.space-detail-fav', card).click(function (e) {
                 var id = parseInt($(this).attr('data-id'));
-                var container = $(this).closest('.space-detail-container');
+                var $container = $(this).closest('.space-detail-container');
                 var tooltip = $(this).tooltip('hide');
     
                 window.spacescout_favorites.clear(id, function () {
-                    container.hide({ effect: 'fade', duration: 800,  complete: function () { this.remove(); } });
+                    $container.hide({ effect: 'fade', duration: 800,  complete: function () { this.remove(); } });
                 });
             });
     
