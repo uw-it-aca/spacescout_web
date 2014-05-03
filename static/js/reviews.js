@@ -217,7 +217,7 @@ function loadRatingsAndReviews(id, review_container, rating_container) {
                 review_container.remove();
             }
 
-            $.event.trigger('loadSpaceReviews', [ state.id ]);
+            $.event.trigger('loadSpaceReviews', [ id ]);
         },
         error: function (xhr, textStatus, errorThrown) {
             console.log('Unable to load reviews: ' + xhr.responseText);

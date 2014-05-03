@@ -213,17 +213,17 @@
             return -1;
         },
 
-        toggle: function (id, on_set, on_clear) {
+        toggle: function (id) {
             if (this.is_favorite(id)) {
-                this.clear(id, on_clear);
+                this.clear(id);
             } else {
-                this.set(id, on_set);
+                this.set(id);
             }
 
             this.update_count();
         },
 
-        set: function (id, on_set) {
+        set: function (id) {
             var self = this;
 
             if (!this.is_favorite(id)) {
@@ -242,9 +242,7 @@
                         }
 
                         self.update_count();
-                        if (on_set) {
-                            on_set.call();
-                        }
+                        $.event.trigger('spaceFavoriteSet', [ id ]);
                     },
                     error: function (xhr, textStatus, errorThrown) {
                         console.log('Unable to set favorite: ' + xhr.responseText);
@@ -253,7 +251,7 @@
             }
         },
 
-        clear: function (id, on_clear) {
+        clear: function (id) {
             var self = this;
 
             $.ajax({
@@ -270,9 +268,7 @@
                     }
 
                     self.update_count();
-                    if (on_clear) {
-                        on_clear.call();
-                    }
+                    $.event.trigger('spaceFavoriteClear', [ id ]);
                 },
                 error: function (xhr, textStatus, errorThrown) {
                     console.log('Unable to unset favorite: ' + xhr.responseText);

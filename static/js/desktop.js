@@ -244,9 +244,11 @@ Handlebars.registerHelper('ifany', function(a, b) {
         var fav_icon_i = $('i', fav_icon);
 
         if (fav_icon.is(':visible')) {
-            var title = 'Favorite this space';
+            var title = 'Favorite this space',
+                authenticated_user = window.spacescout_authenticated_user.length > 0,
+                is_over_favs = false;
 
-            if (window.spacescout_favorites.is_favorite(data.id)) {
+            if (authenticated_user && window.spacescout_favorites.is_favorite(data.id)) {
                 fav_icon.removeClass('space-detail-fav-unset').addClass('space-detail-fav-set');
                 fav_icon_i.removeClass('fa-heart-o').addClass('fa-heart');
                 title = 'Remove this space from favorites';
@@ -256,51 +258,62 @@ Handlebars.registerHelper('ifany', function(a, b) {
             }
 
             fav_icon.unbind();
-            is_over_favs = false;
+
             fav_icon.on('mouseover', function() {
                 is_over_favs = true;
             });
+
             fav_icon.on('mouseout', function() {
                 is_over_favs = false;
             });
-            fav_icon.parent().click(function (e) {
-                var list_item = $('button#' + data.id + ' .space-detail-fav');
 
+            fav_icon.parent().click(function (e) {
                 if ($('#logout_button').length == 0) {
+                    $.cookie('space_set_favorite', JSON.stringify({ id: data.id }));
                     window.location.href = '/login?next=' + window.location.pathname;
                 }
 
+                window.spacescout_favorites.toggle(data.id);
+            });
 
-                window.spacescout_favorites.toggle(data.id,
-                                                   function () {
-                                                       fav_icon.removeClass('space-detail-fav-unset').addClass('space-detail-fav-set');
-                                                       fav_icon_i.removeClass('fa-heart-o').addClass('fa-heart');
-                                                       list_item.show();
-                                                       fav_icon.tooltip('hide');
-                                                       fav_icon.data('tooltip', false);
-                                                       fav_icon.tooltip({ title: 'Remove this space from Favorites',
-                                                                          placement: 'right' });
+            $(document).on('spaceFavoriteSet', function (e, id) {
+                fav_icon.removeClass('space-detail-fav-unset').addClass('space-detail-fav-set');
+                fav_icon_i.removeClass('fa-heart-o').addClass('fa-heart');
+                $('button#' + id + ' .space-detail-fav').show();
+                fav_icon.tooltip('hide');
+                fav_icon.data('tooltip', false);
+                fav_icon.tooltip({ title: 'Remove this space from Favorites',
+                                   placement: 'right' });
+                if (is_over_favs) {
+                    fav_icon.tooltip('show');
+                }
+            });
 
-                                                        if (is_over_favs) {
-                                                            fav_icon.tooltip('show');
-                                                        }
-                                                   },
-                                                   function () {
-                                                       fav_icon.removeClass('space-detail-fav-set').addClass('space-detail-fav-unset');
-                                                       fav_icon_i.removeClass('fa-heart').addClass('fa-heart-o');
-                                                       list_item.hide();
-                                                       fav_icon.tooltip('hide');
-                                                       fav_icon.data('tooltip', false);
-                                                       fav_icon.tooltip({ title: 'Favorite this space',
-                                                                          placement: 'right' });
-                                                        if (is_over_favs) {
-                                                            fav_icon.tooltip('show');
-                                                        }
-
-                                                   });
+            $(document).on('spaceFavoriteClear', function (e, id) {
+                fav_icon.removeClass('space-detail-fav-set').addClass('space-detail-fav-unset');
+                fav_icon_i.removeClass('fa-heart').addClass('fa-heart-o');
+                $('button#' + id + ' .space-detail-fav').hide();
+                fav_icon.tooltip('hide');
+                fav_icon.data('tooltip', false);
+                fav_icon.tooltip({ title: 'Favorite this space',
+                                   placement: 'right' });
+                if (is_over_favs) {
+                    fav_icon.tooltip('show');
+                }
             });
 
             fav_icon.tooltip({ placement: 'right', title: title});
+
+            if (authenticated_user) {
+                var set_favorite = $.cookie('space_set_favorite'),
+                    json_favorite = set_favorite ? JSON.parse(set_favorite) : null;
+
+                if (json_favorite) {
+                    window.spacescout_favorites.set(json_favorite.id);
+                }
+
+                $.removeCookie('space_set_favorite');
+            }
         }
 
         setupRatingsAndReviews(data);
