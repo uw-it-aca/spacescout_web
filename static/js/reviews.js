@@ -146,11 +146,15 @@ function loadRatingsAndReviews(id, review_container, rating_container) {
         success: function (data) {
             var template = Handlebars.compile($('#space_reviews_review').html()),
                 rating_sum = 0,
+                total_reviews = (data && data.length) ? data.length : 0,
+                html_count = Handlebars.compile($('#space_reviews_count').html())({ count : total_reviews }),
                 node;
 
             review_container.html('');
 
-            if (data && data.length > 0) {
+            $('span#review_count', rating_container).html(html_count);
+
+            if (total_reviews > 0) {
                 $.each(data, function(i) {
                     var review = this,
                         rating = this.rating,
@@ -202,8 +206,6 @@ function loadRatingsAndReviews(id, review_container, rating_container) {
                             $(this).switchClass('fa-star-o', 'fa-star');
                         }
                     });
-
-                    $('span#review_count', rating_container).html(data.length);
                 }
 
                 showRatingEditorButton();
