@@ -136,6 +136,11 @@ function setupRatingsAndReviews(data) {
 
             $.removeCookie('space_review');
         }
+
+        $('#show_reviews').css('cursor', 'pointer');
+        $('#show_reviews').click(function () {
+            $('.space-detail-body').animate({ scrollTop: $('#reviews_for_this_space').offset().top }, '500');
+        });
     });
 }
 
