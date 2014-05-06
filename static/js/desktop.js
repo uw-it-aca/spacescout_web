@@ -78,7 +78,22 @@ Handlebars.registerHelper('ifany', function(a, b) {
 
 	   // check if a map_canvas exists... populate it
     	if ($("#map_canvas").length == 1) {
-          initialize();
+            initialize();
+
+	        // Update dimensions on resize
+	        $(d).resize(function(){
+
+                // desktop
+                desktopContent();
+
+                // if the space details is already open
+                if ($('.space-detail-container').is(":visible")) {
+                    $('.space-detail-container').height($('#map_canvas').height());
+                    $('.space-detail-body').height($('.space-detail').height() - 98);
+
+                    resizeCarouselMapContainer();
+                }
+	        });
         }
 
 		// show filter panel
@@ -155,22 +170,6 @@ Handlebars.registerHelper('ifany', function(a, b) {
                 fetchSpaceDetails(id);
             }
         });
-
-	});
-
-	// Update dimensions on resize
-	$(d).resize(function(){
-
-        // desktop
-        desktopContent();
-
-        // if the space details is already open
-        if ($('.space-detail-container').is(":visible")) {
-            $('.space-detail-container').height($('#map_canvas').height());
-            $('.space-detail-body').height($('.space-detail').height() - 98);
-
-            resizeCarouselMapContainer();
-        }
 
 	});
 
