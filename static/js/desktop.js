@@ -187,7 +187,7 @@ Handlebars.registerHelper('ifany', function(a, b) {
         data["has_resources"] = ( data.extended_info.has_computers != null || data.extended_info.has_displays != null || data.extended_info.has_outlets != null || data.extended_info.has_printing != null || data.extended_info.has_projector != null || data.extended_info.has_scanner != null || data.extended_info.has_whiteboards != null );
 
     	// remove any open details
-        var open = (!$('.space-detail-container').is(':visible'));
+        var open = $('.space-detail-container').is(':visible');
 
         $('.space-detail-container').remove();
 
@@ -203,12 +203,11 @@ Handlebars.registerHelper('ifany', function(a, b) {
         $('.space-detail-inner').show();
         $('.space-detail-container').show();
 
-        //set focus on the closing x
-
         $('.space-detail-container').height($('#map_canvas').height());
-        $('.space-detail-body').height($('.space-detail').height() - 98);
+        $('.space-detail-body').height($('.space-detail').height() - 128);
 
         //TODO: make these identical anonymous callback functions a real named function.  Had unknown scope problems doing this before
+
         if (!open) {
             $('.space-detail').show("slide", { direction: "right" }, 400, function () {
                 $('.close').focus();
@@ -329,8 +328,8 @@ Handlebars.registerHelper('ifany', function(a, b) {
         //highlight the selected space
         $('button#' + data.id).closest('.view-details').addClass('selected');
 
-        // Set focus on details container
-        $('.space-detail-inner').focus();
+        //set focus on the closing x
+        $('a.close').focus();
 	}
 
 	// Desktop display defaults
