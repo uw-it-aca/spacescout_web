@@ -3,9 +3,8 @@
 
 
 {% tplhandlebars "space_reviews" %}
-  <h4 id="reviews_for_this_space">Reviews for this space
-    <button class="write-a-review" style="display: none;"><i class="fa fa-pencil"></i> {% trans 'write_review' %}</button>
-  </h4>
+  <h4>Reviews for this space</h4>
+  <button class="write-a-review" style="display: none;"><i class="fa fa-pencil"></i> {% trans 'write_review' %}</button>
   <div class="space-review-compose" style="display: none;">
     <h4>Write a review</h4>
     <h6>Rate this space</h6>
@@ -26,15 +25,14 @@
       </div>
     </div>
 	<textarea placeholder="{% trans 'review_placeholder' %}" maxlength="300"></textarea>
-    <a href="javascript:void(0);"><i class="fa fa-angle-double-down"></i> Review guidelines</a>
+    <a href="javascript:void(0);"><i class="fa fa-angle-double-down"></i> Review Guidelines</a>
     <ul style="display: none;">
-      <li>Explain your star rating.</li>
-      <li>Be polite, no profanity.</li>
-      <li>Remember, your UW NetID will be displayed as reviewer's name.</li>
-      <li>Your submission will be published after our review in a few days.</li>
+      <li>Explain your star ratings; why you liked or disliked the space. </li>
+      <li>Be polite &#8212; no profanity.</li>
+      <li>Remember your UW NetID will appear as the reviewer name.</li>
     </ul>
     <br>
-    <b>Note:</b> Your UW NetID will be displayed with this review.
+    <b>Note:</b> Your review will be published with your UW NetID (if the review follows our guidelines).
 	<br><br>
     <div>
       <button id="space-review-submit" class="btn primary-button">{% trans 'Submit' %}</button>
@@ -42,8 +40,8 @@
     </div>
   </div>
   <div class="space-review-submitted border-rounded" style="display: none;">
-    <b>Thank you for your review.</b><br />
-    We will notify you in a few days once it's published.
+    <b>Thank you for submitting a review.</b><br />
+    You will receive an email once your submission has been reviewed; please allow three business days. 
     <a href="javascript:void(0);">{% trans 'Close' %}</a>
   </div>
   <div class="space-reviews-content"></div>
@@ -51,7 +49,7 @@
 
 {% tplhandlebars "no_space_reviews" %}
     <div class="space-reviews-none border-rounded">
-      No reviews found for this space. Be the first to leave a review for this space.
+      No reviews for this space yet. Be the first one to write a review for this space.
       <br />
       <button class="write-a-review"><i class="fa fa-pencil"></i>{% trans 'write_review' %}</button>
     </div>
@@ -79,6 +77,6 @@
 
 {% tplhandlebars "more_space_reviews" %}
     <div class="more-space-reviews">
-      <a href="javascript:void(0);"><i class="fa fa-angle-double-down"></i> See more reviews...</a>
+      <a href="javascript:void(0);"><i class="fa fa-angle-double-down"></i> See more reviews</a>
     </div>
 {% endtplhandlebars %}
