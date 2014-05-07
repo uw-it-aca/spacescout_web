@@ -121,7 +121,7 @@ def thank_you(request, spot_id=None):
 
     back = request.GET['back'] if request.GET and 'back' in request.GET else share_variables['back']
 
-    return render_to_response('share-thankyou.html', {
+    return render_to_response('spacescout_web/share-thankyou.html', {
         'spot_id': spot_id,
         'back': back,
     }, context_instance=RequestContext(request))
