@@ -329,13 +329,14 @@
             $('.space-detail-fav', card).tooltip({ placement: 'right',
                                                    title: 'Remove this space from Favorites' });
             $('.space-detail-fav', card).click(function (e) {
-                var id = parseInt($(this).attr('data-id'));
-                var container = $(this).closest('.space-detail-container');
+                window.spacescout_favorites.clear(parseInt($(this).attr('data-id')));
+            });
+
+            $(document).on('spaceFavoriteClear', function (e, id) {
                 var tooltip = $(this).tooltip('hide');
-                
-                window.spacescout_favorites.clear(id, function () {
-                    container.hide({ effect: 'fade', duration: 800,  complete: function () { this.remove(); } });
-                });
+                var container = $('#spot_'+id).closest('.space-detail-container');
+
+                container.hide({ effect: 'fade', duration: 800,  complete: function () { this.remove(); } });
             });
             
             var bld_code = fav.location.building_name.match(/.*\(([A-Z ]+)\)( [a-zA-Z]+)?$/)
