@@ -24,6 +24,8 @@
         k: {
             'favorites_count_container': '.favorites_count_container',
             'favorites_count_template': '#favorites_count',
+            'favorites_total_container': '.favorites_total_container',
+            'favorites_total_template': '#favorites_total',
             'favorites_card_container': '.favorites_card_container',
             'favorites_card_template': '#favorites_card'
         },
@@ -39,6 +41,17 @@
                 template = Handlebars.compile(source.html().trim());
                 $(this.k.favorites_count_container).each(function () {
                     $(this).html(template({count: self.favorites ? self.favorites.length : 0}));
+                });
+            }
+
+            source = $(self.k.favorites_total_template);
+            if (source.length) {
+                template = Handlebars.compile(source.html().trim());
+                $(this.k.favorites_total_container).each(function () {
+                    var total = self.favorites ? self.favorites.length : 0,
+                        plural = (total == 1) ? '' : 's';
+
+                    $(this).html(template({ total: total, plural: plural }));
                 });
             }
         },

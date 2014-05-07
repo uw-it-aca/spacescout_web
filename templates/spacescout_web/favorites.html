@@ -64,7 +64,8 @@
           </div>
 
           <h2 class="page-title">Favorites</h2>
-          <h4><span class="favorites_count_container">{{ total }}</span> favorite spaces <span class="comment">(organized by the date you added)</span></h4>
+          <h4><span class="favorites_total_container">favorite spaces</span> <span class="comment">(organized by the date you added)</span></h4>
+          {% tplhandlebars "favorites_total" %}{{ total }} favorite space{{ plural }}{% endtplhandlebars %}
           <div id="space_details_page" class="favorites_card_container favorites_blank_container"></div>
 
           <div class="footer">
