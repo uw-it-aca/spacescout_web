@@ -62,7 +62,7 @@ def share(request, spot_id=None):
             if not (resp.status == 200 or resp.status == 201):
                 return HttpResponseRedirect('/sorry/')
 
-            return HttpResponseRedirect('/thankyou/?back=' + urlquote(back))
+            return HttpResponseRedirect('/share/thankyou/?back=' + urlquote(back))
     else:
         back = request.GET['back'] if request.GET and 'back' in request.GET else '/'
         if request.user and request.user.is_authenticated():
@@ -96,3 +96,47 @@ def share(request, spot_id=None):
         'hidden': ["spot_id", "back"],
         'is_mobile': (request.MOBILE == 1),
     }, context_instance=RequestContext(request))
+
+
+def thank_you(request, spot_id=None):
+    share_variables = _share_variables(request, spot_id)
+
+    back = request.GET['back'] if request.GET and 'back' in request.GET else share_variables['back']
+
+    return render_to_response('share-thankyou.html', {
+        'spot_id': spot_id,
+        'back': back,
+    }, context_instance=RequestContext(request))
+
+
+def _share_variables(request, spot_id):
+    spot_name = 'Unknown'
+    spot_description = ''
+
+    if spot_id is not None:
+        try:
+            spot = Spot(spot_id).get()
+        except SpotException as ex:
+            raise Http404
+
+        spot_name = spot["name"]
+        if 'extended_info' in spot:
+            if 'location_description' in spot['extended_info']:
+                spot_description = spot['extended_info']['location_description']
+
+    if request.MOBILE == 1:
+       is_mobile = True
+    else:
+       is_mobile = False
+
+    if is_mobile and spot_id is not None:
+        back = ('/space/' + spot_id)
+    else:
+        back = '/'
+
+    return {
+        'spot_name': spot_name,
+        'spot_description': spot_description,
+        'is_mobile': is_mobile,
+        'back': back
+    }
