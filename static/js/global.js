@@ -185,14 +185,17 @@ var requests = [];
                     if (!next_info) {
                         continue;
                     }
+                    if (next_info.day_idx == info.day_idx) {
+                        continue;
+                    }
 
                     var next_range = next_info.hour_range.split(" - ");
-                    var day_diff = (next_info.day_idx - info.day_idx) % 7;
+                    var is_next_day = (info.day_idx + 1) % 7 == next_info.day_idx;
 
-                    if (day_diff > 1) {
+                    if (!is_next_day) {
                         // Search beyond the next day
                         break;
-                    } else if (day_diff == 1 && next_range[0] == "Midnight") {
+                    } else if (next_range[0] == "Midnight") {
                         // Found a day in the next range that begins as midnight.
                         range[1] = next_range[1];
                         hours_info[j % hours_info.length] = null;
