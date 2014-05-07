@@ -326,7 +326,7 @@
                 ul.prev().slideDown('fast');
             });
             
-            $('.space-detail-fav', card).tooltip({ placement: 'right',
+            $('.space-detail-fav', card).tooltip({ placement: 'left',
                                                    title: 'Remove this space from Favorites' });
             $('.space-detail-fav', card).click(function (e) {
                 window.spacescout_favorites.clear(parseInt($(this).attr('data-id')));
