@@ -61,7 +61,7 @@
                 detail_node = $('div[id^=detail_container_]'),
                 detail_id = detail_node.length ? parseInt(detail_node.prop('id').match(/^detail_container_(\d+)$/)[1]) : null;
 
-            $('button .space-detail-fav').each(function () {
+            $('#info_items .view-details button .space-detail-fav').each(function () {
                 var node = $(this),
                     id = parseInt(node.parent().prop('id'));
 
@@ -69,13 +69,13 @@
                     node.show();
                     if (id == detail_id) {
                         $('.space-detail-fav', detail_node).removeClass('space-detail-fav-unset').addClass('space-detail-fav-set');
-                        $('.space-detail-fav i', detail_node).removeClass('fa-heart-o').addClass('fa-heart');
+ //                       $('.space-detail-fav i', detail_node).removeClass('fa-heart-o').addClass('fa-heart');
                     }
                 } else {
                     node.hide();
                     if (id == detail_id) {
                         $('.space-detail-fav', detail_node).removeClass('space-detail-fav-set').addClass('space-detail-fav-unset');
-                        $('.space-detail-fav i', detail_node).removeClass('fa-heart').addClass('fa-heart-o');
+  //                      $('.space-detail-fav i', detail_node).removeClass('fa-heart').addClass('fa-heart-o');
                     }
                 }
             });
@@ -173,7 +173,7 @@
             var self = this;
 
             $.ajax({
-                url: 'web_api/v1/user/me/favorites',
+                url: '/web_api/v1/user/me/favorites',
                 success: function (data) {
                     self.favorites = data ? data : [];
                     self.update();
@@ -197,7 +197,7 @@
                 fav = (this.index(id) >= 0);
             } else {
                 $.ajax({
-                    url: 'web_api/v1/user/me/favorite/' + id,
+                    url: '/web_api/v1/user/me/favorite/' + id,
                     type: "GET",
                     async: false,
                     success: function (data) {
@@ -226,22 +226,22 @@
             return -1;
         },
 
-        toggle: function (id, on_set, on_clear) {
+        toggle: function (id) {
             if (this.is_favorite(id)) {
-                this.clear(id, on_clear);
+                this.clear(id);
             } else {
-                this.set(id, on_set);
+                this.set(id);
             }
 
             this.update_count();
         },
 
-        set: function (id, on_set) {
+        set: function (id) {
             var self = this;
 
             if (!this.is_favorite(id)) {
                 $.ajax({
-                    url: 'web_api/v1/user/me/favorite/' + id,
+                    url: '/web_api/v1/user/me/favorite/' + id,
                     dataType: 'json',
                     contentType: "application/json",
                     data: JSON.stringify({}),
@@ -265,9 +265,7 @@
                         }
 
                         self.update_count();
-                        if (on_set) {
-                            on_set.call();
-                        }
+                        $.event.trigger('spaceFavoriteSet', [ id ]);
                     },
                     error: function (xhr, textStatus, errorThrown) {
                         console.log('Unable to set favorite: ' + xhr.responseText);
@@ -276,11 +274,11 @@
             }
         },
 
-        clear: function (id, on_clear) {
+        clear: function (id) {
             var self = this;
 
             $.ajax({
-                url: 'web_api/v1/user/me/favorite/' + id,
+                url: '/web_api/v1/user/me/favorite/' + id,
                 dataType: 'json',
                 type: "DELETE",
                 success: function (data) {
@@ -293,9 +291,7 @@
                     }
 
                     self.update_count();
-                    if (on_clear) {
-                        on_clear.call();
-                    }
+                    $.event.trigger('spaceFavoriteClear', [ id ]);
                 },
                 error: function (xhr, textStatus, errorThrown) {
                     console.log('Unable to unset favorite: ' + xhr.responseText);
@@ -316,7 +312,9 @@
                 o, c;
 
             $('.space-detail-is-closed', card).show();
-            
+
+            loadRatingsAndReviews(fav.id, $('.space-ratings-and-reviews', card), card);
+
             if (fav.available_hours[day].length > 0) {
                 $.each(fav.available_hours[day], function() {
                     this[0] = this[0].replace(/^0+/, '');
@@ -351,19 +349,20 @@
                 ul.prev().slideDown('fast');
             });
             
-            $('.space-detail-fav', card).tooltip({ placement: 'right',
+            $('.space-detail-fav', card).tooltip({ placement: 'left',
                                                    title: 'Remove this space from Favorites' });
             $('.space-detail-fav', card).click(function (e) {
-                var id = parseInt($(this).attr('data-id'));
-                var container = $(this).closest('.space-detail-container');
+                window.spacescout_favorites.clear(parseInt($(this).attr('data-id')));
+            });
+
+            $(document).on('spaceFavoriteClear', function (e, id) {
                 var tooltip = $(this).tooltip('hide');
-                
-                window.spacescout_favorites.clear(id, function () {
-                    container.hide({ effect: 'fade', duration: 800,  complete: function () { this.remove(); } });
-                });
+                var container = $('#spot_'+id).closest('.space-detail-container');
+
+                container.hide({ effect: 'fade', duration: 800,  complete: function () { this.remove(); } });
             });
             
-            var bld_code = fav.location.building_name.match(/.*\(([A-Z ]+)\)( [a-zA-Z]+)?$/)
+            var bld_code = fav.location.building_name.match(/.*\(([A-Z ]+)\)( [a-zA-Z]+)?$/);
             if (bld_code) {
                 $('.space-detail-building', card).html(bld_code[1] + (bld_code[2] ? bld_code[2] : ''));
             } else {

@@ -139,10 +139,26 @@
                 <div class="space-detail">
                     <div class="space-detail-inner" id="detail_container_{{id}}" aria-labelledby="space-detail-name" tabindex="0">
                         <div class="space-detail-header">
-                          <div class="space-detail-fav space-detail-fav-unset pull-left"><i class="fa fa-heart-o"></i></div>
                           <h2 id="space-detail-name" class="space-detail-name"><span class="visuallyhidden">Space Details:</span> {{name}}</h2>
                           <div class="space-detail-type">{{type}} {{#if capacity }}<span class="space-detail-capacity">[Seats&nbsp;{{capacity}}]</span>{{/if}}</div>
                           <a class="close" href="#" title="close"><img alt="close details" src="{% static 'img/x.png' %}" /></a>
+                          <div class="space-actions">
+                          	<span id="show_reviews" class="space-stars">
+                              <i class="fa fa-star-o"></i>
+                              <i class="fa fa-star-o"></i>
+                              <i class="fa fa-star-o"></i>
+                              <i class="fa fa-star-o"></i>
+                              <i class="fa fa-star-o"></i>
+                          	</span>
+                            <span id="review_count"></span>
+                            <span class="divider"></span>
+                            <button id="favorite_space">
+                            	<span class="space-detail-fav space-detail-fav-unset">
+                            		<i class="fa fa-heart"></i>
+                            	</span> {% trans 'favorite' %}
+                            </button>
+                            <button id="share_space"><i class="fa fa-mail-forward"></i> {%trans 'share' %}</button>
+                          </div>
                         </div>
                         <div class="space-detail-body">
 
@@ -235,15 +251,15 @@
                                             <div class="space-info-detail pull-left">
 
                                                 {{#compare extended_info.noise_level "quiet" operator="=="}}
-                                                {% verbatim %}{% trans 'quiet' %}{% endverbatim %}
+                                                {% trans 'quiet' %}
                                                   {{^}}
                                                         {{#compare extended_info.noise_level "moderate" operator="=="}}
-                                                        {% verbatim %}{% trans 'moderate' %}{% endverbatim %}
+                                                        {% trans 'moderate' %}
                                                         {{^}}
                                                             {{#compare extended_info.noise_level "silent" operator="=="}}
-                                                            {% verbatim %}{% trans 'silent' %}{% endverbatim %}
+                                                            {% trans 'silent' %}
                                                             {{^}}
-                                                            {% verbatim %}{% trans 'variable' %}{% endverbatim %}
+                                                            {% trans 'variable' %}
                                                             {{/compare}}
                                                         {{/compare}}
                                                   {{/compare}}
@@ -279,8 +295,8 @@
                                     </ul>
                                 </div>
 
-                                <div class="space-detail-share">
-                                  <a id="share_space" href="javascript:void(0);"><i class="fa fa-envelope fa-lg"></i>Share this space</a>
+				                <div class="space-ratings-and-reviews">
+                                  <div class="loading"></div>
                                 </div>
 
                                 <div class="space-detail-report">
@@ -345,7 +361,7 @@
                                            <span class="space-detail-capacity pull-right">{{#if capacity }}Seats&nbsp;{{capacity}}{{/if}}</span>
                                         {{/if}}
                                     </div>
-                                    {% if user.is_authenticated %}<div class="space-detail-fav pull-right" style="display: none;"><i class="fa fa-heart"></i></div>{% endif %}
+                                    {% if user.is_authenticated %}<div class="space-detail-fav space-detail-fav-set pull-right" style="display: none;"><i class="fa fa-heart"></i></div>{% endif %}
                                     <div class="space-detail-name">{{name}}</div>
                                     <div class="space-detail-desc">{{extended_info.location_description}}</div>
                                 </button>
@@ -410,5 +426,7 @@
             </div>
         </div>
     </div>
+
+    {% include "reviews.html" %}
 
 {% endblock %}

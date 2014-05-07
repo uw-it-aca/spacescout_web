@@ -318,6 +318,12 @@ function weekday_from_day(day) {
     return (day >=0 && day <= 6) ? weekdays[day] : '';
 }
 
+function monthname_from_month(month) {
+    var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+    return (month >=0 && month < 12) ? months[month] : '';
+}
+
 function format_location_filter(data) {
     var source = $('#building_list').html();
     var template = Handlebars.compile(source);

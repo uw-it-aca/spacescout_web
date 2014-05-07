@@ -288,18 +288,34 @@
     {% tplhandlebars "space_details" %}
     <div id="space_details_header" class="clearfix">
         <h1 class="visuallyhidden">SPACESCOUT&trade;</h1>
-		<img id="back_home_button" class="pull-left back-button" src="{% static 'img/details_arrow.png' %}" />
+
+		<div class="back-link">
+			<img id="back_home_button" class="back-button" src="{% static 'img/details_arrow.png' %}" />
+			Back to space details
+		</div>
+		
         <div id="name-type-block" class="pull-left">
-          <div class="space-detail-fav space-detail-fav-unset pull-left"><i class="fa fa-heart-o"></i></div>
           <h2 class="space-detail-name" style=""><span class="visuallyhidden">Space Details:</span> {{name}}</h2>
       	  <div class="space-detail-type">{{ type }} {{ #if capacity }}<span class="space-detail-capacity">[Seats&nbsp;{{capacity}}]</span>{{ /if }}</div>
         </div>
+        <div class="space-actions">
+			<span class="space-stars">
+	          <i class="fa fa-star-o"></i>
+	          <i class="fa fa-star-o"></i>
+	          <i class="fa fa-star-o"></i>
+	          <i class="fa fa-star-o"></i>
+	          <i class="fa fa-star-o"></i>
+			</span>
+          (<span id="review_count">0</span>)
+          <span id="divider"></span>
+          <button id="favorite_space"><span class="space-detail-fav space-detail-fav-unset"><i class="fa fa-heart-o"></i></span> {% trans 'favorite' %}</button>
+          <button id="share_space"><i class="fa fa-mail-forward"></i> {%trans 'share' %}</button>
+        </div>
     </div>
-
     <div id="space_details_page">
         <div class="space-detail-container">
             <div class="space-detail">
-                <div class="space-detail-inner">
+                <div class="space-detail-inner" id="detail_container_{{id}}">
                     <div class="space-detail-body">
                         <div class="space-detail-body-inner">
                             <div id="spaceCarouselContainer" class="image-container" role="tabpanel">
@@ -424,9 +440,7 @@
                         </ul>
                     </div>
 
-                    <div class="space-detail-share">
-                      <a id="share_space" href="javascript:void(0);"><i class="fa fa-envelope fa-lg"></i>Share this space</a>
-                    </div>
+				    <div class="space-ratings-and-reviews"></div>
 
                     <div class="space-detail-report">
                         <a href="/contact/{{ id }}/">Report a problem with this space</a>
@@ -450,5 +464,6 @@
     </div>
     {% endtplhandlebars %}
 
+    {% include "reviews.html" %}
 
 {% endblock %}

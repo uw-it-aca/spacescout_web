@@ -3,7 +3,7 @@
 {% block share-content %}
 
     
-    {% if not is_mobile %}<h2 class="share-header"><span>Back to space details</span><br />Share this space</h2>{% endif %}
+    {% if not is_mobile %}<h2 class="share-header"><span>Back</span><br />Share this space</h2>{% endif %}
 
     <form action="/share/{{ spot_id }}" method="post">{% csrf_token %}
         {{ form.non_field_errors }}
@@ -32,7 +32,7 @@
                 </div>
                 {% if field.name == "subject" %}
                 <div class="infoWrapper">
-                  <p>Your message will include the following.</p>
+                  <p>Your message will include the following:</p>
                   {% for text in share_text %}
                   {{ text }}<br />
                   {% endfor %}
@@ -43,6 +43,6 @@
                 {% endif %}
             {% endif %}
         {% endfor %}
-        <input type="submit" value="Send" />
+        <input type="submit" value="Send" id="formSubmit_button" class="btn primary-button singleSubmit-button"/>
     </form>
 {% endblock %}

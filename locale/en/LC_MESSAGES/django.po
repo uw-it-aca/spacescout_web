@@ -128,6 +128,42 @@ msgstr "Showing"
 msgid "spaces"
 msgstr "spaces"
 
+#: templates/app.html:150
+msgid "favorite"
+msgstr "Favorite"
+
+#: static/js/desktop.js:388
+msgid "terrible"
+msgstr "I won’t be back"
+
+#: static/js/desktop.js:388
+msgid "poor"
+msgstr "I dislike it"
+
+#: static/js/desktop.js:388
+msgid "average"
+msgstr "It’s ok"
+
+#: static/js/desktop.js:388
+msgid "good"
+msgstr "I like it"
+
+#: static/js/desktop.js:388
+msgid "excellent"
+msgstr "I love it"
+
+#: templates/app.html:293
+msgid "write_review"
+msgstr "Write Review"
+
+#: templates/app.html:293
+msgid "review_placeholder"
+msgstr "Review is required. Please explain your star rating."
+
+#: templates/app.html:151
+msgid "share"
+msgstr "Share"
+
 #: templates/login.html:7
 msgid "Username"
 msgstr "Username"
