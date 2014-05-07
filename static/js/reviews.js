@@ -36,7 +36,7 @@ function setupRatingsAndReviews(data) {
         showRatingEditor();
     });
 
-    $('.space-review-compose textarea').keyup(function (e) {
+    $('.space-review-compose textarea').bind('input', function (e) {
         var l = $(this).val().length,
             remaining = window.spacescout_reviews.review_char_limit - l,
             span = $('#space-review-remaining');
