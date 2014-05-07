@@ -139,7 +139,9 @@ function setupRatingsAndReviews(data) {
 
         $('#show_reviews').css('cursor', 'pointer');
         $('#show_reviews').click(function () {
-            $('.space-detail-body').animate({ scrollTop: $('#reviews_for_this_space').offset().top }, '500');
+            $('.space-detail-body').animate({ scrollTop: $('.space-ratings-and-reviews').offset().top
+                                              + $('.space-detail-body').scrollTop()
+                                              - $('.space-detail-body').offset().top }, '500');
         });
     });
 }
@@ -160,6 +162,11 @@ function loadRatingsAndReviews(id, review_container, rating_container) {
             $('span#review_count', rating_container).html(html_count);
 
             if (total_reviews > 0) {
+
+                data.sort(function (a, b) {
+                    return new Date(b.date_submitted) - new Date(a.date_submitted);
+                });
+
                 $.each(data, function(i) {
                     var review = this,
                         rating = this.rating,
