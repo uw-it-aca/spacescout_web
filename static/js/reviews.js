@@ -289,6 +289,7 @@ function tidyUpRatesComposer () {
     $('textarea', node).val('');
     $('.space-review-stars span + span', node).html('');
     $('#space-review-remaining').html(window.spacescout_reviews.review_char_limit);
+    $('#space-review-remaining').removeClass('required');
     $('.space-review-rating div + div span', node).removeClass('required');
     $('.space-review-rating i', node).switchClass('fa-star', 'fa-star-o');
 }
