@@ -134,31 +134,31 @@ msgstr "Favorite"
 
 #: static/js/desktop.js:388
 msgid "terrible"
-msgstr "Terrible"
+msgstr "I won’t be back"
 
 #: static/js/desktop.js:388
 msgid "poor"
-msgstr "Poor"
+msgstr "I dislike it"
 
 #: static/js/desktop.js:388
 msgid "average"
-msgstr "Average"
+msgstr "It’s ok"
 
 #: static/js/desktop.js:388
 msgid "good"
-msgstr "Good"
+msgstr "I like it"
 
 #: static/js/desktop.js:388
 msgid "excellent"
-msgstr "Excellent"
+msgstr "I love it"
 
 #: templates/app.html:293
 msgid "write_review"
-msgstr "Write a review"
+msgstr "Write Review"
 
 #: templates/app.html:293
 msgid "review_placeholder"
-msgstr "Please explain your rating (300 character limit)."
+msgstr "Review is required. Please explain your star rating."
 
 #: templates/app.html:151
 msgid "share"

@@ -3,7 +3,7 @@
 {% block share-content %}
 
     
-    {% if not is_mobile %}<h2 class="share-header"><span>Back to space details</span><br />Share this space</h2>{% endif %}
+    {% if not is_mobile %}<h2 class="share-header"><span>Back</span><br />Share this space</h2>{% endif %}
 
     <form action="/share/{{ spot_id }}" method="post">{% csrf_token %}
         {{ form.non_field_errors }}
