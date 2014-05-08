@@ -37,8 +37,8 @@ function setupRatingsAndReviews(data) {
     });
 
     $('.space-review-compose textarea').bind('input', function (e) {
-        var l = $(this).val().length,
-            remaining = window.spacescout_reviews.review_char_limit - l,
+        var text = $(this).val(),
+            remaining = window.spacescout_reviews.review_char_limit - text.length,
             span = $('#space-review-remaining');
 
         if (remaining > 0) {
@@ -49,7 +49,8 @@ function setupRatingsAndReviews(data) {
             span.addClass('required');
         }
 
-        if (l > 0 && $('.space-review-compose .space-review-stars i.fa-star').length) {
+        if (text.trim().length > 0
+            && $('.space-review-compose .space-review-stars i.fa-star').length) {
             enableSubmitButton();
         } else {
             disableSubmitButton();
