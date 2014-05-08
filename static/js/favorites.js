@@ -349,14 +349,11 @@
                 ul.prev().slideDown('fast');
             });
             
-            $('.space-detail-fav', card).tooltip({ placement: 'left',
-                                                   title: 'Remove this space from Favorites' });
             $('.space-detail-fav', card).click(function (e) {
                 window.spacescout_favorites.clear(parseInt($(this).attr('data-id')));
             });
 
             $(document).on('spaceFavoriteClear', function (e, id) {
-                var tooltip = $(this).tooltip('hide');
                 var container = $('#spot_'+id).closest('.space-detail-container');
 
                 container.hide({ effect: 'fade', duration: 800,  complete: function () { this.remove(); } });

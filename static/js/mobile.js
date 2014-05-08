@@ -326,7 +326,6 @@
                                                        fav_icon.removeClass('space-detail-fav-set').addClass('space-detail-fav-unset');
                                                        fav_icon_i.removeClass('fa-heart').addClass('fa-heart-o');
                                                        list_item.hide();
-                                                       fav_icon.tooltip('hide');
                                                    });
             });
         }
