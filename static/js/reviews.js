@@ -211,11 +211,19 @@ function loadRatingsAndReviews(id, review_container, rating_container) {
                 }
 
                 if (rating_sum) {
-                    var avg = Math.ceil((rating_sum) / data.length);
+                    var avg = rating_sum / data.length,
+                        dec = Math.floor(avg),
+                        frac = avg % 1;
 
                     $('i', rating_container).each(function(i) {
-                        if (i < avg) {
+                        if (i < dec) {
                             $(this).switchClass('fa-star-o', 'fa-star');
+                        } else if (i == dec && frac > 0) {
+                            if (frac > 0.5) {
+                                $(this).switchClass('fa-star-o', 'fa-star');
+                            } else {
+                                $(this).switchClass('fa-star-o', 'fa-star-half-o');
+                            }
                         }
                     });
                 }
