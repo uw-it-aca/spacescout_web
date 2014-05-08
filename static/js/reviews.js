@@ -317,7 +317,7 @@ function showReviewGuidelines () {
     var ul = $('.space-review-compose ul');
 
     ul.show();
-    ul.prev().find('i').switchClass('fs-angle-double-down', 'fs-angle-double-up');
+    ul.prev().find('i').switchClass('fa-angle-double-down', 'fa-angle-double-up');
 }
 
 
@@ -325,5 +325,5 @@ function hideReviewGuidelines () {
     var ul = $('.space-review-compose ul');
 
     ul.hide();
-    ul.prev().find('i').switchClass('fs-angle-double-up', 'fs-angle-double-down');
+    ul.prev().find('i').switchClass('fa-angle-double-up', 'fa-angle-double-down');
 };
