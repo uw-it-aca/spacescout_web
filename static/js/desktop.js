@@ -285,6 +285,7 @@ Handlebars.registerHelper('ifany', function(a, b) {
             if (authenticated_user && window.spacescout_favorites.is_favorite(data.id)) {
                 fav_icon.removeClass('space-detail-fav-unset').addClass('space-detail-fav-set');
                 fav_icon_i.removeClass('fa-heart-o').addClass('fa-heart');
+                fav_icon.parent().find('span:last').text(gettext('favorited'));
                 title = 'Remove this space from favorites';
             } else {
                 fav_icon.removeClass('space-detail-fav-set').addClass('space-detail-fav-unset');
@@ -321,6 +322,7 @@ Handlebars.registerHelper('ifany', function(a, b) {
                 if (is_over_favs) {
                     fav_icon.tooltip('show');
                 }
+                fav_icon.parent().find('span:last').text(gettext('favorited'));
             });
 
             $(document).on('spaceFavoriteClear', function (e, id) {
@@ -334,6 +336,7 @@ Handlebars.registerHelper('ifany', function(a, b) {
                 if (is_over_favs) {
                     fav_icon.tooltip('show');
                 }
+                fav_icon.parent().find('span:last').text(gettext('favorite'));
             });
 
             fav_icon.tooltip({ placement: 'right', title: title});

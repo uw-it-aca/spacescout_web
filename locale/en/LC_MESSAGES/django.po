@@ -132,6 +132,10 @@ msgstr "spaces"
 msgid "favorite"
 msgstr "Favorite"
 
+#: templates/app.html:150
+msgid "favorited"
+msgstr "Favorited"
+
 #: static/js/desktop.js:388
 msgid "terrible"
 msgstr "I won’t be back"
