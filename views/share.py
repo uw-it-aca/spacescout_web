@@ -97,8 +97,10 @@ def share(request, spot_id=None):
 
     try:
         spot = Spot(spot_id).get()
-        floor = "Floor %s" % (spot["location"]["floor"])
-        share_text = [spot["name"], spot["type"], floor]
+        share_text = [spot["name"], spot["type"]]
+        if 'extended_info' in spot and 'location_description' in spot['extended_info']:
+            share_text.append(spot['extended_info']['location_description'])
+
     except SpotException:
         share_text = ['Unrecognized Spot']
 
