@@ -1,5 +1,7 @@
 from django.template import Context, loader
+from django.utils.http import is_safe_url
 from django.http import HttpResponse, HttpResponseRedirect
+from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
 from django.core.context_processors import csrf
 from mobility.decorators import mobile_template
@@ -9,6 +11,8 @@ from mobility.decorators import mobile_template
 @mobile_template('spacescout_web/{mobile/}login.html')
 def Prompt(request, template=None):
     next = request.REQUEST.get('next', '/')
+    if not is_safe_url(url=next, host=request.get_host()):
+        next = "/"
 
     if request.user.is_authenticated():
         return HttpResponseRedirect(next)
@@ -25,7 +29,10 @@ def Login(request):
     username = request.POST['username']
     password = request.POST['password']
     next = request.POST['next']
+    if not is_safe_url(url=next, host=request.get_host()):
+        next = "/"
     user = authenticate(username=username, password=password)
+
     if user is not None and user.is_active:
         login(request, user)
 
