@@ -157,6 +157,9 @@ def fetch_open_now_for_campus(campus, use_cache=True, fill_cache=False, cache_pe
         else:
             distance = '500'
 
+    # SPOT-1832.  Making the distance far enough that center of campus to furthest spot from the center
+    # can be found
+    distance = 1000
     consumer = oauth2.Consumer(key=settings.SS_WEB_OAUTH_KEY, secret=settings.SS_WEB_OAUTH_SECRET)
     client = oauth2.Client(consumer)
 
