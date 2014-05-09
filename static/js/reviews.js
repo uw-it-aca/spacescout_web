@@ -100,7 +100,7 @@ function setupRatingsAndReviews(data) {
         }
     });
 
-    $(document).on('click', '.space-review-stars i', function (e) {
+    $(".space-review-stars i").click(function (e) {
         var target = $(e.target),
             stars = target.prevAll('i'),
             rating = stars.length + 1,
