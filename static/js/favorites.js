@@ -188,6 +188,7 @@
             this.update_count();
             this.update_search_result();
             this.update_cards();
+            replaceReservationNotesUrls();
         },
 
         is_favorite: function (id) {
