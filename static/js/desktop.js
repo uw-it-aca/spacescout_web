@@ -265,7 +265,7 @@ Handlebars.registerHelper('ifany', function(a, b) {
 
     	initializeCarousel();
 
-        replaceUrls();
+        replaceReservationNotesUrls();
 
         $('.space-detail-header .close').on('click', function(e){
             e.preventDefault();

@@ -668,7 +668,7 @@ function getSpaceMap(container, lat, lon) {
 
 }
 
-function replaceUrls(){
+function replaceReservationNotesUrls(){
     // Replace urls in reservation notes with actual links.
     var text = $("#ei_reservation_notes").html();
     var patt = /\b(?:https?|ftp):\/\/[a-z0-9-+&@#\/%?=~_|!:,.;]*[a-z0-9-+&@#\/%=~_|]/gim;
