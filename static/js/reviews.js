@@ -38,7 +38,8 @@ function setupRatingsAndReviews(data) {
 
     $('.space-review-compose textarea').bind('input', function (e) {
         var text = $(this).val(),
-            remaining = window.spacescout_reviews.review_char_limit - text.length,
+            not_counted = (text.match(/[\x7c\s@\.,\\\/#!?\$%\^&\*;:{}\[\]<>=\-_`'"~()\+]+/g) || []).join("").length,
+            remaining = window.spacescout_reviews.review_char_limit - text.length + not_counted,
             span = $('#space-review-remaining');
 
         if (remaining > 0) {
