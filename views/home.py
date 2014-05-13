@@ -77,6 +77,29 @@ def HomeView(request, template=None):
     consumer = oauth2.Consumer(key=settings.SS_WEB_OAUTH_KEY, secret=settings.SS_WEB_OAUTH_SECRET)
     client = oauth2.Client(consumer)
 
+    # log shared space references
+    m = re.match(r'^/space/(\d+)/.*/([a-f0-9]{32})$', request.path)
+    if m:
+        try:
+            url = "{0}/api/v1/spot/{1}/shared".format(settings.SS_WEB_SERVER_HOST, m.group(1))
+
+            headers = {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+
+            if request.user and request.user.is_authenticated():
+                headers["XOAUTH_USER"] = "%s" % request.user.username
+
+            resp, content = client.request(url,
+                                           method='PUT',
+                                           body=json.dumps({ 'hash': m.group(2) }),
+                                           headers=headers)
+
+            # best effort, ignore response
+        except:
+            pass
+        
     buildings = json.loads(get_building_json(client))
 
     # This could probably be a template tag, but didn't seem worth it for one-time use
