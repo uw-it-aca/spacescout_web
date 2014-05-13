@@ -184,7 +184,7 @@
                                 <a name="space_detail_{{id}}"></a>
                                 <div class="space-detail-list-image pull-left">
                                     {{#if images.0.id}}
-                                    <div class="space-detail-list-image-inner lazyloader" data-src="space/{{id}}/image/{{images.0.id}}/thumb/constrain/width:150">&nbsp;</div>
+                                    <div class="space-detail-list-image-inner lazyloader" data-src="/image/space/{{id}}/{{images.0.id}}/thumb/constrain/width:150">&nbsp;</div>
                                     {{else}}
                                     <div class="space-detail-list-image-inner space-detail-no-image">&nbsp;</div>
                                     {{/if}}
@@ -235,7 +235,7 @@
                             <li class="clearfix view-details">
                                 <div class="space-detail-list-image pull-left">
                                   {{#if images.0.id}}
-                                    <div class="space-detail-list-image-inner lazyloader" data-src="space/{{id}}/image/{{images.0.id}}/thumb/constrain/width:150">&nbsp;</div>
+                                    <div class="space-detail-list-image-inner lazyloader" data-src="/image/space/{{id}}/{{images.0.id}}/thumb/constrain/width:150">&nbsp;</div>
                                   {{else}}
                                     <div class="space-detail-list-image-inner space-detail-no-image">&nbsp;</div>
                                   {{/if}}
@@ -324,7 +324,7 @@
                                   <div class="carousel-inner">
                                   {{ #each images }}
                                     <div class="carousel-inner-image item">
-                                        <div class="carousel-inner-image-inner" style="background:url('/space/{{ ../id }}/image/{{ id }}/thumb/constrain/width:500,height:333') no-repeat 50% 50%; background-size:100%;">&nbsp;</div>
+                                        <div class="carousel-inner-image-inner" style="background:url('/image/space/{{ ../id }}/{{ id }}/thumb/constrain/width:500,height:333') no-repeat 50% 50%; background-size:100%;">&nbsp;</div>
                                     </div>
                                   {{ else }}
                                     <div class="carousel-inner-image item">

@@ -24,7 +24,7 @@ Handlebars.registerHelper('carouselimages', function(spacedata) {
     if (spacedata.images.length > 0) {
         for (i=0; i < spacedata.images.length; i++) {
             image_id = spacedata.images[i].id;
-            image_url = "background:url(/space/" + space_id + "/image/" + image_id + "/thumb/constrain/width:500)";
+            image_url = "background:url(/image/space/" + space_id + "/" + image_id + "/thumb/constrain/width:500)";
             div_string = "<div class='carousel-inner-image item'><div class='carousel-inner-image-inner' style='" + image_url + "'>&nbsp;</div></div>";
             elements.push(div_string);
         }
