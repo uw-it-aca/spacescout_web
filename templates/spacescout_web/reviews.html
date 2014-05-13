@@ -4,7 +4,7 @@
 
 {% tplhandlebars "space_reviews" %}
   <h3>Reviews for this space
-  <button class="write-a-review" style="display: none;"><i class="fa fa-pencil"></i> {% trans 'write_review' %}</button>
+  <button class="write-a-review" style="display: none;" title="Click to write a review"><i class="fa fa-pencil"></i> {% trans 'write_review' %}</button>
   </h3>
   <div class="space-review-compose" style="display: none;">
     <h4>Write a review</h4>
@@ -12,36 +12,36 @@
     <div class="space-review-rating">
       <div class="space-review-stars">
         <span>
-          <a class="rating-star" href="javascript:void(0);" title="One star rating"><i class="fa fa-star-o fa-lg"></i></a>
-          <a class="rating-star" href="javascript:void(0);" title="Two star rating"><i class="fa fa-star-o fa-lg"></i></a>
-          <a class="rating-star" href="javascript:void(0);" title="Three star rating"><i class="fa fa-star-o fa-lg"></i></a>
-          <a class="rating-star" href="javascript:void(0);" title="Four star rating"><i class="fa fa-star-o fa-lg"></i></a>
-          <a class="rating-star" href="javascript:void(0);" title="Five star rating"><i class="fa fa-star-o fa-lg"></i></a>
+          <a class="rating-star" href="javascript:void(0);" title="Click to rate this space one star"><i class="fa fa-star-o fa-lg"></i></a>
+          <a class="rating-star" href="javascript:void(0);" title="Click to rate this space two star"><i class="fa fa-star-o fa-lg"></i></a>
+          <a class="rating-star" href="javascript:void(0);" title="Click to rate this space three star"><i class="fa fa-star-o fa-lg"></i></a>
+          <a class="rating-star" href="javascript:void(0);" title="Click to rate this space four star"><i class="fa fa-star-o fa-lg"></i></a>
+          <a class="rating-star" href="javascript:void(0);" title="Click to rate this space five star"><i class="fa fa-star-o fa-lg"></i></a>
         </span>
         <span></span>
       </div>
       <br>
       <div class="space-review-chars">
-        <b><span id="space-review-remaining"></span></b> characters left
+        <strong><span id="space-review-remaining"></strong> characters left
       </div>
     </div>
-	<textarea placeholder="{% trans 'review_placeholder' %}" maxlength="300"></textarea>
-    <a id="review_guidelines" href="javascript:void(0);"><i class="fa fa-angle-double-down"></i> Review Guidelines</a>
+	<textarea placeholder="{% trans 'review_placeholder' %}" maxlength="300" required="required"></textarea>
+    <a id="review_guidelines" href="javascript:void(0);" title="Click to see review guidelines"><i class="fa fa-angle-double-down"></i> Review Guidelines</a>
     <ul style="display: none;">
-      <li>Explain your star ratings; why you liked or disliked the space. </li>
-      <li>Be polite &#8212; no profanity.</li>
+      <li>Explain your star rating&#8212;why you liked or disliked the space. </li>
+      <li>Be polite&#8212;no profanity.</li>
       <li>Remember, your UW NetID will appear as the reviewer name.</li>
     </ul>
     <br>
-    <b>Note:</b> Your review will be published with your UW NetID (if the review follows our guidelines).
+    <strong>Note:</strong> Your review will be published in 2-3 days if it meets review guidelines. 
 	<br><br>
     <div>
-      <button id="space-review-submit" class="btn primary-button">{% trans 'Submit' %}</button>
-      <button id="space-review-cancel">{% trans 'Cancel' %}</button>
+      <button id="space-review-submit" class="btn primary-button" title="Submit your review and rating">{% trans 'Submit' %}</button>
+      <button id="space-review-cancel" title="Cancel writing review">{% trans 'Cancel' %}</button>
     </div>
   </div>
   <div class="space-review-submitted border-rounded" style="display: none;">
-    <b>Thank you for submitting a review!</b><br />
+    <strong>Thank you for submitting a review!</strong><br />
     You will receive an email once your submission has been reviewed; please allow three business days. 
     <a href="javascript:void(0);">{% trans 'Close' %}</a>
   </div>
@@ -66,7 +66,7 @@
 	      <i class="fa fa-star-o fa-lg"></i>
 	      <i class="fa fa-star-o fa-lg"></i>
         </span>
-        <span><b>By {{ reviewer }}.</b> {{ date }}</span>
+        <span>By <strong>{{ reviewer }}</strong> {{ date }}</span>
       </div>
       <div class="space-review-body">
         {{ review }}
@@ -80,6 +80,6 @@
 
 {% tplhandlebars "more_space_reviews" %}
     <div class="more-space-reviews">
-      <a href="javascript:void(0);"><i class="fa fa-angle-double-down"></i> See more reviews</a>
+      <a href="javascript:void(0);" title="Click to see more reviews"><i class="fa fa-angle-double-down"></i> See more reviews</a>
     </div>
 {% endtplhandlebars %}
