@@ -100,23 +100,23 @@ function setupRatingsAndReviews(data) {
         }
     });
 
-    $(document).on('click', '.space-review-stars i', function (e) {
-        var target = $(e.target),
-            stars = target.prevAll('i'),
+    $(document).on('click', 'a.rating-star', function (e) {
+        var target = $(e.currentTarget),
+            stars = target.prevAll('.rating-star'),
             rating = stars.length + 1,
             ratings = ['', gettext('terrible'), gettext('poor'),
                        gettext('average'), gettext('good'), gettext('excellent')];
 
-        stars.switchClass('fa-star-o', 'fa-star');
-        target.switchClass('fa-star-o', 'fa-star');
-        target.nextAll('i').switchClass('fa-star', 'fa-star-o');
+        stars.find('i').switchClass('fa-star-o', 'fa-star');
+        target.find('i').switchClass('fa-star-o', 'fa-star');
+        target.nextAll('a').find('i').switchClass('fa-star', 'fa-star-o');
         $('.space-review-stars span:last-child').html(ratings[rating]);
         if ($('.space-review-compose textarea').val().length) {
             enableSubmitButton();
         }
     });
 
-    $('.space-review-compose a').on('click', function () {
+    $('#review_guidelines').on('click', function () {
         if ($(this).next().is(':visible')) {
             hideReviewGuidelines();
         } else {
@@ -138,8 +138,8 @@ function setupRatingsAndReviews(data) {
             $.removeCookie('space_review');
         }
 
-        $('#show_reviews').css('cursor', 'pointer');
-        $('#show_reviews').click(function () {
+        $('#show_reviews').click(function (e) {
+            e.preventDefault();
             $('.space-detail-body').animate({ scrollTop: $('.space-ratings-and-reviews').offset().top
                                               + $('.space-detail-body').scrollTop()
                                               - $('.space-detail-body').offset().top }, '500');

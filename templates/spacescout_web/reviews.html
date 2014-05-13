@@ -12,11 +12,11 @@
     <div class="space-review-rating">
       <div class="space-review-stars">
         <span>
-	        <i class="fa fa-star-o fa-lg"></i>
-	        <i class="fa fa-star-o fa-lg"></i>
-	        <i class="fa fa-star-o fa-lg"></i>
-	        <i class="fa fa-star-o fa-lg"></i>
-	        <i class="fa fa-star-o fa-lg"></i>
+          <a class="rating-star" href="javascript:void(0);" title="One star rating"><i class="fa fa-star-o fa-lg"></i></a>
+          <a class="rating-star" href="javascript:void(0);" title="Two star rating"><i class="fa fa-star-o fa-lg"></i></a>
+          <a class="rating-star" href="javascript:void(0);" title="Three star rating"><i class="fa fa-star-o fa-lg"></i></a>
+          <a class="rating-star" href="javascript:void(0);" title="Four star rating"><i class="fa fa-star-o fa-lg"></i></a>
+          <a class="rating-star" href="javascript:void(0);" title="Five star rating"><i class="fa fa-star-o fa-lg"></i></a>
         </span>
         <span></span>
       </div>
@@ -26,7 +26,7 @@
       </div>
     </div>
 	<textarea placeholder="{% trans 'review_placeholder' %}" maxlength="300"></textarea>
-    <a href="javascript:void(0);"><i class="fa fa-angle-double-down"></i> Review Guidelines</a>
+    <a id="review_guidelines" href="javascript:void(0);"><i class="fa fa-angle-double-down"></i> Review Guidelines</a>
     <ul style="display: none;">
       <li>Explain your star ratings; why you liked or disliked the space. </li>
       <li>Be polite &#8212; no profanity.</li>
@@ -59,11 +59,13 @@
 {% tplhandlebars "space_reviews_review" %}
     <div class="space-reviews-review">
       <div class="space-review-header">
-        <span><i class="fa fa-star-o fa-lg"></i>
-        <i class="fa fa-star-o fa-lg"></i>
-        <i class="fa fa-star-o fa-lg"></i>
-        <i class="fa fa-star-o fa-lg"></i>
-        <i class="fa fa-star-o fa-lg"></i></span>
+        <span>
+	      <i class="fa fa-star-o fa-lg"></i>
+	      <i class="fa fa-star-o fa-lg"></i>
+	      <i class="fa fa-star-o fa-lg"></i>
+	      <i class="fa fa-star-o fa-lg"></i>
+	      <i class="fa fa-star-o fa-lg"></i>
+        </span>
         <span><b>By {{ reviewer }}.</b> {{ date }}</span>
       </div>
       <div class="space-review-body">
