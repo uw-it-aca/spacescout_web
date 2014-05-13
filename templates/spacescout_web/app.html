@@ -143,7 +143,7 @@
                           <div class="space-detail-type">{{type}} {{#if capacity }}<span class="space-detail-capacity">[Seats&nbsp;{{capacity}}]</span>{{/if}}</div>
                           <a class="close" href="#" title="close"><img alt="close details" src="{% static 'img/x.png' %}" /></a>
                           <div class="space-actions">
-                          	<a id="show_reviews" class="space-stars" href="javascript:void(0);">
+                          	<a id="show_reviews" class="space-stars" href="javascript:void(0);" title="See all reviews for {{name}}">
                               <i class="fa fa-star-o"></i>
                               <i class="fa fa-star-o"></i>
                               <i class="fa fa-star-o"></i>
@@ -152,12 +152,12 @@
                           	</a>
                             <span id="review_count"></span>
                             <span class="divider"></span>
-                            <button id="favorite_space">
+                            <button id="favorite_space" title="Click to favorite {{name}}">
                             	<span class="space-detail-fav space-detail-fav-unset">
                             		<i class="fa fa-heart"></i>
                             	</span> <span>{% trans 'favorite' %}</span>
                             </button>
-                            <button id="share_space"><i class="fa fa-mail-forward"></i> {%trans 'share' %}</button>
+                            <button id="share_space" title="Click to share {{name}}"><i class="fa fa-mail-forward"></i> {%trans 'share' %}</button>
                           </div>
                         </div>
                         <div class="space-detail-body">
