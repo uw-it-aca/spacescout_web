@@ -477,7 +477,13 @@ function reset_location_filter() {
         $(document).keyup(function(e) {
             if (e.keyCode == escape_key_code) {
                 if ($('#filter_block').is(':visible')) {
+
                     $('#filter_block').slideUp(400, function() {
+                        var icon = $('.fa-angle-double-up');
+                        if (icon.length) {
+                            icon.switchClass('fa-angle-double-up', 'fa-angle-double-down', 0);
+                        }
+
                         //mobile style stuff
                         if ($('#container').attr("style")) {
                             $('#container').height('auto');
