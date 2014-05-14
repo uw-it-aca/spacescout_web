@@ -18,6 +18,7 @@ from django.http import HttpResponseRedirect
 from spacescout_web.forms.share import ShareForm
 from django.conf import settings
 from django.utils.http import urlquote
+from django.contrib.auth.views import redirect_to_login
 from spacescout_web.spot import Spot, SpotException
 import oauth2
 import socket
@@ -25,6 +26,9 @@ import simplejson as json
 
 def share(request, spot_id=None):
     if request.method == 'POST':
+        if not request.user.is_authenticated():
+            path = request.build_absolute_uri()
+            return redirect_to_login(path, '/login')
         form = ShareForm(request.POST)
         back = request.POST['back'] if 'back' in request.POST else '/'
         if form.is_valid():
