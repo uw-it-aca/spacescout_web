@@ -22,7 +22,7 @@ js_info_dict = {
 
 urlpatterns = patterns('spacescout_web.views',
     url(r'^$', 'home.HomeView'),
-    url(r'login$', 'auth.Prompt'),
+    url(r'^login$', 'auth.Prompt'),
     url(r'authenticate$', 'auth.Login'),
     url(r'^logout$', 'auth.Logout'),
     url(r'web_api/v1/user/me/favorites/?$', 'favorites.API'),
