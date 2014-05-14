@@ -230,7 +230,7 @@ function loadRatingsAndReviews(id, review_container, rating_container) {
                     });
                 }
 
-                $('.write-a-review').attr('title', gettext('write_review_for') + ' '
+                $('.write-a-review').attr('title', gettext('write_review_for')
                                           + $('#space-detail-name span:last-child').text());
                 showRatingEditorButton();
             } else if ($('.space-review-compose').length) {

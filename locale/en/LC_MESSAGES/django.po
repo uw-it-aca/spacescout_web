@@ -162,7 +162,7 @@ msgstr "Write Review"
 
 #: templates/app.html:293
 msgid "write_review_for"
-msgstr "Write a review for"
+msgstr "Click to write a review for "
 
 #: templates/app.html:293
 msgid "review_placeholder"
