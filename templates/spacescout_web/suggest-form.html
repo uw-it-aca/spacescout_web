@@ -2,7 +2,7 @@
 
 {% block suggest-content %}
 
-    {% if not is_mobile %}<h2 class="suggest-header"><span>Back</span><br />Suggest a Space</h2>{% endif %}
+    {% if not is_mobile %}<h2 class="suggest-header">Suggest a Space</h2>{% endif %}
 
     <form action="/suggest/" method="post">{% csrf_token %}
         <div class="fieldWrapper">
