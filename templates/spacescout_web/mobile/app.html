@@ -299,13 +299,13 @@
       	  <div class="space-detail-type">{{ type }} {{ #if capacity }}<span class="space-detail-capacity">[Seats&nbsp;{{capacity}}]</span>{{ /if }}</div>
         </div>
         <div class="space-actions">
-			<span class="space-stars">
+			<a id="show_reviews" class="space-stars" href="javascript:void(0);" title="See all reviews for {{ name }}">
 	          <i class="fa fa-star-o"></i>
 	          <i class="fa fa-star-o"></i>
 	          <i class="fa fa-star-o"></i>
 	          <i class="fa fa-star-o"></i>
 	          <i class="fa fa-star-o"></i>
-			</span>
+			</a>
           <span id="review_count"></span>
           <span id="divider"></span>
           <button id="favorite_space" title="Tap to favorite {{name}}"><span class="space-detail-fav space-detail-fav-unset"><i class="fa fa-heart-o"></i></span> <span>{% trans 'favorite' %}</span></button>
@@ -440,7 +440,9 @@
                         </ul>
                     </div>
 
-				    <div class="space-ratings-and-reviews"></div>
+				    <div class="space-ratings-and-reviews">
+                      <div class="loading"></div>
+                    </div>
 
                     <div class="space-detail-report">
                         <a href="/contact/{{ id }}/">Report a problem with this space</a>
