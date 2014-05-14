@@ -14,6 +14,7 @@
 """
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from spacescout_web.forms.share import ShareForm
 from django.conf import settings
@@ -23,6 +24,7 @@ import oauth2
 import socket
 import simplejson as json
 
+@login_required(login_url='/login')
 def share(request, spot_id=None):
     if request.method == 'POST':
         form = ShareForm(request.POST)
