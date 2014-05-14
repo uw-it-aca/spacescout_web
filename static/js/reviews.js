@@ -42,6 +42,8 @@ function setupRatingsAndReviews(data) {
             remaining = window.spacescout_reviews.review_char_limit - text.length + not_counted,
             span = $('#space-review-remaining');
 
+        $(this).attr("maxlength", window.spacescout_reviews.review_char_limit + not_counted);
+
         if (remaining > 0) {
             span.html(remaining);
             span.removeClass('required');
