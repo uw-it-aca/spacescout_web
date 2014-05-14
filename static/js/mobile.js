@@ -42,7 +42,9 @@
     var honeycombOrNewer = deviceAgent.match(/android [3-9]/i);
     var froyoOrOlder = android && !gingerbread && !honeycombOrNewer;
 
-    function show_main_app() {
+    window.spacescout_web_mobile = {};
+
+    window.spacescout_web_mobile.show_main_app = function () {
         $('#main_space_detail').hide();
         $('#main_app').show();
 
@@ -51,14 +53,14 @@
         if (window.spacescout_map) {
             google.maps.event.trigger(window.spacescout_map, "resize");
         }
-    }
+    };
 
-    function show_space_detail(id) {
+    window.spacescout_web_mobile.show_space_detail = function(id) {
         $('#main_space_detail').html('');
         $('#main_space_detail').show();
         $('#main_app').hide();
         loadSpaceDetails(id);
-    }
+    };
 
 	$(document).ready(function() {
 
@@ -96,9 +98,9 @@
         if (window.spacescout_url) {
             var state = window.spacescout_url.parse_path(window.location.pathname);
             if (state.id) {
-                show_space_detail(state.id);
+                window.spacescout_web_mobile.show_space_detail(state.id);
             } else {
-                show_main_app();
+                window.spacescout_web_mobile.show_main_app();
             }
         }
 
@@ -211,7 +213,7 @@
 
                 e.preventDefault();
 
-                show_space_detail(id);
+                window.spacescout_web_mobile.show_space_detail(id);
             });
         });
 
@@ -288,7 +290,7 @@
         $('#back_home_button').click(function(e) {
             var m =  window.location.pathname.match(/\/(\d+)\/?$/);
 
-            show_main_app();
+            window.spacescout_web_mobile.show_main_app();
             window.spacescout_url.push(null);
 
             if (m) {
@@ -297,38 +299,7 @@
         });
 
         // set us up teh favorites
-        var fav_icon = $('button#favorite_space .space-detail-fav');
-        var fav_icon_i = $('i', fav_icon);
-
-        if (fav_icon.is(':visible')) {
-            if (window.spacescout_favorites.is_favorite(data.id)) {
-                fav_icon.removeClass('space-detail-fav-unset').addClass('space-detail-fav-set');
-                fav_icon_i.removeClass('fa-heart-o').addClass('fa-heart');
-            } else {
-                fav_icon.removeClass('space-detail-fav-set').addClass('space-detail-fav-unset');
-                fav_icon_i.removeClass('fa-heart').addClass('fa-heart-o');
-            }
-
-            fav_icon.parent().click(function (e) {
-                var list_item = $('button#' + data.id + ' .space-detail-fav');
-
-                if (window.spacescout_authenticated_user.length == 0) {
-                    window.location.href = '/login?next=' + window.location.pathname;
-                }
-
-                window.spacescout_favorites.toggle(data.id,
-                                                   function () {
-                                                       fav_icon.removeClass('space-detail-fav-unset').addClass('space-detail-fav-set');
-                                                       fav_icon_i.removeClass('fa-heart-o').addClass('fa-heart');
-                                                       list_item.show();
-                                                   },
-                                                   function () {
-                                                       fav_icon.removeClass('space-detail-fav-set').addClass('space-detail-fav-unset');
-                                                       fav_icon_i.removeClass('fa-heart').addClass('fa-heart-o');
-                                                       list_item.hide();
-                                                   });
-            });
-        }
+        window.spacescout_favorites.update_favorites_button(data.id);
 
         setupRatingsAndReviews(data);
         loadRatingsAndReviews(data.id, $('.space-reviews-content'), $('.space-actions'));
@@ -364,7 +335,7 @@
 
         $('#back_home_button').css('cursor', 'pointer');
         $('#back_home_button').click(function(e) {
-            show_main_app();
+            window.spacescout_web_mobile.show_main_app();
         });
     }
 
