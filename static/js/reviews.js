@@ -140,10 +140,21 @@ function setupRatingsAndReviews(data) {
         }
 
         $('#show_reviews').click(function (e) {
+            var node, top;
+
+            if (isMobile) {
+                node = $('html, body');
+                top = $('.space-ratings-and-reviews').offset().top
+                                       + $('.space-detail-body').scrollTop();
+            } else {
+                node = $('.space-detail-body');
+                top = $('.space-ratings-and-reviews').offset().top
+                                       + $('.space-detail-body').scrollTop()
+                                       - $('.space-detail-body').offset().top;
+            }
+
             e.preventDefault();
-            $('.space-detail-body').animate({ scrollTop: $('.space-ratings-and-reviews').offset().top
-                                              + $('.space-detail-body').scrollTop()
-                                              - $('.space-detail-body').offset().top }, '500');
+            node.animate({ scrollTop: top }, '500');
         });
     });
 }

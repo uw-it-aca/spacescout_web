@@ -565,7 +565,7 @@ div.actions { display: none; }
     
         .loading { height: 40px; background: #f8f8f8 url('../img/spinner.gif') no-repeat 50% 50%; background-size: 26px; }
 
-        h4 {font-weight: normal; color: @purple_text; 
+        h3 {font-weight: normal; color: @purple_text; 
         	.write-a-review{
 				float: right;
 				background: #e6e6e6;
@@ -635,14 +635,15 @@ div.actions { display: none; }
 	        	font-size: 14px;
 	    	}
 
-        .more-space-reviews { clear: both; padding-top: 18px; }
+        .more-space-reviews { clear: both; padding-top: 18px;
+            a { color: @purple_text; }
+        }
 
         textarea { display: block; width: 100%; height: 80px; }
         #review_guidelines { color: @purple_text; display: block; }
         ul { padding: 8px 0; }
 
         button {
-        	background-color: #4c497e;
         	color: @purple_text; border-radius: 4px !important; font-size: 13px; border: 1px solid #ececec !important; padding: 3px 10px; margin: 0px 3px;}
     }
 }
