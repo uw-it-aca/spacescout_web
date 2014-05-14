@@ -169,6 +169,74 @@
             }
         },
 
+        update_favorites_button: function (id) {
+            var fav_button = $('button#favorite_space'),
+                fav_icon = $('.space-detail-fav', fav_button),
+                fav_icon_i = $('i', fav_icon),
+                setFavoritedButton = function (id) {
+                    var title = fav_button.attr('title').replace(/ favorite /, ' unfavorite ');
+
+                    fav_icon.removeClass('space-detail-fav-unset').addClass('space-detail-fav-set');
+                    fav_icon_i.removeClass('fa-heart-o').addClass('fa-heart');
+                    fav_icon.parent().find('span:last').text(gettext('favorited'));
+                    fav_button.attr('title', title);
+                    if (id) {
+                        $('button#' + id + ' .space-detail-fav').show();
+                    }
+                },
+                unsetFavoritedButton = function(id) {
+                    var title = fav_button.attr('title').replace(/ unfavorite /, ' favorite ');
+
+                    fav_icon.removeClass('space-detail-fav-set').addClass('space-detail-fav-unset');
+                    fav_icon_i.removeClass('fa-heart').addClass('fa-heart-o');
+                    fav_icon.parent().find('span:last').text(gettext('favorite'));
+                    fav_button.attr('title', title);
+                    if (id) {
+                        $('button#' + id + ' .space-detail-fav').hide();
+                    }
+                };
+
+            if (fav_icon.is(':visible')) {
+                var authenticated_user = window.spacescout_authenticated_user.length > 0;
+
+                if (authenticated_user && window.spacescout_favorites.is_favorite(id)) {
+                    setFavoritedButton();
+                } else {
+                    unsetFavoritedButton();
+                }
+
+                fav_icon.unbind();
+
+                fav_button.click(function (e) {
+                    if (!authenticated_user) {
+                        $.cookie('space_set_favorite', JSON.stringify({ id: id }));
+                        window.location.href = '/login?next=' + window.location.pathname;
+                    }
+
+                    window.spacescout_favorites.toggle(id);
+                });
+
+                $(document).on('spaceFavoriteSet', function (e, id) {
+                    setFavoritedButton(id);
+                });
+
+                $(document).on('spaceFavoriteClear', function (e, id) {
+                    unsetFavoritedButton(id);
+                });
+
+                if (authenticated_user) {
+                    var set_favorite = $.cookie('space_set_favorite'),
+                        json_favorite = set_favorite ? JSON.parse(set_favorite) : null;
+
+                    if (json_favorite) {
+                        window.spacescout_favorites.set(json_favorite.id);
+                    }
+
+                    $.removeCookie('space_set_favorite');
+                }
+            }
+        },
+
         load: function () {
             var self = this;
 

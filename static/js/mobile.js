@@ -299,38 +299,7 @@
         });
 
         // set us up teh favorites
-        var fav_icon = $('button#favorite_space .space-detail-fav');
-        var fav_icon_i = $('i', fav_icon);
-
-        if (fav_icon.is(':visible')) {
-            if (window.spacescout_favorites.is_favorite(data.id)) {
-                fav_icon.removeClass('space-detail-fav-unset').addClass('space-detail-fav-set');
-                fav_icon_i.removeClass('fa-heart-o').addClass('fa-heart');
-            } else {
-                fav_icon.removeClass('space-detail-fav-set').addClass('space-detail-fav-unset');
-                fav_icon_i.removeClass('fa-heart').addClass('fa-heart-o');
-            }
-
-            fav_icon.parent().click(function (e) {
-                var list_item = $('button#' + data.id + ' .space-detail-fav');
-
-                if (window.spacescout_authenticated_user.length == 0) {
-                    window.location.href = '/login?next=' + window.location.pathname;
-                }
-
-                window.spacescout_favorites.toggle(data.id,
-                                                   function () {
-                                                       fav_icon.removeClass('space-detail-fav-unset').addClass('space-detail-fav-set');
-                                                       fav_icon_i.removeClass('fa-heart-o').addClass('fa-heart');
-                                                       list_item.show();
-                                                   },
-                                                   function () {
-                                                       fav_icon.removeClass('space-detail-fav-set').addClass('space-detail-fav-unset');
-                                                       fav_icon_i.removeClass('fa-heart').addClass('fa-heart-o');
-                                                       list_item.hide();
-                                                   });
-            });
-        }
+        window.spacescout_favorites.update_favorites_button(data.id);
 
         setupRatingsAndReviews(data);
         loadRatingsAndReviews(data.id, $('.space-reviews-content'), $('.space-actions'));
