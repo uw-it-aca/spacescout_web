@@ -4,13 +4,15 @@
 
 {% tplhandlebars "space_reviews" %}
   <h3>Reviews for this space
-  <button class="write-a-review" style="display: none;" title="Click to write a review"><i class="fa fa-pencil"></i> {% trans 'write_review' %}</button>
+  <button id="Write_Review_btn" class="write-a-review" type="button" aria-label=“Write a review” aria-owns=“WriteReview_container" style="display: none;" title="Click to write a review for this space"><i class="fa fa-pencil"></i> {% trans 'write_review' %} </button>
   </h3>
-  <div class="space-review-compose" style="display: none;">
-    <h4>Write a review</h4>
-    <h4 class="rate-subhead">Rate this space</h4>
+  
+  <div id=“WriteReview_container" aria-labelledby=“Write_Review_header” class="space-review-compose" style="display: none;">
+    <h4 id="Write_Review_header">Write a review</h4>
+    <h4 id="Rate_header" class="rate-subhead">Rate this space</h4>
+    
     <div class="space-review-rating">
-      <div class="space-review-stars">
+      <div id="star-rating" class="space-review-stars">
         <span>
           <a class="rating-star" href="javascript:void(0);" title="Click to rate this space one star"><i class="fa fa-star-o fa-lg"></i></a>
           <a class="rating-star" href="javascript:void(0);" title="Click to rate this space two star"><i class="fa fa-star-o fa-lg"></i></a>
@@ -21,11 +23,13 @@
         <span></span>
       </div>
       <br>
-      <div class="space-review-chars">
+      <div id="Char_counter" class="space-review-chars">
         <strong><span id="space-review-remaining"></strong> characters left
       </div>
     </div>
-	<textarea placeholder="{% trans 'review_placeholder' %}" maxlength="300" required="required"></textarea>
+    
+	<textarea id="Review_comment" placeholder="{% trans 'review_placeholder' %}" maxlength="300" required="required"></textarea>
+	
     <a id="review_guidelines" href="javascript:void(0);" title="Click to see review guidelines"><i class="fa fa-angle-double-down"></i> Review Guidelines</a>
     <ul style="display: none;">
       <li>Explain your star rating&#8212;why you liked or disliked the space. </li>
@@ -52,7 +56,7 @@
     <div class="space-reviews-none border-rounded">
       No reviews for this space yet. Be the first one to write a review for this space.
       <br />
-      <button class="write-a-review"><i class="fa fa-pencil"></i>{% trans 'write_review' %}</button>
+      <button id="Write_Review_btn" class="write-a-review" title="Click to write a review for this space" type="button" aria-owns="WriteReview_container" ><i class="fa fa-pencil"></i>{% trans 'write_review' %}</button>
     </div>
 {% endtplhandlebars %}
 
