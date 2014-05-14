@@ -274,19 +274,39 @@ Handlebars.registerHelper('ifany', function(a, b) {
         });
 
         // set up favorites
-        var fav_icon = $('button#favorite_space .space-detail-fav');
-        var fav_icon_i = $('i', fav_icon);
+        var fav_button = $('button#favorite_space'),
+            fav_icon = $('.space-detail-fav', fav_button),
+            fav_icon_i = $('i', fav_icon),
+            setFavoritedButton = function (id) {
+                var title = fav_button.attr('title').replace(/ favorite /, ' unfavorite ');
+
+                fav_icon.removeClass('space-detail-fav-unset').addClass('space-detail-fav-set');
+                fav_icon_i.removeClass('fa-heart-o').addClass('fa-heart');
+                fav_icon.parent().find('span:last').text(gettext('favorited'));
+                fav_button.attr('title', title);
+                if (id) {
+                    $('button#' + id + ' .space-detail-fav').show();
+                }
+            },
+            unsetFavoritedButton = function(id) {
+                var title = fav_button.attr('title').replace(/ unfavorite /, ' favorite ');
+
+                fav_icon.removeClass('space-detail-fav-set').addClass('space-detail-fav-unset');
+                fav_icon_i.removeClass('fa-heart').addClass('fa-heart-o');
+                fav_icon.parent().find('span:last').text(gettext('favorite'));
+                fav_button.attr('title', title);
+                if (id) {
+                    $('button#' + id + ' .space-detail-fav').hide();
+                }
+            };
 
         if (fav_icon.is(':visible')) {
             var authenticated_user = window.spacescout_authenticated_user.length > 0;
 
             if (authenticated_user && window.spacescout_favorites.is_favorite(data.id)) {
-                fav_icon.removeClass('space-detail-fav-unset').addClass('space-detail-fav-set');
-                fav_icon_i.removeClass('fa-heart-o').addClass('fa-heart');
-                fav_icon.parent().find('span:last').text(gettext('favorited'));
+                setFavoritedButton();
             } else {
-                fav_icon.removeClass('space-detail-fav-set').addClass('space-detail-fav-unset');
-                fav_icon_i.removeClass('fa-heart').addClass('fa-heart-o');
+                unsetFavoritedButton();
             }
 
             fav_icon.unbind();
@@ -301,17 +321,11 @@ Handlebars.registerHelper('ifany', function(a, b) {
             });
 
             $(document).on('spaceFavoriteSet', function (e, id) {
-                fav_icon.removeClass('space-detail-fav-unset').addClass('space-detail-fav-set');
-                fav_icon_i.removeClass('fa-heart-o').addClass('fa-heart');
-                $('button#' + id + ' .space-detail-fav').show();
-                fav_icon.parent().find('span:last').text(gettext('favorited'));
+                setFavoritedButton(id);
             });
 
             $(document).on('spaceFavoriteClear', function (e, id) {
-                fav_icon.removeClass('space-detail-fav-set').addClass('space-detail-fav-unset');
-                fav_icon_i.removeClass('fa-heart').addClass('fa-heart-o');
-                $('button#' + id + ' .space-detail-fav').hide();
-                fav_icon.parent().find('span:last').text(gettext('favorite'));
+                unsetFavoritedButton(id);
             });
 
             if (authenticated_user) {

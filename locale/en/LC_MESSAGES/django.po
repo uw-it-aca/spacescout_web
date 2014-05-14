@@ -161,6 +161,10 @@ msgid "write_review"
 msgstr "Write Review"
 
 #: templates/app.html:293
+msgid "write_review_for"
+msgstr "Click to write a review for "
+
+#: templates/app.html:293
 msgid "review_placeholder"
 msgstr "Review is required. Please explain your star rating."
 
