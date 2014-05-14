@@ -42,7 +42,9 @@
     var honeycombOrNewer = deviceAgent.match(/android [3-9]/i);
     var froyoOrOlder = android && !gingerbread && !honeycombOrNewer;
 
-    function show_main_app() {
+    window.spacescout_web_mobile = {};
+
+    window.spacescout_web_mobile.show_main_app = function () {
         $('#main_space_detail').hide();
         $('#main_app').show();
 
@@ -51,14 +53,14 @@
         if (window.spacescout_map) {
             google.maps.event.trigger(window.spacescout_map, "resize");
         }
-    }
+    };
 
-    function show_space_detail(id) {
+    window.spacescout_web_mobile.show_space_detail = function(id) {
         $('#main_space_detail').html('');
         $('#main_space_detail').show();
         $('#main_app').hide();
         loadSpaceDetails(id);
-    }
+    };
 
 	$(document).ready(function() {
 
@@ -96,9 +98,9 @@
         if (window.spacescout_url) {
             var state = window.spacescout_url.parse_path(window.location.pathname);
             if (state.id) {
-                show_space_detail(state.id);
+                window.spacescout_web_mobile.show_space_detail(state.id);
             } else {
-                show_main_app();
+                window.spacescout_web_mobile.show_main_app();
             }
         }
 
@@ -211,7 +213,7 @@
 
                 e.preventDefault();
 
-                show_space_detail(id);
+                window.spacescout_web_mobile.show_space_detail(id);
             });
         });
 
@@ -288,7 +290,7 @@
         $('#back_home_button').click(function(e) {
             var m =  window.location.pathname.match(/\/(\d+)\/?$/);
 
-            show_main_app();
+            window.spacescout_web_mobile.show_main_app();
             window.spacescout_url.push(null);
 
             if (m) {
@@ -364,7 +366,7 @@
 
         $('#back_home_button').css('cursor', 'pointer');
         $('#back_home_button').click(function(e) {
-            show_main_app();
+            window.spacescout_web_mobile.show_main_app();
         });
     }
 
