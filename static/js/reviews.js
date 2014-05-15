@@ -133,11 +133,12 @@ function setupRatingsAndReviews(data) {
         if (review && window.spacescout_authenticated_user.length > 0) {
             var json_review = review ? JSON.parse(review) : null;
 
-            if (json_review) {
+            if (json_review && !json_review.invalid && id == json_review.id) {
                 postRatingAndReview(json_review.id, json_review.review);
                 $('.space-reviews-none').hide();
             }
 
+            $.cookie('space_review', JSON.stringify({ invalid: true, id: 0, review: '' }));
             $.removeCookie('space_review');
         }
 
