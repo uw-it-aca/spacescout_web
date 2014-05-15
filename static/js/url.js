@@ -330,7 +330,7 @@
         }
     });
 
-    $(document).on('searchResultsLoaded', function () {
+    $(document).on('searchResultsLoaded', function (e, data) {
         var state = window.spacescout_url.parse_path(window.location.pathname);
 
         if (window.location.pathname == '' || window.location.pathname == '/') {

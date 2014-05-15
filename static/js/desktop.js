@@ -164,6 +164,9 @@ Handlebars.registerHelper('ifany', function(a, b) {
             }
         });
 
+        $(document).on('searchResultsLoaded', function (e, data) {
+            $('#space_count_container .count').html(data.count);
+        });
 	});
 
     function fetchSpaceDetails(id){

@@ -597,12 +597,12 @@ function load_data(data) {
 
     // update the map
     updatePins(data);
-    data_loaded();
+    data_loaded(data.length);
 }
 
-function data_loaded() {
+function data_loaded(count) {
     $.event.trigger('searchResultsLoaded', {
-        message: 'search results are loaded'
+        count: count
     });
 }
 
