@@ -69,13 +69,11 @@
                     node.show();
                     if (id == detail_id) {
                         $('.space-detail-fav', detail_node).removeClass('space-detail-fav-unset').addClass('space-detail-fav-set');
- //                       $('.space-detail-fav i', detail_node).removeClass('fa-heart-o').addClass('fa-heart');
                     }
                 } else {
                     node.hide();
                     if (id == detail_id) {
                         $('.space-detail-fav', detail_node).removeClass('space-detail-fav-set').addClass('space-detail-fav-unset');
-  //                      $('.space-detail-fav i', detail_node).removeClass('fa-heart').addClass('fa-heart-o');
                     }
                 }
             });
@@ -177,7 +175,6 @@
                     var title = fav_button.attr('title').replace(/ favorite /, ' unfavorite ');
 
                     fav_icon.removeClass('space-detail-fav-unset').addClass('space-detail-fav-set');
-                    fav_icon_i.removeClass('fa-heart-o').addClass('fa-heart');
                     fav_icon.parent().find('span:last').text(gettext('favorited'));
                     fav_button.attr('title', title);
                     if (id) {
@@ -188,7 +185,6 @@
                     var title = fav_button.attr('title').replace(/ unfavorite /, ' favorite ');
 
                     fav_icon.removeClass('space-detail-fav-set').addClass('space-detail-fav-unset');
-                    fav_icon_i.removeClass('fa-heart').addClass('fa-heart-o');
                     fav_icon.parent().find('span:last').text(gettext('favorite'));
                     fav_button.attr('title', title);
                     if (id) {
