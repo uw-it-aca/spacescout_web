@@ -204,7 +204,7 @@
             $.removeCookie('initial_load');
         });
 
-        $(document).on('searchResultsLoaded', function () {
+        $(document).on('searchResultsLoaded', function (e, data) {
             // handle view details click
             $('.view-details').on('click', function(e){
 
@@ -215,6 +215,9 @@
 
                 window.spacescout_web_mobile.show_space_detail(id);
             });
+
+
+            $('#space_count_container .count').html(data.count);
         });
 
 	});
