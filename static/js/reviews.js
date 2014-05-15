@@ -32,7 +32,7 @@ function setupRatingsAndReviews(data) {
         showRatingEditorButton();
     }
 
-    $('.space-ratings-and-reviews h3 .write-a-review').on('click', function (e) {
+    $('.space-ratings-and-reviews .write-a-review.add-a-review').on('click', function (e) {
         showRatingEditor();
     });
 
@@ -321,11 +321,11 @@ function tidyUpRatesComposer () {
 }
 
 function showRatingEditorButton () {
-    $('.space-ratings-and-reviews h3 button.write-a-review').show();
+    $('.space-ratings-and-reviews .write-a-review.add-a-review').show();
 }
 
 function hideRatingEditorButton () {
-    $('.space-ratings-and-reviews h3 button.write-a-review').hide();
+    $('.space-ratings-and-reviews .write-a-review.add-a-review').hide();
 }
 
 

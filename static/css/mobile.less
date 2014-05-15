@@ -600,7 +600,8 @@ div.actions { display: none;
     
         .loading { height: 40px; background: #f8f8f8 url('../img/spinner.gif') no-repeat 50% 50%; background-size: 26px; }
 
-        h3 {font-weight: normal; color: @purple_text; 
+        .reviews-section-header { clear: both; overflow: auto;
+            h3 { float: left; font-weight: normal; color: @purple_text; }
         	.write-a-review{
 				float: right;
 				background: #e6e6e6;
@@ -616,11 +617,12 @@ div.actions { display: none;
 				height: 32px;
 				width: 110px;
 				color: #4c497e;
-				margin-top: -7px;
+                margin-top: 4px;
 				margin-left: 5px;
 				padding: 0;
 				i{margin-right: 5px;}
             }
+            .write-a-review.add-a-review { float: right; }
             .write-a-review:hover{
 	            text-decoration: none;
 				background-color: #e6e6e6;

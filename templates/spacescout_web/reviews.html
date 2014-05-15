@@ -3,11 +3,11 @@
 
 
 {% tplhandlebars "space_reviews" %}
-  <h3>Reviews for this space
-  <button id="Write_Review_btn" class="write-a-review" type="button" aria-label=“Write a review” aria-owns=“WriteReview_container" style="display: none;" title="Click to write a review for this space"><i class="fa fa-pencil"></i> {% trans 'write_review' %} </button>
-  </h3>
-  
-  <div id=“WriteReview_container" aria-labelledby=“Write_Review_header” class="space-review-compose" style="display: none;">
+  <div class="reviews-section-header">
+    <h3>Reviews for this space</h3>
+    <button id="Write_Review_btn" class="write-a-review add-a-review" type="button" aria-label="Write a review" aria-owns="WriteReview_container" style="display: none;" title="Click to write a review for this space"><i class="fa fa-pencil"></i> {% trans 'write_review' %}</button>
+  </div>
+  <div id="WriteReview_container" aria-labelledby="Write_Review_header" class="space-review-compose" style="display: none;">
     <h4 id="Write_Review_header">Write a review</h4>
     <h4 id="Rate_header" class="rate-subhead">Rate this space</h4>
     
