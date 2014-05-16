@@ -14,7 +14,7 @@
     
 <!-- change to radio form -->
     
-    <fieldset class="space-review-rating"> 
+    <fieldset class="space-review-rating" required="requied"> 
     <legend id="Rate_header" class="rate-subhead">Rate this space</legend> 
     
     	<input id="1-star" type="radio" name="star-rating" value="1-star" style="visibility:hidden">
@@ -31,7 +31,7 @@
      </fieldset> 
    
    <!-- CHAR COUNTER: TO-DO -->
-      <div id="Char_counter" class="space-review-chars">
+      <div id="Char_counter" class="space-review-chars" role="status">
         <strong><span id="space-review-remaining">300</span></strong> characters left
       </div>
     <!-- REVIEW COMMENT -->
@@ -85,7 +85,7 @@
 	      <i class="fa fa-star-o fa-lg"></i>
 	      <i class="fa fa-star-o fa-lg"></i>
         </span>
-        <span>By <strong>{{ reviewer }}</strong> {{ date }}</span>
+        <span>By <strong>{{ reviewer }}</strong> <span id="review-date" class="visuallyhidden">on</span> - {{ date }}</span>
       </div>
       <div class="space-review-body">
         {{ review }}
