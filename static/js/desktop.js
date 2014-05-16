@@ -210,6 +210,20 @@ Handlebars.registerHelper('ifany', function(a, b) {
         // check to see if the space has the following
         data["has_notes"] = ( ( data.extended_info.access_notes != null) || ( data.extended_info.reservation_notes != null) );
         data["has_resources"] = ( data.extended_info.has_computers != null || data.extended_info.has_displays != null || data.extended_info.has_outlets != null || data.extended_info.has_printing != null || data.extended_info.has_projector != null || data.extended_info.has_scanner != null || data.extended_info.has_whiteboards != null );
+        data["review_count"] = (data.extended_info.review_count) || 0;
+        data["stars"] = [];
+        var rating = parseFloat(data.extended_info.rating) || 0;
+        for (var star_pos = 1; star_pos <= 5; star_pos++) {
+            if (rating == star_pos - 0.5) {
+                data.stars.push({ "icon": "fa-star-half-o" });
+            }
+            else if (star_pos <= rating) {
+                data.stars.push({ "icon": "fa-star" });
+            }
+            else {
+                data.stars.push({ "icon": "fa-star-o" });
+            }
+        }
 
     	// remove any open details
         var open = $('.space-detail-container').is(':visible');

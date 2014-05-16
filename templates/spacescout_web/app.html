@@ -145,13 +145,11 @@
                           <a class="close" href="#" title="close"><img alt="close details" src="{% static 'img/x.png' %}" /></a>
                           <div class="space-actions">
                           	<a id="show_reviews" class="space-stars" href="javascript:void(0);" title="See all reviews for {{name}}">
-                              <i class="fa fa-star-o"></i>
-                              <i class="fa fa-star-o"></i>
-                              <i class="fa fa-star-o"></i>
-                              <i class="fa fa-star-o"></i>
-                              <i class="fa fa-star-o"></i>
+                                {{#each stars }}
+                                    <i class="fa {{icon}}"></i>
+                                {{/each}}
                           	</a>
-                            <span id="review_count"></span>
+                            <span id="review_count">({{ review_count }})</span>
                             <span class="divider"></span>
                             <button id="favorite_space" title="Click to favorite {{name}}">
                             	<span class="space-detail-fav space-detail-fav-unset">

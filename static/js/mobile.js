@@ -278,6 +278,21 @@
                               || data.extended_info.has_scanner
                               || data.extended_info.has_whiteboards);
 
+        data["review_count"] = (data.extended_info.review_count) || 0;
+        data["stars"] = [];
+        var rating = parseFloat(data.extended_info.rating) || 0;
+        for (var star_pos = 1; star_pos <= 5; star_pos++) {
+            if (rating == star_pos - 0.5) {
+                data.stars.push({ "icon": "fa-star-half-o" });
+            }
+            else if (star_pos <= rating) {
+                data.stars.push({ "icon": "fa-star" });
+            }
+            else {
+                data.stars.push({ "icon": "fa-star-o" });
+            }
+        }
+
     	$('#main_space_detail').html(template(data));
 
         $('html, body').animate({ scrollTop: 0 }, 'fast');
