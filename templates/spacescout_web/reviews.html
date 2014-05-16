@@ -3,11 +3,72 @@
 
 
 {% tplhandlebars "space_reviews" %}
+<<<<<<< Updated upstream
   <div class="reviews-section-header">
     <h3>Reviews for this space</h3>
     <button id="Write_Review_btn" class="write-a-review add-a-review" type="button" aria-label="Write a review" aria-owns="WriteReview_container" style="display: none;" title="Click to write a review for this space"><i class="fa fa-pencil"></i> {% trans 'write_review' %}</button>
   </div>
   <div id="WriteReview_container" aria-labelledby="Write_Review_header" class="space-review-compose" style="display: none;">
+=======
+  <h3>Reviews for this space
+  <button id="Write_Review_btn" class="write-a-review" type="button" aria-label=“Write a review” aria-owns=“WriteReview_container" style="display: none;" title="Click to write a review for this space"><i class="fa fa-pencil"></i> {% trans 'write_review' %}</button>
+  </h3>
+  
+  <!-- CHANGE TO FORM -->
+  
+  <div id="“WriteReview_container" aria-labelledby="“Write_Review_header”" class="space-review-compose" style="">
+    <h4 id="Write_Review_header">Write a review</h4>
+    
+<!-- change to radio form -->
+    
+    <fieldset class="space-review-rating"> 
+    <legend id="Rate_header" class="rate-subhead">Rate this space</legend> 
+    
+    	<input id="1-star" type="radio" name="star-rating" value="1-star" style="visibility:hidden">
+    	<label for="1-star" class="space-review-stars"><a class="rating-star" href="javascript:void(0);" title="Click to rate this space one star, I won’t be back"><i class="fa fa-star-o fa-lg"></i></a> </label>
+    	
+    	<input id="2-star" type="radio" name="star-rating" value="2-star" style="visibility:hidden">
+    	<label for="2-star" class="space-review-stars"><a class="rating-star" href="javascript:void(0);" title="Click to rate this space two star, I dislike it"><i class="fa fa-star-o fa-lg"></i></a> </label>
+    	<input id="3-star" type="radio" name="star-rating" value="3-star" style="visibility:hidden">
+    	<label for="3-star" class="space-review-stars"><a class="rating-star" href="javascript:void(0);" title="Click to rate this space three star, It’s OK "><i class="fa fa-star-o fa-lg"></i></a> </label>
+    	<input id="4-star" type="radio" name="star-rating" value="4-star" style="visibility:hidden">
+    	<label for="4-star" class="space-review-stars"><a class="rating-star" href="javascript:void(0);" title="Click to rate this space four star,I like it"><i class="fa fa-star-o fa-lg"></i></a> </label>
+    	<input id="5-star" type="radio" name="star-rating" value="5-star" style="visibility:hidden">
+    	<label for="5-star" class="space-review-stars"> <a class="rating-star" href="javascript:void(0);" title="Click to rate this space five star, I love it"><i class="fa fa-star-o fa-lg"></i></a> </label>
+     </fieldset> 
+   
+   <!-- CHAR COUNTER: TO-DO -->
+   <div id="Char_counter" class="space-review-chars">
+        <strong><span id="space-review-remaining">300</span></strong> characters left
+      </div>
+    <!-- REVIEW COMMENT -->
+    <label for="Review_comment" style="visibility:hidden">Enter your review</label>
+    <textarea id="Review_comment" name="Review_comment" placeholder="Review is required. Please explain your star rating." maxlength="300" required="required"></textarea>
+    
+    <!-- Between input and Submit -->
+    
+    <a id="review_guidelines" href="javascript:void(0);" title="Click to see review guidelines"><i class="fa fa-angle-double-down"></i> Review Guidelines</a>
+    
+    <ul style="display: none;">
+      <li>Explain your star rating—why you liked or disliked the space. </li>
+      <li>Be polite—no profanity.</li>
+      <li>Remember, your UW NetID will appear as the reviewer name.</li>
+    </ul>
+     
+   <strong>Note:</strong> Your review will be published in 2-3 days if it meets review guidelines.
+	<br><br>
+	
+	<!-- buttons -->
+<div>
+      <button id="space-review-submit" class="btn primary-button" title="Submit your review and rating" disabled="disabled">Submit</button>
+      <button id="space-review-cancel" title="Cancel writing review">Cancel</button>
+</div>
+  
+ </div>
+ 
+ <!-- ORIGINAL
+  <div id=“WriteReview_container" aria-labelledby=“Write_Review_header” class="space-review-compose" style="display: none;">
+>>>>>>> Stashed changes
     <h4 id="Write_Review_header">Write a review</h4>
     <h4 id="Rate_header" class="rate-subhead">Rate this space</h4>
     
@@ -44,12 +105,14 @@
       <button id="space-review-cancel" title="Cancel writing review">{% trans 'Cancel' %}</button>
     </div>
   </div>
+-->  
+  
   <div class="space-review-submitted border-rounded" style="display: none;">
     <strong>Thank you for submitting a review!</strong><br />
     You will receive an email once your submission has been reviewed; please allow three business days. 
     <a href="javascript:void(0);">{% trans 'Close' %}</a>
   </div>
-  <div class="space-reviews-content"></div>
+  <ol class="space-reviews-content"></ol>
 {% endtplhandlebars %}
 
 {% tplhandlebars "no_space_reviews" %}
@@ -61,7 +124,7 @@
 {% endtplhandlebars %}
 
 {% tplhandlebars "space_reviews_review" %}
-    <div class="space-reviews-review">
+    <li class="space-reviews-review">
       <div class="space-review-header">
         <span>
 	      <i class="fa fa-star-o fa-lg"></i>
@@ -75,7 +138,7 @@
       <div class="space-review-body">
         {{ review }}
       </div>
-    </div>
+    </li>
 {% endtplhandlebars %}
 
 {% tplhandlebars "space_reviews_count" %}
