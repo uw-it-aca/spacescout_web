@@ -92,7 +92,7 @@
 
                     if ($.isArray(space.type)) {
                         $.each(space.type, function () {
-                            type.push(gettext(space.type));
+                            type.push(gettext(this));
                         });
                     }
 

@@ -208,10 +208,18 @@ function loadRatingsAndReviews(id, review_container, rating_container) {
                 $.each(data, function(i) {
                     var review = this,
                         rating = this.rating,
-                        date = new Date(this.date_submitted);
+                        date = new Date(this.date_submitted),
+                        verbiage = [
+                            'Rated as a ' + gettext('one') + ' star, ' + gettext('terrible'),
+                            'Rated as a ' + gettext('two') + ' star, ' + gettext('poor'),
+                            'Rated as a ' + gettext('three') + ' star, ' + gettext('average'),
+                            'Rated as a ' + gettext('four') + ' star, ' + gettext('good'),
+                            'Rated as a ' + gettext('five') + ' star, ' + gettext('excellent')
+                        ];                            
 
                     node = $(template({
                         reviewer: this.reviewer,
+                        verbiage: verbiage[rating - 1],
                         review: (this.review && this.review.length) ? this.review : 'No review provided',
                         date: date ? monthname_from_month(date.getMonth()) + ' ' + date.getDate() + ', ' + date.getFullYear() : ''
                     }));
@@ -251,7 +259,10 @@ function loadRatingsAndReviews(id, review_container, rating_container) {
                 if (rating_sum) {
                     var avg = rating_sum / data.length,
                         dec = Math.floor(avg),
-                        frac = avg % 1;
+                        frac = avg % 1,
+                        number = ['', gettext('one'), gettext('two'),
+                                  gettext('three'), gettext('four'), gettext('five')],
+                        verbiage = 'Out of ' + data.length + ' reviews, the average rating is ' + number[dec];
 
                     $('i', rating_container).each(function(i) {
                         if (i < dec) {
@@ -264,6 +275,16 @@ function loadRatingsAndReviews(id, review_container, rating_container) {
                             }
                         }
                     });
+
+                    if (frac > 0 && frac <= .5) {
+                        verbiage += ' and one half stars';
+                    } else if (dec > 1) {
+                        verbiage += ' stars';
+                    } else {
+                        verbiage += ' star';
+                    }
+                    
+                    $('#space-average-rating-text').html(verbiage + ' out of five');
                 }
 
                 $('.write-a-review').attr('title', gettext('write_review_for')
