@@ -325,6 +325,8 @@ function showRatingEditor () {
         if (diff > 0) {
             w_node.animate( {scrollTop: (diff + w_top + padding)}, '500');
         }
+
+        $('#one-star-link').focus();
     });
 }
 
