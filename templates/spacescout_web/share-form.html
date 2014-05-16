@@ -3,7 +3,7 @@
 {% block share-content %}
 
     
-    {% if not is_mobile %}<h2 class="share-header">Share this space</h2>{% endif %}
+    {% if not is_mobile %}<h2 class="share-header" id="share-title">Share this space</h2>{% endif %}
 
     <form action="/share/{{ spot_id }}" method="post">{% csrf_token %}
         {{ form.non_field_errors }}
@@ -22,7 +22,7 @@
                     {% if field.field.required %}
                        <label for="id_{{field.name}}">{{field.label}}
                        {% for error in field.errors %}
-                         <strong class="alert pull-right">{{ error|escape }}</strong>
+                         <strong class="alert pull-right" role="alert">{{ error|escape }}</strong>
                        {% endfor %}
                        </label>
                     {% else %}
@@ -32,7 +32,7 @@
                 </div>
                 {% if field.name == "subject" %}
                 <div class="infoWrapper">
-                  <p>Your message will include the following:</p>
+                  <p>Your email message will include the following:</p>
                   {% for text in share_text %}
                   {{ text }}<br />
                   {% endfor %}
