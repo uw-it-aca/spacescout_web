@@ -25,7 +25,8 @@
 
     <div id="nav" class="favorites_nav" style="position:relative;">
 
-        <div class="logo-container clearfix">
+        <div class="spacescout-header clearfix">
+          <div class="logo-container">
             <div class="logo">
                 <h1 id="app_header" class="visuallyhidden">SPACESCOUT&trade;</h1>
             </div>
@@ -40,6 +41,7 @@
                 </select>
                 </span>
                 {% endifnotequal %}
+            </div>
            </div>
            <div class="user_context">
               {% if user.is_authenticated %}
