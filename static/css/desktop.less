@@ -245,7 +245,30 @@ These styles are in palce for SPOT-494.  Feel free to move things around.
 								border-bottom-color: #a2a2a2;
 				
 					}
-                	.space-reviews-content {
+					.write-a-review:focus{
+					            text-decoration: none;
+								background-color: #e6e6e6;
+								background-position: 0 -15px;
+								-webkit-transition: background-position 0.1s linear;
+								-moz-transition: background-position 0.1s linear;
+								-o-transition: background-position 0.1s linear;
+								transition: background-position 0.1s linear;
+								background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);
+								background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));
+								background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);
+								background-image: -o-linear-gradient(top, #ffffff, #e6e6e6);
+								background-image: linear-gradient(to bottom, #ffffff, #e6e6e6);
+								background-repeat: repeat-x;
+								filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe6e6e6', GradientType=0);
+								border-color: #e6e6e6 #e6e6e6 #bfbfbf;
+								border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+								filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+								border: 1px solid #bbbbbb;
+								border-bottom-color: #a2a2a2;
+				
+					}
+                	.space-reviews-content { margin-left: 0;
+                        > li { list-style-type: none; }
 	                	.space-reviews-none{background-color: #fcfcfc; padding: 20px; border-radius: 5px; border: 1px solid #e7e7e7; font-size: 13px; 
 		                	button{ margin: 10px 0px;
 		                		i{margin: 5px 9px 5px 3px;}
