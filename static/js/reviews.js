@@ -284,7 +284,7 @@ function loadRatingsAndReviews(id, review_container, rating_container) {
                         verbiage += ' star';
                     }
                     
-                    $('#space-average-rating-text').html(verbiage);
+                    $('#space-average-rating-text').html(verbiage + ' out of five');
                 }
 
                 $('.write-a-review').attr('title', gettext('write_review_for')
