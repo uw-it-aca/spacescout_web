@@ -5,10 +5,9 @@
     <div class="space-detail">
         <div class="space-detail-inner">
             <div id="spot_{{ id }}" class="space-detail-header clearfix">
-              <h1 class="visuallyhidden">SPACESCOUT&trade;</h1>
               <div class="space-detail-building">{{ location.building_code }}</div>
               <div id="name-type-block" class="pull-left">
-                <h2 class="space-detail-name"><span class="visuallyhidden">Space Details: </span>{{ name }}</h2>
+                <h4 class="space-detail-name"><span class="visuallyhidden">Space Details: </span>{{ name }}</h4>
                 <div class="space-detail-type">{{ type }} {{#if capacity }}<span class="space-detail-capacity">[Seats&nbsp;{{capacity}}]</span>{{/if}}</div>
                 <div class="space-detail-tick space-detail-is-open" style="display: none;">OPEN</div>
                 <div class="space-detail-tick space-detail-is-closed" style="display: none;">CLOSED</div>
