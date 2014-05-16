@@ -49,7 +49,7 @@
     You will receive an email once your submission has been reviewed; please allow three business days. 
     <a href="javascript:void(0);">{% trans 'Close' %}</a>
   </div>
-  <div class="space-reviews-content"></div>
+  <ol class="space-reviews-content"></ol>
 {% endtplhandlebars %}
 
 {% tplhandlebars "no_space_reviews" %}
@@ -61,7 +61,7 @@
 {% endtplhandlebars %}
 
 {% tplhandlebars "space_reviews_review" %}
-    <div class="space-reviews-review">
+    <li class="space-reviews-review">
       <div class="space-review-header">
         <span>
 	      <i class="fa fa-star-o fa-lg"></i>
@@ -74,7 +74,7 @@
       </div>
       <div class="space-review-body">
         {{ review }}
-      </div>
+      </li>
     </div>
 {% endtplhandlebars %}
 
