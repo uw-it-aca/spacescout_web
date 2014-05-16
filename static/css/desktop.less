@@ -31,18 +31,18 @@ These styles are in palce for SPOT-494.  Feel free to move things around.
 #nav { z-index: 1000;
 
 
-    .logo-container { background-color: transparent;
+    .spacescout-header {
+        .logo-container { background-color: transparent;
+            .logo { height: 60px; line-height: 60px; width: 226px; position: relative;
+                background-image: url('../img/spacescout_logo.png');
+                background-size: 226px, 56px;
+                background-repeat: no-repeat;
+                background-position: 0 50%;
+             }
+        }
 
-        .logo { height: 60px; line-height: 60px; width: 226px; position: relative;
-            background-image: url('../img/spacescout_logo.png');
-            background-size: 226px, 56px;
-            background-repeat: no-repeat;
-            background-position: 0 50%;
-
-         }
-
-         .location_container { float: left; margin: 6px 0 0 10px;
-             #location_select {
+        .location_container { float: left; margin: 6px 0 0 10px;
+            #location_select {
                  background-position: 95px 10px;
                  height: 30px;
                  padding: 4px 0 6px 12px;
