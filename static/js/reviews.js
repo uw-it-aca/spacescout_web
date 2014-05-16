@@ -26,6 +26,29 @@ window.spacescout_reviews = {
 
 function setupRatingsAndReviews(data) {
 
+    var review_rating_values = {
+        'one-star': {
+            key: gettext('terrible'),
+            val: 1
+        },
+        'two-star': {
+            key: gettext('poor'),
+            val: 2
+        },
+        'three-star': {
+            key: gettext('average'),
+            val: 3
+        },
+        'four-star': {
+            key: gettext('good'),
+            val: 4
+        },
+        'five-star': {
+            key: gettext('excellent'),
+            val: 5
+        }
+    };
+
     $('.space-ratings-and-reviews').html(Handlebars.compile($('#space_reviews').html())());
 
     if (data && data.length) {
@@ -51,9 +74,9 @@ function setupRatingsAndReviews(data) {
             span.html(0);
             span.addClass('required');
         }
+        var x = $('input[name=star-rating]:checked');
 
-        if (text.trim().length > 0
-            && $('.space-review-compose .space-review-stars i.fa-star').length) {
+        if (text.trim().length > 0 && $('input[name=star-rating]:checked').length) {
             enableSubmitButton();
         } else {
             disableSubmitButton();
@@ -73,14 +96,15 @@ function setupRatingsAndReviews(data) {
 
     $('button#space-review-submit').click(function (e) {
         var id = $(e.target).closest('div[id^=detail_container_]').attr('id').match(/_(\d+)$/)[1],
-            node = $('.space-review-compose'),
+            rb_id = $('input[name=star-rating]:checked').prop('id'),
             review = {
-                rating: $('.space-review-rating i.fa-star', node).length,
-                review: $('textarea', node).val().trim()
+                review: $('.space-review-compose textarea').val().trim()
             };
 
-        // validate
-        if (review.rating < 1 || review.rating > 5 || review.review.length <= 0) {
+        debugger
+        if (review_rating_values.hasOwnProperty(rb_id)) {
+            review.rating = review_rating_values[rb_id].val;
+        } else {
             return;
         }
 
@@ -105,15 +129,13 @@ function setupRatingsAndReviews(data) {
 
     $(document).on('click', 'a.rating-star', function (e) {
         var target = $(e.currentTarget),
-            stars = target.prevAll('.rating-star'),
-            rating = stars.length + 1,
-            ratings = ['', gettext('terrible'), gettext('poor'),
-                       gettext('average'), gettext('good'), gettext('excellent')];
+            rb_id = target.prop('id').match(/^([a-z]+-star)-link$/)[1];
 
-        stars.find('i').switchClass('fa-star-o', 'fa-star');
+        $('#' + rb_id).prop('checked', true);
+        target.parent().prevAll('.space-review-stars').find('i').switchClass('fa-star-o', 'fa-star');
         target.find('i').switchClass('fa-star-o', 'fa-star');
-        target.nextAll('a').find('i').switchClass('fa-star', 'fa-star-o');
-        $('.space-review-stars span:last-child').html(ratings[rating]);
+        target.parent().nextAll('.space-review-stars').find('i').switchClass('fa-star', 'fa-star-o');
+        $('.space-review-compose .space-review-rating span').html(review_rating_values[rb_id].key);
         if ($('.space-review-compose textarea').val().length) {
             enableSubmitButton();
         }
@@ -312,12 +334,13 @@ function tidyUpRatesComposer () {
 
     disableSubmitButton();
     hideReviewGuidelines();
+    $('input[name=star-rating]:checked').prop('checked', false);
     $('textarea', node).val('');
-    $('.space-review-stars span + span', node).html('');
+    $('.space-review-rating span', node).html('');
     $('#space-review-remaining').html(window.spacescout_reviews.review_char_limit);
     $('#space-review-remaining').removeClass('required');
     $('.space-review-rating div + div span', node).removeClass('required');
-    $('.space-review-rating i', node).switchClass('fa-star', 'fa-star-o');
+    $('a.rating-star i', node).switchClass('fa-star', 'fa-star-o');
 }
 
 function showRatingEditorButton () {
