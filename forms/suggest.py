@@ -13,9 +13,10 @@
     limitations under the License.
 """
 from django import forms
+from spacescout_web.forms.base import BaseForm
 
 
-class SuggestForm(forms.Form):
+class SuggestForm(BaseForm):
         name = forms.CharField(max_length=25, label="Your Name", required=True)
         netid = forms.CharField(max_length=25, label="Your UW NetID", required=True)
         sender = forms.EmailField(max_length=40, label="Your Email", required=True)
