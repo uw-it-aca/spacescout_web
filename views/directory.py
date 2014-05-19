@@ -40,7 +40,7 @@ def API(request):
                 base = ''
 
             ldap_id = l.search(base, ldap.SCOPE_SUBTREE,
-                               'mail=%s*' % (q), None)
+                               '(|(mail=%s*)(cn=%s*))' % (q, q), None)
 
             while 1:
                 result_type, result_data = l.result(ldap_id, 0)

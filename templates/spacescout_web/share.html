@@ -3,6 +3,9 @@
 {% load static %}
 
 {% block extra_js %}
+<script>
+    window.spacescout_referrer = '{{ back }}';
+</script>
 {% endblock %}
 
 {% block content %}
@@ -11,7 +14,7 @@
         <h1 class="visuallyhidden">SPACESCOUT&trade;</h1>
         <img id="back_home_button" class="pull-left back-button" src="{% static 'img/details_arrow.png' %}" />
         <div id="name-type-block" class="pull-left">
-            <h2 class="space-detail-name" style=""><span> Back to space details</span><br />Share this Space</h2>
+            <h2 class="space-detail-name" style="">Share this Space</h2>
         </div>
     </div>
 
@@ -19,14 +22,14 @@
     {% else %}
     <div id="nav" style="position:relative;">
         <div class="logo-container clearfix">
-            <div class="logo"><h1 class="visuallyhidden">SPACESCOUT&trade;</h1></div>
+            <a href="/" title="Spacesout home page"><div class="logo"><h1 class="visuallyhidden">SPACESCOUT&trade;</h1></div></a>
         </div>
     </div>
     {% endif %}
 
     <div {% if is_mobile %}style="margin:10px; background:#fff;" {% else %}id="main_content" style="padding: 80px;"{% endif %} role="main" aria-labelledby="share-header">
         <div class="actions pull-left back-button" style="margin:5px 10px 0px 0px;">
-            <a href='{{ back }}' title="back" id="cookieSet"><img id="back_to_space_button" src="{% static 'img/details_arrow.png' %}" alt="Back"/></button></a>
+            <a href='{{ back }}' title="Back to space details" id="cookieSet"><img id="back_to_space_button" src="{% static 'img/details_arrow.png' %}" alt="Back to space detail"/> Back</a>
         </div>
         {% block share-content %}{% endblock %}
     </div>

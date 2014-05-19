@@ -236,7 +236,7 @@ function loadMarkerSpots(marker, data) {
 
     scrollToTop('info_list');
     $('.loading').slideUp('fast');
-
+    data_loaded(visible_markers.length);
 }
 
 function clear_map() {

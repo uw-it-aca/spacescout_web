@@ -38,7 +38,6 @@ Handlebars.registerHelper('ifany', function(a, b) {
 	var iphone = deviceAgent.match(/(iphone|ipod)/);
 
 	$(document).ready(function() {
-
         // share destination typeahead
         if ($('#id_recipient').length) {
             var node = $('#id_recipient');
@@ -54,11 +53,15 @@ Handlebars.registerHelper('ifany', function(a, b) {
 
             engine.initialize();
 
-            node.addClass('typeahead');
-            node.typeahead(null, {
-                displayKey: 'email',
-                minLength: 3,
-                source: engine.ttAdapter()
+            node.addClass('tokenfield');
+            node.tokenfield({
+                delimiter: [',', '\t'],
+                createTokensOnBlur: true,
+                typeahead: [null, {
+                    displayKey: 'email',
+                    minLength: 3,
+                    source: engine.ttAdapter()
+                }]
             });
 
             return;
@@ -68,7 +71,22 @@ Handlebars.registerHelper('ifany', function(a, b) {
 
 	   // check if a map_canvas exists... populate it
     	if ($("#map_canvas").length == 1) {
-          initialize();
+            initialize();
+
+	        // Update dimensions on resize
+	        $(d).resize(function(){
+
+                // desktop
+                desktopContent();
+
+                // if the space details is already open
+                if ($('.space-detail-container').is(":visible")) {
+                    $('.space-detail-container').height($('#map_canvas').height());
+                    $('.space-detail-body').height($('.space-detail').height() - 98);
+
+                    resizeCarouselMapContainer();
+                }
+	        });
         }
 
 		// show filter panel
@@ -146,22 +164,9 @@ Handlebars.registerHelper('ifany', function(a, b) {
             }
         });
 
-	});
-
-	// Update dimensions on resize
-	$(d).resize(function(){
-
-        // desktop
-        desktopContent();
-
-        // if the space details is already open
-        if ($('.space-detail-container').is(":visible")) {
-            $('.space-detail-container').height($('#map_canvas').height());
-            $('.space-detail-body').height($('.space-detail').height() - 98);
-
-            resizeCarouselMapContainer();
-        }
-
+        $(document).on('searchResultsLoaded', function (e, data) {
+            $('#space_count_container .count').html(data.count);
+        });
 	});
 
     function fetchSpaceDetails(id){
@@ -205,9 +210,23 @@ Handlebars.registerHelper('ifany', function(a, b) {
         // check to see if the space has the following
         data["has_notes"] = ( ( data.extended_info.access_notes != null) || ( data.extended_info.reservation_notes != null) );
         data["has_resources"] = ( data.extended_info.has_computers != null || data.extended_info.has_displays != null || data.extended_info.has_outlets != null || data.extended_info.has_printing != null || data.extended_info.has_projector != null || data.extended_info.has_scanner != null || data.extended_info.has_whiteboards != null );
+        data["review_count"] = (data.extended_info.review_count) || 0;
+        data["stars"] = [];
+        var rating = parseFloat(data.extended_info.rating) || 0;
+        for (var star_pos = 1; star_pos <= 5; star_pos++) {
+            if (rating == star_pos - 0.5) {
+                data.stars.push({ "icon": "fa-star-half-o" });
+            }
+            else if (star_pos <= rating) {
+                data.stars.push({ "icon": "fa-star" });
+            }
+            else {
+                data.stars.push({ "icon": "fa-star-o" });
+            }
+        }
 
     	// remove any open details
-        var open = (!$('.space-detail-container').is(':visible'));
+        var open = $('.space-detail-container').is(':visible');
 
         $('.space-detail-container').remove();
 
@@ -223,12 +242,11 @@ Handlebars.registerHelper('ifany', function(a, b) {
         $('.space-detail-inner').show();
         $('.space-detail-container').show();
 
-        //set focus on the closing x
-
         $('.space-detail-container').height($('#map_canvas').height());
-        $('.space-detail-body').height($('.space-detail').height() - 98);
+        $('.space-detail-body').height($('.space-detail').height() - 128);
 
         //TODO: make these identical anonymous callback functions a real named function.  Had unknown scope problems doing this before
+
         if (!open) {
             $('.space-detail').show("slide", { direction: "right" }, 400, function () {
                 $('.close').focus();
@@ -257,7 +275,7 @@ Handlebars.registerHelper('ifany', function(a, b) {
 
     	initializeCarousel();
 
-        replaceUrls();
+        replaceReservationNotesUrls();
 
         $('.space-detail-header .close').on('click', function(e){
             e.preventDefault();
@@ -266,87 +284,23 @@ Handlebars.registerHelper('ifany', function(a, b) {
         });
 
         // set up favorites
-        var fav_icon = $('.space-detail-header .space-detail-fav');
-        var fav_icon_i = $('i', fav_icon);
+        window.spacescout_favorites.update_favorites_button(data.id);
 
-        if (fav_icon.is(':visible')) {
-            var title = 'Favorite this space',
-                auth_user = window.spacescout_authenticated_user;
+        setupRatingsAndReviews(data);
+        loadRatingsAndReviews(data.id, $('.space-reviews-content'), $('.space-actions'));
 
-            if (auth_user.length && window.spacescout_favorites.is_favorite(data.id)) {
-                fav_icon.removeClass('space-detail-fav-unset').addClass('space-detail-fav-set');
-                fav_icon_i.removeClass('fa-heart-o').addClass('fa-heart');
-                title = 'Remove this space from favorites';
-            } else {
-                fav_icon.removeClass('space-detail-fav-set').addClass('space-detail-fav-unset');
-                fav_icon_i.removeClass('fa-heart').addClass('fa-heart-o');
-            }
-
-            fav_icon.unbind();
-            is_over_favs = false;
-            fav_icon.on('mouseover', function() {
-                is_over_favs = true;
-            });
-            fav_icon.on('mouseout', function() {
-                is_over_favs = false;
-            });
-            fav_icon.click(function (e) {
-                var list_item = $('button#' + data.id + ' .space-detail-fav');
-
-                if (auth_user.length < 1) {
-                    window.location.href = '/login?next=' + window.location.pathname;
-                }
-
-
-                window.spacescout_favorites.toggle(data.id,
-                                                   function () {
-                                                       fav_icon.removeClass('space-detail-fav-unset').addClass('space-detail-fav-set');
-                                                       fav_icon_i.removeClass('fa-heart-o').addClass('fa-heart');
-                                                       list_item.show();
-                                                       fav_icon.tooltip('hide');
-                                                       fav_icon.data('tooltip', false);
-                                                       fav_icon.tooltip({ title: 'Remove this space from Favorites',
-                                                                          placement: 'right' });
-
-                                                        if (is_over_favs) {
-                                                            fav_icon.tooltip('show');
-                                                        }
-                                                   },
-                                                   function () {
-                                                       fav_icon.removeClass('space-detail-fav-set').addClass('space-detail-fav-unset');
-                                                       fav_icon_i.removeClass('fa-heart').addClass('fa-heart-o');
-                                                       list_item.hide();
-                                                       fav_icon.tooltip('hide');
-                                                       fav_icon.data('tooltip', false);
-                                                       fav_icon.tooltip({ title: 'Favorite this space',
-                                                                          placement: 'right' });
-                                                        if (is_over_favs) {
-                                                            fav_icon.tooltip('show');
-                                                        }
-
-                                                   });
-            });
-
-            fav_icon.tooltip({ placement: 'right', title: title});
-        }
-
-        $('a#share_space').unbind('click');
-        $('a#share_space').click(function (e) {
-            var url = '/share/' + data.id
-                    + '?back=' + encodeURIComponent(window.location.pathname);
-
-            if (window.spacescout_authenticated_user.length < 1) {
-                window.location.href = '/login?next=' + encodeURIComponent(url);
-            } else {
-                window.location.href = url;
-            }
+        // set up share space
+        $('button#share_space').unbind('click');
+        $('button#share_space').click(function (e) {
+            window.location.href = '/share/' + data.id
+                + '?back=' + encodeURIComponent(window.location.pathname);
         });
 
         //highlight the selected space
         $('button#' + data.id).closest('.view-details').addClass('selected');
 
-        // Set focus on details container
-        $('.space-detail-inner').focus();
+        //set focus on the closing x
+        $('a.close').focus();
 	}
 
 	// Desktop display defaults

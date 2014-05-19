@@ -14,6 +14,7 @@
 """
 from django.conf.urls import patterns, include, url
 from django.conf import settings
+from spacescout_web.views.reviews import ReviewsView
 
 js_info_dict = {
     'packages': ('spacescout_web',),
@@ -21,7 +22,7 @@ js_info_dict = {
 
 urlpatterns = patterns('spacescout_web.views',
     url(r'^$', 'home.HomeView'),
-    url(r'login$', 'auth.Prompt'),
+    url(r'^login$', 'auth.Prompt'),
     url(r'authenticate$', 'auth.Login'),
     url(r'^logout$', 'auth.Logout'),
     url(r'web_api/v1/user/me/favorites/?$', 'favorites.API'),
@@ -31,15 +32,21 @@ urlpatterns = patterns('spacescout_web.views',
     url(r'search/$', 'search.SearchView'),
     url(r'suggest/$', 'suggest.suggest', name="suggest-form"),
     url(r'contact(?:/(?P<spot_id>\d+))?/$', 'contact.contact'),
+    url(r'share/thankyou/$', 'share.thank_you'),
     url(r'share/(?P<spot_id>\d+)$', 'share.share', name="share-form"),
     url(r'sorry(?:/(?P<spot_id>\d+))?/$', 'contact.sorry'),
     url(r'thankyou(?:/(?P<spot_id>\d+))?/$', 'contact.thank_you'),
     url(r'^favorites?$', 'favorites.FavoritesView'),
+    url(r'space/(?P<spot_id>\d+)/reviews$', ReviewsView().run),
     url(r'space/(?P<spot_id>\d+)/json/$', 'spot.SpotView', {'return_json': True}),
     url(r'space/(?P<spot_id>\d+)/image/(?P<image_id>\d+)/thumb/constrain/width:(?P<thumb_width>\d+)(?:,height:(?P<thumb_height>\d+))?$', 'image.ImageView', {'constrain': True}),
     url(r'space/(?P<spot_id>\d+)/image/(?P<image_id>\d+)/thumb/constrain/height:(?P<thumb_height>\d+)(?:,width:(?P<thumb_width>\d+))?$', 'image.ImageView', {'constrain': True}),
     url(r'space/(?P<spot_id>\d+)/image/(?P<image_id>\d+)/thumb/(?P<thumb_width>\d+)x(?P<thumb_height>\d+)$', 'image.ImageView'),
     url(r'images/(?P<image_ids>[\d,]+)/thumb/constrain/width:(?P<thumb_width>\d+)(?:,height:(?P<thumb_height>\d+))?$', 'image.MultiImageView', {'constrain': True}),
+
+    url(r'image/space/(?P<spot_id>\d+)/(?P<image_id>\d+)/thumb/constrain/width:(?P<thumb_width>\d+)(?:,height:(?P<thumb_height>\d+))?$', 'image.ImageView', {'constrain': True}),
+    url(r'image/space/(?P<spot_id>\d+)/(?P<image_id>\d+)/thumb/constrain/height:(?P<thumb_height>\d+)(?:,width:(?P<thumb_width>\d+))?$', 'image.ImageView', {'constrain': True}),
+    url(r'image/space/(?P<spot_id>\d+)/(?P<image_id>\d+)/thumb/(?P<thumb_width>\d+)x(?P<thumb_height>\d+)$', 'image.ImageView'),
 )
 
 urlpatterns += patterns('',

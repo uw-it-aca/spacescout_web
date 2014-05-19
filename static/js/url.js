@@ -51,9 +51,17 @@
                     repopulate_filters(this.decode_search_terms(state.search));
                     run_custom_search();
                 } else if (state.id) {
-                    data_loaded();
+                    if (window.spacescout_web_mobile) {
+                        window.spacescout_web_mobile.show_space_detail(state.id);
+                    } else {
+                        data_loaded();
+                    }
                 } else if ($('.space-detail-container').length) {
-                    closeSpaceDetails();
+                    if (window.spacescout_web_mobile) {
+                        window.spacescout_web_mobile.show_main_app();
+                    } else {
+                        closeSpaceDetails();
+                    }
                 }
                 break;
             default:
@@ -77,7 +85,7 @@
             }
 
             history.pushState({ campus: campus, search: search, id: id, local_path: '' },
-                              null,
+                              '',
                               url.join('/'));
         },
 
@@ -97,7 +105,7 @@
             }
 
             history.replaceState({ campus: campus, search: search, id: id },
-                                 null,
+                                 '',
                                  url.join('/'));
         },
 
@@ -317,10 +325,12 @@
     $(window).bind('popstate', function (e) {
         if (e.originalEvent.state) {
             window.spacescout_url.dispatch(e.originalEvent.state);
+        } else {
+            window.spacescout_url.load(window.location.pathname);
         }
     });
 
-    $(document).on('searchResultsLoaded', function () {
+    $(document).on('searchResultsLoaded', function (e, data) {
         var state = window.spacescout_url.parse_path(window.location.pathname);
 
         if (window.location.pathname == '' || window.location.pathname == '/') {

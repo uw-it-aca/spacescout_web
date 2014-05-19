@@ -13,13 +13,42 @@
     limitations under the License.
 """
 from django import forms
+from django.core.validators import email_re
+from django.utils.translation import ugettext as _
+import re
+
+
+email_separator_re = re.compile(r'[^\w\.\-\+@_]+')
+     
+                                                                                        
+def _is_valid_email(email):    
+    return email_re.match(email)
+
+
+class EmailListField(forms.CharField):
+
+    widget = forms.Textarea
+
+    def clean(self, value):
+        super(EmailListField, self).clean(value)
+
+        emails = email_separator_re.split(value)
+
+        if not emails:
+            raise forms.ValidationError(_(u'Enter at least one e-mail address.'))
+
+        for email in emails:
+            if not _is_valid_email(email):
+                raise forms.ValidationError(_('%s is not a valid e-mail address.') % email)
+
+        return emails
 
 
 class ShareForm(forms.Form):
         back = forms.CharField(widget=forms.HiddenInput())
         spot_id = forms.IntegerField(widget=forms.HiddenInput())
         sender = forms.EmailField(max_length=128, label="From", required=True)
-        recipient = forms.EmailField(max_length=128, label="To", required=True)
+        recipient = EmailListField(max_length=1028, label="To", required=True)
         subject = forms.CharField(max_length=128, label="Subject", required=True)
         message = forms.CharField(widget=forms.Textarea(attrs={'rows': 5}), label="Your Message (optional)", required=False)
         email_confirmation = forms.CharField(required=False)

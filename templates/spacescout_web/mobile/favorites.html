@@ -12,6 +12,7 @@
 
 {% block extra_js %}
 <script type="text/javascript">
+    window.spacescout_referrer = '{{ back }}';
     $.ajaxSetup({
         headers: { "X-CSRFToken": '{{ csrf_token }}' }
     });
@@ -24,7 +25,8 @@
 
     <div id="nav" class="favorites_nav" style="position:relative;">
 
-        <div class="logo-container clearfix">
+        <div class="spacescout-header clearfix">
+          <div class="logo-container">
             <div class="logo">
                 <h1 id="app_header" class="visuallyhidden">SPACESCOUT&trade;</h1>
             </div>
@@ -39,16 +41,17 @@
                 </select>
                 </span>
                 {% endifnotequal %}
+            </div>
            </div>
            <div class="user_context">
               {% if user.is_authenticated %}
                 <span class="salutation">{% trans 'greeting' %}&nbsp;{{ request.user }}</span>
-                <a href="/">{% trans 'favorites' %} (<span class="favorites_count_container">{{ total }}</span>)</a>
-                {% tplhandlebars "favorites_count" %}{{count}}{% endtplhandlebars %}
+                <a href="/">{% trans 'favorites' %} <span class="favorites_count_container"></span></a>
+                {% tplhandlebars "favorites_count" %}({{count}}){% endtplhandlebars %}
                 <span>|</span>
                 <a href="logout?next=/">{% trans 'logout' %}</a>
               {% else %}
-                {% trans 'salutation' %}&nbsp;<a href="login?next={% firstof request.path '/' %}">{% trans 'login' %}</a>
+                {% trans 'salutation' %}&nbsp;<a href="/login?next={% firstof request.path '/' %}">{% trans 'login' %}</a>
               {% endif %}
            </div>
            <div class="favorites-header"><span></span></div>
@@ -60,11 +63,12 @@
           </div>
 
           <h2 class="page-title">Favorites</h2>
-          <h4><span class="favorites_count_container">{{ total }}</span> favorite spaces <span class="comment">(listed by the date you added)</span></h4>
+          <div class="favorites-total"><span class="favorites_total_container">favorite spaces</span></div>
+          {% tplhandlebars "favorites_total" %}{{ total }} favorite space{{ plural }}{% endtplhandlebars %}
           <div id="space_details_page" class="favorites_card_container favorites_blank_container"></div>
 
           <div class="footer">
-            <span>Any favorite space is missing? </span><a href="#">Go to FAQ</a>
+            <span>Are any of your favorite spaces missing? </span><a href="http://www.washington.edu/itconnect/learn/tools/spacescout/#empty">Go to FAQ</a>
           </div>
         </div>
     </div>
@@ -85,6 +89,8 @@
 {% endtplhandlebars %}
 
 {% include "spacescout_web/favorites-card.html" %}
+
+{% include "spacescout_web/reviews.html" %}
 
 {% if user.is_authenticated %}
 <script type="text/javascript">

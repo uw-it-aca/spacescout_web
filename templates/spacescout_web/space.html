@@ -19,10 +19,8 @@
         if (fav_icon.is(':visible')) {
             if (window.spacescout_favorites.is_favorite({{ id }})) {
                 fav_icon.removeClass('space-detail-fav-unset').addClass('space-detail-fav-set');
-                fav_icon_i.removeClass('fa-heart-o').addClass('fa-heart');
             } else {
                 fav_icon.removeClass('space-detail-fav-set').addClass('space-detail-fav-unset');
-                fav_icon_i.removeClass('fa-heart').addClass('fa-heart-o');
             }
     
             fav_icon.unbind();
@@ -30,11 +28,9 @@
                 window.spacescout_favorites.toggle({{ id }},
                 function () {
                     fav_icon.removeClass('space-detail-fav-unset').addClass('space-detail-fav-set');
-                    fav_icon_i.removeClass('fa-heart-o').addClass('fa-heart');
                 },
                 function () {
                     fav_icon.removeClass('space-detail-fav-set').addClass('space-detail-fav-unset');
-                    fav_icon_i.removeClass('fa-heart').addClass('fa-heart-o');
                 });
             });
         }
@@ -53,7 +49,7 @@
         <h1 class="visuallyhidden">SPACESCOUT&trade;</h1>
 		<img id="back_home_button" class="pull-left back-button" src="{% static 'img/details_arrow.png' %}" />
         <div id="name-type-block" class="pull-left">
-          {% if user.is_authenticated %}<div class="space-detail-fav space-detail-fav-unset pull-left"><i class="fa fa-heart-o"></i></div>{% endif %}
+          {% if user.is_authenticated %}<div class="space-detail-fav space-detail-fav-unset pull-left"><i class="fa fa-heart"></i></div>{% endif %}
           <h2 class="space-detail-name" style=""><span class="visuallyhidden">Space Details:</span> {{name}}</h2>
       	  <div class="space-detail-type">{{ type }} {% if capacity %}<span class="space-detail-capacity">[Seats&nbsp;{{capacity}}]</span>{% endif %}</div>
         </div>
@@ -74,7 +70,7 @@
                                       {% if images %}
                                         {% for image in images %}
                                         <div class="carousel-inner-image item">
-                                            <div class="carousel-inner-image-inner" style="background:url('/space/{{ id }}/image/{{ image.id }}/thumb/constrain/width:500,height:333') no-repeat 50% 50%; background-size:100%;">&nbsp;</div>
+                                            <div class="carousel-inner-image-inner" style="background:url('/image/space/{{ id }}/{{ image.id }}/thumb/constrain/width:500,height:333') no-repeat 50% 50%; background-size:100%;">&nbsp;</div>
                                         </div>
                                         {% endfor %}
                                       {% else %}
@@ -106,7 +102,7 @@
                                     <h3 class="space-info-label pull-left">Notes</h3>
                                     <div class="space-info-detail pull-left">
                                         {% if extended_info.access_notes %}<p>{{extended_info.access_notes }}</p>{% endif %}
-                                        {% if extended_info.reservation_notes %}<p id="ei_reservation_notes">{{extended_info.reservation_notes }}</p>{% endif %}
+                                        {% if extended_info.reservation_notes %}<p class="ei_reservation_notes">{{extended_info.reservation_notes }}</p>{% endif %}
                                     </div>
                                 </li>
                                 {% endif %}

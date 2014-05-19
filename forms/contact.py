@@ -13,9 +13,10 @@
     limitations under the License.
 """
 from django import forms
+from spacescout_web.forms.base import BaseForm
 
 
-class ContactForm(forms.Form):
+class ContactForm(BaseForm):
         name = forms.CharField(max_length=25, label="Your Name")
         sender = forms.EmailField(max_length=40, label="Your Email (Optional)", required=False)
         #feedback_choice = forms.ChoiceField((

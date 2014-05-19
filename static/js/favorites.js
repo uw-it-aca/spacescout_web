@@ -24,6 +24,8 @@
         k: {
             'favorites_count_container': '.favorites_count_container',
             'favorites_count_template': '#favorites_count',
+            'favorites_total_container': '.favorites_total_container',
+            'favorites_total_template': '#favorites_total',
             'favorites_card_container': '.favorites_card_container',
             'favorites_card_template': '#favorites_card'
         },
@@ -41,6 +43,17 @@
                     $(this).html(template({count: self.favorites ? self.favorites.length : 0}));
                 });
             }
+
+            source = $(self.k.favorites_total_template);
+            if (source.length) {
+                template = Handlebars.compile(source.html().trim());
+                $(this.k.favorites_total_container).each(function () {
+                    var total = self.favorites ? self.favorites.length : 0,
+                        plural = (total == 1) ? '' : 's';
+
+                    $(this).html(template({ total: total, plural: plural }));
+                });
+            }
         },
 
         update_search_result: function () {
@@ -48,7 +61,7 @@
                 detail_node = $('div[id^=detail_container_]'),
                 detail_id = detail_node.length ? parseInt(detail_node.prop('id').match(/^detail_container_(\d+)$/)[1]) : null;
 
-            $('button .space-detail-fav').each(function () {
+            $('#info_items .view-details button .space-detail-fav').each(function () {
                 var node = $(this),
                     id = parseInt(node.parent().prop('id'));
 
@@ -56,13 +69,11 @@
                     node.show();
                     if (id == detail_id) {
                         $('.space-detail-fav', detail_node).removeClass('space-detail-fav-unset').addClass('space-detail-fav-set');
-                        $('.space-detail-fav i', detail_node).removeClass('fa-heart-o').addClass('fa-heart');
                     }
                 } else {
                     node.hide();
                     if (id == detail_id) {
                         $('.space-detail-fav', detail_node).removeClass('space-detail-fav-set').addClass('space-detail-fav-unset');
-                        $('.space-detail-fav i', detail_node).removeClass('fa-heart').addClass('fa-heart-o');
                     }
                 }
             });
@@ -81,7 +92,7 @@
 
                     if ($.isArray(space.type)) {
                         $.each(space.type, function () {
-                            type.push(gettext(space.type));
+                            type.push(gettext(this));
                         });
                     }
 
@@ -156,11 +167,77 @@
             }
         },
 
+        update_favorites_button: function (id) {
+            var fav_button = $('button#favorite_space'),
+                fav_icon = $('.space-detail-fav', fav_button),
+                fav_icon_i = $('i', fav_icon),
+                setFavoritedButton = function (id) {
+                    var title = fav_button.attr('title').replace(/ favorite /, ' unfavorite ');
+
+                    fav_icon.removeClass('space-detail-fav-unset').addClass('space-detail-fav-set');
+                    fav_icon.parent().find('span:last').text(gettext('favorited'));
+                    fav_button.attr('title', title);
+                    if (id) {
+                        $('button#' + id + ' .space-detail-fav').show();
+                    }
+                },
+                unsetFavoritedButton = function(id) {
+                    var title = fav_button.attr('title').replace(/ unfavorite /, ' favorite ');
+
+                    fav_icon.removeClass('space-detail-fav-set').addClass('space-detail-fav-unset');
+                    fav_icon.parent().find('span:last').text(gettext('favorite'));
+                    fav_button.attr('title', title);
+                    if (id) {
+                        $('button#' + id + ' .space-detail-fav').hide();
+                    }
+                };
+
+            if (fav_icon.is(':visible')) {
+                var authenticated_user = window.spacescout_authenticated_user.length > 0;
+
+                if (authenticated_user && window.spacescout_favorites.is_favorite(id)) {
+                    setFavoritedButton();
+                } else {
+                    unsetFavoritedButton();
+                }
+
+                fav_icon.unbind();
+
+                fav_button.click(function (e) {
+                    if (!authenticated_user) {
+                        $.cookie('space_set_favorite', JSON.stringify({ id: id }));
+                        window.location.href = '/login?next=' + window.location.pathname;
+                    }
+
+                    window.spacescout_favorites.toggle(id);
+                });
+
+                $(document).on('spaceFavoriteSet', function (e, id) {
+                    setFavoritedButton(id);
+                });
+
+                $(document).on('spaceFavoriteClear', function (e, id) {
+                    unsetFavoritedButton(id);
+                });
+
+                if (authenticated_user) {
+                    var set_favorite = $.cookie('space_set_favorite'),
+                        json_favorite = set_favorite ? JSON.parse(set_favorite) : null;
+
+                    if (json_favorite) {
+                        window.spacescout_favorites.set(json_favorite.id);
+                    }
+
+                    $.removeCookie('space_set_favorite');
+                }
+            }
+        },
+
         load: function () {
             var self = this;
 
             $.ajax({
-                url: 'web_api/v1/user/me/favorites',
+                url: '/web_api/v1/user/me/favorites',
                 success: function (data) {
                     self.favorites = data ? data : [];
                     self.update();
@@ -175,6 +252,7 @@
             this.update_count();
             this.update_search_result();
             this.update_cards();
+            replaceReservationNotesUrls();
         },
 
         is_favorite: function (id) {
@@ -184,7 +262,7 @@
                 fav = (this.index(id) >= 0);
             } else {
                 $.ajax({
-                    url: 'web_api/v1/user/me/favorite/' + id,
+                    url: '/web_api/v1/user/me/favorite/' + id,
                     type: "GET",
                     async: false,
                     success: function (data) {
@@ -213,22 +291,22 @@
             return -1;
         },
 
-        toggle: function (id, on_set, on_clear) {
+        toggle: function (id) {
             if (this.is_favorite(id)) {
-                this.clear(id, on_clear);
+                this.clear(id);
             } else {
-                this.set(id, on_set);
+                this.set(id);
             }
 
             this.update_count();
         },
 
-        set: function (id, on_set) {
+        set: function (id) {
             var self = this;
 
             if (!this.is_favorite(id)) {
                 $.ajax({
-                    url: 'web_api/v1/user/me/favorite/' + id,
+                    url: '/web_api/v1/user/me/favorite/' + id,
                     dataType: 'json',
                     contentType: "application/json",
                     data: JSON.stringify({}),
@@ -252,9 +330,7 @@
                         }
 
                         self.update_count();
-                        if (on_set) {
-                            on_set.call();
-                        }
+                        $.event.trigger('spaceFavoriteSet', [ id ]);
                     },
                     error: function (xhr, textStatus, errorThrown) {
                         console.log('Unable to set favorite: ' + xhr.responseText);
@@ -263,11 +339,11 @@
             }
         },
 
-        clear: function (id, on_clear) {
+        clear: function (id) {
             var self = this;
 
             $.ajax({
-                url: 'web_api/v1/user/me/favorite/' + id,
+                url: '/web_api/v1/user/me/favorite/' + id,
                 dataType: 'json',
                 type: "DELETE",
                 success: function (data) {
@@ -280,9 +356,7 @@
                     }
 
                     self.update_count();
-                    if (on_clear) {
-                        on_clear.call();
-                    }
+                    $.event.trigger('spaceFavoriteClear', [ id ]);
                 },
                 error: function (xhr, textStatus, errorThrown) {
                     console.log('Unable to unset favorite: ' + xhr.responseText);
@@ -303,7 +377,9 @@
                 o, c;
 
             $('.space-detail-is-closed', card).show();
-            
+
+            loadRatingsAndReviews(fav.id, $('.space-ratings-and-reviews', card), card);
+
             if (fav.available_hours[day].length > 0) {
                 $.each(fav.available_hours[day], function() {
                     this[0] = this[0].replace(/^0+/, '');
@@ -338,19 +414,17 @@
                 ul.prev().slideDown('fast');
             });
             
-            $('.space-detail-fav', card).tooltip({ placement: 'right',
-                                                   title: 'Remove this space from Favorites' });
             $('.space-detail-fav', card).click(function (e) {
-                var id = parseInt($(this).attr('data-id'));
-                var container = $(this).closest('.space-detail-container');
-                var tooltip = $(this).tooltip('hide');
-                
-                window.spacescout_favorites.clear(id, function () {
-                    container.hide({ effect: 'fade', duration: 800,  complete: function () { this.remove(); } });
-                });
+                window.spacescout_favorites.clear(parseInt($(this).attr('data-id')));
+            });
+
+            $(document).on('spaceFavoriteClear', function (e, id) {
+                var container = $('#spot_'+id).closest('.space-detail-container');
+
+                container.hide({ effect: 'fade', duration: 800,  complete: function () { this.remove(); } });
             });
             
-            var bld_code = fav.location.building_name.match(/.*\(([A-Z ]+)\)( [a-zA-Z]+)?$/)
+            var bld_code = fav.location.building_name.match(/.*\(([A-Z ]+)\)( [a-zA-Z]+)?$/);
             if (bld_code) {
                 $('.space-detail-building', card).html(bld_code[1] + (bld_code[2] ? bld_code[2] : ''));
             } else {

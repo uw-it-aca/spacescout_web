@@ -42,7 +42,9 @@
     var honeycombOrNewer = deviceAgent.match(/android [3-9]/i);
     var froyoOrOlder = android && !gingerbread && !honeycombOrNewer;
 
-    function show_main_app() {
+    window.spacescout_web_mobile = {};
+
+    window.spacescout_web_mobile.show_main_app = function () {
         $('#main_space_detail').hide();
         $('#main_app').show();
 
@@ -51,23 +53,54 @@
         if (window.spacescout_map) {
             google.maps.event.trigger(window.spacescout_map, "resize");
         }
-    }
+    };
 
-    function show_space_detail(id) {
+    window.spacescout_web_mobile.show_space_detail = function(id) {
         $('#main_space_detail').html('');
         $('#main_space_detail').show();
         $('#main_app').hide();
         loadSpaceDetails(id);
-    }
+    };
 
 	$(document).ready(function() {
+
+        $('.logo').click(function () {
+            window.location.href = '/';
+        });
+
+        // share destination typeahead
+        if ($('#id_recipient').length) {
+            var node = $('#id_recipient');
+
+            var engine = new Bloodhound({
+                datumTokenizer: function (d) {
+                    return Blookdhound.tokenizers.whitespace(d.email);
+                },
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                limit: 15,
+                remote: 'web_api/v1/directory/?q=%QUERY'
+            });
+
+            engine.initialize();
+
+            node.addClass('tokenfield');
+            node.tokenfield({
+                delimiter: [',', '\t'],
+                createTokensOnBlur: true,
+                typeahead: [null, {
+                    displayKey: 'email',
+                    minLength: 3,
+                    source: engine.ttAdapter()
+                }]
+            });
+        }
 
         if (window.spacescout_url) {
             var state = window.spacescout_url.parse_path(window.location.pathname);
             if (state.id) {
-                show_space_detail(state.id);
+                window.spacescout_web_mobile.show_space_detail(state.id);
             } else {
-                show_main_app();
+                window.spacescout_web_mobile.show_main_app();
             }
         }
 
@@ -92,15 +125,12 @@
               scrollTo('info_list');
         });
 
-        // back to spaces button on mobile space details page
-        $('#back_home_button').click(function() {
-            var href = '/';
+        // back to spaces button on contact, share and suggest pages
+        var nodes = $('#back_home_button, #back_home_button + div > h2');
 
-            if ($('#id_back').length > 0) {
-                href = $('#id_back').val();
-            }
-
-            window.location.href = href;
+        nodes.css('cursor', 'pointer');
+        nodes.click(function () {
+            window.location.href = window.spacescout_referrer.length ? window.spacescout_referrer : '/';
         });
 
         // for iphones (ios5) - check if they have the ios detector cookie, if they don't give them one and show the popup
@@ -174,7 +204,7 @@
             $.removeCookie('initial_load');
         });
 
-        $(document).on('searchResultsLoaded', function () {
+        $(document).on('searchResultsLoaded', function (e, data) {
             // handle view details click
             $('.view-details').on('click', function(e){
 
@@ -183,8 +213,11 @@
 
                 e.preventDefault();
 
-                show_space_detail(id);
+                window.spacescout_web_mobile.show_space_detail(id);
             });
+
+
+            $('#space_count_container .count').html(data.count);
         });
 
 	});
@@ -245,6 +278,21 @@
                               || data.extended_info.has_scanner
                               || data.extended_info.has_whiteboards);
 
+        data["review_count"] = (data.extended_info.review_count) || 0;
+        data["stars"] = [];
+        var rating = parseFloat(data.extended_info.rating) || 0;
+        for (var star_pos = 1; star_pos <= 5; star_pos++) {
+            if (rating == star_pos - 0.5) {
+                data.stars.push({ "icon": "fa-star-half-o" });
+            }
+            else if (star_pos <= rating) {
+                data.stars.push({ "icon": "fa-star" });
+            }
+            else {
+                data.stars.push({ "icon": "fa-star-o" });
+            }
+        }
+
     	$('#main_space_detail').html(template(data));
 
         $('html, body').animate({ scrollTop: 0 }, 'fast');
@@ -253,13 +301,14 @@
 
         initializeCarousel();
         resizeCarouselMapContainer();
-        replaceUrls();
+        replaceReservationNotesUrls();
         initMapCarouselButtons();
 
+        $('#back_home_button').css('cursor', 'pointer');
         $('#back_home_button').click(function(e) {
             var m =  window.location.pathname.match(/\/(\d+)\/?$/);
 
-            show_main_app();
+            window.spacescout_web_mobile.show_main_app();
             window.spacescout_url.push(null);
 
             if (m) {
@@ -267,44 +316,15 @@
             }
         });
 
-        // set up favorites
-        var fav_icon = $('#space_details_header .space-detail-fav');
-        var fav_icon_i = $('#space_details_header .space-detail-fav i');
+        // set us up teh favorites
+        window.spacescout_favorites.update_favorites_button(data.id);
 
-        if (fav_icon.is(':visible')) {
+        setupRatingsAndReviews(data);
+        loadRatingsAndReviews(data.id, $('.space-reviews-content'), $('.space-actions'));
 
-            if (window.spacescout_favorites.is_favorite(data.id)) {
-                fav_icon.removeClass('space-detail-fav-unset').addClass('space-detail-fav-set');
-                fav_icon_i.removeClass('fa-heart-o').addClass('fa-heart');
-            } else {
-                fav_icon.removeClass('space-detail-fav-set').addClass('space-detail-fav-unset');
-                fav_icon_i.removeClass('fa-heart').addClass('fa-heart-o');
-            }
-
-            fav_icon.click(function (e) {
-                e.preventDefault();
-
-                if (window.spacescout_authenticated_user.length == 0) {
-                    window.location.href = '/login?next=' + window.location.pathname;
-                }
-
-
-                window.spacescout_favorites.toggle(data.id,
-                                                   function () {
-                                                       fav_icon.removeClass('space-detail-fav-unset').addClass('space-detail-fav-set');
-                                                       fav_icon_i.removeClass('fa-heart-o').addClass('fa-heart');
-                                                       $('button#' + data.id + ' .space-detail-fav').show();
-                                                   },
-                                                   function () {
-                                                       fav_icon.removeClass('space-detail-fav-set').addClass('space-detail-fav-unset');
-                                                       fav_icon_i.removeClass('fa-heart').addClass('fa-heart-o');
-                                                       $('button#' + data.id + ' .space-detail-fav').hide();
-                                                   });
-            });
-        }
-
-        $('a#share_space').unbind('click');
-        $('a#share_space').click(function (e) {
+        // set up share space
+        $('button#share_space').unbind('click');
+        $('button#share_space').click(function (e) {
             var id =  window.location.pathname.match(/(\d+)\/?$/)[1];
 
             window.location.href = '/share/' + id
@@ -331,10 +351,9 @@
 
         window.spacescout_url.push(null);
 
+        $('#back_home_button').css('cursor', 'pointer');
         $('#back_home_button').click(function(e) {
-            var m =  window.location.pathname.match(/\/(\d+)\/?$/);
-
-            show_main_app();
+            window.spacescout_web_mobile.show_main_app();
         });
     }
 

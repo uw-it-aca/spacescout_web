@@ -51,6 +51,7 @@
     }
     window.spacescout_csrf_token = '{{ csrf_token }}';
     window.spacescout_authenticated_user = '{{ username }}';
+    window.spacescout_referrer = '{{ back }}';
     $.ajaxSetup({
         headers: { "X-CSRFToken": '{{ csrf_token }}' }
     });
@@ -65,7 +66,8 @@
   <div id="main_app" style="display: none;">
     <div id="nav" style="position:relative;">
 
-        <div class="logo-container clearfix">
+        <div class="spacescout-header clearfix">
+          <div class="logo-container">
 
             <div class="logo">
                 <h1 id="app_header" class="visuallyhidden">SPACESCOUT&trade;</h1>
@@ -83,16 +85,17 @@
                 {% endifnotequal %}
             </div>
         </div>
+      </div>
         <!-- hidden for now, until cool stuff for logged in users is finished.-->
         <div class="user_context">
             {% if user.is_authenticated %}
               <span class="salutation">{% trans 'greeting' %}&nbsp;{{ request.user }}</span>
-              <a href="/favorites">{% trans 'favorites' %} (<span class="favorites_count_container">0</span>)</a>
+              <a href="/favorites">{% trans 'favorites' %} <span class="favorites_count_container"></span></a>
               <span>|</span>
-              {% tplhandlebars "favorites_count" %}{{count}}{% endtplhandlebars %}
-              <a href="logout?next={% firstof request.path '/' %}">{% trans 'logout' %}</a>
+              {% tplhandlebars "favorites_count" %}({{count}}){% endtplhandlebars %}
+              <a href="/logout?next={% firstof request.path '/' %}">{% trans 'logout' %}</a>
             {% else %}
-              {% trans 'salutation' %}&nbsp;<a href="login?next={% firstof request.path '/' %}">{% trans 'login' %}</a>
+              {% trans 'salutation' %}&nbsp;<a href="/login?next={% firstof request.path '/' %}">{% trans 'login' %}</a>
             {% endif %}
         </div>
         <!-- -->
@@ -183,7 +186,7 @@
                                 <a name="space_detail_{{id}}"></a>
                                 <div class="space-detail-list-image pull-left">
                                     {{#if images.0.id}}
-                                    <div class="space-detail-list-image-inner lazyloader" data-src="space/{{id}}/image/{{images.0.id}}/thumb/constrain/width:150">&nbsp;</div>
+                                    <div class="space-detail-list-image-inner lazyloader" data-src="/image/space/{{id}}/{{images.0.id}}/thumb/constrain/width:150">&nbsp;</div>
                                     {{else}}
                                     <div class="space-detail-list-image-inner space-detail-no-image">&nbsp;</div>
                                     {{/if}}
@@ -234,7 +237,7 @@
                             <li class="clearfix view-details">
                                 <div class="space-detail-list-image pull-left">
                                   {{#if images.0.id}}
-                                    <div class="space-detail-list-image-inner lazyloader" data-src="space/{{id}}/image/{{images.0.id}}/thumb/constrain/width:150">&nbsp;</div>
+                                    <div class="space-detail-list-image-inner lazyloader" data-src="/image/space/{{id}}/{{images.0.id}}/thumb/constrain/width:150">&nbsp;</div>
                                   {{else}}
                                     <div class="space-detail-list-image-inner space-detail-no-image">&nbsp;</div>
                                   {{/if}}
@@ -287,18 +290,32 @@
     {% tplhandlebars "space_details" %}
     <div id="space_details_header" class="clearfix">
         <h1 class="visuallyhidden">SPACESCOUT&trade;</h1>
-		<img id="back_home_button" class="pull-left back-button" src="{% static 'img/details_arrow.png' %}" />
+
+		<div class="back-link">
+			<img id="back_home_button" class="back-button" src="{% static 'img/details_arrow.png' %}" />
+			Back to Space list
+		</div>
+		
         <div id="name-type-block" class="pull-left">
-          <div class="space-detail-fav space-detail-fav-unset pull-left"><i class="fa fa-heart-o"></i></div>
           <h2 class="space-detail-name" style=""><span class="visuallyhidden">Space Details:</span> {{name}}</h2>
       	  <div class="space-detail-type">{{ type }} {{ #if capacity }}<span class="space-detail-capacity">[Seats&nbsp;{{capacity}}]</span>{{ /if }}</div>
         </div>
+        <div class="space-actions">
+			<a id="show_reviews" class="space-stars" href="javascript:void(0);" title="See all reviews for {{ name }}">
+                {{#each stars }}
+                    <i class="fa {{icon}}"></i>
+                {{/each}}
+			</a>
+          <span id="review_count">({{ review_count }})</span>
+          <span id="divider"></span>
+          <button id="favorite_space" title="Tap to favorite {{name}}"><span class="space-detail-fav space-detail-fav-unset"><i class="fa fa-heart"></i></span> <span>{% trans 'favorite' %}</span></button>
+          <button id="share_space" title="Tap to share {{name}}"><i class="fa fa-mail-forward"></i> {%trans 'share' %}</button>
+        </div>
     </div>
-
     <div id="space_details_page">
         <div class="space-detail-container">
             <div class="space-detail">
-                <div class="space-detail-inner">
+                <div class="space-detail-inner" id="detail_container_{{id}}">
                     <div class="space-detail-body">
                         <div class="space-detail-body-inner">
                             <div id="spaceCarouselContainer" class="image-container" role="tabpanel">
@@ -307,7 +324,7 @@
                                   <div class="carousel-inner">
                                   {{ #each images }}
                                     <div class="carousel-inner-image item">
-                                        <div class="carousel-inner-image-inner" style="background:url('/space/{{ ../id }}/image/{{ id }}/thumb/constrain/width:500,height:333') no-repeat 50% 50%; background-size:100%;">&nbsp;</div>
+                                        <div class="carousel-inner-image-inner" style="background:url('/image/space/{{ ../id }}/{{ id }}/thumb/constrain/width:500,height:333') no-repeat 50% 50%; background-size:100%;">&nbsp;</div>
                                     </div>
                                   {{ else }}
                                     <div class="carousel-inner-image item">
@@ -337,7 +354,7 @@
                                 <h3 class="space-info-label pull-left">Notes</h3>
                                 <div class="space-info-detail pull-left">
                                     {{ #if extended_info.access_notes }}<p>{{extended_info.access_notes }}</p>{{ /if }}
-                                    {{ #if extended_info.reservation_notes }}<p id="ei_reservation_notes">{{extended_info.reservation_notes }}</p>{{ /if }}
+                                    {{ #if extended_info.reservation_notes }}<p class="ei_reservation_notes">{{extended_info.reservation_notes }}</p>{{ /if }}
                                 </div>
                             </li>
                             {{ /if }}
@@ -423,8 +440,8 @@
                         </ul>
                     </div>
 
-                    <div class="space-detail-share">
-                      <a id="share_space" href="javascript:void(0);"><i class="fa fa-envelope fa-lg"></i>Share this space</a>
+				    <div class="space-ratings-and-reviews">
+                      <div class="loading"></div>
                     </div>
 
                     <div class="space-detail-report">
@@ -449,5 +466,6 @@
     </div>
     {% endtplhandlebars %}
 
+    {% include "spacescout_web/reviews.html" %}
 
 {% endblock %}
