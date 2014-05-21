@@ -55,7 +55,7 @@ Handlebars.registerHelper('ifany', function(a, b) {
 
             node.addClass('tokenfield');
             node.tokenfield({
-                delimiter: [',', '\t'],
+                delimiter: [',', '\t', ' '],
                 createTokensOnBlur: true,
                 typeahead: [null, {
                     displayKey: 'email',
