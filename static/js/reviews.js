@@ -386,16 +386,19 @@ function disableSubmitButton () {
 
 
 function showReviewGuidelines () {
-    var ul = $('.space-review-compose ul');
+    var link = $('#review_guidelines');
 
-    ul.show();
-    ul.prev().find('i').switchClass('fa-angle-double-down', 'fa-angle-double-up');
+    link.next().show();
+    link.attr('title', 'Click to hide review guidelines');
+    $('i', link).switchClass('fa-angle-double-down', 'fa-angle-double-up');
+
 }
 
 
 function hideReviewGuidelines () {
-    var ul = $('.space-review-compose ul');
+    var link = $('#review_guidelines');
 
-    ul.hide();
-    ul.prev().find('i').switchClass('fa-angle-double-up', 'fa-angle-double-down');
+    link.next().hide();
+    link.attr('title', 'Click to see review guidelines');
+    $('i', link).switchClass('fa-angle-double-up', 'fa-angle-double-down');
 };
