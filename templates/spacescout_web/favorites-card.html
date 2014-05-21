@@ -57,7 +57,7 @@
 
                             {{#if has_notes }}
                             <li class="clearfix">
-                                <h3 class="space-info-label pull-left">Notes</h3>
+                                <div class="space-info-label pull-left">Notes</div>
                                 <div class="space-info-detail pull-left">
                                     {{#if extended_info.access_notes }}<p>{{extended_info.access_notes}}</p>{{/if}}
                                     {{#if extended_info.reservation_notes }}<p class="ei_reservation_notes">{{extended_info.reservation_notes }}</p>{{/if}}
@@ -68,7 +68,7 @@
                                 {{#if extended_info.auto_labstats_total}}
                                     {{#compare extended_info.auto_labstats_total 0 operator="!="}}
                                         <li class="clearfix">
-                                            <h3 class="space-info-label pull-left">Computers</h3>
+                                            <div class="space-info-label pull-left">Computers</div>
                                             <div class="space-info-detail pull-left">
 
                                             {{#compare extended_info.auto_labstats_available 0 operator=">"}}
@@ -82,17 +82,18 @@
                                 {{/if}}
                             {{/if}}
 
-                            <li class="clearfix"><h3 class="space-info-label pull-left">Hours</h3>
-                              <div class="space-info-detail pull-left">{{formatHours available_hours}}</div>
+                            <li class="clearfix">
+                            	<div class="space-info-label pull-left">Hours</div>
+								<div class="space-info-detail pull-left">{{formatHours available_hours}}</div>
                             </li>
 
-                            <li class="clearfix"><h3 class="space-info-label pull-left">Location</h3>
+                            <li class="clearfix"><div class="space-info-label pull-left">Location</div>
                               <div class="space-info-detail pull-left">{{extended_info.location_description}}</div>
                             </li>
 
                             {{#if has_resources }}
                             <li class="clearfix">
-                                <h3 class="space-info-label pull-left">Resources</h3>
+                                <div class="space-info-label pull-left">Resources</div>
                                 <div class="space-info-detail pull-left">
                                     <ul class='space-info-resources-list'>
                                     {{#if extended_info.has_computers }}<li>Computers</li>{{/if}}
@@ -109,19 +110,19 @@
 
                             {{#if extended_info.noise_level }}
                             <li class="clearfix">
-                                <h3 class="space-info-label pull-left">Noise Level</h3>
+                                <div class="space-info-label pull-left">Noise Level</div>
                                 <div class="space-info-detail pull-left">{{ extended_info.noise_level }}</div>
                             </li>
                             {{/if}}
 
                             {{#if extended_info.has_natural_light }}
-                            <li class="clearfix"><h3 class="space-info-label pull-left">Lighting</h3><div class="space-info-detail pull-left">Natural light</div></li>
+                            <li class="clearfix"><div class="space-info-label pull-left">Lighting</div><div class="space-info-detail pull-left">Natural light</div></li>
                             {{/if}}
 
 
                             {{#if extended_info.food_nearby }}
                             <li class="clearfix">
-                                <h3 class="space-info-label pull-left">Food/Coffee</h3>
+                                <div class="space-info-label pull-left">Food/Coffee</div>
                                 <div class="space-info-detail pull-left">{{ extended_info.food_nearby }}</div>
                             </li>
                             {{/if}}
@@ -148,7 +149,7 @@
 {% endtplhandlebars %}
 
 {% tplhandlebars "mobile_hours" %}
-<h3 class="space-info-label pull-left">Hours</h3><div class="space-info-detail pull-left">{{formatHours available_hours}}</div>
+<div class="space-info-label pull-left">Hours</div><div class="space-info-detail pull-left">{{formatHours available_hours}}</div>
 {% endtplhandlebars %}
 
 {% tplhandlebars "images_template" %}
