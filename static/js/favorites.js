@@ -373,8 +373,7 @@
                 hour = now.getHours(),
                 minute = now.getMinutes(),
                 day = weekday_from_day(now.getDay()).toLowerCase(),
-                formatted = 'Closed',
-                o, c;
+                formatted = 'Closed';
 
             $('.space-detail-is-closed', card).show();
 
@@ -382,14 +381,16 @@
 
             if (fav.available_hours[day].length > 0) {
                 $.each(fav.available_hours[day], function() {
-                    this[0] = this[0].replace(/^0+/, '');
-                    this[1] = this[1].replace(/^0+/, '');
-                    o = this[0].split(':');
-                    c = this[1].split(':');
+                    var o = this[0].replace(/^0+/, '').split(':'),
+                        c = this[1].replace(/^0+/, '').split(':'),
+                        o_h = o[0].length ? parseInt(o[0]) : 0,
+                        o_m = o[1].length ? parseInt(o[1]) : 0,
+                        c_h = c[0].length ? parseInt(c[0]) : 0,
+                        c_m = c[1].length ? parseInt(c[1]) : 0;
                     
-                    if ((hour > parseInt(o[0]) && hour < parseInt(c[0]))
-                        || (hour == parseInt(o[0]) && minute > parseInt(o[1]))
-                        || (hour == parseInt(c[0]) && minute < parseInt(c[1]))) {
+                    if ((hour > o_h && hour < c_h)
+                        || (hour == o_h && minute > o_m)
+                        || (hour == c_h && minute < c_m)) {
                         $('.space-detail-is-open', card).show();
                         $('.space-detail-is-closed', card).hide();
                     }
