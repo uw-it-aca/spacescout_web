@@ -48,10 +48,10 @@
             <div class="user_context">
                 {% if user.is_authenticated %}
                   <span>{% trans 'greeting' %}&nbsp;{{ request.user }}</span>
-                  <a href="favorites">{% trans 'favorites' %} <span class="favorites_count_container"></span></a>
+                  <a href="/favorites?back={{back}}">{% trans 'favorites' %} <span class="favorites_count_container"></span></a>
                   {% tplhandlebars "favorites_count" %}({{count}}){% endtplhandlebars %}
                   <span>|</span>
-                  <a href="/logout?next=/">{% trans 'logout' %}</a>
+                  <a href="/logout?next={{back}}">{% trans 'logout' %}</a>
                 {% else %}
                   {% trans 'salutation' %}&nbsp;<a href="/login?next={% firstof request.path '/' %}">{% trans 'login' %}</a>
                 {% endif %}
@@ -62,7 +62,7 @@
         <div class="favorites-header"><span></span></div>
         <div class="favorites" role="main" aria-labelledby="favorites-tally">
           <div class="navigation">
-            <a href="/" title="Go back to map">Back to Map</a>
+            <a href="{{back}}" title="Go back to map">Back to Map</a>
           </div>
 
           <h2 id="favorites-title" class="page-title">Favorites</h2>

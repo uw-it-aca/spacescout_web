@@ -167,6 +167,12 @@ Handlebars.registerHelper('ifany', function(a, b) {
         $(document).on('searchResultsLoaded', function (e, data) {
             $('#space_count_container .count').html(data.count);
         });
+
+        $('a span.favorites_count_container').parent().click(function (e) {
+            e.preventDefault();
+            window.location.href = '/favorites'
+                + '?back=' + encodeURIComponent(window.location.pathname);
+        });
 	});
 
     function fetchSpaceDetails(id){

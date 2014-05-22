@@ -423,7 +423,13 @@
             $(document).on('spaceFavoriteClear', function (e, id) {
                 var container = $('#spot_'+id).closest('.space-detail-container');
 
-                container.hide({ effect: 'fade', duration: 800,  complete: function () { this.remove(); } });
+                container.hide({
+                    effect: 'fade',
+                    duration: 800,
+                    complete: function () {
+                        container.remove();
+                    }
+                });
             });
             
             var bld_code = fav.location.building_name.match(/.*\(([A-Z ]+)\)( [a-zA-Z]+)?$/);

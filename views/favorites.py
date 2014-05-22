@@ -27,7 +27,10 @@ import oauth2
 @mobile_template('spacescout_web/{mobile/}favorites.html')
 def FavoritesView(request, template=None):
     return render_to_response(template,
-                              { 'locations': settings.SS_LOCATIONS },
+                              {
+                                  'locations': settings.SS_LOCATIONS,
+                                  'back': request.GET['back'] if request.GET and 'back' in request.GET else '/'
+                              },
                               context_instance=RequestContext(request))
 
 
