@@ -71,7 +71,7 @@
           </div>
           <div class="location_container">
             {% ifnotequal locations|length 1 %}
-            <span role="navigation" aria-labelledby="location_select_heading">
+            <span aria-labelledby="location_select_heading">
               <label id="location_select_heading" for="location_select"  class="visuallyhidden">Select campus:</label>
               <select id='location_select'>
                 {% for key, value in locations.items %}
