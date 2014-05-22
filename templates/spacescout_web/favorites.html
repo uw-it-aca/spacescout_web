@@ -60,13 +60,13 @@
         </div>
 
         <div class="favorites-header"><span></span></div>
-        <div class="favorites" role="main" >
+        <div class="favorites" role="main" aria-labelledby="favorites-tally">
           <div class="navigation">
             <a href="/" title="Go back to map">Back to Map</a>
           </div>
 
           <h2 id="favorites-title" class="page-title">Favorites</h2>
-          <div class="favorites-total" aria-labelledby="space_details_page"><span class="favorites_total_container">favorite spaces</span></div>
+          <div id="favorites-tally" role="status" class="favorites-total" aria-labelledby="space_details_page"><span class="favorites_total_container">favorite spaces</span></div>
           
           {% tplhandlebars "favorites_total" %}{{ total }} favorite space{{ plural }}{% endtplhandlebars %}
           
