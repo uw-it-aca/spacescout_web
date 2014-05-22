@@ -501,16 +501,15 @@ div.actions { display: none;
 							
 	                	}
 	                	
-	                	.space-review-rating{
-	                		input[type=radio]{width: 0px;}
-		                	.space-review-stars{ margin-bottom: 10px;
-		                		.rating-star{
-				                	i{
-				                		font-size: 33px; margin-left: 7px; color: @star-color;
-									}
-		                		}
-		                	}
-                            span { font-size: 12px; font-style: italic;} 
+	                	.space-review-rating { padding-bottom: 10px;
+                          ol {
+                            li { margin-left: 7px; 
+                              input { height: 33px; width: 33px; }
+                              label { margin-left: -33px;
+                                i { font-size: 33px; }
+                              }
+                            }
+                          }
 	                	}
 	                	.space-review-chars{ float: right; font-size: 12px; }
 	                	textarea{width: 97%;}
@@ -690,12 +689,16 @@ div.actions { display: none;
         }
         h3 {font-weight: normal; color: @purple_text; }
         .space-review-rating { clear: both;
-            .space-review-stars {
-                float: left;
-                i:hover { cursor: pointer; }
+            ol { list-style: none; display: inline-block; height: 30px; padding: 0; margin: 0;
+              li { display: inline-block; height: 30px; 
+                input { position: relative; top: -8px; height: 30px; width: 30px; margin: 0; padding: 0; filter: alpha(opacity=0); -moz-opacity: 0; -khtml-opacity: 0; opacity: 0; }
+                label { display: inline-block; margin-left: -30px;
+                  i { color: @star-color; font-size: 30px; }
+                }
+              }
             }
 
-            div + div { float: right; }
+            span { display: inline-block; position: relative; top: -4px; margin-left: 6px; line-height: 30px; height: 30px; font-size: 12px; font-style: italic; }
         }
         .space-reviews-none, .space-review-submitted { height: 60px; padding: 8px; line-height: 14px; 
             background-color: white;
