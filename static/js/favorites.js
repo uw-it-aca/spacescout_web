@@ -163,6 +163,8 @@
                     container.append(blank);
                 }
 
+                replaceReservationNotesUrls();
+
                 $.event.trigger('favoritesLoaded', [ this.favorites ]);
             }
         },
@@ -252,7 +254,6 @@
             this.update_count();
             this.update_search_result();
             this.update_cards();
-            replaceReservationNotesUrls();
         },
 
         is_favorite: function (id) {
