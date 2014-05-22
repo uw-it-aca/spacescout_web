@@ -231,13 +231,16 @@ function loadRatingsAndReviews(id, review_container, rating_container) {
                     review_container.append(node);
 
                     $('.more-space-reviews a').on('click', function (e) {
-                        $('.space-reviews-review:hidden').each(function (i) {
+                        var container = $(this).closest('.space-ratings-and-reviews'),
+                            hidden = $('.space-reviews-review:hidden', container);
+
+                        hidden.each(function (i) {
                             if (i < window.spacescout_reviews.pagination) {
                                 $(this).slideDown(400);
                             }
                         });
 
-                        if ($('.space-reviews-review:hidden').length <= 0) {
+                        if (hidden.length <= window.spacescout_reviews.pagination) {
                             $(this).parent().hide();
                         }
                     });
