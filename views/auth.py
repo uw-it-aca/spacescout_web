@@ -41,4 +41,4 @@ def Login(request):
 # Logout
 def Logout(request):
     logout(request)
-    return HttpResponseRedirect(request.REQUEST['next'])
+    return HttpResponseRedirect(request.REQUEST['next'] if 'next' in request.REQUEST else '/')
