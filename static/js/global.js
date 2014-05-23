@@ -422,16 +422,6 @@ function reset_location_filter() {
             window.spacescout_url.replace();
         });
 
-    	// handle clicking on map centering buttons
-        $('#center_all').on('click', function(e){
-
-            e.preventDefault();
-            if (window.spacescout_map.getZoom() != window.default_zoom) {
-                window.spacescout_map.setZoom(parseInt(window.default_zoom));
-            }
-            window.spacescout_map.setCenter(new google.maps.LatLng(window.default_latitude, window.default_longitude));
-        });
-
         // handle checkbox and radio button clicks
         $('.checkbox input:checkbox').click(function() {
             if(this.checked) {

@@ -732,7 +732,18 @@ function scrollToTop(id) {
 
 function displayMapCenteringButtons() {
     // build the template
-   var source = $('#map_controls').html();
-   var template = Handlebars.compile(source);
-   $('#map_canvas').append(template(template));
+    var source = $('#map_controls').html(),
+        template = Handlebars.compile(source),
+        map_canvas = $('#map_canvas');
+
+    map_canvas.append(template(template));
+
+    // handle clicking on map centering buttons
+    $('.map-control-container a', map_canvas).on('click', function(e){
+        e.preventDefault();
+        if (window.spacescout_map.getZoom() != window.default_zoom) {
+            window.spacescout_map.setZoom(parseInt(window.default_zoom));
+        }
+        window.spacescout_map.setCenter(new google.maps.LatLng(window.default_latitude, window.default_longitude));
+    });
 }
