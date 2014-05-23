@@ -94,6 +94,8 @@ Handlebars.registerHelper('ifany', function(a, b) {
             var block = $("#filter_block");
 
             if (block.css('display') == 'none') {
+                get_location_buildings();
+
                 // reflect current filter
                 if (window.hasOwnProperty('spacescout_search_options')) {
                     clear_filter();

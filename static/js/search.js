@@ -30,7 +30,7 @@ function openAllMarkerInfoWindow(data) {
 
     // load and update favorites
     if ($(window.spacescout_favorites.k.favorites_count_container).length == 1) {
-        window.spacescout_favorites.load();
+        window.spacescout_favorites.update();
 
         if (window.hasOwnProperty('spacescout_favorites_refresh')
             && window.spacescout_favorites_refresh) {

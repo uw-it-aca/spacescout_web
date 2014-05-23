@@ -417,7 +417,6 @@ function reset_location_filter() {
             run_custom_search();
 
             window.update_count = true;
-            get_location_buildings();
             $.cookie('default_location', $(this).val());
             reset_location_filter();
             window.spacescout_url.replace();
@@ -432,8 +431,6 @@ function reset_location_filter() {
             }
             window.spacescout_map.setCenter(new google.maps.LatLng(window.default_latitude, window.default_longitude));
         });
-
-        get_location_buildings();
 
         // handle checkbox and radio button clicks
         $('.checkbox input:checkbox').click(function() {

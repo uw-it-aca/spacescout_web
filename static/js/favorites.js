@@ -20,6 +20,10 @@
 */
 (function(){
 
+    $(document).ready(function () {
+        window.spacescout_favorites.favorites = window.spacescout_favorites_list;
+    });
+
     window.spacescout_favorites = window.spacescout_favorites || {
         k: {
             'favorites_count_container': '.favorites_count_container',
@@ -30,7 +34,7 @@
             'favorites_card_template': '#favorites_card'
         },
 
-        favorites: undefined,
+        favorites: window.spacescout_favorites_list,
 
         update_count: function () {
             var self = this,
@@ -208,7 +212,7 @@
                 fav_button.click(function (e) {
                     if (!authenticated_user) {
                         $.cookie('space_set_favorite', JSON.stringify({ id: id }));
-                        window.location.href = '/login?next=' + window.location.pathname;
+                        window.location.href = '/login?next=' + encodeURIComponent(window.location.pathname);
                     }
 
                     window.spacescout_favorites.toggle(id);
