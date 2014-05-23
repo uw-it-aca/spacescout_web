@@ -47,8 +47,8 @@ class EmailListField(forms.CharField):
 class ShareForm(forms.Form):
         back = forms.CharField(widget=forms.HiddenInput())
         spot_id = forms.IntegerField(widget=forms.HiddenInput())
-        sender = forms.EmailField(max_length=128, label="From", required=True)
-        recipient = EmailListField(max_length=1028, label="To", required=True)
+        sender = forms.EmailField(max_length=128, label="From", required=True, error_messages={'required':'Required field'})
+        recipient = EmailListField(max_length=1028, label="To", required=True, error_messages={'required':'Required field'})
         subject = forms.CharField(max_length=128, label="Subject", required=True)
         message = forms.CharField(widget=forms.Textarea(attrs={'rows': 5}), label="Your Message (optional)", required=False)
         email_confirmation = forms.CharField(required=False)

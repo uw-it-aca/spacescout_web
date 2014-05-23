@@ -18,13 +18,21 @@
                 </div>
             {% else %}
                 <div class="fieldWrapper">
-                    {{ field.label_tag }}{{ field }}
+                    {% if field.field.required %}
+                    <label for "id_{{field.name}}">{{field.label}}<span class="required">*</span>
                     {% for error in field.errors %}
-                        <strong class="alert">{{ error|escape }}</strong>
+                        <span class="alert-error">{{ error|escape }}</span>
                     {% endfor %}
+                    </label>
+                    {% else %}
+                        {{field.label_tag}}
+                    {% endif %}
+                    {{field}}
                 </div>
             {% endif %}
         {% endfor %}
-        <input type="submit" value="Send" class="btn primary-button singleSubmit-button"/>
-    </form>
+       <div class="fieldWrapper">
+       <input type="submit" value="Send" class="btn primary-button singleSubmit-button"/>
+   </div>
+   </form>
 {% endblock %}
