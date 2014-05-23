@@ -23,6 +23,7 @@ from django.conf import settings
 def suggest(request, spot_id=None):
     if request.method == 'POST':
         form = SuggestForm(request.POST)
+        back = request.POST['back'] if 'back' in request.POST else '/'
         if form.is_valid():
             name = form.cleaned_data['name']
             netid = form.cleaned_data['netid']
@@ -56,10 +57,11 @@ def suggest(request, spot_id=None):
                     return HttpResponseRedirect('/sorry/')
             return HttpResponseRedirect('/thankyou/')
     else:
+        back = request.GET['back'] if 'back' in request.POST else '/'
         form = SuggestForm()
 
     return render_to_response('spacescout_web/suggest-form.html', {
         'form': form,
-        'back': '/',
+        'back': back,
         'is_mobile': (request.MOBILE == 1),
     }, context_instance=RequestContext(request))
