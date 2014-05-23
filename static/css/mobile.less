@@ -17,7 +17,7 @@
   width: 25px;
   font-size: 12px;
   padding: 0;
-  margin: 0;
+  margin: -2px 0 0 0;
   text-align: center;
   color: #fff;
 }
@@ -87,11 +87,15 @@ button {
 
     .spacescout-header {
         .logo-container {
-        .logo { height: 44px; width: 188px; float:left; position: relative;
+        .logo { 
+        	height: 44px; 
+        	width: 188px; 
+        	float:left; 
+        	position: relative;
             background-image: url('../img/spacescout_logo.png');
-            background-size: 180px 30px;
+            background-size: 180px 40px;
             background-repeat: no-repeat;
-            background-position: 10px 50%;
+            background-position: 8px 50%;
         }
         }
 
@@ -99,7 +103,7 @@ button {
             #location_select {
                 background: #e8eaf7 url('../img/drop-arrow.png') no-repeat 98% 50%;
                 background-size: 9px 7px;
-                background-position: 83px 8px;
+                background-position: 115px 9px;
                 -webkit-appearance: none;
                 -moz-appearance: none;
                 text-indent: 0.01px;
@@ -112,9 +116,10 @@ button {
                 margin-top: 10px;
                 margin-right: 8px;
                 margin-left: 10px;
-                padding: 0 7px;
+                padding: 0 8px;
                 right: 3px;
-                width: 105px;
+                width: 130px;
+                border-radius: 3px;
             }
             #location_select:disabled {
                 background: #eeeeee;
@@ -140,7 +145,7 @@ button {
 @keyframes filter-clear-anim { 100% {left:0px;} }
 @-webkit-keyframes filter-clear-anim {100% {left:0px;}}
 
-#filter_container { position: relative; margin: 0 10px 11px 10px;
+#filter_container { position: relative; margin: 0 0px 11px 0px;
 
 
     #filter_block { display:none; background-color:#222; color: @grey_medium; overflow-y: auto; -webkit-overflow-scrolling: touch;
@@ -483,6 +488,9 @@ div.actions { display: none;
                 	/*CSS for reviews compose section*/
                 	.space-review-compose{ padding: 15px; font-size: 12px; background-color: #fdfdfd; border: 1px solid #e7e7e7; padding: 15px; border-radius: 5px;
 	                	h4{font-size: 17px; margin-bottom: 0px; margin-top: 5px;}
+	                	fieldset{
+		                	border: 0px; margin: 0px; padding: 0px;
+	                	}
 	                	legend{border: none;}
 	                	.rate-subhead{
 		                	font-size: 14px;
@@ -493,15 +501,15 @@ div.actions { display: none;
 							
 	                	}
 	                	
-	                	.space-review-rating{
-		                	.space-review-stars{ margin-bottom: 10px;
-		                		.rating-star{
-				                	i{
-				                		font-size: 30px; margin-left: 5px; color: @star-color;
-									}
-		                		}
-		                	}
-                            span { font-size: 12px; font-style: italic;} 
+	                	.space-review-rating { padding-bottom: 10px;
+                          ol {
+                            li { margin-left: 7px; 
+                              input { height: 33px; width: 33px; }
+                              label { margin-left: -33px;
+                                i { font-size: 33px; }
+                              }
+                            }
+                          }
 	                	}
 	                	.space-review-chars{ float: right; font-size: 12px; }
 	                	textarea{width: 97%;}
@@ -511,6 +519,11 @@ div.actions { display: none;
 							width: 100px;
 							color: black;
 	                	}
+	                	#space-review-submit:disabled {
+                            cursor: not-allowed;
+                            background: none;
+							background-color: #4c497e !important;
+                        }
 	                	#space-review-submit:hover:disabled {
                             cursor: not-allowed;
                             background: none;
@@ -601,6 +614,7 @@ div.actions { display: none;
 			font-weight: normal;
 			line-height: 20px;
 			text-rendering: optimizelegibility;
+			width: 190px;
 		}
     
         .loading { height: 40px; background: #f8f8f8 url('../img/spinner.gif') no-repeat 50% 50%; background-size: 26px; }
@@ -675,12 +689,16 @@ div.actions { display: none;
         }
         h3 {font-weight: normal; color: @purple_text; }
         .space-review-rating { clear: both;
-            .space-review-stars {
-                float: left;
-                i:hover { cursor: pointer; }
+            ol { list-style: none; display: inline-block; height: 30px; padding: 0; margin: 0;
+              li { display: inline-block; height: 30px; 
+                input { position: relative; top: -8px; height: 30px; width: 30px; margin: 0; padding: 0; filter: alpha(opacity=0); -moz-opacity: 0; -khtml-opacity: 0; opacity: 0; }
+                label { display: inline-block; margin-left: -30px;
+                  i { color: @star-color; font-size: 30px; }
+                }
+              }
             }
 
-            div + div { float: right; }
+            span { display: inline-block; position: relative; top: -4px; margin-left: 6px; line-height: 30px; height: 30px; font-size: 12px; font-style: italic; }
         }
         .space-reviews-none, .space-review-submitted { height: 60px; padding: 8px; line-height: 14px; 
             background-color: white;
@@ -892,7 +910,8 @@ select {
 @media screen and (min-width: 320px) {
 
     #nav {
-        .favorites {
+        .favorites { padding: 0;
+            #space_details_page { padding: 0 0 0 4px; }
             #Xspace-detail-blank { height: 170px; 
               .Xspace-detail { border: 3px solid red; height: 170px; }
             }

@@ -50,6 +50,7 @@
     }
     window.spacescout_authenticated_user = '{{ username }}';
     window.spacescout_referrer = '{{ back }}';
+    window.spacescout_favorites_list = {{ favorites_json|safe }};
     $.ajaxSetup({
         headers: { "X-CSRFToken": '{{ csrf_token }}' }
     });
@@ -71,7 +72,7 @@
           </div>
           <div class="location_container">
             {% ifnotequal locations|length 1 %}
-            <span role="navigation" aria-labelledby="location_select_heading">
+            <span aria-labelledby="location_select_heading">
               <label id="location_select_heading" for="location_select"  class="visuallyhidden">Select campus:</label>
               <select id='location_select'>
                 {% for key, value in locations.items %}
@@ -88,7 +89,7 @@
             <a href="/favorites">{% trans 'favorites' %} <span class="favorites_count_container"></span></a>
             {% tplhandlebars "favorites_count" %}({{count}}){% endtplhandlebars %}
             <span>|</span>
-            <a id="logout_button" href="/logout?next={% firstof request.path '/' %}">{% trans 'logout' %}</a>
+            <a id="logout_button" href="/logout?next={{ request.path }}">{% trans 'logout' %}</a>
             {% else %}
             {% trans 'salutation' %}&nbsp;<a href="/login?next={% firstof request.path '/' %}">{% trans 'login' %}</a>
             {% endif %}

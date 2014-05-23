@@ -48,10 +48,10 @@
             <div class="user_context">
                 {% if user.is_authenticated %}
                   <span>{% trans 'greeting' %}&nbsp;{{ request.user }}</span>
-                  <a href="favorites">{% trans 'favorites' %} <span class="favorites_count_container"></span></a>
+                  <a href="/favorites?back={{back}}">{% trans 'favorites' %} <span class="favorites_count_container"></span></a>
                   {% tplhandlebars "favorites_count" %}({{count}}){% endtplhandlebars %}
                   <span>|</span>
-                  <a href="/logout?next=/">{% trans 'logout' %}</a>
+                  <a href="/logout?next={{back}}">{% trans 'logout' %}</a>
                 {% else %}
                   {% trans 'salutation' %}&nbsp;<a href="/login?next={% firstof request.path '/' %}">{% trans 'login' %}</a>
                 {% endif %}
@@ -60,13 +60,13 @@
         </div>
 
         <div class="favorites-header"><span></span></div>
-        <div class="favorites" role="main" >
+        <div class="favorites" role="main" aria-labelledby="favorites-tally">
           <div class="navigation">
-            <a href="/" title="Go back to map">Back to Map</a>
+            <a href="{{back}}" title="Go back to map">Back to Map</a>
           </div>
 
           <h2 id="favorites-title" class="page-title">Favorites</h2>
-          <div class="favorites-total" aria-labelledby="space_details_page"><span class="favorites_total_container">favorite spaces</span></div>
+          <div id="favorites-tally" role="status" class="favorites-total" aria-labelledby="space_details_page"><span class="favorites_total_container">favorite spaces</span></div>
           
           {% tplhandlebars "favorites_total" %}{{ total }} favorite space{{ plural }}{% endtplhandlebars %}
           
@@ -86,8 +86,8 @@
 <div id="space-detail-blank" class="space-detail-container">
     <div class="space-detail">
         <div class="space-detail-inner">
-          <i class="fa fa-heart fa-4x"></i>Your next favorite space will be here.
-          <br /><a href="/" title="Click to go to space list">Go to space list</a>
+          <i class="fa fa-heart fa-4x"></i>
+          <a href="/" title="Click to go to space list">Discover spaces</a> and add to your list. 
         </div>
     </div>
 </div>

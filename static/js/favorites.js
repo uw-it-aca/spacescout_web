@@ -20,6 +20,10 @@
 */
 (function(){
 
+    $(document).ready(function () {
+        window.spacescout_favorites.favorites = window.spacescout_favorites_list;
+    });
+
     window.spacescout_favorites = window.spacescout_favorites || {
         k: {
             'favorites_count_container': '.favorites_count_container',
@@ -30,7 +34,7 @@
             'favorites_card_template': '#favorites_card'
         },
 
-        favorites: undefined,
+        favorites: window.spacescout_favorites_list,
 
         update_count: function () {
             var self = this,
@@ -163,6 +167,8 @@
                     container.append(blank);
                 }
 
+                replaceReservationNotesUrls();
+
                 $.event.trigger('favoritesLoaded', [ this.favorites ]);
             }
         },
@@ -206,7 +212,7 @@
                 fav_button.click(function (e) {
                     if (!authenticated_user) {
                         $.cookie('space_set_favorite', JSON.stringify({ id: id }));
-                        window.location.href = '/login?next=' + window.location.pathname;
+                        window.location.href = '/login?next=' + encodeURIComponent(window.location.pathname);
                     }
 
                     window.spacescout_favorites.toggle(id);
@@ -252,7 +258,6 @@
             this.update_count();
             this.update_search_result();
             this.update_cards();
-            replaceReservationNotesUrls();
         },
 
         is_favorite: function (id) {
@@ -373,8 +378,7 @@
                 hour = now.getHours(),
                 minute = now.getMinutes(),
                 day = weekday_from_day(now.getDay()).toLowerCase(),
-                formatted = 'Closed',
-                o, c;
+                formatted = 'Closed';
 
             $('.space-detail-is-closed', card).show();
 
@@ -382,14 +386,16 @@
 
             if (fav.available_hours[day].length > 0) {
                 $.each(fav.available_hours[day], function() {
-                    this[0] = this[0].replace(/^0+/, '');
-                    this[1] = this[1].replace(/^0+/, '');
-                    o = this[0].split(':');
-                    c = this[1].split(':');
+                    var o = this[0].replace(/^0+/, '').split(':'),
+                        c = this[1].replace(/^0+/, '').split(':'),
+                        o_h = o[0].length ? parseInt(o[0]) : 0,
+                        o_m = o[1].length ? parseInt(o[1]) : 0,
+                        c_h = c[0].length ? parseInt(c[0]) : 0,
+                        c_m = c[1].length ? parseInt(c[1]) : 0;
                     
-                    if ((hour > parseInt(o[0]) && hour < parseInt(c[0]))
-                        || (hour == parseInt(o[0]) && minute > parseInt(o[1]))
-                        || (hour == parseInt(c[0]) && minute < parseInt(c[1]))) {
+                    if ((hour > o_h && hour < c_h)
+                        || (hour == o_h && minute > o_m)
+                        || (hour == c_h && minute < c_m)) {
                         $('.space-detail-is-open', card).show();
                         $('.space-detail-is-closed', card).hide();
                     }
@@ -421,7 +427,13 @@
             $(document).on('spaceFavoriteClear', function (e, id) {
                 var container = $('#spot_'+id).closest('.space-detail-container');
 
-                container.hide({ effect: 'fade', duration: 800,  complete: function () { this.remove(); } });
+                container.hide({
+                    effect: 'fade',
+                    duration: 800,
+                    complete: function () {
+                        container.remove();
+                    }
+                });
             });
             
             var bld_code = fav.location.building_name.match(/.*\(([A-Z ]+)\)( [a-zA-Z]+)?$/);

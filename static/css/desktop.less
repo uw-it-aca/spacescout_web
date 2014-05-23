@@ -48,6 +48,7 @@ These styles are in palce for SPOT-494.  Feel free to move things around.
                  padding: 4px 0 6px 12px;
                  width: 120px;
              }
+            #location_select::-ms-expand { display: none; }
          }
 
          .user_context { line-height: 60px; background: transparent; color: #666; clear: none;
@@ -72,7 +73,7 @@ These styles are in palce for SPOT-494.  Feel free to move things around.
 }
 #filter-clear { top: 10px; }
 #filter_container {
-     position:absolute; top:100px; left:0; right:0; margin: 0; z-index: 100;
+     position:absolute; top:106px; left:0; right:0; margin: 0; z-index: 100;
 
      #filter_block { background: rgba(0, 0, 0, 0.9); min-height: 450px;
 
@@ -299,16 +300,6 @@ These styles are in palce for SPOT-494.  Feel free to move things around.
 						
 	                	}
 
-	                	.space-review-rating{
-		                	.space-review-stars{ margin-bottom: 10px;
-		                		.rating-star{
-				                	i{
-				                		font-size: 30px; margin-left: 5px; color: @star-color;
-									}
-		                		}
-		                	}
-		              		span { margin-left: -66px; font-size: 12px; font-style: italic;} 
-	                	}
 	                	.space-review-chars{ float: right; font-size: 12px; }
 	                	textarea{width: 97%;}
 	                	a{font-size: 12px; margin-bottom: 0px;}
@@ -317,6 +308,11 @@ These styles are in palce for SPOT-494.  Feel free to move things around.
 							height: 32px;
 							width: 100px;
 	                	}
+	                	#space-review-submit:disabled {
+                            cursor: not-allowed;
+                            background: none;
+							background-color: #4c497e !important;
+                        }
                         #space-review-submit:hover:disabled {
                             cursor: not-allowed;
                             background: none;

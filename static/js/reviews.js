@@ -26,29 +26,6 @@ window.spacescout_reviews = {
 
 function setupRatingsAndReviews(data) {
 
-    var review_rating_values = {
-        'one-star': {
-            key: gettext('terrible'),
-            val: 1
-        },
-        'two-star': {
-            key: gettext('poor'),
-            val: 2
-        },
-        'three-star': {
-            key: gettext('average'),
-            val: 3
-        },
-        'four-star': {
-            key: gettext('good'),
-            val: 4
-        },
-        'five-star': {
-            key: gettext('excellent'),
-            val: 5
-        }
-    };
-
     $('.space-ratings-and-reviews').html(Handlebars.compile($('#space_reviews').html())());
 
     if (data && data.length) {
@@ -96,15 +73,12 @@ function setupRatingsAndReviews(data) {
 
     $('button#space-review-submit').click(function (e) {
         var id = $(e.target).closest('div[id^=detail_container_]').attr('id').match(/_(\d+)$/)[1],
-            rb_id = $('input[name=star-rating]:checked').prop('id'),
             review = {
-                review: $('.space-review-compose textarea').val().trim()
+                review: $('.space-review-compose textarea').val().trim(),
+                rating: parseInt($('input[name=star-rating]:checked').val())
             };
 
-        debugger
-        if (review_rating_values.hasOwnProperty(rb_id)) {
-            review.rating = review_rating_values[rb_id].val;
-        } else {
+        if (!review.rating) {
             return;
         }
 
@@ -127,15 +101,28 @@ function setupRatingsAndReviews(data) {
         }
     });
 
-    $(document).on('click', 'a.rating-star', function (e) {
-        var target = $(e.currentTarget),
-            rb_id = target.prop('id').match(/^([a-z]+-star)-link$/)[1];
+    $("input[name=star-rating]").change(function (e) {
+        var target = $(e.target),
+            rating = parseInt(target.val()),
+            rating_names = [
+                gettext('terrible'),
+                gettext('poor'),
+                gettext('average'),
+                gettext('good'),
+                gettext('excellent')
+            ];
+        
+        target.closest('ol').find('li input').each(function () {
+            var t = $(this);
 
-        $('#' + rb_id).prop('checked', true);
-        target.parent().prevAll('.space-review-stars').find('i').switchClass('fa-star-o', 'fa-star');
-        target.find('i').switchClass('fa-star-o', 'fa-star');
-        target.parent().nextAll('.space-review-stars').find('i').switchClass('fa-star', 'fa-star-o');
-        $('.space-review-compose .space-review-rating span').html(review_rating_values[rb_id].key);
+            if (t.val() > rating) {
+                t.next().find('i').switchClass('fa-star', 'fa-star-o');
+            } else {
+                t.next().find('i').switchClass('fa-star-o', 'fa-star');
+            }
+        });
+
+        $('.space-review-compose .space-review-rating span').html(rating_names[rating - 1]);
         if ($('.space-review-compose textarea').val().length) {
             enableSubmitButton();
         }
@@ -244,13 +231,16 @@ function loadRatingsAndReviews(id, review_container, rating_container) {
                     review_container.append(node);
 
                     $('.more-space-reviews a').on('click', function (e) {
-                        $('.space-reviews-review:hidden').each(function (i) {
+                        var container = $(this).closest('.space-ratings-and-reviews'),
+                            hidden = $('.space-reviews-review:hidden', container);
+
+                        hidden.each(function (i) {
                             if (i < window.spacescout_reviews.pagination) {
                                 $(this).slideDown(400);
                             }
                         });
 
-                        if ($('.space-reviews-review:hidden').length <= 0) {
+                        if (hidden.length <= window.spacescout_reviews.pagination) {
                             $(this).parent().hide();
                         }
                     });
@@ -358,12 +348,12 @@ function tidyUpRatesComposer () {
     disableSubmitButton();
     hideReviewGuidelines();
     $('input[name=star-rating]:checked').prop('checked', false);
+    $('input[name=star-rating]').next().find('i').switchClass('fa-star', 'fa-star-o');
     $('textarea', node).val('');
     $('.space-review-rating span', node).html('');
     $('#space-review-remaining').html(window.spacescout_reviews.review_char_limit);
     $('#space-review-remaining').removeClass('required');
     $('.space-review-rating div + div span', node).removeClass('required');
-    $('a.rating-star i', node).switchClass('fa-star', 'fa-star-o');
 }
 
 function showRatingEditorButton () {
@@ -386,16 +376,19 @@ function disableSubmitButton () {
 
 
 function showReviewGuidelines () {
-    var ul = $('.space-review-compose ul');
+    var link = $('#review_guidelines');
 
-    ul.show();
-    ul.prev().find('i').switchClass('fa-angle-double-down', 'fa-angle-double-up');
+    link.next().show();
+    link.attr('title', 'Click to hide review guidelines');
+    $('i', link).switchClass('fa-angle-double-down', 'fa-angle-double-up');
+
 }
 
 
 function hideReviewGuidelines () {
-    var ul = $('.space-review-compose ul');
+    var link = $('#review_guidelines');
 
-    ul.hide();
-    ul.prev().find('i').switchClass('fa-angle-double-up', 'fa-angle-double-down');
+    link.next().hide();
+    link.attr('title', 'Click to see review guidelines');
+    $('i', link).switchClass('fa-angle-double-up', 'fa-angle-double-down');
 };

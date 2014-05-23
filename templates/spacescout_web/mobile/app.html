@@ -52,6 +52,7 @@
     window.spacescout_csrf_token = '{{ csrf_token }}';
     window.spacescout_authenticated_user = '{{ username }}';
     window.spacescout_referrer = '{{ back }}';
+    window.spacescout_favorites_list = {{ favorites_json|safe }};
     $.ajaxSetup({
         headers: { "X-CSRFToken": '{{ csrf_token }}' }
     });
@@ -74,7 +75,7 @@
             </div>
             <div class="location_container">
                 {% ifnotequal locations|length 1 %}
-                <span role="navigation" aria-labelledby="location_select_heading">
+                <span aria-labelledby="location_select_heading">
                 <label id="location_select_heading" for="location_select"  class="visuallyhidden">Select campus:</label>
                 <select id='location_select'>
                     {% for key, value in locations.items %}
@@ -101,7 +102,7 @@
         <!-- -->
         <div class="filter_context" role="search" aria-labelledby="filter_group_header">
           <h2 id="filter_group_header" class="visuallyhidden">Find Study Spaces by Specific Criteria</h2>
-          <button id="filter_button" class="btn" type="button" aria-label="Filter settings..." aria-owns="filter_container" >{%trans 'filters' %}<i class="fa fa-angle-double-down"></i></button>
+          <button id="filter_button" type="button" aria-label="Filter settings..." aria-owns="filter_container" >{%trans 'filters' %}<i class="fa fa-angle-double-down"></i></button>
 
           <h3 id="spaces_match_header" class="visuallyhidden">Your current filters return:</h3>
 
@@ -292,8 +293,8 @@
         <h1 class="visuallyhidden">SPACESCOUT&trade;</h1>
 
 		<div class="back-link">
-			<img id="back_home_button" class="back-button" src="{% static 'img/details_arrow.png' %}" />
-			Back to Space list
+			<a id="back_home_button" href="javascript:void(0);"><img class="back-button" src="{% static 'img/details_arrow.png' %}" />
+			Back to Space list</a>
 		</div>
 		
         <div id="name-type-block" class="pull-left">

@@ -55,7 +55,7 @@ Handlebars.registerHelper('ifany', function(a, b) {
 
             node.addClass('tokenfield');
             node.tokenfield({
-                delimiter: [',', '\t'],
+                delimiter: [',', '\t', ' '],
                 createTokensOnBlur: true,
                 typeahead: [null, {
                     displayKey: 'email',
@@ -94,6 +94,8 @@ Handlebars.registerHelper('ifany', function(a, b) {
             var block = $("#filter_block");
 
             if (block.css('display') == 'none') {
+                get_location_buildings();
+
                 // reflect current filter
                 if (window.hasOwnProperty('spacescout_search_options')) {
                     clear_filter();
@@ -166,6 +168,12 @@ Handlebars.registerHelper('ifany', function(a, b) {
 
         $(document).on('searchResultsLoaded', function (e, data) {
             $('#space_count_container .count').html(data.count);
+        });
+
+        $('a span.favorites_count_container').parent().click(function (e) {
+            e.preventDefault();
+            window.location.href = '/favorites'
+                + '?back=' + encodeURIComponent(window.location.pathname);
         });
 	});
 

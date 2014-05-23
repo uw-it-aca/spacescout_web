@@ -76,31 +76,19 @@ def HomeView(request, template=None):
 
     consumer = oauth2.Consumer(key=settings.SS_WEB_OAUTH_KEY, secret=settings.SS_WEB_OAUTH_SECRET)
     client = oauth2.Client(consumer)
+    headers = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+        }
 
-    # log shared space references
-    m = re.match(r'^/space/(\d+)/.*/([a-f0-9]{32})$', request.path)
-    if m:
-        try:
-            url = "{0}/api/v1/spot/{1}/shared".format(settings.SS_WEB_SERVER_HOST, m.group(1))
+    if request.user and request.user.is_authenticated():
+        headers["XOAUTH_USER"] = "%s" % request.user.username
 
-            headers = {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            }
+    log_shared_space_reference(request, headers, client)
 
-            if request.user and request.user.is_authenticated():
-                headers["XOAUTH_USER"] = "%s" % request.user.username
-
-            resp, content = client.request(url,
-                                           method='PUT',
-                                           body=json.dumps({ 'hash': m.group(2) }),
-                                           headers=headers)
-
-            # best effort, ignore response
-        except:
-            pass
-        
     buildings = json.loads(get_building_json(client))
+
+    favorites_json = get_favorites_json(headers, client)
 
     # This could probably be a template tag, but didn't seem worth it for one-time use
     #TODO: hey, actually it's probably going to be a Handlebars helper and template
@@ -125,6 +113,7 @@ def HomeView(request, template=None):
         'by_distance_ratio': by_distance_ratio,
         'buildingdict': buildingdict,
         'spaces': spaces,
+        'favorites_json': favorites_json,
     }
 
     return render_to_response(template, params, context_instance=RequestContext(request))
@@ -253,3 +242,32 @@ def get_building_json(client):
         return content
 
     return '[]'
+
+
+#TODO: use the favorites view instead
+def get_favorites_json(headers, client):
+    url = "{0}/api/v1/user/me/favorites".format(settings.SS_WEB_SERVER_HOST)
+
+    resp, content = client.request(url, method='GET', headers=headers)
+
+    if resp.status == 200:
+        return content
+
+    return '[]'
+
+
+def log_shared_space_reference(request, headers, client):
+    # log shared space references
+    m = re.match(r'^/space/(\d+)/.*/([a-f0-9]{32})$', request.path)
+    if m:
+        try:
+            url = "{0}/api/v1/spot/{1}/shared".format(settings.SS_WEB_SERVER_HOST, m.group(1))
+
+            resp, content = client.request(url,
+                                           method='PUT',
+                                           body=json.dumps({ 'hash': m.group(2) }),
+                                           headers=headers)
+
+            # best effort, ignore response
+        except:
+            pass
