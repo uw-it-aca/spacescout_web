@@ -417,7 +417,16 @@
                 var ul = $(e.target).closest('ul'),
                     reviews = $('.space-reviews-review', ul);
                 
-                ul.slideUp('fast');
+                ul.slideUp('fast', function () {
+                    var top = card.offset().top,
+                        scrolltop = $(document).scrollTop();
+
+                    if (top < scrolltop) {
+                        $('html,body').animate({
+                            scrollTop: top
+                        }, 400, 'swing');
+                    }
+                });
                 ul.prev().slideDown('fast');
                 
                 if (reviews.length > window.spacescout_reviews.pagination) {
