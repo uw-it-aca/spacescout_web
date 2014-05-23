@@ -414,10 +414,21 @@
             });
             
             $('.space-info-less-detail a', card).click(function (e) {
-                var ul = $(e.target).closest('ul');
+                var ul = $(e.target).closest('ul'),
+                    reviews = $('.space-reviews-review', ul);
                 
                 ul.slideUp('fast');
                 ul.prev().slideDown('fast');
+                
+                if (reviews.length > window.spacescout_reviews.pagination) {
+                    reviews.each(function (i) {
+                        if (i >= window.spacescout_reviews.pagination) {
+                            $(this).hide();
+                        }
+                    });
+
+                    $('.more-space-reviews', ul).show();
+                }
             });
             
             $('.space-detail-fav', card).click(function (e) {
