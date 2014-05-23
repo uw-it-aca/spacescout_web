@@ -696,6 +696,12 @@ function fetch_data() {
         }
     }
 
+    // implicitly filter on selected campus
+    var location = $('#location_select option:selected');
+    if (location.length) {
+        url_args.push("extended_info:campus=", encodeURIComponent(location.val().split(',')[2]), '&');
+    }
+
     url_args.pop();
 
     var query = url_args.join("");
