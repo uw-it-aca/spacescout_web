@@ -15,7 +15,7 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from spacescout_web.forms.share import ShareForm
 from django.conf import settings
 from django.utils.http import urlquote
@@ -104,7 +104,10 @@ def share(request, spot_id=None):
             share_text.append(spot['extended_info']['location_description'])
 
     except SpotException:
-        share_text = ['Unrecognized Spot']
+        return render_to_response('spacescout_web/share-sorry.html', {
+                    'problem': 'Sorry, but the space you wish to share does not exist.',
+                    'back': back,
+                }, context_instance=RequestContext(request))
 
     share_url = 'http://%s/space/%s/%s' % (getattr(settings, 'SS_APP_SERVER', socket.gethostname()),
                                            spot_id, urlquote(spot["name"]))
