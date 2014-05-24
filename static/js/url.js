@@ -71,6 +71,7 @@
 
         push: function (id) {
             var url = [''],
+                path,
                 campus = window.default_location,
                 search = this.encode_current_search();
 
@@ -84,9 +85,13 @@
                 url.push(id);
             }
 
-            history.pushState({ campus: campus, search: search, id: id, local_path: '' },
-                              '',
-                              url.join('/'));
+            path = url.join('/');
+
+            // only push fresh references
+            if (decodeURIComponent(window.location.pathname) != path) {
+                history.pushState({ campus: campus, search: search, id: id, local_path: '' },
+                                  '', path);
+            }
         },
 
         replace: function (id) {
