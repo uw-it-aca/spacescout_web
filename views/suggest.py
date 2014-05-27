@@ -18,12 +18,14 @@ from django.http import HttpResponseRedirect
 from spacescout_web.forms.suggest import SuggestForm
 from django.core.mail import send_mail
 from django.conf import settings
+from spacescout_web.views.contact import validate_back_link
 
 
 def suggest(request, spot_id=None):
     if request.method == 'POST':
         form = SuggestForm(request.POST)
-        back = request.POST['back'] if 'back' in request.POST else '/'
+        back = request.POST['back'] if 'back' in request.POST \
+                and not validate_back_link(request.POST['back']) else '/'
         if form.is_valid():
             name = form.cleaned_data['name']
             netid = form.cleaned_data['netid']
@@ -55,9 +57,13 @@ def suggest(request, spot_id=None):
                     send_mail(subject, email_message, sender, settings.FEEDBACK_EMAIL_RECIPIENT)
                 except:
                     return HttpResponseRedirect('/sorry/')
+
+
             return HttpResponseRedirect('/thankyou/')
     else:
-        back = request.GET['back'] if 'back' in request.POST else '/'
+        back = request.GET['back'] if request.GET and 'back' in request.GET \
+            and not validate_back_link(request.GET['back']) else '/'
+
         form = SuggestForm()
 
     return render_to_response('spacescout_web/suggest-form.html', {

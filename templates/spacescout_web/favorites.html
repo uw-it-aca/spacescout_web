@@ -12,6 +12,11 @@
 
 {% block extra_js %}
 <script type="text/javascript">
+    var campus = '{{back}}'.match(/^\/([a-zA-Z]*)(|\/.*)$/)
+    if (campus && campus[1]) {
+        $('#location_select option[value*='+ campus[1].toLowerCase() + ']').attr('selected', 'selected');
+    }
+
     window.spacescout_referrer = '{{ back }}';
     $.ajaxSetup({
         headers: { "X-CSRFToken": '{{ csrf_token }}' }

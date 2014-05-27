@@ -21,6 +21,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 import simplejson as json
 import urllib2
+import re
 
 def contact(request, spot_id=None):
     contact_variables = _contact_variables(request, spot_id)
@@ -55,6 +56,7 @@ def contact(request, spot_id=None):
                     send_mail(subject, email_message, sender, settings.FEEDBACK_EMAIL_RECIPIENT)
                 except:
                     return HttpResponseRedirect('/sorry/' + spot_id)
+
             return HttpResponseRedirect('/thankyou/' + spot_id)
     else:
         form = ContactForm()
@@ -71,7 +73,10 @@ def contact(request, spot_id=None):
 def thank_you(request, spot_id=None):
     contact_variables = _contact_variables(request, spot_id)
 
-    back = request.GET['back'] if request.GET and 'back' in request.GET else contact_variables['back']
+    if request.GET and 'back' in request.GET and not validate_back_link(request.GET['back']):
+        back = request.GET['back']
+    else:
+        back = contact_variables['back']
 
     return render_to_response('spacescout_web/contact-thankyou.html', {
         'spot_id': spot_id,
@@ -124,3 +129,7 @@ def _contact_variables(request, spot_id):
         'is_mobile': is_mobile,
         'back': back
     }
+
+
+def validate_back_link(back):
+    return re.match(r'^(/{2,}|/\.)', back)

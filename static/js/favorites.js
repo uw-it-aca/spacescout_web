@@ -86,7 +86,7 @@
         update_cards: function () {
             var container = $(this.k.favorites_card_container),
                 campuses = {}, campus,
-                source, template, i, j, node, opts, n, blank,
+                source, template, i, j, n, blank, campus_select, opts,
                 self = this,
                 insert_card = function (i, space) {
                     var spot = $('spot_' + space.id),
@@ -141,12 +141,15 @@
                 });
 
                 blank = Handlebars.compile($('#blank_card').html())();
+                campus_select = $('#location_select');
 
-                if (campuses && Object.keys(campuses).length > 1) {
+                if (campuses && Object.keys(campuses).length > 0
+                    && (Object.keys(campuses).length > 1
+                        || !campuses.hasOwnProperty($('option:selected', campus_select).val().split(',')[2]))) {
                     template = Handlebars.compile($('#campus_label').html());
-                    node = $('#location_select');
-                    opts = node.find('option');
-                    i = node.prop('selectedIndex');
+
+                    opts = $('option', campus_select);
+                    i = campus_select.prop('selectedIndex');
 
                     for (j = 0; j < opts.size(); j += 1) {
                         campus = $(opts[i]).val().split(',')[2];

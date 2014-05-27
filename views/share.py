@@ -20,6 +20,7 @@ from spacescout_web.forms.share import ShareForm
 from django.conf import settings
 from django.utils.http import urlquote
 from spacescout_web.spot import Spot, SpotException
+from spacescout_web.views.contact import validate_back_link
 import oauth2
 import socket
 import simplejson as json
@@ -28,7 +29,8 @@ import simplejson as json
 def share(request, spot_id=None):
     if request.method == 'POST':
         form = ShareForm(request.POST)
-        back = request.POST['back'] if 'back' in request.POST else '/'
+        back = request.POST['back'] if 'back' in request.POST \
+            and not validate_back_link(request.POST['back']) else '/'
         if form.is_valid():
             spot_id = form.cleaned_data['spot_id']
             back = form.cleaned_data['back']
@@ -66,7 +68,9 @@ def share(request, spot_id=None):
 
             return HttpResponseRedirect('/share/thankyou/?back=' + urlquote(back))
     else:
-        back = request.GET['back'] if request.GET and 'back' in request.GET else '/'
+        # mask user from silliness
+        back = request.GET['back'] if request.GET and 'back' in request.GET \
+            and not validate_back_link(request.GET['back']) else '/'
         if request.user and request.user.is_authenticated():
             consumer = oauth2.Consumer(key=settings.SS_WEB_OAUTH_KEY, secret=settings.SS_WEB_OAUTH_SECRET)
             client = oauth2.Client(consumer)
@@ -126,7 +130,8 @@ def share(request, spot_id=None):
 def thank_you(request, spot_id=None):
     share_variables = _share_variables(request, spot_id)
 
-    back = request.GET['back'] if request.GET and 'back' in request.GET else share_variables['back']
+    back = request.GET['back'] if request.GET and 'back' in request.GET \
+        and not validate_back_link(request.GET['back']) else share_variables['back']
 
     return render_to_response('spacescout_web/share-thankyou.html', {
         'spot_id': spot_id,
