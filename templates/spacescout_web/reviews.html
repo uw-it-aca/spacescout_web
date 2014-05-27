@@ -78,13 +78,33 @@
 	      <i class="fa fa-star-o fa-lg"></i>
 	      <i class="fa fa-star-o fa-lg"></i>
         </span>
-        <span id="space-rating-text" class="visuallyhidden">{{ verbiage }}</span>
+        <span id="space-rating-text" class="visuallyhidden">{{ rating_description }}</span>
         <span>By <strong>{{ reviewer }}</strong> <span id="review-date" class="visuallyhidden">on</span> - {{ date }}</span>
       </div>
       <div class="space-review-body">
         {{ review }}
       </div>
     </li>
+{% endtplhandlebars %}
+
+{% tplhandlebars "rating_description_one_star" %}
+Rated as a one star, {% trans "terrible" %}
+{% endtplhandlebars %}
+
+{% tplhandlebars "rating_description_two_star" %}
+Rated as a two star, {% trans "poor" %}
+{% endtplhandlebars %}
+
+{% tplhandlebars "rating_description_three_star" %}
+Rated as a three star, {% trans "average" %}
+{% endtplhandlebars %}
+
+{% tplhandlebars "rating_description_four_star" %}
+Rated as a four star, {% trans "good" %}
+{% endtplhandlebars %}
+
+{% tplhandlebars "rating_description_five_star" %}
+Rated as a five star, {% trans "excellent" %}
 {% endtplhandlebars %}
 
 {% tplhandlebars "space_reviews_count" %}

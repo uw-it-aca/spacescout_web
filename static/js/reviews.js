@@ -180,7 +180,14 @@ function loadRatingsAndReviews(id, review_container, rating_container) {
                 rating_sum = 0,
                 total_reviews = (data && data.length) ? data.length : 0,
                 html_count = Handlebars.compile($('#space_reviews_count').html())({ count : total_reviews }),
-                node;
+                node,
+                rating_descriptions = [
+                    Handlebars.compile($('#rating_description_one_star').html())({}),
+                    Handlebars.compile($('#rating_description_two_star').html())({}),
+                    Handlebars.compile($('#rating_description_three_star').html())({}),
+                    Handlebars.compile($('#rating_description_four_star').html())({}),
+                    Handlebars.compile($('#rating_description_five_star').html())({})
+                ];
 
             review_container.html('');
 
@@ -195,18 +202,11 @@ function loadRatingsAndReviews(id, review_container, rating_container) {
                 $.each(data, function(i) {
                     var review = this,
                         rating = this.rating,
-                        date = new Date(this.date_submitted),
-                        verbiage = [
-                            'Rated as a ' + gettext('one') + ' star, ' + gettext('terrible'),
-                            'Rated as a ' + gettext('two') + ' star, ' + gettext('poor'),
-                            'Rated as a ' + gettext('three') + ' star, ' + gettext('average'),
-                            'Rated as a ' + gettext('four') + ' star, ' + gettext('good'),
-                            'Rated as a ' + gettext('five') + ' star, ' + gettext('excellent')
-                        ];                            
+                        date = new Date(this.date_submitted);
 
                     node = $(template({
                         reviewer: this.reviewer,
-                        verbiage: verbiage[rating - 1],
+                        rating_description: rating_descriptions[rating - 1],
                         review: (this.review && this.review.length) ? this.review : 'No review provided',
                         date: date ? monthname_from_month(date.getMonth()) + ' ' + date.getDate() + ', ' + date.getFullYear() : ''
                     }));
