@@ -343,7 +343,7 @@
 
                                 <button id="{{id}}" class="space-detail-list-item pull-left" type="button" aria-label="Get space details for {{name}}" aria-owns="detail_container_{{id}}">
                                     <div class="space-detail-type clearfix">
-                                    	<span class="space-detail-type-label pull-left">{{type}}</span>
+                                    	<span class="space-detail-type-label pull-left">{{{type}}}</span>
                                         {{#if extended_info.labstats_id}}
                                             {{#if extended_info.auto_labstats_total}}
                                                 {{#compare extended_info.auto_labstats_total 0 operator="!="}}
@@ -393,7 +393,7 @@
                                 </div>
                                 <button  id="{{id}}" class="space-detail-list-item pull-left" type="button" aria-label="Get space details for {{name}}" aria-owns="detail_container_{{id}}">
                                     <div class="space-detail-type clearfix">
-                                    	<span class="space-detail-type-label pull-left">{{type}}</span>
+                                    	<span class="space-detail-type-label pull-left">{{{type}}}</span>
                                         {{#if extended_info.labstats_id}}
                                             {{#if extended_info.auto_labstats_total}}
                                                 {{#compare extended_info.auto_labstats_total 0 operator="!="}}

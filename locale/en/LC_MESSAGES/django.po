@@ -27,7 +27,7 @@ msgstr "Café"
 
 #: extras/uw_server_values.py:7 templates/filters.html:27
 msgid "classroom"
-msgstr "Conference/classroom"
+msgstr "Conference/<wbr><a class=wbr></a>classroom"
 
 #: extras/uw_server_values.py:8 templates/filters.html:19
 msgid "computer_lab"
