@@ -417,7 +417,8 @@ function reset_location_filter() {
             run_custom_search();
 
             window.update_count = true;
-            $.cookie('default_location', $(this).val());
+
+            $.cookie('default_location', $(this).val(), { path: '/' });
             reset_location_filter();
             window.spacescout_url.replace();
         });

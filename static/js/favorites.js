@@ -85,7 +85,7 @@
 
         update_cards: function () {
             var container = $(this.k.favorites_card_container),
-                campuses = {}, campus,
+                campuses = {}, campus, campus_name,
                 source, template, i, j, n, blank, campus_select, opts,
                 self = this,
                 insert_card = function (i, space) {
@@ -140,7 +140,7 @@
                     }
                 });
 
-                blank = Handlebars.compile($('#blank_card').html())();
+                blank = Handlebars.compile($('#blank_card').html())({ back: window.spacescout_referrer });
                 campus_select = $('#location_select');
 
                 if (campuses && Object.keys(campuses).length > 0
@@ -153,17 +153,19 @@
 
                     for (j = 0; j < opts.size(); j += 1) {
                         campus = $(opts[i]).val().split(',')[2];
+                        campus_name = opts[i].innerHTML;
                         i = ((i + 1) % opts.size());
 
+                        container.append(template({ campus: campus_name + ' Campus' }));
+
                         if (campuses.hasOwnProperty(campus)) {
-                            container.append(template({ campus: campus.charAt(0).toUpperCase() + campus.slice(1) + ' Campus' }));
                             $.each(campuses[campus], insert_card);
-                            if (blank) {
-                                container.append(blank);
-                                blank = null;
-                            }
                         }
 
+                        if (blank) {
+                            container.append(blank);
+                            blank = null;
+                        }
                     }
                 } else {
                     $.each(this.favorites, insert_card);
