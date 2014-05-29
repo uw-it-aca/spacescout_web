@@ -111,6 +111,10 @@ Rating: 5 out of 5 stars.
 ({{ count }})
 {% endtplhandlebars %}
 
+{% tplhandlebars "space_average_rating" %}
+Out of {{ total }} review{{ total_plural }}, the average rating is {{ decimal }} {{ fraction }} star{{ star_plural }} out of five
+{% endtplhandlebars %}
+
 {% tplhandlebars "more_space_reviews" %}
     <li class="more-space-reviews">
       <a href="javascript:void(0);" title="Click to see more reviews"><i class="fa fa-angle-double-down"></i> See more reviews</a>

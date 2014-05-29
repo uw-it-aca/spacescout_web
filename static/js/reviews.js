@@ -250,9 +250,10 @@ function loadRatingsAndReviews(id, review_container, rating_container) {
                     var avg = rating_sum / data.length,
                         dec = Math.floor(avg),
                         frac = avg % 1,
+                        frac_string,
                         number = ['', gettext('one'), gettext('two'),
                                   gettext('three'), gettext('four'), gettext('five')],
-                        verbiage = 'Out of ' + data.length + ' reviews, the average rating is ' + number[dec];
+                        rating_template = Handlebars.compile($('#space_average_rating').html());
 
                     $('i', rating_container).each(function(i) {
                         if (i < dec) {
@@ -266,15 +267,13 @@ function loadRatingsAndReviews(id, review_container, rating_container) {
                         }
                     });
 
-                    if (frac > 0 && frac <= .5) {
-                        verbiage += ' and one half stars';
-                    } else if (dec > 1) {
-                        verbiage += ' stars';
-                    } else {
-                        verbiage += ' star';
-                    }
-                    
-                    $('#space-average-rating-text', rating_container).html(verbiage + ' out of five');
+                    $('#space-average-rating-text', rating_container).html(rating_template({
+                        total: data.length,
+                        total_plural: (data.length > 1) ? 's' : '',
+                        decimal: number[dec],
+                        fraction: (frac > 0 && frac <= .5) ? gettext(' and one half') : '',
+                        star_plural: (dec > 1 || (frac > 0 && frac <= .5)) ? 's' : ''
+                    }));
                 }
 
                 $('.write-a-review').attr('title', gettext('write_review_for')
