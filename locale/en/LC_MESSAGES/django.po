@@ -186,4 +186,4 @@ msgstr "Log in"
 
 #: templates/reviews.html:293
 msgid " and one half"
-msgstr " and one half"
+msgstr " and a half"
