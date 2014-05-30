@@ -51,7 +51,7 @@
         <div id="name-type-block" class="pull-left">
           {% if user.is_authenticated %}<div class="space-detail-fav space-detail-fav-unset pull-left"><i class="fa fa-heart"></i></div>{% endif %}
           <h2 class="space-detail-name" style=""><span class="visuallyhidden">Space Details:</span> {{name}}</h2>
-      	  <div class="space-detail-type">{{ type }} {% if capacity %}<span class="space-detail-capacity">[Seats&nbsp;{{capacity}}]</span>{% endif %}</div>
+      	  <div class="space-detail-type">{{{ type }}} {% if capacity %}<span class="space-detail-capacity">[Seats&nbsp;{{capacity}}]</span>{% endif %}</div>
         </div>
     </div>
 
