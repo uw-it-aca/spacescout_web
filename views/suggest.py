@@ -71,3 +71,12 @@ def suggest(request, spot_id=None):
         'back': back,
         'is_mobile': (request.MOBILE == 1),
     }, context_instance=RequestContext(request))
+
+
+def thank_you(request, spot_id=None):
+    back = request.GET['back'] if request.GET and 'back' in request.GET \
+        and not validate_back_link(request.GET['back']) else '/'
+
+    return render_to_response('spacescout_web/suggest-thankyou.html', {
+        'back': back,
+    }, context_instance=RequestContext(request))

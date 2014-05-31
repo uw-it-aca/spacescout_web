@@ -272,7 +272,7 @@ function loadRatingsAndReviews(id, review_container, rating_container) {
                         total_plural: (data.length > 1) ? 's' : '',
                         decimal: number[dec],
                         fraction: (frac > 5) ? '' : gettext(' and one half'),
-                        star_plural: (dec > 1 || frac <= 5) ? '' : 's'
+                        star_plural: (dec > 1 || frac <= 5) ? 's' : ''
                     }));
                 }
 
