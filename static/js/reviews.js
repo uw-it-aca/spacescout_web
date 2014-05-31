@@ -249,7 +249,7 @@ function loadRatingsAndReviews(id, review_container, rating_container) {
                 if (rating_sum) {
                     var avg = rating_sum / data.length,
                         dec = Math.floor(avg),
-                        frac = avg % 1,
+                        frac = Math.floor((avg % 1)*10),
                         frac_string,
                         number = ['', gettext('one'), gettext('two'),
                                   gettext('three'), gettext('four'), gettext('five')],
@@ -259,7 +259,7 @@ function loadRatingsAndReviews(id, review_container, rating_container) {
                         if (i < dec) {
                             $(this).switchClass('fa-star-o', 'fa-star');
                         } else if (i == dec && frac > 0) {
-                            if (frac > 0.5) {
+                            if (frac > 5) {
                                 $(this).switchClass('fa-star-o', 'fa-star');
                             } else {
                                 $(this).switchClass('fa-star-o', 'fa-star-half-o');
@@ -271,8 +271,8 @@ function loadRatingsAndReviews(id, review_container, rating_container) {
                         total: data.length,
                         total_plural: (data.length > 1) ? 's' : '',
                         decimal: number[dec],
-                        fraction: (frac > 0 && frac <= .5) ? gettext(' and one half') : '',
-                        star_plural: (dec > 1 || (frac > 0 && frac <= .5)) ? 's' : ''
+                        fraction: (frac > 5) ? '' : gettext(' and one half'),
+                        star_plural: (dec > 1 || frac <= 5) ? '' : 's'
                     }));
                 }
 
