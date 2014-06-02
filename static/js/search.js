@@ -340,20 +340,21 @@ function run_custom_search() {
     // hours
     if ($("#hours_list_input").prop("checked")) {
         if ($('#day-from').val() != 'nopref') {
-            var from_query = new Array;
+            var from_query = new Array,
+                hour_from = $('#hour-from').val();
+
             from_query.push($('#day-from').val());
-            if ($('#hour-from').val() != 'nopref') {
-                var time = $('#hour-from').val();
-                var hour = time.split(':')[0];
-                var min = time.split(':')[1];
+            if (hour_from && hour_from != 'nopref') {
+                var hour = hour_from.split(':')[0];
+                var min = hour_from.split(':')[1];
                 if ($('#ampm-from').val() == 'PM' && hour != 12) {
                     hour = Number(hour) + 12;
-                    time = hour+':'+min;
+                    hour_from = hour+':'+min;
                 } else if ($('#ampm-from').val() == 'AM' && hour == 12) {
                     hour = 0;
-                    time = hour+':'+min;
+                    hour_from = hour+':'+min;
                 }
-                from_query.push(time);
+                from_query.push(hour_from);
             } else {
                 from_query.push('00:00');
             }
@@ -361,20 +362,21 @@ function run_custom_search() {
         }
 
         if ($('#day-from').val() != 'nopref' && $('#day-until').val() != 'nopref') {
-            var until_query = new Array;
+            var until_query = new Array,
+                hour_until = $('#hour-until').val();
+
             until_query.push($('#day-until').val());
-            if ($('#hour-until').val() != 'nopref') {
-                var time = $('#hour-until').val();
-                var hour = time.split(':')[0];
-                var min = time.split(':')[1];
+            if (hour_until && hour_until != 'nopref') {
+                var hour = hour_until.split(':')[0];
+                var min = hour_until.split(':')[1];
                 if ($('#ampm-until').val() == 'PM' && hour != 12) {
                     hour = Number(hour) + 12;
-                    time = hour+':'+min;
+                    hour_until = hour+':'+min;
                 } else if ($('#ampm-until').val() == 'AM' && hour == 12) {
                     hour = 0;
-                    time = hour+':'+min;
+                    hour_until = hour+':'+min;
                 }
-                until_query.push(time);
+                until_query.push(hour_until);
             } else {
                 until_query.push('23:59');
             }
