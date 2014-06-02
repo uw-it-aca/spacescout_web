@@ -460,7 +460,7 @@
                     }
                 });
             });
-            
+
             var bld_code = fav.location.building_name.match(/.*\(([A-Z ]+)\)( [a-zA-Z]+)?$/);
             if (bld_code) {
                 $('.space-detail-building', card).html(bld_code[1] + (bld_code[2] ? bld_code[2] : ''));
@@ -518,6 +518,20 @@
                 
                 $(window.location.hash).parent().find('.space-info-more-detail a').click();
             }
+
+            $('.space-detail-fav-button').hover(function() {
+                $(this).addClass('space-detail-fav-button-active');
+            }, function () {
+                $(this).removeClass('space-detail-fav-button-active');
+            });
+
+            $('.space-detail-fav-button').focus(function() {
+                $(this).addClass('space-detail-fav-button-active');
+            });
+
+            $('.space-detail-fav-button').blur(function() {
+                $(this).removeClass('space-detail-fav-button-active');
+            });
         });
 
         $('#back_link').click(function (e) {
