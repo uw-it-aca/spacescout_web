@@ -250,12 +250,12 @@
                 terms = raw ? raw.split('|') : [];
 
             $.each(terms, function () {
-                var m = this.match(/^([^:]+):(.*)$/),
+                var m = this.match(/^([^:]+)(:(.*))?$/),
                     v;
 
                 if (!m) return;
 
-                v = m[2];
+                v = m[3];
                 switch (m[1]) {
                 case 'type':
                     opts['type'] = [];
