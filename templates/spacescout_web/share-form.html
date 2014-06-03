@@ -36,7 +36,7 @@
                 <div class="infoWrapper fieldWrapper">
                   <p>Your email message will include the following:</p>
                   {% for text in share_text %}
-                  {{ text }}<br />
+                  {{ text|safe }}<br />
                   {% endfor %}
                   <a href="{{ share_url }}" target="_blank">{{ share_url }}</a>
                 </div>
