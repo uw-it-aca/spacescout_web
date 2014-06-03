@@ -1,5 +1,7 @@
 {% extends "spacescout_web/share.html" %}
 
 {% block share-content %}
-    <h2  class="contact-header">{{ problem }}</h2>
+    <h2  class="share-header">
+      {% if problem %}{{ problem }}{% else %}Sorry, but we are currently unable to share this space{% endif %}
+    </h2>
 {% endblock %}

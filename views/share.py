@@ -64,7 +64,7 @@ def share(request, spot_id=None):
                                            headers=headers)
 
             if not (resp.status == 200 or resp.status == 201):
-                return HttpResponseRedirect('/sorry/')
+                return HttpResponseRedirect('/share/sorry/')
 
             return HttpResponseRedirect('/share/thankyou/?back=' + urlquote(back))
     else:
@@ -136,6 +136,16 @@ def thank_you(request, spot_id=None):
     return render_to_response('spacescout_web/share-thankyou.html', {
         'spot_id': spot_id,
         'back': back,
+    }, context_instance=RequestContext(request))
+
+
+def sorry(request, spot_id=None):
+    share_variables = _share_variables(request, spot_id)
+
+    return render_to_response('spacescout_web/share-sorry.html', {
+            'problem': None,
+            'back': request.GET['back'] if request.GET and 'back' in request.GET \
+                and not validate_back_link(request.GET['back']) else share_variables['back']
     }, context_instance=RequestContext(request))
 
 
