@@ -17,3 +17,46 @@ SpaceScout is a project from the University of Washington.
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   See the License for the specific language governing permissions and
   limitations under the License.
+
+/*** Settings ***/
+
+SS_LOCATIONS = { 
+    'location name': {
+        'NAME': ''
+        'CENTER_LATITUDE': '' 
+        'CENTER_LONGITUDE': ''
+        'ZOOM_LEVEL': ''
+    },  
+}
+
+SS_DEFAULT_LOCATION = ''
+
+# Value should be a boolean
+SHOW_IOS_SMART_BANNER = 
+
+# This is the list of zoom levels for which the spaces are clustered by building on the map.  An empty list means no building clustering
+SS_BUILDING_CLUSTERING_ZOOM_LEVELS = []
+
+# The ratio (distance between spaces / diagonal distance visible on map) below which spaces will cluster
+# together on the map when not clustering by building
+# The value should be a double
+SS_DISTANCE_CLUSTERING_RATIO = 
+
+#Django Compressor - LessCSS Compiler
+COMPRESS_ENABLED = True/False
+COMPRESS_PRECOMPILERS = (('text/less', 'lessc {infile} {outfile}'),)
+
+
+/*** Local Settings ***/
+
+FEEDBACK_EMAIL_RECIPIENT = ['']  # The email addresses that the report a problem form will send email to
+
+SS_WEB_SERVER_HOST = ''
+# Run ./manage.py create_consumer on the server and copy the key and secret below. You'll also need to go into the admin and make the oauth client "Trusted."
+SS_WEB_OAUTH_KEY = ''
+SS_WEB_OAUTH_SECRET = ''
+
+# Make this unique, and don't share it with anybody.
+SECRET_KEY = ''
+
+MOBILE_USER_AGENTS = ''
