@@ -206,6 +206,24 @@
             $.removeCookie('initial_load');
         });
 
+        $('#login_button').click(function (e) {
+            e.preventDefault();
+            window.location.href = '/login'
+                + '?next=' + encodeURIComponent(window.location.pathname);
+        });
+
+        $('#logout_button').click(function (e) {
+            e.preventDefault();
+            window.location.href = '/logout'
+                + '?next=' + encodeURIComponent(window.location.pathname);
+        });
+
+        $('a span.favorites_count_container').parent().click(function (e) {
+            e.preventDefault();
+            window.location.href = '/favorites'
+                + '?back=' + encodeURIComponent(window.location.pathname);
+        });
+
         $(document).on('searchResultsLoaded', function (e, data) {
             // handle view details click
             $('.view-details').on('click', function(e){

@@ -170,6 +170,18 @@ Handlebars.registerHelper('ifany', function(a, b) {
             $('#space_count_container .count').html(data.count);
         });
 
+        $('#login_button').click(function (e) {
+            e.preventDefault();
+            window.location.href = '/login'
+                + '?next=' + encodeURIComponent(window.location.pathname);
+        });
+
+        $('#logout_button').click(function (e) {
+            e.preventDefault();
+            window.location.href = '/logout'
+                + '?next=' + encodeURIComponent(window.location.pathname);
+        });
+
         $('a span.favorites_count_container').parent().click(function (e) {
             e.preventDefault();
             window.location.href = '/favorites'

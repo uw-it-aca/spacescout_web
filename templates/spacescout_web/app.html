@@ -89,9 +89,9 @@
             <a href="/favorites">{% trans 'favorites' %} <span class="favorites_count_container"></span></a>
             {% tplhandlebars "favorites_count" %}({{count}}){% endtplhandlebars %}
             <span>|</span>
-            <a id="logout_button" href="/logout?next={{ request.path }}">{% trans 'logout' %}</a>
+            <a id="logout_button" href="/logout">{% trans 'logout' %}</a>
             {% else %}
-            {% trans 'salutation' %}&nbsp;<a href="/login?next={% firstof request.path '/' %}">{% trans 'login' %}</a>
+            {% trans 'salutation' %}&nbsp;<a id="login_button" href="/login">{% trans 'login' %}</a>
             {% endif %}
           </div>
             <!-- -->
