@@ -116,7 +116,9 @@ def HomeView(request, template=None):
         'favorites_json': favorites_json,
     }
 
-    return render_to_response(template, params, context_instance=RequestContext(request))
+    response = render_to_response(template, params, context_instance=RequestContext(request))
+    response['Cache-Control'] = 'no-cache'
+    return response
 
 
 def get_key_for_search_args(search_args):
