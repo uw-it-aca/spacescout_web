@@ -19,9 +19,7 @@ SpaceScout is a project from the University of Washington.
   limitations under the License.
 
 
-Below are the settings that should be placed in settings.py and local_settings.py. Fill in the value for your own specific app.
-
-/*** Settings ***/
+Below are the settings that should be placed in settings.py. Fill in the value for your own specific app.
 
 SS_LOCATIONS = { 
     'location name': {
@@ -45,13 +43,6 @@ SS_BUILDING_CLUSTERING_ZOOM_LEVELS = []
 # The value should be a double
 SS_DISTANCE_CLUSTERING_RATIO = 
 
-#Django Compressor - LessCSS Compiler
-COMPRESS_ENABLED = True/False
-COMPRESS_PRECOMPILERS = (('text/less', 'lessc {infile} {outfile}'),)
-
-
-/*** Local Settings ***/
-
 FEEDBACK_EMAIL_RECIPIENT = ['']  # The email addresses that the report a problem form will send email to
 
 SS_WEB_SERVER_HOST = ''
@@ -59,4 +50,12 @@ SS_WEB_SERVER_HOST = ''
 SS_WEB_OAUTH_KEY = ''
 SS_WEB_OAUTH_SECRET = ''
 
+SS_APP_SERVER = ''
+
+SS_MAIL_DOMAIN = ''
+
 MOBILE_USER_AGENTS = ''
+
+#Django Compressor - LessCSS Compiler
+COMPRESS_ENABLED = True/False
+COMPRESS_PRECOMPILERS = (('text/less', 'lessc {infile} {outfile}'),)
