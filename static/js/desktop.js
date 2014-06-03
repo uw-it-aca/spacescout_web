@@ -122,10 +122,10 @@ Handlebars.registerHelper('ifany', function(a, b) {
                 });
             }
         });
-
-        $('#neighboring').blur(function() {
-            $('#cancel_results_button').focus();
-        });
+//Remove stealing focus
+        //$('#neighboring').blur(function() {
+        //    $('#cancel_results_button').focus();
+        //});
 
         // clear filters
         $('#cancel_results_button').click(function() {
