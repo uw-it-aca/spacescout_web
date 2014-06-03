@@ -501,7 +501,9 @@
                 h = $(e.target).prop('href'),
 
                 window.location.href = h
-                    + '?back=' + encodeURIComponent('/favorites#spot_' + h.match(/\d+$/)[0]);
+                    + '?back=' + encodeURIComponent('/favorites'
+                                                    + '?back=' + encodeURIComponent(window.spacescout_referrer)
+                                                    + '#spot_' + h.match(/\d+$/)[0]);
             });
 
             if (window.location.hash.length > 1) {
