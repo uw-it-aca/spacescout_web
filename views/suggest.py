@@ -19,6 +19,10 @@ from spacescout_web.forms.suggest import SuggestForm
 from django.core.mail import send_mail
 from django.conf import settings
 from spacescout_web.views.contact import validate_back_link
+import logging
+
+
+logger = logging.getLogger(__name__)
 
 
 def suggest(request, spot_id=None):
@@ -55,7 +59,8 @@ def suggest(request, spot_id=None):
             if bot_test == '':
                 try:
                     send_mail(subject, email_message, sender, settings.FEEDBACK_EMAIL_RECIPIENT)
-                except:
+                except Exception as e:
+                    logger.error('Suggest failure: %s' % (e))
                     return HttpResponseRedirect('/sorry/')
 
 
