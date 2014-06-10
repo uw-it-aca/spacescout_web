@@ -32,7 +32,7 @@ def API(request):
     if hasattr(settings, 'SS_LDAP_DIRECTORY') and 'q' in request.GET:
         try:
             q = request.GET.get('q');
-            l = ldap.open(settings.SS_LDAP_DIRECTORY)
+            l = ldap.initialize('ldap://' + settings.SS_LDAP_DIRECTORY)
 
             if hasattr(settings, 'SS_LDAP_SEARCH_BASE'):
                 base = settings.SS_LDAP_SEARCH_BASE
