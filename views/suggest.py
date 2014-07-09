@@ -44,7 +44,8 @@ def suggest(request, spot_id=None):
             browser = request.META.get('HTTP_USER_AGENT', 'Unknown')
 
             subject = "[Suggestion] From %s" % (name)
-            email_message = "Suggested Space:\n\
+            email_message = "A SpaceScout user has suggested the following space.\n\
+                           \nSuggested Space:\n\
                            \nFrom: %s <%s>\n\
                            \nUW NetID: %s\n\
                            \nBuilding: %s\n\
