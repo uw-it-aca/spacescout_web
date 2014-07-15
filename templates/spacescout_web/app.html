@@ -293,6 +293,15 @@
                                         </li>
                                         {{/if}}
 
+                                        {{#if extended_info.hours_notes }}
+                                        <li class="clearfix">
+                                            <h3 class="space-info-label pull-left">Hours Notes</h3>
+                                            <div class="space-info-detail pull-left">
+                                                {{#if extended_info.hours_notes }}<p>{{extended_info.hours_notes}}</p>{{/if}}
+                                            </div>
+                                        </li>
+                                        {{/if}}
+
                                     </ul>
                                 </div>
 
