@@ -184,6 +184,16 @@
                                     </div>
                                 </li>
                                 {% endif %}
+
+                                {% if extended_info.hours_notes %}
+                                <li class="clearfix">
+                                  <h3 class="space-info-label pull-left">Hours Notes</h3>
+                                  <div class="space-info-detail pull-left">
+                                    <p>{{ extended_info.hours_notes }}</p>
+                                  </div>
+                                </li>
+                                {% endif %}
+
                             </ul>
                         </div>
 
