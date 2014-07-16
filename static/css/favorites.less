@@ -70,25 +70,9 @@
 	        
                 }
 
-                .space-detail-tick { font-size: 12px; padding: 2px 8px; position: absolute; margin-top: 48px; margin-left: -8px; z-index: 100; }
-                .space-detail-is-open:before{
-					content:url('../img/space_open_chev.png');
-					position:absolute; 
-					z-index:100000;
-					top: -14px;
-					left: 0px;
-				}
-                .space-detail-is-open { background-color: @is_open; color: white; margin-left: -11px;}
-                
-                .space-detail-is-closed:before{
-					content:url('../img/space_close_chev.png');
-					position:absolute; 
-					z-index:100000;
-					top: -14px;
-					left: 0px;
-				}
-                .space-detail-is-closed { background-color: @is_closed; color: white; margin-left: -11px;}
-				
+                .space-detail-tick { font-size: 12px; padding: 2px 6px; position: absolute; margin-top: 48px; margin-left: -8px; z-index: 100; }
+                .space-detail-is-open { background-color: @is_open; color: white; }
+                .space-detail-is-closed { background-color: @is_closed; color: white; }
             }
 
             .space-info {
