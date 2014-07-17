@@ -40,7 +40,7 @@
             var location = $(this).val().split(',');
             if (location[2] == state.campus) {
                 $(document).ready(function () {
-                    $('#location_select option:eq(' + i + ')').attr('selected', 'selected');
+                    $('#location_select').prop('selectedIndex', i);
                 });
                 window.default_latitude = location[0];
                 window.default_longitude = location[1];
