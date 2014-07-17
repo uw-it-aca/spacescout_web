@@ -277,7 +277,11 @@
                     opts["open_until"] = v;
                     break;
                 case 'bld' :
-                    opts["building_name"] = v;
+                    opts["building_name"] = [];
+                    $.each(v.split(','), function () {
+                        opts['building_name'].push(this);
+                    });
+
                     break;
                 case 'rwb' :
                     opts["extended_info:has_whiteboards"] = true;
