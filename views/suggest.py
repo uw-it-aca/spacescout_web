@@ -28,8 +28,13 @@ logger = logging.getLogger(__name__)
 def suggest(request, spot_id=None):
     if request.method == 'POST':
         form = SuggestForm(request.POST)
-        back = request.POST['back'] if 'back' in request.POST \
-                and not validate_back_link(request.POST['back']) else '/'
+
+        try:
+            back = request.POST['back']
+            validate_back_link(back)
+        except:
+            back = '/'
+
         if form.is_valid():
             name = form.cleaned_data['name']
             netid = form.cleaned_data['netid']
@@ -67,8 +72,11 @@ def suggest(request, spot_id=None):
 
             return HttpResponseRedirect('/thankyou/')
     else:
-        back = request.GET['back'] if request.GET and 'back' in request.GET \
-            and not validate_back_link(request.GET['back']) else '/'
+        try:
+            back = request.GET['back']
+            validate_back_link(back)
+        except:
+            back = '/'
 
         form = SuggestForm()
 
@@ -80,8 +88,11 @@ def suggest(request, spot_id=None):
 
 
 def thank_you(request, spot_id=None):
-    back = request.GET['back'] if request.GET and 'back' in request.GET \
-        and not validate_back_link(request.GET['back']) else '/'
+    try:
+        back = request.GET['back']
+        validate_back_link(back)
+    except:
+        back = '/'
 
     return render_to_response('spacescout_web/suggest-thankyou.html', {
         'back': back,
