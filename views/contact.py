@@ -77,9 +77,10 @@ def contact(request, spot_id=None):
 def thank_you(request, spot_id=None):
     contact_variables = _contact_variables(request, spot_id)
 
-    if request.GET and 'back' in request.GET and not validate_back_link(request.GET['back']):
+    try:
         back = request.GET['back']
-    else:
+        validate_back_link(back)
+    except:
         back = contact_variables['back']
 
     return render_to_response('spacescout_web/contact-thankyou.html', {
@@ -137,4 +138,5 @@ def _contact_variables(request, spot_id):
 
 
 def validate_back_link(back):
-    return re.match(r'^(/{2,}|/\.)', back)
+    if not re.match(r'^(/|%2F)', back):
+        raise(Exception('Invalid Back Link'))

@@ -27,7 +27,7 @@
         },
 
         dispatch: function (state) {
-            if (!state) {
+            if (!state || !state.local_path) {
                 state = this.parse_path(window.location.pathname);
             }
 
@@ -47,8 +47,10 @@
                             $(this).attr('selected', 'selected');
                         }
                     });
-                    
-                    repopulate_filters(this.decode_search_terms(state.search));
+
+                    window.spacescout_search_options = this.decode_search_terms(state.search);
+                    clear_filter();
+                    repopulate_filters(window.spacescout_search_options);
                     run_custom_search();
                 } else if (state.id) {
                     if (window.spacescout_web_mobile) {
@@ -277,7 +279,11 @@
                     opts["open_until"] = v;
                     break;
                 case 'bld' :
-                    opts["building_name"] = v;
+                    opts["building_name"] = [];
+                    $.each(v.split(','), function () {
+                        opts['building_name'].push(this);
+                    });
+
                     break;
                 case 'rwb' :
                     opts["extended_info:has_whiteboards"] = true;

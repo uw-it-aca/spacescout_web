@@ -32,8 +32,13 @@ import logging as logger
 def share(request, spot_id=None):
     if request.method == 'POST':
         form = ShareForm(request.POST)
-        back = request.POST['back'] if 'back' in request.POST \
-            and not validate_back_link(request.POST['back']) else '/'
+
+        try:
+            back = request.POST['back']
+            validate_back_link(back)
+        except:
+            back = '/'
+
         if form.is_valid():
             spot_id = form.cleaned_data['spot_id']
             back = form.cleaned_data['back']
@@ -73,8 +78,12 @@ def share(request, spot_id=None):
             return HttpResponseRedirect('/share/thankyou/?back=' + urlquote(back))
     else:
         # mask user from silliness
-        back = request.GET['back'] if request.GET and 'back' in request.GET \
-            and not validate_back_link(request.GET['back']) else '/'
+        try:
+            back = request.GET['back']
+            validate_back_link(back)
+        except:
+            back = '/'
+
         if request.user and request.user.is_authenticated():
             consumer = oauth2.Consumer(key=settings.SS_WEB_OAUTH_KEY, secret=settings.SS_WEB_OAUTH_SECRET)
             client = oauth2.Client(consumer)
@@ -135,8 +144,11 @@ def share(request, spot_id=None):
 def thank_you(request, spot_id=None):
     share_variables = _share_variables(request, spot_id)
 
-    back = request.GET['back'] if request.GET and 'back' in request.GET \
-        and not validate_back_link(request.GET['back']) else share_variables['back']
+    try:
+        back = request.GET['back']
+        validate_back_link(back)
+    except:
+        back = share_variables['back']
 
     return render_to_response('spacescout_web/share-thankyou.html', {
         'spot_id': spot_id,
@@ -147,10 +159,15 @@ def thank_you(request, spot_id=None):
 def sorry(request, spot_id=None):
     share_variables = _share_variables(request, spot_id)
 
+    try:
+        back = request.GET['back']
+        validate_back_link(back)
+    except:
+        back = share_variables['back']
+
     return render_to_response('spacescout_web/share-sorry.html', {
             'problem': None,
-            'back': request.GET['back'] if request.GET and 'back' in request.GET \
-                and not validate_back_link(request.GET['back']) else share_variables['back']
+            'back': back
     }, context_instance=RequestContext(request))
 
 
