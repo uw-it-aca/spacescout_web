@@ -420,7 +420,7 @@ function reset_location_filter() {
 
             $.cookie('default_location', $(this).val(), { path: '/' });
             reset_location_filter();
-            window.spacescout_url.replace();
+            window.spacescout_url.push();
         });
 
         // handle checkbox and radio button clicks

@@ -27,8 +27,12 @@ import oauth2
 @login_required(login_url='/login')
 @mobile_template('spacescout_web/{mobile/}favorites.html')
 def FavoritesView(request, template=None):
-    back = request.GET['back'] if request.GET and 'back' in request.GET \
-        and not validate_back_link(request.GET['back']) else '/'
+    try:
+        back = request.GET['back']
+        validate_back_link(back)
+    except:
+        back = '/'
+
     return render_to_response(template,
                               {
                                   'locations': settings.SS_LOCATIONS,
