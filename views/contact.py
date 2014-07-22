@@ -22,9 +22,11 @@ from django.conf import settings
 import simplejson as json
 import urllib2
 import re
-import logging as logger
+import logging
 
-#logger = logging.getLogger(__name__)
+
+logger = logging.getLogger(__name__)
+
 
 def contact(request, spot_id=None):
     contact_variables = _contact_variables(request, spot_id)

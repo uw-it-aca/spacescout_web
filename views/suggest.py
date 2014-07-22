@@ -19,9 +19,11 @@ from spacescout_web.forms.suggest import SuggestForm
 from django.core.mail import send_mail
 from django.conf import settings
 from spacescout_web.views.contact import validate_back_link
-import logging as logger
+import logging
 
-#logger = logging.getLogger(__name__)
+
+logger = logging.getLogger(__name__)
+
 
 def suggest(request, spot_id=None):
     if request.method == 'POST':

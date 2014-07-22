@@ -24,9 +24,11 @@ from spacescout_web.views.contact import validate_back_link
 import oauth2
 import socket
 import simplejson as json
-import logging as logger
+import logging
 
-#logger = logging.getLogger(__name__)
+
+logger = logging.getLogger(__name__)
+
 
 @login_required(login_url='/login')
 def share(request, spot_id=None):
@@ -120,7 +122,6 @@ def share(request, spot_id=None):
         if 'extended_info' in spot and 'location_description' in spot['extended_info']:
             share_text.append(spot['extended_info']['location_description'])
     except SpotException as e:
-        import pdb; pdb.set_trace()
         logger.error('Share failure for spot %s: %s' % (spot_id, e))
         return render_to_response('spacescout_web/share-sorry.html', {
                     'problem': 'Sorry, but the space you wish to share does not exist.',
