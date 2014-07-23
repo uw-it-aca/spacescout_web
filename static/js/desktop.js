@@ -27,6 +27,15 @@ Handlebars.registerHelper('ifany', function(a, b) {
     }
 });
 
+
+$('button#suggest').click(function (e) {
+                if (window.location.pathname != "/") {
+                  window.location.href = '/suggest/?back=' + encodeURIComponent(window.location.pathname);
+                } else {
+                  window.location.href = '/suggest/';
+                }     
+            }); 
+
 (function(d){
 
 	var sw = document.body.clientWidth,
@@ -66,6 +75,14 @@ Handlebars.registerHelper('ifany', function(a, b) {
 
             return;
         }
+
+    $('a#suggest').click(function (e) {
+      if (window.location.pathname != "/") {
+        window.location.href = '/suggest/?back=' + encodeURIComponent(window.location.pathname);
+      } else {
+        window.location.href = '/suggest/';
+      }
+    });
 
 		desktopContent();
 

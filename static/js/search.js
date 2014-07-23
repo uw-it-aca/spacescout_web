@@ -175,6 +175,9 @@ function repopulate_filters(form_opts) {
                     }
                     ampm = 'PM';
                 }
+                if (time[0] == 0 ) {
+                    time[0] = 12;
+                }
                 time = time.join(':');
                 $('#day-from').val(day);
                 $('#hour-from').val(time);
@@ -192,6 +195,9 @@ function repopulate_filters(form_opts) {
                         time[0] = Number(time[0]) - 12;
                     }
                     ampm = 'PM';
+                }
+                if (time[0] == 0) {
+                    time[0] = 12;
                 }
                 time = time.join(':');
                 $('#day-until').val(day);
