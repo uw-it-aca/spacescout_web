@@ -41,4 +41,7 @@ def Login(request):
 # Logout
 def Logout(request):
     logout(request)
-    return HttpResponseRedirect(request.REQUEST['next'] if 'next' in request.REQUEST else '/')
+    if hasattr(settings, 'SS_WEB_LOGOUT_URL'):
+        return HttpResponseRedirect(settings.SS_WEB_LOGOUT_URL)
+    else:
+        return HttpResponseRedirect(request.REQUEST['next'] if 'next' in request.REQUEST else '/')
