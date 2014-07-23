@@ -66,6 +66,8 @@ def suggest(request, spot_id=None):
 
             if bot_test == '':
                 try:
+                    if not hasattr(settings, 'FEEDBACK_EMAIL_RECIPIENT'):
+                        logger.error('Missing configuration: Set FEEDBACK_EMAIL_RECIPIENT for your site')
                     send_mail(subject, email_message, sender, settings.FEEDBACK_EMAIL_RECIPIENT)
                 except Exception as e:
                     logger.error('Suggest failure: %s' % (e))
