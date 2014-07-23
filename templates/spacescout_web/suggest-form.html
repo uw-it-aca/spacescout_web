@@ -11,7 +11,7 @@
         </div>
         {{ form.non_field_errors }}
         {% for field in form %}
-            {% if field.name == "email_confirmation" %}
+            {% if field.name == "email_confirmation" or field.name == "back" %}
                 <div style="display: None;">
                     LEAVE BLANK {{ field }}
                 </div>
