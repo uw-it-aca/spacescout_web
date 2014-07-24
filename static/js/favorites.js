@@ -250,8 +250,13 @@
             $.ajax({
                 url: '/web_api/v1/user/me/favorites',
                 success: function (data) {
-                    self.favorites = data ? data : [];
-                    self.update();
+                    if ($.isArray(data)) {
+                        self.favorites = data;
+                        self.update();
+                    }
+                    else {
+                        console.log('Unrecognized favorites response: ' + data);
+                    }
                 },
                 error: function (xhr, textStatus, errorThrown) {
                     console.log('Unable to load favorites: ' + xhr.responseText);
