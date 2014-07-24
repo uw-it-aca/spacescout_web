@@ -27,7 +27,7 @@
         },
 
         dispatch: function (state) {
-            if (!state || !state.local_path) {
+            if (!state) {
                 state = this.parse_path(window.location.pathname);
             }
 
@@ -44,7 +44,7 @@
                             window.default_longitude = location[1];
                             window.default_location = location[2];
                             window.default_zoom = parseInt(location[3]);
-                            $(this).attr('selected', 'selected');
+                            $(this).parent().prop('selectedIndex', i);
                         }
                     });
 
@@ -334,11 +334,11 @@
     };
 
     $(window).bind('popstate', function (e) {
-        if (e.originalEvent.state) {
+       if (e.originalEvent.state) {
             window.spacescout_url.dispatch(e.originalEvent.state);
-        } else {
+       } else {
             window.spacescout_url.load(window.location.pathname);
-        }
+       }
     });
 
     $(document).on('searchResultsLoaded', function (e, data) {
