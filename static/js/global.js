@@ -462,31 +462,34 @@ function reset_location_filter() {
 
         var escape_key_code = 27;
 
-        $(document).keyup(function(e) {
-            if (e.keyCode == escape_key_code) {
-                if ($('#filter_block').is(':visible')) {
+        function closeFilter() {
+            $('#filter_block').slideUp(400, function() {
+                var icon = $('.fa-angle-double-up');
+                if (icon.length) {
+                    icon.switchClass('fa-angle-double-up', 'fa-angle-double-down', 0);
+                }
 
-                    $('#filter_block').slideUp(400, function() {
-                        var icon = $('.fa-angle-double-up');
-                        if (icon.length) {
-                            icon.switchClass('fa-angle-double-up', 'fa-angle-double-down', 0);
-                        }
-
-                        //mobile style stuff
-                        if ($('#container').attr("style")) {
-                            $('#container').height('auto');
-                            $('#container').css('overflow','visible');
-                        }   
-                    });
+                //mobile style stuff
+                if ($('#container').attr("style")) {
+                    $('#container').height('auto');
+                    $('#container').css('overflow','visible');
+                }
 //                    $('#filter_button').show();
 //                    $('#space_count_container').show();
 //                    $('#view_results_button').hide();
 //                    $('#cancel_results_button').hide();
-                    $('#filter_button').focus();
-                }
-                if ($('.space-detail').is(':visible')) {
+            });
+            $('#filter_button').focus();
+        }
+
+
+        $(document).keyup(function(e) {
+            if (e.keyCode == escape_key_code) {
+                if ($('#filter_block').is(':visible')) {
+                    closeFilter();
+                } else if ($('.space-detail').is(':visible')) {
                     closeSpaceDetails();
-                } 
+                }
             }
         });
 
