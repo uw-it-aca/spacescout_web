@@ -16,9 +16,12 @@
     Changes:
 
     =================================================================
-
+    sbutler1@illinois.edu: fixed suggested by JSHint, also use some
+      common jQuery conventions.
 */
-(function(){
+
+// H = Handlebars, $ = jQuery
+(function (H, $) {
 
     $(document).ready(function () {
         window.spacescout_favorites.favorites = window.spacescout_favorites_list;
@@ -38,11 +41,11 @@
 
         update_count: function () {
             var self = this,
-                source = $(self.k.favorites_count_template),
+                $source = $(self.k.favorites_count_template),
                 template;
 
-            if (source.length) {
-                template = Handlebars.compile(source.html().trim());
+            if ($source.length) {
+                template = H.compile($source.html().trim());
                 $(this.k.favorites_count_container).each(function () {
                     $(this).html(template({count: self.favorites ? self.favorites.length : 0}));
                 });
@@ -62,37 +65,37 @@
 
         update_search_result: function () {
             var self = this,
-                detail_node = $('div[id^=detail_container_]'),
-                detail_id = detail_node.length ? parseInt(detail_node.prop('id').match(/^detail_container_(\d+)$/)[1]) : null;
+                $detail_node = $('div[id^=detail_container_]'),
+                detail_id = $detail_node.length ? parseInt($detail_node.prop('id').match(/^detail_container_(\d+)$/)[1]) : null;
 
             $('#info_items .view-details button .space-detail-fav').each(function () {
-                var node = $(this),
-                    id = parseInt(node.parent().prop('id'));
+                var $node = $(this),
+                    id = parseInt($node.parent().prop('id'));
 
                 if (self.is_favorite(id)) {
-                    node.show();
+                    $node.show();
                     if (id == detail_id) {
-                        $('.space-detail-fav', detail_node).removeClass('space-detail-fav-unset').addClass('space-detail-fav-set');
+                        $('.space-detail-fav', $detail_node).removeClass('space-detail-fav-unset').addClass('space-detail-fav-set');
                     }
                 } else {
-                    node.hide();
+                    $node.hide();
                     if (id == detail_id) {
-                        $('.space-detail-fav', detail_node).removeClass('space-detail-fav-set').addClass('space-detail-fav-unset');
+                        $('.space-detail-fav', $detail_node).removeClass('space-detail-fav-set').addClass('space-detail-fav-unset');
                     }
                 }
             });
         },
 
         update_cards: function () {
-            var container = $(this.k.favorites_card_container),
+            var $container = $(this.k.favorites_card_container),
                 campuses = {}, campus, campus_name,
-                source, template, i, j, n, blank, campus_select, opts,
-                self = this,
+                source, template, i, j, n, blank, campus_select, opts;
+                var self = this,
                 insert_card = function (i, space) {
-                    var spot = $('spot_' + space.id),
+                    var $spot = $('spot_' + space.id),
                         source = $(self.k.favorites_card_template).html(),
-                        template = Handlebars.compile(source),
-                        type = [], card;
+                        template = H.compile(source),
+                        type = [], $card;
 
                     if ($.isArray(space.type)) {
                         $.each(space.type, function () {
@@ -103,7 +106,7 @@
                     space.type = type.join(', ');
                     space.extended_info.noise_level = gettext(space.extended_info.noise_level);
                     space.extended_info.food_nearby = gettext(space.extended_info.food_nearby);
-                    space.has_reservation_notes = ( space.extended_info.reservation_notes != null);
+                    space.has_reservation_notes = space.extended_info.reservation_notes != null;
                     space.has_notes = ( ( space.extended_info.access_notes != null) || space.has_reservation_notes );
                     space.has_resources = ( space.extended_info.has_computers != null ||
                                             space.extended_info.has_displays != null ||
@@ -112,12 +115,20 @@
                                             space.extended_info.has_projector != null ||
                                             space.extended_info.has_scanner != null ||
                                             space.extended_info.has_whiteboards != null );
+                    //TODO: are these a better way to do this?
+                    //this.has_reservation_notes = !!this.extended_info.reservation_notes;
+                    //this.has_notes = ( this.extended_info.access_notes || this.has_reservation_notes );
+                    //this.has_resources = ( this.extended_info.has_computers || this.extended_info.has_displays || this.extended_info.has_outlets || this.extended_info.has_printing || this.extended_info.has_projector || this.extended_info.has_scanner || this.extended_info.has_whiteboards );
 
-                    card = $(template(space));
+                    $card = $(template(space));
 
-                    if (spot.length == 0) {
-                        container.append(card);
+                    if ($spot.length == 0) {
+                        $container.append(card);
                     }
+                    //TODO: is this a better way?
+                    //if ($spot.length == 0) {
+                    //    $card.insertBefore('#space-detail-blank', $container);
+                    //}
 
                     $.event.trigger('favoriteCardLoaded', [ card, space ]);
                 };
@@ -133,7 +144,7 @@
                             } else {
                                 campuses[this.extended_info.campus] = [this];
                             }
-                               
+
                         } else {
                             campuses = null;
                         }
@@ -402,7 +413,7 @@
                         o_m = o[1].length ? parseInt(o[1]) : 0,
                         c_h = c[0].length ? parseInt(c[0]) : 0,
                         c_m = c[1].length ? parseInt(c[1]) : 0;
-                    
+
                     if ((hour > o_h && hour < c_h)
                         || (hour == o_h && minute > o_m)
                         || (hour == c_h && minute < c_m)) {
@@ -410,37 +421,37 @@
                         $('.space-detail-is-closed', card).hide();
                     }
                 });
-                
+
                 formatted = to12Hour(fav.available_hours[day]).join(", ");
             }
-            
-            $('.space-info-hours-today span', card).html(formatted);
-            
-            $('.space-info-more-detail a', card).click(function (e) {
-                var more_div = $(e.target).parent();
-                
-                more_div.slideUp('fast');
-                more_div.next().slideDown('fast');
-            });
-            
-            $('.space-info-less-detail a', card).click(function (e) {
-                var ul = $(e.target).closest('ul'),
-                    reviews = $('.space-reviews-review', ul);
-                
-                ul.slideUp('fast', function () {
-                    var top = card.offset().top,
-                        scrolltop = $(document).scrollTop();
 
-                    if (top < scrolltop) {
+            $('.space-info-hours-today span', card).html(formatted);
+
+            $('.space-info-more-detail a', card).click(function (e) {
+                var $more_div = $(e.target).parent();
+
+                $more_div.slideUp('fast');
+                $more_div.next().slideDown('fast');
+            });
+
+            $('.space-info-less-detail a', card).click(function (e) {
+                var $ul = $(e.target).closest('ul');
+                var $reviews = $('.space-reviews-review', ul);
+
+                $ul.slideUp('fast', function () {
+                    var top = card.offset().top;
+                    var $scrolltop = $(document).scrollTop();
+
+                    if (top < $scrolltop) {
                         $('html,body').animate({
                             scrollTop: top
                         }, 400, 'swing');
                     }
                 });
-                ul.prev().slideDown('fast');
-                
-                if (reviews.length > window.spacescout_reviews.pagination) {
-                    reviews.each(function (i) {
+                $ul.prev().slideDown('fast');
+
+                if ($reviews.length > window.spacescout_reviews.pagination) {
+                    $reviews.each(function (i) {
                         if (i >= window.spacescout_reviews.pagination) {
                             $(this).hide();
                         }
@@ -449,19 +460,19 @@
                     $('.more-space-reviews', ul).show();
                 }
             });
-            
+
             $('.space-detail-fav', card).click(function (e) {
                 window.spacescout_favorites.clear(parseInt($(this).attr('data-id')));
             });
 
             $(document).on('spaceFavoriteClear', function (e, id) {
-                var container = $('#spot_'+id).closest('.space-detail-container');
+                var $container = $('#spot_'+id).closest('.space-detail-container');
 
-                container.hide({
+                $container.hide({
                     effect: 'fade',
                     duration: 800,
                     complete: function () {
-                        container.remove();
+                        $container.remove();
                     }
                 });
             });
@@ -472,25 +483,25 @@
             } else {
                 $('.space-detail-building', card).html(fav.location.building_name);
             }
-            
+
             // Load image carousel
             if (fav.hasOwnProperty('images') && fav.images.length > 0) {
-                var template = Handlebars.compile($('#images_template').html());
+                var template = H.compile($('#images_template').html());
                 var data = [];
                 // only load initial image
                 data.push({ id: fav.id, image_id: fav.images[0].id });
                 $('.carousel-inner', card).html(template({ data: data }));
             } else {
-                var template = Handlebars.compile($('#no_images_template').html());
+                var template = H.compile($('#no_images_template').html());
                 $('.carousel-inner', card).html(template({ static_url: window.spacescout_static_url }));
             }
-            
+
             if (fav.has_reservation_notes) {
                 var url = fav.extended_info.reservation_notes.match(/(http:\/\/[^\s]+)/);
-                
+
                 if (url) {
-                    var template = Handlebars.compile($('#reservation_cue').html());
-                    $('.space-info-reservation-cue', card).html(template({ url: url[1] })).show();
+                   var template = H.compile($('#reservation_cue').html());
+                   $('.space-info-reservation-cue', card).html(template({ url: url[1] })).show();
                 }
             }
         });
@@ -550,5 +561,5 @@
 
     }
 
-})(this);
+})(Handlebars, jQuery);
 

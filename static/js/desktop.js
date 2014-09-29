@@ -18,42 +18,43 @@
 
     sbutler1@illinois.edu: attr(checked) to prop(checked); focus on
       spot details.
+    sbutler1@illinois.edu: fix obvious JSHint bugs
+    sbutler1@illinois.edu: formatting fixes plus hide non-global
+      variables/functions.
 */
 
-Handlebars.registerHelper('ifany', function(a, b) {
-    // if anything passed is true, return true
-    if (a || b) {
-        return fn(this);
-    }
-});
+// H = Handlebars, $ = jQuery
+(function (H, $, d) {
+    //TODO: what does this change from sbutler gain us? What happens to breakpoint / mobile?
+    //window.speed = 600;
+    var sw = document.body.clientWidth,
+        breakpoint = 767,
+        speed = 600,
+        mobile = true;
 
+    H.registerHelper('ifany', function(a, b) {
+        // if anything passed is true, return true
+        if (a || b) {
+            return fn(this);
+        }
+    });
 
-$('button#suggest').click(function (e) {
-                if (window.location.pathname != "/") {
-                  window.location.href = '/suggest/?back=' + encodeURIComponent(window.location.pathname);
-                } else {
-                  window.location.href = '/suggest/';
-                }     
-            }); 
+    $('button#suggest').click(function (e) {
+        if (window.location.pathname != "/") {
+            window.location.href = '/suggest/?back=' + encodeURIComponent(window.location.pathname);
+        } else {
+            window.location.href = '/suggest/';
+        }
+    });
 
-(function(d){
-
-	var sw = document.body.clientWidth,
-		breakpoint = 767,
-		speed = 600,
-		mobile = true;
-
-    var deviceAgent = navigator.userAgent.toLowerCase();
-	var iphone = deviceAgent.match(/(iphone|ipod)/);
-
-	$(document).ready(function() {
+    $(document).ready(function() {
         // share destination typeahead
         if ($('#id_recipient').length) {
             var node = $('#id_recipient');
 
             var engine = new Bloodhound({
                 datumTokenizer: function (d) {
-                    return Blookdhound.tokenizers.whitespace(d.email);
+                    return Bloodhound.tokenizers.whitespace(d.email);
                 },
                 queryTokenizer: Bloodhound.tokenizers.whitespace,
                 limit: 15,
@@ -76,22 +77,22 @@ $('button#suggest').click(function (e) {
             return;
         }
 
-    $('a#suggest').click(function (e) {
-      if (window.location.pathname != "/") {
-        window.location.href = '/suggest/?back=' + encodeURIComponent(window.location.pathname);
-      } else {
-        window.location.href = '/suggest/';
-      }
-    });
+        $('a#suggest').click(function (e) {
+            if (window.location.pathname != "/") {
+                window.location.href = '/suggest/?back=' + encodeURIComponent(window.location.pathname);
+            } else {
+                window.location.href = '/suggest/';
+            }
+        });
 
-		desktopContent();
+        _desktopContent();
 
-	   // check if a map_canvas exists... populate it
-    	if ($("#map_canvas").length == 1) {
+        // check if a map_canvas exists... populate it
+        if ($("#map_canvas").length == 1) {
             initialize();
 
-	        // Update dimensions on resize
-	        $(d).resize(function(){
+            // Update dimensions on resize
+            $(d).resize(function(){
 
                 // desktop
                 desktopContent();
@@ -103,57 +104,46 @@ $('button#suggest').click(function (e) {
 
                     resizeCarouselMapContainer();
                 }
-	        });
+            });
         }
 
-		// show filter panel
-		$('#filter_button').click(function() {
-            var block = $("#filter_block");
+        // show filter panel
+        $('#filter_button').click(function() {
+            var $block = $("#filter_block");
 
-            if (block.css('display') == 'none') {
-                get_location_buildings();
-
+            if ($block.css('display') == 'none') {
+                getLocationBuildings();
                 // reflect current filter
                 if (window.hasOwnProperty('spacescout_search_options')) {
                     clear_filter();
                     repopulate_filters(window.spacescout_search_options);
                 }
 
-                block.slideDown(400, function() {
-                    var icon = $('.fa-angle-double-down');
+                $block.slideDown(400, function() {
+                    var $icon = $('.fa-angle-double-down');
 
-                    if (icon.length) {
-                        icon.switchClass('fa-angle-double-down', 'fa-angle-double-up', 0);
+                    if ($icon.length) {
+                        $icon.switchClass('fa-angle-double-down', 'fa-angle-double-up', 0);
                     }
 
                     $('#study_room').focus();
                 });
-            }
-            else {
-                block.slideUp(400, function() {
-                    var icon = $('.fa-angle-double-up');
+            } else {
+                $block.slideUp(400, function() {
+                    var $icon = $('.fa-angle-double-up');
 
-                    if (icon.length) {
-                        icon.switchClass('fa-angle-double-up', 'fa-angle-double-down', 0);
+                    if ($icon.length) {
+                        $icon.switchClass('fa-angle-double-up', 'fa-angle-double-down', 0);
                     }
                 });
             }
         });
-//Remove stealing focus
-        //$('#neighboring').blur(function() {
-        //    $('#cancel_results_button').focus();
-        //});
 
         // clear filters
         $('#cancel_results_button').click(function() {
 
             $('#filter-clear').slideDown(50);
             $('#filter-clear').delay(1000).fadeOut(500);
-
-            // clear saved search options
-//            if ($.cookie('spacescout_search_opts')) {
-//                $.removeCookie('spacescout_search_opts');
-//            }
 
             clear_filter();
             // clear the initial_load cookie so we can use the in-page json
@@ -164,7 +154,6 @@ $('button#suggest').click(function (e) {
         // handle view details click
         $(document).on('click', '.view-details', function(e){
             var id = $(this).find('.space-detail-list-item').attr('id');
-
             e.preventDefault();
             // clear previously selected space
             $('#info_items li').removeClass('selected');
@@ -204,7 +193,7 @@ $('button#suggest').click(function (e) {
             window.location.href = '/favorites'
                 + '?back=' + encodeURIComponent(window.location.pathname);
         });
-	});
+    });
 
     function fetchSpaceDetails(id){
         // clear any uneeded ajax window.requests
@@ -220,6 +209,7 @@ $('button#suggest').click(function (e) {
             })
         );
     }
+    //TODO: APPLY UIUC CHANGES TO CODE BELOW THIS LINE
 
 	// Show space details (sliding transition)
 	function showSpaceDetails(data) {
@@ -275,7 +265,6 @@ $('button#suggest').click(function (e) {
         initMapCarouselButtons();
 
     	// set/reset initial state
-
         $('.space-detail-inner').show();
         $('.space-detail-container').show();
 
@@ -341,18 +330,18 @@ $('button#suggest').click(function (e) {
 	}
 
 	// Desktop display defaults
-	function desktopContent() {
+	function _desktopContent() {
 
     	var windowH = $(window).height();
         var headerH = $('#nav').height();
         var contentH = windowH - headerH;
 
         $('#map_canvas').height(contentH - 100);
-        $('#info_list').height(contentH -80);
+        $('#info_list').height(contentH - 80);
 
         // make sure loading and list height fills the list container
         $('#info_list .list-inner').css('min-height', contentH - 100);
         //$('.loading').height(contentH);
     }
 
-})(this);
+})(Handlebars, jQuery);
