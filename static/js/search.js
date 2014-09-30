@@ -92,8 +92,6 @@ var spacescout_map = null, spacescout_markers = [], speed = 800, update_count = 
     window.openAllMarkerInfoWindow = openAllMarkerInfoWindow;
 
     function _sortByBuildingName(data) {
-    console.log('r1');
-    console.log(data);
         data.sort(function (one, two) {
             var abuilding = one.location.building_name.toLowerCase(), bbuilding = two.location.building_name.toLowerCase();
             if (abuilding < bbuilding)
@@ -753,7 +751,7 @@ var spacescout_map = null, spacescout_markers = [], speed = 800, update_count = 
         fix_filter_overflow();
         */
 
-        var url_args = [];
+        var url_args = ["/search/?"];
         for (var key in args) {
             if (args.hasOwnProperty(key)) {
                 var val = args[key];
@@ -761,10 +759,10 @@ var spacescout_map = null, spacescout_markers = [], speed = 800, update_count = 
                 if (typeof(val) == "object") {
                     // only objects allowed in args are arrays
                     for (var i = 0; i < val.length; i++) {
-                        url_args.push(encodeURIComponent(key) + "=" + encodeURIComponent(val[i]));
+                        url_args.push(encodeURIComponent(key) + "=" + encodeURIComponent(val[i]), '&');
                     }
                 } else {
-                    url_args.push(encodeURIComponent(key) + "=" + encodeURIComponent(val));
+                    url_args.push(encodeURIComponent(key) + "=" + encodeURIComponent(val), '&');
                 }
             }
         }
