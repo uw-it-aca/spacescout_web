@@ -51,9 +51,9 @@
                 });
             }
 
-            source = $(self.k.favorites_total_template);
-            if (source.length) {
-                template = Handlebars.compile(source.html().trim());
+            $source = $(self.k.favorites_total_template);
+            if ($source.length) {
+                template = H.compile($source.html().trim());
                 $(this.k.favorites_total_container).each(function () {
                     var total = self.favorites ? self.favorites.length : 0,
                         plural = (total == 1) ? '' : 's';
@@ -151,13 +151,13 @@
                     }
                 });
 
-                blank = Handlebars.compile($('#blank_card').html())({ back: window.spacescout_referrer });
+                blank = H.compile($('#blank_card').html())({ back: window.spacescout_referrer });
                 campus_select = $('#location_select');
 
                 if (campuses && Object.keys(campuses).length > 0
                     && (Object.keys(campuses).length > 1
                         || !campuses.hasOwnProperty($('option:selected', campus_select).val().split(',')[2]))) {
-                    template = Handlebars.compile($('#campus_label').html());
+                    template = H.compile($('#campus_label').html());
 
                     opts = $('option', campus_select);
                     i = campus_select.prop('selectedIndex');
@@ -393,7 +393,7 @@
 
 
     if ($('.favorites_nav').length > 0) {
-        
+
         $(document).on('favoriteCardLoaded', function (e, card, fav) {
             var now = new Date(),
                 hour = now.getHours(),
@@ -533,7 +533,7 @@
                 $('html,body').animate({
                     scrollTop: d
                 }, 1000, 'swing');
-                
+
                 $(window.location.hash).parent().find('.space-info-more-detail a').click();
             }
 
