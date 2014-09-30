@@ -357,9 +357,9 @@ var spacescout_map = null, spacescout_markers = [], speed = 800, update_count = 
                 if ($('#hour-from').val() != 'nopref') {
                     var time = $('#hour-from').val().split(':');
 
-                    if ($('#ampm-from').val() == 'PM' && time[0] != 12) {
-                        time[0] = time[0] + 12;
-                    } else if ($('#ampm-from').val() == 'AM' && time[0] == 12) {
+                    if ($('#ampm-from').val() == 'PM' && Number(time[0]) != 12) {
+                        time[0] = Number(time[0]) + 12;
+                    } else if ($('#ampm-from').val() == 'AM' && Number(time[0]) == 12) {
                         time[0] = 0;
                     }
 
@@ -376,9 +376,9 @@ var spacescout_map = null, spacescout_markers = [], speed = 800, update_count = 
                 if ($('#hour-until').val() != 'nopref') {
                     var time = $('#hour-until').val().split(':');
 
-                    if ($('#ampm-until').val() == 'PM' && time[0] != 12) {
-                        time[0] = time[0] + 12;
-                    } else if ($('#ampm-until').val() == 'AM' && time[0] == 12) {
+                    if ($('#ampm-until').val() == 'PM' && Number(time[0]) != 12) {
+                        time[0] = Number(time[0]) + 12;
+                    } else if ($('#ampm-until').val() == 'AM' && Number(time[0]) == 12) {
                         time[0] = 0;
                     }
 
