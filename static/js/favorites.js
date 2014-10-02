@@ -24,8 +24,6 @@
 (function (H, $) {
 
     $(document).ready(function () {
-        console.log(window.spacescout_favorites_list);
-        console.log("r1");
         window.spacescout_favorites.favorites = window.spacescout_favorites_list;
     });
 
@@ -137,7 +135,6 @@
                 };
 
             if ($container.length == 1 && $.isArray(this.favorites)) {
-                console.log('r2');
                 // sort by campus
                 $.each(this.favorites, function () {
                     if (campuses != null) {
