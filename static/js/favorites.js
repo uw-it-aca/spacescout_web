@@ -24,6 +24,8 @@
 (function (H, $) {
 
     $(document).ready(function () {
+        console.log(window.spacescout_favorites_list);
+        console.log("r1");
         window.spacescout_favorites.favorites = window.spacescout_favorites_list;
     });
 
@@ -36,6 +38,7 @@
             'favorites_card_container': '.favorites_card_container',
             'favorites_card_template': '#favorites_card'
         },
+
 
         favorites: window.spacescout_favorites_list,
 
@@ -123,17 +126,18 @@
                     $card = $(template(space));
 
                     if ($spot.length == 0) {
-                        $container.append(card);
+                        $container.append($card);
                     }
                     //TODO: is this a better way?
                     //if ($spot.length == 0) {
                     //    $card.insertBefore('#space-detail-blank', $container);
                     //}
 
-                    $.event.trigger('favoriteCardLoaded', [ card, space ]);
+                    $.event.trigger('favoriteCardLoaded', [ $card, space ]);
                 };
 
-            if (container.length == 1 && $.isArray(this.favorites)) {
+            if ($container.length == 1 && $.isArray(this.favorites)) {
+                console.log('r2');
                 // sort by campus
                 $.each(this.favorites, function () {
                     if (campuses != null) {
@@ -167,7 +171,7 @@
                         campus_name = opts[i].innerHTML;
                         i = ((i + 1) % opts.size());
 
-                        container.append(template({ campus: campus_name + ' Campus' }));
+                        $container.append(template({ campus: campus_name + ' Campus' }));
 
                         if (campuses.hasOwnProperty(campus)) {
                             $.each(campuses[campus], insert_card);
@@ -180,7 +184,7 @@
                     }
                 } else {
                     $.each(this.favorites, insert_card);
-                    container.append(blank);
+                    $container.append(blank);
                 }
 
                 replaceReservationNotesUrls();
