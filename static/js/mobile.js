@@ -23,7 +23,7 @@
 */
 
 // $ = jQuery
-(function (m,$) {
+(function ($, m) {
 
     var deviceAgent = navigator.userAgent.toLowerCase();
 
