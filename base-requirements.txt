@@ -1,6 +1,7 @@
 Django>=1.4,<1.5
 simplejson
 oauth2
+# on ubuntu, python-ldap requires the libldap2-dev package
 python-ldap
 oauth_provider
 django-compressor
