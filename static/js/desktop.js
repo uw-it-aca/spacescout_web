@@ -26,7 +26,7 @@
 // H = Handlebars, $ = jQuery
 (function (H, $, d) {
     //TODO: what does this change from sbutler gain us? What happens to breakpoint / mobile?
-    //window.speed = 600;
+    window.speed = 600;
     var sw = document.body.clientWidth,
         breakpoint = 767,
         speed = 600,
@@ -205,66 +205,65 @@
         window.requests.push(
             $.ajax({
                 url: '/space/'+id+'/json/',
-                success: showSpaceDetails
+                success: _showSpaceDetails
             })
         );
     }
     //TODO: APPLY UIUC CHANGES TO CODE BELOW THIS LINE
 
-	// Show space details (sliding transition)
-	function showSpaceDetails(data) {
-        // format last modified date
-        var last_mod= new Date(data["last_modified"]);
-        var month = last_mod.getMonth();
-        var day = last_mod.getDate();
-        var year = last_mod.getFullYear();
-        data["last_modified"] = month + "/" + day + "/" + year;
+    // Show space details (sliding transition)
+    function _showSpaceDetails(data) {
+          // format last modified date
+          var last_mod= new Date(data["last_modified"]);
+          var month = last_mod.getMonth();
+          var day = last_mod.getDate();
+          var year = last_mod.getFullYear();
+          data["last_modified"] = month + "/" + day + "/" + year;
 
-        // campuses match?
-        if (data['extended_info'].hasOwnProperty('campus')) {
-            $('#location_select option').each(function (i) {
-                var location = $(this).val().split(',');
+          if (data['extended_info'].hasOwnProperty('campus')) {
+              $('#location_select option').each(function (i) {
+                  var location = $(this).val().split(',');
 
-                if (location[2] == data['extended_info']['campus']) {
-                    if (!$(this).is(':selected')) {
-                        $(this).attr('selected', 'selected');
-                        $(this).trigger('change');
-                    }
-                }
-            });
-        }
+                  if (location[2] == data['extended_info']['campus']) {
+                      if (!$(this).is(':selected')) {
+                          $(this).attr('selected', 'selected');
+                          $(this).trigger('change');
+                      }
+                  }
+              });
+          }
 
-        // check to see if the space has the following
-        data["has_notes"] = ( ( data.extended_info.access_notes != null) || ( data.extended_info.reservation_notes != null) );
-        data["has_resources"] = ( data.extended_info.has_computers != null || data.extended_info.has_displays != null || data.extended_info.has_outlets != null || data.extended_info.has_printing != null || data.extended_info.has_projector != null || data.extended_info.has_scanner != null || data.extended_info.has_whiteboards != null );
-        data["review_count"] = (data.extended_info.review_count) || 0;
-        data["stars"] = [];
-        var rating = parseFloat(data.extended_info.rating) || 0;
-        for (var star_pos = 1; star_pos <= 5; star_pos++) {
-            if (rating == star_pos - 0.5) {
-                data.stars.push({ "icon": "fa-star-half-o" });
-            }
-            else if (star_pos <= rating) {
-                data.stars.push({ "icon": "fa-star" });
-            }
-            else {
-                data.stars.push({ "icon": "fa-star-o" });
-            }
-        }
+          // check to see if the space has the following
+          data["has_notes"] = ( ( data.extended_info.access_notes != null) || ( data.extended_info.reservation_notes != null) );
+          data["has_resources"] = ( data.extended_info.has_computers != null || data.extended_info.has_displays != null || data.extended_info.has_outlets != null || data.extended_info.has_printing != null || data.extended_info.has_projector != null || data.extended_info.has_scanner != null || data.extended_info.has_whiteboards != null );
+          data["review_count"] = (data.extended_info.review_count) || 0;
+          data["stars"] = [];
+          var rating = parseFloat(data.extended_info.rating) || 0;
+          for (var star_pos = 1; star_pos <= 5; star_pos++) {
+              if (rating == star_pos - 0.5) {
+                  data.stars.push({ "icon": "fa-star-half-o" });
+              }
+              else if (star_pos <= rating) {
+                  data.stars.push({ "icon": "fa-star" });
+              }
+              else {
+                  data.stars.push({ "icon": "fa-star-o" });
+              }
+          }
 
-    	// remove any open details
+        // remove any open details
         var open = $('.space-detail-container').is(':visible');
 
         $('.space-detail-container').remove();
 
         // build the template
-    	var source = $('#space_details').html();
-    	var template = Handlebars.compile(source);
-    	$('#map_canvas').append(template(data));
+        var source = $('#space_details').html();
+        var template = H.compile(source);
+        $('#map_canvas').append(template(data));
 
         initMapCarouselButtons();
 
-    	// set/reset initial state
+        // set/reset initial state
         $('.space-detail-inner').show();
         $('.space-detail-container').show();
 
@@ -299,7 +298,7 @@
             });
         }
 
-    	initializeCarousel();
+        initializeCarousel();
 
         replaceReservationNotesUrls();
 
@@ -327,12 +326,12 @@
 
         //set focus on the closing x
         $('a.close').focus();
-	}
+    }
 
-	// Desktop display defaults
-	function _desktopContent() {
+	  // Desktop display defaults
+	  function _desktopContent() {
 
-    	var windowH = $(window).height();
+      var windowH = $(window).height();
         var headerH = $('#nav').height();
         var contentH = windowH - headerH;
 
