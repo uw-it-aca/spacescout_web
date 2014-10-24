@@ -334,11 +334,6 @@ var requests = [];
     }
     window.default_open_at_filter = default_open_at_filter;
 
-    function monthname_from_month(month) {
-        var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-
-        return (month >=0 && month < 12) ? months[month] : '';
-    }
 
     function weekday_from_day(day) {
         var weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -702,6 +697,12 @@ var requests = [];
 
 function static_url(base) {
     return window.spacescout_static_url+base;
+}
+
+function monthname_from_month(month) {
+        var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+        return (month >=0 && month < 12) ? months[month] : '';
 }
 
 function replaceReservationNotesUrls(){
