@@ -25,12 +25,7 @@
 
 // H = Handlebars, $ = jQuery
 (function (H, $, d) {
-    //TODO: what does this change from sbutler gain us? What happens to breakpoint / mobile?
     window.speed = 600;
-    var sw = document.body.clientWidth,
-        breakpoint = 767,
-        speed = 600,
-        mobile = true;
 
     H.registerHelper('ifany', function(a, b) {
         // if anything passed is true, return true
@@ -112,7 +107,7 @@
             var $block = $("#filter_block");
 
             if ($block.css('display') == 'none') {
-                getLocationBuildings();
+                window.getLocationBuildings();
                 // reflect current filter
                 if (window.hasOwnProperty('spacescout_search_options')) {
                     clear_filter();

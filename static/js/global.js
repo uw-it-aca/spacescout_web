@@ -378,7 +378,7 @@ var requests = [];
             run_custom_search();
 
             window.update_count = true;
-            getLocationBuildings();
+            _getLocationBuildings();
             $.cookie('default_location', $(this).val(), { path: '/' });
             window.spacescout_url.push();
             reset_location_filter();
@@ -393,7 +393,7 @@ var requests = [];
             window.spacescout_map.setCenter(new GM.LatLng(window.default_latitude, window.default_longitude));
         });
 
-        getLocationBuildings();
+        _getLocationBuildings();
 
         // handle checkbox and radio button clicks
         $('.checkbox input:checkbox').click(function () {
@@ -679,6 +679,47 @@ var requests = [];
     }
     window.replaceUrls = replaceUrls;
 
+    function _getLocationBuildings() {
+        // populate the location filter list
+        var url = '/buildings';
+        if (window.default_location !== null) {
+            url = url + '?campus=' + window.default_location;
+        }
+        $.ajax({
+            url: url,
+            success: _formatLocationFilter
+        });
+    }
+    window.getLocationBuildings = _getLocationBuildings;
+
+    function _formatLocationFilter(data) {
+        var source = $('#building_list').html();
+        var template = Handlebars.compile(source);
+
+        if (source) {
+            $('#building_list_container').html(template({data: data}));
+        }
+
+        //the building multi-select plugin "Chosen" is called here. But it's disabled on mobile
+        if ($.cookie('spacescout_search_opts')) {
+            var form_opts = JSON.parse($.cookie('spacescout_search_opts'));
+            if (form_opts["building_name"]) {
+                $('#e9 option').each(function() {
+                    if ($.inArray( $(this).val(), form_opts["building_name"]) != -1) {
+                        $(this).prop("selected", "selected");
+                    }
+                });
+            }
+        }
+
+        var $node = $(".chzn-select");
+        if ($node.length > 0 && $node.chosen) {
+            $node.chosen({width: "98%"});
+        }
+
+        $('#e9.building-location').trigger("liszt:updated");
+    }
+
     function closeSpaceDetails() {
         var the_spot_id = $('.space-detail-inner').attr("id");
         the_spot_id = "#" + the_spot_id.replace(/[^0-9]/g, '');
@@ -720,43 +761,5 @@ function replaceReservationNotesUrls(){
 }
 
 
-function getLocationBuildings() {
-    // populate the location filter list
-    var url = '/buildings';
-    if (window.default_location !== null) {
-        url = url + '?campus=' + window.default_location;
-    }
-    $.ajax({
-        url: url,
-        success: formatLocationFilter
-    });
-}
 
 
-    function formatLocationFilter(data) {
-        var source = $('#building_list').html();
-        var template = Handlebars.compile(source);
-
-        if (source) {
-            $('#building_list_container').html(template({data: data}));
-        }
-
-        //the building multi-select plugin "Chosen" is called here. But it's disabled on mobile
-        if ($.cookie('spacescout_search_opts')) {
-            var form_opts = JSON.parse($.cookie('spacescout_search_opts'));
-            if (form_opts["building_name"]) {
-                $('#e9 option').each(function() {
-                    if ($.inArray( $(this).val(), form_opts["building_name"]) != -1) {
-                        $(this).prop("selected", "selected");
-                    }
-                });
-            }
-        }
-
-        var $node = $(".chzn-select");
-        if ($node.length > 0 && $node.chosen) {
-            $node.chosen({width: "98%"});
-        }
-
-        $('#e9.building-location').trigger("liszt:updated");
-    }
