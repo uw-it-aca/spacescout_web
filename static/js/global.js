@@ -379,7 +379,7 @@ var requests = [];
 
             window.update_count = true;
             getLocationBuildings();
-            $.cookie('default_location', $(this).val());
+            $.cookie('default_location', $(this).val(), { path: '/' });
             window.spacescout_url.push();
             reset_location_filter();
         });
