@@ -208,7 +208,7 @@ function loadRatingsAndReviews(id, review_container, rating_container) {
                         reviewer: this.reviewer,
                         rating_description: rating_descriptions[rating - 1],
                         review: (this.review && this.review.length) ? this.review : 'No review provided',
-                        date: date ? monthname_from_month(date.getMonth()) + ' ' + date.getDate() + ', ' + date.getFullYear() : ''
+                        date: date ? window.monthNameByMonth(date.getMonth()) + ' ' + date.getDate() + ', ' + date.getFullYear() : ''
                     }));
 
                     rating_sum += parseInt(this.rating);
