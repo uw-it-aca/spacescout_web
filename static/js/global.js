@@ -325,28 +325,23 @@ var requests = [];
         }
 
         hour = ""+hour+":"+min;
-        $("#day-from").val(weekDayFromDay(date.getDay()));
+        $("#day-from").val(weekday_from_day(date.getDay()));
         $("#hour-from").val(hour);
 
 
-        $("#day-until").val(weekDayFromDay(date.getDay()));
+        $("#day-until").val(weekday_from_day(date.getDay()));
         $("#hour-until").val(hour);
     }
     window.default_open_at_filter = default_open_at_filter;
 
 
-    function weekDayFromDay(day) {
+    function weekday_from_day(day) {
         var weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         return (day >= 0 && day <= 6) ? weekdays[day] : '';
     }
-    window.weekDayFromDay = weekDayFromDay;
+    window.weekday_from_day = weekday_from_day;
 
-    function monthNameFromMonth(month) {
-            var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-            return (month >=0 && month < 12) ? months[month] : '';
-    }
-    window.monthNameFromMonth = monthNameFromMonth;
 
     // Found at http://stackoverflow.com/questions/476679/preloading-images-with-jquery
     function _preloadImages(arrayOfImages) {
@@ -745,6 +740,12 @@ function static_url(base) {
     return window.spacescout_static_url+base;
 }
 
+function monthname_from_month(month) {
+        var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+        return (month >=0 && month < 12) ? months[month] : '';
+}
+
 function replaceReservationNotesUrls(){
     // Replace urls in reservation notes with actual links.
     $(".ei_reservation_notes").each(function() {
@@ -758,3 +759,7 @@ function replaceReservationNotesUrls(){
         }
     });
 }
+
+
+
+
