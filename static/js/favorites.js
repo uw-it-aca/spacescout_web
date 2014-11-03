@@ -175,7 +175,7 @@
                         }
 
                         if (blank) {
-                            container.append(blank);
+                            $container.append(blank);
                             blank = null;
                         }
                     }
