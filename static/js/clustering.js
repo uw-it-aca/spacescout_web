@@ -154,7 +154,7 @@
             labelClass: "map-label", // the CSS class for the label
             labelAnchor: new GM.Point(15, 34) // position label over main_icon (position assumes 40x40 marker)
         });
-        
+
         GM.event.addListener(marker, 'click', function() {
             _loadMarkerSpots(marker, marker.spots); 
         });
