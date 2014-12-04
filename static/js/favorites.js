@@ -463,7 +463,7 @@
             });
 
             $('.space-detail-fav', card).click(function (e) {
-                window.spacescout_favorites.clear(parseInt($(this).attr('data-id')));
+                window.spacescout_favorites.clear(parseInt($(this).data('id')));
             });
 
             $(document).on('spaceFavoriteClear', function (e, id) {
