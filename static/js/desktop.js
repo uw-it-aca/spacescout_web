@@ -87,7 +87,7 @@
             initialize();
 
             // Update dimensions on resize
-            $(d).resize(function(){
+            $(window).resize(function(){
 
                 // desktop
                 desktopContent();
@@ -204,7 +204,6 @@
             })
         );
     }
-    //TODO: APPLY UIUC CHANGES TO CODE BELOW THIS LINE
 
     // Show space details (sliding transition)
     function _showSpaceDetails(data) {
