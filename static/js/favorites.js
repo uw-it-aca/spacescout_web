@@ -107,29 +107,15 @@
                     space.type = type.join(', ');
                     space.extended_info.noise_level = gettext(space.extended_info.noise_level);
                     space.extended_info.food_nearby = gettext(space.extended_info.food_nearby);
-                    space.has_reservation_notes = space.extended_info.reservation_notes != null;
-                    space.has_notes = ( ( space.extended_info.access_notes != null) || space.has_reservation_notes );
-                    space.has_resources = ( space.extended_info.has_computers != null ||
-                                            space.extended_info.has_displays != null ||
-                                            space.extended_info.has_outlets != null ||
-                                            space.extended_info.has_printing != null ||
-                                            space.extended_info.has_projector != null ||
-                                            space.extended_info.has_scanner != null ||
-                                            space.extended_info.has_whiteboards != null );
-                    //TODO: are these a better way to do this?
-                    //this.has_reservation_notes = !!this.extended_info.reservation_notes;
-                    //this.has_notes = ( this.extended_info.access_notes || this.has_reservation_notes );
-                    //this.has_resources = ( this.extended_info.has_computers || this.extended_info.has_displays || this.extended_info.has_outlets || this.extended_info.has_printing || this.extended_info.has_projector || this.extended_info.has_scanner || this.extended_info.has_whiteboards );
+                    this.has_reservation_notes = !!this.extended_info.reservation_notes;
+                    this.has_notes = ( this.extended_info.access_notes || this.has_reservation_notes );
+                    this.has_resources = ( this.extended_info.has_computers || this.extended_info.has_displays || this.extended_info.has_outlets || this.extended_info.has_printing || this.extended_info.has_projector || this.extended_info.has_scanner || this.extended_info.has_whiteboards );
 
                     $card = $(template(space));
 
                     if ($spot.length == 0) {
                         $container.append($card);
                     }
-                    //TODO: is this a better way?
-                    //if ($spot.length == 0) {
-                    //    $card.insertBefore('#space-detail-blank', $container);
-                    //}
 
                     $.event.trigger('favoriteCardLoaded', [ $card, space ]);
                 };
