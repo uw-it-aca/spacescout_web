@@ -19,10 +19,6 @@ from spacescout_web.forms.contact import ContactForm
 from spacescout_web.spot import Spot, SpotException
 from django.core.mail import send_mail
 from django.conf import settings
-import simplejson as json
-import sys
-import urllib2
-import re
 import logging
 
 
