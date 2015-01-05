@@ -90,7 +90,7 @@
             $(window).resize(function(){
 
                 // desktop
-                desktopContent();
+                _desktopContent();
 
                 // if the space details is already open
                 if ($('.space-detail-container').is(":visible")) {

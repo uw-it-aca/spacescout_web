@@ -543,7 +543,7 @@ var requests = [];
                     $('#spaceMap', $container).show();
                     $('#carouselControl.btn', $container).attr("tabindex", 0).attr("aria-selected", false);
                     $('#mapControl.btn', $container).attr("tabindex", -1).attr("aria-selected", true);
-                    coords = JSON.parse($target.data('location'));
+                    coords = $target.data('location');
                     _getSpaceMap($container, coords[0], coords[1]);
                 }
             }
