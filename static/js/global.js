@@ -598,14 +598,6 @@ var requests = [];
             map: map,
             icon: image
         });
-
-        // calcuate height based on 3:2 aspect ratio
-        var containerH = containerW / 1.5;
-
-        $('.carousel').height(containerH);
-        $('.carousel-inner-image').height(containerH);
-        $('.carousel-inner-image-inner').height(containerH);
-        $('.map-container').height(containerH);
     }
 
     function resetFilters() {
