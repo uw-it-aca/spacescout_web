@@ -589,8 +589,7 @@ var requests = [];
 
         var map = new GM.Map($('#spaceMap', container).get(0), mapOptions);
 
-        //TODO: is this actually used?
-        var image = '/static/img/pins/pin00.png';
+        var image = static_url('img/pins/pin00.png');
 
         var spaceLatLng = new GM.LatLng(lat , lon);
         var spaceMarker = new GM.Marker({
