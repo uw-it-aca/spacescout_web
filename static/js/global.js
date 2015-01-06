@@ -625,37 +625,6 @@ var requests = [];
         reset_location_filter();
     }
 
-    function getSpaceMap(container, lat, lon) {
-
-      if (window.space_latitude) {
-        lat = window.space_latitude;
-      }
-
-      if (window.space_longitude) {
-        lon = window.space_longitude;
-      }
-
-      var mapOptions = {
-        zoom: 17,
-        center: new google.maps.LatLng(lat , lon),
-        mapTypeId: google.maps.MapTypeId.ROADMAP,
-        mapTypeControl: false,
-        streetViewControl: false
-      };
-
-      var map = new google.maps.Map($('#spaceMap', container).get(0), mapOptions);
-
-      var image = static_url('img/pins/pin00.png');
-
-      var spaceLatLng = new google.maps.LatLng(lat , lon);
-      var spaceMarker = new google.maps.Marker({
-          position: spaceLatLng,
-          map: map,
-          icon: image
-      });
-
-    }
-
     function replaceUrls(){
         // Replace urls in reservation notes with actual links.
         var text = $("#ei_reservation_notes").html();
