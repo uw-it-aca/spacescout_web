@@ -162,7 +162,7 @@
         $('#filter_button').click(function () {
             var block = $("#filter_block");
             if (block.css('display') == 'none') {
-                _getLocationBuildings();
+                window.getLocationBuildings();
 
                 // reflect current filter
                 if (window.hasOwnProperty('spacescout_search_options')) {
