@@ -209,7 +209,7 @@
     function _showSpaceDetails(data) {
           // format last modified date
           var last_mod= new Date(data["last_modified"]);
-          var month = last_mod.getMonth();
+          var month = last_mod.getMonth() + 1;
           var day = last_mod.getDate();
           var year = last_mod.getFullYear();
           data["last_modified"] = month + "/" + day + "/" + year;
