@@ -212,7 +212,7 @@ def get_space_json(client, search_args, use_cache, fill_cache, cache_period):
             for t in space['type']:
                 typelist.append(_(t))
 
-            space["type"] = ','.join(typelist)
+            space["type"] = ', '.join(typelist)
 
     if fill_cache:
         cache_key = get_key_for_search_args(search_args)
