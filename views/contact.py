@@ -14,7 +14,7 @@
 """
 from django.shortcuts import render_to_response, render
 from django.template import RequestContext
-from django.http import HttpResponseRedirect, Http404
+from django.http import HttpResponseRedirect, Http404, HttpRequest
 from spacescout_web.forms.contact import ContactForm
 from spacescout_web.spot import Spot, SpotException
 from django.core.mail import send_mail
@@ -110,7 +110,7 @@ def _contact_variables(request, spot_id):
         try:
             spot = Spot(spot_id).get()
         except SpotException as ex:
-            logger.error('Contact exception : %s' % (ex))
+            logger.warning(request.META['REMOTE_ADDR'] + " " + request.META['USER'] + " [" + ex.message.get('date') + "] \"" + request.method + " " + request.path_info + "\" " + ex.message.get('status'))
             raise Http404
 
         spot_name = spot["name"]
