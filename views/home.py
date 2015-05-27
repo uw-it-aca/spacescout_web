@@ -81,14 +81,16 @@ def HomeView(request, template=None):
         'Accept': 'application/json'
         }
 
+    favorites_json = {}
+
     if request.user and request.user.is_authenticated():
         headers["XOAUTH_USER"] = "%s" % request.user.username
+        favorites_json = get_favorites_json(headers, client)
 
     log_shared_space_reference(request, headers, client)
 
     buildings = json.loads(get_building_json(client))
 
-    favorites_json = get_favorites_json(headers, client)
 
     # This could probably be a template tag, but didn't seem worth it for one-time use
     #TODO: hey, actually it's probably going to be a Handlebars helper and template
