@@ -192,8 +192,8 @@ def _share_variables(request, spot_id):
     else:
        is_mobile = False
 
-    if is_mobile and spot_id is not None:
-        back = ('/space/' + spot_id)
+    if request.GET['back']:
+        back = request.GET['back']
     else:
         back = '/'
 

@@ -20,6 +20,7 @@ from spacescout_web.spot import Spot, SpotException
 from django.core.mail import send_mail
 from django.conf import settings
 import logging
+import re
 
 
 logger = logging.getLogger(__name__)
