@@ -107,9 +107,9 @@
 
           <!-- Google Maps -->
           {% if gmaps_api_key %}
-          <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?v=3.15&amp;key={{ gmaps_api_key }}&amp;libraries=geometry&amp;sensor=false"></script>
+          <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?v=3&amp;key={{ gmaps_api_key }}&amp;libraries=geometry&amp;sensor=false"></script>
           {% else %}
-          <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?v=3.15&amp;libraries=geometry&amp;sensor=false"></script>
+          <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?libraries=geometry&amp;sensor=false"></script>
           {% endif %}
 
             {% compress js %}
