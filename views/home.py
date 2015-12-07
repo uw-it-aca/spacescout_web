@@ -59,7 +59,7 @@ def HomeView(request, template=None):
         if hasattr(settings, 'SS_DEFAULT_LOCATION'):
             location = settings.SS_DEFAULT_LOCATION
 
-    spaces, template_values = get_campus_data(location)
+    spaces, template_values = get_campus_data(request, location)
 
     spaces = json.dumps(spaces)
 
@@ -103,7 +103,6 @@ def HomeView(request, template=None):
             buildingdict[building[0]].append(building)
         except:
             pass
-
     params = {
         'username' : request.user.username if request.user and request.user.is_authenticated() else '',
         'center_latitude': template_values['center_latitude'],
@@ -132,8 +131,8 @@ def get_key_for_search_args(search_args):
 
     return "space_search_%s" % hashlib.sha224(joined).hexdigest()
 
-def get_campus_data(campus):
-    spaces = fetch_open_now_for_campus(campus)
+def get_campus_data(request, campus):
+    spaces = fetch_open_now_for_campus(request, campus)
     template_values = template_values_for_campus(campus)
 
     return spaces, template_values
@@ -154,7 +153,7 @@ def template_values_for_campus(campus):
         'zoom_level': location['ZOOM_LEVEL'],
     }
 
-def fetch_open_now_for_campus(campus, use_cache=True, fill_cache=False, cache_period=FIVE_MINUTE_CACHE):
+def fetch_open_now_for_campus(request, campus, use_cache=True, fill_cache=False, cache_period=FIVE_MINUTE_CACHE):
     if campus is None:
         # Default to zooming in on the UW Seattle campus
         center_latitude = '47.655003'
@@ -179,6 +178,11 @@ def fetch_open_now_for_campus(campus, use_cache=True, fill_cache=False, cache_pe
     consumer = oauth2.Consumer(key=settings.SS_WEB_OAUTH_KEY, secret=settings.SS_WEB_OAUTH_SECRET)
     client = oauth2.Client(consumer)
 
+    search_args = create_query(request, center_latitude, center_longitude, distance)
+
+    return get_space_json(client, search_args, use_cache, fill_cache, cache_period)
+
+def create_query(request, center_latitude, center_longitude, distance):
     search_args = {
         'center_latitude': center_latitude,
         'center_longitude': center_longitude,
@@ -187,7 +191,58 @@ def fetch_open_now_for_campus(campus, use_cache=True, fill_cache=False, cache_pe
         'limit': '0',
     }
 
-    return get_space_json(client, search_args, use_cache, fill_cache, cache_period)
+    request_parts = request.path.split('/')
+    campus = request_parts[1]
+    params = request_parts[2].split('|')
+    for param in params:
+        if param.count(':') == 1 and param.find(':') > -1:
+            key, value = param.split(':')
+        elif param.find(':') > -1:
+            parts = param.split(':')
+            key = parts[0]
+            parts = parts[1:]
+            for x in range(0, len(parts)):
+                if x == 0:
+                    value = parts[x]
+                else:
+                    value = value + ':' + parts[x]
+        else:
+            key = param
+
+        if key == 'type':
+            search_args['type'] = value.split(',')
+        elif key == 'reservable':
+            search_args['reservable'] = True
+        elif key == 'cap':
+            search_args['capacity'] = int(value)
+        elif key == 'open':
+            search_args['open_at'] = value
+        elif key == 'close':
+            search_args['open_until'] = value
+        elif key == 'bld':
+            search_args['buiding_name'] = value.split(',')
+        elif key == 'rwb':
+            search_args['extended_info:has_whiteboards'] = True
+        elif key == 'rol':
+            search_args['extended_info:has_outlets'] = True
+        elif key == 'rcp':
+            search_args['extended_info:has_computers'] = True
+        elif key == 'rsc':
+            search_args['extended_info:has_scanner'] = True
+        elif key == 'rpj':
+            search_args['extended_info:has_projector'] = True
+        elif key == 'rpr':
+            search_args['extended_info:has_printing'] = True
+        elif key == 'rds':
+            search_args['extended_info:has_displays'] = True
+        elif key == 'natl':
+            search_args['extended_info:has_natural_light'] = True
+        elif key == 'noise':
+            search_args['extended_info:noise_level'] = value.split(',')
+        elif key == 'food':
+            search_args['extended_info:food_nearby'] = value.split(',')
+
+    return search_args
 
 def get_space_json(client, search_args, use_cache, fill_cache, cache_period):
     # We don't want the management command that fills the cache to get
@@ -226,7 +281,14 @@ def get_space_json(client, search_args, use_cache, fill_cache, cache_period):
 def fetch_space_json(client, search_args):
     query = []
     for key, value in search_args.items():
-        query.append("%s=%s" % (key, value))
+        if (key == 'type'
+                or key == 'extended_info:noise_level'
+                or key == 'extended_info:food_nearby'):
+            values = value
+            for value in values:
+                query.append("%s=%s" % (key, value))
+        else:
+            query.append("%s=%s" % (key, value))
 
     url = "{0}/api/v1/spot/?{1}".format(settings.SS_WEB_SERVER_HOST, "&".join(query))
     resp, content = client.request(url, 'GET')
