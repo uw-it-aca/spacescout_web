@@ -19,11 +19,11 @@
     {% if is_mobile %}
     <div id="space_details_header" class="clearfix">
         <h1 class="visuallyhidden">SPACESCOUT&trade;</h1>
-    </div>
-    <div style="padding:0px 10px 10px 10px; background:#fff; overflow: hidden;" role="main" aria-labelledby="contact_header">
-        <div class="pull-left back-button" style="margin:5px 1-px 0px 0px;">
-            <a href='{{ back }}' title="back" id="cookieSet"><img id="back_to_space_button" src="{% static 'img/details_arrow.png' %}" alt="Back"/><span class="contact-header"> Back</span></a>
+        <img id="back_home_button" class="pull-left back-button" src="{% static 'img/details_arrow.png' %}" />
+        <div id="name-type-block" class="pull-left">
+            <h2 class="space-detail-name" style=""><span>Back to space details</span><br />Report a Problem</h2>
         </div>
+    </div>
 
 
     {% else %}
@@ -32,12 +32,12 @@
             <a href="/" title="Spacesout home page"><div class="logo"><h1 class="visuallyhidden">SPACESCOUT&trade;</h1></div></a>
         </div>
     </div>
-    <div id="main_content" style="padding: 80px; overflow: hidden;" role="main" aria-labelledby="contact_header">
+    {% endif %}
+
+    <div {% if is_mobile %}style="padding:0px 10px 10px 10px; background:#fff; overflow: hidden;" {% else %}id="main_content" style="padding: 80px; overflow: hidden;"{% endif %} role="main" aria-labelledby="contact_header">
         <div class="actions pull-left back-button" style="margin:5px 10px 0px 0px;">
             <a href='{{ back }}' title="back" id="cookieSet"><img id="back_to_space_button" src="{% static 'img/details_arrow.png' %}" alt="Back"/> Back</a>
         </div>
-        {% endif %}
-
         {% block contact-content %}{% endblock %}
     </div>
 {% endblock %}
