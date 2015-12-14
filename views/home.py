@@ -212,7 +212,7 @@ def create_query(request, center_latitude, center_longitude, distance):
         if key == 'type':
             search_args['type'] = value.split(',')
         elif key == 'reservable':
-            search_args['reservable'] = True
+            search_args['extended_info:reservable'] = 'true'
         elif key == 'cap':
             search_args['capacity'] = int(value)
         elif key == 'open':
@@ -220,7 +220,7 @@ def create_query(request, center_latitude, center_longitude, distance):
         elif key == 'close':
             search_args['open_until'] = value
         elif key == 'bld':
-            search_args['buiding_name'] = value.split(',')
+            search_args['building_name'] = value.split(',')
         elif key == 'rwb':
             search_args['extended_info:has_whiteboards'] = True
         elif key == 'rol':
@@ -283,9 +283,12 @@ def fetch_space_json(client, search_args):
     for key, value in search_args.items():
         if (key == 'type'
                 or key == 'extended_info:noise_level'
-                or key == 'extended_info:food_nearby'):
+                or key == 'extended_info:food_nearby'
+                or key == 'building_name'):
             values = value
             for value in values:
+                if key == 'building_name':
+                    value = value.replace(' ', '+')
                 query.append("%s=%s" % (key, value))
         else:
             query.append("%s=%s" % (key, value))
