@@ -628,7 +628,7 @@ var requests = [];
     function replaceUrls(){
         // Replace urls in reservation notes with actual links.
         var text = $("#ei_reservation_notes").html();
-        var patt = /\b(?:https?|ftp):\/\/[a-z0-9-+&@#\/%?=~_|!:,.;]*[a-z0-9-+&@#\/%=~_|]/gim;
+        var patt = /\b(?:https?|ftp|http):\/\/[a-z0-9-+&@#\/%?=~_|!:,.;]*[a-z0-9-+&@#\/%=~_|]/gim;
         var url = patt.exec(text);
         if (url !== null) {
             text = text.replace(url, "<a href='" + url + "' target='_blank'>" + url + "</a>");
@@ -706,13 +706,23 @@ function monthname_from_month(month) {
 
 function replaceReservationNotesUrls(){
     // Replace urls in reservation notes with actual links.
-    $(".ei_reservation_notes").each(function() {
+    $("#ei_reservation_notes").each(function() {
         var text = $(this).html(),
             patt = /\b(?:https?|ftp):\/\/[a-z0-9-+&@#\/%?=~_|!:,.;]*[a-z0-9-+&@#\/%=~_|]/gim,
             url = patt.exec(text);
 
         if (url !== null) {
             text = text.replace(url, "<a href='" + url + "' target='_blank'>" + url + "</a>");
+            $(this).html(text);
+        }
+    });
+    $("#hours_notes").each(function() {
+        var text = $(this).html(),
+            patt = /\b(?:https?|ftp):\/\/[a-z0-9-+&@#\/%?=~_|!:,.;]*[a-z0-9-+&@#\/%=~_|]/gim,
+            url = patt.exec(text);
+
+        if (url !== null) {
+            text = text.replace(url, "<a href='" + url + "' target=_blank'>" + url + "</a>");
             $(this).html(text);
         }
     });

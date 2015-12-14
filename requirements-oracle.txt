@@ -5,6 +5,7 @@ django-compressor
 django-mobility
 django-templatetag-handlebars
 oauth_provider
+mock==1.0.1
 
 -e git+git://github.com/sbutler/django-shibboleth-remoteuser.git#egg=django-shibboleth-remoteuser
 
