@@ -191,56 +191,58 @@ def create_query(request, center_latitude, center_longitude, distance):
         'limit': '0',
     }
 
-    request_parts = request.path.split('/')
-    campus = request_parts[1]
-    params = request_parts[2].split('|')
-    for param in params:
-        if param.count(':') == 1 and param.find(':') > -1:
-            key, value = param.split(':')
-        elif param.find(':') > -1:
-            parts = param.split(':')
-            key = parts[0]
-            parts = parts[1:]
-            for x in range(0, len(parts)):
-                if x == 0:
-                    value = parts[x]
-                else:
-                    value = value + ':' + parts[x]
-        else:
-            key = param
+    #TODO: abstract out all the checks for specific extended info
+    if request.path != u'/':
+        request_parts = request.path.split('/')
+        campus = request_parts[1]
+        params = request_parts[2].split('|')
+        for param in params:
+            if param.count(':') == 1 and param.find(':') > -1:
+                key, value = param.split(':')
+            elif param.find(':') > -1:
+                parts = param.split(':')
+                key = parts[0]
+                parts = parts[1:]
+                for x in range(0, len(parts)):
+                    if x == 0:
+                        value = parts[x]
+                    else:
+                        value = value + ':' + parts[x]
+            else:
+                key = param
 
-        if key == 'type':
-            search_args['type'] = value.split(',')
-        elif key == 'reservable':
-            search_args['extended_info:reservable'] = 'true'
-        elif key == 'cap':
-            search_args['capacity'] = int(value)
-        elif key == 'open':
-            search_args['open_at'] = value
-        elif key == 'close':
-            search_args['open_until'] = value
-        elif key == 'bld':
-            search_args['building_name'] = value.split(',')
-        elif key == 'rwb':
-            search_args['extended_info:has_whiteboards'] = True
-        elif key == 'rol':
-            search_args['extended_info:has_outlets'] = True
-        elif key == 'rcp':
-            search_args['extended_info:has_computers'] = True
-        elif key == 'rsc':
-            search_args['extended_info:has_scanner'] = True
-        elif key == 'rpj':
-            search_args['extended_info:has_projector'] = True
-        elif key == 'rpr':
-            search_args['extended_info:has_printing'] = True
-        elif key == 'rds':
-            search_args['extended_info:has_displays'] = True
-        elif key == 'natl':
-            search_args['extended_info:has_natural_light'] = True
-        elif key == 'noise':
-            search_args['extended_info:noise_level'] = value.split(',')
-        elif key == 'food':
-            search_args['extended_info:food_nearby'] = value.split(',')
+            if key == 'type':
+                search_args['type'] = value.split(',')
+            elif key == 'reservable':
+                search_args['extended_info:reservable'] = 'true'
+            elif key == 'cap':
+                search_args['capacity'] = int(value)
+            elif key == 'open':
+                search_args['open_at'] = value
+            elif key == 'close':
+                search_args['open_until'] = value
+            elif key == 'bld':
+                search_args['building_name'] = value.split(',')
+            elif key == 'rwb':
+                search_args['extended_info:has_whiteboards'] = True
+            elif key == 'rol':
+                search_args['extended_info:has_outlets'] = True
+            elif key == 'rcp':
+                search_args['extended_info:has_computers'] = True
+            elif key == 'rsc':
+                search_args['extended_info:has_scanner'] = True
+            elif key == 'rpj':
+                search_args['extended_info:has_projector'] = True
+            elif key == 'rpr':
+                search_args['extended_info:has_printing'] = True
+            elif key == 'rds':
+                search_args['extended_info:has_displays'] = True
+            elif key == 'natl':
+                search_args['extended_info:has_natural_light'] = True
+            elif key == 'noise':
+                search_args['extended_info:noise_level'] = value.split(',')
+            elif key == 'food':
+                search_args['extended_info:food_nearby'] = value.split(',')
 
     return search_args
 
@@ -280,6 +282,8 @@ def get_space_json(client, search_args, use_cache, fill_cache, cache_period):
 
 def fetch_space_json(client, search_args):
     query = []
+
+    #TODO: abstract out all checks for specific extended info
     for key, value in search_args.items():
         if (key == 'type'
                 or key == 'extended_info:noise_level'
