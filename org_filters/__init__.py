@@ -97,6 +97,13 @@ class SearchFilterChain(object):
             args = f.filter_args(args)
         return args
 
+    def url_args(self, args):
+        """Calls url_args for each defined filter."""
+        search_args = []
+        for f in self.filters:
+            search_args = f.url_args(args)
+        return search_args
+
     def filters_key(self, key):
         return key in SearchFilterChain.keys
 

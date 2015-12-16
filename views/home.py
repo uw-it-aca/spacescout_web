@@ -26,6 +26,7 @@ from django.core.cache import cache
 from django.utils.translation import ugettext as _
 import types
 import re
+from spacescout_web.org_filters import SearchFilterChain
 
 FIVE_MINUTE_CACHE = 300
 
@@ -124,8 +125,9 @@ def HomeView(request, template=None):
 
 def get_key_for_search_args(search_args):
     query = []
-    for key, value in search_args.items():
-        query.append("%s=%s" % (key, value))
+    for search_arg in search_args:
+        for key, value in search_arg.items():
+            query.append("%s=%s" % (key, value))
 
     joined = "&".join(query)
 
@@ -178,73 +180,16 @@ def fetch_open_now_for_campus(request, campus, use_cache=True, fill_cache=False,
     consumer = oauth2.Consumer(key=settings.SS_WEB_OAUTH_KEY, secret=settings.SS_WEB_OAUTH_SECRET)
     client = oauth2.Client(consumer)
 
-    search_args = create_query(request, center_latitude, center_longitude, distance)
+    chain = SearchFilterChain(request)
+    search_url_args = []
+    search_url_args = chain.url_args(request)
+    search_url_args.append({'center_latitude':center_latitude})
+    search_url_args.append({'center_longitude':center_longitude})
+    search_url_args.append({'open_now':'1'})
+    search_url_args.append({'distance':distance})
+    search_url_args.append({'limit':'0'})
 
-    return get_space_json(client, search_args, use_cache, fill_cache, cache_period)
-
-def create_query(request, center_latitude, center_longitude, distance):
-    search_args = {
-        'center_latitude': center_latitude,
-        'center_longitude': center_longitude,
-        'open_now': '1',
-        'distance': distance,
-        'limit': '0',
-    }
-
-    #TODO: abstract out all the checks for specific extended info
-    if request.path != u'/':
-        request_parts = request.path.split('/')
-        campus = request_parts[1]
-        params = request_parts[2].split('|')
-        for param in params:
-            if param.count(':') == 1 and param.find(':') > -1:
-                key, value = param.split(':')
-            elif param.find(':') > -1:
-                parts = param.split(':')
-                key = parts[0]
-                parts = parts[1:]
-                for x in range(0, len(parts)):
-                    if x == 0:
-                        value = parts[x]
-                    else:
-                        value = value + ':' + parts[x]
-            else:
-                key = param
-
-            if key == 'type':
-                search_args['type'] = value.split(',')
-            elif key == 'reservable':
-                search_args['extended_info:reservable'] = 'true'
-            elif key == 'cap':
-                search_args['capacity'] = int(value)
-            elif key == 'open':
-                search_args['open_at'] = value
-            elif key == 'close':
-                search_args['open_until'] = value
-            elif key == 'bld':
-                search_args['building_name'] = value.split(',')
-            elif key == 'rwb':
-                search_args['extended_info:has_whiteboards'] = True
-            elif key == 'rol':
-                search_args['extended_info:has_outlets'] = True
-            elif key == 'rcp':
-                search_args['extended_info:has_computers'] = True
-            elif key == 'rsc':
-                search_args['extended_info:has_scanner'] = True
-            elif key == 'rpj':
-                search_args['extended_info:has_projector'] = True
-            elif key == 'rpr':
-                search_args['extended_info:has_printing'] = True
-            elif key == 'rds':
-                search_args['extended_info:has_displays'] = True
-            elif key == 'natl':
-                search_args['extended_info:has_natural_light'] = True
-            elif key == 'noise':
-                search_args['extended_info:noise_level'] = value.split(',')
-            elif key == 'food':
-                search_args['extended_info:food_nearby'] = value.split(',')
-
-    return search_args
+    return get_space_json(client, search_url_args, use_cache, fill_cache, cache_period)
 
 def get_space_json(client, search_args, use_cache, fill_cache, cache_period):
     # We don't want the management command that fills the cache to get
@@ -284,17 +229,8 @@ def fetch_space_json(client, search_args):
     query = []
 
     #TODO: abstract out all checks for specific extended info
-    for key, value in search_args.items():
-        if (key == 'type'
-                or key == 'extended_info:noise_level'
-                or key == 'extended_info:food_nearby'
-                or key == 'building_name'):
-            values = value
-            for value in values:
-                if key == 'building_name':
-                    value = value.replace(' ', '+')
-                query.append("%s=%s" % (key, value))
-        else:
+    for search_arg in search_args:
+        for key, value in search_arg.items():
             query.append("%s=%s" % (key, value))
 
     url = "{0}/api/v1/spot/?{1}".format(settings.SS_WEB_SERVER_HOST, "&".join(query))
