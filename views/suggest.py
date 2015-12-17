@@ -28,7 +28,6 @@ logger = logging.getLogger(__name__)
 def suggest(request, spot_id=None):
     if request.method == 'POST':
         form = SuggestForm(request.POST)
-        #send_mail('Subject here', 'sss', 'mingwd@uw.edu', ['dmw9120@gmail.com'], fail_silently=False)
 
         try:
             back = request.POST['back']
@@ -52,7 +51,6 @@ def suggest(request, spot_id=None):
             browser = request.META.get('HTTP_USER_AGENT', 'Unknown')
 
             subject = "[Suggestion] From %s" % (name)
-            send_mail('Subject here', campus_name, 'mingwd@uw.edu', ['dmw9120@gmail.com'], fail_silently=False)
 
             email_message = "A SpaceScout user has suggested the following space.\n\
                            \nSuggested Space:\n\
