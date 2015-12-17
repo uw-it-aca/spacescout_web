@@ -25,10 +25,10 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-
 def suggest(request, spot_id=None):
     if request.method == 'POST':
         form = SuggestForm(request.POST)
+        #send_mail('Subject here', 'sss', 'mingwd@uw.edu', ['dmw9120@gmail.com'], fail_silently=False)
 
         try:
             back = request.POST['back']
@@ -41,6 +41,7 @@ def suggest(request, spot_id=None):
             name = form.cleaned_data['name']
             netid = form.cleaned_data['netid']
             sender = form.cleaned_data['sender']
+            campus_name = form.cleaned_data['campus_name']
             building = form.cleaned_data['building']
             floor = form.cleaned_data['floor']
             room_number = form.cleaned_data['room_number']
@@ -51,16 +52,19 @@ def suggest(request, spot_id=None):
             browser = request.META.get('HTTP_USER_AGENT', 'Unknown')
 
             subject = "[Suggestion] From %s" % (name)
+            send_mail('Subject here', campus_name, 'mingwd@uw.edu', ['dmw9120@gmail.com'], fail_silently=False)
+
             email_message = "A SpaceScout user has suggested the following space.\n\
                            \nSuggested Space:\n\
                            \nFrom: %s <%s>\n\
                            \nUW NetID: %s\n\
+                           \nCampus: %s\n\
                            \nBuilding: %s\n\
                            \nFloor: %s\n\
                            \nRoom number: %s\n\
                            \nDescription: %s\n\
                            \nJustification: %s\n\
-                           \nBrowser Type = %s" % (name, sender, netid, building,
+                           \nBrowser Type = %s" % (name, sender, netid, campus_name, building,
                                                    floor, room_number, description,
                                                    justification, browser)
 
