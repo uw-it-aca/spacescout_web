@@ -74,7 +74,7 @@ def suggest(request, spot_id=None):
                     return HttpResponseRedirect('/sorry/')
 
 
-            return HttpResponseRedirect('/thankyou/?back=' + urlquote(back))
+            return HttpResponseRedirect('/suggest/thankyou/?back=' + urlquote(back))
     else:
         try:
             back = request.GET['back']
