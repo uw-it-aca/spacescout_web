@@ -4,6 +4,6 @@ oauth2
 # on ubuntu, python-ldap requires the libldap2-dev package
 python-ldap
 oauth_provider
-django-compressor
+django-compressor<2.0
 django-mobility
 django-templatetag-handlebars
