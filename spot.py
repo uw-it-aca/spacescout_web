@@ -22,6 +22,9 @@ import re
 class SpotException(Exception):
     """ Exception for invalid Spot.
     """
+    def __init__(self, resp):
+        self.resp = resp
+            
     pass
 
 
