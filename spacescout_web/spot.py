@@ -24,7 +24,6 @@ class SpotException(Exception):
     """
     def __init__(self, resp):
         self.resp = resp
-            
     pass
 
 
