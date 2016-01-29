@@ -214,6 +214,11 @@
           var year = last_mod.getFullYear();
           data["last_modified"] = month + "/" + day + "/" + year;
 
+          //if space does not exist
+          if(data['extended_info'] == undefined) {
+            window.location.href = '/space-not-found';
+          }
+
           if (data['extended_info'].hasOwnProperty('campus')) {
               $('#location_select option').each(function (i) {
                   var location = $(this).val().split(',');
@@ -226,6 +231,7 @@
                   }
               });
           }
+
 
           // check to see if the space has the following
           data["has_notes"] = ( ( data.extended_info.access_notes != null) || ( data.extended_info.reservation_notes != null) );
