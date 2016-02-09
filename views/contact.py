@@ -14,7 +14,7 @@
 """
 from django.shortcuts import render_to_response, render
 from django.template import RequestContext
-from django.http import HttpResponseRedirect, Http404, HttpRequest
+from django.http import HttpResponseRedirect, Http404
 from spacescout_web.forms.contact import ContactForm
 from spacescout_web.spot import Spot, SpotException
 from django.core.mail import send_mail
