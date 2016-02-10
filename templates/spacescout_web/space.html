@@ -22,7 +22,7 @@
             } else {
                 fav_icon.removeClass('space-detail-fav-set').addClass('space-detail-fav-unset');
             }
-    
+
             fav_icon.unbind();
             fav_icon.click(function (e) {
                 window.spacescout_favorites.toggle({{ id }},
@@ -44,7 +44,7 @@
 
 {% block content %}
 {% load i18n %}
-    
+
     <div id="space_details_header" class="clearfix">
         <h1 class="visuallyhidden">SPACESCOUT&trade;</h1>
 		<img id="back_home_button" class="pull-left back-button" src="{% static 'img/details_arrow.png' %}" />
@@ -112,14 +112,14 @@
                                         <h3 class="space-info-label pull-left">Computers</h3>
                                         <div class="space-info-detail pull-left">
                                         {% if extended_info.auto_labstats_available > '0' %}
-                                            <p><span class="computer-available">{{ extended_info.auto_labstats_available }}</span> of {{ extended_info.auto_labstats_total }} available</p>    
+                                            <p><span class="computer-available">{{ extended_info.auto_labstats_available }}</span> of {{ extended_info.auto_labstats_total }} available</p>
                                         {% elif extended_info.auto_labstats_available == '0' %}
-                                            <p><span class="computer-notavailable">{{ extended_info.auto_labstats_available }}</span> of {{ extended_info.auto_labstats_total }} available</p>    
+                                            <p><span class="computer-notavailable">{{ extended_info.auto_labstats_available }}</span> of {{ extended_info.auto_labstats_total }} available</p>
                                         {% endif %}
                                         </div>
                                     </li>
                                 {% endif %}
-								
+
                                 {% load templatetag_handlebars %}
                                 <li id="mobile_hours_template" class="clearfix">
                                 {% tplhandlebars "mobile_hours" %}

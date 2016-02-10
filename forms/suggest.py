@@ -14,6 +14,7 @@
 """
 from django import forms
 from spacescout_web.forms.base import BaseForm
+from django.conf import settings
 
 
 class SuggestForm(BaseForm):
@@ -21,6 +22,7 @@ class SuggestForm(BaseForm):
         name = forms.CharField(max_length=25, label="Your Name", required=True, error_messages={'required':'Required field'})
         netid = forms.CharField(max_length=25, label="Your UW NetID", required=True, error_messages={'required':'Required field'})
         sender = forms.EmailField(max_length=40, label="Your Email", required=True, error_messages={'required':'Required field'})
+        campus_name = forms.ChoiceField(choices= [(v, v) for v in settings.SS_LOCATIONS.keys()])
         building = forms.CharField(widget=forms.TextInput(), label="Building Name", required=True, error_messages={'required':'Required field'})
         floor = forms.CharField(widget=forms.TextInput(), label="Floor Number", required=True, error_messages={'required':'Required field'})
         room_number = forms.CharField(widget=forms.TextInput(), label="Room Number (optional)", required=False)

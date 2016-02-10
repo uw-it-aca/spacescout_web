@@ -264,7 +264,7 @@
         resizeCarouselMapContainer();
     });
 
-    // fetch and show space 
+    // fetch and show space
     function loadSpaceDetails(id) {
         //clear any uneeded pending ajax window.requests
         $.each(window.requests, function () {
