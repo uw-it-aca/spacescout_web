@@ -111,7 +111,7 @@ def _contact_variables(request, spot_id):
         try:
             spot = Spot(spot_id).get()
         except SpotException as ex:
-            logger.error('Contact exception : %s' % (ex))
+            logger.warning(request.META['REMOTE_ADDR'] + " " + request.META['USER'] + " [" + ex.message.get('date') + "] \"" + request.method + " " + request.path_info + "\" " + ex.message.get('status'))
             raise Http404
 
         spot_name = spot["name"]
