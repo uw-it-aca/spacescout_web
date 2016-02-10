@@ -29,6 +29,8 @@ import re
 
 FIVE_MINUTE_CACHE = 300
 
+
+
 @mobile_template('spacescout_web/{mobile/}app.html')
 def HomeView(request, template=None):
     # The preference order is cookie, config, then some static values
