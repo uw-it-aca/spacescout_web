@@ -29,10 +29,6 @@ _ga.getEventTrackers_ = function(category, action, opt_label) {
     };
 };
 
-function testFunction(){
-  _gaq.push(_ga.getEventTrackers_("Filters", window.default_location+"-"+this.name, this.value));
-}
-
 function trackCheckedFilters()  {
 
     window.spacescout_open_now_filter = false;
