@@ -228,7 +228,7 @@
                                         {{/if}}
 
                                         <li class="clearfix"><h3 class="space-info-label pull-left">Hours</h3><div class="space-info-detail pull-left">{{formatHours available_hours}}</div></li>
-                                        <li class="clearfix"><h3 class="space-info-label pull-left">Location</h3><div id="location_ga_eventtracking" class="space-info-detail pull-left">{{extended_info.location_description}}</div></li>
+                                        <li class="clearfix"><h3 class="space-info-label pull-left">Location</h3><div class="space-info-detail pull-left">{{extended_info.location_description}}</div></li>
 
                                         {{#if has_resources }}
                                         <li class="clearfix">
@@ -362,7 +362,7 @@
 
                                 </div>
 
-                                <button id="{{id}}" class="space-detail-list-item pull-left" type="button" aria-label="Get space details for {{name}}" aria-owns="detail_container_{{id}}" onclick="_gaq.push(['_trackEvent', 'butt', 'clicked'])">
+                                <button id="{{id}}" class="space-detail-list-item pull-left" type="button" aria-label="Get space details for {{name}}" aria-owns="detail_container_{{id}}">
                                     <div class="space-detail-type clearfix">
                                     	<span class="space-detail-type-label pull-left">{{{type}}}</span>
                                         {{#if extended_info.labstats_id}}
