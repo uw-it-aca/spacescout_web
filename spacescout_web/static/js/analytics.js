@@ -30,7 +30,6 @@ _ga.getEventTrackers_ = function(category, action, opt_label) {
 };
 
 function testFunction(){
-  console.log("Hello World");
   _gaq.push(_ga.getEventTrackers_("Filters", window.default_location+"-"+this.name, this.value));
 }
 
