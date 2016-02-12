@@ -195,8 +195,8 @@
 
                             <div style="margin: 0 20px 20px 20px;">
 
-                                
-                                <div class="space-info">
+
+                                <div class="space-info" >
                                      <ul>
 
                                         {{#if has_notes }}
@@ -228,6 +228,7 @@
 
                                         <li class="clearfix"><h3 class="space-info-label pull-left">Hours</h3><div class="space-info-detail pull-left">{{formatHours available_hours}}</div></li>
                                         <li class="clearfix"><h3 class="space-info-label pull-left">Location</h3><div class="space-info-detail pull-left">{{extended_info.location_description}}</div></li>
+
                                         {{#if has_resources }}
                                         <li class="clearfix">
                                             <h3 class="space-info-label pull-left">Resources</h3>
@@ -321,6 +322,17 @@
                     </div>
                 </div>
             </div>
+
+            <!--************************************************************ GA event tracking, return location ID, name, and -->
+
+            <script>
+                pageTracker = _gat._getTracker(ga_event_tracking_id);
+                pageTracker._initData();
+                pageTracker._trackEvent("Details", "{{id}}, {{name}}, {{location.building_name}}, {{extended_info.campus}}");
+            </script>
+
+            <!-- ************************************************************ -->
+
         {% endtplhandlebars %}
 
         <div id="info_list">
@@ -337,7 +349,7 @@
 
                         {{#if data}}<ol class="lazyload-view">
                         {{#each data}}
-                 
+
                 <!-- space list start -->
 			    <li><h3 class="building_header">{{this.name}}</h3>
                             <ol>{{#each this.spots}}
