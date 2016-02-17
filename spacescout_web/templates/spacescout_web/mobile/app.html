@@ -111,6 +111,14 @@
           <div id="spacecount">
             <span class="count">{{count}}</span><span class="spaces"> {% trans 'spaces' %}</span>
           </div>
+
+    <!-- Ga Tracning when user switch campus -->
+          <script>
+              var user_select_campus = document.getElementById('location_select').options[document.getElementById('location_select').selectedIndex].text;
+              pageTracker = _gat._getTracker(ga_event_tracking_id);
+              pageTracker._initData();
+              pageTracker._trackEvent("Details", user_select_campus);
+          </script>
           {% endtplhandlebars %}
         </div>
     </div>
@@ -473,6 +481,7 @@
     <script>
         pageTracker = _gat._getTracker(ga_event_tracking_id);
         pageTracker._initData();
+        console.log("{{location.building_name}}");
         pageTracker._trackEvent("Details", "{{id}}, {{name}}, {{location.building_name}}, {{extended_info.campus}}");
     </script>
 
