@@ -25,7 +25,6 @@ class SpotException(Exception):
     def __init__(self, resp_status, spot_id):
         self.resp_status = resp_status
         self.spot_id = spot_id
-    pass
 
 
 class Spot(object):
@@ -42,7 +41,7 @@ class Spot(object):
             raise(Exception("Required setting missing: SS_WEB_OAUTH_SECRET"))
 
         consumer = oauth2.Consumer(key=settings.SS_WEB_OAUTH_KEY, secret=settings.SS_WEB_OAUTH_SECRET)
-        client = oauth2.Client(consumer)        
+        client = oauth2.Client(consumer)
         url = "{0}/api/v1/spot/{1}".format(settings.SS_WEB_SERVER_HOST, self.spot_id)
 
         resp, content = client.request(url, 'GET')

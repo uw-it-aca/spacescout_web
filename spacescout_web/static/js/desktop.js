@@ -200,7 +200,7 @@
         window.requests.push(
             $.ajax({
                 url: '/space/'+id+'/json/',
-                success: _showSpaceDetails
+                success: _showSpaceDetails,
             })
         );
     }
@@ -208,16 +208,12 @@
     // Show space details (sliding transition)
     function _showSpaceDetails(data) {
           // format last modified date
+          console.log("Enters Success Function!");
           var last_mod= new Date(data["last_modified"]);
           var month = last_mod.getMonth() + 1;
           var day = last_mod.getDate();
           var year = last_mod.getFullYear();
           data["last_modified"] = month + "/" + day + "/" + year;
-
-          //if space does not exist
-          if(data['extended_info'] == undefined) {
-            window.location.href = '/space-not-found';
-          }
 
           if (data['extended_info'].hasOwnProperty('campus')) {
               $('#location_select option').each(function (i) {
