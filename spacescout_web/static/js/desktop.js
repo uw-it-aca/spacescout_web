@@ -200,7 +200,7 @@
         window.requests.push(
             $.ajax({
                 url: '/space/'+id+'/json/',
-                success: _showSpaceDetails,
+                success: _showSpaceDetails
             })
         );
     }
@@ -208,7 +208,6 @@
     // Show space details (sliding transition)
     function _showSpaceDetails(data) {
           // format last modified date
-          console.log("Enters Success Function!");
           var last_mod= new Date(data["last_modified"]);
           var month = last_mod.getMonth() + 1;
           var day = last_mod.getDate();
