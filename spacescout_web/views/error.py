@@ -16,9 +16,17 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.conf import settings
 from mobility.decorators import mobile_template
+from django.http import HttpResponseNotFound
+from django.template import loader
+from django.template.loader import render_to_string
 
 @mobile_template('spacescout_web/{mobile/}404.html')
 def page_not_found(request, template=None):
+
+    template_list = (
+        template,
+        '404.html'
+    )
 
     if(request.META['PATH_INFO'] == '/space-not-found'):
         params = {
@@ -30,4 +38,4 @@ def page_not_found(request, template=None):
             'request_path': request.META['PATH_INFO'],
             }
 
-    return render_to_response(template, params, context_instance=RequestContext(request))
+    return HttpResponseNotFound(loader.render_to_string(template, params, context_instance=RequestContext(request)))
