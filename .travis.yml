@@ -13,7 +13,7 @@ before_script:
     - python manage.py syncdb --noinput
 # command to run tests
 script:
-    - pep8 sppacescout_web/
+    - pep8 spacescout_web/
     - coverage run --source=spacescout_web/ manage.py test spacescout_web
 after_script:
     - coveralls
