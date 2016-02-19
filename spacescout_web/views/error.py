@@ -23,19 +23,9 @@ from django.template.loader import render_to_string
 @mobile_template('spacescout_web/{mobile/}404.html')
 def page_not_found(request, template=None):
 
-    template_list = (
-        template,
-        '404.html'
-    )
-
-    if(request.META['PATH_INFO'] == '/space-not-found'):
-        params = {
-            'message' : 'Sorry! Unable to load detailes for this space',
-        }
-    else:
-        params = {
-            'message' : 'Sorry! Scout couldn\'t fetch the page at ',
-            'request_path': request.META['PATH_INFO'],
-            }
+    params = {
+        'message' : 'Sorry! Scout couldn\'t fetch the page at ',
+        'request_path': request.META['PATH_INFO'],
+    }
 
     return HttpResponseNotFound(loader.render_to_string(template, params, context_instance=RequestContext(request)))
