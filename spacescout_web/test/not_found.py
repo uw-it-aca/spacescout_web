@@ -20,4 +20,4 @@ class NotFound404Test(TestCase):
         contains = response.content.find(expected) != -1
 
         self.assertEqual(response.status_code, 404)
-        self.assertContains(response.content, expected)
+        self.assertTrue(contains)
