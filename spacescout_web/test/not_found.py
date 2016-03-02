@@ -17,7 +17,12 @@ class NotFound404Test(TestCase):
         response = client.get("/wrongurl")
 
         expected = 'Sorry! Scout couldn&#39;t fetch the page at  /wrongurl.'
-        contains = response.content.find(expected) != -1
+
+        # assertContains throws attribute error so using find instead.
+        # string1.find(string2) returns the index where string2 is found
+        # and returns -1 if not found
+        found = response.content.find(expected)
+        contains = found != -1
 
         self.assertEqual(response.status_code, 404)
         self.assertTrue(contains)
