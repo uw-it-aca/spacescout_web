@@ -6,7 +6,10 @@ class Filter(SearchFilter):
         if self.request.path != u'/':
             request_parts = self.request.path.split('/')
             campus = request_parts[1]
-            params = request_parts[2].split('|')
+            if len(request_parts) > 2:
+                params = request_parts[2].split('|')
+            else:
+                params = request_parts
             for param in params:
                 if param.count(':') == 1 and param.find(':') > -1:
                     key, value = param.split(':')
