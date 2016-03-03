@@ -45,15 +45,11 @@ class Spot(object):
                                 secret=settings.SS_WEB_OAUTH_SECRET
                                 )
         client = oauth2.Client(consumer)
-<<<<<<< HEAD
 
         url = "{0}/api/v1/spot/{1}".format(
                                     settings.SS_WEB_SERVER_HOST,
                                     self.spot_id
                                     )
-=======
-        url = "{0}/api/v1/spot/{1}".format(settings.SS_WEB_SERVER_HOST, self.spot_id)
->>>>>>> develop
 
         resp, content = client.request(url, 'GET')
 
