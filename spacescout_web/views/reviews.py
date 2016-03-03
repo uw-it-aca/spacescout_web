@@ -17,7 +17,7 @@ from django.template import RequestContext
 from django.conf import settings
 from django.http import HttpResponse
 from django.views.decorators.cache import never_cache
-from spacescout_web.views.rest_dispatch import RESTDispatch, RESTException,
+from spacescout_web.views.rest_dispatch import RESTDispatch, RESTException
 from spacescout_web.views.rest_dispatch import JSONResponse
 import oauth2
 

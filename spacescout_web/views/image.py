@@ -23,19 +23,30 @@ import hashlib
 from spacescout_web.middleware.unpatch_vary import unpatch_vary_headers
 
 
-def ImageView(request, spot_id, image_id, thumb_width=None, thumb_height=None, constrain=False):
+def ImageView(
+            request, spot_id, image_id, thumb_width=None,
+            thumb_height=None, constrain=False):
 
     client = get_client()
-    contenttype, img = get_image(client, spot_id, image_id, constrain, thumb_width, thumb_height)
+    contenttype, img = get_image(
+                                client, spot_id, image_id,
+                                constrain, thumb_width, thumb_height)
 
     response = HttpResponse(img, content_type=contenttype)
     # Remove some headers that don't vary for images
-    unpatch_vary_headers(response, ['Cookie', 'X-Mobile', 'Accept-Language', 'User-Agent'])
+    unpatch_vary_headers(response, [
+                                    'Cookie', 'X-Mobile',
+                                    'Accept-Language', 'User-Agent'])
 
     return response
 
-def MultiImageView(request, spot_id=None, image_ids=None, thumb_width=None, thumb_height=None, constrain=False):
-    headers, img = get_multi_image(spot_id, image_ids, constrain, thumb_width, thumb_height)
+
+def MultiImageView(
+                    request, spot_id=None, image_ids=None, thumb_width=None,
+                    thumb_height=None, constrain=False):
+    headers, img = get_multi_image(
+                        spot_id, image_ids, constrain,
+                        thumb_width, thumb_height)
 
     if headers is None:
         return HttpResponseNotFound()
@@ -44,9 +55,12 @@ def MultiImageView(request, spot_id=None, image_ids=None, thumb_width=None, thum
     response['Content-Type'] = headers['Content-Type']
     response['Sprite-Offsets'] = headers['Sprite-Offsets']
     # Remove some headers that don't vary for images
-    unpatch_vary_headers(response, ['Cookie', 'X-Mobile', 'Accept-Language', 'User-Agent'])
+    unpatch_vary_headers(response, [
+                                    'Cookie', 'X-Mobile',
+                                    'Accept-Language', 'User-Agent'])
 
     return response
+
 
 def get_client():
     # Required settings for the client
@@ -57,21 +71,32 @@ def get_client():
     if not hasattr(settings, 'SS_WEB_OAUTH_SECRET'):
         raise(Exception("Required setting missing: SS_WEB_OAUTH_SECRET"))
 
-    consumer = oauth2.Consumer(key=settings.SS_WEB_OAUTH_KEY, secret=settings.SS_WEB_OAUTH_SECRET)
+    consumer = oauth2.Consumer(
+                        key=settings.SS_WEB_OAUTH_KEY,
+                        secret=settings.SS_WEB_OAUTH_SECRET)
     client = oauth2.Client(consumer)
 
     return client
 
-def get_image(client, spot_id, image_id, constrain, thumb_width=None, thumb_height=None):
+
+def get_image(
+                client, spot_id, image_id, constrain,
+                thumb_width=None, thumb_height=None):
     if constrain is True:
         constraint = []
         if thumb_width:
             constraint.append("width:%s" % thumb_width)
         if thumb_height:
             constraint.append("height:%s" % thumb_height)
-        url = "{0}/api/v1/spot/{1}/image/{2}/thumb/constrain/{3}".format(settings.SS_WEB_SERVER_HOST, spot_id, image_id, ','.join(constraint))
+        url = "{0}/api/v1/spot/{1}/image/{2}/thumb/constrain/{3}".format(
+                                                settings.SS_WEB_SERVER_HOST,
+                                                spot_id, image_id,
+                                                ','.join(constraint))
     else:
-        url = "{0}/api/v1/spot/{1}/image/{2}/thumb/{3}x{4}".format(settings.SS_WEB_SERVER_HOST, spot_id, image_id, thumb_width, thumb_height)
+        url = "{0}/api/v1/spot/{1}/image/{2}/thumb/{3}x{4}".format(
+                                                settings.SS_WEB_SERVER_HOST,
+                                                spot_id, image_id,
+                                                thumb_width, thumb_height)
 
     resp, content = client.request(url, 'GET')
 
@@ -80,19 +105,29 @@ def get_image(client, spot_id, image_id, constrain, thumb_width=None, thumb_heig
 
     return 'application/json', '[]'
 
-def get_multi_image(spot_id, image_ids, constrain, thumb_width=None, thumb_height=None, fill_cache=False):
+
+def get_multi_image(
+                    spot_id, image_ids, constrain, thumb_width=None,
+                    thumb_height=None, fill_cache=False):
     if constrain is True:
         constraint = []
         if thumb_width:
             constraint.append("width:%s" % thumb_width)
         if thumb_height:
             constraint.append("height:%s" % thumb_height)
-        url = "{0}/api/v1/multi_image/{2}/thumb/constrain/{3}".format(settings.SS_WEB_SERVER_HOST, spot_id, image_ids, ','.join(constraint))
+        url = "{0}/api/v1/multi_image/{2}/thumb/constrain/{3}".format(
+                                                settings.SS_WEB_SERVER_HOST,
+                                                spot_id, image_ids,
+                                                ','.join(constraint))
     else:
-        url = "{0}/api/v1/multi_image/{2}/thumb/{3}x{4}".format(settings.SS_WEB_SERVER_HOST, spot_id, image_ids, thumb_width, thumb_height)
+        url = "{0}/api/v1/multi_image/{2}/thumb/{3}x{4}".format(
+                                                settings.SS_WEB_SERVER_HOST,
+                                                spot_id, image_ids,
+                                                thumb_width, thumb_height)
 
     image_cache_key = "spot_multi_image_%s" % hashlib.sha224(url).hexdigest()
-    offsets_cache_key = "spot_multi_image_offsets_%s" % hashlib.sha224(url).hexdigest()
+    offsets_cache_key = "spot_multi_image_offsets_%s" % (
+                                            hashlib.sha224(url).hexdigest())
 
     if fill_cache:
         client = get_client()
@@ -110,4 +145,3 @@ def get_multi_image(spot_id, image_ids, constrain, thumb_width=None, thumb_heigh
         'Content-Type': 'image/jpeg',
         'Sprite-Offsets': cached_offsets
     }, cached_image
-
