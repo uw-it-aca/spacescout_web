@@ -22,7 +22,9 @@ import re
 class SpotException(Exception):
     """ Exception for invalid Spot.
     """
-    pass
+    def __init__(self, resp_status, spot_id):
+        self.resp_status = resp_status
+        self.spot_id = spot_id
 
 
 class Spot(object):
@@ -43,16 +45,20 @@ class Spot(object):
                                 secret=settings.SS_WEB_OAUTH_SECRET
                                 )
         client = oauth2.Client(consumer)
+<<<<<<< HEAD
 
         url = "{0}/api/v1/spot/{1}".format(
                                     settings.SS_WEB_SERVER_HOST,
                                     self.spot_id
                                     )
+=======
+        url = "{0}/api/v1/spot/{1}".format(settings.SS_WEB_SERVER_HOST, self.spot_id)
+>>>>>>> develop
 
         resp, content = client.request(url, 'GET')
 
         if resp.status != 200:
-            raise SpotException(resp)
+            raise SpotException(resp.status, self.spot_id)
 
         spot = json.loads(content)
 
