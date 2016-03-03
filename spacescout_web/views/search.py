@@ -41,7 +41,10 @@ def SearchView(request):
 
     chain = SearchFilterChain(request)
 
-    consumer = oauth2.Consumer(key=settings.SS_WEB_OAUTH_KEY, secret=settings.SS_WEB_OAUTH_SECRET)
+    consumer = oauth2.Consumer(
+                            key=settings.SS_WEB_OAUTH_KEY,
+                            secret=settings.SS_WEB_OAUTH_SECRET
+                            )
     client = oauth2.Client(consumer)
 
     search_args = {}
@@ -77,11 +80,20 @@ def get_space_search_json(client, options):
     for key in options:
         if isinstance(options[key], types.ListType):
             for item in options[key]:
-                args.append("{0}={1}".format(urllib.quote(key), urllib.quote(item)))
+                args.append("{0}={1}".format(
+                                            urllib.quote(key),
+                                            urllib.quote(item)
+                                            ))
         else:
-            args.append("{0}={1}".format(urllib.quote(key), urllib.quote(options[key])))
+            args.append("{0}={1}".format(
+                                        urllib.quote(key),
+                                        urllib.quote(options[key])
+                                        ))
 
-    url = "{0}/api/v1/spot/?{1}".format(settings.SS_WEB_SERVER_HOST, "&".join(args))
+    url = "{0}/api/v1/spot/?{1}".format(
+                                        settings.SS_WEB_SERVER_HOST,
+                                        "&".join(args)
+                                        )
 
     resp, content = client.request(url, 'GET')
 

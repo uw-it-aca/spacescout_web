@@ -20,7 +20,8 @@ js_info_dict = {
     'packages': ('spacescout_web',),
 }
 
-urlpatterns = patterns('spacescout_web.views',
+urlpatterns = patterns(
+    'spacescout_web.views',
     url(r'^$', 'home.HomeView'),
     url(r'^login$', 'auth.Prompt'),
     url(r'authenticate$', 'auth.Login'),
@@ -40,20 +41,59 @@ urlpatterns = patterns('spacescout_web.views',
     url(r'thankyou(?:/(?P<spot_id>\d+))?/$', 'contact.thank_you'),
     url(r'^favorites?$', 'favorites.FavoritesView'),
     url(r'space/(?P<spot_id>\d+)/reviews$', ReviewsView().run),
-    url(r'space/(?P<spot_id>\d+)/json/$', 'spot.SpotView', {'return_json': True}),
-    url(r'space/(?P<spot_id>\d+)/image/(?P<image_id>\d+)/thumb/constrain/width:(?P<thumb_width>\d+)(?:,height:(?P<thumb_height>\d+))?$', 'image.ImageView', {'constrain': True}),
-    url(r'space/(?P<spot_id>\d+)/image/(?P<image_id>\d+)/thumb/constrain/height:(?P<thumb_height>\d+)(?:,width:(?P<thumb_width>\d+))?$', 'image.ImageView', {'constrain': True}),
-    url(r'space/(?P<spot_id>\d+)/image/(?P<image_id>\d+)/thumb/(?P<thumb_width>\d+)x(?P<thumb_height>\d+)$', 'image.ImageView'),
-    url(r'images/(?P<image_ids>[\d,]+)/thumb/constrain/width:(?P<thumb_width>\d+)(?:,height:(?P<thumb_height>\d+))?$', 'image.MultiImageView', {'constrain': True}),
-
-    url(r'image/space/(?P<spot_id>\d+)/(?P<image_id>\d+)/thumb/constrain/width:(?P<thumb_width>\d+)(?:,height:(?P<thumb_height>\d+))?$', 'image.ImageView', {'constrain': True}),
-    url(r'image/space/(?P<spot_id>\d+)/(?P<image_id>\d+)/thumb/constrain/height:(?P<thumb_height>\d+)(?:,width:(?P<thumb_width>\d+))?$', 'image.ImageView', {'constrain': True}),
-    url(r'image/space/(?P<spot_id>\d+)/(?P<image_id>\d+)/thumb/(?P<thumb_width>\d+)x(?P<thumb_height>\d+)$', 'image.ImageView'),
+    url(
+        r'space/(?P<spot_id>\d+)/json/$',
+        'spot.SpotView',
+        {'return_json': True}
+    ),
+    url(
+        r'space/(?P<spot_id>\d+)/image/(?P<image_id>\d+)/thumb/constrain/'
+        'width:(?P<thumb_width>\d+)(?:,height:(?P<thumb_height>\d+))?$',
+        'image.ImageView',
+        {'constrain': True}
+    ),
+    url(
+        r'space/(?P<spot_id>\d+)/image/(?P<image_id>\d+)/thumb/constrain/'
+        'height:(?P<thumb_height>\d+)(?:,width:(?P<thumb_width>\d+))?$',
+        'image.ImageView',
+        {'constrain': True}
+    ),
+    url(
+        r'space/(?P<spot_id>\d+)/image/(?P<image_id>\d+)/thumb/'
+        '(?P<thumb_width>\d+)x(?P<thumb_height>\d+)$',
+        'image.ImageView'
+    ),
+    url(
+        r'images/(?P<image_ids>[\d,]+)/thumb/constrain/'
+        'width:(?P<thumb_width>\d+)(?:,height:(?P<thumb_height>\d+))?$',
+        'image.MultiImageView',
+        {'constrain': True}
+    ),
+    url(
+        r'image/space/(?P<spot_id>\d+)/(?P<image_id>\d+)/thumb/constrain/'
+        'width:(?P<thumb_width>\d+)(?:,height:(?P<thumb_height>\d+))?$',
+        'image.ImageView',
+        {'constrain': True}
+    ),
+    url(
+        r'image/space/(?P<spot_id>\d+)/(?P<image_id>\d+)/thumb/constrain/'
+        'height:(?P<thumb_height>\d+)(?:,width:(?P<thumb_width>\d+))?$',
+        'image.ImageView',
+        {'constrain': True}
+    ),
+    url(
+        r'image/space/(?P<spot_id>\d+)/(?P<image_id>\d+)/thumb/'
+        '(?P<thumb_width>\d+)x(?P<thumb_height>\d+)$',
+        'image.ImageView'
+    ),
 )
 
 urlpatterns += patterns('',
-                        url(r'^jsi18n/$', 'django.views.i18n.javascript_catalog', js_info_dict),
-                        )
+                        url(
+                            r'^jsi18n/$',
+                            'django.views.i18n.javascript_catalog',
+                            js_info_dict
+                        ),)
 
 urlpatterns += patterns('spacescout_web.views',
                         url(r'^space/\d+/.*$', 'home.HomeView'))
@@ -61,4 +101,3 @@ urlpatterns += patterns('spacescout_web.views',
 for key in settings.SS_LOCATIONS:
     urlpatterns += patterns('spacescout_web.views',
                             url(r'^'+key+'.*$', 'home.HomeView'))
-
