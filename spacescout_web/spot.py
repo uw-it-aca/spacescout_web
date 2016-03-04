@@ -40,9 +40,16 @@ class Spot(object):
         if not hasattr(settings, 'SS_WEB_OAUTH_SECRET'):
             raise(Exception("Required setting missing: SS_WEB_OAUTH_SECRET"))
 
-        consumer = oauth2.Consumer(key=settings.SS_WEB_OAUTH_KEY, secret=settings.SS_WEB_OAUTH_SECRET)
+        consumer = oauth2.Consumer(
+                                key=settings.SS_WEB_OAUTH_KEY,
+                                secret=settings.SS_WEB_OAUTH_SECRET
+                                )
         client = oauth2.Client(consumer)
-        url = "{0}/api/v1/spot/{1}".format(settings.SS_WEB_SERVER_HOST, self.spot_id)
+
+        url = "{0}/api/v1/spot/{1}".format(
+                                    settings.SS_WEB_SERVER_HOST,
+                                    self.spot_id
+                                    )
 
         resp, content = client.request(url, 'GET')
 
@@ -56,7 +63,11 @@ class Spot(object):
             types.append(_(t))
 
         spot["type"] = ','.join(types)
-        modified_date = spot["last_modified"][5:10] + '-' + spot["last_modified"][:4]
+        modified_date = (
+                        spot["last_modified"][5:10] +
+                        '-' +
+                        spot["last_modified"][:4]
+                        )
         spot["last_modified"] = re.sub('-', '/', modified_date)
 
         return spot
