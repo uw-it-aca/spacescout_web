@@ -26,4 +26,3 @@ class BaseForm(forms.Form):
                 data[k] = v.strip()
         self.data = data
         super(BaseForm, self).full_clean()
-

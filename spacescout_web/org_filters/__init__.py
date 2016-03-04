@@ -21,13 +21,14 @@ from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.utils.importlib import import_module
 
+
 class SearchFilter(object):
     """
     A search filter base class. Implementers should subclass this and
     redefine the methods they're interested in.
 
     A new instance of this class is created for each search request.
-    
+
     Instance Variables:
         request: The HTTP request.
         keys: set of keys this filter handles.
@@ -45,6 +46,7 @@ class SearchFilter(object):
         Return a dictionary object, whether you modify it or not.
         """
         return args
+
 
 class SearchFilterChain(object):
     """
@@ -108,4 +110,3 @@ class SearchFilterChain(object):
         return key in SearchFilterChain.keys
 
 SearchFilterChain._load_filters()
-

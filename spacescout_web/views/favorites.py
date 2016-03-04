@@ -45,30 +45,41 @@ def FavoritesView(request, template=None):
 @login_required(login_url='/login')
 @never_cache
 def API(request, spot_id=None):
-    
-    consumer = oauth2.Consumer(key=settings.SS_WEB_OAUTH_KEY, secret=settings.SS_WEB_OAUTH_SECRET)
+
+    consumer = oauth2.Consumer(key=settings.SS_WEB_OAUTH_KEY,
+                               secret=settings.SS_WEB_OAUTH_SECRET)
     client = oauth2.Client(consumer)
 
     if request.META['REQUEST_METHOD'] == 'GET':
         if spot_id:
-            url = "{0}/api/v1/user/me/favorite/{1}".format(settings.SS_WEB_SERVER_HOST, spot_id)
+            url = \
+                "{0}/api/v1/user/me/favorite/{1}".format(
+                    settings.SS_WEB_SERVER_HOST,
+                    spot_id)
         else:
-            url = "{0}/api/v1/user/me/favorites".format(settings.SS_WEB_SERVER_HOST)
+            url = \
+                "{0}/api/v1/user/me/favorites".format(
+                    settings.SS_WEB_SERVER_HOST)
 
         method = 'GET'
         body = ''
 
     elif request.META['REQUEST_METHOD'] == 'PUT':
 
-        url = "{0}/api/v1/user/me/favorite/{1}".format(settings.SS_WEB_SERVER_HOST, spot_id)
+        url = \
+            "{0}/api/v1/user/me/favorite/{1}".format(
+                settings.SS_WEB_SERVER_HOST, spot_id)
         method = 'PUT'
         body = request.read()
 
     elif request.META['REQUEST_METHOD'] == 'DELETE':
 
-        url = "{0}/api/v1/user/me/favorite/{1}".format(settings.SS_WEB_SERVER_HOST, spot_id)
+        url = \
+            "{0}/api/v1/user/me/favorite/{1}".format(
+                settings.SS_WEB_SERVER_HOST,
+                spot_id)
         method = 'DELETE'
-        body=''
+        body = ''
 
     else:
         return HttpResponse('Method not allowed', status=405)
@@ -92,4 +103,3 @@ def API(request, spot_id=None):
         return HttpResponse('error', status=resp.status)
 
     return HttpResponse(response_body, mimetype='application/json', status=200)
-

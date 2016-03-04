@@ -1,5 +1,6 @@
 from spacescout_web.org_filters import SearchFilter
 
+
 class Filter(SearchFilter):
     def url_args(self, args):
         search_args = []
@@ -26,42 +27,53 @@ class Filter(SearchFilter):
                     key = param
 
                 if key == 'type':
-                    search_args.append({key:value})
+                    search_args.append({key: value})
                 elif key == 'reservable':
-                    search_args.append({'extended_info:reservable':'true'})
+                    search_args.append({'extended_info:reservable':
+                                        'true'})
                 elif key == 'cap':
-                    search_args.append({'capacity':int(value)})
+                    search_args.append({'capacity': int(value)})
                 elif key == 'open':
-                    search_args.append({'open_at':value})
+                    search_args.append({'open_at': value})
                 elif key == 'close':
-                    search_args.append({'open_until':value})
+                    search_args.append({'open_until': value})
                 elif key == 'bld':
                     values = value.split(',')
                     for value in values:
                         value = value.replace(' ', '+')
-                        search_args.append({'building_name':value})
+                        search_args.append({'building_name': value})
                 elif key == 'rwb':
-                    search_args.append({'extended_info:has_whiteboards':'true'})
+                    search_args.append({'extended_info:has_whiteboards':
+                                        'true'})
                 elif key == 'rol':
-                    search_args.append({'extended_info:has_outlets':'true'})
+                    search_args.append({'extended_info:has_outlets':
+                                        'true'})
                 elif key == 'rcp':
-                    search_args.append({'extended_info:has_computers':'true'})
+                    search_args.append({'extended_info:has_computers':
+                                        'true'})
                 elif key == 'rsc':
-                    search_args.append({'extended_info:has_scanner':'true'})
+                    search_args.append({'extended_info:has_scanner':
+                                        'true'})
                 elif key == 'rpj':
-                    search_args.append({'extended_info:has_projector':'true'})
+                    search_args.append({'extended_info:has_projector':
+                                        'true'})
                 elif key == 'rpr':
-                    search_args.append({'extended_info:has_printing':'true'})
+                    search_args.append({'extended_info:has_printing':
+                                        'true'})
                 elif key == 'rds':
-                    search_args.append({'extended_info:has_displays':'true'})
+                    search_args.append({'extended_info:has_displays':
+                                        'true'})
                 elif key == 'natl':
-                    search_args.append({'extended_info:has_natural_light':'true'})
+                    search_args.append({'extended_info:has_natural_light':
+                                        'true'})
                 elif key == 'noise':
                     values = value.split(',')
                     for value in values:
-                        search_args.append({'extended_info:noise_level':value})
+                        search_args.append({'extended_info:noise_level':
+                                            value})
                 elif key == 'food':
                     values = value.split(',')
                     for value in values:
-                        search_args.append({'extended_info:food_nearby':value})
+                        search_args.append({'extended_info:food_nearby':
+                                            value})
         return search_args

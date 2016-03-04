@@ -47,4 +47,6 @@ class URLFiltering(TestCase):
         request = factory.get('/seattle/cap:1|rol')
         chain = SearchFilterChain(request)
         search_args = chain.url_args(request)
-        self.assertEqual([{'capacity': 1}, {'extended_info:has_outlets': 'true'}], search_args)
+        self.assertEqual([{'capacity': 1},
+                          {'extended_info:has_outlets': 'true'}],
+                         search_args)

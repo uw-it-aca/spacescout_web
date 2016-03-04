@@ -26,7 +26,7 @@ def SpotView(request, spot_id, return_json=False):
 
     except SpotException as e:
         if e.resp_status == 404:
-            #TODO What are the following two lines for?
+            # TODO What are the following two lines for?
             url = request.get_host()
             url = url + "/contact"
             raise Http404
@@ -40,4 +40,7 @@ def SpotView(request, spot_id, return_json=False):
     if return_json:
         return HttpResponse(content, mimetype='application/json')
     else:
-        return render_to_response('spacescout_web/space.html', spot, context_instance=RequestContext(request))
+        return render_to_response(
+            'spacescout_web/space.html',
+            spot,
+            context_instance=RequestContext(request))

@@ -24,6 +24,7 @@ def Prompt(request, template=None):
     c.update(csrf(request))
     return HttpResponse(t.render(c))
 
+
 # Login Authentication
 def Login(request):
     username = request.POST['username']
@@ -38,10 +39,12 @@ def Login(request):
 
     return HttpResponseRedirect(next)
 
+
 # Logout
 def Logout(request):
     logout(request)
     if hasattr(settings, 'SS_WEB_LOGOUT_URL'):
         return HttpResponseRedirect(settings.SS_WEB_LOGOUT_URL)
     else:
-        return HttpResponseRedirect(request.REQUEST['next'] if 'next' in request.REQUEST else '/')
+        return HttpResponseRedirect(
+            request.REQUEST['next'] if 'next' in request.REQUEST else '/')
