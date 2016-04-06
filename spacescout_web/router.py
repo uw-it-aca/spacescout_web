@@ -1,6 +1,5 @@
 class OAuthDBRouter(object):
-    """
-    A router sending oauth to the right place 
+    """ A router sending oauth to the right place
     """
     def db_for_read(self, model, **hints):
         """
@@ -24,12 +23,10 @@ class OAuthDBRouter(object):
         return True
 
     def allow_migrate(self, db, model):
-        """
-        Make sure the auth app only appears in the 'auth_db'
-        database.
+        """ Make sure the auth app only appears in the 'auth_db' database.
         """
         if db == 'oauth':
             return model._meta.app_label == 'oauth_provider'
         elif model._meta.app_label == 'oauth_provider':
             return False
-        return None 
+        return None

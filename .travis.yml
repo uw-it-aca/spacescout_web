@@ -1,0 +1,19 @@
+language: python
+python:
+    - "2.6"
+    - "2.7"
+# command to install dependencies
+install:
+    - pip install .
+    - pip install pep8
+    - pip install coverage
+    - pip install python-coveralls
+before_script:
+    - cp travis_ci/manage.py manage.py
+    - python manage.py syncdb --noinput
+# command to run tests
+script:
+    - pep8 spacescout_web/
+    - coverage run --source=spacescout_web/ manage.py test spacescout_web
+after_script:
+    - coveralls

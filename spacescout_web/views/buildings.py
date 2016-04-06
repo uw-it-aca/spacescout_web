@@ -19,7 +19,9 @@ import simplejson as json
 
 
 def buildings(request):
-    consumer = oauth2.Consumer(key=settings.SS_WEB_OAUTH_KEY, secret=settings.SS_WEB_OAUTH_SECRET)
+    consumer = oauth2.Consumer(
+        key=settings.SS_WEB_OAUTH_KEY,
+        secret=settings.SS_WEB_OAUTH_SECRET)
     client = oauth2.Client(consumer)
 
     query = None

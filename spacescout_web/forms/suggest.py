@@ -19,13 +19,45 @@ from django.conf import settings
 
 class SuggestForm(BaseForm):
         back = forms.CharField(widget=forms.HiddenInput())
-        name = forms.CharField(max_length=25, label="Your Name", required=True, error_messages={'required':'Required field'})
-        netid = forms.CharField(max_length=25, label="Your UW NetID", required=True, error_messages={'required':'Required field'})
-        sender = forms.EmailField(max_length=40, label="Your Email", required=True, error_messages={'required':'Required field'})
-        campus_name = forms.ChoiceField(choices=[(settings.SS_LOCATIONS[k]['NAME'], settings.SS_LOCATIONS[k]['NAME']) for k in settings.SS_LOCATIONS.keys()])
-        building = forms.CharField(widget=forms.TextInput(), label="Building Name", required=True, error_messages={'required':'Required field'})
-        floor = forms.CharField(widget=forms.TextInput(), label="Floor Number", required=True, error_messages={'required':'Required field'})
-        room_number = forms.CharField(widget=forms.TextInput(), label="Room Number (optional)", required=False)
-        description = forms.CharField(widget=forms.Textarea(attrs={'rows': 5}), label="Description of Space", required=True, error_messages={'required':'Required field'})
-        justification = forms.CharField(widget=forms.Textarea(attrs={'rows': 5}), label="Why do you recommend this space? (optional)", required=False)
+        name = forms.CharField(
+            max_length=25,
+            label="Your Name",
+            required=True,
+            error_messages={'required': 'Required field'})
+        netid = forms.CharField(
+            max_length=25,
+            label="Your UW NetID",
+            required=True,
+            error_messages={'required': 'Required field'})
+        sender = forms.EmailField(
+            max_length=40,
+            label="Your Email",
+            required=True,
+            error_messages={'required': 'Required field'})
+        campus_name = forms.ChoiceField(
+            choices=[(settings.SS_LOCATIONS[k]['NAME'],
+                      settings.SS_LOCATIONS[k]['NAME'])
+                     for k in settings.SS_LOCATIONS.keys()])
+        building = forms.CharField(
+            widget=forms.TextInput(),
+            label="Building Name",
+            required=True,
+            error_messages={'required': 'Required field'})
+        floor = forms.CharField(
+            widget=forms.TextInput(),
+            label="Floor Number",
+            required=True,
+            error_messages={'required': 'Required field'})
+        room_number = forms.CharField(widget=forms.TextInput(),
+                                      label="Room Number (optional)",
+                                      required=False)
+        description = forms.CharField(
+            widget=forms.Textarea(attrs={'rows': 5}),
+            label="Description of Space",
+            required=True,
+            error_messages={'required': 'Required field'})
+        justification = forms.CharField(
+            widget=forms.Textarea(attrs={'rows': 5}),
+            label="Why do you recommend this space? (optional)",
+            required=False)
         email_confirmation = forms.CharField(required=False)

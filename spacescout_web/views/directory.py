@@ -20,10 +20,11 @@ from django.views.decorators.cache import never_cache
 import ldap
 import simplejson as json
 
+
 # Shim to LDAP directory search
 @never_cache
 def API(request):
-    
+
     if request.META['REQUEST_METHOD'] != 'GET':
         return HttpResponse('Method not allowed', status=405)
 
@@ -31,7 +32,7 @@ def API(request):
 
     if hasattr(settings, 'SS_LDAP_DIRECTORY') and 'q' in request.GET:
         try:
-            q = request.GET.get('q');
+            q = request.GET.get('q')
             l = ldap.initialize('ldap://' + settings.SS_LDAP_DIRECTORY)
 
             if hasattr(settings, 'SS_LDAP_SEARCH_BASE'):
@@ -45,17 +46,19 @@ def API(request):
             while 1:
                 result_type, result_data = l.result(ldap_id, 0)
                 if not result_data or len(result_data) == 0:
-                    break;
+                    break
                 else:
                     if result_type == ldap.RES_SEARCH_ENTRY:
                         try:
-                            result.append({ 'name': result_data[0][1]['cn'][0],
-                                            'email': result_data[0][1]['mail'][0] })
+                            result.append(
+                                {'name': result_data[0][1]['cn'][0],
+                                 'email': result_data[0][1]['mail'][0]})
                         except:
                             pass
-            
+
         except ldap.LDAPError, e:
             pass
 
-
-    return HttpResponse(json.dumps(result), mimetype='application/json', status=200)
+    return HttpResponse(json.dumps(result),
+                        mimetype='application/json',
+                        status=200)

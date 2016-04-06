@@ -29,7 +29,8 @@ HEADER_UNPATCH_VARY = 'X-Unpatch-Vary'
 def unpatch_vary_headers(response, headers):
     """Add the headers to the list of unpatch vary headers.
     """
-    unpatch_headers = re.split(r'\s*,\s*', response.get(HEADER_UNPATCH_VARY, ''))
+    unpatch_headers = re.split(r'\s*,\s*',
+                               response.get(HEADER_UNPATCH_VARY, ''))
     unpatch_headers.extend(headers)
     response[HEADER_UNPATCH_VARY] = ','.join(unpatch_headers)
     return response
