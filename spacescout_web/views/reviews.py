@@ -43,7 +43,7 @@ class ReviewsView(RESTDispatch):
             return response
 
         headers = {
-            "XOAUTH_USER": "%s" % request.user.username,
+            "X-OAuth-User": "%s" % request.user.username,
             'Content-Type': 'application/json',
             'Accept': 'application/json'
         }
