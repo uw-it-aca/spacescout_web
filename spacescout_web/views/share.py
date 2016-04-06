@@ -63,7 +63,7 @@ def share(request, spot_id=None):
             })
 
             headers = {
-                "XOAUTH_USER": "%s" % request.user.username,
+                "X-OAuth-User": "%s" % request.user.username,
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
             }
@@ -107,7 +107,7 @@ def share(request, spot_id=None):
             url = "{0}/api/v1/user/me".format(settings.SS_WEB_SERVER_HOST)
 
             headers = {
-                "XOAUTH_USER": "%s" % request.user.username,
+                "X-OAuth-User": "%s" % request.user.username,
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
                 }

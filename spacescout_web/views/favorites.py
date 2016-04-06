@@ -85,7 +85,7 @@ def API(request, spot_id=None):
         return HttpResponse('Method not allowed', status=405)
 
     headers = {
-        "XOAUTH_USER": "%s" % request.user.username,
+        "X-OAuth-User": "%s" % request.user.username,
         'Content-Type': 'application/json',
         'Accept': 'application/json'
     }

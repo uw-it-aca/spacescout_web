@@ -92,7 +92,7 @@ def HomeView(request, template=None):
     favorites_json = {}
 
     if request.user and request.user.is_authenticated():
-        headers["XOAUTH_USER"] = "%s" % request.user.username
+        headers["X-OAuth-User"] = "%s" % request.user.username
         favorites_json = get_favorites_json(headers, client)
 
     log_shared_space_reference(request, headers, client)
