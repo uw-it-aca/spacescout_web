@@ -20,10 +20,10 @@
 from spacescout_web.org_filters import SearchFilter
 import sys
 
+
 class Filter(SearchFilter):
     def filter_args(self, args):
         if 'shibboleth' in sys.modules and 'HTTP_EPPN' in self.request.META:
             args['eppn'] = self.request.META['HTTP_EPPN']
 
         return args
-

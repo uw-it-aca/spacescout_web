@@ -30,6 +30,7 @@ from spacescout_web.org_filters import SearchFilterChain
 
 FIVE_MINUTE_CACHE = 300
 
+
 @mobile_template('spacescout_web/{mobile/}app.html')
 def HomeView(request, template=None):
     # The preference order is cookie, config, then some static values
@@ -53,7 +54,7 @@ def HomeView(request, template=None):
             if not hasattr(settings, "SS_LOCATIONS"):
                 location = None
 
-            elif not location in settings.SS_LOCATIONS:
+            elif location not in settings.SS_LOCATIONS:
                 location = None
 
     if location is None:
@@ -64,18 +65,24 @@ def HomeView(request, template=None):
 
     spaces = json.dumps(spaces)
 
-    # Default to zooming in on the UW Seattle campus if no default location is set
+    # Default to zooming in on the UW Seattle campus
+    # if no default location is set
     if hasattr(settings, 'SS_DEFAULT_LOCATION'):
         default_location = settings.SS_DEFAULT_LOCATION
         locations = settings.SS_LOCATIONS
 
-    if (hasattr(settings, 'SS_BUILDING_CLUSTERING_ZOOM_LEVELS') and hasattr(settings, 'SS_DISTANCE_CLUSTERING_RATIO')):
+    if (hasattr(settings, 'SS_BUILDING_CLUSTERING_ZOOM_LEVELS') and hasattr(
+                                settings, 'SS_DISTANCE_CLUSTERING_RATIO')):
         by_building_zooms = settings.SS_BUILDING_CLUSTERING_ZOOM_LEVELS
         by_distance_ratio = settings.SS_DISTANCE_CLUSTERING_RATIO
     else:
-        raise ImproperlyConfigured("You need to configure your clustering constants in settings.py or local_settings.py")
+        raise ImproperlyConfigured(
+                    "You need to configure your clustering constants in"
+                    " settings.py or local_settings.py")
 
-    consumer = oauth2.Consumer(key=settings.SS_WEB_OAUTH_KEY, secret=settings.SS_WEB_OAUTH_SECRET)
+    consumer = oauth2.Consumer(
+                key=settings.SS_WEB_OAUTH_KEY,
+                secret=settings.SS_WEB_OAUTH_SECRET)
     client = oauth2.Client(consumer)
     headers = {
         'Content-Type': 'application/json',
@@ -85,27 +92,33 @@ def HomeView(request, template=None):
     favorites_json = {}
 
     if request.user and request.user.is_authenticated():
-        headers["XOAUTH_USER"] = "%s" % request.user.username
+        headers["X-OAuth-User"] = "%s" % request.user.username
         favorites_json = get_favorites_json(headers, client)
 
     log_shared_space_reference(request, headers, client)
 
     buildings = json.loads(get_building_json(client))
 
-
-    # This could probably be a template tag, but didn't seem worth it for one-time use
-    #TODO: hey, actually it's probably going to be a Handlebars helper and template
+    # This could probably be a template tag, not worth it for one-time use
+    # TODO: it's probably going to be a Handlebars helper and template
     buildingdict = SortedDict()
     for building in buildings:
         try:
-            if not building[0] in buildingdict.keys():  # building[0] is the first letter of the string
+            # building[0] is the first letter of the string
+            if not building[0] in buildingdict.keys():
                 buildingdict[building[0]] = []
 
             buildingdict[building[0]].append(building)
         except:
             pass
+
+    if request.user and request.user.is_authenticated():
+        username = request.user.username
+    else:
+        username = ''
+
     params = {
-        'username' : request.user.username if request.user and request.user.is_authenticated() else '',
+        'username': username,
         'center_latitude': template_values['center_latitude'],
         'center_longitude': template_values['center_longitude'],
         'zoom_level': template_values['zoom_level'],
@@ -118,7 +131,9 @@ def HomeView(request, template=None):
         'favorites_json': favorites_json,
     }
 
-    response = render_to_response(template, params, context_instance=RequestContext(request))
+    response = render_to_response(
+                                template, params,
+                                context_instance=RequestContext(request))
     response['Cache-Control'] = 'no-cache'
     return response
 
@@ -133,11 +148,13 @@ def get_key_for_search_args(search_args):
 
     return "space_search_%s" % hashlib.sha224(joined).hexdigest()
 
+
 def get_campus_data(request, campus):
     spaces = fetch_open_now_for_campus(request, campus)
     template_values = template_values_for_campus(campus)
 
     return spaces, template_values
+
 
 def template_values_for_campus(campus):
     if campus is None:
@@ -155,7 +172,10 @@ def template_values_for_campus(campus):
         'zoom_level': location['ZOOM_LEVEL'],
     }
 
-def fetch_open_now_for_campus(request, campus, use_cache=True, fill_cache=False, cache_period=FIVE_MINUTE_CACHE):
+
+def fetch_open_now_for_campus(
+                            request, campus, use_cache=True,
+                            fill_cache=False, cache_period=FIVE_MINUTE_CACHE):
     if campus is None:
         # Default to zooming in on the UW Seattle campus
         center_latitude = '47.655003'
@@ -174,22 +194,27 @@ def fetch_open_now_for_campus(request, campus, use_cache=True, fill_cache=False,
         else:
             distance = '500'
 
-    # SPOT-1832.  Making the distance far enough that center of campus to furthest spot from the center
-    # can be found
+    # SPOT-1832. Making the distance far enough that center of campus to
+    # furthest spot from the center can be found
     distance = 1000
-    consumer = oauth2.Consumer(key=settings.SS_WEB_OAUTH_KEY, secret=settings.SS_WEB_OAUTH_SECRET)
+    consumer = oauth2.Consumer(
+                            key=settings.SS_WEB_OAUTH_KEY,
+                            secret=settings.SS_WEB_OAUTH_SECRET)
     client = oauth2.Client(consumer)
 
     chain = SearchFilterChain(request)
     search_url_args = []
     search_url_args = chain.url_args(request)
-    search_url_args.append({'center_latitude':center_latitude})
-    search_url_args.append({'center_longitude':center_longitude})
-    search_url_args.append({'open_now':'1'})
-    search_url_args.append({'distance':distance})
-    search_url_args.append({'limit':'0'})
+    search_url_args.append({'center_latitude': center_latitude})
+    search_url_args.append({'center_longitude': center_longitude})
+    search_url_args.append({'open_now': '1'})
+    search_url_args.append({'distance': distance})
+    search_url_args.append({'limit': '0'})
 
-    return get_space_json(client, search_url_args, use_cache, fill_cache, cache_period)
+    return get_space_json(
+                        client, search_url_args, use_cache,
+                        fill_cache, cache_period)
+
 
 def get_space_json(client, search_args, use_cache, fill_cache, cache_period):
     # We don't want the management command that fills the cache to get
@@ -225,15 +250,18 @@ def get_space_json(client, search_args, use_cache, fill_cache, cache_period):
 
     return data
 
+
 def fetch_space_json(client, search_args):
     query = []
 
-    #TODO: abstract out all checks for specific extended info
+    # TODO: abstract out all checks for specific extended info
     for search_arg in search_args:
         for key, value in search_arg.items():
             query.append("%s=%s" % (key, value))
 
-    url = "{0}/api/v1/spot/?{1}".format(settings.SS_WEB_SERVER_HOST, "&".join(query))
+    url = "{0}/api/v1/spot/?{1}".format(
+                                        settings.SS_WEB_SERVER_HOST,
+                                        "&".join(query))
     resp, content = client.request(url, 'GET')
 
     if resp.status == 200:
@@ -242,7 +270,7 @@ def fetch_space_json(client, search_args):
     return '[]'
 
 
-#TODO: use the new buildings view instead
+# TODO: use the new buildings view instead
 def get_building_json(client):
     url = "{0}/api/v1/buildings".format(settings.SS_WEB_SERVER_HOST)
     resp, content = client.request(url, 'GET')
@@ -253,7 +281,7 @@ def get_building_json(client):
     return '[]'
 
 
-#TODO: use the favorites view instead
+# TODO: use the favorites view instead
 def get_favorites_json(headers, client):
     url = "{0}/api/v1/user/me/favorites".format(settings.SS_WEB_SERVER_HOST)
 
@@ -270,12 +298,14 @@ def log_shared_space_reference(request, headers, client):
     m = re.match(r'^/space/(\d+)/.*/([a-f0-9]{32})$', request.path)
     if m:
         try:
-            url = "{0}/api/v1/spot/{1}/shared".format(settings.SS_WEB_SERVER_HOST, m.group(1))
+            url = "{0}/api/v1/spot/{1}/shared".format(
+                                                settings.SS_WEB_SERVER_HOST,
+                                                m.group(1))
 
-            resp, content = client.request(url,
-                                           method='PUT',
-                                           body=json.dumps({ 'hash': m.group(2) }),
-                                           headers=headers)
+            resp, content = client.request(
+                                    url, method='PUT',
+                                    body=json.dumps({'hash': m.group(2)}),
+                                    headers=headers)
 
             # best effort, ignore response
         except:
