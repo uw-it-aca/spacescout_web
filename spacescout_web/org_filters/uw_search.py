@@ -35,7 +35,7 @@ class Filter(SearchFilter):
                     try:
                         search_args.append({'capacity': int(value)})
                     except:
-                        pass
+                        search_args.append({'capacity': 1})
                 elif key == 'open':
                     search_args.append({'open_at': value})
                 elif key == 'close':
