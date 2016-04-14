@@ -170,7 +170,11 @@ var spacescout_map = null, spacescout_markers = [], speed = 800, update_count = 
             }
             // TODO: CHANGE FROM DOT NOTATION TO SQUARE BRACKETS
             // set capacity
-            $('#capacity').val(form_opts.capacity);
+            if (isNaN(form_opts.capacity)) {
+                $('#capacity').val(1);
+            } else {
+                $('#capacity').val(form_opts.capacity);
+            }
 
             // set hours
             if (form_opts.open_at || form_opts.open_until) {
