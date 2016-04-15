@@ -32,7 +32,10 @@ class Filter(SearchFilter):
                     search_args.append({'extended_info:reservable':
                                         'true'})
                 elif key == 'cap':
-                    search_args.append({'capacity': int(value)})
+                    try:
+                        search_args.append({'capacity': int(value)})
+                    except:
+                        search_args.append({'capacity': 1})
                 elif key == 'open':
                     search_args.append({'open_at': value})
                 elif key == 'close':
