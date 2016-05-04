@@ -75,12 +75,14 @@
               <label id="location_select_heading" for="location_select"  class="visuallyhidden">Select campus:</label>
               <select id='location_select'>
                 {% for key, value in locations.items %}
-                <option value="{{ value.CENTER_LATITUDE }},{{ value.CENTER_LONGITUDE }},{{ key }},{{ value.ZOOM_LEVEL }}">{{ value.NAME }}</option>
+                <option value="{{ value.CENTER_LATITUDE }},{{ value.CENTER_LONGITUDE }},{{ key }},{{ value.ZOOM_LEVEL }}">{{ value.NAME }} </option>
                 {% endfor %}
               </select>
             </span>
             {% endifnotequal %}
           </div>
+
+
           <!-- hidden for now, until cool stuff for logged in users is finished.-->
           <div class="user_context pull-right">
             {% if user.is_authenticated %}
@@ -104,6 +106,14 @@
           <div id="space_count_container" aria-labelledby="spaces_match_header" role="status"></div>
           {% tplhandlebars "space_count" %}
           <span class="count">{{count}}</span> {% trans 'spaces' %}
+
+          <!--GA event tracking when user change campus -->
+          <script>
+              var user_select_campus = document.getElementById('location_select').options[document.getElementById('location_select').selectedIndex].text;
+              pageTracker = _gat._getTracker(ga_event_tracking_id);
+              pageTracker._initData();
+              pageTracker._trackEvent("Campus", user_select_campus);
+          </script>
           {% endtplhandlebars %}
         </div>
       </div>
@@ -195,8 +205,8 @@
 
                             <div style="margin: 0 20px 20px 20px;">
 
-                                
-                                <div class="space-info">
+
+                                <div class="space-info" >
                                      <ul>
 
                                         {{#if has_notes }}
@@ -228,6 +238,7 @@
 
                                         <li class="clearfix"><h3 class="space-info-label pull-left">Hours</h3><div class="space-info-detail pull-left">{{formatHours available_hours}}</div></li>
                                         <li class="clearfix"><h3 class="space-info-label pull-left">Location</h3><div class="space-info-detail pull-left">{{extended_info.location_description}}</div></li>
+
                                         {{#if has_resources }}
                                         <li class="clearfix">
                                             <h3 class="space-info-label pull-left">Resources</h3>
@@ -321,6 +332,17 @@
                     </div>
                 </div>
             </div>
+
+            <!--******************* GA event tracking, return location ID, name, and campus-->
+
+            <script>
+                pageTracker = _gat._getTracker(ga_event_tracking_id);
+                pageTracker._initData();
+                pageTracker._trackEvent("Details", "{{id}}, {{name}}, {{location.building_name}}, {{extended_info.campus}}");
+            </script>
+
+            <!-- ************************************************************ -->
+
         {% endtplhandlebars %}
 
         <div id="info_list">
@@ -337,7 +359,7 @@
 
                         {{#if data}}<ol class="lazyload-view">
                         {{#each data}}
-                 
+
                 <!-- space list start -->
 			    <li><h3 class="building_header">{{this.name}}</h3>
                             <ol>{{#each this.spots}}

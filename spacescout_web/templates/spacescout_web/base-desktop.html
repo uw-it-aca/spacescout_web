@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <!--
 
   Copyright 2012, 2013 UW Information Technology, University of Washington
@@ -72,7 +73,9 @@
         <script type="text/javascript">
 
           var _gaq = _gaq || [];
+          var ga_event_tracking_id = '{{ ga_tracking_id }}' // create global ga event tracking number for tracking detail page
           _gaq.push(['_setAccount', '{{ ga_tracking_id }}']);
+          //_gaq.push(['_setDomainName', 'none']);
           _gaq.push(['_trackPageview']);
 
           (function() {
