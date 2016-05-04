@@ -25,6 +25,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+
 def suggest(request, spot_id=None):
     if request.method == 'POST':
         form = SuggestForm(request.POST)
@@ -52,7 +53,9 @@ def suggest(request, spot_id=None):
 
             subject = "[Suggestion] From %s" % (name)
 
-            email_message = "A SpaceScout user has suggested the following space.\n\
+            email_message = (
+                            "A SpaceScout user has suggested the "
+                            "following space.\n\
                            \nSuggested Space:\n\
                            \nFrom: %s <%s>\n\
                            \nUW NetID: %s\n\
@@ -62,21 +65,32 @@ def suggest(request, spot_id=None):
                            \nRoom number: %s\n\
                            \nDescription: %s\n\
                            \nJustification: %s\n\
-                           \nBrowser Type = %s" % (name, sender, netid, campus_name, building,
-                                                   floor, room_number, description,
-                                                   justification, browser)
+                           \nBrowser Type = %s" % (
+                                                    name, sender, netid,
+                                                    campus_name, building,
+                                                    floor, room_number,
+                                                    description, justification,
+                                                    browser))
 
             if bot_test == '':
                 try:
                     if not hasattr(settings, 'FEEDBACK_EMAIL_RECIPIENT'):
-                        logger.error('Missing configuration: Set FEEDBACK_EMAIL_RECIPIENT for your site')
-                    send_mail(subject, email_message, sender, settings.FEEDBACK_EMAIL_RECIPIENT)
+                        logger.error(
+                                    'Missing configuration: Set '
+                                    'FEEDBACK_EMAIL_RECIPIENT for your site'
+                                    )
+                    send_mail(
+                            subject, email_message, sender,
+                            settings.FEEDBACK_EMAIL_RECIPIENT
+                            )
                 except Exception as e:
                     logger.error('Suggest failure: %s' % (e))
                     return HttpResponseRedirect('/sorry/')
 
-
-            return HttpResponseRedirect('/suggest/thankyou/?back=' + urlquote(back))
+            return HttpResponseRedirect(
+                                        '/suggest/thankyou/?back=' +
+                                        urlquote(back)
+                                        )
     else:
         try:
             back = request.GET['back']

@@ -50,7 +50,10 @@ def share(request, spot_id=None):
             message = form.cleaned_data['message']
             bot_test = form.cleaned_data['email_confirmation']
 
-            url = "{0}/api/v1/spot/{1}/share".format(settings.SS_WEB_SERVER_HOST, spot_id)
+            url = "{0}/api/v1/spot/{1}/share".format(
+                                            settings.SS_WEB_SERVER_HOST,
+                                            spot_id
+                                            )
 
             body = json.dumps({
                 'to': recipient,
@@ -60,12 +63,15 @@ def share(request, spot_id=None):
             })
 
             headers = {
-                "XOAUTH_USER": "%s" % request.user.username,
+                "X-OAuth-User": "%s" % request.user.username,
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
             }
 
-            consumer = oauth2.Consumer(key=settings.SS_WEB_OAUTH_KEY, secret=settings.SS_WEB_OAUTH_SECRET)
+            consumer = oauth2.Consumer(
+                                        key=settings.SS_WEB_OAUTH_KEY,
+                                        secret=settings.SS_WEB_OAUTH_SECRET
+                                        )
             client = oauth2.Client(consumer)
 
             resp, content = client.request(url,
@@ -74,10 +80,16 @@ def share(request, spot_id=None):
                                            headers=headers)
 
             if not (resp.status == 200 or resp.status == 201):
-                logger.error('Share service failure %s: %s' % (resp.status, url))
+                logger.error('Share service failure %s: %s' % (
+                                                                resp.status,
+                                                                url
+                                                                ))
                 return HttpResponseRedirect('/share/sorry/')
 
-            return HttpResponseRedirect('/share/thankyou/?back=' + urlquote(back))
+            return HttpResponseRedirect(
+                                        '/share/thankyou/?back=' +
+                                        urlquote(back)
+                                        )
     else:
         # mask user from silliness
         try:
@@ -87,12 +99,15 @@ def share(request, spot_id=None):
             back = '/'
 
         if request.user and request.user.is_authenticated():
-            consumer = oauth2.Consumer(key=settings.SS_WEB_OAUTH_KEY, secret=settings.SS_WEB_OAUTH_SECRET)
+            consumer = oauth2.Consumer(
+                                        key=settings.SS_WEB_OAUTH_KEY,
+                                        secret=settings.SS_WEB_OAUTH_SECRET
+                                        )
             client = oauth2.Client(consumer)
             url = "{0}/api/v1/user/me".format(settings.SS_WEB_SERVER_HOST)
 
             headers = {
-                "XOAUTH_USER": "%s" % request.user.username,
+                "X-OAuth-User": "%s" % request.user.username,
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
                 }
@@ -101,7 +116,10 @@ def share(request, spot_id=None):
                                            method='GET',
                                            headers=headers)
 
-            sender = "%s@%s" % (request.user.username, getattr(settings, 'SS_MAIL_DOMAIN', 'uw.edu'))
+            sender = "%s@%s" % (
+                                request.user.username,
+                                getattr(settings, 'SS_MAIL_DOMAIN', 'uw.edu')
+                                )
             if resp.status == 200:
                 me = content = json.loads(content)
                 if 'email' in me and len(me['email']):
@@ -110,7 +128,7 @@ def share(request, spot_id=None):
             sender = ''
 
         form = ShareForm(initial={
-                'spot_id':spot_id,
+                'spot_id': spot_id,
                 'back': back,
                 'sender': sender,
                 'subject': 'Check out this space I found on SpaceScout',
@@ -119,17 +137,22 @@ def share(request, spot_id=None):
     try:
         spot = Spot(spot_id).get()
         share_text = [spot["name"], spot["type"]]
-        if 'extended_info' in spot and 'location_description' in spot['extended_info']:
+        if ('extended_info' in spot and
+                'location_description' in spot['extended_info']):
             share_text.append(spot['extended_info']['location_description'])
     except SpotException as e:
         logger.error('Share failure for spot %s: %s' % (spot_id, e))
         return render_to_response('spacescout_web/share-sorry.html', {
-                    'problem': 'Sorry, but the space you wish to share does not exist.',
+                    'problem': 'Sorry, but the space you wish '
+                    'to share does not exist.',
                     'back': back,
                 }, context_instance=RequestContext(request))
 
-    share_url = 'http://%s/space/%s/%s' % (getattr(settings, 'SS_APP_SERVER', socket.gethostname()),
-                                           spot_id, urlquote(spot["name"]))
+    share_url = 'http://%s/space/%s/%s' % (getattr(
+                                            settings, 'SS_APP_SERVER',
+                                            socket.gethostname()),
+                                           spot_id, urlquote(spot["name"])
+                                           )
 
     return render_to_response('spacescout_web/share-form.html', {
         'form': form,
@@ -183,14 +206,14 @@ def _share_variables(request, spot_id):
             raise Http404
 
         spot_name = spot["name"]
-        if 'extended_info' in spot:
-            if 'location_description' in spot['extended_info']:
-                spot_description = spot['extended_info']['location_description']
+        if ('extended_info' in spot and
+                'location_description' in spot['extended_info']):
+            spot_description = spot['extended_info']['location_description']
 
     if request.MOBILE == 1:
-       is_mobile = True
+        is_mobile = True
     else:
-       is_mobile = False
+        is_mobile = False
 
     if request.GET['back']:
         back = request.GET['back']

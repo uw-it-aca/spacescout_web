@@ -17,17 +17,24 @@ from django.template import RequestContext
 from django.conf import settings
 from django.http import HttpResponse
 from django.views.decorators.cache import never_cache
-from spacescout_web.views.rest_dispatch import RESTDispatch, RESTException, JSONResponse
+from spacescout_web.views.rest_dispatch import RESTDispatch, RESTException
+from spacescout_web.views.rest_dispatch import JSONResponse
 import oauth2
 
 
 class ReviewsView(RESTDispatch):
     def __init__(self):
-        consumer = oauth2.Consumer(key=settings.SS_WEB_OAUTH_KEY, secret=settings.SS_WEB_OAUTH_SECRET)
+        consumer = oauth2.Consumer(
+            key=settings.SS_WEB_OAUTH_KEY,
+            secret=settings.SS_WEB_OAUTH_SECRET
+            )
         self._client = oauth2.Client(consumer)
 
     def _url(self, spot_id):
-        return "{0}/api/v1/spot/{1}/reviews".format(settings.SS_WEB_SERVER_HOST, spot_id)
+        return "{0}/api/v1/spot/{1}/reviews".format(
+                                            settings.SS_WEB_SERVER_HOST,
+                                            spot_id
+                                            )
 
     def POST(self, request, spot_id):
         if not (request.user and request.user.is_authenticated()):
@@ -36,7 +43,7 @@ class ReviewsView(RESTDispatch):
             return response
 
         headers = {
-            "XOAUTH_USER": "%s" % request.user.username,
+            "X-OAuth-User": "%s" % request.user.username,
             'Content-Type': 'application/json',
             'Accept': 'application/json'
         }
@@ -49,7 +56,11 @@ class ReviewsView(RESTDispatch):
         if not (resp.status == 200 or resp.status == 201):
             return HttpResponse('error', status=resp.status)
 
-        return HttpResponse("{}", mimetype='application/json', status=resp.status)
+        return HttpResponse(
+                            "{}",
+                            mimetype='application/json',
+                            status=resp.status
+                            )
 
     @never_cache
     def GET(self, request, spot_id):
@@ -61,11 +72,19 @@ class ReviewsView(RESTDispatch):
 
         response_body = '{}'
 
-        resp, content = self._client.request(self._url(spot_id), method='GET', headers=headers)
+        resp, content = self._client.request(
+                                            self._url(spot_id),
+                                            method='GET',
+                                            headers=headers
+                                            )
 
         if resp.status == 200 or resp.status == 201:
             response_body = content if content else '{}'
         else:
             return HttpResponse('error', status=resp.status)
 
-        return HttpResponse(response_body, mimetype='application/json', status=200)
+        return HttpResponse(
+                            response_body,
+                            mimetype='application/json',
+                            status=200
+                            )

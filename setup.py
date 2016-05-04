@@ -14,5 +14,6 @@ setup(name='SpaceScout-Web',
                         'django-templatetag-handlebars',
                         'simplejson',
                         'python-ldap',
+                        'mock<=1.0.1',
                        ],
      )

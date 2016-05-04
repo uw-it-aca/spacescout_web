@@ -25,11 +25,12 @@ from django.core.exceptions import SuspiciousOperation
 from ipaddress import ip_address
 import logging
 
-from shibboleth.middleware import ShibbolethRemoteUserMiddleware as OrigShibbolethRemoteUserMiddleware
+from shibboleth.middleware import ShibbolethRemoteUserMiddleware as \
+    OrigShibbolethRemoteUserMiddleware
 
 logger = logging.getLogger(__name__)
+
 
 class ShibbolethRemoteUserMiddleware(OrigShibbolethRemoteUserMiddleware):
     """ Allow the use of headers when coming from a trusted proxy. """
     header = 'HTTP_SSO_USER'
-
