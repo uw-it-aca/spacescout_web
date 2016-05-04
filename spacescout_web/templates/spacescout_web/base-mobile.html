@@ -65,7 +65,7 @@
         {% if ga_tracking_id %}
         <!-- Google Analytics tracking -->
         <script type="text/javascript">
-
+          var ga_event_tracking_id = '{{ ga_tracking_id }}' // global javascript variable used for event tracking
           var _gaq = _gaq || [];
           _gaq.push(['_setAccount', '{{ ga_tracking_id }}']);
           _gaq.push(['_trackPageview']);
@@ -145,4 +145,3 @@
 
     </body>
 </html>
-
