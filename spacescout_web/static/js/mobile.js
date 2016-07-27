@@ -119,7 +119,6 @@
         // initialize the carousel for mobile standalone space page
         initializeCarousel();
         resizeCarouselMapContainer();
-        replaceUrls();
 
         if ($(".space-detail-body").length == 1) {
             initMapCarouselButtons();
@@ -264,7 +263,7 @@
         resizeCarouselMapContainer();
     });
 
-    // fetch and show space 
+    // fetch and show space
     function loadSpaceDetails(id) {
         //clear any uneeded pending ajax window.requests
         $.each(window.requests, function () {

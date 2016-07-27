@@ -195,7 +195,7 @@
 
                             <div style="margin: 0 20px 20px 20px;">
 
-                                
+
                                 <div class="space-info">
                                      <ul>
 
@@ -203,7 +203,7 @@
                                         <li class="clearfix">
                                             <h3 class="space-info-label pull-left">Notes</h3>
                                             <div class="space-info-detail pull-left">
-                                                {{#if extended_info.access_notes }}<p>{{extended_info.access_notes}}</p>{{/if}}
+                                                {{#if extended_info.access_notes }}<p id="ei_access_notes">{{extended_info.access_notes}}</p>{{/if}}
                                                 {{#if extended_info.reservation_notes }}<p id="ei_reservation_notes">{{extended_info.reservation_notes }}</p>{{/if}}
                                             </div>
                                         </li>
@@ -337,7 +337,7 @@
 
                         {{#if data}}<ol class="lazyload-view">
                         {{#each data}}
-                 
+
                 <!-- space list start -->
 			    <li><h3 class="building_header">{{this.name}}</h3>
                             <ol>{{#each this.spots}}
