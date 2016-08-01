@@ -331,7 +331,7 @@
 
         initializeCarousel();
         resizeCarouselMapContainer();
-        replaceReservationNotesUrls();
+        replaceUrls();
         initMapCarouselButtons();
 
         $('#back_home_button').css('cursor', 'pointer');

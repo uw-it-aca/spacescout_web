@@ -692,16 +692,16 @@ function monthname_from_month(month) {
         return (month >=0 && month < 12) ? months[month] : '';
 }
 
-function replaceReservationNotesUrls(){
+function replaceUrls(){
     // Replace urls in reservation notes, access notes and hour notes with actual links.
 
     var id = ["ei_reservation_notes", "ei_access_notes", "hours_notes"];
     for (index = 0; index < id.length; index++){
-      replaceReservationNotesUrlsHelper("#" + id[index]);
+      replaceUrlsHelper("#" + id[index]);
     }
 }
 
-function replaceReservationNotesUrlsHelper(id){
+function replaceUrlsHelper(id){
   $(id).each(function() {
       var text = $(this).html(),
           patt = /\b(?:https?|ftp):\/\/[a-z0-9-+&@#\/%?=~_|!:,.;]*[a-z0-9-+&@#\/%=~_|]/gim,
