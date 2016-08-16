@@ -170,7 +170,7 @@
                     $container.append(blank);
                 }
 
-                replaceReservationNotesUrls();
+                replaceUrls();
 
                 $.event.trigger('favoritesLoaded', [ this.favorites ]);
             }

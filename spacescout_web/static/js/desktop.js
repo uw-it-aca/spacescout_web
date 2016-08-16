@@ -295,7 +295,7 @@
 
         initializeCarousel();
 
-        replaceReservationNotesUrls();
+        replaceUrls();
 
         $('.space-detail-header .close').on('click', function(e){
             e.preventDefault();

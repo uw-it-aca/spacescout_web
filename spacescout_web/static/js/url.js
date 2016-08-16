@@ -127,7 +127,7 @@
                 m = path.match(/^\/([a-zA-Z]+)?(\/([a-z][^/]*))?((\/(\d*))?(\/.*)?)?$/);
 
             if (m) {
-                // 
+                //
                 $('#location_select option').each(function (i) {
                     var location = $(this).val().split(',');
                     if (location[2] == m[1]) {

@@ -157,7 +157,7 @@
             </div>
         </form>
     </div>
-    
+
     <div id="main_content" class="clearfix" role="main" aria-labelledby="app_header">
         <h2 id="map_header" class="visuallyhidden" aria-hidden="true">Map of Spaces</h2>
         <div id="map_canvas" aria-labelledby="map_header" aria-hidden="true"></div>
@@ -296,7 +296,7 @@
 			<a id="back_home_button" href="javascript:void(0);"><img class="back-button" src="{% static 'img/details_arrow.png' %}" />
 			Back to space list</a>
 		</div>
-		
+
         <div id="name-type-block" class="pull-left">
           <h2 class="space-detail-name" style=""><span class="visuallyhidden">Space Details:</span> {{name}}</h2>
       	  <div class="space-detail-type">{{{ type }}} {{ #if capacity }}<span class="space-detail-capacity">[Seats&nbsp;{{capacity}}]</span>{{ /if }}</div>
@@ -355,7 +355,7 @@
                             <li class="clearfix">
                                 <h3 class="space-info-label pull-left">Notes</h3>
                                 <div class="space-info-detail pull-left">
-                                    {{ #if extended_info.access_notes }}<p>{{extended_info.access_notes }}</p>{{ /if }}
+                                    {{ #if extended_info.access_notes }}<p id="ei_access_notes">{{extended_info.access_notes }}</p>{{ /if }}
                                     {{ #if extended_info.reservation_notes }}<p id="ei_reservation_notes">{{extended_info.reservation_notes }}</p>{{ /if }}
                                 </div>
                             </li>
@@ -373,7 +373,7 @@
                                     </div>
                                 </li>
                             {{ /if }}
-							
+
                             <li id="mobile_hours_template" class="clearfix">
                               <h3 class="space-info-label pull-left">Hours</h3><div class="space-info-detail pull-left">{{formatHours available_hours}}</div>
                             </li>
