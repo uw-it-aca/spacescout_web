@@ -296,8 +296,7 @@
 
         data.has_access_reservation_notes = (data.extended_info.access_notes
                                              || data.extended_info.reservation_notes);
-        data.has_labstats = (data.extended_info.labstats_id
-                             && data.extended_info.auto_labstats_total
+        data.has_labstats = (data.extended_info.auto_labstats_total
                              && data.extended_info.auto_labstats_total != '0');
         data.has_labstats_available = (data.extended_info.auto_labstats_available > '0');
         data.has_resources = (data.extended_info.has_computers

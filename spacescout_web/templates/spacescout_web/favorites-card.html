@@ -65,22 +65,20 @@
                                 </div>
                             </li>
                             {{/if}}
-                            {{#if extended_info.labstats_id}}
-                                {{#if extended_info.auto_labstats_total}}
-                                    {{#compare extended_info.auto_labstats_total 0 operator="!="}}
-                                        <li class="clearfix">
-                                            <div class="space-info-label pull-left">Computers</div>
-                                            <div class="space-info-detail pull-left">
+                            {{#if extended_info.auto_labstats_total}}
+                                {{#compare extended_info.auto_labstats_total 0 operator="!="}}
+                                    <li class="clearfix">
+                                        <div class="space-info-label pull-left">Computers</div>
+                                        <div class="space-info-detail pull-left">
 
-                                            {{#compare extended_info.auto_labstats_available 0 operator=">"}}
-                                                <p><span class="computer-available">{{extended_info.auto_labstats_available}}</span> of {{extended_info.auto_labstats_total}} available</p>
-                                            {{^}}
-                                                <p><span class="computer-notavailable">{{extended_info.auto_labstats_available}}</span> of {{extended_info.auto_labstats_total}} available</p>
-                                            {{/compare}}
-                                            </div>
-                                        </li>
-                                    {{/compare}}
-                                {{/if}}
+                                        {{#compare extended_info.auto_labstats_available 0 operator=">"}}
+                                            <p><span class="computer-available">{{extended_info.auto_labstats_available}}</span> of {{extended_info.auto_labstats_total}} available</p>
+                                        {{^}}
+                                            <p><span class="computer-notavailable">{{extended_info.auto_labstats_available}}</span> of {{extended_info.auto_labstats_total}} available</p>
+                                        {{/compare}}
+                                        </div>
+                                    </li>
+                                {{/compare}}
                             {{/if}}
 
                             <li class="clearfix">
@@ -170,5 +168,3 @@
 {% tplhandlebars "reservation_cue" %}
 <a href="{{ url }}" target="_blank">Reserve this space online... <i class="fa fa-external-link"></i></a>
 {% endtplhandlebars %}
-
-
