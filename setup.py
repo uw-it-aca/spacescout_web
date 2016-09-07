@@ -15,5 +15,6 @@ setup(name='SpaceScout-Web',
                         'simplejson',
                         'python-ldap',
                         'mock<=1.0.1',
+                        'PermissionsLogging',
                        ],
      )
