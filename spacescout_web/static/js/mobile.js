@@ -119,7 +119,6 @@
         // initialize the carousel for mobile standalone space page
         initializeCarousel();
         resizeCarouselMapContainer();
-        replaceUrls();
 
         if ($(".space-detail-body").length == 1) {
             initMapCarouselButtons();
@@ -264,7 +263,7 @@
         resizeCarouselMapContainer();
     });
 
-    // fetch and show space 
+    // fetch and show space
     function loadSpaceDetails(id) {
         //clear any uneeded pending ajax window.requests
         $.each(window.requests, function () {
@@ -297,8 +296,7 @@
 
         data.has_access_reservation_notes = (data.extended_info.access_notes
                                              || data.extended_info.reservation_notes);
-        data.has_labstats = (data.extended_info.labstats_id
-                             && data.extended_info.auto_labstats_total
+        data.has_labstats = (data.extended_info.auto_labstats_total
                              && data.extended_info.auto_labstats_total != '0');
         data.has_labstats_available = (data.extended_info.auto_labstats_available > '0');
         data.has_resources = (data.extended_info.has_computers
@@ -332,7 +330,7 @@
 
         initializeCarousel();
         resizeCarouselMapContainer();
-        replaceReservationNotesUrls();
+        replaceUrls();
         initMapCarouselButtons();
 
         $('#back_home_button').css('cursor', 'pointer');

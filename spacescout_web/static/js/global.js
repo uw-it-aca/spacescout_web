@@ -479,7 +479,7 @@ var requests = [];
 
             $this.carousel({
                 interval: false
-            }); 
+            });
 
             // add carousel pagination
             var html = '<div class="carousel-nav" data-target="' + $this.attr('id') + '"><ul>';
@@ -488,9 +488,9 @@ var requests = [];
                 html += '<li><a';
                 if (i === 0) {
                     html += ' class="active"';
-                }   
+                }
                 html += ' href="#">•</a></li>';
-            }   
+            }
 
             html += '</ul></li>';
             $this.before(html);
@@ -502,7 +502,7 @@ var requests = [];
             if ($this.find('.item').length == 1) {
                 $this.find('.carousel-control').hide();
                 $this.prev().hide(); // hide carousel pagination container for single image carousels
-            }   
+            }
 
         }).bind('slid', function (e) {
             var $nav = $('.carousel-nav[data-target="' + $(this).attr('id') + '"] ul');
@@ -511,7 +511,7 @@ var requests = [];
 
             $nav.find('li a.active').removeClass('active');
             $(item).find('a').addClass('active');
-        }); 
+        });
 
         $('.carousel-nav a').bind('click', function (e) {
             var index = $(this).parent().index();
@@ -519,7 +519,7 @@ var requests = [];
 
             $carousel.carousel(index);
             e.preventDefault();
-        }); 
+        });
 
         resizeCarouselMapContainer();
     }
@@ -625,18 +625,6 @@ var requests = [];
         reset_location_filter();
     }
 
-    function replaceUrls(){
-        // Replace urls in reservation notes with actual links.
-        var text = $("#ei_reservation_notes").html();
-        var patt = /\b(?:https?|ftp|http):\/\/[a-z0-9-+&@#\/%?=~_|!:,.;]*[a-z0-9-+&@#\/%=~_|]/gim;
-        var url = patt.exec(text);
-        if (url !== null) {
-            text = text.replace(url, "<a href='" + url + "' target='_blank'>" + url + "</a>");
-            $("#ei_reservation_notes").html(text);
-        }
-    }
-    window.replaceUrls = replaceUrls;
-
     function _getLocationBuildings() {
         // populate the location filter list
         var url = '/buildings';
@@ -704,30 +692,24 @@ function monthname_from_month(month) {
         return (month >=0 && month < 12) ? months[month] : '';
 }
 
-function replaceReservationNotesUrls(){
-    // Replace urls in reservation notes with actual links.
-    $("#ei_reservation_notes").each(function() {
-        var text = $(this).html(),
-            patt = /\b(?:https?|ftp):\/\/[a-z0-9-+&@#\/%?=~_|!:,.;]*[a-z0-9-+&@#\/%=~_|]/gim,
-            url = patt.exec(text);
+function replaceUrls(){
+    // Replace urls in reservation notes, access notes and hour notes with actual links.
 
-        if (url !== null) {
-            text = text.replace(url, "<a href='" + url + "' target='_blank'>" + url + "</a>");
-            $(this).html(text);
-        }
-    });
-    $("#hours_notes").each(function() {
-        var text = $(this).html(),
-            patt = /\b(?:https?|ftp):\/\/[a-z0-9-+&@#\/%?=~_|!:,.;]*[a-z0-9-+&@#\/%=~_|]/gim,
-            url = patt.exec(text);
-
-        if (url !== null) {
-            text = text.replace(url, "<a href='" + url + "' target=_blank'>" + url + "</a>");
-            $(this).html(text);
-        }
-    });
+    var id = ["ei_reservation_notes", "ei_access_notes", "hours_notes"];
+    for (index = 0; index < id.length; index++){
+      replaceUrlsHelper("#" + id[index]);
+    }
 }
 
+function replaceUrlsHelper(id){
+  $(id).each(function() {
+      var text = $(this).html(),
+          patt = /\b(?:https?|ftp):\/\/[a-z0-9-+&@#\/%?=~_|!:,.;]*[a-z0-9-+&@#\/%=~_|]/gim,
+          url = patt.exec(text);
 
-
-
+      if (url !== null) {
+          text = text.replace(url, "<a href='" + url + "' target='_blank'>" + url + "</a>");
+          $(this).html(text);
+      }
+  });
+}
