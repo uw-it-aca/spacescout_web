@@ -469,6 +469,9 @@ var requests = [];
         });
 
         default_open_at_filter();
+
+        // Show SpaceScout deprecation modal
+        $('#myModal').modal('show');
     });
 
     function initializeCarousel() {
