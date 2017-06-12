@@ -469,9 +469,17 @@ var requests = [];
         });
 
         default_open_at_filter();
+        var last_time = localStorage.getItem('lastModal');
 
-        // Show SpaceScout deprecation modal
-        $('#myModal').modal('show');
+        if(!last_time)
+            last_time = 0;
+
+        if(new Date().getTime() - last_time > 30 * 60 * 1000){
+            // Show SpaceScout deprecation modal
+            $('#myModal').modal('show');
+            // set the time that this was set at so that we do not display more than every half hour
+            localStorage.setItem('lastModal', new Date().getTime());
+        }
     });
 
     function initializeCarousel() {
