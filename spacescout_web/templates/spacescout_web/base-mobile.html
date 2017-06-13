@@ -78,9 +78,21 @@
 
         </script>
         {% endif %}
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap-combined.min.css" />
     </head>
 
       <body id="top">
+        <!-- Modal -->
+        <div style="top: 10px !important;" id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-header" style="border:none !important; padding:0 !important;">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="margin:10px;">×</button>
+        </div>
+          <div class="modal-body" style="padding:30px !important;">
+            <p style="font-size:18px;">SpaceScout has grown into a new app, <a href="https://scout.uw.edu">Scout</a>!</p>
+            <p>Now you can search for places to eat on campus and technology you can use, in addition to study spaces.</p>
+            <p><strong>SpaceScout will be retired on June 23, 2017.</strong></p>
+          </div>
+        </div>
 			<div id="preload"></div>
           {% if show_ios_smart_banner %}
           <div id="ios_callout" style="display:none;">
@@ -119,6 +131,7 @@
             <script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap/js/bootstrap-carousel.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/typeahead.bundle.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap/js/bootstrap-tokenfield.js"></script>
+            <script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap/js/bootstrap-modal.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/handlebars.js"></script>
 			<script type="text/javascript" src="{{ STATIC_URL }}js/markerwithlabel.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}libs/jquery.lazyscrollloading-min.js"></script>
