@@ -1,3 +1,6 @@
+NOTE: SpaceScout has been retired. Please see Scout as a replacement - https://github.com/uw-it-aca/scout
+
+
 This is the web client for SpaceScout™.  It connects to services provided by https://github.com/uw-it-aca/spotseeker_server
 
 A live instance of this project can be viewed at http://spacescout.uw.edu/
